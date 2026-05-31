@@ -1,8 +1,12 @@
-window.MathJax = {
-  tex: {inlineMath: [['\\(','\\)'], ['$', '$']], displayMath: [['\\[','\\]']]},
-  svg: {fontCache: 'global'}
-};
+
+function setDetails(open){
+  document.querySelectorAll('details.study-toggle').forEach(d => { d.open = open; });
+}
 function printReady(){
-  if(window.MathJax && MathJax.typesetPromise){MathJax.typesetPromise().then(()=>window.print());}
-  else{window.print();}
+  setDetails(true);
+  if(window.MathJax && MathJax.typesetPromise){ MathJax.typesetPromise().then(()=>window.print()); }
+  else{ window.print(); }
+}
+function toggleReadingMode(){
+  document.body.classList.toggle('reading-mode');
 }
