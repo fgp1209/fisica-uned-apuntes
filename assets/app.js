@@ -1,12 +1,25 @@
-
-function setDetails(open){
-  document.querySelectorAll('details.study-toggle').forEach(d => { d.open = open; });
+function openAllDetails(){
+  document.querySelectorAll("details").forEach((el)=>el.open=true);
+}
+function closeAllDetails(){
+  document.querySelectorAll("details").forEach((el)=>el.open=false);
 }
 function printReady(){
-  setDetails(true);
-  if(window.MathJax && MathJax.typesetPromise){ MathJax.typesetPromise().then(()=>window.print()); }
-  else{ window.print(); }
+  openAllDetails();
+  if(window.MathJax && MathJax.typesetPromise){
+    MathJax.typesetPromise().then(()=>window.print());
+  } else {
+    window.print();
+  }
 }
-function toggleReadingMode(){
-  document.body.classList.toggle('reading-mode');
-}
+
+document.addEventListener("DOMContentLoaded", () => {
+  document.querySelectorAll('a[href^="#"]').forEach((a) => {
+    a.addEventListener("click", () => {
+      const target = document.querySelector(a.getAttribute("href"));
+      if(target){
+        setTimeout(() => target.scrollIntoView({block:"start", behavior:"smooth"}), 0);
+      }
+    });
+  });
+});
