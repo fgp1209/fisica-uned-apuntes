@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Astronomía — Tema 3 — Movimiento de los planetas</title>
+<link rel="icon" type="image/png" sizes="32x32" href="assets/icons/icon-32.png" />
+<link rel="icon" type="image/png" sizes="50x50" href="assets/icons/icon-50.png" />
+<link rel="apple-touch-icon" sizes="100x100" href="assets/icons/icon-100.png" />
+<meta name="theme-color" content="#172554" />
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+<link rel="stylesheet" href="assets/styles.css" />
+<script defer src="assets/app.js"></script>
+</head>
+<body class="subject-astronomia">
+<div class="wrap">
+<header class="cover">
+  <div class="top-actions">
+    <a class="back-link" href="index.html">← Volver al índice</a>
+  </div>
+  <p class="eyebrow">UNED Física · Curso de Astronomía · Tema 3</p>
+  <h1>Guía de estudio — Curso de Astronomía</h1>
+  <p class="subtitle">Introducción a la Astronomía: movimiento de los planetas, problema de dos cuerpos y órbitas keplerianas.</p>
+  <div class="chips">
+    <span class="chip">Astronomía</span>
+    <span class="chip">Tema 3</span>
+    <span class="chip">mecánica celeste</span>
+    <span class="chip">MathJax</span>
+    <span class="chip">estado: maquetado</span>
+  </div>
+</header>
+
+<div class="toolbar no-print">
+  <nav>
+    <a href="#mapa">Mapa</a>
+    <a href="#prerrequisitos">Prerrequisitos</a>
+    <a href="#idea-central">Idea central</a>
+    <a href="#desarrollo-completo">Desarrollo</a>
+    <a href="#conceptos-clave">Conceptos</a>
+    <a href="#errores-habituales">Errores</a>
+    <a href="#preguntas-orientadas-a-examen">Preguntas</a>
+    <a href="#respuestas-modelo">Respuestas</a>
+    <a href="#resumen-final-de-repaso">Resumen</a>
+    <a href="#checklist-de-dominio">Checklist</a>
+  </nav>
+  <div class="toolbar-actions">
+    <button class="btn" onclick="printReady()">Imprimir / guardar PDF</button>
+    <button class="btn secondary" onclick="openAllDetails()">Abrir todo</button>
+    <button class="btn secondary" onclick="closeAllDetails()">Cerrar acordeones</button>
+  </div>
+</div>
+
+<main>
+<section class="page map-page" id="mapa">
+  <div class="page-head">
+    <h2>Mapa clicable</h2>
+    <p class="section-lead">Ruta de lectura: del movimiento aparente a la dinámica newtoniana, la ley horaria y las perturbaciones.</p>
+  </div>
+  <div class="concept-map">
+    <a class="map-node" href="#idea-central"><span>Problema central</span><small>predecir posiciones, velocidades y tipos de órbita</small></a>
+    <a class="map-node" href="#desarrollo-aparente"><span>Movimiento aparente</span><small>eclíptica · retrogradación · periodo sinódico</small></a>
+    <a class="map-node" href="#desarrollo-kepler-newton"><span>Kepler y Newton</span><small>áreas · elipses · fuerza \(1/r^2\)</small></a>
+    <a class="map-node" href="#desarrollo-dos-cuerpos"><span>Dos cuerpos</span><small>centro de masas · movimiento relativo · \(\mu\)</small></a>
+    <a class="map-node" href="#desarrollo-integrales"><span>Integrales</span><small>momento angular · Laplace · energía</small></a>
+    <a class="map-node" href="#desarrollo-cónicas"><span>Cónicas</span><small>\(r=p/(1+e\cos f)\) · elipse · parábola · hipérbola</small></a>
+    <a class="map-node" href="#desarrollo-ley-horaria"><span>Ley horaria</span><small>\(M=E-e\sin E\) · posición en el tiempo</small></a>
+    <a class="map-node" href="#desarrollo-perturbaciones"><span>Perturbaciones</span><small>órbitas reales · terceros cuerpos · relatividad</small></a>
+  </div>
+</section>
+
+<section class="page" id="prerrequisitos">
+  <div class="page-head"><h2>1. Prerrequisitos mínimos</h2></div>
+  <div class="grid cards-grid">
+    <article class="definition-card"><h3>Vectores de posición y velocidad</h3><p>Un vector de posición indica dónde está un cuerpo respecto a un origen; el vector velocidad indica cómo cambia esa posición con el tiempo. Es necesario porque el capítulo formula el problema orbital con vectores como \(\mathbf r_1\), \(\mathbf r_2\), \(\mathbf x\) y \(\mathbf X\). Ejemplo: si \(\mathbf x\) une el Sol con un planeta, su derivada temporal es la velocidad relativa del planeta.</p></article>
+    <article class="definition-card"><h3>Segunda ley de Newton</h3><p>Relaciona fuerza y aceleración. Es necesaria porque el movimiento planetario se pasa de una descripción geométrica, Kepler, a una explicación dinámica, Newton. Ejemplo: una aceleración radial implica una fuerza radial.</p></article>
+    <article class="definition-card"><h3>Producto vectorial</h3><p>Operación que da un vector perpendicular al plano definido por otros dos. Es necesario para entender el momento angular \(\mathbf G = \mathbf x \times \mathbf X\). Ejemplo: si la órbita está en un plano, el momento angular apunta perpendicularmente a ese plano.</p></article>
+    <article class="definition-card"><h3>Cónicas</h3><p>Son curvas como circunferencia, elipse, parábola e hipérbola. Es necesario porque el movimiento bajo atracción newtoniana conduce a órbitas cónicas. Ejemplo: una órbita planetaria ligada es elíptica; una trayectoria de escape puede ser hiperbólica.</p></article>
+    <article class="definition-card"><h3>Coordenadas polares</h3><p>Describen una posición mediante distancia \(r\) y ángulo. Es necesario porque la órbita se expresa como:</p><div class="formula-block">\[r=\frac{p}{1+e\cos f}.\]</div><p>Ejemplo: en una elipse, \(f=0\) corresponde al periastro.</p></article>
+    <article class="definition-card"><h3>Derivación e integración básicas</h3><p>Son necesarias porque el capítulo estudia ecuaciones diferenciales del movimiento. Ejemplo: derivar el momento angular permite demostrar que es constante.</p></article>
+    <article class="definition-card"><h3>Energía mecánica específica</h3><p>Es la energía por unidad de masa. Es necesaria porque el signo de la energía clasifica el tipo de órbita. Ejemplo: energía negativa, órbita elíptica; energía nula, parabólica; energía positiva, hiperbólica.</p></article>
+  </div>
+</section>
+
+<section class="page" id="idea-central">
+  <div class="page-head"><h2>2. Idea central del capítulo</h2></div>
+  <div class="key-box"><p><strong>El Tema 3, “Movimiento de los planetas”, introduce la base de la Mecánica Celeste dentro del libro.</strong> Su objetivo no es solo decir que los planetas se mueven en elipses, sino explicar cómo se pasa de las observaciones históricas del movimiento planetario a un modelo matemático capaz de predecir posiciones, velocidades y tipos de órbita.</p></div>
+  <div class="reading-block"><p>El índice del capítulo muestra esta progresión: introducción histórica, deducción de la ley de Newton, problema de dos cuerpos, integrales del movimiento, deducción de las leyes de Kepler, ley horaria, elementos orbitales y perturbaciones.</p></div>
+  <div class="reading-block"><p>El problema que articula todo el capítulo es este: dadas dos masas que se atraen gravitatoriamente, determinar su movimiento. El libro lo trata primero desde la observación: los planetas aparecen cerca de la eclíptica, presentan movimiento propio, retrogradaciones aparentes y repeticiones periódicas asociadas al periodo sinódico. Después se pasa al modelo físico: el movimiento planetario se entiende como una consecuencia de la atracción gravitatoria.</p></div>
+  <div class="reading-block"><p>El papel del capítulo en la asignatura es fundamental. En coordenadas astronómicas aprendiste a localizar astros; aquí aprendes a modelar su movimiento. Este tema prepara directamente los capítulos posteriores sobre movimientos geocéntricos, tiempo, efemérides, eclipses y órbitas de sistemas binarios. El propio libro presenta el capítulo como un estudio de Mecánica Celeste centrado en el problema de dos cuerpos y en las perturbaciones que modifican las órbitas keplerianas.</p></div>
+</section>
+
+<section class="page" id="desarrollo-completo">
+  <div class="page-head"><h2>3. Desarrollo completo del capítulo</h2></div>
+  <h3 id="desarrollo-aparente">3.1. Del movimiento aparente al problema físico</h3>
+  <div class="reading-block"><p>El capítulo comienza con una constatación observacional: algunos astros no mantienen posiciones fijas respecto al fondo estelar. Estos cuerpos, llamados planetas, se desplazan cerca de la eclíptica, avanzan generalmente hacia el Este, pero a veces parecen retroceder hacia el Oeste. Esa retrogradación no es un movimiento real hacia atrás en la órbita heliocéntrica, sino una consecuencia de observar desde la Tierra, que también se mueve.</p></div>
+  <div class="reading-block"><p>La primera solución histórica importante fue el modelo geocéntrico con epiciclos y deferentes. Este modelo podía predecir posiciones con una precisión aceptable para su época, pero no explicaba físicamente el movimiento. Era un artificio geométrico: ajustaba trayectorias aparentes sin decir por qué los cuerpos se movían así. El paso a Copérnico introduce un modelo heliocéntrico más simple para explicar el movimiento retrógrado, aunque todavía mantiene círculos y velocidades constantes, por lo que tampoco resuelve completamente el problema.</p></div>
+  <div class="reading-block"><p>La importancia de esta parte es que sitúa el problema: no basta con describir trayectorias aparentes; hay que encontrar una ley física. Esa transición culmina en Kepler y Newton.</p></div>
+  <h3 id="desarrollo-kepler-newton">3.2. Leyes de Kepler y ley de Newton</h3>
+  <div class="reading-block"><p>Kepler, a partir de las observaciones de Tycho Brahe, formula tres leyes: los planetas barren áreas proporcionales a los tiempos, sus órbitas son elipses con el Sol en un foco y los cubos de los semiejes mayores son proporcionales a los cuadrados de los periodos orbitales. Estas leyes describen muy bien el movimiento, pero no explican su causa física.</p></div>
+  <div class="reading-block"><p>El capítulo muestra cómo, partiendo de esas leyes, se deduce la fuerza gravitatoria newtoniana. La ley de las áreas implica que la aceleración transversal es nula; por tanto, la aceleración debe ser radial. Al combinar la geometría de la elipse con la tercera ley, se obtiene que la fuerza tiene dirección sobre la recta que une los cuerpos y módulo proporcional al producto de las masas e inversamente proporcional al cuadrado de la distancia.</p></div>
+  <div class="reading-block"><p>La consecuencia conceptual es importante: Kepler proporciona la descripción cinemática; Newton proporciona la causa dinámica. En examen, esto se pregunta a menudo como relación entre leyes de Kepler y gravitación universal.</p></div>
+  <h3 id="desarrollo-dos-cuerpos">3.3. Problema de dos cuerpos</h3>
+  <div class="reading-block"><p>El problema de dos cuerpos consiste en estudiar dos masas puntuales \(m_1\) y \(m_2\), llamadas en el libro \(S\) y \(P\), que se atraen mutuamente según la ley de Newton. El sistema completo parece inicialmente complicado porque hay que determinar dos posiciones vectoriales, pero puede simplificarse separando el movimiento del centro de masas y el movimiento relativo.</p></div>
+  <div class="reading-block"><p>El centro de masas se mueve con movimiento rectilíneo uniforme. Por tanto, la parte esencial del problema queda reducida al movimiento relativo de una partícula ficticia bajo una fuerza central newtoniana. En esa reducción aparece el parámetro:</p><div class="formula-block">\[\mu = G(m_1+m_2).\]</div><p>Conocer el movimiento del centro de masas y el vector relativo permite reconstruir las posiciones de los dos cuerpos.</p></div>
+  <div class="reading-block"><p>La idea que hay que retener es que el movimiento orbital de dos cuerpos no se resuelve siguiendo dos órbitas independientes desde el principio, sino transformándolo en un problema equivalente de movimiento relativo.</p></div>
+  <h3 id="desarrollo-integrales">3.4. Integrales del movimiento</h3>
+  <div class="reading-block"><p>Una integral del movimiento es una cantidad que permanece constante durante la evolución. En el problema kepleriano aparecen tres constantes esenciales: el momento angular, el vector de Laplace y la energía específica.</p></div>
+  <div class="reading-block"><p>El momento angular por unidad de masa es:</p><div class="formula-block">\[\mathbf G=\mathbf x \times \mathbf X.\]</div><p>Su constancia implica que el movimiento se produce en un plano. Esto explica por qué las órbitas keplerianas son planas. Además, su módulo está relacionado con la velocidad areolar: el área barrida por unidad de tiempo es constante, que es la formulación dinámica de la segunda ley de Kepler.</p></div>
+  <div class="reading-block"><p>El vector de Laplace también es constante y apunta en una dirección privilegiada de la órbita: la línea de los ápsides. Esta dirección fija permite localizar el periastro y construir la ecuación polar de la cónica. La energía específica, por su parte, permite clasificar el tipo de órbita.</p></div>
+  <h3 id="desarrollo-cónicas">3.5. Deducción de las leyes de Kepler desde Newton</h3>
+  <div class="reading-block"><p>Una vez obtenidas las integrales del movimiento, el capítulo recorre el camino inverso: de Newton se vuelven a deducir las leyes de Kepler. El resultado central es que, bajo una atracción newtoniana, la trayectoria relativa es una cónica:</p><div class="formula-block">\[r=\frac{p}{1+e\cos f}.\]</div><p>Aquí \(p\) es el parámetro de la cónica, \(e\) la excentricidad y \(f\) la anomalía verdadera.</p></div>
+  <div class="reading-block"><p>Si \(e=0\), la órbita es circular. Si \(0&lt;e&lt;1\), es elíptica. Si \(e=1\), parabólica. Si \(e&gt;1\), hiperbólica. Para los planetas, las órbitas son elípticas porque están ligadas gravitatoriamente al Sol. Las trayectorias parabólicas e hiperbólicas aparecen en contextos de escape o paso no ligado.</p></div>
+  <div class="reading-block"><p>La línea de los ápsides es la dirección donde se alcanza la mínima distancia al foco. El punto de mínima distancia se llama periastro; si el foco es el Sol, perihelio; si es la Tierra, perigeo. El punto de máxima distancia, cuando existe, se llama apoastro, afelio o apogeo según el caso.</p></div>
+  <h3 id="desarrollo-tercera-ley">3.6. Tercera ley generalizada</h3>
+  <div class="reading-block"><p>En el caso elíptico, el capítulo obtiene una forma generalizada de la tercera ley de Kepler:</p><div class="formula-block">\[P^2=\frac{4\pi^2 a^3}{G(m_1+m_2)}.\]</div><p>Esto corrige la formulación original de Kepler, porque el periodo no depende solo del semieje mayor, sino también de la suma de las masas. En el Sistema Solar, como la masa de los planetas es pequeña frente a la del Sol, la forma clásica de Kepler funciona muy bien como aproximación.</p></div>
+  <div class="reading-block"><p>La consecuencia práctica es directa: si conoces \(a\) y \(P\), puedes obtener información sobre la masa central. Este tipo de razonamiento es básico en problemas de satélites, planetas, estrellas binarias y exoplanetas.</p></div>
+  <h3 id="desarrollo-ley-horaria">3.7. Ley horaria del movimiento</h3>
+  <div class="reading-block"><p>Saber la forma de la órbita no basta. También hay que saber dónde está el cuerpo en cada instante. Esa es la función de la ley horaria.</p></div>
+  <div class="reading-block"><p>En el caso elíptico se introduce la anomalía excéntrica \(E\), la anomalía media \(M\) y el movimiento medio \(n\). La ecuación clave es la ecuación de Kepler:</p><div class="formula-block">\[M=n(t-T)=E-e\sin E.\]</div><p>Una vez resuelta esta ecuación para \(E\), se obtiene la distancia:</p><div class="formula-block">\[r=a(1-e\cos E)\]</div><p>y luego la anomalía verdadera \(f\).</p></div>
+  <div class="reading-block"><p>En el caso hiperbólico aparece una anomalía hiperbólica \(F\), y en el caso parabólico aparece la ecuación de Barker. El capítulo trata estos tres casos porque el problema newtoniano no produce solo elipses: produce toda la familia de cónicas, según la energía.</p></div>
+  <h3 id="desarrollo-elementos">3.8. Órbita en el espacio y elementos orbitales</h3>
+  <div class="reading-block"><p>Hasta aquí, la órbita se ha estudiado principalmente en su propio plano. Pero una órbita real está orientada en el espacio. Para fijarla hacen falta elementos orbitales. El capítulo introduce la inclinación \(I\), el ángulo del nodo \(\Omega\), el argumento del periastro \(\omega\), la excentricidad \(e\), el semieje mayor \(a\) y la época de paso por el periastro \(T\). Estos elementos permiten determinar la posición y la velocidad de la partícula en cualquier instante.</p></div>
+  <div class="reading-block"><p>La inclinación fija cómo se inclina el plano orbital respecto al plano de referencia. La línea de nodos es la intersección entre ambos planos. El ángulo del nodo sitúa esa línea en el plano de referencia. El argumento del periastro fija dónde está el periastro dentro del plano orbital. La excentricidad define la forma, el semieje mayor el tamaño y \(T\) la fase temporal de la órbita.</p></div>
+  <div class="reading-block"><p>En problemas de examen, esta parte suele aparecer como identificación de elementos o como cálculo de posición a partir de \(a,e,I,\Omega,\omega,T\).</p></div>
+  <h3 id="desarrollo-perturbaciones">3.9. Perturbaciones</h3>
+  <div class="reading-block"><p>El problema de dos cuerpos es una aproximación. El libro insiste en que los cuerpos reales no son puntos, tienen forma y volumen, y además todos los cuerpos interactúan con todos. Por eso, las órbitas reales se describen como órbitas keplerianas perturbadas.</p></div>
+  <div class="reading-block"><p>Entre las perturbaciones tratadas aparecen el potencial de una esfera, el potencial de un sólido, la atracción de otros cuerpos y el avance del perihelio de planetas interiores. En el caso de un tercer cuerpo, la perturbación puede descomponerse en una parte directa y otra indirecta; este modelo sirve, por ejemplo, para estudiar la influencia del Sol sobre la órbita lunar o la influencia del Sol y la Luna sobre un satélite artificial.</p></div>
+  <div class="reading-block"><p>El avance del perihelio de Mercurio se presenta como un caso donde la mecánica clásica no basta completamente y hay que introducir correcciones relativistas. El capítulo da valores aproximados del avance relativista para Mercurio y Venus.</p></div>
+</section>
+
+<section class="page" id="conceptos-clave">
+  <div class="page-head"><h2>4. Conceptos clave</h2><p class="section-lead">Definiciones con relación examinable y ejemplos de uso.</p></div>
+  <div class="grid cards-grid">
+    <article class="definition-card"><h3>Movimiento retrógrado aparente</h3><p>Es el cambio temporal de sentido del movimiento aparente de un planeta sobre la esfera celeste. No implica que el planeta invierta físicamente su órbita; se explica por la combinación del movimiento terrestre y planetario. En examen puede preguntarse: “Explique por qué el modelo heliocéntrico explica mejor el movimiento retrógrado que el geocéntrico”.</p></article>
+    <article class="definition-card"><h3>Periodo sinódico</h3><p>Es el periodo con que se repite una configuración observada desde la Tierra. No debe confundirse con el periodo orbital o sidéreo. Ejemplo: la repetición de una retrogradación se asocia al periodo sinódico. En examen puede aparecer como discriminación entre movimiento real heliocéntrico y movimiento aparente geocéntrico.</p></article>
+    <article class="definition-card"><h3>Leyes de Kepler</h3><p>Son tres leyes empíricas: ley de las áreas, órbitas elípticas con el Sol en un foco y relación \(a^3/P^2\). Su importancia es que conectan observación y dinámica. En examen puede pedirse enunciarlas o deducir consecuencias.</p></article>
+    <article class="definition-card"><h3>Ley de gravitación universal</h3><p>Establece que la fuerza entre dos masas es atractiva, radial, proporcional al producto de masas e inversamente proporcional al cuadrado de la distancia. Se relaciona con Kepler porque Newton da la causa física de las leyes keplerianas.</p></article>
+    <article class="definition-card"><h3>Problema de dos cuerpos</h3><p>Es el estudio del movimiento de dos masas puntuales que se atraen gravitatoriamente. Se reduce al movimiento del centro de masas más el movimiento relativo. En examen puede aparecer como “reduzca el problema de dos cuerpos al movimiento relativo”.</p></article>
+    <article class="definition-card"><h3>Centro de masas</h3><p>Punto que representa el movimiento global del sistema. En el problema de dos cuerpos se mueve rectilíneamente y uniformemente. Ejemplo: en un sistema estrella-planeta, ambos orbitan alrededor del centro de masas, aunque este esté muy cerca de la estrella.</p></article>
+    <article class="definition-card"><h3>Momento angular</h3><p>Magnitud vectorial \(\mathbf G=\mathbf x\times \mathbf X\). Su conservación implica movimiento plano y velocidad areolar constante. En examen: “Demuestre que el movimiento bajo fuerza central es plano”.</p></article>
+    <article class="definition-card"><h3>Vector de Laplace</h3><p>Vector constante que señala la dirección de los ápsides. Permite obtener la ecuación polar de la cónica. En examen puede preguntarse su significado geométrico.</p></article>
+    <article class="definition-card"><h3>Energía específica</h3><p>Magnitud constante que clasifica la órbita. Si \(h&lt;0\), órbita elíptica; si \(h=0\), parabólica; si \(h&gt;0\), hiperbólica. En examen puede aparecer como clasificación del tipo de órbita a partir de datos de velocidad y distancia.</p></article>
+    <article class="definition-card"><h3>Anomalía verdadera \(f\)</h3><p>Ángulo medido desde el periastro hasta la posición del cuerpo en la órbita. Se relaciona directamente con la geometría de la cónica. En examen puede aparecer en problemas de posición orbital.</p></article>
+    <article class="definition-card"><h3>Anomalía excéntrica \(E\)</h3><p>Variable auxiliar del caso elíptico que permite resolver la ley horaria. No es el ángulo físico directo de posición, sino un parámetro matemático. En examen puede aparecer en la ecuación de Kepler.</p></article>
+    <article class="definition-card"><h3>Anomalía media \(M\)</h3><p>Variable lineal con el tiempo:</p><div class="formula-block">\[M=n(t-T).\]</div><p>Representa cuánto habría avanzado un cuerpo ficticio con movimiento circular uniforme. En examen se usa para calcular la posición en una órbita elíptica.</p></article>
+    <article class="definition-card"><h3>Ecuación de Kepler</h3><p>En el caso elíptico:</p><div class="formula-block">\[M=E-e\sin E.\]</div><p>Es central porque conecta tiempo y posición orbital. En examen puede pedirse resolverla numéricamente o explicar su función.</p></article>
+    <article class="definition-card"><h3>Elementos orbitales</h3><p>Conjunto de constantes que fijan forma, tamaño, orientación y fase de la órbita: \(a,e,I,\Omega,\omega,T\). En examen puede pedirse identificar qué determina cada uno.</p></article>
+    <article class="definition-card"><h3>Perturbación orbital</h3><p>Desviación respecto al modelo kepleriano puro. Puede deberse a otros cuerpos, forma no esférica del cuerpo central o efectos relativistas. En examen puede preguntarse por qué los elementos orbitales reales no son estrictamente constantes.</p></article>
+  </div>
+</section>
+
+<section class="page" id="relaciones-entre-ideas">
+  <div class="page-head"><h2>5. Relaciones entre ideas</h2></div>
+  <div class="reading-block"><p>El capítulo tiene una estructura causal clara. Primero aparecen las observaciones: los planetas no se comportan como estrellas fijas. Después aparecen los modelos geométricos: geocentrismo, epiciclos y heliocentrismo. El siguiente paso es Kepler, que elimina los círculos perfectos y usa elipses. Finalmente Newton introduce la causa física: la gravitación.</p></div>
+  <div class="key-box"><p><strong>Jerarquía conceptual:</strong> observación aparente → leyes empíricas de Kepler → ley de Newton → problema de dos cuerpos → integrales del movimiento → cónicas → ley horaria → elementos orbitales → perturbaciones.</p></div>
+  <div class="reading-block"><p>La dependencia más importante es que las integrales del movimiento hacen posible deducir la forma de la órbita. Sin momento angular constante no habría plano orbital fijo. Sin vector de Laplace no quedaría fijada la línea de los ápsides. Sin energía no podríamos clasificar la cónica.</p></div>
+  <div class="reading-block"><p>La oposición principal es entre movimiento real heliocéntrico y movimiento aparente geocéntrico. El capítulo 3 trabaja el movimiento orbital físico; el capítulo 4, que viene después, estudiará cómo se ve ese movimiento desde la Tierra. Por eso no hay que mezclar periodo orbital con periodo sinódico.</p></div>
+  <div class="reading-block"><p>También hay una oposición entre modelo ideal y modelo real. El problema de dos cuerpos produce órbitas keplerianas limpias. El Sistema Solar real exige perturbaciones. Esta distinción es clave: primero se domina el modelo exacto; después se corrige.</p></div>
+</section>
+
+<section class="page" id="errores-habituales">
+  <div class="page-head"><h2>6. Errores habituales</h2></div>
+  <details class="accordion accordion-error" open><summary>Confundir periodo orbital con periodo sinódico.</summary><p>Está mal porque el periodo orbital describe la revolución real respecto al Sol, mientras que el sinódico describe la repetición de una configuración vista desde la Tierra.</p><p><strong>Respuesta incorrecta:</strong> “El periodo sinódico es el tiempo que tarda el planeta en completar su órbita”.</p><p><strong>Respuesta correcta:</strong> “El periodo sinódico es el tiempo entre configuraciones aparentes equivalentes vistas desde la Tierra”.</p></details>
+  <details class="accordion accordion-error"><summary>Pensar que el movimiento retrógrado es una inversión real de la órbita.</summary><p>Está mal porque es un efecto aparente por la combinación de movimientos.</p><p><strong>Incorrecta:</strong> “Marte retrocede físicamente en su órbita”.</p><p><strong>Correcta:</strong> “Marte parece retroceder sobre el fondo estelar por la geometría Tierra-Marte-Sol”.</p></details>
+  <details class="accordion accordion-error"><summary>Creer que Kepler explicó la causa física del movimiento.</summary><p>Está mal porque Kepler describió regularidades; Newton introdujo la explicación dinámica.</p><p><strong>Incorrecta:</strong> “Kepler descubrió la fuerza gravitatoria”.</p><p><strong>Correcta:</strong> “Kepler formuló leyes cinemáticas; Newton dedujo la ley dinámica”.</p></details>
+  <details class="accordion accordion-error"><summary>Olvidar que el problema de dos cuerpos usa masas puntuales.</summary><p>Está mal porque el modelo real incluye cuerpos extensos y perturbaciones.</p><p><strong>Incorrecta:</strong> “La órbita real de un satélite es exactamente kepleriana”.</p><p><strong>Correcta:</strong> “La órbita kepleriana es una primera aproximación”.</p></details>
+  <details class="accordion accordion-error"><summary>Confundir anomalía verdadera y anomalía excéntrica.</summary><p>Está mal porque \(f\) es el ángulo geométrico real desde el periastro y \(E\) es una variable auxiliar del caso elíptico.</p><p><strong>Incorrecta:</strong> “La ecuación de Kepler da directamente la anomalía verdadera”.</p><p><strong>Correcta:</strong> “La ecuación de Kepler da \(E\); después se obtiene \(f\)”.</p></details>
+  <details class="accordion accordion-error"><summary>Usar la tercera ley clásica sin masas cuando no procede.</summary><p>Está mal porque la forma general incluye \(m_1+m_2\).</p><p><strong>Incorrecta:</strong> “El periodo solo depende de \(a\)”.</p><p><strong>Correcta:</strong> “En el problema de dos cuerpos, \(P^2=4\pi^2a^3/[G(m_1+m_2)]\)”.</p></details>
+  <details class="accordion accordion-error"><summary>Pensar que una órbita hiperbólica es periódica.</summary><p>Está mal porque la hipérbola corresponde a un movimiento no ligado.</p><p><strong>Incorrecta:</strong> “El cuerpo vuelve al periastro en cada periodo”.</p><p><strong>Correcta:</strong> “En una hipérbola no hay periodo orbital”.</p></details>
+  <details class="accordion accordion-error"><summary>Confundir perihelio, perigeo y periastro.</summary><p>Está mal porque dependen del foco.</p><p><strong>Incorrecta:</strong> “Perigeo es cualquier punto de mínima distancia”.</p><p><strong>Correcta:</strong> “Periastro es general; perihelio si el foco es el Sol; perigeo si es la Tierra”.</p></details>
+</section>
+
+<section class="page" id="preguntas-orientadas-a-examen">
+  <div class="page-head"><h2>7. Preguntas orientadas a examen</h2></div>
+  <div class="grid cards-grid">
+    <article class="question-card"><h3>10 preguntas fáciles</h3><ol class="question-list"><li>¿Qué significa que los planetas sean “errantes”?</li><li>¿Qué es el movimiento retrógrado aparente?</li><li>Enuncia las tres leyes de Kepler.</li><li>¿Qué diferencia hay entre periodo orbital y periodo sinódico?</li><li>¿Qué afirma la ley de gravitación universal de Newton?</li><li>¿Qué es el problema de dos cuerpos?</li><li>¿Qué representa el centro de masas en el problema de dos cuerpos?</li><li>¿Qué es el momento angular orbital?</li><li>¿Qué es el perihelio?</li><li>¿Qué es una órbita kepleriana?</li></ol></article>
+    <article class="question-card"><h3>10 preguntas medias</h3><ol class="question-list"><li>Explica por qué la ley de las áreas implica una fuerza radial.</li><li>¿Por qué el problema de dos cuerpos puede reducirse al movimiento relativo?</li><li>¿Qué papel tiene el parámetro \(\mu=G(m_1+m_2)\)?</li><li>Explica el significado físico de la conservación del momento angular.</li><li>¿Qué indica el vector de Laplace?</li><li>Relaciona el signo de la energía con el tipo de órbita.</li><li>Escribe la ecuación polar de una cónica kepleriana e interpreta sus términos.</li><li>Explica la diferencia entre anomalía media, excéntrica y verdadera.</li><li>¿Qué elementos orbitales fijan la orientación de una órbita en el espacio?</li><li>¿Por qué las órbitas reales son keplerianas perturbadas?</li></ol></article>
+    <article class="question-card"><h3>5 preguntas difíciles</h3><ol class="question-list"><li>Deduce cualitativamente la ley de gravitación de Newton a partir de las leyes de Kepler.</li><li>Explica cómo las integrales del movimiento conducen a la ecuación de una cónica.</li><li>Demuestra conceptualmente por qué la tercera ley de Kepler clásica es una aproximación.</li><li>Describe el procedimiento para calcular la posición de un cuerpo en una órbita elíptica en un instante dado.</li><li>Explica el origen del avance del perihelio de Mercurio y por qué muestra una limitación de la mecánica clásica.</li></ol></article>
+    <article class="question-card"><h3>5 preguntas de desarrollo largo</h3><ol class="question-list"><li>Desarrolla la evolución histórica desde el modelo geocéntrico hasta Newton.</li><li>Expón el problema de dos cuerpos y su reducción al movimiento relativo.</li><li>Explica las integrales del movimiento kepleriano y su significado geométrico.</li><li>Describe la ley horaria del movimiento elíptico y la ecuación de Kepler.</li><li>Explica qué son los elementos orbitales y cómo fijan una órbita en el espacio.</li></ol></article>
+    <article class="question-card"><h3>5 preguntas de relación entre conceptos</h3><ol class="question-list"><li>Relaciona momento angular, ley de las áreas y movimiento plano.</li><li>Relaciona energía específica, excentricidad y tipo de órbita.</li><li>Relaciona vector de Laplace, línea de los ápsides y periastro.</li><li>Relaciona anomalía media, anomalía excéntrica y anomalía verdadera.</li><li>Relaciona modelo kepleriano ideal y perturbaciones reales.</li></ol></article>
+  </div>
+</section>
+
+<section class="page" id="respuestas-modelo">
+  <div class="page-head"><h2>8. Respuestas modelo</h2><p class="section-lead">Acordeones pensados para repaso activo.</p></div>
+  <details class="accordion accordion-answer" open><summary>Respuestas fáciles</summary><ol><li>Los planetas son “errantes” porque cambian su posición respecto al fondo de estrellas fijas. No aparecen inmóviles en la esfera celeste, sino que presentan un movimiento propio aparente.</li><li>Es el desplazamiento aparente de un planeta en sentido contrario al habitual sobre el fondo estelar. Se explica por la geometría de observación desde una Tierra que también se mueve.</li><li>Primera: el radio vector barre áreas proporcionales a los tiempos. Segunda: los planetas se mueven en elipses con el Sol en un foco. Tercera: los cubos de los semiejes mayores son proporcionales a los cuadrados de los periodos orbitales.</li><li>El periodo orbital es el tiempo real de revolución alrededor del Sol. El periodo sinódico es el tiempo con que se repite una configuración vista desde la Tierra.</li><li>Afirma que dos masas se atraen con una fuerza dirigida según la recta que las une, proporcional al producto de las masas e inversamente proporcional al cuadrado de la distancia.</li><li>Es el estudio del movimiento de dos masas puntuales que se atraen gravitatoriamente según la ley de Newton.</li><li>Representa el movimiento global del sistema. En el problema de dos cuerpos se mueve con movimiento rectilíneo uniforme.</li><li>Es el vector \(\mathbf G=\mathbf x\times \mathbf X\). Mide la rotación orbital por unidad de masa y es perpendicular al plano de la órbita.</li><li>Es el punto de mínima distancia al Sol en una órbita.</li><li>Es una órbita que satisface el modelo de dos cuerpos bajo atracción newtoniana: una cónica recorrida según la ley de las áreas.</li></ol></details>
+  <details class="accordion accordion-answer"><summary>Respuestas medias</summary><ol><li>Si el radio vector barre áreas iguales en tiempos iguales, la velocidad areolar es constante. Al derivar esa constancia, la componente transversal de la aceleración se anula. Por tanto, la aceleración solo puede ser radial, y la fuerza también.</li><li>Porque el movimiento del centro de masas se separa del movimiento relativo. El centro de masas se mueve uniformemente y la dinámica esencial queda en el vector que une los dos cuerpos.</li><li>\(\mu\) condensa la intensidad gravitatoria del sistema de dos cuerpos. Permite escribir la ecuación del movimiento relativo de forma compacta.</li><li>La conservación del momento angular implica que el movimiento permanece en un plano fijo y que la velocidad areolar es constante. Es la versión dinámica de la ley de las áreas.</li><li>El vector de Laplace fija la orientación de la línea de los ápsides. Su dirección señala el periastro y permite escribir la cónica orbital.</li><li>Si la energía específica es negativa, el cuerpo está ligado y la órbita es elíptica. Si es cero, la trayectoria es parabólica. Si es positiva, el movimiento es no ligado e hiperbólico.</li><li>La ecuación es \(r=p/(1+e\cos f)\). \(p\) es el parámetro, \(e\) la excentricidad y \(f\) la anomalía verdadera. Según \(e\), la cónica será circular, elíptica, parabólica o hiperbólica.</li><li>\(M\) crece linealmente con el tiempo; \(E\) es una variable auxiliar en la elipse; \(f\) es el ángulo real desde el periastro hasta el cuerpo.</li><li>La inclinación \(I\), el ángulo del nodo \(\Omega\) y el argumento del periastro \(\omega\).</li><li>Porque los cuerpos no son puntos, tienen forma, y además existen más de dos cuerpos interactuando. Por eso las órbitas reales se apartan del modelo exacto de dos cuerpos.</li></ol></details>
+  <details class="accordion accordion-answer"><summary>Respuestas difíciles</summary><ol><li>Kepler muestra que el movimiento es plano, areolar y elíptico. La constancia de la velocidad areolar implica aceleración radial. Al combinar la ecuación de la elipse con la tercera ley, se obtiene una aceleración proporcional a \(1/r^2\). Newton interpreta esa aceleración como efecto de una fuerza atractiva entre masas.</li><li>El momento angular constante fija el plano orbital. El vector de Laplace constante fija la línea de los ápsides. Al combinar ambos con la energía se obtiene una ecuación polar del tipo \(r=p/(1+e\cos f)\), que es una cónica.</li><li>La tercera ley clásica supone que \(a^3/P^2\) es igual para todos los planetas. La forma general incluye \(m_1+m_2\). Como las masas planetarias son pequeñas frente a la solar, la corrección es pequeña, y la forma de Kepler resulta una aproximación excelente.</li><li>Primero se calcula \(n\) a partir de \(\mu\) y \(a\). Luego se obtiene \(M=n(t-T)\). Después se resuelve \(M=E-e\sin E\). Con \(E\) se calcula \(r=a(1-e\cos E)\) y se transforma a la anomalía verdadera \(f\). Finalmente, con los elementos orbitales, se obtiene la posición espacial.</li><li>El perihelio de Mercurio avanza por perturbaciones planetarias y por correcciones relativistas. La mecánica clásica explica gran parte del efecto, pero no todo. La relatividad introduce una corrección adicional que explica la discrepancia observada.</li></ol></details>
+  <details class="accordion accordion-answer"><summary>Respuestas de desarrollo largo</summary><ol><li>El modelo geocéntrico explicaba el movimiento planetario mediante epiciclos y deferentes. Era útil predictivamente, pero carecía de causa física. Copérnico simplificó la geometría al situar el Sol en el centro, aunque mantuvo círculos. Kepler sustituyó los círculos por elipses y formuló tres leyes empíricas. Newton completó el proceso al deducir una fuerza gravitatoria capaz de explicar esas leyes.</li><li>En el problema de dos cuerpos se consideran dos masas puntuales sometidas a atracción gravitatoria mutua. Las ecuaciones iniciales se reducen al movimiento del centro de masas y al movimiento relativo. El centro de masas se mueve uniformemente. La parte dinámica esencial queda descrita por una partícula relativa sometida a un campo newtoniano con parámetro \(\mu=G(m_1+m_2)\).</li><li>Las integrales principales son el momento angular, el vector de Laplace y la energía. El momento angular fija el plano y la ley de las áreas. El vector de Laplace fija la línea de los ápsides. La energía clasifica la cónica. Juntas permiten pasar de la ecuación diferencial del movimiento a la forma geométrica de la órbita.</li><li>La ley horaria responde a la pregunta de dónde está el cuerpo en cada instante. En una elipse, se introduce \(M=n(t-T)\). La ecuación de Kepler \(M=E-e\sin E\) permite hallar la anomalía excéntrica. A partir de ella se obtiene la distancia \(r\) y la anomalía verdadera \(f\). Así se conecta tiempo y posición orbital.</li><li>Los elementos orbitales fijan completamente la órbita. \(a\) fija tamaño, \(e\) forma, \(I\) inclinación del plano orbital, \(\Omega\) orientación de la línea de nodos, \(\omega\) dirección del periastro dentro del plano y \(T\) el instante de paso por el periastro. Con ellos puede determinarse posición y velocidad en una época dada.</li></ol></details>
+  <details class="accordion accordion-answer"><summary>Respuestas de relación entre conceptos</summary><ol><li>El momento angular constante implica que el plano orbital no cambia. Su módulo se relaciona con el área barrida por unidad de tiempo, de modo que la conservación de \(\mathbf G\) equivale a la ley de las áreas.</li><li>La energía específica determina si el cuerpo está ligado. Energía negativa corresponde a elipse; nula, parábola; positiva, hipérbola. La excentricidad expresa geométricamente esa clasificación.</li><li>El vector de Laplace apunta hacia la línea de los ápsides. Esa línea contiene el periastro y el apoastro, cuando existe. Por eso fija la orientación interna de la cónica.</li><li>\(M\) se calcula directamente desde el tiempo; \(E\) se obtiene resolviendo la ecuación de Kepler; \(f\) se deduce después y da la posición angular real.</li><li>El modelo kepleriano ideal supone dos masas puntuales aisladas. Las perturbaciones introducen la influencia de cuerpos adicionales, formas no esféricas y efectos relativistas. Por eso los elementos orbitales reales pueden variar con el tiempo.</li></ol></details>
+</section>
+
+<section class="page" id="resumen-final-de-repaso">
+  <div class="page-head"><h2>9. Resumen final de repaso</h2></div>
+  <div class="grid cards-grid">
+    <article class="definition-card"><h3>Núcleo del tema</h3><ul><li>El capítulo pasa de la observación del movimiento planetario a su explicación dinámica.</li><li>Kepler describe: áreas, elipses y relación periodo-semieje.</li><li>Newton explica: fuerza central inversamente proporcional a \(r^2\).</li><li>El problema de dos cuerpos se reduce a centro de masas + movimiento relativo.</li><li>Conservaciones clave: momento angular, vector de Laplace y energía.</li></ul></article>
+    <article class="definition-card"><h3>Fórmulas madre</h3><p>La órbita kepleriana es una cónica:</p><div class="formula-block">\[r=\frac{p}{1+e\cos f}.\]</div><p>La ecuación de Kepler conecta tiempo y posición:</p><div class="formula-block">\[M=E-e\sin E.\]</div></article>
+    <article class="definition-card"><h3>Clasificación y realidad</h3><ul><li>El signo de la energía clasifica la órbita.</li><li>Los elementos orbitales fijan forma, tamaño, orientación y fase.</li><li>Las órbitas reales son keplerianas perturbadas.</li><li>Errores que evitar: confundir periodo sinódico con orbital, anomalía excéntrica con verdadera, perihelio con periastro, y modelo ideal con órbita real.</li></ul></article>
+  </div>
+</section>
+
+<section class="page" id="checklist-de-dominio">
+  <div class="page-head"><h2>10. Checklist de dominio</h2></div>
+  <div class="checklist">
+    <label><input type="checkbox" /> Si no puedes explicar por qué los planetas presentan movimiento retrógrado aparente, falta repasar la introducción histórica.</label>
+    <label><input type="checkbox" /> Si confundes periodo sinódico con orbital, revisar movimiento aparente frente a movimiento heliocéntrico.</label>
+    <label><input type="checkbox" /> Si no puedes enunciar las tres leyes de Kepler sin mezclar sus contenidos, falta repasar la sección 3.2.</label>
+    <label><input type="checkbox" /> Si no puedes pasar de “ley de áreas” a “fuerza radial”, falta repasar la deducción de Newton.</label>
+    <label><input type="checkbox" /> Si no sabes qué representa \(\mu=G(m_1+m_2)\), falta repasar reducción del problema de dos cuerpos.</label>
+    <label><input type="checkbox" /> Si no puedes explicar el centro de masas, falta repasar la separación entre movimiento global y relativo.</label>
+    <label><input type="checkbox" /> Si confundes \(\mathbf G\) con la constante gravitatoria \(G\), revisar notación.</label>
+    <label><input type="checkbox" /> Si no puedes explicar por qué la órbita es plana, revisar momento angular.</label>
+    <label><input type="checkbox" /> Si no puedes decir qué señala el vector de Laplace, falta repasar línea de los ápsides.</label>
+    <label><input type="checkbox" /> Si confundes periastro, perigeo y perihelio, revisar vocabulario orbital.</label>
+    <label><input type="checkbox" /> Si no puedes clasificar órbitas por \(e\), repasar cónicas.</label>
+    <label><input type="checkbox" /> Si no puedes clasificar órbitas por energía, repasar energía específica.</label>
+    <label><input type="checkbox" /> Si no puedes escribir la ecuación de Kepler, falta repasar ley horaria.</label>
+    <label><input type="checkbox" /> Si confundes \(M\), \(E\) y \(f\), revisar anomalías orbitales.</label>
+    <label><input type="checkbox" /> Si puedes explicar cómo calcular la posición en una elipse a partir de \(t\), el núcleo del capítulo está asentado.</label>
+    <label><input type="checkbox" /> Si puedes relacionar elementos orbitales con orientación espacial, el bloque geométrico está dominado.</label>
+    <label><input type="checkbox" /> Si puedes justificar por qué las órbitas reales son perturbadas, el cierre conceptual del capítulo está asentado.</label>
+  </div>
+</section>
+</main>
+</div>
+</body>
+</html>
