@@ -1,0 +1,1433 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MM1 — Ecuaciones lineales de orden superior</title>
+  <meta name="description" content="Guía de estudio de Métodos Matemáticos I sobre ecuaciones diferenciales lineales de orden superior, wronskiano, reducción de orden y coeficientes constantes." />
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/icon-32.png" />
+  <link rel="icon" type="image/png" sizes="50x50" href="assets/icons/icon-50.png" />
+  <link rel="apple-touch-icon" sizes="100x100" href="assets/icons/icon-100.png" />
+  <link rel="stylesheet" href="assets/styles.css" />
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['\\(', '\\)']],
+        displayMath: [['\\[', '\\]']],
+        processEscapes: true
+      },
+      options: {
+        skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+  <script defer src="assets/app.js"></script>
+</head>
+<body class="subject-mm1">
+  <header class="lesson-hero">
+    <nav class="breadcrumb" aria-label="Navegación">
+      <a href="index.html">← Volver al índice</a>
+    </nav>
+    <div class="hero-content">
+      <p class="eyebrow">Métodos Matemáticos I · Sanz y Torres · Capítulos 3–4</p>
+      <h1>Ecuaciones diferenciales lineales de orden superior</h1>
+      <div class="hero-summary">
+        <p>Fuente principal: Sanz y Torres, capítulos 3 y 4, donde se tratan las ecuaciones de orden superior, la teoría fundamental de las ecuaciones lineales, el wronskiano, la reducción de orden y las ecuaciones lineales de coeficientes constantes. Boas encaja como apoyo aplicado para ecuaciones lineales de segundo orden con coeficientes constantes y término derecho nulo.</p>
+      </div>
+      <div class="hero-chips" aria-label="Etiquetas de la lección">
+        <span>EDO de orden superior</span>
+        <span>Wronskiano</span>
+        <span>Coeficientes constantes</span>
+        <span>Reducción de orden</span>
+        <span>Estado: completo</span>
+      </div>
+    </div>
+  </header>
+
+  <nav class="lesson-toolbar" aria-label="Secciones de la lección">
+    <a href="#mapa">Mapa</a>
+<a href="#prerrequisitos">Prerrequisitos</a>
+<a href="#desarrollo">Desarrollo</a>
+<a href="#conceptos">Conceptos</a>
+<a href="#errores">Errores</a>
+<a href="#preguntas">Preguntas</a>
+<a href="#respuestas">Respuestas</a>
+<a href="#resumen">Resumen</a>
+<a href="#checklist">Checklist</a>
+  </nav>
+
+  <main class="lesson-layout">
+    <section id="mapa" class="page">
+      <div class="section-heading">
+        <p class="section-kicker">Vista rápida</p>
+        <h2>Mapa conceptual</h2>
+      </div>
+      <div class="concept-map">
+        <a class="map-node" href="#prerrequisitos"><span>Prerrequisitos</span><small>Derivadas sucesivas, Cauchy, linealidad, independencia, determinantes y raíces.</small></a>
+<a class="map-node" href="#idea"><span>Idea central</span><small>Las soluciones homogéneas forman un espacio vectorial de dimensión igual al orden.</small></a>
+<a class="map-node" href="#desarrollo"><span>Desarrollo</span><small>Orden superior, operador lineal, wronskiano, reducción de orden y característica.</small></a>
+<a class="map-node" href="#conceptos"><span>Conceptos clave</span><small>Definiciones operativas con ejemplo, relación y pregunta típica de examen.</small></a>
+<a class="map-node" href="#relaciones"><span>Relaciones</span><small>Encadenamiento entre orden, Cauchy, superposición, sistema fundamental y completa.</small></a>
+<a class="map-node" href="#errores"><span>Errores habituales</span><small>Trampas: raíces múltiples, soluciones complejas, wronskiano y coeficientes variables.</small></a>
+<a class="map-node" href="#preguntas"><span>Preguntas</span><small>Bloques graduados desde definición básica hasta desarrollo largo.</small></a>
+<a class="map-node" href="#respuestas"><span>Respuestas modelo</span><small>Resoluciones y justificaciones listas para repaso activo.</small></a>
+<a class="map-node" href="#resumen"><span>Resumen</span><small>Fórmulas núcleo y relaciones mínimas.</small></a>
+<a class="map-node" href="#checklist"><span>Checklist</span><small>Criterios de dominio antes de pasar al siguiente tema.</small></a>
+      </div>
+    </section>
+
+    <section id="prerrequisitos" class="page">
+<div class="section-heading"><p class="section-kicker">Tema MM1</p><h2>Prerrequisitos mínimos</h2></div>
+<div class="card-grid">
+<article class="definition-card">
+<h3>1. Derivadas sucesivas</h3>
+<p>Una ecuación diferencial de orden superior contiene \(y',y'',\ldots,y^{(n)}\). El orden de la ecuación es el mayor orden de derivada que aparece.</p>
+<p>Es necesario porque todo el capítulo gira en torno a ecuaciones como</p>
+<div class="formula-block">\[
+y''+p(x)y'+q(x)y=0
+\]</div>
+<p>o, en orden \(n\),</p>
+<div class="formula-block">\[
+y^{(n)}+h_1(x)y^{(n-1)}+\cdots+h_n(x)y=F(x).
+\]</div>
+<p>Ejemplo mínimo: en \(y''-3y'+2y=0\), el orden es \(2\).</p>
+</article>
+<article class="definition-card">
+<h3>2. Problema de Cauchy</h3>
+<p>Un problema de Cauchy fija la ecuación diferencial y los valores iniciales de la función y sus derivadas hasta orden \(n-1\):</p>
+<div class="formula-block">\[
+y(x_0)=y_0,\quad y'(x_0)=y_1,\quad \ldots,\quad y^{(n-1)}(x_0)=y_{n-1}.
+\]</div>
+<p>Es necesario porque una ecuación de orden \(n\) necesita \(n\) datos iniciales para determinar una solución particular. Sanz y Torres formula este punto como parte central del capítulo de ecuaciones de orden superior.</p>
+<p>Ejemplo mínimo: para \(y''+y=0\), las condiciones \(y(0)=1\), \(y'(0)=0\) seleccionan la solución \(y=\cos x\).</p>
+</article>
+<article class="definition-card">
+<h3>3. Linealidad</h3>
+<p>Una ecuación diferencial es lineal si \(y,y',\ldots,y^{(n)}\) aparecen solo en primer grado, sin productos entre ellas ni funciones no lineales de \(y\). La forma general es</p>
+<div class="formula-block">\[
+y^{(n)}+h_1(x)y^{(n-1)}+\cdots+h_n(x)y=F(x).
+\]</div>
+<p>Es necesario porque la teoría del capítulo depende de la linealidad: espacio de soluciones, superposición, sistema fundamental, solución general.</p>
+<p>Ejemplo mínimo: \(y''+xy'+y=0\) es lineal; \(y''+(y')^2+y=0\) no lo es.</p>
+</article>
+<article class="definition-card">
+<h3>4. Homogénea frente a completa</h3>
+<p>Una ecuación lineal es homogénea si \(F(x)=0\). Es completa o no homogénea si \(F(x)\neq 0\).</p>
+<p>Es necesario porque la solución general de una ecuación completa se construye como</p>
+<div class="formula-block">\[
+y=y_h+y_p,
+\]</div>
+<p>donde \(y_h\) resuelve la homogénea asociada y \(y_p\) es una solución particular. Esta relación aparece explícitamente en Sanz y Torres y también en Boas.</p>
+<p>Ejemplo mínimo:</p>
+<div class="formula-block">\[
+y''+y=\cos x
+\]</div>
+<p>tiene homogénea asociada</p>
+<div class="formula-block">\[
+y''+y=0.
+\]</div>
+</article>
+<article class="definition-card">
+<h3>5. Independencia lineal</h3>
+<p>Un conjunto de funciones \(y_1,\ldots,y_n\) es linealmente independiente si</p>
+<div class="formula-block">\[
+C_1y_1+\cdots+C_ny_n=0
+\]</div>
+<p>implica necesariamente</p>
+<div class="formula-block">\[
+C_1=\cdots=C_n=0.
+\]</div>
+<p>Es necesario porque la solución general de una ecuación homogénea de orden \(n\) necesita \(n\) soluciones linealmente independientes.</p>
+<p>Ejemplo mínimo: \({e^x,e^{2x}}\) es independiente; \({e^x,3e^x}\) no.</p>
+</article>
+<article class="definition-card">
+<h3>6. Determinantes</h3>
+<p>El determinante permite decidir si varias funciones forman un sistema fundamental mediante el wronskiano.</p>
+<p>Es necesario porque el wronskiano es un determinante construido con las funciones y sus derivadas.</p>
+<p>Ejemplo mínimo:</p>
+<div class="formula-block">\[
+W(y_1,y_2)=
+\begin{vmatrix}
+y_1 & y_2\\
+y_1' & y_2'
+\end{vmatrix}
+=y_1y_2'-y_1'y_2.
+\]</div>
+</article>
+<article class="definition-card">
+<h3>7. Polinomios característicos</h3>
+<p>Para ecuaciones de coeficientes constantes se prueba con soluciones \(y=e^{rx}\). Esto convierte la ecuación diferencial en una ecuación algebraica para \(r\), llamada ecuación característica. Sanz y Torres presenta este método como el procedimiento base para ecuaciones lineales homogéneas de coeficientes constantes.</p>
+<p>Ejemplo mínimo:</p>
+<div class="formula-block">\[
+y''-3y'+2y=0
+\]</div>
+<p>da</p>
+<div class="formula-block">\[
+r^2-3r+2=0.
+\]</div>
+</article>
+<article class="definition-card">
+<h3>8. Números complejos y fórmula de Euler</h3>
+<p>Las raíces complejas de la ecuación característica producen senos y cosenos mediante</p>
+<div class="formula-block">\[
+e^{(\alpha+i\beta)x}=e^{\alpha x}(\cos \beta x+i\sin \beta x).
+\]</div>
+<p>Es necesario porque una pareja de raíces complejas conjugadas genera soluciones reales de la forma</p>
+<div class="formula-block">\[
+e^{\alpha x}(A\cos \beta x+B\sin \beta x).
+\]</div>
+<p>Ejemplo mínimo: si \(r=\pm i\), entonces</p>
+<div class="formula-block">\[
+y=C_1\cos x+C_2\sin x.
+\]</div>
+</article>
+</div>
+</section>
+
+<section id="idea" class="page">
+<div class="section-heading"><p class="section-kicker">Tema MM1</p><h2>Idea central del capítulo</h2></div>
+<div class="reading-block"><p>El capítulo responde a una pregunta estructural: cómo resolver ecuaciones diferenciales donde la incógnita no solo aparece con su primera derivada, sino con derivadas de orden superior. En física, esto aparece de forma inmediata: la segunda ley de Newton suele producir ecuaciones de segundo orden porque la aceleración es una segunda derivada. En matemáticas, el salto importante es que una ecuación de orden \(n\) no tiene una sola constante arbitraria, sino \(n\).</p>
+<p>La idea central es que las ecuaciones lineales homogéneas poseen una estructura algebraica. Sus soluciones pueden sumarse y multiplicarse por constantes sin dejar de ser soluciones. Por eso el conjunto de soluciones forma un espacio vectorial. En una ecuación homogénea de orden \(n\), ese espacio tiene dimensión \(n\). La solución general no es una fórmula aislada, sino una combinación lineal de \(n\) soluciones independientes.</p>
+<p>El wronskiano aparece como herramienta de control. Sirve para comprobar si las soluciones halladas son suficientes para construir la solución general. No resuelve por sí solo la ecuación, pero valida que el conjunto de soluciones encontradas tiene el rango correcto.</p>
+<p>La reducción de orden responde a otra situación típica: si ya se conoce una solución de una ecuación homogénea, puede buscarse otra mediante un cambio del tipo</p>
+<div class="formula-block">\[
+y=y_1v.
+\]</div>
+<p>Esto reduce el orden efectivo de la ecuación. La idea es no empezar desde cero: una solución conocida permite factorizar parte del problema.</p>
+<p>Por último, las ecuaciones lineales homogéneas con coeficientes constantes son el caso operativo más rentable. En ellas la hipótesis</p>
+<div class="formula-block">\[
+y=e^{rx}
+\]</div>
+<p>convierte la ecuación diferencial en una ecuación polinómica. El análisis de raíces reales, múltiples y complejas da directamente la forma de la solución general. Esta parte aparece de forma recurrente en examen, incluida la construcción de soluciones reales a partir de raíces complejas y múltiples.</p></div>
+</section>
+
+<section id="desarrollo" class="page">
+<div class="section-heading"><p class="section-kicker">Tema MM1</p><h2>Desarrollo completo del capítulo</h2></div>
+<div class="lesson-stack">
+<article class="reading-block">
+<h3>3.1. Ecuaciones de orden superior y problema de Cauchy</h3>
+<p>Una ecuación diferencial ordinaria de orden superior puede escribirse en forma general como</p>
+<div class="formula-block">\[
+F(x,y,y',y'',\ldots,y^{(n)})=0.
+\]</div>
+<p>Si puede despejarse la derivada de mayor orden, queda</p>
+<div class="formula-block">\[
+y^{(n)}=f(x,y,y',\ldots,y^{(n-1)}).
+\]</div>
+<p>Esta forma es importante porque permite plantear el problema de existencia y unicidad. Una ecuación de orden \(n\) necesita \(n\) datos iniciales. No basta con fijar \(y(x_0)\); también hacen falta \(y'(x_0),\ldots,y^{(n-1)}(x_0)\).</p>
+<p>La consecuencia conceptual es clara: resolver una ecuación de orden \(n\) significa obtener una familia con \(n\) constantes arbitrarias. Al imponer \(n\) condiciones iniciales, esas constantes quedan fijadas.</p>
+<p>Ejemplo:</p>
+<div class="formula-block">\[
+y''+y=0.
+\]</div>
+<p>Su solución general será</p>
+<div class="formula-block">\[
+y=C_1\cos x+C_2\sin x.
+\]</div>
+<p>Las dos constantes aparecen porque la ecuación es de segundo orden.</p>
+</article>
+<article class="reading-block">
+<h3>3.2. La ecuación lineal y el operador diferencial lineal</h3>
+<p>La ecuación lineal de orden \(n\) tiene la forma</p>
+<div class="formula-block">\[
+y^{(n)}+h_1(x)y^{(n-1)}+\cdots+h_{n-1}(x)y'+h_n(x)y=F(x).
+\]</div>
+<p>Se introduce el operador diferencial lineal</p>
+<div class="formula-block">\[
+L(y)=y^{(n)}+h_1(x)y^{(n-1)}+\cdots+h_n(x)y.
+\]</div>
+<p>Entonces la ecuación se escribe de forma compacta:</p>
+<div class="formula-block">\[
+L(y)=F(x).
+\]</div>
+<p>Si \(F(x)=0\), la ecuación es homogénea:</p>
+<div class="formula-block">\[
+L(y)=0.
+\]</div>
+<p>Esto importa porque el operador lineal cumple</p>
+<div class="formula-block">\[
+L(\alpha y+\beta z)=\alpha L(y)+\beta L(z).
+\]</div>
+<p>De aquí sale la propiedad de superposición. Si \(y_1\) e \(y_2\) son soluciones de la homogénea, entonces cualquier combinación lineal</p>
+<div class="formula-block">\[
+C_1y_1+C_2y_2
+\]</div>
+<p>también es solución.</p>
+</article>
+<article class="reading-block">
+<h3>3.3. Espacio de soluciones</h3>
+<p>En una ecuación lineal homogénea de orden \(n\), el conjunto de soluciones tiene estructura de espacio vectorial real de dimensión \(n\). Sanz y Torres lo formula explícitamente en su resumen del capítulo.</p>
+<p>Esto significa que no hay que buscar infinitas soluciones sin criterio. Hay que encontrar exactamente \(n\) soluciones linealmente independientes. Una vez obtenidas, toda solución de la ecuación se expresa como combinación lineal de ellas.</p>
+<p>Para una ecuación de segundo orden:</p>
+<div class="formula-block">\[
+y''+p(x)y'+q(x)y=0,
+\]</div>
+<p>si \(y_1,y_2\) son independientes, entonces</p>
+<div class="formula-block">\[
+y=C_1y_1+C_2y_2
+\]</div>
+<p>es la solución general.</p>
+</article>
+<article class="reading-block">
+<h3>3.4. Wronskiano</h3>
+<p>Para funciones \(y_1,\ldots,y_n\), el wronskiano es</p>
+<div class="formula-block">\[
+W(y_1,\ldots,y_n)=
+\begin{vmatrix}
+y_1 & y_2 & \cdots & y_n\\
+y_1' & y_2' & \cdots & y_n'\\
+\vdots & \vdots & \ddots & \vdots\\
+y_1^{(n-1)} & y_2^{(n-1)} & \cdots & y_n^{(n-1)}
+\end{vmatrix}.
+\]</div>
+<p>Para dos funciones:</p>
+<div class="formula-block">\[
+W(y_1,y_2)=y_1y_2'-y_1'y_2.
+\]</div>
+<p>Su papel es decidir si las soluciones son independientes. Si el wronskiano no se anula en un punto del intervalo, las funciones son linealmente independientes. En el contexto de ecuaciones lineales homogéneas, esto permite verificar que forman un sistema fundamental.</p>
+<p>Ejemplo:</p>
+<div class="formula-block">\[
+y_1=\cos x,\qquad y_2=\sin x.
+\]</div>
+<p>Entonces</p>
+<div class="formula-block">\[
+W(\cos x,\sin x)=
+\begin{vmatrix}
+\cos x & \sin x\\
+-\sin x & \cos x
+\end{vmatrix}
+=\cos^2x+\sin^2x=1.
+\]</div>
+<p>Como \(W=1\neq 0\), forman un sistema fundamental de</p>
+<div class="formula-block">\[
+y''+y=0.
+\]</div>
+<p>El histórico de exámenes de MM1 incluye preguntas explícitas sobre qué es el wronskiano y para qué se usa.</p>
+</article>
+<article class="reading-block">
+<h3>3.5. Sistema fundamental de soluciones</h3>
+<p>Un sistema fundamental de soluciones de una ecuación homogénea de orden \(n\) es un conjunto de \(n\) soluciones linealmente independientes.</p>
+<p>Para orden \(2\), se necesitan dos soluciones. Para orden \(3\), tres. Para orden \(4\), cuatro.</p>
+<p>Ejemplo:</p>
+<div class="formula-block">\[
+y'''-y'=0.
+\]</div>
+<p>La ecuación característica será</p>
+<div class="formula-block">\[
+r^3-r=r(r-1)(r+1)=0.
+\]</div>
+<p>Raíces:</p>
+<div class="formula-block">\[
+r=0,\quad r=1,\quad r=-1.
+\]</div>
+<p>Sistema fundamental:</p>
+<div class="formula-block">\[
+{1,e^x,e^{-x}}.
+\]</div>
+<p>Solución general:</p>
+<div class="formula-block">\[
+y=C_1+C_2e^x+C_3e^{-x}.
+\]</div>
+</article>
+<article class="reading-block">
+<h3>3.6. Reducción de orden</h3>
+<p>La reducción de orden se aplica cuando se conoce una solución no trivial \(y_1(x)\) de una ecuación homogénea. Se busca otra solución en la forma</p>
+<div class="formula-block">\[
+y=y_1v.
+\]</div>
+<p>Al sustituir, aparece una ecuación de orden menor para \(v\) o para alguna derivada de \(v\). Sanz y Torres resume el método diciendo que, conocida una solución particular no trivial de una ecuación lineal homogénea de orden \(n\), el cambio \(y=y_1v\) transforma la ecuación en otra homogénea de orden \(n-1\).</p>
+<p>Ejemplo clásico:</p>
+<div class="formula-block">\[
+y''+y=0.
+\]</div>
+<p>Conocida \(y_1=\cos x\), se busca</p>
+<div class="formula-block">\[
+y=v\cos x.
+\]</div>
+<p>La sustitución permite obtener una segunda solución independiente, que será proporcional a \(\sin x\). El objetivo del método no es memorizar este caso, sino entender que una solución conocida permite construir la base completa.</p>
+</article>
+<article class="reading-block">
+<h3>3.7. Ecuaciones lineales homogéneas de coeficientes constantes</h3>
+<p>La forma general es</p>
+<div class="formula-block">\[
+a_ny^{(n)}+a_{n-1}y^{(n-1)}+\cdots+a_1y'+a_0y=0,
+\]</div>
+<p>con \(a_i\) constantes.</p>
+<p>Se prueba con</p>
+<div class="formula-block">\[
+y=e^{rx}.
+\]</div>
+<p>Como</p>
+<div class="formula-block">\[
+y'=re^{rx},\quad y''=r^2e^{rx},\quad \ldots,\quad y^{(n)}=r^ne^{rx},
+\]</div>
+<p>al sustituir se obtiene</p>
+<div class="formula-block">\[
+e^{rx}(a_nr^n+a_{n-1}r^{n-1}+\cdots+a_1r+a_0)=0.
+\]</div>
+<p>Como \(e^{rx}\neq 0\), queda la ecuación característica:</p>
+<div class="formula-block">\[
+a_nr^n+a_{n-1}r^{n-1}+\cdots+a_1r+a_0=0.
+\]</div>
+<p>Sanz y Torres expresa esta idea como: \(y=e^{rx}\) es solución si y solo si \(r\) es raíz de la ecuación característica.</p>
+</article>
+<article class="reading-block">
+<h3>3.8. Raíces reales simples</h3>
+<p>Si la ecuación característica tiene raíces reales distintas</p>
+<div class="formula-block">\[
+r_1,r_2,\ldots,r_n,
+\]</div>
+<p>entonces el sistema fundamental es</p>
+<div class="formula-block">\[
+{e^{r_1x},e^{r_2x},\ldots,e^{r_nx}}.
+\]</div>
+<p>La solución general es</p>
+<div class="formula-block">\[
+y=C_1e^{r_1x}+C_2e^{r_2x}+\cdots+C_ne^{r_nx}.
+\]</div>
+<p>Ejemplo:</p>
+<div class="formula-block">\[
+y''-3y'+2y=0.
+\]</div>
+<p>Ecuación característica:</p>
+<div class="formula-block">\[
+r^2-3r+2=0=(r-1)(r-2).
+\]</div>
+<p>Solución general:</p>
+<div class="formula-block">\[
+y=C_1e^x+C_2e^{2x}.
+\]</div>
+</article>
+<article class="reading-block">
+<h3>3.9. Raíces reales múltiples</h3>
+<p>Si \(r=a\) es raíz doble, no basta con \(e^{ax}\). La segunda solución es</p>
+<div class="formula-block">\[
+xe^{ax}.
+\]</div>
+<p>Si \(r=a\) tiene multiplicidad \(m\), aporta</p>
+<div class="formula-block">\[
+e^{ax},\quad xe^{ax},\quad x^2e^{ax},\quad \ldots,\quad x^{m-1}e^{ax}.
+\]</div>
+<p>Sanz y Torres lo formula de forma general: una raíz real de orden \(m\) genera soluciones \(e^{rx},xe^{rx},\ldots,x^{m-1}e^{rx}\).</p>
+<p>Ejemplo:</p>
+<div class="formula-block">\[
+y''-2y'+y=0.
+\]</div>
+<p>Ecuación característica:</p>
+<div class="formula-block">\[
+(r-1)^2=0.
+\]</div>
+<p>Solución general:</p>
+<div class="formula-block">\[
+y=(C_1+C_2x)e^x.
+\]</div>
+</article>
+<article class="reading-block">
+<h3>3.10. Raíces complejas conjugadas</h3>
+<p>Si las raíces son</p>
+<div class="formula-block">\[
+r=\alpha\pm i\beta,
+\]</div>
+<p>entonces la solución real asociada es</p>
+<div class="formula-block">\[
+y=e^{\alpha x}(C_1\cos \beta x+C_2\sin \beta x).
+\]</div>
+<p>Esto evita dejar la solución en forma compleja. Boas destaca las formas equivalentes con exponenciales complejas, combinación seno-coseno y forma amplitud-fase.</p>
+<p>Ejemplo:</p>
+<div class="formula-block">\[
+y''+4y=0.
+\]</div>
+<p>Ecuación característica:</p>
+<div class="formula-block">\[
+r^2+4=0,\quad r=\pm 2i.
+\]</div>
+<p>Solución general:</p>
+<div class="formula-block">\[
+y=C_1\cos 2x+C_2\sin 2x.
+\]</div>
+</article>
+<article class="reading-block">
+<h3>3.11. Raíces complejas múltiples</h3>
+<p>Si</p>
+<div class="formula-block">\[
+r=\alpha\pm i\beta
+\]</div>
+<p>tiene multiplicidad \(m\), la solución real se escribe como</p>
+<div class="formula-block">\[
+y=e^{\alpha x}\left[P_{m-1}(x)\cos \beta x+Q_{m-1}(x)\sin \beta x\right],
+\]</div>
+<p>donde \(P_{m-1}\) y \(Q_{m-1}\) son polinomios de grado como máximo \(m-1\).</p>
+<p>Ejemplo: si \((r^2+1)^2=0\), entonces \(r=\pm i\) dobles y</p>
+<div class="formula-block">\[
+y=(C_1+C_2x)\cos x+(C_3+C_4x)\sin x.
+\]</div>
+</article>
+<article class="reading-block">
+<h3>3.12. Variación de constantes</h3>
+<p>La variación de constantes pertenece propiamente a la resolución de ecuaciones completas, pero se apoya en la homogénea. Si se conoce la solución general de la homogénea</p>
+<div class="formula-block">\[
+y_h=C_1y_1+\cdots+C_ny_n,
+\]</div>
+<p>se busca una particular de la completa sustituyendo las constantes por funciones:</p>
+<div class="formula-block">\[
+y_p=C_1(x)y_1+\cdots+C_n(x)y_n.
+\]</div>
+<p>El método es general y no exige coeficientes constantes. Sanz y Torres lo presenta como un método de obtención de soluciones particulares válido incluso cuando los coeficientes no son constantes.</p>
+<p>Para segundo orden:</p>
+<div class="formula-block">\[
+y''+p(x)y'+q(x)y=g(x),
+\]</div>
+<p>si \(y_1,y_2\) resuelven la homogénea, se busca</p>
+<div class="formula-block">\[
+y_p=u_1y_1+u_2y_2,
+\]</div>
+<p>con el sistema auxiliar habitual</p>
+<div class="formula-block">\[
+u_1'y_1+u_2'y_2=0,
+\]</div>
+<div class="formula-block">\[
+u_1'y_1'+u_2'y_2'=g(x).
+\]</div>
+<p>El wronskiano aparece en el denominador al resolver este sistema.</p>
+</article>
+</div>
+</section>
+
+<section id="conceptos" class="page">
+<div class="section-heading"><p class="section-kicker">Tema MM1</p><h2>Conceptos clave</h2></div>
+<div class="card-grid">
+<article class="definition-card">
+<h3>1. Ecuación diferencial ordinaria de orden superior</h3>
+<p>Definición: ecuación donde aparece una función desconocida y alguna derivada de orden mayor que uno.</p>
+<p>Explicación: modela fenómenos donde la tasa de cambio depende de derivadas sucesivas. En física, el caso dominante es el segundo orden, porque muchas leyes dinámicas involucran aceleración.</p>
+<p>Ejemplo:</p>
+<div class="formula-block">\[
+y''+y=0.
+\]</div>
+<p>Relación: conduce al problema de Cauchy y a la necesidad de tantas constantes como orden tenga la ecuación.</p>
+<p>Pregunta de examen: “Indique cuántas condiciones iniciales son necesarias para determinar una solución particular de una ecuación de orden \(n\).”</p>
+</article>
+<article class="definition-card">
+<h3>2. Problema de Cauchy</h3>
+<p>Definición: ecuación diferencial más condiciones iniciales sobre \(y,y',\ldots,y^{(n-1)}\) en un punto.</p>
+<p>Explicación: convierte una familia de soluciones en una solución concreta.</p>
+<p>Ejemplo:</p>
+<div class="formula-block">\[
+y''+y=0,\quad y(0)=0,\quad y'(0)=1.
+\]</div>
+<p>Solución:</p>
+<div class="formula-block">\[
+y=\sin x.
+\]</div>
+<p>Relación: conecta existencia, unicidad y número de constantes.</p>
+<p>Pregunta de examen: “Resolver un PVI de segundo orden con coeficientes constantes.”</p>
+</article>
+<article class="definition-card">
+<h3>3. Operador diferencial lineal</h3>
+<p>Definición:</p>
+<div class="formula-block">\[
+L(y)=y^{(n)}+h_1(x)y^{(n-1)}+\cdots+h_n(x)y.
+\]</div>
+<p>Explicación: permite escribir la ecuación como \(L(y)=F(x)\) y usar linealidad.</p>
+<p>Ejemplo:</p>
+<div class="formula-block">\[
+L(y)=y''-3y'+2y.
+\]</div>
+<p>Relación: base de superposición y separación homogénea/completa.</p>
+<p>Pregunta de examen: “Escriba la homogénea asociada a una ecuación completa.”</p>
+</article>
+<article class="definition-card">
+<h3>4. Ecuación homogénea</h3>
+<p>Definición:</p>
+<div class="formula-block">\[
+L(y)=0.
+\]</div>
+<p>Explicación: todos los términos dependen de \(y\) o sus derivadas. Su conjunto de soluciones forma espacio vectorial.</p>
+<p>Ejemplo:</p>
+<div class="formula-block">\[
+y''+4y=0.
+\]</div>
+<p>Relación: da la parte complementaria de la solución de una completa.</p>
+<p>Pregunta de examen: “Halle la solución general de la homogénea asociada.”</p>
+</article>
+<article class="definition-card">
+<h3>5. Ecuación completa</h3>
+<p>Definición:</p>
+<div class="formula-block">\[
+L(y)=F(x),\qquad F(x)\neq 0.
+\]</div>
+<p>Explicación: contiene un término externo independiente de \(y\). Su solución general se obtiene sumando una particular y la solución general homogénea.</p>
+<p>Ejemplo:</p>
+<div class="formula-block">\[
+y''+y=\cos x.
+\]</div>
+<p>Relación: usa variación de constantes o coeficientes indeterminados.</p>
+<p>Pregunta de examen: “Encuentre una solución particular y escriba la solución general.”</p>
+</article>
+<article class="definition-card">
+<h3>6. Independencia lineal</h3>
+<p>Definición: \(y_1,\ldots,y_n\) son independientes si ninguna combinación lineal no trivial da cero.</p>
+<p>Explicación: garantiza que las soluciones aportan información distinta.</p>
+<p>Ejemplo:</p>
+<div class="formula-block">\[
+{\cos x,\sin x}
+\]</div>
+<p>es independiente.</p>
+<p>Relación: condición para formar sistema fundamental.</p>
+<p>Pregunta de examen: “Determine si tres funciones pueden formar un conjunto fundamental de soluciones.”</p>
+</article>
+<article class="definition-card">
+<h3>7. Wronskiano</h3>
+<p>Definición: determinante formado con funciones y sus derivadas hasta orden \(n-1\).</p>
+<p>Explicación: mide independencia funcional dentro del marco de ecuaciones lineales.</p>
+<p>Ejemplo:</p>
+<div class="formula-block">\[
+W(e^x,e^{2x})=
+\begin{vmatrix}
+e^x&e^{2x}\\
+e^x&2e^{2x}
+\end{vmatrix}
+=e^{3x}\neq 0.
+\]</div>
+<p>Relación: valida sistemas fundamentales y aparece en variación de constantes.</p>
+<p>Pregunta de examen: “Defina el wronskiano y explique para qué se usa.”</p>
+</article>
+<article class="definition-card">
+<h3>8. Sistema fundamental de soluciones</h3>
+<p>Definición: conjunto de \(n\) soluciones linealmente independientes de una homogénea de orden \(n\).</p>
+<p>Explicación: es una base del espacio de soluciones.</p>
+<p>Ejemplo:</p>
+<div class="formula-block">\[
+{1,e^x,e^{-x}}
+\]</div>
+<p>para \(y'''-y'=0\).</p>
+<p>Relación: permite escribir la solución general.</p>
+<p>Pregunta de examen: “Justifique que un conjunto dado es sistema fundamental.”</p>
+</article>
+<article class="definition-card">
+<h3>9. Solución general homogénea</h3>
+<p>Definición: combinación lineal de un sistema fundamental:</p>
+<div class="formula-block">\[
+y=C_1y_1+\cdots+C_ny_n.
+\]</div>
+<p>Explicación: contiene todas las soluciones de la homogénea.</p>
+<p>Ejemplo:</p>
+<div class="formula-block">\[
+y=C_1\cos x+C_2\sin x.
+\]</div>
+<p>Relación: se usa también para construir la solución de una completa.</p>
+<p>Pregunta de examen: “Escriba la solución general de una homogénea de orden 4 con raíces dadas.”</p>
+</article>
+<article class="definition-card">
+<h3>10. Reducción de orden</h3>
+<p>Definición: método que usa una solución conocida \(y_1\) para buscar otra mediante</p>
+<div class="formula-block">\[
+y=y_1v.
+\]</div>
+<p>Explicación: reduce el orden de la ecuación y evita repetir el problema completo.</p>
+<p>Ejemplo: conocida \(y_1=e^x\) en una ecuación de segundo orden, se prueba \(y=e^xv\).</p>
+<p>Relación: conecta solución conocida, independencia y sistema fundamental.</p>
+<p>Pregunta de examen: “Use reducción de orden para encontrar una segunda solución.”</p>
+</article>
+<article class="definition-card">
+<h3>11. Ecuación característica</h3>
+<p>Definición: polinomio obtenido al sustituir \(y=e^{rx}\) en una ecuación lineal homogénea de coeficientes constantes.</p>
+<p>Explicación: transforma la EDO en álgebra.</p>
+<p>Ejemplo:</p>
+<div class="formula-block">\[
+y''+5y'+6y=0
+\Rightarrow
+r^2+5r+6=0.
+\]</div>
+<p>Relación: sus raíces determinan la forma de la solución.</p>
+<p>Pregunta de examen: “Determine la ecuación diferencial a partir de raíces dadas.”</p>
+</article>
+<article class="definition-card">
+<h3>12. Raíz real simple</h3>
+<p>Definición: raíz real de multiplicidad uno de la ecuación característica.</p>
+<p>Explicación: aporta una solución exponencial.</p>
+<p>Ejemplo: \(r=2\) aporta \(e^{2x}\).</p>
+<p>Relación: varias raíces reales simples generan varias exponenciales independientes.</p>
+<p>Pregunta de examen: “Resolver una homogénea con raíces reales distintas.”</p>
+</article>
+<article class="definition-card">
+<h3>13. Raíz real múltiple</h3>
+<p>Definición: raíz real repetida de la ecuación característica.</p>
+<p>Explicación: una raíz de multiplicidad \(m\) aporta \(m\) soluciones:</p>
+<div class="formula-block">\[
+e^{rx},xe^{rx},\ldots,x^{m-1}e^{rx}.
+\]</div>
+<p>Ejemplo: \((r-3)^2=0\) da</p>
+<div class="formula-block">\[
+(C_1+C_2x)e^{3x}.
+\]</div>
+<p>Relación: evita perder soluciones.</p>
+<p>Pregunta de examen: “Explique por qué aparece el factor \(x\) en raíces dobles.”</p>
+</article>
+<article class="definition-card">
+<h3>14. Raíz compleja conjugada</h3>
+<p>Definición: par \(\alpha\pm i\beta\) de raíces de un polinomio real.</p>
+<p>Explicación: produce soluciones reales oscilatorias moduladas por \(e^{\alpha x}\).</p>
+<p>Ejemplo:</p>
+<div class="formula-block">\[
+r=-1\pm 2i
+\Rightarrow
+y=e^{-x}(C_1\cos 2x+C_2\sin 2x).
+\]</div>
+<p>Relación: conecta ecuaciones diferenciales con oscilaciones.</p>
+<p>Pregunta de examen: “Escriba la solución real asociada a raíces complejas.”</p>
+</article>
+<article class="definition-card">
+<h3>15. Variación de constantes</h3>
+<p>Definición: método para ecuaciones completas donde las constantes de la solución homogénea se sustituyen por funciones.</p>
+<p>Explicación: permite construir una solución particular incluso con coeficientes variables.</p>
+<p>Ejemplo:</p>
+<div class="formula-block">\[
+y_p=u_1y_1+u_2y_2.
+\]</div>
+<p>Relación: necesita el sistema fundamental y el wronskiano.</p>
+<p>Pregunta de examen: “Use variación de constantes para hallar una particular.”</p>
+</article>
+</div>
+</section>
+
+<section id="relaciones" class="page">
+<div class="section-heading"><p class="section-kicker">Tema MM1</p><h2>Relaciones entre ideas</h2></div>
+<div class="reading-block"><p>El capítulo se organiza jerárquicamente.</p>
+<p>Primero aparece la noción de ecuación de orden superior. De ahí se deduce que una solución general debe contener tantas constantes como el orden de la ecuación. Esto lleva al problema de Cauchy: cada condición inicial fija una constante.</p>
+<p>Después entra la linealidad. Sin linealidad no hay espacio vectorial de soluciones. Con linealidad homogénea sí hay superposición: si \(y_1\) e \(y_2\) son soluciones, también lo es \(C_1y_1+C_2y_2\). Esta propiedad convierte el problema de resolver la ecuación en el problema de encontrar una base del espacio de soluciones.</p>
+<p>El concepto de independencia lineal es la condición para que esa base sea válida. El wronskiano es el instrumento técnico para comprobar independencia. Si se tienen \(n\) soluciones independientes en una ecuación de orden \(n\), ya está construida la solución general.</p>
+<p>La reducción de orden depende de esta estructura. Si ya hay una solución, no se busca otra a ciegas. Se impone que la nueva solución tenga la forma \(y=y_1v\), porque así se aprovecha la solución conocida y se reduce el orden.</p>
+<p>Las ecuaciones de coeficientes constantes forman el caso más algebraico. La hipótesis \(y=e^{rx}\) funciona porque derivar una exponencial solo multiplica por \(r\). Eso convierte el operador diferencial en un polinomio. La ecuación característica es el puente entre análisis y álgebra.</p>
+<p>Las raíces de la ecuación característica determinan la forma de la solución:</p>
+<ul>
+<li>raíz real simple \(\rightarrow e^{rx}\),</li>
+<li>raíz real múltiple \(\rightarrow e^{rx},xe^{rx},\ldots\),</li>
+<li>raíz compleja \(\alpha\pm i\beta\rightarrow e^{\alpha x}\cos\beta x,\ e^{\alpha x}\sin\beta x\).</li>
+</ul>
+<p>La variación de constantes queda al final porque usa todo lo anterior. Para resolver una ecuación completa, primero hay que dominar la homogénea. La particular se construye deformando las constantes de la homogénea.</p>
+<p>Históricamente, Sanz y Torres sitúa estos métodos en la evolución de la resolución de ecuaciones lineales, mencionando la sistematización de Euler y la idea de D’Alembert de descomponer la solución completa como homogénea más particular.</p></div>
+</section>
+
+<section id="errores" class="page">
+<div class="section-heading"><p class="section-kicker">Tema MM1</p><h2>Errores habituales</h2></div>
+<div class="accordion-list">
+<details class="accordion" open>
+<summary>Error 1. Confundir orden con grado</summary>
+<div class="accordion-content"><p>Error: decir que \(y''+(y')^3=0\) es de tercer orden porque aparece una potencia cúbica.</p>
+<p>Por qué está mal: el orden depende de la derivada de mayor orden, no de la potencia.</p>
+<p>Corrección: la ecuación es de segundo orden y no lineal.</p>
+<p>Respuesta incorrecta: “Es de orden 3 porque aparece \((y')^3\).”</p>
+<p>Respuesta correcta: “Es de orden 2 porque la derivada de mayor orden es \(y''\); no es lineal porque aparece \((y')^3\).”</p></div>
+</details>
+<details class="accordion" open>
+<summary>Error 2. Usar superposición en una ecuación no homogénea</summary>
+<div class="accordion-content"><p>Error: si \(y_1,y_2\) resuelven \(L(y)=F(x)\), afirmar que \(y_1+y_2\) también la resuelve.</p>
+<p>Por qué está mal:</p>
+<div class="formula-block">\[
+L(y_1+y_2)=L(y_1)+L(y_2)=2F(x).
+\]</div>
+<p>Corrección: la superposición directa vale para homogéneas.</p>
+<p>Respuesta incorrecta: “La suma de dos soluciones de la completa también es solución.”</p>
+<p>Respuesta correcta: “La diferencia de dos soluciones de la completa resuelve la homogénea; la suma no necesariamente resuelve la completa.”</p></div>
+</details>
+<details class="accordion">
+<summary>Error 3. Perder soluciones en raíces múltiples</summary>
+<div class="accordion-content"><p>Error: si \((r-2)^2=0\), escribir solo</p>
+<div class="formula-block">\[
+y=Ce^{2x}.
+\]</div>
+<p>Por qué está mal: una ecuación de segundo orden necesita dos soluciones independientes.</p>
+<p>Corrección:</p>
+<div class="formula-block">\[
+y=(C_1+C_2x)e^{2x}.
+\]</div>
+<p>Respuesta incorrecta: “Raíz \(2\), solución \(Ce^{2x}\).”</p>
+<p>Respuesta correcta: “Raíz doble \(2\), solución \((C_1+C_2x)e^{2x}\).”</p></div>
+</details>
+<details class="accordion">
+<summary>Error 4. Dejar soluciones complejas cuando se pide forma real</summary>
+<div class="accordion-content"><p>Error:</p>
+<div class="formula-block">\[
+y=C_1e^{(1+2i)x}+C_2e^{(1-2i)x}.
+\]</div>
+<p>Por qué está mal: si la ecuación tiene coeficientes reales, se espera normalmente solución real.</p>
+<p>Corrección:</p>
+<div class="formula-block">\[
+y=e^x(C_1\cos 2x+C_2\sin 2x).
+\]</div>
+<p>Respuesta incorrecta: “La solución es combinación de exponenciales complejas.”</p>
+<p>Respuesta correcta: “La solución real equivalente es \(e^x(C_1\cos2x+C_2\sin2x)\).”</p></div>
+</details>
+<details class="accordion">
+<summary>Error 5. Calcular mal el wronskiano por invertir derivadas</summary>
+<div class="accordion-content"><p>Error:</p>
+<div class="formula-block">\[
+W(y_1,y_2)=y_1'y_2-y_1y_2'.
+\]</div>
+<p>Por qué está mal: cambia el signo respecto a la convención habitual. El signo no afecta a si es cero o no, pero sí a fórmulas como variación de constantes.</p>
+<p>Corrección:</p>
+<div class="formula-block">\[
+W(y_1,y_2)=y_1y_2'-y_1'y_2.
+\]</div>
+<p>Respuesta incorrecta: “\(W=\sin^2x-\cos^2x\)” para \(\cos x,\sin x\).</p>
+<p>Respuesta correcta: “\(W=\cos^2x+\sin^2x=1\).”</p></div>
+</details>
+<details class="accordion">
+<summary>Error 6. Creer que \(W=0\) en un punto cualquiera siempre implica dependencia</summary>
+<div class="accordion-content"><p>Error: ver que el wronskiano se anula en un punto y concluir dependencia sin contexto.</p>
+<p>Por qué está mal: en teoría general de funciones, \(W=0\) en un punto aislado no basta. En soluciones de una ecuación lineal homogénea con coeficientes continuos, el wronskiano tiene comportamiento más rígido.</p>
+<p>Corrección: para sistemas de soluciones de una misma ecuación lineal homogénea, basta comprobar que \(W\neq 0\) en algún punto para independencia.</p>
+<p>Respuesta incorrecta: “Como \(W(0)=0\), son dependientes.”</p>
+<p>Respuesta correcta: “Hay que comprobar si el wronskiano es identicamente nulo o si se trabaja dentro del marco de soluciones de la misma ecuación lineal.”</p></div>
+</details>
+<details class="accordion">
+<summary>Error 7. No comprobar el número de constantes</summary>
+<div class="accordion-content"><p>Error: resolver una ecuación de cuarto orden y obtener tres constantes.</p>
+<p>Por qué está mal: salvo restricciones especiales, la solución general debe contener cuatro constantes.</p>
+<p>Corrección: contar raíces con multiplicidad y comprobar que el número total de soluciones independientes coincide con el orden.</p>
+<p>Respuesta incorrecta: “\(y=C_1+C_2e^x+C_3e^{-x}\)” para una ecuación de cuarto orden.</p>
+<p>Respuesta correcta: “Falta una solución independiente; revisar multiplicidades o raíces complejas.”</p></div>
+</details>
+<details class="accordion">
+<summary>Error 8. Aplicar ecuación característica con coeficientes variables</summary>
+<div class="accordion-content"><p>Error: para</p>
+<div class="formula-block">\[
+y''+xy'+y=0
+\]</div>
+<p>intentar</p>
+<div class="formula-block">\[
+r^2+xr+1=0.
+\]</div>
+<p>Por qué está mal: el método \(y=e^{rx}\) solo da el procedimiento directo estándar cuando los coeficientes son constantes.</p>
+<p>Corrección: usar otros métodos: reducción de orden, series, cambios adecuados o teoría general.</p>
+<p>Respuesta incorrecta: “La característica es \(r^2+xr+1=0\).”</p>
+<p>Respuesta correcta: “No hay ecuación característica algebraica ordinaria porque el coeficiente de \(y'\) depende de \(x\).”</p></div>
+</details>
+<details class="accordion">
+<summary>Error 9. En variación de constantes, no imponer condición auxiliar</summary>
+<div class="accordion-content"><p>Error: tomar</p>
+<div class="formula-block">\[
+y_p=u_1y_1+u_2y_2
+\]</div>
+<p>y derivar sin imponer ninguna relación entre \(u_1'\) y \(u_2'\).</p>
+<p>Por qué está mal: aparecen demasiados términos y no se determina el sistema.</p>
+<p>Corrección: para segundo orden se impone</p>
+<div class="formula-block">\[
+u_1'y_1+u_2'y_2=0.
+\]</div>
+<p>Respuesta incorrecta: “Derivo directamente y sustituyo todo.”</p>
+<p>Respuesta correcta: “Se introduce la condición auxiliar para simplificar y obtener un sistema resoluble.”</p></div>
+</details>
+<details class="accordion">
+<summary>Error 10. Confundir solución particular con solución general</summary>
+<div class="accordion-content"><p>Error: encontrar \(y_p\) y terminar.</p>
+<p>Por qué está mal: una particular no contiene las constantes de la homogénea.</p>
+<p>Corrección:</p>
+<div class="formula-block">\[
+y=y_h+y_p.
+\]</div>
+<p>Respuesta incorrecta: “Una particular es \(y=x\), por tanto la solución es \(y=x\).”</p>
+<p>Respuesta correcta: “La solución general es \(y=y_h+x\).”</p></div>
+</details>
+</div>
+</section>
+
+<section id="preguntas" class="page">
+<div class="section-heading"><p class="section-kicker">Tema MM1</p><h2>Preguntas orientadas a examen</h2></div>
+<div class="question-grid">
+<article class="reading-block question-block">
+<h3>10 preguntas fáciles</h3>
+<ol start="1">
+<li>¿Qué significa que una ecuación diferencial sea de orden \(n\)?</li>
+<li>¿Cuántas condiciones iniciales necesita una ecuación de orden \(n\)?</li>
+<li>¿Qué es una ecuación lineal homogénea?</li>
+<li>¿Qué diferencia hay entre ecuación homogénea y completa?</li>
+<li>¿Qué es un operador diferencial lineal?</li>
+<li>¿Qué significa que dos soluciones sean linealmente independientes?</li>
+<li>Escriba el wronskiano de dos funciones \(y_1,y_2\).</li>
+<li>¿Qué es un sistema fundamental de soluciones?</li>
+<li>¿Qué forma tiene la solución general de una homogénea de segundo orden?</li>
+<li>¿Qué ecuación característica corresponde a \(y''-5y'+6y=0\)?</li>
+</ol>
+</article>
+<article class="reading-block question-block">
+<h3>10 preguntas medias</h3>
+<ol start="11">
+<li>Resolver \(y''-5y'+6y=0\).</li>
+<li>Resolver \(y''+4y=0\).</li>
+<li>Resolver \(y''-2y'+y=0\).</li>
+<li>Resolver \(y'''-y'=0\).</li>
+<li>Calcular el wronskiano de \({e^x,e^{2x}}\).</li>
+<li>Determinar si \({\cos x,\sin x}\) forma sistema fundamental de \(y''+y=0\).</li>
+<li>Escribir la solución real asociada a las raíces \(2\pm 3i\).</li>
+<li>Escribir la solución general si las raíces son \(0,1,1,-1\pm i\).</li>
+<li>Explicar en qué consiste la reducción de orden.</li>
+<li>Explicar en qué consiste la variación de constantes.</li>
+</ol>
+</article>
+<article class="reading-block question-block">
+<h3>5 preguntas difíciles</h3>
+<ol start="21">
+<li>Dada una ecuación lineal homogénea de orden cuatro con raíces \(2\) doble y \(1+i\) simple, escribir la ecuación característica y la solución general real.</li>
+<li>Si \(y_1\) es una solución no trivial de una ecuación homogénea de segundo orden, justificar por qué el cambio \(y=y_1v\) reduce el orden.</li>
+<li>Resolver \(y''+y=\sec x\tan x\) por variación de constantes, sabiendo que la homogénea tiene \(\cos x,\sin x\).</li>
+<li>Determinar una ecuación diferencial lineal homogénea de coeficientes constantes cuya solución general sea</li>
+</ol>
+<div class="formula-block">\[
+y=C_1+C_2e^x+C_3xe^x+C_4e^{-x}\cos x+C_5e^{-x}\sin x.
+\]</div>
+<ol start="25">
+<li>Decidir si \(f(x)=\sec^2x\), \(g(x)=3\), \(h(x)=\tan^2x\) pueden formar un conjunto fundamental de soluciones de una homogénea, y razonar el mínimo orden posible.</li>
+</ol>
+</article>
+<article class="reading-block question-block">
+<h3>5 preguntas de desarrollo largo</h3>
+<ol start="26">
+<li>Desarrollar la teoría de la solución general de una ecuación lineal homogénea de orden \(n\).</li>
+<li>Explicar el papel del wronskiano en el estudio de ecuaciones lineales homogéneas.</li>
+<li>Desarrollar el método de ecuación característica para ecuaciones homogéneas de coeficientes constantes.</li>
+<li>Comparar raíces reales simples, reales múltiples y complejas en la construcción de soluciones.</li>
+<li>Explicar la relación entre homogénea asociada, solución particular y solución general de una ecuación completa.</li>
+</ol>
+</article>
+<article class="reading-block question-block">
+<h3>5 preguntas de relación entre conceptos</h3>
+<ol start="31">
+<li>Relacionar problema de Cauchy, orden de la ecuación y número de constantes arbitrarias.</li>
+<li>Relacionar independencia lineal, wronskiano y sistema fundamental.</li>
+<li>Relacionar ecuación característica y operador diferencial.</li>
+<li>Relacionar raíces complejas y movimiento oscilatorio.</li>
+<li>Relacionar reducción de orden y variación de constantes.</li>
+</ol>
+</article>
+</div>
+</section>
+
+<section id="respuestas" class="page">
+<div class="section-heading"><p class="section-kicker">Tema MM1</p><h2>Respuestas modelo</h2></div>
+<div class="accordion-list">
+<details class="accordion">
+<summary>1. ¿Qué significa que una ecuación diferencial sea de orden \(n\)?</summary>
+<div class="accordion-content"><p>Significa que la derivada de mayor orden que aparece en la ecuación es \(y^{(n)}\). Por ejemplo, \(y''+y=0\) es de segundo orden porque la derivada más alta es \(y''\).</p></div>
+</details>
+<details class="accordion">
+<summary>2. ¿Cuántas condiciones iniciales necesita una ecuación de orden \(n\)?</summary>
+<div class="accordion-content"><p>Necesita \(n\) condiciones iniciales, normalmente sobre \(y,y',\ldots,y^{(n-1)}\) en un mismo punto. Esto permite fijar las \(n\) constantes arbitrarias de la solución general.</p></div>
+</details>
+<details class="accordion">
+<summary>3. ¿Qué es una ecuación lineal homogénea?</summary>
+<div class="accordion-content"><p>Es una ecuación de la forma</p>
+<div class="formula-block">\[
+L(y)=0,
+\]</div>
+<p>donde \(L\) es un operador diferencial lineal. Todos los términos contienen \(y\) o alguna de sus derivadas.</p></div>
+</details>
+<details class="accordion">
+<summary>4. ¿Qué diferencia hay entre ecuación homogénea y completa?</summary>
+<div class="accordion-content"><p>La homogénea tiene segundo miembro nulo:</p>
+<div class="formula-block">\[
+L(y)=0.
+\]</div>
+<p>La completa tiene segundo miembro no nulo:</p>
+<div class="formula-block">\[
+L(y)=F(x).
+\]</div>
+<p>La solución general de la completa se obtiene como suma de una solución particular y la solución general de la homogénea asociada.</p></div>
+</details>
+<details class="accordion">
+<summary>5. ¿Qué es un operador diferencial lineal?</summary>
+<div class="accordion-content"><p>Es una aplicación que actúa sobre una función y sus derivadas manteniendo la linealidad:</p>
+<div class="formula-block">\[
+L(\alpha y+\beta z)=\alpha L(y)+\beta L(z).
+\]</div>
+<p>Ejemplo:</p>
+<div class="formula-block">\[
+L(y)=y''-3y'+2y.
+\]</div></div>
+</details>
+<details class="accordion">
+<summary>6. ¿Qué significa que dos soluciones sean linealmente independientes?</summary>
+<div class="accordion-content"><p>Significa que</p>
+<div class="formula-block">\[
+C_1y_1+C_2y_2=0
+\]</div>
+<p>solo puede cumplirse para todo \(x\) si</p>
+<div class="formula-block">\[
+C_1=C_2=0.
+\]</div>
+<p>No son múltiplos una de otra.</p></div>
+</details>
+<details class="accordion">
+<summary>7. Escriba el wronskiano de dos funciones \(y_1,y_2\)</summary>
+<div class="accordion-content"><div class="formula-block">\[
+W(y_1,y_2)=
+\begin{vmatrix}
+y_1&y_2\\
+y_1'&y_2'
+\end{vmatrix}
+=y_1y_2'-y_1'y_2.
+\]</div></div>
+</details>
+<details class="accordion">
+<summary>8. ¿Qué es un sistema fundamental de soluciones?</summary>
+<div class="accordion-content"><p>Es un conjunto de \(n\) soluciones linealmente independientes de una ecuación lineal homogénea de orden \(n\). Sirve como base para escribir la solución general.</p></div>
+</details>
+<details class="accordion">
+<summary>9. ¿Qué forma tiene la solución general de una homogénea de segundo orden?</summary>
+<div class="accordion-content"><p>Si \(y_1,y_2\) son soluciones independientes, entonces</p>
+<div class="formula-block">\[
+y=C_1y_1+C_2y_2.
+\]</div></div>
+</details>
+<details class="accordion">
+<summary>10. ¿Qué ecuación característica corresponde a \(y''-5y'+6y=0\)?</summary>
+<div class="accordion-content"><p>Se prueba con \(y=e^{rx}\). Entonces</p>
+<div class="formula-block">\[
+r^2-5r+6=0.
+\]</div></div>
+</details>
+<details class="accordion">
+<summary>11. Resolver \(y''-5y'+6y=0\)</summary>
+<div class="accordion-content"><p>Ecuación característica:</p>
+<div class="formula-block">\[
+r^2-5r+6=(r-2)(r-3)=0.
+\]</div>
+<p>Raíces:</p>
+<div class="formula-block">\[
+r=2,\quad r=3.
+\]</div>
+<p>Solución general:</p>
+<div class="formula-block">\[
+y=C_1e^{2x}+C_2e^{3x}.
+\]</div></div>
+</details>
+<details class="accordion">
+<summary>12. Resolver \(y''+4y=0\)</summary>
+<div class="accordion-content"><p>Ecuación característica:</p>
+<div class="formula-block">\[
+r^2+4=0.
+\]</div>
+<p>Raíces:</p>
+<div class="formula-block">\[
+r=\pm 2i.
+\]</div>
+<p>Solución general real:</p>
+<div class="formula-block">\[
+y=C_1\cos 2x+C_2\sin 2x.
+\]</div></div>
+</details>
+<details class="accordion">
+<summary>13. Resolver \(y''-2y'+y=0\)</summary>
+<div class="accordion-content"><p>Ecuación característica:</p>
+<div class="formula-block">\[
+r^2-2r+1=(r-1)^2=0.
+\]</div>
+<p>Raíz doble:</p>
+<div class="formula-block">\[
+r=1.
+\]</div>
+<p>Solución general:</p>
+<div class="formula-block">\[
+y=(C_1+C_2x)e^x.
+\]</div></div>
+</details>
+<details class="accordion">
+<summary>14. Resolver \(y'''-y'=0\)</summary>
+<div class="accordion-content"><p>Ecuación característica:</p>
+<div class="formula-block">\[
+r^3-r=r(r-1)(r+1)=0.
+\]</div>
+<p>Raíces:</p>
+<div class="formula-block">\[
+r=0,1,-1.
+\]</div>
+<p>Solución general:</p>
+<div class="formula-block">\[
+y=C_1+C_2e^x+C_3e^{-x}.
+\]</div></div>
+</details>
+<details class="accordion">
+<summary>15. Calcular el wronskiano de \({e^x,e^{2x}}\)</summary>
+<div class="accordion-content"><div class="formula-block">\[
+W=
+\begin{vmatrix}
+e^x&e^{2x}\\
+e^x&2e^{2x}
+\end{vmatrix}
+=2e^{3x}-e^{3x}=e^{3x}.
+\]</div>
+<p>Como \(e^{3x}\neq 0\), las funciones son independientes.</p></div>
+</details>
+<details class="accordion">
+<summary>16. Determinar si \({\cos x,\sin x}\) forma sistema fundamental de \(y''+y=0\)</summary>
+<div class="accordion-content"><p>Ambas funciones satisfacen \(y''+y=0\). Su wronskiano es</p>
+<div class="formula-block">\[
+W=
+\begin{vmatrix}
+\cos x&\sin x\\
+-\sin x&\cos x
+\end{vmatrix}
+=\cos^2x+\sin^2x=1.
+\]</div>
+<p>Como son dos soluciones independientes de una ecuación de segundo orden, forman sistema fundamental.</p></div>
+</details>
+<details class="accordion">
+<summary>17. Escribir la solución real asociada a las raíces \(2\pm 3i\)</summary>
+<div class="accordion-content"><p>Para raíces \(\alpha\pm i\beta\), la solución real es</p>
+<div class="formula-block">\[
+y=e^{\alpha x}(C_1\cos\beta x+C_2\sin\beta x).
+\]</div>
+<p>Aquí:</p>
+<div class="formula-block">\[
+\alpha=2,\quad \beta=3.
+\]</div>
+<p>Por tanto:</p>
+<div class="formula-block">\[
+y=e^{2x}(C_1\cos3x+C_2\sin3x).
+\]</div></div>
+</details>
+<details class="accordion">
+<summary>18. Escribir la solución general si las raíces son \(0,1,1,-1\pm i\)</summary>
+<div class="accordion-content"><p>Raíz \(0\):</p>
+<div class="formula-block">\[
+C_1.
+\]</div>
+<p>Raíz \(1\) doble:</p>
+<div class="formula-block">\[
+(C_2+C_3x)e^x.
+\]</div>
+<p>Raíces \(-1\pm i\):</p>
+<div class="formula-block">\[
+e^{-x}(C_4\cos x+C_5\sin x).
+\]</div>
+<p>Solución general:</p>
+<div class="formula-block">\[
+y=C_1+(C_2+C_3x)e^x+e^{-x}(C_4\cos x+C_5\sin x).
+\]</div></div>
+</details>
+<details class="accordion">
+<summary>19. Explicar en qué consiste la reducción de orden</summary>
+<div class="accordion-content"><p>Consiste en usar una solución conocida \(y_1\) de una ecuación homogénea para buscar otra solución en la forma</p>
+<div class="formula-block">\[
+y=y_1v.
+\]</div>
+<p>Al sustituir, la ecuación resultante reduce su orden. En una ecuación de segundo orden, se transforma en una ecuación de primer orden para una derivada de \(v\).</p></div>
+</details>
+<details class="accordion">
+<summary>20. Explicar en qué consiste la variación de constantes</summary>
+<div class="accordion-content"><p>Consiste en partir de la solución general de la homogénea</p>
+<div class="formula-block">\[
+y_h=C_1y_1+\cdots+C_ny_n
+\]</div>
+<p>y buscar una solución particular de la completa sustituyendo las constantes por funciones:</p>
+<div class="formula-block">\[
+y_p=C_1(x)y_1+\cdots+C_n(x)y_n.
+\]</div>
+<p>Después se sustituyen estas expresiones en la ecuación para determinar las funciones \(C_i(x)\).</p></div>
+</details>
+<details class="accordion">
+<summary>21. Raíces \(2\) doble y \(1+i\) simple</summary>
+<div class="accordion-content"><p>Como los coeficientes son reales, si \(1+i\) es raíz, también lo es \(1-i\). La ecuación característica es</p>
+<div class="formula-block">\[
+(r-2)^2(r-(1+i))(r-(1-i))=0.
+\]</div>
+<p>El factor complejo se agrupa:</p>
+<div class="formula-block">\[
+(r-1)^2+1.
+\]</div>
+<p>Por tanto:</p>
+<div class="formula-block">\[
+(r-2)^2\left((r-1)^2+1\right)=0.
+\]</div>
+<p>Solución general real:</p>
+<div class="formula-block">\[
+y=(C_1+C_2x)e^{2x}+e^x(C_3\cos x+C_4\sin x).
+\]</div></div>
+</details>
+<details class="accordion">
+<summary>22. Justificar reducción de orden</summary>
+<div class="accordion-content"><p>Si \(y_1\) es solución no trivial, se busca \(y=y_1v\). Al derivar,</p>
+<div class="formula-block">\[
+y'=y_1'v+y_1v',
+\]</div>
+<div class="formula-block">\[
+y''=y_1''v+2y_1'v'+y_1v''.
+\]</div>
+<p>Al sustituir en la ecuación homogénea, los términos con \(v\) se anulan porque \(y_1\) ya es solución. Queda una ecuación que depende de \(v'\) y \(v''\). Tomando \(u=v'\), queda una ecuación de primer orden para \(u\). Por eso se reduce el orden.</p></div>
+</details>
+<details class="accordion">
+<summary>23. Resolver \(y''+y=\sec x\tan x\)</summary>
+<div class="accordion-content"><p>Homogénea:</p>
+<div class="formula-block">\[
+y_h=C_1\cos x+C_2\sin x.
+\]</div>
+<p>Tomamos</p>
+<div class="formula-block">\[
+y_1=\cos x,\quad y_2=\sin x.
+\]</div>
+<p>Wronskiano:</p>
+<div class="formula-block">\[
+W=1.
+\]</div>
+<p>Para</p>
+<div class="formula-block">\[
+y''+y=g(x),
+\]</div>
+<p>con \(g(x)=\sec x\tan x\), una fórmula de variación de constantes da</p>
+<div class="formula-block">\[
+u_1'=-y_2g=-\sin x\sec x\tan x,
+\]</div>
+<div class="formula-block">\[
+u_2'=y_1g=\cos x\sec x\tan x=\tan x.
+\]</div>
+<p>Entonces</p>
+<div class="formula-block">\[
+u_2=\int \tan x,dx=-\ln|\cos x|.
+\]</div>
+<p>Además,</p>
+<div class="formula-block">\[
+u_1'=-\sin x\frac{1}{\cos x}\frac{\sin x}{\cos x}
+=-\frac{\sin^2x}{\cos^2x}
+=-\tan^2x.
+\]</div>
+<p>Como</p>
+<div class="formula-block">\[
+\tan^2x=\sec^2x-1,
+\]</div>
+<div class="formula-block">\[
+u_1=\int -\tan^2x,dx= -\tan x+x.
+\]</div>
+<p>Una particular es</p>
+<div class="formula-block">\[
+y_p=(x-\tan x)\cos x-\ln|\cos x|\sin x.
+\]</div>
+<p>Como \(-\tan x\cos x=-\sin x\), ese término se absorbe en la homogénea. Puede escribirse:</p>
+<div class="formula-block">\[
+y_p=x\cos x-\sin x\ln|\cos x|.
+\]</div>
+<p>Solución general:</p>
+<div class="formula-block">\[
+y=C_1\cos x+C_2\sin x+x\cos x-\sin x\ln|\cos x|.
+\]</div></div>
+</details>
+<details class="accordion">
+<summary>24. Ecuación diferencial con solución dada</summary>
+<div class="accordion-content"><p>Solución:</p>
+<div class="formula-block">\[
+y=C_1+C_2e^x+C_3xe^x+C_4e^{-x}\cos x+C_5e^{-x}\sin x.
+\]</div>
+<p>Raíces asociadas:</p>
+<div class="formula-block">\[
+0,\quad 1\text{ doble},\quad -1\pm i.
+\]</div>
+<p>Ecuación característica:</p>
+<div class="formula-block">\[
+r(r-1)^2((r+1)^2+1)=0.
+\]</div>
+<p>Como</p>
+<div class="formula-block">\[
+((r+1)^2+1)=r^2+2r+2,
+\]</div>
+<p>la ecuación diferencial es</p>
+<div class="formula-block">\[
+D(D-1)^2(D^2+2D+2)y=0.
+\]</div></div>
+</details>
+<details class="accordion">
+<summary>25. Funciones \(\sec^2x,3,\tan^2x\)</summary>
+<div class="accordion-content"><p>Se observa que</p>
+<div class="formula-block">\[
+\sec^2x=1+\tan^2x.
+\]</div>
+<p>Además \(g(x)=3\) es múltiplo de \(1\). Por tanto,</p>
+<div class="formula-block">\[
+\sec^2x=1+\tan^2x=\frac{1}{3}g(x)+h(x).
+\]</div>
+<p>Las tres funciones son linealmente dependientes. No pueden formar un sistema fundamental de tres soluciones. El mínimo orden posible para una ecuación homogénea que las tenga entre sus soluciones es \(2\), siempre que se tomen dos independientes, por ejemplo \(1\) y \(\tan^2x\), en un intervalo donde estén definidas.</p></div>
+</details>
+<details class="accordion">
+<summary>26. Teoría de la solución general homogénea</summary>
+<div class="accordion-content"><p>Una ecuación lineal homogénea de orden \(n\) tiene forma</p>
+<div class="formula-block">\[
+L(y)=0.
+\]</div>
+<p>Por la linealidad de \(L\), si \(y_1,\ldots,y_n\) son soluciones, cualquier combinación lineal también lo es. El conjunto de soluciones forma un espacio vectorial de dimensión \(n\). Por tanto, para construir la solución general hay que encontrar \(n\) soluciones linealmente independientes. Si esas soluciones son \(y_1,\ldots,y_n\), entonces</p>
+<div class="formula-block">\[
+y=C_1y_1+\cdots+C_ny_n
+\]</div>
+<p>contiene todas las soluciones.</p></div>
+</details>
+<details class="accordion">
+<summary>27. Papel del wronskiano</summary>
+<div class="accordion-content"><p>El wronskiano permite comprobar independencia lineal de funciones solución. Para dos funciones:</p>
+<div class="formula-block">\[
+W=y_1y_2'-y_1'y_2.
+\]</div>
+<p>Si el wronskiano no se anula en el intervalo, las funciones son independientes. En ecuaciones lineales homogéneas, esto permite decidir si las soluciones forman un sistema fundamental. También aparece en variación de constantes, porque el sistema para las derivadas de las constantes variables tiene como determinante el wronskiano.</p></div>
+</details>
+<details class="accordion">
+<summary>28. Método de ecuación característica</summary>
+<div class="accordion-content"><p>Para</p>
+<div class="formula-block">\[
+a_ny^{(n)}+\cdots+a_1y'+a_0y=0,
+\]</div>
+<p>se prueba</p>
+<div class="formula-block">\[
+y=e^{rx}.
+\]</div>
+<p>La sustitución da</p>
+<div class="formula-block">\[
+e^{rx}(a_nr^n+\cdots+a_1r+a_0)=0.
+\]</div>
+<p>Como \(e^{rx}\neq 0\), se obtiene la ecuación característica</p>
+<div class="formula-block">\[
+a_nr^n+\cdots+a_1r+a_0=0.
+\]</div>
+<p>Las raíces de este polinomio determinan la solución general.</p></div>
+</details>
+<details class="accordion">
+<summary>29. Comparar tipos de raíces</summary>
+<div class="accordion-content"><p>Una raíz real simple \(r\) aporta \(e^{rx}\). Una raíz real múltiple de orden \(m\) aporta</p>
+<div class="formula-block">\[
+e^{rx},xe^{rx},\ldots,x^{m-1}e^{rx}.
+\]</div>
+<p>Una pareja compleja \(\alpha\pm i\beta\) aporta</p>
+<div class="formula-block">\[
+e^{\alpha x}\cos\beta x,\quad e^{\alpha x}\sin\beta x.
+\]</div>
+<p>Si la pareja compleja tiene multiplicidad \(m\), aparecen además factores polinómicos hasta grado \(m-1\).</p></div>
+</details>
+<details class="accordion">
+<summary>30. Homogénea asociada, particular y solución general</summary>
+<div class="accordion-content"><p>Para una ecuación completa</p>
+<div class="formula-block">\[
+L(y)=F(x),
+\]</div>
+<p>se resuelve primero la homogénea asociada</p>
+<div class="formula-block">\[
+L(y)=0.
+\]</div>
+<p>Su solución general es \(y_h\). Después se busca una solución particular \(y_p\) de la completa. La solución general de la completa es</p>
+<div class="formula-block">\[
+y=y_h+y_p.
+\]</div>
+<p>La razón es que si \(L(y_p)=F(x)\) y \(L(y_h)=0\), entonces</p>
+<div class="formula-block">\[
+L(y_p+y_h)=F(x).
+\]</div></div>
+</details>
+<details class="accordion">
+<summary>31. Relación entre Cauchy, orden y constantes</summary>
+<div class="accordion-content"><p>Una ecuación de orden \(n\) produce una solución general con \(n\) constantes. El problema de Cauchy proporciona \(n\) condiciones iniciales para fijarlas. Por eso una ecuación de segundo orden necesita dos condiciones, y una de cuarto orden necesita cuatro.</p></div>
+</details>
+<details class="accordion">
+<summary>32. Relación entre independencia, wronskiano y sistema fundamental</summary>
+<div class="accordion-content"><p>Un sistema fundamental es un conjunto de soluciones independientes. La independencia puede comprobarse con el wronskiano. Si se tienen \(n\) soluciones de una ecuación de orden \(n\) y el wronskiano no se anula, forman sistema fundamental.</p></div>
+</details>
+<details class="accordion">
+<summary>33. Relación entre ecuación característica y operador diferencial</summary>
+<div class="accordion-content"><p>En coeficientes constantes, el operador diferencial puede escribirse como un polinomio en \(D\):</p>
+<div class="formula-block">\[
+L(D)=a_nD^n+\cdots+a_1D+a_0.
+\]</div>
+<p>Al aplicar (L\(D\)) a \(e^{rx}\), cada \(D\) actúa como multiplicación por \(r\). Por eso aparece el polinomio característico (L\(r\)).</p></div>
+</details>
+<details class="accordion">
+<summary>34. Relación entre raíces complejas y movimiento oscilatorio</summary>
+<div class="accordion-content"><p>Las raíces complejas \(\alpha\pm i\beta\) generan términos</p>
+<div class="formula-block">\[
+e^{\alpha x}\cos\beta x,\quad e^{\alpha x}\sin\beta x.
+\]</div>
+<p>La parte imaginaria \(\beta\) determina la oscilación. La parte real \(\alpha\) determina crecimiento o amortiguamiento exponencial.</p></div>
+</details>
+<details class="accordion">
+<summary>35. Relación entre reducción de orden y variación de constantes</summary>
+<div class="accordion-content"><p>Ambos métodos sustituyen constantes por funciones o introducen una función auxiliar. En reducción de orden se usa</p>
+<div class="formula-block">\[
+y=y_1v
+\]</div>
+<p>para encontrar nuevas soluciones de una homogénea. En variación de constantes se usa</p>
+<div class="formula-block">\[
+y_p=C_1(x)y_1+\cdots+C_n(x)y_n
+\]</div>
+<p>para encontrar una particular de una completa. Ambos dependen de conocer previamente soluciones de la homogénea.</p></div>
+</details>
+</div>
+</section>
+
+<section id="resumen" class="page">
+<div class="section-heading"><p class="section-kicker">Tema MM1</p><h2>Resumen final de repaso</h2></div>
+<div class="reading-block"><p>Ideas principales:</p>
+<ul>
+<li>Una ecuación de orden \(n\) necesita \(n\) condiciones iniciales.</li>
+<li>Una ecuación lineal homogénea tiene espacio de soluciones de dimensión \(n\).</li>
+<li>La solución general homogénea es combinación lineal de un sistema fundamental.</li>
+<li>El wronskiano comprueba independencia.</li>
+<li>Reducción de orden usa una solución conocida para encontrar otra.</li>
+<li>En coeficientes constantes, \(y=e^{rx}\) lleva a la ecuación característica.</li>
+<li>Las raíces determinan la forma de la solución.</li>
+</ul>
+<p>Conceptos imprescindibles:</p>
+<div class="formula-block">\[
+L(y)=0,\qquad L(y)=F(x),
+\]</div>
+<div class="formula-block">\[
+W(y_1,y_2)=y_1y_2'-y_1'y_2,
+\]</div>
+<div class="formula-block">\[
+y=C_1y_1+\cdots+C_ny_n,
+\]</div>
+<div class="formula-block">\[
+p(r)=0.
+\]</div>
+<p>Relaciones clave:</p>
+<ul>
+<li>orden \(\rightarrow\) número de constantes,</li>
+<li>linealidad \(\rightarrow\) superposición,</li>
+<li>independencia \(\rightarrow\) sistema fundamental,</li>
+<li>wronskiano \(\rightarrow\) validación de independencia,</li>
+<li>homogénea \(\rightarrow\) base de la completa,</li>
+<li>raíces \(\rightarrow\) estructura de la solución.</li>
+</ul>
+<p>Errores que evitar:</p>
+<ul>
+<li>aplicar característica con coeficientes variables,</li>
+<li>olvidar factores \(x\) en raíces múltiples,</li>
+<li>dejar solución compleja si se pide real,</li>
+<li>perder constantes,</li>
+<li>confundir solución particular con solución general,</li>
+<li>usar superposición directamente en ecuaciones completas.</li>
+</ul></div>
+</section>
+
+<section id="checklist" class="page">
+<div class="section-heading"><p class="section-kicker">Tema MM1</p><h2>Checklist de dominio</h2></div>
+<div class="reading-block checklist-block">
+<ul>
+<li>Si no puedes distinguir orden, grado, linealidad y homogeneidad, falta repasar clasificación básica de EDO.</li>
+<li>Si no puedes explicar por qué una ecuación de orden \(n\) tiene \(n\) constantes, falta repasar problema de Cauchy.</li>
+<li>Si confundes homogénea con completa, revisar \(L(y)=0\) frente a \(L(y)=F(x)\).</li>
+<li>Si no puedes definir operador diferencial lineal, falta repasar linealidad.</li>
+<li>Si no puedes explicar por qué la suma de soluciones funciona en homogéneas, falta repasar superposición.</li>
+<li>Si confundes independencia lineal con que las funciones “se parezcan”, revisar definición formal.</li>
+<li>Si no puedes calcular \(W(y_1,y_2)\), falta repasar determinantes \(2\times2\).</li>
+<li>Si no sabes para qué sirve el wronskiano, revisar sistema fundamental.</li>
+<li>Si resuelves una ecuación de orden \(n\) y obtienes menos de \(n\) constantes, revisar raíces múltiples o soluciones perdidas.</li>
+<li>Si ante \(y''-5y'+6y=0\) no escribes \(r^2-5r+6=0\), falta repasar ecuación característica.</li>
+<li>Si ante raíz doble \(r=a\) no escribes \((C_1+C_2x)e^{ax}\), falta repasar multiplicidad.</li>
+<li>Si ante \(r=\alpha\pm i\beta\) no escribes \(e^{\alpha x}(C_1\cos\beta x+C_2\sin\beta x)\), falta repasar Euler.</li>
+<li>Si aplicas ecuación característica a \(y''+xy'+y=0\), revisar condición de coeficientes constantes.</li>
+<li>Si no puedes usar \(y=y_1v\), falta repasar reducción de orden.</li>
+<li>Si no puedes plantear \(y_p=u_1y_1+u_2y_2\), falta repasar variación de constantes.</li>
+<li>Si puedes resolver homogéneas de segundo, tercero y cuarto orden con raíces simples, múltiples y complejas, el núcleo algebraico está asentado.</li>
+<li>Si puedes resolver un PVI aplicando condiciones iniciales sin perder constantes, el tema está operativo para examen.</li>
+<li>Si puedes explicar en 5 líneas la relación entre wronskiano, independencia y sistema fundamental, el capítulo está conceptualmente dominado.</li>
+</ul>
+<p>[Confianza: Alta]</p>
+</div>
+</section>
+  </main>
+</body>
+</html>

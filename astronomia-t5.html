@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Astronomía — Tema 5 — Tiempo astronómico</title>
+<link rel="icon" type="image/png" sizes="32x32" href="assets/icons/icon-32.png" />
+<link rel="icon" type="image/png" sizes="50x50" href="assets/icons/icon-50.png" />
+<link rel="apple-touch-icon" sizes="100x100" href="assets/icons/icon-100.png" />
+<meta name="theme-color" content="#172554" />
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+<link rel="stylesheet" href="assets/styles.css" />
+<script defer src="assets/app.js"></script>
+</head>
+<body class="subject-astronomia">
+<div class="wrap">
+<header class="cover">
+  <div class="top-actions">
+    <a class="back-link" href="index.html">← Volver al índice</a>
+  </div>
+  <p class="eyebrow">UNED Física · Curso de Astronomía · Tema 5</p>
+  <h1>Guía de estudio — Curso de Astronomía</h1>
+  <p class="subtitle">Introducción a la Astronomía: tiempo astronómico, escalas temporales, calendarios y fecha juliana.</p>
+  <div class="chips">
+    <span class="chip">Astronomía</span>
+    <span class="chip">Tema 5</span>
+    <span class="chip">tiempo sidéreo</span>
+    <span class="chip">calendarios</span>
+    <span class="chip">MathJax</span>
+    <span class="chip">estado: maquetado</span>
+  </div>
+</header>
+
+<div class="toolbar no-print">
+  <nav>
+    <a href="#mapa">Mapa</a>
+    <a href="#prerrequisitos">Prerrequisitos</a>
+    <a href="#idea-central">Idea central</a>
+    <a href="#desarrollo-completo">Desarrollo</a>
+    <a href="#conceptos-clave">Conceptos</a>
+    <a href="#errores-habituales">Errores</a>
+    <a href="#preguntas-orientadas-a-examen">Preguntas</a>
+    <a href="#respuestas-modelo">Respuestas</a>
+    <a href="#resumen-final-de-repaso">Resumen</a>
+    <a href="#checklist-de-dominio">Checklist</a>
+  </nav>
+  <div class="toolbar-actions">
+    <button class="btn" onclick="printReady()">Imprimir / guardar PDF</button>
+    <button class="btn secondary" onclick="openAllDetails()">Abrir todo</button>
+    <button class="btn secondary" onclick="closeAllDetails()">Cerrar acordeones</button>
+  </div>
+</div>
+
+<main>
+<section class="page map-page" id="mapa">
+  <div class="page-head">
+    <h2>Mapa clicable</h2>
+    <p class="section-lead">Ruta de lectura: de la rotación terrestre al tiempo sidéreo, el tiempo universal y la fecha juliana.</p>
+  </div>
+  <div class="concept-map">
+    <a class="map-node" href="#idea-central"><span>Problema central</span><small>fechar acontecimientos · medir intervalos · elegir escala</small></a>
+    <a class="map-node" href="#desarrollo-medir-tiempo-epoca-e-intervalo"><span>Época e intervalo</span><small>cronológico · cronométrico · reloj</small></a>
+    <a class="map-node" href="#desarrollo-tiempo-sidereo"><span>Tiempo sidéreo</span><small>punto vernal · ángulo horario · culminación</small></a>
+    <a class="map-node" href="#desarrollo-tiempo-solar-verdadero-tiempo-medio-y-ecuacion-del-tiempo"><span>Tiempo solar</span><small>Sol verdadero · Sol medio · ecuación del tiempo</small></a>
+    <a class="map-node" href="#desarrollo-tiempo-civil-local-y-tiempo-universal"><span>Tiempo universal</span><small>Greenwich · TU0 · TU1 · TU2</small></a>
+    <a class="map-node" href="#desarrollo-relacion-entre-tiempo-sidereo-y-tiempo-medio"><span>Conversión TS/TU</span><small>día sidéreo · Intsa · Intmea</small></a>
+    <a class="map-node" href="#desarrollo-escalas-uniformes-te-tai-tt-tdb-y-tuc"><span>Escalas uniformes</span><small>TAI · TT · TDB · TUC</small></a>
+    <a class="map-node" href="#desarrollo-calendarios-fecha-juliana-y-epoca-j2000-0"><span>Calendarios</span><small>gregoriano · JD · MJD · J2000,0</small></a>
+    <a class="map-node" href="#preguntas-orientadas-a-examen"><span>Examen</span><small>errores · preguntas · respuestas modelo · checklist</small></a>
+  </div>
+</section>
+
+<section class="page" id="prerrequisitos">
+  <div class="page-head">
+    <h2>1. Prerrequisitos mínimos</h2>
+    <p class="section-lead">Base geométrica y temporal necesaria para seguir el capítulo.</p>
+  </div>
+<div class="grid cards-grid">
+<article class="definition-card"><h3>Esfera celeste</h3><p>Definición breve: modelo geométrico en el que proyectamos las direcciones de los astros sobre una esfera imaginaria centrada en el observador o en la Tierra.</p><p>Por qué es necesario: el tiempo sidéreo y el ángulo horario se definen como ángulos sobre esa esfera.</p><p>Ejemplo: decir que una estrella “culmina” significa que pasa por el meridiano local en la esfera celeste.</p></article>
+<article class="definition-card"><h3>Meridiano del lugar</h3><p>Definición breve: círculo máximo que pasa por el polo celeste y el cenit del observador.</p><p>Por qué es necesario: los tiempos astronómicos ligados a la rotación terrestre se miden por pasos de puntos de referencia por el meridiano.</p><p>Ejemplo: el mediodía solar verdadero ocurre cuando el Sol verdadero cruza el meridiano local.</p></article>
+<article class="definition-card"><h3>Ángulo horario, H</h3><p>Definición breve: ángulo medido sobre el ecuador celeste desde el meridiano local hasta el círculo horario del astro.</p><p>Por qué es necesario: el tiempo sidéreo y el tiempo solar se expresan mediante ángulos horarios.</p><p>Ejemplo: si una estrella tiene ascensión recta α y el tiempo sidéreo local es TS, entonces \(H = \mathrm{TS} - \alpha\).</p></article>
+<article class="definition-card"><h3>Ascensión recta, α</h3><p>Definición breve: coordenada ecuatorial medida sobre el ecuador celeste desde el punto vernal.</p><p>Por qué es necesario: conecta el tiempo sidéreo con la posición de los astros.</p><p>Ejemplo: una estrella culmina cuando \(\mathrm{TS} = \alpha\).</p></article>
+<article class="definition-card"><h3>Punto vernal o equinoccio γ</h3><p>Definición breve: punto de intersección entre ecuador celeste y eclíptica usado como origen de ascensiones rectas.</p><p>Por qué es necesario: el tiempo sidéreo se define a partir del ángulo horario de este punto.</p><p>Ejemplo: el tiempo sidéreo local medio es el ángulo horario del equinoccio medio.</p></article>
+<article class="definition-card"><h3>Longitud geográfica, λ</h3><p>Definición breve: coordenada terrestre que mide la separación angular respecto al meridiano de Greenwich.</p><p>Por qué es necesario: la hora astronómica local depende del meridiano; para pasar de Greenwich al observador aparece λ.</p><p>Ejemplo: en el convenio usado en el libro, el tiempo sidéreo local se obtiene sumando la longitud al tiempo sidéreo de Greenwich.</p></article>
+<article class="definition-card"><h3>Rotación y traslación de la Tierra</h3><p>Definición breve: la Tierra gira sobre su eje y orbita alrededor del Sol.</p><p>Por qué es necesario: la rotación genera el día; la traslación explica que el día sidéreo y el día solar medio no duren lo mismo.</p><p>Ejemplo: el día sidéreo es unos cuatro minutos más corto que el día solar medio.</p></article>
+<article class="definition-card"><h3>Precesión y nutación</h3><p>Definición breve: movimientos lentos del eje terrestre y del ecuador celeste.</p><p>Por qué es necesario: hacen que el equinoccio no sea un punto perfectamente fijo.</p><p>Ejemplo: por eso se distingue entre tiempo sidéreo medio y aparente.</p><p>---</p></article>
+</div>
+</section>
+<section class="page" id="idea-central">
+  <div class="page-head">
+    <h2>2. Idea central del capítulo</h2>
+    <p class="section-lead">Qué problema resuelve el capítulo y por qué no basta con la hora civil.</p>
+  </div>
+<div class="key-box"><p>El capítulo estudia cómo se mide el tiempo en astronomía y por qué no basta con decir “hora civil”. En astronomía interesa fijar cuándo ocurre un fenómeno y medir cuánto tiempo transcurre entre dos fenómenos. El libro distingue explícitamente el aspecto cronológico, que exige una época origen, y el aspecto cronométrico, que exige medir intervalos con precisión. Esta distinción es básica porque un eclipse, una ocultación, una culminación o una posición planetaria necesitan una fecha bien definida, mientras que una duración necesita una escala de tiempo fiable.</p></div>
+<div class="reading-block"><p>El capítulo parte de una idea sencilla: usar la rotación terrestre como reloj natural. Pero enseguida aparecen tres problemas. Primero, la hora depende del meridiano del observador, de modo que inicialmente es una hora local. Segundo, hay que elegir un punto de referencia celeste: el Sol, el Sol medio o el equinoccio. Tercero, la rotación de la Tierra no es perfectamente uniforme, de modo que no sirve como reloj absoluto para todos los problemas de precisión.</p></div>
+<div class="reading-block"><p>La parte más importante para examen es entender la familia de tiempos astronómicos: tiempo sidéreo, tiempo solar verdadero, tiempo solar medio, tiempo universal, tiempo atómico y tiempo universal coordinado. El tiempo sidéreo permite relacionar coordenadas ecuatoriales con visibilidad local; el tiempo solar y el tiempo medio conectan el movimiento aparente del Sol con la vida civil; el calendario y la fecha juliana permiten nombrar épocas sin ambigüedad.</p></div>
+<div class="reading-block"><p>El capítulo también enseña una conversión fundamental: pasar de tiempo universal a tiempo sidéreo local. Esta conversión es central porque permite saber qué ascensión recta está en el meridiano en un instante dado. El libro establece la relación entre día medio y día sidéreo a partir del año trópico: el día sidéreo resulta más corto que el día medio, aproximadamente \(23\,\mathrm{h} 56\,\mathrm{min} 4{,}09\,\mathrm{s}\) de tiempo medio.</p></div>
+<div class="reading-block"><p>Por último, el capítulo introduce los calendarios y la fecha juliana. El calendario sirve para la vida civil, pero es incómodo para cálculos astronómicos porque los meses tienen distinta duración y existen años bisiestos. La fecha juliana resuelve ese problema contando días de forma continua.</p></div>
+<div class="reading-block"><p>---</p></div>
+</section>
+<section class="page" id="desarrollo-completo">
+  <div class="page-head">
+    <h2>3. Desarrollo completo del capítulo</h2>
+    <p class="section-lead">Escalas de tiempo, conversiones, calendarios y fecha juliana.</p>
+  </div>
+<h3 id="desarrollo-medir-tiempo-epoca-e-intervalo">3.1. Medir tiempo: época e intervalo</h3>
+<div class="reading-block"><p>El capítulo comienza separando dos usos del tiempo. El primero es fechar un acontecimiento: por ejemplo, decir que una observación se hizo el 2000 enero 1 a las 12 h. Para eso hace falta una época origen y una forma de contar ciclos desde ella. El segundo es medir un intervalo: por ejemplo, cuánto dura una ocultación o cuántos segundos transcurren entre dos contactos.</p></div>
+<div class="reading-block"><p>Esta separación importa porque no todos los relojes sirven igual para ambas tareas. Un reloj civil puede bastar para ordenar una agenda, pero no para calcular con precisión posiciones astronómicas. En astronomía se necesita saber no solo la hora marcada, sino también qué escala de tiempo se está usando.</p></div>
+<div class="reading-block"><p>La rotación terrestre parece un reloj natural: cada vez que un punto de referencia cruza el meridiano, se completa un ciclo. Pero ese reloj depende de qué referencia se elija. Si la referencia es el punto vernal, aparece el tiempo sidéreo. Si la referencia es el Sol, aparece el tiempo solar. Si se usa un Sol ficticio que se mueve uniformemente, aparece el tiempo solar medio.</p></div>
+<h3 id="desarrollo-relojes-basados-en-la-rotacion-terrestre">3.2. Relojes basados en la rotación terrestre</h3>
+<div class="reading-block"><p>El libro describe un “reloj natural” basado en la rotación de la Tierra. El observador tiene un meridiano local y mide el paso de un punto de referencia por ese meridiano. Esta idea es geométricamente simple, pero plantea dificultades: la hora es local, la referencia celeste puede moverse y la rotación terrestre no es perfectamente uniforme.</p></div>
+<div class="reading-block"><p>El carácter local es esencial. Dos observadores situados en longitudes distintas no tienen el mismo meridiano, por tanto no ven culminar el Sol o una estrella al mismo tiempo. De ahí que haya que introducir Greenwich como referencia internacional para construir escalas universales.</p></div>
+<h3 id="desarrollo-tiempo-sidereo">3.3. Tiempo sidéreo</h3>
+<div class="reading-block"><p>El tiempo sidéreo se define tomando como referencia el punto vernal o equinoccio. En términos prácticos, el tiempo sidéreo local es el ángulo horario del equinoccio. Esta definición lo convierte en la escala natural para usar coordenadas ecuatoriales.</p></div>
+<h3>La relación fundamental es</h3>
+<div class="formula-block">\[H = \mathrm{TS} - \alpha\]</div>
+<div class="reading-block"><p>donde \(H\) es el ángulo horario del astro, \(\mathrm{TS}\) el tiempo sidéreo local y \(\alpha\) su ascensión recta.</p></div>
+<div class="reading-block"><p>La consecuencia inmediata es muy importante: cuando un astro culmina, su ángulo horario es cero, así que:</p></div>
+<div class="formula-block">\[\mathrm{TS} = \alpha\]</div>
+<div class="reading-block"><p>Por eso, si se conoce el tiempo sidéreo local, se sabe qué ascensión recta está pasando por el meridiano. Esta es una de las ideas más examinables del capítulo.</p></div>
+<div class="reading-block"><p>El libro distingue tiempo sidéreo aparente y tiempo sidéreo medio. El aparente usa el equinoccio verdadero de la fecha; el medio usa el equinoccio medio, corregido por precesión pero no por la parte periódica de la nutación. Para la mayoría de problemas básicos se trabaja con tiempo sidéreo medio.</p></div>
+<h3 id="desarrollo-tiempo-solar-verdadero-tiempo-medio-y-ecuacion-del-tiempo">3.4. Tiempo solar verdadero, tiempo medio y ecuación del tiempo</h3>
+<div class="reading-block"><p>Si se toma el Sol verdadero como referencia, se obtiene el tiempo solar verdadero. Es la idea que subyace a un reloj de Sol: la posición aparente del Sol respecto al meridiano local marca la hora.</p></div>
+<div class="reading-block"><p>Pero el Sol verdadero no avanza uniformemente sobre la esfera celeste. La órbita terrestre no es circular uniforme y el movimiento aparente del Sol se proyecta sobre el ecuador celeste de forma no uniforme. Por eso se introduce el Sol medio, un punto ficticio que se mueve uniformemente y permite definir el tiempo solar medio.</p></div>
+<h3>La diferencia entre el tiempo solar verdadero y el tiempo medio es la ecuación del tiempo. En la notación del libro</h3>
+<div class="formula-block">\[\mathrm{Ec.T.} = H_{\odot} - \mathrm{Hm}\]</div>
+<div class="reading-block"><p>donde \(H_{\odot}\) es el ángulo horario del Sol verdadero y \(\mathrm{Hm}\) el del Sol medio. Por tanto, para pasar de la hora indicada por un reloj solar a tiempo medio hay que aplicar esta corrección con el signo adecuado. El libro muestra que la ecuación del tiempo varía a lo largo del año, con máximos, mínimos y ceros.</p></div>
+<div class="reading-block"><p>La consecuencia práctica es clara: el mediodía solar verdadero no coincide todos los días con las 12 h de tiempo medio. No es un fallo del reloj; es una diferencia entre el Sol real y el Sol medio.</p></div>
+<h3 id="desarrollo-tiempo-civil-local-y-tiempo-universal">3.5. Tiempo civil local y tiempo universal</h3>
+<div class="reading-block"><p>El tiempo medio, definido mediante el ángulo horario del Sol medio, tiene un problema para la vida civil: el día astronómico comenzaría al mediodía, cuando el ángulo horario del Sol medio es cero. La vida civil, en cambio, comienza el día a medianoche. Para corregirlo se añade un desfase de 12 h, obteniendo el tiempo civil local:</p></div>
+<div class="formula-block">\[Tc = \mathrm{Hm} + 12\,\mathrm{h}\]</div>
+<div class="reading-block"><p>El problema es que sigue siendo local. Dos ciudades con longitudes distintas tendrán tiempos civiles locales distintos. Para evitarlo, se toma como referencia el meridiano de Greenwich y se define el tiempo universal. El libro explica que el antiguo uso de GMT es ambiguo y desaconsejable, porque históricamente se ha usado con significados distintos.</p></div>
+<div class="reading-block"><p>La idea que debe quedar fijada es esta: el tiempo universal nace de llevar el tiempo civil al meridiano de Greenwich. Después aparecen refinamientos como \(\mathrm{\mathrm{TU}0}\), \(\mathrm{\mathrm{TU}1}\) y \(\mathrm{\mathrm{TU}2}\), relacionados con la corrección por movimiento del polo y con irregularidades de la rotación terrestre.</p></div>
+<h3 id="desarrollo-ano-sidereo-ano-tropico-y-ano-anomalistico">3.6. Año sidéreo, año trópico y año anomalístico</h3>
+<div class="reading-block"><p>El capítulo introduce varios tipos de año según el punto de referencia elegido. El año anomalístico se mide entre pasos sucesivos por el perigeo. El año sidéreo se mide respecto a un equinoccio de época fija. El año trópico se mide entre dos pasos consecutivos por el equinoccio medio y es el más importante para las estaciones.</p></div>
+<div class="reading-block"><p>El año trópico dura aproximadamente \(365{,}2422\) días medios. Como no contiene un número entero de días, surgen los problemas de calendario y la necesidad de años bisiestos. El año juliano, por su parte, adopta convencionalmente \(365{,}25\) días medios.</p></div>
+<div class="reading-block"><p>Esta distinción es importante porque el calendario civil intenta seguir el año trópico, no el año sidéreo. Las estaciones dependen del Sol respecto al equinoccio, no de su retorno exacto respecto a las estrellas fijas.</p></div>
+<h3 id="desarrollo-relacion-entre-tiempo-sidereo-y-tiempo-medio">3.7. Relación entre tiempo sidéreo y tiempo medio</h3>
+<div class="reading-block"><p>La Tierra completa una vuelta respecto al equinoccio antes de que el Sol medio vuelva al meridiano. Por eso el día sidéreo es más corto que el día medio.</p></div>
+<h3>El libro obtiene la relación</h3>
+<div class="formula-block">\[(\mathrm{At} + 1) días sidéreos = \mathrm{At} días medios\]</div>
+<div class="reading-block"><p>donde \(\mathrm{At}\) es el año trópico expresado en días medios.</p></div>
+<h3>Usando \(\mathrm{At} \approx 365{,}2422\), resulta</h3>
+<div class="formula-block">\[1 día sidéreo = 0{,}9972696 días medios = 23\,\mathrm{h} 56\,\mathrm{min} 4{,}09053\,\mathrm{s}\]</div>
+<div class="reading-block"><p>y</p></div>
+<div class="formula-block">\[1 día medio = 1{,}0027379 días sidéreos\]</div>
+<div class="reading-block"><p>Esta es una de las fórmulas clave del capítulo. Permite convertir intervalos de tiempo medio en intervalos de tiempo sidéreo y viceversa.</p></div>
+<h3>El libro introduce dos funciones</h3>
+<div class="formula-block">\[\operatorname{Intsa}(x) = 1{,}0027379 x\]</div>
+<div class="reading-block"><p>para convertir intervalo medio en intervalo sidéreo, y</p></div>
+<div class="formula-block">\[\operatorname{Intmea}(x) = 0{,}9972696 x\]</div>
+<div class="reading-block"><p>para convertir intervalo sidéreo en intervalo medio.</p></div>
+<h3 id="desarrollo-conversion-entre-tiempo-universal-y-tiempo-sidereo">3.8. Conversión entre tiempo universal y tiempo sidéreo</h3>
+<h3>La relación práctica más importante es</h3>
+<div class="formula-block">\[\mathrm{TS} = \mathrm{TSMG0} + \lambda + \operatorname{Intsa}(\mathrm{TU})\]</div>
+<div class="reading-block"><p>donde \(\mathrm{TS}\) es el tiempo sidéreo local, \(\mathrm{TSMG0}\) es el tiempo sidéreo medio en Greenwich a las 0 h de tiempo universal, \(\lambda\) es la longitud del observador con el convenio del libro, y \(\mathrm{TU}\) es el tiempo universal transcurrido desde las 0 h.</p></div>
+<h3>La inversa es</h3>
+<div class="formula-block">\[\mathrm{TU} = \operatorname{Intmea}(\mathrm{TS} - \mathrm{TSMG0} - \lambda)\]</div>
+<div class="reading-block"><p>Estas fórmulas condensan todo el sentido operativo del capítulo. Primero se toma el tiempo sidéreo de Greenwich al inicio del día. Después se corrige por longitud. Finalmente se añade el intervalo transcurrido desde las 0 h, convertido de tiempo medio a tiempo sidéreo.</p></div>
+<div class="reading-block"><p>En problemas de examen, el error típico es sumar directamente horas civiles sin convertir el intervalo medio en sidéreo. Otro error común es olvidar reducir el resultado módulo 24 h.</p></div>
+<h3 id="desarrollo-escalas-uniformes-te-tai-tt-tdb-y-tuc">3.9. Escalas uniformes: TE, TAI, TT, TDB y TUC</h3>
+<div class="reading-block"><p>La rotación terrestre no es perfectamente uniforme. Durante mucho tiempo se tomó el tiempo universal como si fuera uniforme, pero la comparación con la Mecánica Celeste mostró irregularidades. Por ello se introdujeron escalas de tiempo más uniformes, como el tiempo de efemérides.</p></div>
+<h3>El tiempo atómico internacional, TAI, se basa en relojes atómicos y se considera una escala muy uniforme. El libro relaciona el tiempo de efemérides con el TAI mediante</h3>
+<div class="formula-block">\[\mathrm{TE} = \mathrm{TAI} + 32{,}184\,\mathrm{s}\]</div>
+<div class="reading-block"><p>Después se introduce el tiempo dinámico terrestre, TT, como continuación del tiempo de efemérides, y el tiempo dinámico baricéntrico, TDB, para ecuaciones referidas al baricentro del Sistema Solar.</p></div>
+<div class="reading-block"><p>Para la vida civil se usa el tiempo universal coordinado, TUC. Está ligado al TAI, pero se mantiene próximo a TU1 mediante segundos intercalares. El libro indica que \(DUT1 = \mathrm{\mathrm{TU}1} - \mathrm{TUC}\) debe mantenerse por debajo de 0,9 s, y que \(\mathrm{TAI} - \mathrm{TUC}\) debe ser un número entero de segundos.</p></div>
+<h3 id="desarrollo-calendarios-fecha-juliana-y-epoca-j2000-0">3.10. Calendarios, fecha juliana y época J2000,0</h3>
+<div class="reading-block"><p>El calendario intenta combinar días y años para fechar épocas. Como el año trópico no dura un número entero de días, el calendario necesita reglas de ajuste. El calendario juliano usa un ciclo de tres años comunes y uno bisiesto, con duración media de \(365{,}25\) días. Eso se aproxima al año trópico, pero acumula casi un día de error cada 128 años.</p></div>
+<div class="reading-block"><p>La reforma gregoriana corrigió el desfase acumulado eliminando diez días en 1582 y modificó la regla de los bisiestos: los años acabados en 00 no son bisiestos salvo que sean múltiplos de 400. Así, 1900 no fue bisiesto, pero 2000 sí. La duración media resultante es \(365{,}2425\) días.</p></div>
+<h3>Para cálculos astronómicos se prefiere la fecha juliana, JD, porque cuenta días de forma continua. El número de día juliano, JDN, es el número entero de días transcurridos desde el origen; la fecha juliana añade la fracción de día correspondiente. La fecha juliana modificada se define como</h3>
+<div class="formula-block">\[\mathrm{MJD} = \mathrm{JD} - 2\,400\,000{,}5\]</div>
+<div class="reading-block"><p>y permite manejar menos cifras y hacer comenzar el día a medianoche.</p></div>
+<div class="reading-block"><p>La época estándar moderna es \(\mathrm{J2000}{,}0\), definida como 2000 enero 1 a las 12 TDB, equivalente a \(\mathrm{JD} 2\,451\,545{,}0\). Desde ella se miden muchos intervalos mediante siglos julianos.</p></div>
+<div class="reading-block"><p>---</p></div>
+</section>
+<section class="page" id="conceptos-clave">
+  <div class="page-head">
+    <h2>4. Conceptos clave</h2>
+    <p class="section-lead">Definiciones operativas con relación y posible forma de examen.</p>
+  </div>
+<div class="grid cards-grid">
+<article class="definition-card"><h3>Tiempo cronológico</h3><p>Definición precisa: uso del tiempo para situar un acontecimiento respecto a una época origen.</p><p>Explicación: permite decir cuándo ocurrió algo. Requiere una escala y una referencia inicial.</p><p>Ejemplo: “2000 enero 1 a las 12 h TDB”.</p><p>Relación: se conecta con calendario, fecha juliana y época J2000,0.</p><p>Posible examen: “Distinga entre aspecto cronológico y cronométrico del tiempo”.</p></article>
+<article class="definition-card"><h3>Tiempo cronométrico</h3><p>Definición precisa: uso del tiempo para medir intervalos entre acontecimientos.</p><p>Explicación: no siempre exige una fecha absoluta, pero sí un reloj uniforme y sincronizado.</p><p>Ejemplo: duración de 12,4 s entre dos contactos de una ocultación.</p><p>Relación: se conecta con estado y marcha de un reloj.</p><p>Posible examen: “Explique por qué la sincronización es esencial al medir intervalos”.</p></article>
+<article class="definition-card"><h3>Tiempo sidéreo</h3><p>Definición precisa: tiempo asociado al ángulo horario del punto vernal.</p><p>Explicación: mide la rotación terrestre respecto al equinoccio y es la escala natural para coordenadas ecuatoriales.</p><p>Ejemplo: una estrella de ascensión recta \(\alpha = 5\,\mathrm{h}\) culmina cuando \(\mathrm{TS} = 5\,\mathrm{h}\).</p><p>Relación: \(H = \mathrm{TS} - \alpha\).</p><p>Posible examen: “Demuestre o use la relación entre tiempo sidéreo, ascensión recta y ángulo horario”.</p></article>
+<article class="definition-card"><h3>Tiempo sidéreo medio</h3><p>Definición precisa: tiempo sidéreo referido al equinoccio medio.</p><p>Explicación: omite la parte periódica pequeña de la nutación y se usa en cálculos habituales.</p><p>Ejemplo: \(\mathrm{TSMG0}\) tabulado en almanaques.</p><p>Relación: se distingue del tiempo sidéreo aparente.</p><p>Posible examen: “Diferencie tiempo sidéreo medio y aparente”.</p></article>
+<article class="definition-card"><h3>Tiempo solar verdadero</h3><p>Definición precisa: tiempo basado en el ángulo horario del Sol verdadero.</p><p>Explicación: corresponde a la hora indicada por un reloj solar ideal.</p><p>Ejemplo: el mediodía solar verdadero ocurre cuando el Sol cruza el meridiano.</p><p>Relación: se compara con el tiempo medio mediante la ecuación del tiempo.</p><p>Posible examen: “Explique por qué el tiempo solar verdadero no es uniforme”.</p></article>
+<article class="definition-card"><h3>Sol medio y tiempo solar medio</h3><p>Definición precisa: tiempo definido mediante un Sol ficticio que se mueve uniformemente.</p><p>Explicación: corrige las irregularidades del Sol verdadero y sirve como base del tiempo civil.</p><p>Ejemplo: el día medio tiene 24 h de tiempo medio.</p><p>Relación: se conecta con la ecuación del tiempo.</p><p>Posible examen: “¿Por qué se introduce el Sol medio?”</p></article>
+<article class="definition-card"><h3>Ecuación del tiempo</h3><p>Definición precisa: diferencia entre el ángulo horario del Sol verdadero y el del Sol medio, según la convención del libro.</p><p>Explicación: permite pasar de tiempo solar verdadero a tiempo medio.</p><p>Ejemplo: si un reloj solar no coincide con el reloj medio, la diferencia se debe a esta ecuación.</p><p>Relación: une tiempo solar verdadero y tiempo solar medio.</p><p>Posible examen: “Defina la ecuación del tiempo e indique su uso”.</p></article>
+<article class="definition-card"><h3>Tiempo universal, TU</h3><p>Definición precisa: tiempo civil referido al meridiano de Greenwich.</p><p>Explicación: elimina el carácter local del tiempo civil.</p><p>Ejemplo: una observación se registra en TU para que sea comparable globalmente.</p><p>Relación: se subdivide en TU0, TU1 y TU2 según correcciones aplicadas.</p><p>Posible examen: “Explique por qué se introduce el tiempo universal”.</p></article>
+<article class="definition-card"><h3>Tiempo universal coordinado, TUC</h3><p>Definición precisa: escala civil basada en relojes atómicos pero mantenida próxima a TU1 mediante segundos intercalares.</p><p>Explicación: combina uniformidad práctica con compatibilidad con la rotación terrestre.</p><p>Ejemplo: las señales horarias oficiales se basan en TUC.</p><p>Relación: se conecta con TAI mediante una diferencia entera de segundos.</p><p>Posible examen: “Explique qué condiciones cumple el TUC”.</p></article>
+<article class="definition-card"><h3>Día sidéreo</h3><p>Definición precisa: intervalo entre dos pasos consecutivos del equinoccio por el meridiano.</p><p>Explicación: es más corto que el día medio porque la Tierra avanza en su órbita mientras rota.</p><p>Ejemplo: \(1 \mathrm{d.s.} \approx 23\,\mathrm{h} 56\,\mathrm{min} 4\,\mathrm{s}\) de tiempo medio.</p><p>Relación: se compara con el día medio mediante el año trópico.</p><p>Posible examen: “¿Por qué el día sidéreo es más corto que el día solar medio?”</p></article>
+<article class="definition-card"><h3>Año trópico</h3><p>Definición precisa: intervalo entre dos pasos consecutivos del Sol por el equinoccio medio.</p><p>Explicación: es el año relevante para las estaciones y los calendarios.</p><p>Ejemplo: \(\mathrm{At} \approx 365{,}2422\) días medios.</p><p>Relación: fundamenta el calendario gregoriano.</p><p>Posible examen: “Distinga año trópico, sidéreo y anomalístico”.</p></article>
+<article class="definition-card"><h3>Fecha juliana, JD</h3><p>Definición precisa: cuenta continua de días más fracción de día desde un origen convencional.</p><p>Explicación: evita la complejidad de meses, años bisiestos y reformas de calendario.</p><p>Ejemplo: J2000,0 corresponde a \(\mathrm{JD} 2451545{,}0\).</p><p>Relación: se conecta con MJD y siglos julianos.</p><p>Posible examen: “Explique por qué se usa la fecha juliana en astronomía”.</p><p>---</p></article>
+</div>
+</section>
+<section class="page" id="relaciones-entre-ideas">
+  <div class="page-head">
+    <h2>5. Relaciones entre ideas</h2>
+    <p class="section-lead">Cadena conceptual que conecta rotación, meridiano, tiempo y calendario.</p>
+  </div>
+<h3>La estructura conceptual del capítulo puede verse como una cadena</h3>
+<div class="formula-block">\[rotación terrestre → paso por el meridiano → ángulo horario → tiempo astronómico\]</div>
+<div class="reading-block"><p>Si el punto de referencia es el equinoccio, se obtiene tiempo sidéreo. Si el punto de referencia es el Sol verdadero, se obtiene tiempo solar verdadero. Si se sustituye el Sol real por un Sol ficticio uniforme, se obtiene tiempo medio. Por tanto, la diferencia entre las escalas no es arbitraria: procede de elegir distintas referencias sobre la esfera celeste.</p></div>
+<div class="reading-block"><p>La relación entre tiempo sidéreo y coordenadas ecuatoriales es jerárquicamente central. Primero se define el tiempo sidéreo como ángulo horario del equinoccio. Después, como la ascensión recta se mide desde el equinoccio, aparece la relación \(H = \mathrm{TS} - \alpha\). De ella se deduce la condición de culminación \(\mathrm{TS} = \alpha\).</p></div>
+<div class="reading-block"><p>El tiempo solar verdadero y el tiempo medio se oponen por uniformidad. El tiempo solar verdadero sigue al Sol real; el tiempo medio sigue a un Sol ficticio uniforme. La ecuación del tiempo es la herramienta que los conecta.</p></div>
+<div class="reading-block"><p>El tiempo civil local y el tiempo universal se oponen por localidad. El tiempo civil local depende de la longitud; el tiempo universal toma Greenwich como meridiano de referencia. El paso a TUC añade otra oposición: rotación terrestre frente a relojes atómicos. TU sigue la Tierra; TAI sigue relojes atómicos; TUC intenta mantener ambos mundos conectados.</p></div>
+<div class="reading-block"><p>El calendario pertenece al aspecto cronológico del tiempo. Sirve para nombrar fechas, pero no es cómodo para cálculos. La fecha juliana transforma una fecha de calendario en una cuenta continua de días. J2000,0 da una época estándar moderna para expresar intervalos largos mediante siglos julianos.</p></div>
+<div class="reading-block"><p>Históricamente, la evolución es clara: primero se usa el Sol y la rotación terrestre; después se corrige la no uniformidad con el Sol medio; luego se adopta Greenwich para universalizar la hora; finalmente, se recurre a relojes atómicos y escalas dinámicas para precisión.</p></div>
+<div class="reading-block"><p>---</p></div>
+</section>
+<section class="page" id="errores-habituales">
+  <div class="page-head">
+    <h2>6. Errores habituales</h2>
+    <p class="section-lead">Fallos típicos de interpretación, signo, escala y conversión.</p>
+  </div>
+<details class="accordion accordion-error"><summary>1. Confundir tiempo sidéreo con hora civil</summary><p>Por qué está mal: el tiempo sidéreo mide rotación respecto al equinoccio, no respecto al Sol ni a la hora oficial.</p><p>Corrección: usar tiempo sidéreo para coordenadas ecuatoriales y hora civil/TUC para relojes cotidianos.</p><p>Incorrecto: “A las 22 h civiles culmina siempre α = 22 h”.</p><p>Correcto: “Culmina la ascensión recta igual al tiempo sidéreo local, no a la hora civil”.</p></details>
+<details class="accordion accordion-error"><summary>2. Olvidar que el día sidéreo no dura 24 h medias</summary><p>Por qué está mal: el día sidéreo es unos cuatro minutos más corto.</p><p>Corrección: convertir intervalos con \(1{,}0027379\) o \(0{,}9972696\).</p><p>Incorrecto: “6 h de TU son 6 h sidéreas”.</p><p>Correcto: “6 h medias equivalen aproximadamente a \(6 \times 1{,}0027379\) h sidéreas”.</p></details>
+<details class="accordion accordion-error"><summary>3. Usar la hora oficial como si fuera TU</summary><p>Por qué está mal: la hora oficial incluye huso horario y, a veces, horario de verano.</p><p>Corrección: primero pasar a TUC/TU aproximado y después aplicar fórmulas astronómicas.</p><p>Incorrecto: “En España, 23:00 oficiales son 23:00 TU”.</p><p>Correcto: “Hay que restar la zona horaria correspondiente”.</p></details>
+<details class="accordion accordion-error"><summary>4. Cambiar el signo de la longitud</summary><p>Por qué está mal: la longitud entra con convenio de signo; usar el contrario desplaza la hora sidérea.</p><p>Corrección: mantener el convenio del libro: \(\mathrm{TS} = \mathrm{TSMG0} + \lambda + \operatorname{Intsa}(\mathrm{TU})\).</p><p>Incorrecto: “Siempre resto la longitud”.</p><p>Correcto: “Uso el signo definido para λ; si cambio de convenio, cambio la fórmula”.</p></details>
+<details class="accordion accordion-error"><summary>5. No reducir horas módulo 24</summary><p>Por qué está mal: las horas astronómicas son cíclicas.</p><p>Corrección: si el resultado supera 24 h, restar 24 h; si es negativo, sumar 24 h.</p><p>Incorrecto: “TS = 27 h 15 min”.</p><p>Correcto: “TS = 3 h 15 min”.</p></details>
+<details class="accordion accordion-error"><summary>6. Confundir año trópico y año sidéreo</summary><p>Por qué está mal: usan referencias distintas.</p><p>Corrección: el año trópico se refiere al equinoccio medio y regula estaciones; el sidéreo se refiere a una dirección fija.</p><p>Incorrecto: “El calendario se ajusta al año sidéreo”.</p><p>Correcto: “El calendario se ajusta al año trópico”.</p></details>
+<details class="accordion accordion-error"><summary>7. Creer que el calendario juliano y la fecha juliana son lo mismo</summary><p>Por qué está mal: el calendario juliano es un calendario civil antiguo; la fecha juliana es una cuenta continua de días.</p><p>Corrección: distinguir calendario de escala continua.</p><p>Incorrecto: “JD es una fecha del calendario juliano”.</p><p>Correcto: “JD es una numeración continua de días usada en astronomía”.</p></details>
+<details class="accordion accordion-error"><summary>8. Interpretar GMT como término preciso</summary><p>Por qué está mal: el libro señala que GMT ha tenido usos ambiguos.</p><p>Corrección: usar TU, TUC o la escala especificada.</p><p>Incorrecto: “El problema está en GMT, da igual qué signifique”.</p><p>Correcto: “Hay que indicar TU o TUC”.</p></details>
+<details class="accordion accordion-error"><summary>9. Pensar que TUC es perfectamente uniforme</summary><p>Por qué está mal: TUC se ajusta con segundos intercalares para mantenerse cercano a TU1.</p><p>Corrección: TAI es la escala atómica uniforme; TUC es civil y coordinada.</p><p>Incorrecto: “UTC/TUC es simplemente TAI”.</p><p>Correcto: “TUC se basa en TAI, pero difiere de él por un número entero de segundos”.</p></details>
+<details class="accordion accordion-error"><summary>10. Aplicar la ecuación del tiempo con signo arbitrario</summary><p>Por qué está mal: el signo depende de la definición.</p><p>Corrección: en el libro \(\mathrm{Ec.T.} = H_{\odot} - \mathrm{Hm}\); despejar antes de sustituir.</p><p>Incorrecto: “Siempre sumo la ecuación del tiempo”.</p><p>Correcto: “Si quiero \(\mathrm{Hm}\), uso \(\mathrm{Hm} = H_{\odot} - \mathrm{Ec.T.}\)”.</p><p>---</p></details>
+</section>
+<section class="page" id="preguntas-orientadas-a-examen">
+  <div class="page-head">
+    <h2>7. Preguntas orientadas a examen</h2>
+    <p class="section-lead">Bloques graduados de recuperación activa.</p>
+  </div>
+<div class="grid cards-grid">
+<article class="question-card"><h3>10 preguntas fáciles</h3><ol class="question-list">
+<li>¿Qué diferencia hay entre el aspecto cronológico y el cronométrico del tiempo?</li>
+<li>¿Qué es el tiempo sidéreo?</li>
+<li>¿Qué relación hay entre ángulo horario, tiempo sidéreo y ascensión recta?</li>
+<li>¿Qué condición se cumple cuando una estrella culmina?</li>
+<li>¿Qué es el tiempo solar verdadero?</li>
+<li>¿Por qué se introduce el Sol medio?</li>
+<li>¿Qué es la ecuación del tiempo?</li>
+<li>¿Qué es el tiempo universal?</li>
+<li>¿Qué es un año trópico?</li>
+<li>¿Qué es la fecha juliana?</li>
+</ol></article>
+<article class="question-card"><h3>10 preguntas medias</h3><ol class="question-list" start="11">
+<li>Explique por qué el tiempo sidéreo es local.</li>
+<li>Diferencie tiempo sidéreo aparente y tiempo sidéreo medio.</li>
+<li>Explique por qué el día sidéreo es más corto que el día medio.</li>
+<li>Obtenga la relación cualitativa entre día sidéreo y año trópico.</li>
+<li>¿Por qué el tiempo solar verdadero no es uniforme?</li>
+<li>¿Qué problema resuelve el tiempo civil local respecto al tiempo medio?</li>
+<li>¿Qué problema resuelve el tiempo universal respecto al tiempo civil local?</li>
+<li>Explique la diferencia entre TAI y TUC.</li>
+<li>¿Por qué el calendario gregoriano modifica al calendario juliano?</li>
+<li>¿Para qué sirve la fecha juliana modificada?</li>
+</ol></article>
+<article class="question-card"><h3>5 preguntas difíciles</h3><ol class="question-list" start="21">
+<li>A partir de \(H = \mathrm{TS} - \alpha\), explique cómo se determina qué ascensión recta está culminando en un instante dado.</li>
+<li>Interprete la fórmula \(\mathrm{TS} = \mathrm{TSMG0} + \lambda + \operatorname{Intsa}(\mathrm{TU})\).</li>
+<li>Explique por qué para convertir TU a TS no basta con sumar directamente el intervalo de TU.</li>
+<li>Compare TU, TU1, TAI y TUC desde el punto de vista de la uniformidad.</li>
+<li>Explique la utilidad de J2000,0 y de los siglos julianos en expresiones astronómicas.</li>
+</ol></article>
+<article class="question-card"><h3>5 preguntas de desarrollo largo</h3><ol class="question-list" start="26">
+<li>Desarrolle el paso desde el reloj solar verdadero hasta el tiempo universal.</li>
+<li>Explique el papel del tiempo sidéreo en la observación astronómica.</li>
+<li>Describa los distintos tipos de año introducidos en el capítulo y su importancia.</li>
+<li>Desarrolle la necesidad de escalas de tiempo uniformes en astronomía.</li>
+<li>Explique el problema de los calendarios y cómo lo resuelven el calendario gregoriano y la fecha juliana.</li>
+</ol></article>
+<article class="question-card"><h3>5 preguntas de relación entre conceptos</h3><ol class="question-list" start="31">
+<li>Relacione punto vernal, ascensión recta, ángulo horario y tiempo sidéreo.</li>
+<li>Relacione Sol verdadero, Sol medio y ecuación del tiempo.</li>
+<li>Relacione año trópico, estaciones y calendario gregoriano.</li>
+<li>Relacione tiempo universal, tiempo atómico internacional y tiempo universal coordinado.</li>
+<li>Relacione fecha juliana, fecha juliana modificada y época J2000,0.</li>
+</ol></article>
+</div>
+</section>
+<section class="page" id="respuestas-modelo">
+  <div class="page-head">
+    <h2>8. Respuestas modelo</h2>
+    <p class="section-lead">Respuestas plegables para autocorrección.</p>
+  </div>
+<details class="accordion accordion-answer"><summary>Respuesta 1</summary><p>El aspecto cronológico sirve para fechar un acontecimiento respecto a una época origen. El aspecto cronométrico sirve para medir el intervalo entre dos acontecimientos. En astronomía ambos son necesarios: una observación necesita fecha y escala de tiempo, y una duración necesita un reloj suficientemente estable.</p></details>
+<details class="accordion accordion-answer"><summary>Respuesta 2</summary><p>El tiempo sidéreo es el tiempo definido por la rotación terrestre tomando como referencia el punto vernal. En la práctica, el tiempo sidéreo local es el ángulo horario del equinoccio. Sirve para relacionar la hora de observación con las coordenadas ecuatoriales.</p></details>
+<details class="accordion accordion-answer"><summary>Respuesta 3</summary><p>La relación es \(H = \mathrm{TS} - \alpha\). El ángulo horario de un astro se obtiene restando su ascensión recta al tiempo sidéreo local. Esta fórmula permite saber dónde está el astro respecto al meridiano.</p></details>
+<details class="accordion accordion-answer"><summary>Respuesta 4</summary><p>Cuando una estrella culmina, su ángulo horario es cero. Por tanto, \(0 = \mathrm{TS} - \alpha\), y se cumple \(\mathrm{TS} = \alpha\). La ascensión recta que culmina en un instante dado es igual al tiempo sidéreo local.</p></details>
+<details class="accordion accordion-answer"><summary>Respuesta 5</summary><p>El tiempo solar verdadero es el tiempo definido por el movimiento aparente del Sol verdadero. Equivale a usar el Sol real como referencia para medir su ángulo horario. Es la base conceptual de un reloj de Sol.</p></details>
+<details class="accordion accordion-answer"><summary>Respuesta 6</summary><p>Se introduce el Sol medio porque el Sol verdadero no se mueve uniformemente sobre el ecuador celeste. El Sol medio es ficticio y avanza uniformemente, de modo que permite definir un tiempo medio más regular.</p></details>
+<details class="accordion accordion-answer"><summary>Respuesta 7</summary><p>La ecuación del tiempo es la diferencia entre el tiempo solar verdadero y el tiempo medio. En la notación del libro, \(\mathrm{Ec.T.} = H_{\odot} - \mathrm{Hm}\). Sirve para transformar la hora de un reloj solar en tiempo medio.</p></details>
+<details class="accordion accordion-answer"><summary>Respuesta 8</summary><p>El tiempo universal es el tiempo civil referido al meridiano de Greenwich. Resuelve el problema de que el tiempo civil local depende de la longitud del observador.</p></details>
+<details class="accordion accordion-answer"><summary>Respuesta 9</summary><p>El año trópico es el intervalo entre dos pasos consecutivos del Sol por el equinoccio medio. Es el año relevante para las estaciones y para el calendario civil.</p></details>
+<details class="accordion accordion-answer"><summary>Respuesta 10</summary><p>La fecha juliana es una cuenta continua de días, más fracción de día, desde un origen convencional. Se usa porque simplifica los cálculos entre fechas al evitar meses de distinta duración y años bisiestos.</p></details>
+<details class="accordion accordion-answer"><summary>Respuesta 11</summary><p>El tiempo sidéreo es local porque se define mediante el ángulo horario del equinoccio respecto al meridiano del observador. Como cada longitud tiene un meridiano distinto, el tiempo sidéreo local cambia con la longitud.</p></details>
+<details class="accordion accordion-answer"><summary>Respuesta 12</summary><p>El tiempo sidéreo aparente toma como referencia el equinoccio verdadero de la fecha, afectado por precesión y nutación. El tiempo sidéreo medio toma el equinoccio medio, corrigiendo la precesión pero prescindiendo de la parte periódica pequeña de la nutación. Para problemas básicos suele usarse el medio.</p></details>
+<details class="accordion accordion-answer"><summary>Respuesta 13</summary><p>El día sidéreo es más corto porque mide el retorno del equinoccio al meridiano, mientras que el día medio mide el retorno del Sol medio. Durante una rotación, la Tierra avanza en su órbita; para que el Sol vuelva al meridiano hace falta girar un poco más. Por eso el día solar medio dura unos cuatro minutos más.</p></details>
+<details class="accordion accordion-answer"><summary>Respuesta 14</summary><p>En un año trópico, el Sol medio vuelve al equinoccio medio. Durante ese intervalo, el equinoccio pasa por el meridiano una vez más que el Sol medio. Por eso se obtiene \((\mathrm{At} + 1) días sidéreos = \mathrm{At} días medios\).</p></details>
+<details class="accordion accordion-answer"><summary>Respuesta 15</summary><p>El tiempo solar verdadero no es uniforme porque el movimiento aparente del Sol real no es uniforme. Influyen la órbita terrestre y la proyección del movimiento solar sobre el ecuador celeste. Por eso se define el Sol medio.</p></details>
+<details class="accordion accordion-answer"><summary>Respuesta 16</summary><p>El tiempo medio comienza de forma astronómica en relación con el paso del Sol medio por el meridiano. La vida civil comienza el día a medianoche. El tiempo civil local corrige esto añadiendo 12 h al ángulo horario del Sol medio.</p></details>
+<details class="accordion accordion-answer"><summary>Respuesta 17</summary><p>El tiempo civil local depende del meridiano de cada observador. El tiempo universal toma Greenwich como referencia, lo que permite comparar observaciones hechas en lugares distintos.</p></details>
+<details class="accordion accordion-answer"><summary>Respuesta 18</summary><p>TAI es una escala atómica muy uniforme. TUC es la escala civil coordinada: se basa en relojes atómicos, pero se mantiene próxima a TU1 mediante segundos intercalares. Por eso \(\mathrm{TAI} - \mathrm{TUC}\) es un número entero de segundos.</p></details>
+<details class="accordion accordion-answer"><summary>Respuesta 19</summary><p>El calendario juliano toma un año medio de 365,25 días, algo mayor que el año trópico. Ese pequeño desfase acumulaba errores en las estaciones. El calendario gregoriano corrigió el desfase y ajustó la regla de los años bisiestos.</p></details>
+<details class="accordion accordion-answer"><summary>Respuesta 20</summary><p>La fecha juliana modificada reduce el número de cifras de la fecha juliana y hace comenzar el día a medianoche. Se define como \(\mathrm{MJD} = \mathrm{JD} - 2\,400\,000{,}5\).</p></details>
+<details class="accordion accordion-answer"><summary>Respuesta 21</summary><p>Si \(H = \mathrm{TS} - \alpha\), un astro culmina cuando \(H = 0\). Entonces \(\mathrm{TS} = \alpha\). Por tanto, conocida la hora sidérea local, la ascensión recta que está culminando es exactamente esa hora sidérea. Si \(\mathrm{TS} = 8\,\mathrm{h} 20\,\mathrm{min}\), culminan los astros con \(\alpha = 8\,\mathrm{h} 20\,\mathrm{min}\).</p></details>
+<details class="accordion accordion-answer"><summary>Respuesta 22</summary><p>La fórmula \(\mathrm{TS} = \mathrm{TSMG0} + \lambda + \operatorname{Intsa}(\mathrm{TU})\) calcula el tiempo sidéreo local a partir del tiempo universal. \(\mathrm{TSMG0}\) da el tiempo sidéreo en Greenwich al inicio del día universal; \(\lambda\) traslada Greenwich al meridiano local; \(\operatorname{Intsa}(\mathrm{TU})\) convierte el intervalo de tiempo universal transcurrido desde las 0 h en intervalo sidéreo.</p></details>
+<details class="accordion accordion-answer"><summary>Respuesta 23</summary><p>No basta con sumar TU porque una hora media no equivale exactamente a una hora sidérea. El tiempo sidéreo avanza algo más rápido respecto al tiempo medio. Por eso el intervalo debe multiplicarse aproximadamente por \(1{,}0027379\).</p></details>
+<details class="accordion accordion-answer"><summary>Respuesta 24</summary><p>TU se basa en la rotación terrestre y no es perfectamente uniforme. TU1 representa mejor la rotación real de la Tierra al corregir efectos del polo. TAI se basa en relojes atómicos y es mucho más uniforme. TUC combina la estabilidad práctica del TAI con la cercanía a TU1 mediante segundos intercalares.</p></details>
+<details class="accordion accordion-answer"><summary>Respuesta 25</summary><p>J2000,0 proporciona una época estándar común para expresar posiciones y desarrollos temporales. Al usar \(\mathrm{JD} 2451545{,}0\) como origen, se puede calcular el intervalo respecto a esa época y expresarlo en siglos julianos, lo que simplifica polinomios astronómicos dependientes del tiempo.</p></details>
+<details class="accordion accordion-answer"><summary>Respuesta 26</summary><p>El reloj solar verdadero usa el Sol real como referencia. Como el Sol verdadero no se mueve uniformemente, se introduce el Sol medio para definir un tiempo medio regular. Después se añade un desfase de 12 h para que el día civil comience a medianoche, obteniendo el tiempo civil local. Como este depende de la longitud, se toma Greenwich como meridiano de referencia y se define el tiempo universal.</p></details>
+<details class="accordion accordion-answer"><summary>Respuesta 27</summary><p>El tiempo sidéreo es esencial porque conecta la rotación terrestre con el sistema ecuatorial. La ascensión recta se mide desde el punto vernal y el tiempo sidéreo es el ángulo horario de ese mismo punto. Por eso \(H = \mathrm{TS} - \alpha\). Con esta relación se determina si un astro está saliendo, culminando o poniéndose, y qué región del cielo está mejor situada para observar.</p></details>
+<details class="accordion accordion-answer"><summary>Respuesta 28</summary><p>El año anomalístico se mide entre pasos por el perigeo y es útil en dinámica orbital. El año sidéreo se mide respecto a una referencia fija y representa el retorno del Sol a la misma dirección estelar. El año trópico se mide respecto al equinoccio medio y está ligado a las estaciones. Para calendarios interesa el año trópico, no el sidéreo.</p></details>
+<details class="accordion accordion-answer"><summary>Respuesta 29</summary><p>La rotación terrestre no es perfectamente uniforme, de modo que las escalas basadas en ella no sirven como tiempo absoluto para cálculos de alta precisión. La Mecánica Celeste y los relojes atómicos obligan a introducir escalas más uniformes, como TE, TAI y TT. Estas escalas permiten describir movimientos astronómicos sin arrastrar irregularidades de la rotación terrestre.</p></details>
+<details class="accordion accordion-answer"><summary>Respuesta 30</summary><p>El calendario debe combinar días enteros con un año que no contiene un número entero de días. El calendario juliano resolvió el problema con un año bisiesto cada cuatro años, pero acumulaba desfase respecto al año trópico. El gregoriano mejoró la regla eliminando algunos bisiestos seculares. Para cálculos astronómicos, la fecha juliana evita el problema contando días de forma continua.</p></details>
+<details class="accordion accordion-answer"><summary>Respuesta 31</summary><p>El punto vernal es el origen de la ascensión recta. El tiempo sidéreo es el ángulo horario de ese punto. Como el ángulo horario de un astro mide su separación respecto al meridiano y la ascensión recta su separación respecto al punto vernal, se obtiene \(H = \mathrm{TS} - \alpha\).</p></details>
+<details class="accordion accordion-answer"><summary>Respuesta 32</summary><p>El Sol verdadero da el tiempo solar verdadero, pero su movimiento aparente no es uniforme. El Sol medio es una referencia ficticia uniforme. La ecuación del tiempo mide la diferencia entre ambos y permite convertir de tiempo solar verdadero a tiempo medio.</p></details>
+<details class="accordion accordion-answer"><summary>Respuesta 33</summary><p>El año trópico mide el ciclo del Sol respecto al equinoccio medio, por lo que está ligado a las estaciones. El calendario civil intenta mantener las estaciones en fechas aproximadamente fijas. El calendario gregoriano ajusta los bisiestos para aproximarse mejor al año trópico.</p></details>
+<details class="accordion accordion-answer"><summary>Respuesta 34</summary><p>El tiempo universal procede de la rotación terrestre. El tiempo atómico internacional procede de relojes atómicos y es más uniforme. El tiempo universal coordinado se basa en el tiempo atómico, pero se corrige mediante segundos intercalares para no separarse demasiado de la rotación terrestre representada por TU1.</p></details>
+<details class="accordion accordion-answer"><summary>Respuesta 35</summary><p>La fecha juliana es una cuenta continua de días. La fecha juliana modificada resta \(2\,400\,000{,}5\) para reducir cifras y comenzar el día a medianoche. J2000,0 es una época estándar expresada como \(\mathrm{JD} 2451545{,}0\), usada como origen moderno para muchos cálculos astronómicos.</p><p>---</p></details>
+</section>
+<section class="page" id="resumen-final-de-repaso">
+  <div class="page-head">
+    <h2>9. Resumen final de repaso</h2>
+    <p class="section-lead">Núcleo mínimo para repaso rápido.</p>
+  </div>
+<div class="summary-box"><h3>Ideas principales</h3><ul>
+<li>El tiempo astronómico sirve para fechar acontecimientos y medir intervalos.</li>
+<li>La rotación terrestre permite definir relojes naturales, pero estos son locales y no perfectamente uniformes.</li>
+<li>El tiempo sidéreo usa el punto vernal como referencia.</li>
+<li>La fórmula fundamental es \(H = \mathrm{TS} - \alpha\).</li>
+<li>El tiempo solar verdadero usa el Sol real; el tiempo medio usa un Sol ficticio uniforme.</li>
+<li>La ecuación del tiempo conecta tiempo solar verdadero y tiempo medio.</li>
+<li>El tiempo universal es el tiempo civil referido a Greenwich.</li>
+<li>TAI es atómico; TUC es civil coordinado y próximo a TU1.</li>
+<li>El día sidéreo es más corto que el día medio.</li>
+<li>El calendario gregoriano aproxima el año trópico.</li>
+<li>La fecha juliana evita las complicaciones del calendario.</li>
+</ul></div>
+<div class="summary-box"><h3>Conceptos imprescindibles</h3><ul>
+<li>Ángulo horario.</li>
+<li>Ascensión recta.</li>
+<li>Tiempo sidéreo local.</li>
+<li>Tiempo solar verdadero.</li>
+<li>Tiempo medio.</li>
+<li>Ecuación del tiempo.</li>
+<li>TU, TAI, TUC.</li>
+<li>Año trópico.</li>
+<li>Día sidéreo.</li>
+<li>Fecha juliana.</li>
+<li>J2000,0.</li>
+</ul></div>
+<div class="summary-box"><h3>Relaciones clave</h3><ul>
+<li>\(H = \mathrm{TS} - \alpha\)</li>
+<li>Culminación: \(\mathrm{TS} = \alpha\)</li>
+<li>\(1 día sidéreo \approx 23\,\mathrm{h} 56\,\mathrm{min} 4\,\mathrm{s}\)</li>
+<li>\(1 día medio \approx 1{,}0027379 días sidéreos\)</li>
+<li>\(\mathrm{TS} = \mathrm{TSMG0} + \lambda + \operatorname{Intsa}(\mathrm{TU})\)</li>
+<li>\(\mathrm{MJD} = \mathrm{JD} - 2\,400\,000{,}5\)</li>
+<li>\(\mathrm{J2000}{,}0 = \mathrm{JD} 2451545{,}0\)</li>
+</ul></div>
+<div class="summary-box"><h3>Errores que evitar</h3><ul>
+<li>Usar hora oficial como TU.</li>
+<li>Confundir tiempo sidéreo con hora civil.</li>
+<li>Olvidar convertir intervalos medios a sidéreos.</li>
+<li>Cambiar el signo de la longitud.</li>
+<li>No reducir módulo 24 h.</li>
+<li>Confundir calendario juliano con fecha juliana.</li>
+<li>Confundir año sidéreo con año trópico.</li>
+</ul></div>
+<div class="reading-block"><p>---</p></div>
+</section>
+<section class="page" id="checklist-de-dominio">
+  <div class="page-head">
+    <h2>10. Checklist de dominio</h2>
+    <p class="section-lead">Criterios de paso antes de resolver problemas.</p>
+  </div>
+<div class="checklist-box"><ul>
+<li>Si no puedes explicar la diferencia entre tiempo cronológico y cronométrico, falta repasar la introducción del capítulo.</li>
+<li>Si no puedes definir tiempo sidéreo, falta repasar el papel del punto vernal.</li>
+<li>Si no puedes usar \(H = \mathrm{TS} - \alpha\), falta repasar coordenadas ecuatoriales.</li>
+<li>Si confundes ascensión recta con ángulo horario, revisar esfera celeste y meridiano local.</li>
+<li>Si no sabes cuándo culmina una estrella, falta practicar \(H = 0\).</li>
+<li>Si confundes tiempo solar verdadero y tiempo medio, revisar Sol verdadero, Sol medio y ecuación del tiempo.</li>
+<li>Si aplicas la ecuación del tiempo sin mirar el signo, revisar la definición \(\mathrm{Ec.T.} = H_{\odot} - \mathrm{Hm}\).</li>
+<li>Si crees que el día sidéreo dura 24 h medias, revisar la relación con el año trópico.</li>
+<li>Si no sabes convertir TU a TS, repasar \(\mathrm{TS} = \mathrm{TSMG0} + \lambda + \operatorname{Intsa}(\mathrm{TU})\).</li>
+<li>Si olvidas la longitud del observador, revisar el carácter local del tiempo sidéreo.</li>
+<li>Si usas hora oficial como TU, revisar tiempo civil, zona horaria y TUC.</li>
+<li>Si confundes TAI y TUC, revisar escalas uniformes y segundos intercalares.</li>
+<li>Si no puedes distinguir año trópico, sidéreo y anomalístico, repasar movimiento orbital de la Tierra.</li>
+<li>Si confundes calendario juliano y fecha juliana, revisar caracterización de una época.</li>
+<li>Si puedes explicar por qué se usa J2000,0 y calcular intervalos desde JD, el bloque de calendarios está suficientemente asentado.</li>
+<li>Si puedes resolver una culminación dada una ascensión recta y un tiempo sidéreo local, el núcleo observacional del capítulo está asentado.</li>
+<li>Si puedes pasar de hora civil a TU y de TU a tiempo sidéreo local, el capítulo está preparado para problemas básicos de examen.</li>
+</ul></div>
+</section>
+</main>
+</div>
+</body>
+</html>

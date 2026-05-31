@@ -1,0 +1,1349 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Métodos Matemáticos I — EDO lineales completas</title>
+  <meta name="description" content="Lección de Métodos Matemáticos I sobre ecuaciones diferenciales lineales de coeficientes constantes, coeficientes indeterminados, resonancia y PVI." />
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/icon-32.png" />
+  <link rel="icon" type="image/png" sizes="50x50" href="assets/icons/icon-50.png" />
+  <link rel="apple-touch-icon" sizes="100x100" href="assets/icons/icon-100.png" />
+  <link rel="stylesheet" href="assets/styles.css" />
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['\\(', '\\)']],
+        displayMath: [['\\[', '\\]']],
+        processEscapes: true
+      },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+  <script defer src="assets/app.js"></script>
+</head>
+<body class="subject-mm1">
+  <header class="site-header">
+    <a class="back-link" href="index.html">← Índice</a>
+    <div class="header-content">
+      <p class="subject-label">Métodos Matemáticos I</p>
+      <h1>EDO lineales de coeficientes constantes</h1>
+      <p class="lead">Ecuación homogénea, solución particular, coeficientes indeterminados, resonancia algebraica y problemas de valor inicial.</p>
+      <div class="chip-row">
+        <span class="chip">Tema: EDO completas</span>
+        <span class="chip">Método: coeficientes indeterminados</span>
+        <span class="chip">Estado: completo</span>
+      </div>
+    </div>
+  </header>
+
+  <nav class="lesson-toolbar" aria-label="Navegación de la lección">
+    <a href="#mapa">Mapa</a>
+<a href="#prerrequisitos">Prerrequisitos</a>
+<a href="#desarrollo">Desarrollo</a>
+<a href="#conceptos">Conceptos</a>
+<a href="#errores">Errores</a>
+<a href="#preguntas">Preguntas</a>
+<a href="#respuestas">Respuestas</a>
+<a href="#resumen">Resumen</a>
+<a href="#checklist">Checklist</a>
+  </nav>
+
+  <main class="lesson-layout">
+    <section class="page hero-page" id="mapa">
+      <header class="section-header">
+        <p class="eyebrow">Mapa conceptual</p>
+        <h2>Ruta de resolución</h2>
+      </header>
+      <div class="concept-map">
+        <a class="map-card" href="#desarrollo-3-1-de-la-ecuacion-homogenea-a-la-ecuacion-completa">
+<span>Homogénea</span>
+<p>De \(L(y)=0\) a la ecuación característica \(p(r)=0\).</p>
+</a>
+<a class="map-card" href="#desarrollo-3-2-principio-de-superposicion-para-la-completa">
+<span>Completa</span>
+<p>La solución se construye como \(y=y_h+y_p\).</p>
+</a>
+<a class="map-card" href="#desarrollo-3-3-metodo-de-coeficientes-indeterminados">
+<span>Selección</span>
+<p>El segundo miembro \(F(x)\) fija el ansatz de \(y_p\).</p>
+</a>
+<a class="map-card" href="#conceptos-resonancia-algebraica">
+<span>Resonancia</span>
+<p>Si el ansatz cae en la homogénea, se multiplica por \(x^s\).</p>
+</a>
+<a class="map-card" href="#desarrollo-3-9-problemas-de-valor-inicial">
+<span>PVI</span>
+<p>Las condiciones iniciales se aplican al total \(y_h+y_p\).</p>
+</a>
+      </div>
+      <div class="formula-block">
+        \[
+        L(y)=F(x),\qquad y=y_h+y_p
+        \]
+      </div>
+    </section>
+
+    <section class="page" id="prerrequisitos">
+<header class="section-header">
+<p class="eyebrow">Sección 1</p>
+<h2>1. Prerrequisitos mínimos</h2>
+</header>
+<div class="card-grid">
+<article class="definition-card" id="pre-ecuacion-diferencial-ordinaria">
+<h3>Ecuación diferencial ordinaria</h3>
+<p>Una EDO es una ecuación donde aparece una función desconocida y sus derivadas. Este capítulo trabaja ecuaciones de orden superior, normalmente de segundo orden:</p>
+<div class="formula-block">\[
+a_n y^{(n)}+a_{n-1}y^{(n-1)}+\cdots+a_1y'+a_0y=F(x).
+\]</div>
+<p>Es necesario reconocer qué papel juega cada derivada y distinguir entre resolver una ecuación y comprobar una solución.</p>
+</article>
+<article class="definition-card" id="pre-linealidad">
+<h3>Linealidad</h3>
+<p>Una ecuación es lineal si \(y,y',y'',\dots\) aparecen solo en primer grado y no multiplicadas entre sí. Por ejemplo,</p>
+<div class="formula-block">\[
+y''+3y'+2y=e^x
+\]</div>
+<p>es lineal, pero</p>
+<div class="formula-block">\[
+y''+yy'=x
+\]</div>
+<p>no lo es. La linealidad permite sumar soluciones y separar el problema en homogéneo + particular.</p>
+</article>
+<article class="definition-card" id="pre-ecuacion-homogenea-asociada">
+<h3>Ecuación homogénea asociada</h3>
+<p>A toda ecuación completa</p>
+<div class="formula-block">\[
+L(y)=F(x)
+\]</div>
+<p>le corresponde la homogénea</p>
+<div class="formula-block">\[
+L(y)=0.
+\]</div>
+<p>Sanz/Torres formula el capítulo precisamente a partir de esta estructura: primero se resuelve la homogénea de coeficientes constantes y luego se buscan soluciones particulares de la completa.</p>
+</article>
+<article class="definition-card" id="pre-polinomios-caracteristicos">
+<h3>Polinomios característicos</h3>
+<p>Para una ecuación homogénea de coeficientes constantes se prueba \(y=e^{rx}\). Eso transforma la EDO en una ecuación algebraica:</p>
+<div class="formula-block">\[
+p(r)=0.
+\]</div>
+<p>Las raíces de (p\(r\)) determinan la forma de la solución homogénea.</p>
+</article>
+<article class="definition-card" id="pre-derivadas-de-exponenciales-y-trigonometricas">
+<h3>Derivadas de exponenciales y trigonométricas</h3>
+<p>El método de coeficientes indeterminados funciona porque las derivadas de \(e^{ax}\), \(\cos bx\), \(\sin bx\) y polinomios permanecen dentro de familias cerradas. Ejemplo:</p>
+<div class="formula-block">\[
+\frac{d}{dx}(e^{2x})=2e^{2x},\qquad
+\frac{d}{dx}(\cos 3x)=-3\sin 3x.
+\]</div>
+</article>
+<article class="definition-card" id="pre-numeros-complejos-y-formula-de-euler">
+<h3>Números complejos y fórmula de Euler</h3>
+<p>Las funciones trigonométricas se pueden tratar mediante exponenciales complejas:</p>
+<div class="formula-block">\[
+e^{i\alpha x}=\cos(\alpha x)+i\sin(\alpha x).
+\]</div>
+<p>Boas usa este enfoque para resolver segundos miembros sinusoidales resolviendo primero con \(e^{i\alpha x}\) y tomando después parte real o imaginaria.</p>
+</article>
+<article class="definition-card" id="pre-condiciones-iniciales">
+<h3>Condiciones iniciales</h3>
+<p>Un PVI añade datos como</p>
+<div class="formula-block">\[
+y(0)=y_0,\qquad y'(0)=v_0.
+\]</div>
+<p>Estos datos no se aplican a la particular sola, sino a la solución completa.</p>
+</article>
+</div>
+</section>
+<section class="page" id="idea-central">
+<header class="section-header">
+<p class="eyebrow">Sección 2</p>
+<h2>2. Idea central del capítulo</h2>
+</header>
+<div class="reading-block">
+<p>El capítulo enseña a resolver una clase muy frecuente de ecuaciones diferenciales: las ecuaciones lineales de coeficientes constantes con segundo miembro no nulo. Su forma general es</p>
+<div class="formula-block">\[
+a_n y^{(n)}+a_{n-1}y^{(n-1)}+\cdots+a_1y'+a_0y=F(x),
+\]</div>
+<p>donde los coeficientes \(a_i\) son constantes y (F\(x\)) representa una acción externa, una fuente, una fuerza aplicada o un término impuesto.</p>
+<p>La idea decisiva es que la solución no se busca de golpe. Se descompone en dos partes:</p>
+<div class="formula-block">\[
+y(x)=y_h(x)+y_p(x).
+\]</div>
+<p>La parte \(y_h\) resuelve la ecuación homogénea asociada. La parte \(y_p\) es una solución concreta de la ecuación completa. Sanz/Torres lo expresa como regla estructural del capítulo: la solución general de la completa se obtiene sumando una solución particular a la solución general de la homogénea.</p>
+<p>El método central de este tema es el de coeficientes indeterminados, también llamado método de selección. Consiste en mirar la forma de (F\(x\)) y proponer una solución particular de la misma familia: polinomio si \(F\) es polinomio, exponencial por polinomio si \(F\) es exponencial por polinomio, y combinación exponencial-trigonométrica si aparecen senos y cosenos. El método no es universal, pero cuando se puede usar es rápido, mecánico y muy rentable en examen.</p>
+<p>La dificultad real no está en sustituir y resolver coeficientes. Está en elegir bien el ansatz. El caso peligroso aparece cuando la forma propuesta para \(y_p\) ya pertenece a la solución homogénea. Entonces hay resonancia algebraica: el operador diferencial anula parte del intento, y hay que multiplicar por una potencia de \(x\). Boas formula esta regla para ecuaciones de segundo orden: si el exponente \(c\) coincide con una raíz de la característica, se multiplica por \(x\); si coincide con una raíz doble, por \(x^2\).</p>
+<p>Este capítulo es tácticamente central para Física porque aparece detrás de osciladores forzados, circuitos lineales, respuestas transitorias, modelos de relajación y sistemas con excitación externa. Boas introduce las ecuaciones no homogéneas justamente como el caso en que un sistema que antes vibraba libremente pasa a estar sometido a una fuerza externa o una fem aplicada.</p>
+</div>
+</section>
+<section class="page" id="desarrollo">
+<header class="section-header">
+<p class="eyebrow">Sección 3</p>
+<h2>3. Desarrollo completo del capítulo</h2>
+</header>
+<div class="reading-block">
+
+</div>
+<article class="reading-block" id="desarrollo-3-1-de-la-ecuacion-homogenea-a-la-ecuacion-completa">
+<h3>3.1. De la ecuación homogénea a la ecuación completa</h3>
+<p>La ecuación homogénea de coeficientes constantes tiene la forma</p>
+<div class="formula-block">\[
+a_n y^{(n)}+a_{n-1}y^{(n-1)}+\cdots+a_1y'+a_0y=0.
+\]</div>
+<p>Se prueba una solución exponencial:</p>
+<div class="formula-block">\[
+y=e^{rx}.
+\]</div>
+<p>Como cada derivada de \(e^{rx}\) produce otra vez \(e^{rx}\), se obtiene</p>
+<div class="formula-block">\[
+p(r)e^{rx}=0.
+\]</div>
+<p>Como \(e^{rx}\neq 0\), queda</p>
+<div class="formula-block">\[
+p(r)=a_n r^n+a_{n-1}r^{n-1}+\cdots+a_1r+a_0=0.
+\]</div>
+<p>Esta es la ecuación característica. Sanz/Torres resume la regla: \(e^{rx}\) es solución de (L\(y\)=0) si y solo si \(r\) es raíz de la ecuación característica.</p>
+<p>Si las raíces son reales y distintas,</p>
+<div class="formula-block">\[
+r_1,r_2,\dots,r_n,
+\]</div>
+<p>la solución homogénea es</p>
+<div class="formula-block">\[
+y_h=C_1e^{r_1x}+C_2e^{r_2x}+\cdots+C_ne^{r_nx}.
+\]</div>
+<p>Si una raíz \(r\) tiene multiplicidad \(m\), no basta con \(e^{rx}\). Aparecen las soluciones</p>
+<div class="formula-block">\[
+e^{rx},\; xe^{rx},\; x^2e^{rx},\dots,x^{m-1}e^{rx}.
+\]</div>
+<p>Boas lo muestra explícitamente para una raíz doble: cuando la raíz se repite, \(xe^{ax}\) aporta la segunda solución linealmente independiente.</p>
+<p>Si las raíces son complejas conjugadas,</p>
+<div class="formula-block">\[
+r=\alpha\pm i\beta,
+\]</div>
+<p>la solución real asociada es</p>
+<div class="formula-block">\[
+y_h=e^{\alpha x}\left(C_1\cos\beta x+C_2\sin\beta x\right).
+\]</div>
+<p>Esto conecta el álgebra compleja con soluciones reales. En examen importa escribir la solución final en términos reales salvo que el enunciado permita forma compleja.</p>
+</article>
+<article class="reading-block" id="desarrollo-3-2-principio-de-superposicion-para-la-completa">
+<h3>3.2. Principio de superposición para la completa</h3>
+<p>La ecuación completa es</p>
+<div class="formula-block">\[
+L(y)=F(x).
+\]</div>
+<p>Si \(y_p\) cumple</p>
+<div class="formula-block">\[
+L(y_p)=F(x),
+\]</div>
+<p>y \(y_h\) cumple</p>
+<div class="formula-block">\[
+L(y_h)=0,
+\]</div>
+<p>entonces</p>
+<div class="formula-block">\[
+L(y_h+y_p)=L(y_h)+L(y_p)=0+F(x)=F(x).
+\]</div>
+<p>Por tanto,</p>
+<div class="formula-block">\[
+\boxed{y=y_h+y_p}.
+\]</div>
+<p>Boas llama a \(y_h\) función complementaria y a \(y_p\) solución particular; su ejemplo muestra que la suma de ambas da la solución general de la ecuación no homogénea.</p>
+<p>La consecuencia práctica es clara: primero se resuelve la homogénea. Después se busca una particular. Al final se aplican condiciones iniciales.</p>
+</article>
+<article class="reading-block" id="desarrollo-3-3-metodo-de-coeficientes-indeterminados">
+<h3>3.3. Método de coeficientes indeterminados</h3>
+<p>El método de coeficientes indeterminados parte de una observación simple: ciertos tipos de funciones mantienen su forma bajo derivación. Si (F\(x\)) pertenece a una de esas familias, se propone \(y_p\) en la misma familia con coeficientes desconocidos.</p>
+<p>Sanz/Torres lo define como búsqueda de soluciones con características iguales a las del término (F\(x\)).</p>
+<p>La forma general depende del segundo miembro.</p>
+</article>
+<article class="reading-block" id="desarrollo-3-4-segundo-miembro-polinomico">
+<h3>3.4. Segundo miembro polinómico</h3>
+<p>Si</p>
+<div class="formula-block">\[
+F(x)=A_rx^r+A_{r-1}x^{r-1}+\cdots+A_1x+A_0,
+\]</div>
+<p>se prueba</p>
+<div class="formula-block">\[
+y_p=B_rx^r+B_{r-1}x^{r-1}+\cdots+B_1x+B_0,
+\]</div>
+<p>si \(0\) no es raíz de la característica.</p>
+<p><strong>Ejemplo:</strong></p>
+<div class="formula-block">\[
+y''+3y'+2y=x^2.
+\]</div>
+<p>La homogénea tiene característica</p>
+<div class="formula-block">\[
+r^2+3r+2=0.
+\]</div>
+<p>Como \(0\) no es raíz, se prueba</p>
+<div class="formula-block">\[
+y_p=Ax^2+Bx+C.
+\]</div>
+<p>Si \(0\) sí es raíz de multiplicidad \(s\), se multiplica por \(x^s\):</p>
+<div class="formula-block">\[
+y_p=x^s\left(B_rx^r+\cdots+B_0\right).
+\]</div>
+<p><strong>Ejemplo:</strong></p>
+<div class="formula-block">\[
+y''-y'=x.
+\]</div>
+<p>La característica es</p>
+<div class="formula-block">\[
+r^2-r=r(r-1).
+\]</div>
+<p>Como \(0\) es raíz simple, no se prueba \(Ax+B\), sino</p>
+<div class="formula-block">\[
+y_p=x(Ax+B)=Ax^2+Bx.
+\]</div>
+</article>
+<article class="reading-block" id="desarrollo-3-5-segundo-miembro-exponencial-por-polinomio">
+<h3>3.5. Segundo miembro exponencial por polinomio</h3>
+<p>Si</p>
+<div class="formula-block">\[
+F(x)=e^{ax}P_r(x),
+\]</div>
+<p>se prueba</p>
+<div class="formula-block">\[
+y_p=e^{ax}Q_r(x),
+\]</div>
+<p>donde \(Q_r\) es un polinomio del mismo grado que \(P_r\), si \(a\) no es raíz de la característica.</p>
+<p>Si \(a\) es raíz de multiplicidad \(s\), se prueba</p>
+<div class="formula-block">\[
+y_p=x^s e^{ax}Q_r(x).
+\]</div>
+<p><strong>Ejemplo:</strong></p>
+<div class="formula-block">\[
+y''+y'-2y=18xe^x.
+\]</div>
+<p>La característica es</p>
+<div class="formula-block">\[
+r^2+r-2=(r-1)(r+2).
+\]</div>
+<p>Como \(a=1\) es raíz simple, se prueba</p>
+<div class="formula-block">\[
+y_p=xe^x(Ax+B)=e^x(Ax^2+Bx).
+\]</div>
+<p>Boas desarrolla exactamente este tipo de ejemplo y obtiene una particular de la forma (e^x\(3x^2-2x\)).</p>
+</article>
+<article class="reading-block" id="desarrollo-3-6-segundo-miembro-trigonometrico">
+<h3>3.6. Segundo miembro trigonométrico</h3>
+<p>Si</p>
+<div class="formula-block">\[
+F(x)=A\cos bx+B\sin bx,
+\]</div>
+<p>se prueba</p>
+<div class="formula-block">\[
+y_p=M\cos bx+N\sin bx,
+\]</div>
+<p>salvo resonancia.</p>
+<p>La forma trigonométrica puede verse como caso complejo:</p>
+<div class="formula-block">\[
+\cos bx,\sin bx \leftrightarrow e^{ibx}.
+\]</div>
+<p>Si \(\pm ib\) no son raíces de la característica, el ansatz directo funciona. Si \(\pm ib\) son raíces de multiplicidad \(s\), se multiplica por \(x^s\):</p>
+<div class="formula-block">\[
+y_p=x^s(M\cos bx+N\sin bx).
+\]</div>
+<p>Ejemplo sin resonancia:</p>
+<div class="formula-block">\[
+y''+3y'+2y=\cos x.
+\]</div>
+<p>La característica es</p>
+<div class="formula-block">\[
+r^2+3r+2=0,
+\]</div>
+<p>raíces \(-1,-2\). Como \(\pm i\) no son raíces, se prueba</p>
+<div class="formula-block">\[
+y_p=A\cos x+B\sin x.
+\]</div>
+<p>Ejemplo con resonancia:</p>
+<div class="formula-block">\[
+y''+y=\cos x.
+\]</div>
+<p>La característica es</p>
+<div class="formula-block">\[
+r^2+1=0,\qquad r=\pm i.
+\]</div>
+<p>Como el segundo miembro coincide con la frecuencia natural homogénea, se prueba</p>
+<div class="formula-block">\[
+y_p=x(A\cos x+B\sin x).
+\]</div>
+</article>
+<article class="reading-block" id="desarrollo-3-7-segundo-miembro-exponencial-trigonometrico">
+<h3>3.7. Segundo miembro exponencial-trigonométrico</h3>
+<p>Si</p>
+<div class="formula-block">\[
+F(x)=e^{px}\left(P_l(x)\cos qx+Q_m(x)\sin qx\right),
+\]</div>
+<p>se prueba</p>
+<div class="formula-block">\[
+y_p=e^{px}\left(R_k(x)\cos qx+S_k(x)\sin qx\right),
+\]</div>
+<p>donde</p>
+<div class="formula-block">\[
+k=\max(l,m).
+\]</div>
+<p>Si \(p\pm qi\) son raíces de la característica con multiplicidad \(s\), se multiplica por \(x^s\). Sanz/Torres recoge esta regla en su resumen del método de selección.</p>
+<p><strong>Ejemplo:</strong></p>
+<div class="formula-block">\[
+y''-2y'+5y=e^x\cos 2x.
+\]</div>
+<p>La característica es</p>
+<div class="formula-block">\[
+r^2-2r+5=0,\qquad r=1\pm 2i.
+\]</div>
+<p>Hay resonancia simple, así que se prueba</p>
+<div class="formula-block">\[
+y_p=xe^x(A\cos 2x+B\sin 2x).
+\]</div>
+</article>
+<article class="reading-block" id="desarrollo-3-8-suma-de-segundos-miembros">
+<h3>3.8. Suma de segundos miembros</h3>
+<p>Si</p>
+<div class="formula-block">\[
+F(x)=F_1(x)+F_2(x),
+\]</div>
+<p>puede buscarse</p>
+<div class="formula-block">\[
+y_p=y_{p1}+y_{p2},
+\]</div>
+<p>donde</p>
+<div class="formula-block">\[
+L(y_{p1})=F_1(x),\qquad L(y_{p2})=F_2(x).
+\]</div>
+<p><strong>Ejemplo:</strong></p>
+<div class="formula-block">\[
+y''+y=x+e^{2x}.
+\]</div>
+<p>Se busca una particular polinómica para \(x\) y otra exponencial para \(e^{2x}\):</p>
+<div class="formula-block">\[
+y_p=(Ax+B)+Ce^{2x}.
+\]</div>
+</article>
+<article class="reading-block" id="desarrollo-3-9-problemas-de-valor-inicial">
+<h3>3.9. Problemas de valor inicial</h3>
+<p>Una vez obtenida</p>
+<div class="formula-block">\[
+y=y_h+y_p,
+\]</div>
+<p>se aplican las condiciones iniciales.</p>
+<p><strong>Ejemplo:</strong></p>
+<div class="formula-block">\[
+y''-3y'+2y=e^x,\qquad y(0)=0,\qquad y'(0)=1.
+\]</div>
+<p>Primero:</p>
+<div class="formula-block">\[
+r^2-3r+2=(r-1)(r-2).
+\]</div>
+<p>Luego:</p>
+<div class="formula-block">\[
+y_h=C_1e^x+C_2e^{2x}.
+\]</div>
+<p>Como \(e^x\) ya pertenece a la homogénea, hay resonancia simple:</p>
+<div class="formula-block">\[
+y_p=Axe^x.
+\]</div>
+<p>Se sustituye, se calcula \(A\), y solo después se imponen (y\(0\),y'\(0\)). El error típico es imponer las condiciones antes de tener la solución completa.</p>
+</article>
+</section>
+<section class="page" id="conceptos">
+<header class="section-header">
+<p class="eyebrow">Sección 4</p>
+<h2>4. Conceptos clave</h2>
+</header>
+<div class="card-grid">
+<div class="reading-block">
+
+</div>
+<article class="definition-card" id="conceptos-ecuacion-lineal-de-coeficientes-constantes">
+<h3>Ecuación lineal de coeficientes constantes</h3>
+<p><strong>Definición:</strong> ecuación donde \(y\) y sus derivadas aparecen linealmente y multiplicadas por constantes.</p>
+<p><strong>Ejemplo:</strong></p>
+<div class="formula-block">\[
+y''+4y'+4y=e^{-2x}.
+\]</div>
+<p><strong>Relación:</strong> permite usar operador diferencial, ecuación característica y superposición.</p>
+<p><strong>Pregunta de examen:</strong> “Resolver la ecuación lineal completa con coeficientes constantes...”.</p>
+</article>
+<article class="definition-card" id="conceptos-operador-diferencial-lineal">
+<h3>Operador diferencial lineal</h3>
+<p><strong>Definición:</strong></p>
+<div class="formula-block">\[
+L=a_nD^n+a_{n-1}D^{n-1}+\cdots+a_1D+a_0.
+\]</div>
+<p>Permite escribir</p>
+<div class="formula-block">\[
+L(y)=F(x).
+\]</div>
+<p><strong>Explicación:</strong> convierte la EDO en una acción algebraica sobre funciones. Es útil porque (D\(e^{rx}\)=re^{rx}).</p>
+<p><strong>Ejemplo:</strong></p>
+<div class="formula-block">\[
+(D^2+3D+2)y=e^x.
+\]</div>
+<p><strong>Pregunta de examen:</strong> “Escriba la ecuación en notación operacional y resuélvala”.</p>
+</article>
+<article class="definition-card" id="conceptos-ecuacion-caracteristica">
+<h3>Ecuación característica</h3>
+<p><strong>Definición:</strong></p>
+<div class="formula-block">\[
+p(r)=a_nr^n+a_{n-1}r^{n-1}+\cdots+a_0=0.
+\]</div>
+<p><strong>Explicación:</strong> sale de probar \(y=e^{rx}\) en la homogénea.</p>
+<p><strong>Ejemplo:</strong></p>
+<div class="formula-block">\[
+y''-5y'+6y=0
+\Rightarrow r^2-5r+6=0.
+\]</div>
+<p><strong>Relación:</strong> determina \(y_h\).</p>
+<p><strong>Pregunta de examen:</strong> “Determine la solución general de la homogénea asociada”.</p>
+</article>
+<article class="definition-card" id="conceptos-solucion-homogenea">
+<h3>Solución homogénea</h3>
+<p><strong>Definición:</strong> solución general de</p>
+<div class="formula-block">\[
+L(y)=0.
+\]</div>
+<p><strong>Ejemplo:</strong></p>
+<div class="formula-block">\[
+y''-5y'+6y=0
+\Rightarrow y_h=C_1e^{2x}+C_2e^{3x}.
+\]</div>
+<p><strong>Relación:</strong> contiene las constantes libres que luego ajustan las condiciones iniciales.</p>
+<p><strong>Pregunta de examen:</strong> “Obtenga la solución complementaria”.</p>
+</article>
+<article class="definition-card" id="conceptos-solucion-particular">
+<h3>Solución particular</h3>
+<p><strong>Definición:</strong> cualquier función \(y_p\) que cumple</p>
+<div class="formula-block">\[
+L(y_p)=F(x).
+\]</div>
+<p><strong>Ejemplo:</strong></p>
+<div class="formula-block">\[
+y''+y=x
+\]</div>
+<p>admite \(y_p=x\), porque \(y_p''+y_p=x\).</p>
+<p><strong>Relación:</strong> no lleva constantes arbitrarias de la homogénea.</p>
+<p><strong>Pregunta de examen:</strong> “Halle una solución particular mediante coeficientes indeterminados”.</p>
+</article>
+<article class="definition-card" id="conceptos-solucion-general-de-la-completa">
+<h3>Solución general de la completa</h3>
+<p><strong>Definición:</strong></p>
+<div class="formula-block">\[
+y=y_h+y_p.
+\]</div>
+<p><strong>Explicación:</strong> nace de la linealidad del operador.</p>
+<p><strong>Ejemplo:</strong></p>
+<div class="formula-block">\[
+y''+y=x
+\Rightarrow y=C_1\cos x+C_2\sin x+x.
+\]</div>
+<p><strong>Pregunta de examen:</strong> “Halle la solución general de la ecuación diferencial”.</p>
+</article>
+<article class="definition-card" id="conceptos-metodo-de-coeficientes-indeterminados">
+<h3>Método de coeficientes indeterminados</h3>
+<p><strong>Definición:</strong> método para hallar \(y_p\) proponiendo una forma semejante a (F\(x\)) con coeficientes desconocidos.</p>
+<p><strong>Ejemplo:</strong></p>
+<div class="formula-block">\[
+F(x)=3x^2-1
+\Rightarrow y_p=Ax^2+Bx+C.
+\]</div>
+<p><strong>Relación:</strong> solo sirve para familias cerradas bajo derivación: polinomios, exponenciales, senos, cosenos y productos de estos.</p>
+<p><strong>Pregunta de examen:</strong> “Aplique el método de selección”.</p>
+</article>
+<article class="definition-card" id="conceptos-resonancia-algebraica">
+<h3>Resonancia algebraica</h3>
+<p><strong>Definición:</strong> ocurre cuando el ansatz de \(y_p\) coincide con parte de \(y_h\).</p>
+<p><strong>Ejemplo:</strong></p>
+<div class="formula-block">\[
+y''+y=\cos x.
+\]</div>
+<p>Como \(\cos x\) ya aparece en \(y_h\), no sirve \(A\cos x+B\sin x\). Hay que probar:</p>
+<div class="formula-block">\[
+y_p=x(A\cos x+B\sin x).
+\]</div>
+<p><strong>Relación:</strong> depende de si el número \(a\) o \(p\pm qi\) es raíz de la característica.</p>
+<p><strong>Pregunta de examen:</strong> “Justifique por qué multiplica el ansatz por \(x\)”.</p>
+</article>
+<article class="definition-card" id="conceptos-pvi">
+<h3>PVI</h3>
+<p><strong>Definición:</strong> ecuación diferencial más condiciones sobre la función y sus derivadas en un punto.</p>
+<p><strong>Ejemplo:</strong></p>
+<div class="formula-block">\[
+y''+y=0,\qquad y(0)=1,\qquad y'(0)=0.
+\]</div>
+<p><strong>Relación:</strong> selecciona una solución concreta dentro de la familia general.</p>
+<p><strong>Pregunta de examen:</strong> “Resolver el problema de valores iniciales”.</p>
+</article>
+</div>
+</section>
+<section class="page" id="relaciones">
+<header class="section-header">
+<p class="eyebrow">Sección 5</p>
+<h2>5. Relaciones entre ideas</h2>
+</header>
+<div class="reading-block">
+<p>La jerarquía del capítulo es:</p>
+<div class="formula-block">\[
+\text{linealidad}
+\Rightarrow
+\text{superposición}
+\Rightarrow
+y=y_h+y_p
+\Rightarrow
+\text{PVI}.
+\]</div>
+<p>La ecuación característica pertenece a la parte homogénea. No se usa para resolver directamente la completa, sino para construir la base de soluciones libres. Sin esa base, no se puede saber si el ansatz particular entra en resonancia.</p>
+<p>El método de coeficientes indeterminados depende de una correspondencia entre el segundo miembro y una familia cerrada bajo derivación:</p>
+<div class="formula-block">\[
+P(x),\quad e^{ax}P(x),\quad e^{px}\cos qx,\quad e^{px}\sin qx.
+\]</div>
+<p>La resonancia algebraica aparece cuando esa familia ya está dentro del núcleo del operador \(L\). En ese caso, el operador anula el intento inicial y la solución particular debe moverse fuera del núcleo multiplicando por \(x^s\).</p>
+<p>Las condiciones iniciales no intervienen en la elección del ansatz. Intervienen al final, cuando ya está construida la solución completa. Conceptualmente, primero se obtiene el espacio de soluciones; después se escoge una trayectoria concreta.</p>
+<p>Históricamente, el capítulo se apoya en el programa clásico de Euler para reducir ecuaciones lineales de coeficientes constantes a ecuaciones algebraicas mediante \(e^{rx}\), tal como resume Sanz/Torres en la introducción al capítulo.</p>
+</div>
+</section>
+<section class="page" id="errores">
+<header class="section-header">
+<p class="eyebrow">Sección 6</p>
+<h2>6. Errores habituales</h2>
+</header>
+<div class="reading-block">
+
+</div>
+<details class="accordion" id="errores-error-1-resolver-solo-la-particular">
+<summary>Error 1: resolver solo la particular</summary>
+<div class="accordion-content">
+<p><strong>Error:</strong> dar como solución final únicamente \(y_p\).</p>
+<p><strong>Por qué está mal:</strong> la solución general necesita también \(y_h\).</p>
+<p><strong>Incorrecto:</strong></p>
+<div class="formula-block">\[
+y''+y=x \Rightarrow y=x.
+\]</div>
+<p><strong>Correcto:</strong></p>
+<div class="formula-block">\[
+y=C_1\cos x+C_2\sin x+x.
+\]</div>
+</div>
+</details>
+<details class="accordion" id="errores-error-2-olvidar-la-resonancia">
+<summary>Error 2: olvidar la resonancia</summary>
+<div class="accordion-content">
+<p><strong>Error:</strong> en</p>
+<div class="formula-block">\[
+y''+y=\cos x
+\]</div>
+<p>probar</p>
+<div class="formula-block">\[
+y_p=A\cos x+B\sin x.
+\]</div>
+<p><strong>Por qué está mal:</strong> esa forma pertenece a la homogénea y será anulada por \(D^2+1\).</p>
+<p><strong>Correcto:</strong></p>
+<div class="formula-block">\[
+y_p=x(A\cos x+B\sin x).
+\]</div>
+</div>
+</details>
+<details class="accordion" id="errores-error-3-usar-un-polinomio-de-grado-insuficiente">
+<summary>Error 3: usar un polinomio de grado insuficiente</summary>
+<div class="accordion-content">
+<p><strong>Error:</strong> para</p>
+<div class="formula-block">\[
+y''+2y'+y=x^2
+\]</div>
+<p>probar \(y_p=Ax+B\).</p>
+<p><strong>Por qué está mal:</strong> el segundo miembro tiene grado 2.</p>
+<p><strong>Correcto:</strong></p>
+<div class="formula-block">\[
+y_p=Ax^2+Bx+C.
+\]</div>
+</div>
+</details>
+<details class="accordion" id="errores-error-4-aplicar-condiciones-iniciales-antes-de-hallar-y-p">
+<summary>Error 4: aplicar condiciones iniciales antes de hallar \(y_p\)</summary>
+<div class="accordion-content">
+<p><strong>Error:</strong> calcular \(C_1,C_2\) solo con \(y_h\).</p>
+<p><strong>Por qué está mal:</strong> las condiciones iniciales actúan sobre \(y_h+y_p\).</p>
+<p><strong>Incorrecto:</strong></p>
+<div class="formula-block">\[
+y(0)=C_1.
+\]</div>
+<p><strong>Correcto:</strong></p>
+<div class="formula-block">\[
+y(0)=y_h(0)+y_p(0).
+\]</div>
+</div>
+</details>
+<details class="accordion" id="errores-error-5-confundir-raiz-compleja-con-funcion-compleja-final">
+<summary>Error 5: confundir raíz compleja con función compleja final</summary>
+<div class="accordion-content">
+<p><strong>Error:</strong> dejar</p>
+<div class="formula-block">\[
+y=C_1e^{(1+2i)x}+C_2e^{(1-2i)x}.
+\]</div>
+<p><strong>Por qué está mal:</strong> si la ecuación tiene coeficientes reales, normalmente se pide solución real.</p>
+<p><strong>Correcto:</strong></p>
+<div class="formula-block">\[
+y=e^x(A\cos 2x+B\sin 2x).
+\]</div>
+</div>
+</details>
+<details class="accordion" id="errores-error-6-no-separar-segundos-miembros">
+<summary>Error 6: no separar segundos miembros</summary>
+<div class="accordion-content">
+<p><strong>Error:</strong> para</p>
+<div class="formula-block">\[
+F(x)=x+e^x
+\]</div>
+<p>probar una sola forma desordenada.</p>
+<p><strong>Corrección:</strong></p>
+<div class="formula-block">\[
+y_p=y_{p1}+y_{p2}.
+\]</div>
+<p>Ejemplo correcto:</p>
+<div class="formula-block">\[
+y_p=(Ax+B)+Ce^x.
+\]</div>
+</div>
+</details>
+<details class="accordion" id="errores-error-7-multiplicar-por-x-sin-mirar-la-multiplicidad">
+<summary>Error 7: multiplicar por \(x\) sin mirar la multiplicidad</summary>
+<div class="accordion-content">
+<p><strong>Error:</strong> siempre multiplicar por \(x\) cuando hay coincidencia.</p>
+<p><strong>Por qué está mal:</strong> si la raíz tiene multiplicidad 2, hay que multiplicar por \(x^2\).</p>
+<p><strong>Correcto:</strong></p>
+<div class="formula-block">\[
+(D-a)^2y=e^{ax}
+\Rightarrow y_p=Ax^2e^{ax}.
+\]</div>
+</div>
+</details>
+</section>
+<section class="page" id="preguntas">
+<header class="section-header">
+<p class="eyebrow">Sección 7</p>
+<h2>7. Preguntas orientadas a examen</h2>
+</header>
+<div class="reading-block">
+
+</div>
+<details class="accordion" id="preguntas-10-preguntas-faciles" open>
+<summary>10 preguntas fáciles</summary>
+<div class="accordion-content">
+<ol class="question-list"><li value="1">¿Qué es una ecuación lineal homogénea de coeficientes constantes?</li>
+<li value="2">¿Qué es la ecuación característica?</li>
+<li value="3">¿Qué forma tiene la solución si las raíces son reales y distintas?</li>
+<li value="4">¿Qué forma tiene la solución si hay una raíz doble \(r=a\)?</li>
+<li value="5">¿Qué forma real corresponde a raíces \(\alpha\pm i\beta\)?</li>
+<li value="6">¿Qué significa que una ecuación sea completa o no homogénea?</li>
+<li value="7">¿Qué relación hay entre \(y_h\), \(y_p\) y la solución general?</li>
+<li value="8">¿Cuándo se puede usar coeficientes indeterminados?</li>
+<li value="9">¿Qué ansatz se usa si (F\(x\)=x^2+1) y no hay resonancia?</li>
+<li value="10">¿Qué es un PVI?</li></ol>
+</div>
+</details>
+<details class="accordion" id="preguntas-10-preguntas-medias" open>
+<summary>10 preguntas medias</summary>
+<div class="accordion-content">
+<ol class="question-list"><li value="11">Resolver \(y''-5y'+6y=0\).</li>
+<li value="12">Resolver \(y''+4y'+4y=0\).</li>
+<li value="13">Resolver \(y''+9y=0\).</li>
+<li value="14">Hallar una particular de \(y''+y=x\).</li>
+<li value="15">Hallar la forma del ansatz para \(y''-y=e^{2x}\).</li>
+<li value="16">Hallar la forma del ansatz para \(y''-3y'+2y=e^x\).</li>
+<li value="17">Hallar la forma del ansatz para \(y''+y=\sin x\).</li>
+<li value="18">Hallar la forma del ansatz para \(y''+2y'+2y=e^{-x}\cos x\).</li>
+<li value="19">Explicar por qué \(y=y_h+y_p\).</li>
+<li value="20">Resolver un PVI después de obtener la solución general.</li></ol>
+</div>
+</details>
+<details class="accordion" id="preguntas-5-preguntas-dificiles" open>
+<summary>5 preguntas difíciles</summary>
+<div class="accordion-content">
+<ol class="question-list"><li value="21">Resolver \(y''-3y'+2y=e^x\).</li>
+<li value="22">Resolver \(y''+2y'+y=e^{-x}\).</li>
+<li value="23">Resolver \(y''+y=\cos x\).</li>
+<li value="24">Resolver \(y''-2y'+5y=e^x\cos 2x\).</li>
+<li value="25">Resolver \(y''+3y'+2y=x+e^{-x}\).</li></ol>
+</div>
+</details>
+<details class="accordion" id="preguntas-5-preguntas-de-desarrollo-largo" open>
+<summary>5 preguntas de desarrollo largo</summary>
+<div class="accordion-content">
+<ol class="question-list"><li value="26">Explicar el método de coeficientes indeterminados y sus límites.</li>
+<li value="27">Desarrollar la regla de resonancia algebraica.</li>
+<li value="28">Comparar raíces reales, múltiples y complejas en la homogénea.</li>
+<li value="29">Explicar cómo se resuelve una EDO completa con PVI.</li>
+<li value="30">Interpretar físicamente la diferencia entre respuesta libre y respuesta forzada.</li></ol>
+</div>
+</details>
+<details class="accordion" id="preguntas-5-preguntas-de-relacion-entre-conceptos" open>
+<summary>5 preguntas de relación entre conceptos</summary>
+<div class="accordion-content">
+<ol class="question-list"><li value="31">Relacionar linealidad y superposición.</li>
+<li value="32">Relacionar ecuación característica y resonancia.</li>
+<li value="33">Relacionar exponenciales complejas y términos trigonométricos.</li>
+<li value="34">Relacionar solución homogénea y condiciones iniciales.</li>
+<li value="35">Relacionar coeficientes indeterminados y familias cerradas bajo derivación.</li></ol>
+</div>
+</details>
+</section>
+<section class="page" id="respuestas">
+<header class="section-header">
+<p class="eyebrow">Sección 8</p>
+<h2>8. Respuestas modelo</h2>
+</header>
+<div class="reading-block">
+
+</div>
+<details class="accordion" id="respuestas-1-que-es-una-ecuacion-lineal-homogenea-de-coeficientes-constantes">
+<summary>1. ¿Qué es una ecuación lineal homogénea de coeficientes constantes?</summary>
+<div class="accordion-content">
+<p>Es una ecuación de la forma</p>
+<div class="formula-block">\[
+a_n y^{(n)}+\cdots+a_1y'+a_0y=0,
+\]</div>
+<p>donde los coeficientes \(a_i\) son constantes y la función desconocida aparece linealmente.</p>
+</div>
+</details>
+<details class="accordion" id="respuestas-2-que-es-la-ecuacion-caracteristica">
+<summary>2. ¿Qué es la ecuación característica?</summary>
+<div class="accordion-content">
+<p>Es la ecuación algebraica que se obtiene al sustituir \(y=e^{rx}\) en la homogénea:</p>
+<div class="formula-block">\[
+a_nr^n+\cdots+a_1r+a_0=0.
+\]</div>
+<p>Sus raíces determinan la solución homogénea.</p>
+</div>
+</details>
+<details class="accordion" id="respuestas-3-que-forma-tiene-la-solucion-si-las-raices-son-reales-y-distintas">
+<summary>3. ¿Qué forma tiene la solución si las raíces son reales y distintas?</summary>
+<div class="accordion-content">
+<p>Si las raíces son \(r_1,\dots,r_n\),</p>
+<div class="formula-block">\[
+y_h=C_1e^{r_1x}+\cdots+C_ne^{r_nx}.
+\]</div>
+</div>
+</details>
+<details class="accordion" id="respuestas-4-que-forma-tiene-la-solucion-si-hay-una-raiz-doble-r-a">
+<summary>4. ¿Qué forma tiene la solución si hay una raíz doble \(r=a\)?</summary>
+<div class="accordion-content">
+<p>La raíz doble aporta</p>
+<div class="formula-block">\[
+C_1e^{ax}+C_2xe^{ax}.
+\]</div>
+<p>Para multiplicidad \(m\), aparecen potencias hasta \(x^{m-1}e^{ax}\).</p>
+</div>
+</details>
+<details class="accordion" id="respuestas-5-que-forma-real-corresponde-a-raices-alpha-pm-i-beta">
+<summary>5. ¿Qué forma real corresponde a raíces \(\alpha\pm i\beta\)?</summary>
+<div class="accordion-content">
+<div class="formula-block">\[
+y_h=e^{\alpha x}(C_1\cos\beta x+C_2\sin\beta x).
+\]</div>
+</div>
+</details>
+<details class="accordion" id="respuestas-6-que-significa-que-una-ecuacion-sea-completa">
+<summary>6. ¿Qué significa que una ecuación sea completa?</summary>
+<div class="accordion-content">
+<p>Que el segundo miembro no es cero:</p>
+<div class="formula-block">\[
+L(y)=F(x),\qquad F(x)\neq 0.
+\]</div>
+</div>
+</details>
+<details class="accordion" id="respuestas-7-que-relacion-hay-entre-y-h-y-p-y-la-solucion-general">
+<summary>7. ¿Qué relación hay entre \(y_h\), \(y_p\) y la solución general?</summary>
+<div class="accordion-content">
+<p>La solución general es</p>
+<div class="formula-block">\[
+y=y_h+y_p,
+\]</div>
+<p>donde \(y_h\) resuelve la homogénea y \(y_p\) una solución concreta de la completa.</p>
+</div>
+</details>
+<details class="accordion" id="respuestas-8-cuando-se-puede-usar-coeficientes-indeterminados">
+<summary>8. ¿Cuándo se puede usar coeficientes indeterminados?</summary>
+<div class="accordion-content">
+<p>Cuando (F\(x\)) es combinación de polinomios, exponenciales, senos, cosenos o productos de ellos.</p>
+</div>
+</details>
+<details class="accordion" id="respuestas-9-que-ansatz-se-usa-si-fx-x-2-1-y-no-hay-resonancia">
+<summary>9. ¿Qué ansatz se usa si (F\(x\)=x^2+1) y no hay resonancia?</summary>
+<div class="accordion-content">
+<div class="formula-block">\[
+y_p=Ax^2+Bx+C.
+\]</div>
+</div>
+</details>
+<details class="accordion" id="respuestas-10-que-es-un-pvi">
+<summary>10. ¿Qué es un PVI?</summary>
+<div class="accordion-content">
+<p>Una ecuación diferencial junto con condiciones iniciales, por ejemplo:</p>
+<div class="formula-block">\[
+y(0)=a,\qquad y'(0)=b.
+\]</div>
+<p>Sirve para fijar las constantes de la solución general.</p>
+</div>
+</details>
+<details class="accordion" id="respuestas-11-resolver-y-5y-6y-0">
+<summary>11. Resolver \(y''-5y'+6y=0\)</summary>
+<div class="accordion-content">
+<p>Característica:</p>
+<div class="formula-block">\[
+r^2-5r+6=(r-2)(r-3)=0.
+\]</div>
+<p>Solución:</p>
+<div class="formula-block">\[
+y=C_1e^{2x}+C_2e^{3x}.
+\]</div>
+</div>
+</details>
+<details class="accordion" id="respuestas-12-resolver-y-4y-4y-0">
+<summary>12. Resolver \(y''+4y'+4y=0\)</summary>
+<div class="accordion-content">
+<p>Característica:</p>
+<div class="formula-block">\[
+r^2+4r+4=(r+2)^2.
+\]</div>
+<p>Solución:</p>
+<div class="formula-block">\[
+y=(C_1+C_2x)e^{-2x}.
+\]</div>
+</div>
+</details>
+<details class="accordion" id="respuestas-13-resolver-y-9y-0">
+<summary>13. Resolver \(y''+9y=0\)</summary>
+<div class="accordion-content">
+<p>Característica:</p>
+<div class="formula-block">\[
+r^2+9=0,\qquad r=\pm 3i.
+\]</div>
+<p>Solución:</p>
+<div class="formula-block">\[
+y=C_1\cos 3x+C_2\sin 3x.
+\]</div>
+</div>
+</details>
+<details class="accordion" id="respuestas-14-hallar-una-particular-de-y-y-x">
+<summary>14. Hallar una particular de \(y''+y=x\)</summary>
+<div class="accordion-content">
+<p>Se prueba</p>
+<div class="formula-block">\[
+y_p=Ax+B.
+\]</div>
+<p>Entonces</p>
+<div class="formula-block">\[
+y_p''+y_p=Ax+B=x.
+\]</div>
+<p>Por tanto:</p>
+<div class="formula-block">\[
+A=1,\qquad B=0.
+\]</div>
+<p>Una particular es</p>
+<div class="formula-block">\[
+y_p=x.
+\]</div>
+</div>
+</details>
+<details class="accordion" id="respuestas-15-ansatz-para-y-y-e-2x">
+<summary>15. Ansatz para \(y''-y=e^{2x}\)</summary>
+<div class="accordion-content">
+<p>Característica:</p>
+<div class="formula-block">\[
+r^2-1=0,\qquad r=\pm1.
+\]</div>
+<p>Como \(2\) no es raíz:</p>
+<div class="formula-block">\[
+y_p=Ae^{2x}.
+\]</div>
+</div>
+</details>
+<details class="accordion" id="respuestas-16-ansatz-para-y-3y-2y-e-x">
+<summary>16. Ansatz para \(y''-3y'+2y=e^x\)</summary>
+<div class="accordion-content">
+<p>Característica:</p>
+<div class="formula-block">\[
+r^2-3r+2=(r-1)(r-2).
+\]</div>
+<p>Como \(1\) es raíz simple:</p>
+<div class="formula-block">\[
+y_p=Axe^x.
+\]</div>
+</div>
+</details>
+<details class="accordion" id="respuestas-17-ansatz-para-y-y-sin-x">
+<summary>17. Ansatz para \(y''+y=\sin x\)</summary>
+<div class="accordion-content">
+<p>Característica:</p>
+<div class="formula-block">\[
+r^2+1=0,\qquad r=\pm i.
+\]</div>
+<p>Hay resonancia:</p>
+<div class="formula-block">\[
+y_p=x(A\cos x+B\sin x).
+\]</div>
+</div>
+</details>
+<details class="accordion" id="respuestas-18-ansatz-para-y-2y-2y-e-x-cos-x">
+<summary>18. Ansatz para \(y''+2y'+2y=e^{-x}\cos x\)</summary>
+<div class="accordion-content">
+<p>Característica:</p>
+<div class="formula-block">\[
+r^2+2r+2=0,\qquad r=-1\pm i.
+\]</div>
+<p>Hay resonancia:</p>
+<div class="formula-block">\[
+y_p=xe^{-x}(A\cos x+B\sin x).
+\]</div>
+</div>
+</details>
+<details class="accordion" id="respuestas-19-explicar-por-que-y-y-h-y-p">
+<summary>19. Explicar por qué \(y=y_h+y_p\)</summary>
+<div class="accordion-content">
+<p>Por linealidad:</p>
+<div class="formula-block">\[
+L(y_h+y_p)=L(y_h)+L(y_p)=0+F(x)=F(x).
+\]</div>
+<p>Por eso la suma de la homogénea y una particular resuelve la completa.</p>
+</div>
+</details>
+<details class="accordion" id="respuestas-20-resolver-un-pvi-despues-de-obtener-la-solucion-general">
+<summary>20. Resolver un PVI después de obtener la solución general</summary>
+<div class="accordion-content">
+<p>Se obtiene primero:</p>
+<div class="formula-block">\[
+y=y_h+y_p.
+\]</div>
+<p>Luego se calcula \(y'\), se sustituyen las condiciones iniciales y se resuelve el sistema algebraico para las constantes.</p>
+</div>
+</details>
+<details class="accordion" id="respuestas-21-resolver-y-3y-2y-e-x">
+<summary>21. Resolver \(y''-3y'+2y=e^x\)</summary>
+<div class="accordion-content">
+<p>Homogénea:</p>
+<div class="formula-block">\[
+r^2-3r+2=(r-1)(r-2).
+\]</div>
+<div class="formula-block">\[
+y_h=C_1e^x+C_2e^{2x}.
+\]</div>
+<p>Como \(e^x\) resuena:</p>
+<div class="formula-block">\[
+y_p=Axe^x.
+\]</div>
+<p>Derivando:</p>
+<div class="formula-block">\[
+y_p'=A e^x(1+x),
+\]</div>
+<div class="formula-block">\[
+y_p''=A e^x(2+x).
+\]</div>
+<p>Sustituyendo:</p>
+<div class="formula-block">\[
+A e^x(2+x)-3A e^x(1+x)+2Axe^x=-Ae^x.
+\]</div>
+<p>Para que sea \(e^x\):</p>
+<div class="formula-block">\[
+-A=1 \Rightarrow A=-1.
+\]</div>
+<p>Solución:</p>
+<div class="formula-block">\[
+y=C_1e^x+C_2e^{2x}-xe^x.
+\]</div>
+</div>
+</details>
+<details class="accordion" id="respuestas-22-resolver-y-2y-y-e-x">
+<summary>22. Resolver \(y''+2y'+y=e^{-x}\)</summary>
+<div class="accordion-content">
+<p>Característica:</p>
+<div class="formula-block">\[
+(r+1)^2=0.
+\]</div>
+<div class="formula-block">\[
+y_h=(C_1+C_2x)e^{-x}.
+\]</div>
+<p>Como \(-1\) es raíz doble:</p>
+<div class="formula-block">\[
+y_p=Ax^2e^{-x}.
+\]</div>
+<p>Usando (\(D+1\)^2y=e^{-x}), para \(y=e^{-x}u\),</p>
+<div class="formula-block">\[
+(D+1)y=e^{-x}u',
+\]</div>
+<div class="formula-block">\[
+(D+1)^2y=e^{-x}u''.
+\]</div>
+<p>Si \(u=Ax^2\), entonces \(u''=2A\). Por tanto:</p>
+<div class="formula-block">\[
+2Ae^{-x}=e^{-x}\Rightarrow A=\frac12.
+\]</div>
+<p>Solución:</p>
+<div class="formula-block">\[
+y=(C_1+C_2x)e^{-x}+\frac12x^2e^{-x}.
+\]</div>
+</div>
+</details>
+<details class="accordion" id="respuestas-23-resolver-y-y-cos-x">
+<summary>23. Resolver \(y''+y=\cos x\)</summary>
+<div class="accordion-content">
+<p>Homogénea:</p>
+<div class="formula-block">\[
+y_h=C_1\cos x+C_2\sin x.
+\]</div>
+<p>Hay resonancia:</p>
+<div class="formula-block">\[
+y_p=x(A\cos x+B\sin x).
+\]</div>
+<p>Una elección más directa para \(\cos x\) es probar</p>
+<div class="formula-block">\[
+y_p=Ax\sin x.
+\]</div>
+<p>Entonces:</p>
+<div class="formula-block">\[
+y_p'=A\sin x+Ax\cos x,
+\]</div>
+<div class="formula-block">\[
+y_p''=2A\cos x-Ax\sin x.
+\]</div>
+<p>Sustituyendo:</p>
+<div class="formula-block">\[
+y_p''+y_p=2A\cos x.
+\]</div>
+<p>Luego:</p>
+<div class="formula-block">\[
+2A=1\Rightarrow A=\frac12.
+\]</div>
+<p>Solución:</p>
+<div class="formula-block">\[
+y=C_1\cos x+C_2\sin x+\frac{x}{2}\sin x.
+\]</div>
+</div>
+</details>
+<details class="accordion" id="respuestas-24-resolver-y-2y-5y-e-x-cos-2x">
+<summary>24. Resolver \(y''-2y'+5y=e^x\cos 2x\)</summary>
+<div class="accordion-content">
+<p>Característica:</p>
+<div class="formula-block">\[
+r^2-2r+5=0,\qquad r=1\pm 2i.
+\]</div>
+<div class="formula-block">\[
+y_h=e^x(C_1\cos 2x+C_2\sin 2x).
+\]</div>
+<p>Hay resonancia:</p>
+<div class="formula-block">\[
+y_p=xe^x(A\cos 2x+B\sin 2x).
+\]</div>
+<p>Por método complejo:</p>
+<div class="formula-block">\[
+L(D)=D^2-2D+5.
+\]</div>
+<p>Como \(1+2i\) es raíz simple,</p>
+<div class="formula-block">\[
+L(D)\left(xe^{(1+2i)x}\right)=L'(1+2i)e^{(1+2i)x}.
+\]</div>
+<div class="formula-block">\[
+L'(r)=2r-2,\qquad L'(1+2i)=4i.
+\]</div>
+<p>Para obtener (e^{\(1+2i\)x}),</p>
+<div class="formula-block">\[
+C=\frac1{4i}=-\frac{i}{4}.
+\]</div>
+<div class="formula-block">\[
+Y_p=-\frac{i}{4}xe^{(1+2i)x}.
+\]</div>
+<p>Tomando parte real:</p>
+<div class="formula-block">\[
+y_p=\frac{x}{4}e^x\sin 2x.
+\]</div>
+<p>Solución:</p>
+<div class="formula-block">\[
+y=e^x(C_1\cos 2x+C_2\sin 2x)+\frac{x}{4}e^x\sin 2x.
+\]</div>
+</div>
+</details>
+<details class="accordion" id="respuestas-25-resolver-y-3y-2y-x-e-x">
+<summary>25. Resolver \(y''+3y'+2y=x+e^{-x}\)</summary>
+<div class="accordion-content">
+<p>Homogénea:</p>
+<div class="formula-block">\[
+r^2+3r+2=(r+1)(r+2).
+\]</div>
+<div class="formula-block">\[
+y_h=C_1e^{-x}+C_2e^{-2x}.
+\]</div>
+<p>Para \(x\), como \(0\) no es raíz:</p>
+<div class="formula-block">\[
+y_{p1}=Ax+B.
+\]</div>
+<div class="formula-block">\[
+y_{p1}'=A,\qquad y_{p1}''=0.
+\]</div>
+<div class="formula-block">\[
+0+3A+2(Ax+B)=x.
+\]</div>
+<div class="formula-block">\[
+2A=1\Rightarrow A=\frac12.
+\]</div>
+<div class="formula-block">\[
+3A+2B=0\Rightarrow B=-\frac34.
+\]</div>
+<p>Para \(e^{-x}\), hay resonancia simple:</p>
+<div class="formula-block">\[
+y_{p2}=Cxe^{-x}.
+\]</div>
+<p>Como</p>
+<div class="formula-block">\[
+(D+1)(D+2)y=e^{-x},
+\]</div>
+<p>y \(r=-1\) es raíz simple,</p>
+<div class="formula-block">\[
+C=\frac{1}{(-1+2)}=1.
+\]</div>
+<div class="formula-block">\[
+y_{p2}=xe^{-x}.
+\]</div>
+<p>Solución:</p>
+<div class="formula-block">\[
+y=C_1e^{-x}+C_2e^{-2x}+\frac12x-\frac34+xe^{-x}.
+\]</div>
+</div>
+</details>
+<details class="accordion" id="respuestas-26-metodo-de-coeficientes-indeterminados-y-limites">
+<summary>26. Método de coeficientes indeterminados y límites</summary>
+<div class="accordion-content">
+<p>El método consiste en proponer una solución particular con la misma estructura funcional que (F\(x\)). Funciona cuando (F\(x\)) pertenece a familias cerradas bajo derivación: polinomios, exponenciales, senos, cosenos y productos entre ellos. No es adecuado para segundos miembros arbitrarios como \(\ln x\), \(\tan x\), \(1/x\) o funciones no elementales. En esos casos se emplean otros métodos, como variación de constantes o transformada de Laplace.</p>
+</div>
+</details>
+<details class="accordion" id="respuestas-27-regla-de-resonancia-algebraica">
+<summary>27. Regla de resonancia algebraica</summary>
+<div class="accordion-content">
+<p>Si el ansatz propuesto pertenece a la solución homogénea, el operador diferencial lo anula y no puede producir (F\(x\)). Para corregirlo, se multiplica por \(x^s\), donde \(s\) es la multiplicidad de la raíz asociada al segundo miembro. Si (F=e^{ax}P\(x\)), se mira si \(a\) es raíz. Si \(F=e^{px}\cos qx\) o \(e^{px}\sin qx\), se mira si \(p\pm qi\) son raíces.</p>
+</div>
+</details>
+<details class="accordion" id="respuestas-28-raices-reales-multiples-y-complejas">
+<summary>28. Raíces reales, múltiples y complejas</summary>
+<div class="accordion-content">
+<p>Las raíces reales simples producen exponenciales independientes. Las raíces múltiples producen exponenciales multiplicadas por potencias de \(x\). Las raíces complejas conjugadas producen combinaciones reales de senos y cosenos multiplicadas por \(e^{\alpha x}\). Estas tres posibilidades cubren la solución homogénea de coeficientes constantes.</p>
+</div>
+</details>
+<details class="accordion" id="respuestas-29-resolucion-de-una-edo-completa-con-pvi">
+<summary>29. Resolución de una EDO completa con PVI</summary>
+<div class="accordion-content">
+<p>El procedimiento correcto es: resolver la homogénea, elegir una particular, sumar ambas partes, derivar la solución completa, aplicar condiciones iniciales y resolver constantes. El PVI no cambia la forma del ansatz; solo fija los valores de las constantes arbitrarias.</p>
+</div>
+</details>
+<details class="accordion" id="respuestas-30-respuesta-libre-y-respuesta-forzada">
+<summary>30. Respuesta libre y respuesta forzada</summary>
+<div class="accordion-content">
+<p>En modelos físicos, \(y_h\) representa la respuesta libre del sistema: depende de las condiciones iniciales y de la dinámica interna. \(y_p\) representa la respuesta forzada: depende del término externo (F\(x\)). En un oscilador amortiguado, la parte homogénea suele ser transitoria y la particular describe el régimen impuesto por la fuerza externa.</p>
+</div>
+</details>
+<details class="accordion" id="respuestas-31-linealidad-y-superposicion">
+<summary>31. Linealidad y superposición</summary>
+<div class="accordion-content">
+<p>La linealidad implica que</p>
+<div class="formula-block">\[
+L(y_1+y_2)=L(y_1)+L(y_2).
+\]</div>
+<p>Por eso se puede construir la solución completa sumando una solución de la homogénea y una particular de la no homogénea.</p>
+</div>
+</details>
+<details class="accordion" id="respuestas-32-ecuacion-caracteristica-y-resonancia">
+<summary>32. Ecuación característica y resonancia</summary>
+<div class="accordion-content">
+<p>La ecuación característica indica qué funciones anula el operador homogéneo. Si el segundo miembro tiene la misma forma que una de esas funciones, hay resonancia y el ansatz debe multiplicarse por \(x^s\).</p>
+</div>
+</details>
+<details class="accordion" id="respuestas-33-exponenciales-complejas-y-trigonometria">
+<summary>33. Exponenciales complejas y trigonometría</summary>
+<div class="accordion-content">
+<p>Las funciones \(\cos bx\) y \(\sin bx\) son partes real e imaginaria de \(e^{ibx}\). Esto permite tratar segundos miembros trigonométricos como exponenciales complejas y después volver a soluciones reales.</p>
+</div>
+</details>
+<details class="accordion" id="respuestas-34-solucion-homogenea-y-condiciones-iniciales">
+<summary>34. Solución homogénea y condiciones iniciales</summary>
+<div class="accordion-content">
+<p>Las constantes de \(y_h\) permiten ajustar las condiciones iniciales. La particular no se escoge para cumplir esas condiciones; se escoge para producir el segundo miembro (F\(x\)). Las condiciones se aplican al total \(y_h+y_p\).</p>
+</div>
+</details>
+<details class="accordion" id="respuestas-35-coeficientes-indeterminados-y-familias-cerradas">
+<summary>35. Coeficientes indeterminados y familias cerradas</summary>
+<div class="accordion-content">
+<p>El método funciona porque al derivar polinomios, exponenciales y trigonométricas se obtiene otra función de la misma familia. Esa estabilidad permite proponer un ansatz finito con coeficientes desconocidos y resolverlos igualando coeficientes.</p>
+</div>
+</details>
+</section>
+<section class="page" id="resumen">
+<header class="section-header">
+<p class="eyebrow">Sección 9</p>
+<h2>9. Resumen final de repaso</h2>
+</header>
+<div class="reading-block">
+<p>Ideas principales:</p>
+<div class="formula-block">\[
+L(y)=F(x),\qquad y=y_h+y_p.
+\]</div>
+<p>La homogénea se resuelve con:</p>
+<div class="formula-block">\[
+p(r)=0.
+\]</div>
+<p>Raíces:</p>
+<div class="formula-block">\[
+r_i\text{ reales simples}\Rightarrow e^{r_ix}.
+\]</div>
+<div class="formula-block">\[
+r=a\text{ doble}\Rightarrow e^{ax},xe^{ax}.
+\]</div>
+<div class="formula-block">\[
+r=\alpha\pm i\beta\Rightarrow e^{\alpha x}(C_1\cos\beta x+C_2\sin\beta x).
+\]</div>
+<p>Coeficientes indeterminados:</p>
+<div class="formula-block">\[
+F=P_r(x)\Rightarrow y_p=Q_r(x).
+\]</div>
+<div class="formula-block">\[
+F=e^{ax}P_r(x)\Rightarrow y_p=e^{ax}Q_r(x).
+\]</div>
+<div class="formula-block">\[
+F=e^{px}(P\cos qx+Q\sin qx)
+\Rightarrow
+y_p=e^{px}(R\cos qx+S\sin qx).
+\]</div>
+<p>Resonancia:</p>
+<div class="formula-block">\[
+\text{si la forma ya está en }y_h,\quad y_p\mapsto x^s y_p.
+\]</div>
+<p>Errores que evitar:</p>
+<ul><li>olvidar \(y_h\);</li>
+<li>olvidar multiplicar por \(x^s\);</li>
+<li>aplicar condiciones iniciales antes de sumar \(y_h+y_p\);</li>
+<li>usar grado polinómico incorrecto;</li>
+<li>dejar soluciones complejas cuando se pide forma real.</li></ul>
+</div>
+</section>
+<section class="page" id="checklist">
+<header class="section-header">
+<p class="eyebrow">Sección 10</p>
+<h2>10. Checklist de dominio</h2>
+</header>
+<div class="reading-block">
+<ul class="checklist-list"><li>Si no puedes construir (p\(r\)), falta repasar ecuación característica.</li>
+<li>Si no puedes pasar de raíces a \(y_h\), falta repasar raíces reales, múltiples y complejas.</li>
+<li>Si confundes \(y_h\) con \(y_p\), revisar superposición lineal.</li>
+<li>Si pruebas siempre el mismo ansatz, falta repasar clasificación de (F\(x\)).</li>
+<li>Si no detectas resonancia, revisar multiplicidad de raíces.</li>
+<li>Si multiplicas por \(x\) sin comprobar multiplicidad, revisar resonancia algebraica.</li>
+<li>Si aplicas (y\(0\),y'\(0\)) antes de hallar \(y_p\), revisar PVI.</li>
+<li>Si fallan derivadas de \(xe^{ax}\), falta práctica algebraica.</li>
+<li>Si fallan derivadas de \(x\sin x\) o \(e^{ax}\cos bx\), falta repasar regla del producto.</li>
+<li>Si puedes resolver \(y''+y=\cos x\), el caso de resonancia trigonométrica está asentado.</li>
+<li>Si puedes resolver \(y''+2y'+y=e^{-x}\), la resonancia doble está asentada.</li>
+<li>Si puedes resolver \(y''+3y'+2y=x+e^{-x}\), la suma de segundos miembros está asentada.</li>
+<li>Si puedes resolver un PVI completo sin rehacer el ansatz, el capítulo está suficientemente dominado.</li></ul>
+</div>
+</section>
+  </main>
+</body>
+</html>

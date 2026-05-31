@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>MM1 — Tema 1: EDO de primer orden</title>
+<link rel="icon" type="image/png" sizes="32x32" href="assets/icons/icon-32.png" />
+<link rel="icon" type="image/png" sizes="50x50" href="assets/icons/icon-50.png" />
+<link rel="apple-touch-icon" sizes="100x100" href="assets/icons/icon-100.png" />
+<meta name="theme-color" content="#3f4f75" />
+<script>
+window.MathJax = { tex: {inlineMath: [['\(','\)'], ['$', '$']], displayMath: [['\[','\]']] }, svg: {fontCache: 'global'} };
+</script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+<link rel="stylesheet" href="assets/styles.css" />
+<script defer src="assets/app.js"></script>
+</head>
+<body class="subject-mm1">
+<div class="wrap">
+  <header class="cover">
+    <div class="top-actions"><a class="back-link" href="index.html">← Volver al índice</a></div>
+    <h1>Guía de estudio — MM1 / EDO de primer orden</h1>
+    <p class="subtitle">Métodos Matemáticos I · Tema 1 · Separables, homogéneas, lineales, exactas, Bernoulli y Riccati</p>
+    <div class="chips"><span class="chip">MM1</span><span class="chip">Tema 1</span><span class="chip">EDO</span><span class="chip">MathJax</span><span class="chip">A4</span></div>
+  </header>
+  <div class="toolbar no-print">
+    <nav><a href="index.html">Inicio</a><a href="#mapa">Mapa</a><a href="#s1-prerrequisitos">Prerrequisitos</a><a href="#s2-idea-central">Idea</a><a href="#s3-desarrollo">Desarrollo</a><a href="#s4-conceptos">Conceptos</a><a href="#s5-relaciones">Relaciones</a><a href="#s6-errores">Errores</a><a href="#s7-preguntas">Preguntas</a><a href="#s8-respuestas">Respuestas</a><a href="#s9-resumen">Resumen</a><a href="#s10-checklist">Checklist</a></nav>
+    <div class="toolbar-actions"><button class="btn secondary" onclick="setDetails(true)">Abrir todo</button><button class="btn secondary" onclick="setDetails(false)">Modo repaso</button><button class="btn" onclick="printReady()">Imprimir / PDF</button></div>
+  </div>
+
+  <main>
+    <section class="page" id="fuentes"><div class="page-head"><h2>Fuentes y orientación</h2><span class="page-no">inicio</span></div><div class="reading-block">
+    <p class="lead">Fuentes base: Sanz/Torres para estructura teórica del tema; Boas como refuerzo operativo; OCR UNED para orientación de examen. Sanz/Torres organiza el bloque en ecuación de primer orden, Cauchy, existencia/unicidad, isoclinas, separables, homogéneas, exactas, factores integrantes, lineales, Bernoulli y Riccati.  En OCR recientes aparecen EDO exactas, factores integrantes, lineales, Bernoulli y Riccati, además de la exigencia explícita de justificar resultados teóricos usados.</p>
+    </div></section>
+    
+<section class="structure-map" id="mapa">
+  <div class="section-kicker">Mapa clicable</div>
+  <h2>Estructura operativa del tema</h2>
+  <p class="map-subtitle">Clasificación primero; método después; dominio siempre al final.</p>
+  <a class="map-root" href="#s2-idea-central"><span class="node main">EDO de primer orden</span></a>
+  <div class="map-grid">
+    <div class="map-column">
+      <a class="node main" href="#dev-3-2-problema-de-cauchy">Cauchy</a>
+      <div class="arrow"></div>
+      <a class="node" href="#dev-3-3-existencia-local-frente-a-solucion-global">Existencia local</a>
+      <div class="arrow"></div>
+      <a class="node small" href="#s10-checklist">Dominio y unicidad</a>
+    </div>
+    <div class="map-column">
+      <a class="node main" href="#dev-3-4-ecuaciones-separables">Separables</a>
+      <div class="arrow"></div>
+      <a class="node" href="#dev-3-5-ecuaciones-homogeneas-de-primer-orden">Homogéneas</a>
+      <div class="arrow"></div>
+      <a class="node small" href="#dev-3-6-ecuaciones-reducibles-a-homogeneas">Traslación del origen</a>
+    </div>
+    <div class="map-column">
+      <a class="node main" href="#dev-3-7-ecuaciones-lineales-de-primer-orden">Lineales</a>
+      <div class="arrow"></div>
+      <a class="node" href="#dev-3-10-bernoulli">Bernoulli</a>
+      <div class="arrow"></div>
+      <a class="node small" href="#dev-3-11-riccati-basico">Riccati con particular</a>
+    </div>
+    <div class="map-column">
+      <a class="node main" href="#dev-3-8-exactas">Exactas</a>
+      <div class="arrow"></div>
+      <a class="node" href="#dev-3-9-factor-integrante">Factor integrante</a>
+      <div class="arrow"></div>
+      <a class="node small" href="#s6-errores">Errores típicos</a>
+    </div>
+  </div>
+  <p class="map-note">Lectura de examen: forma → patrón → cambio o factor → integración → constante → dominio.</p>
+</section>
+
+    <section class="page" id="s1-prerrequisitos"><div class="page-head"><h2>1. Prerrequisitos mínimos</h2><span class="page-no">p.1</span></div>
+<div class="grid auto">
+<article class="card definition-card"><h3>Derivada ordinaria</h3>
+<p>Mide la variación local de una función (y\(x\)). Es necesaria porque una EDO relaciona \(x\), \(y\) y alguna derivada de \(y\). Ejemplo mínimo: si \(y=x^2\), entonces \(y'=2x\).</p></article>
+<article class="card definition-card"><h3>Primitiva e integral indefinida</h3>
+<p>Resolver muchas EDO de primer orden equivale a integrar. Es imprescindible para separables, lineales, exactas y factores integrantes. Ejemplo: de \(y'=2x\) se obtiene \(y=x^2+C\).</p></article>
+<article class="card definition-card"><h3>Regla de la cadena</h3>
+<p>Permite derivar funciones compuestas y justificar cambios como \(y=vx\), \(y=u^{-1}\), \(z=y^{1-n}\). Ejemplo: si \(y=v(x)x\), entonces \(y'=v+xv'\).</p></article>
+<article class="card definition-card"><h3>Derivadas parciales</h3>
+<p>Aparecen en exactas y en el teorema de existencia y unicidad, porque una ecuación \(y'=f(x,y)\) depende de dos variables. Ejemplo: si \(f(x,y)=xy^2\), entonces \(f_y=2xy\).</p></article>
+<article class="card definition-card"><h3>Diferenciales</h3>
+<p>La forma \(M(x,y),dx+N(x,y),dy=0\) se interpreta mediante diferenciales. Es esencial para exactas y factores integrantes. Ejemplo: si \(F(x,y)=x^2y\), entonces \(dF=2xy,dx+x^2,dy\).</p></article>
+<article class="card definition-card"><h3>Álgebra elemental limpia</h3>
+<p>Las EDO de primer orden suelen fallar por despejes, signos y constantes. Ejemplo: de \(\frac{dy}{y}=x,dx\) no sale \(y=\frac{x^2}{2}+C\), sino \(\ln |y|=\frac{x^2}{2}+C\), luego \(y=Ce^{x^2/2}\).</p></article>
+<article class="card definition-card"><h3>Funciones homogéneas</h3>
+<p>Una función (M\(x,y\)) es homogénea de grado \(k\) si \(M(\lambda x,\lambda y)=\lambda^kM(x,y)\). Es necesaria para reconocer ecuaciones homogéneas de primer orden. Ejemplo: \(M=x^2+xy\) es homogénea de grado \(2\).</p></article>
+<article class="card definition-card"><h3>Dominio de definición</h3>
+<p>No basta resolver formalmente: hay que indicar dónde tiene sentido la ecuación y dónde se puede asegurar existencia/unicidad. Ejemplo: \(y'=\frac{y}{x}\) exige \(x\neq 0\).</p></article>
+</div>
+</section>
+<section class="page" id="s2-idea-central"><div class="page-head"><h2>2. Idea central del capítulo</h2><span class="page-no">p.2</span></div>
+<div class="reading-block">
+<p class="lead">El capítulo estudia cómo resolver y clasificar ecuaciones diferenciales ordinarias de primer orden. Una EDO de primer orden no busca un número, sino una función (y\(x\)) cuya derivada cumple una relación dada. La forma más directa es</p>
+<div class="formula-block">\[
+y'=f(x,y),
+\]</div>
+<p>aunque muchas veces aparece como</p>
+<div class="formula-block">\[
+F(x,y,y')=0
+\]</div>
+<p>o como forma diferencial</p>
+<div class="formula-block">\[
+M(x,y),dx+N(x,y),dy=0.
+\]</div>
+<p>La idea central no es memorizar una lista de métodos, sino reconocer la estructura de la ecuación. Cada tipo tiene una firma algebraica: separable, homogénea, lineal, exacta, Bernoulli, Riccati. En examen, el punto crítico es diagnosticar rápido el tipo y aplicar el método correcto sin mezclar recetas.</p>
+<p>Este bloque ocupa una posición básica en Métodos Matemáticos I porque entrena el paso de una ley local a una familia de soluciones. En física, una EDO aparece cuando una ley relaciona una magnitud con su ritmo de cambio: enfriamiento, crecimiento, velocidad con rozamiento, circuitos RC, caída con resistencia proporcional, etc.</p>
+<p>Además, el capítulo introduce una distinción que suele pasarse por alto: resolver formalmente no equivale a entender la solución. El problema de Cauchy pregunta si por un punto \((x_0,y_0)\) pasa una solución y si esa solución es única. Sanz/Torres formula explícitamente este problema para \(y'=f(x,y)\) y lo vincula con continuidad de \(f\) y de \(f_y\).</p>
+</div>
+</section>
+<section class="page" id="s3-desarrollo"><div class="page-head"><h2>3. Desarrollo completo del capítulo</h2><span class="page-no">p.3</span></div>
+<article class="lesson reading-block" id="dev-3-1-concepto-de-edo-de-primer-orden"><div class="section-kicker">Bloque de desarrollo</div><h3>3.1. Concepto de EDO de primer orden</h3>
+<p class="lead">Una ecuación diferencial de primer orden es una relación entre una variable independiente \(x\), una función desconocida (y\(x\)) y su primera derivada \(y'(x)\). Su forma general es</p>
+<div class="formula-block">\[
+F(x,y,y')=0.
+\]</div>
+<p>Cuando se puede despejar la derivada, se escribe</p>
+<div class="formula-block">\[
+y'=f(x,y).
+\]</div>
+<p>Esta forma es especialmente importante porque permite interpretar la ecuación como un campo de pendientes: en cada punto \((x,y)\), el valor (f\(x,y\)) indica la pendiente que debe tener la curva solución al pasar por ese punto. Por eso la ecuación no describe una única curva, sino una familia de curvas integrales.</p>
+<p>La consecuencia conceptual es clara: resolver una EDO de primer orden significa encontrar una familia</p>
+<div class="formula-block">\[
+y=\varphi(x,C),
+\]</div>
+<p>con una constante arbitraria \(C\). Esa constante se fija cuando se añade una condición inicial \(y(x_0)=y_0\).</p></article>
+<article class="lesson reading-block" id="dev-3-2-problema-de-cauchy"><div class="section-kicker">Bloque de desarrollo</div><h3>3.2. Problema de Cauchy</h3>
+<p class="lead">El problema de Cauchy consiste en resolver</p>
+<div class="formula-block">\[
+y'=f(x,y), \qquad y(x_0)=y_0.
+\]</div>
+<p>La pregunta no es solo “cuál es la solución”, sino si existe y si es única. El resultado básico dice que, si \(f\) es continua y \(f_y\) también es continua en un dominio que contiene \((x_0,y_0)\), entonces existe una única solución local que pasa por ese punto. Sanz/Torres lo presenta como teorema de existencia y unicidad para la ecuación de primer orden.</p>
+<p>Ejemplo:</p>
+<div class="formula-block">\[
+y'=y,\qquad y(0)=1.
+\]</div>
+<p>Aquí \(f(x,y)=y\) y \(f_y=1\), ambas continuas en todo \(\mathbb{R}^2\). Hay solución única. Resolviendo:</p>
+<div class="formula-block">\[
+\frac{dy}{y}=dx,\qquad \ln|y|=x+C,\qquad y=Ce^x.
+\]</div>
+<p>La condición inicial da \(1=C\), luego \(y=e^x\).</p></article>
+<article class="lesson reading-block" id="dev-3-3-existencia-local-frente-a-solucion-global"><div class="section-kicker">Bloque de desarrollo</div><h3>3.3. Existencia local frente a solución global</h3>
+<p class="lead">El teorema de existencia y unicidad garantiza solución en un entorno de \(x_0\), no necesariamente en todo \(\mathbb{R}\). Esta precisión importa en examen.</p>
+<p>Ejemplo:</p>
+<div class="formula-block">\[
+y'=y^2,\qquad y(0)=1.
+\]</div>
+<p>Separando:</p>
+<div class="formula-block">\[
+\frac{dy}{y^2}=dx,\qquad -\frac{1}{y}=x+C.
+\]</div>
+<p>Con \(y(0)=1\), resulta \(C=-1\), luego</p>
+<div class="formula-block">\[
+y=\frac{1}{1-x}.
+\]</div>
+<p>La solución existe cerca de \(0\), pero explota en \(x=1\). No es solución global en todo \(\mathbb{R}\).</p></article>
+<article class="lesson reading-block" id="dev-3-4-ecuaciones-separables"><div class="section-kicker">Bloque de desarrollo</div><h3>3.4. Ecuaciones separables</h3>
+<p class="lead">Una ecuación es separable si puede escribirse como</p>
+<div class="formula-block">\[
+y'=g(x)h(y).
+\]</div>
+<p>Entonces se separan variables:</p>
+<div class="formula-block">\[
+\frac{dy}{h(y)}=g(x),dx.
+\]</div>
+<p>Después se integra cada lado. El método es elemental, pero tiene dos trampas: dividir por una función que puede anularse y olvidar soluciones constantes.</p>
+<p>Ejemplo:</p>
+<div class="formula-block">\[
+y'=xy.
+\]</div>
+<p>Si \(y\neq 0\),</p>
+<div class="formula-block">\[
+\frac{dy}{y}=x,dx,
+\]</div>
+<div class="formula-block">\[
+\ln|y|=\frac{x^2}{2}+C,
+\]</div>
+<div class="formula-block">\[
+y=Ce^{x^2/2}.
+\]</div>
+<p>La solución \(y=0\) queda incluida con \(C=0\).</p></article>
+<article class="lesson reading-block" id="dev-3-5-ecuaciones-homogeneas-de-primer-orden"><div class="section-kicker">Bloque de desarrollo</div><h3>3.5. Ecuaciones homogéneas de primer orden</h3>
+<p class="lead">Una ecuación de primer orden es homogénea si puede escribirse como</p>
+<div class="formula-block">\[
+y'=F\left(\frac{y}{x}\right),
+\]</div>
+<p>o si en forma diferencial</p>
+<div class="formula-block">\[
+M(x,y),dx+N(x,y),dy=0
+\]</div>
+<p>las funciones \(M\) y \(N\) son homogéneas del mismo grado.</p>
+<p>El cambio estándar es</p>
+<div class="formula-block">\[
+y=vx,\qquad y'=v+xv'.
+\]</div>
+<p>Al sustituir, la ecuación queda separable en \(v\) y \(x\).</p>
+<p>Ejemplo:</p>
+<div class="formula-block">\[
+y'=\frac{x+y}{x}=1+\frac{y}{x}.
+\]</div>
+<p>Con \(y=vx\),</p>
+<div class="formula-block">\[
+v+xv'=1+v,
+\]</div>
+<div class="formula-block">\[
+xv'=1,
+\]</div>
+<div class="formula-block">\[
+v=\ln|x|+C.
+\]</div>
+<p>Por tanto,</p>
+<div class="formula-block">\[
+y=x(\ln|x|+C).
+\]</div></article>
+<article class="lesson reading-block" id="dev-3-6-ecuaciones-reducibles-a-homogeneas"><div class="section-kicker">Bloque de desarrollo</div><h3>3.6. Ecuaciones reducibles a homogéneas</h3>
+<p class="lead">Algunas ecuaciones no son homogéneas directamente, pero se vuelven homogéneas tras trasladar el origen. El caso típico es</p>
+<div class="formula-block">\[
+y'=\frac{a_1x+b_1y+c_1}{a_2x+b_2y+c_2}.
+\]</div>
+<p>Si las rectas</p>
+<div class="formula-block">\[
+a_1x+b_1y+c_1=0,\qquad a_2x+b_2y+c_2=0
+\]</div>
+<p>se cortan en \((x_0,y_0)\), se hace</p>
+<div class="formula-block">\[
+X=x-x_0,\qquad Y=y-y_0.
+\]</div>
+<p>La ecuación queda expresada con términos homogéneos de grado uno en \(X,Y\), y se aplica \(Y=vX\).</p>
+<p>Ejemplo mínimo:</p>
+<div class="formula-block">\[
+y'=\frac{x+y+4}{x-y-6}.
+\]</div>
+<p>Se busca el punto que anula numerador y denominador:</p>
+<div class="formula-block">\[
+x+y+4=0,\qquad x-y-6=0.
+\]</div>
+<p>De ahí,</p>
+<div class="formula-block">\[
+x=1,\qquad y=-5.
+\]</div>
+<p>Con \(X=x-1\), \(Y=y+5\), queda</p>
+<div class="formula-block">\[
+Y'=\frac{X+Y}{X-Y},
+\]</div>
+<p>que es homogénea.</p></article>
+<article class="lesson reading-block" id="dev-3-7-ecuaciones-lineales-de-primer-orden"><div class="section-kicker">Bloque de desarrollo</div><h3>3.7. Ecuaciones lineales de primer orden</h3>
+<p class="lead">La forma estándar es</p>
+<div class="formula-block">\[
+y'+p(x)y=q(x).
+\]</div>
+<p>Su método central es el factor integrante</p>
+<div class="formula-block">\[
+\mu(x)=e^{\int p(x),dx}.
+\]</div>
+<p>Multiplicando toda la ecuación por \(\mu\):</p>
+<div class="formula-block">\[
+\mu y'+\mu p y=\mu q.
+\]</div>
+<p>Como \(\mu'=\mu p\), el lado izquierdo se convierte en</p>
+<div class="formula-block">\[
+(\mu y)'=\mu q.
+\]</div>
+<p>Entonces</p>
+<div class="formula-block">\[
+\mu y=\int \mu q,dx+C.
+\]</div>
+<p>La solución general es</p>
+<div class="formula-block">\[
+y=e^{-\int p(x),dx}\left(\int e^{\int p(x),dx}q(x),dx+C\right).
+\]</div>
+<p>Sanz/Torres subraya que la solución general de una lineal de primer orden tiene la forma “homogénea asociada + una particular”.</p>
+<p>Ejemplo:</p>
+<div class="formula-block">\[
+y'+\frac{1}{x}y=x,\qquad x\neq 0.
+\]</div>
+<p>Aquí</p>
+<div class="formula-block">\[
+p(x)=\frac{1}{x},\qquad \mu=x.
+\]</div>
+<p>Multiplicando:</p>
+<div class="formula-block">\[
+xy'+y=x^2,
+\]</div>
+<div class="formula-block">\[
+(xy)'=x^2.
+\]</div>
+<p>Integrando:</p>
+<div class="formula-block">\[
+xy=\frac{x^3}{3}+C,
+\]</div>
+<div class="formula-block">\[
+y=\frac{x^2}{3}+\frac{C}{x}.
+\]</div></article>
+<article class="lesson reading-block" id="dev-3-8-exactas"><div class="section-kicker">Bloque de desarrollo</div><h3>3.8. Exactas</h3>
+<p class="lead">Una ecuación en forma diferencial</p>
+<div class="formula-block">\[
+M(x,y),dx+N(x,y),dy=0
+\]</div>
+<p>es exacta si existe una función potencial (F\(x,y\)) tal que</p>
+<div class="formula-block">\[
+dF=F_x,dx+F_y,dy=M,dx+N,dy.
+\]</div>
+<p>Por tanto,</p>
+<div class="formula-block">\[
+F_x=M,\qquad F_y=N.
+\]</div>
+<p>La condición de exactitud, en dominios adecuados, es</p>
+<div class="formula-block">\[
+M_y=N_x.
+\]</div>
+<p>Entonces la solución implícita es</p>
+<div class="formula-block">\[
+F(x,y)=C.
+\]</div>
+<p>Ejemplo:</p>
+<div class="formula-block">\[
+(2xy+1),dx+x^2,dy=0.
+\]</div>
+<p>Aquí</p>
+<div class="formula-block">\[
+M=2xy+1,\qquad N=x^2.
+\]</div>
+<p>Se comprueba:</p>
+<div class="formula-block">\[
+M_y=2x,\qquad N_x=2x.
+\]</div>
+<p>Es exacta. Se integra \(M\) respecto a \(x\):</p>
+<div class="formula-block">\[
+F=x^2y+x+\phi(y).
+\]</div>
+<p>Derivando respecto a \(y\):</p>
+<div class="formula-block">\[
+F_y=x^2+\phi'(y).
+\]</div>
+<p>Como debe ser \(N=x^2\), resulta \(\phi'(y)=0\). Luego</p>
+<div class="formula-block">\[
+x^2y+x=C.
+\]</div></article>
+<article class="lesson reading-block" id="dev-3-9-factor-integrante"><div class="section-kicker">Bloque de desarrollo</div><h3>3.9. Factor integrante</h3>
+<p class="lead">Si una ecuación no es exacta, a veces puede hacerse exacta multiplicando por una función \(\mu\):</p>
+<div class="formula-block">\[
+\mu M,dx+\mu N,dy=0.
+\]</div>
+<p>Si \(\mu\) depende solo de \(x\), se usa el criterio</p>
+<div class="formula-block">\[
+\frac{M_y-N_x}{N}=f(x),
+\]</div>
+<p>y entonces</p>
+<div class="formula-block">\[
+\mu(x)=e^{\int f(x),dx}.
+\]</div>
+<p>Si \(\mu\) depende solo de \(y\), se usa</p>
+<div class="formula-block">\[
+\frac{N_x-M_y}{M}=g(y),
+\]</div>
+<p>y entonces</p>
+<div class="formula-block">\[
+\mu(y)=e^{\int g(y),dy}.
+\]</div>
+<p>Los OCR UNED han preguntado directamente por factores integrantes, incluyendo el caso en que se da la forma del factor o se pide verificar que vuelve exacta la ecuación.</p>
+<p>Ejemplo:</p>
+<div class="formula-block">\[
+(y+x y^2),dx-x,dy=0.
+\]</div>
+<div class="formula-block">\[
+M=y+xy^2,\qquad N=-x.
+\]</div>
+<div class="formula-block">\[
+M_y=1+2xy,\qquad N_x=-1.
+\]</div>
+<p>No es exacta. Se calcula</p>
+<div class="formula-block">\[
+\frac{N_x-M_y}{M}
+=\frac{-1-(1+2xy)}{y+xy^2}
+=\frac{-2(1+xy)}{y(1+xy)}
+=-\frac{2}{y}.
+\]</div>
+<p>Depende solo de \(y\), luego</p>
+<div class="formula-block">\[
+\mu(y)=e^{\int -2/y,dy}=y^{-2}.
+\]</div></article>
+<article class="lesson reading-block" id="dev-3-10-bernoulli"><div class="section-kicker">Bloque de desarrollo</div><h3>3.10. Bernoulli</h3>
+<p class="lead">La ecuación de Bernoulli tiene forma</p>
+<div class="formula-block">\[
+y'+p(x)y=q(x)y^n,\qquad n\neq 0,1.
+\]</div>
+<p>También aparece como</p>
+<div class="formula-block">\[
+y'+f(x)y+g(x)y^n=0.
+\]</div>
+<p>Sanz/Torres indica que se transforma en lineal mediante el cambio ligado a \(y^{1-n}\).</p>
+<p>El cambio estándar es</p>
+<div class="formula-block">\[
+z=y^{1-n}.
+\]</div>
+<p>Dividiendo por \(y^n\):</p>
+<div class="formula-block">\[
+y^{-n}y'+p(x)y^{1-n}=q(x).
+\]</div>
+<p>Como</p>
+<div class="formula-block">\[
+z'=(1-n)y^{-n}y',
+\]</div>
+<p>se obtiene una lineal:</p>
+<div class="formula-block">\[
+z'+(1-n)p(x)z=(1-n)q(x).
+\]</div>
+<p>Ejemplo:</p>
+<div class="formula-block">\[
+y'+y=xy^2.
+\]</div>
+<p>Aquí \(n=2\), \(z=y^{-1}\). Dividiendo por \(y^2\):</p>
+<div class="formula-block">\[
+\frac{y'}{y^2}+\frac{1}{y}=x.
+\]</div>
+<p>Como \(z'= -y'/y^2\),</p>
+<div class="formula-block">\[
+-z'+z=x,
+\]</div>
+<div class="formula-block">\[
+z'-z=-x.
+\]</div>
+<p>Eso ya es lineal.</p></article>
+<article class="lesson reading-block" id="dev-3-11-riccati-basico"><div class="section-kicker">Bloque de desarrollo</div><h3>3.11. Riccati básico</h3>
+<p class="lead">La ecuación de Riccati tiene forma</p>
+<div class="formula-block">\[
+y'=a(x)y^2+b(x)y+c(x),
+\]</div>
+<p>o equivalentemente con todos los términos en un lado. En general no se resuelve por cuadraturas elementales. El caso básico de examen aparece cuando se conoce una solución particular \(y_p\). Entonces se hace</p>
+<div class="formula-block">\[
+y=y_p+\frac{1}{z}.
+\]</div>
+<p>Ese cambio transforma Riccati en una ecuación lineal para \(z\). Boas formula precisamente este procedimiento: conocida una solución particular, \(y=y_p+1/z\) da una lineal de primer orden.  Sanz/Torres presenta la misma idea como reducción a Bernoulli mediante \(y=p(x)+u\).</p>
+<p>Ejemplo:</p>
+<div class="formula-block">\[
+y'=y^2-1,\qquad y_p=1.
+\]</div>
+<p>Haciendo</p>
+<div class="formula-block">\[
+y=1+\frac{1}{z},
+\]</div>
+<div class="formula-block">\[
+y'=-\frac{z'}{z^2}.
+\]</div>
+<p>Sustituyendo:</p>
+<div class="formula-block">\[
+-\frac{z'}{z^2}=\left(1+\frac{1}{z}\right)^2-1
+=\frac{2}{z}+\frac{1}{z^2}.
+\]</div>
+<p>Multiplicando por \(z^2\):</p>
+<div class="formula-block">\[
+-z'=2z+1,
+\]</div>
+<div class="formula-block">\[
+z'+2z=-1.
+\]</div>
+<p>Lineal.</p></article>
+</section>
+<section class="page" id="s4-conceptos"><div class="page-head"><h2>4. Conceptos clave</h2><span class="page-no">p.4</span></div>
+<div class="grid auto">
+<article class="card definition-card"><h3>EDO de primer orden</h3>
+<p><strong>Definición:</strong> relación entre \(x\), (y\(x\)) y \(y'(x)\). <strong>Explicación:</strong> permite modelar leyes locales de cambio. <strong>Ejemplo:</strong> \(y'=xy\). <strong>Relación:</strong> base de separables, lineales, exactas y Cauchy. <strong>Examen:</strong> “Clasifique y resuelva la ecuación diferencial dada”.</p></article>
+<article class="card definition-card"><h3>Solución general</h3>
+<p><strong>Definición:</strong> familia de soluciones con una constante arbitraria. <strong>Explicación:</strong> una EDO de primer orden normalmente produce una familia uniparamétrica. <strong>Ejemplo:</strong> \(y'=y\Rightarrow y=Ce^x\). <strong>Relación:</strong> al aplicar condición inicial se obtiene solución particular. <strong>Examen:</strong> “Halle la solución general”.</p></article>
+<article class="card definition-card"><h3>Solución particular</h3>
+<p><strong>Definición:</strong> solución obtenida al fijar la constante. <strong>Ejemplo:</strong> \(y=Ce^x\), \(y(0)=2\Rightarrow y=2e^x\). <strong>Relación:</strong> clave en Cauchy y Riccati. <strong>Examen:</strong> “Encuentre la solución que verifica \(y(0)=1\)”.</p></article>
+<article class="card definition-card"><h3>Problema de Cauchy</h3>
+<p><strong>Definición:</strong> EDO más condición inicial. <strong>Ejemplo:</strong> \(y'=x+y,\ y(0)=1\). <strong>Relación:</strong> activa existencia y unicidad. <strong>Examen:</strong> “Estudie existencia y unicidad”.</p></article>
+<article class="card definition-card"><h3>Existencia y unicidad</h3>
+<p><strong>Definición:</strong> condiciones que garantizan una única solución local. <strong>Explicación:</strong> no basta que la fórmula parezca resoluble; hay que mirar dominio y continuidad. <strong>Ejemplo:</strong> \(y'=y^{1/3}\) tiene problemas de unicidad en \(y=0\). <strong>Relación:</strong> depende de \(f\) y \(f_y\). <strong>Examen:</strong> “Determine los dominios de existencia y unicidad”, pregunta ya presente en OCR.</p></article>
+<article class="card definition-card"><h3>Campo de pendientes</h3>
+<p><strong>Definición:</strong> asignación de una pendiente (f\(x,y\)) a cada punto. <strong>Ejemplo:</strong> \(y'=x-y\). <strong>Relación:</strong> conecta EDO con geometría de curvas solución. <strong>Examen:</strong> “Represente cualitativamente las soluciones”.</p></article>
+<article class="card definition-card"><h3>Isoclina</h3>
+<p><strong>Definición:</strong> curva donde \(f(x,y)=k\), es decir, donde todas las soluciones tienen la misma pendiente. <strong>Ejemplo:</strong> para \(y'=x+y\), las isoclinas son \(x+y=k\). <strong>Relación:</strong> ayuda a esbozar soluciones sin resolver. <strong>Examen:</strong> “Explique el método de isoclinas”.</p></article>
+<article class="card definition-card"><h3>Separable</h3>
+<p><strong>Definición:</strong> \(y'=g(x)h(y)\). <strong>Ejemplo:</strong> \(y'=xy\). <strong>Relación:</strong> método más básico; muchas reducibles acaban aquí. <strong>Examen:</strong> “Resuelva separando variables”.</p></article>
+<article class="card definition-card"><h3>Homogénea de primer orden</h3>
+<p><strong>Definición:</strong> \(y'=F(y/x)\) o \(M,N\) homogéneas del mismo grado. <strong>Ejemplo:</strong> \(y'=(x+y)/x\). <strong>Relación:</strong> se reduce a separable con \(y=vx\). <strong>Examen:</strong> “Resolver mediante cambio homogéneo”.</p></article>
+<article class="card definition-card"><h3>Lineal de primer orden</h3>
+<p><strong>Definición:</strong> \(y'+p(x)y=q(x)\). <strong>Ejemplo:</strong> \(y'+\frac1x y=x\). <strong>Relación:</strong> factor integrante \(\mu=e^{\int p}\). <strong>Examen:</strong> “Encuentre la solución por el método lineal”.</p></article>
+<article class="card definition-card"><h3>Exacta</h3>
+<p><strong>Definición:</strong> \(Mdx+Ndy=0\) con \(M_y=N_x\). <strong>Ejemplo:</strong> \((2xy+1)dx+x^2dy=0\). <strong>Relación:</strong> equivale a hallar un potencial \(F\). <strong>Examen:</strong> “Demuestre si es exacta y resuelva”.</p></article>
+<article class="card definition-card"><h3>Factor integrante</h3>
+<p><strong>Definición:</strong> función \(\mu\) que convierte una ecuación no exacta en exacta. <strong>Ejemplo:</strong> \(\mu(x)\) o \(\mu(y)\). <strong>Relación:</strong> puente entre no exacta y exacta. <strong>Examen:</strong> “Halle un factor integrante y resuelva”.</p></article>
+<article class="card definition-card"><h3>Bernoulli</h3>
+<p><strong>Definición:</strong> \(y'+p(x)y=q(x)y^n\). <strong>Ejemplo:</strong> \(y'+y=xy^2\). <strong>Relación:</strong> se convierte en lineal con \(z=y^{1-n}\). <strong>Examen:</strong> “Indique el cambio que la transforma en lineal”.</p></article>
+<article class="card definition-card"><h3>Riccati</h3>
+<p><strong>Definición:</strong> \(y'=a(x)y^2+b(x)y+c(x)\). <strong>Ejemplo:</strong> \(y'=y^2-1\). <strong>Relación:</strong> si se conoce \(y_p\), se reduce a lineal. <strong>Examen:</strong> “Dada una solución particular, halle la solución general”.</p></article>
+</div>
+</section>
+<section class="page" id="s5-relaciones"><div class="page-head"><h2>5. Relaciones entre ideas</h2><span class="page-no">p.5</span></div>
+<div class="reading-block">
+<p class="lead">La jerarquía principal es:</p>
+<div class="formula-block">\[
+\text{EDO} \rightarrow \text{clasificación} \rightarrow \text{método} \rightarrow \text{solución} \rightarrow \text{dominio}.
+\]</div>
+<p>Primero se decide si la ecuación está despejada como \(y'=f(x,y)\) o si conviene verla como \(Mdx+Ndy=0\). Si está despejada, se revisa si es separable, homogénea, lineal, Bernoulli o Riccati. Si está en forma diferencial, se comprueba exactitud antes de intentar manipularla como lineal.</p>
+<p>Las ecuaciones separables son el núcleo elemental. Las homogéneas y muchas reducibles no son métodos independientes en sentido profundo: son estrategias para convertir una ecuación en separable.</p>
+<p>Las lineales son el segundo núcleo. Bernoulli se reduce a lineal; Riccati con solución particular también se reduce a lineal. Por eso la lineal de primer orden debe dominarse sin fricción.</p>
+<p>Las exactas conectan con la idea de potencial. Resolver una exacta no es despejar \(y'\), sino reconstruir una función (F\(x,y\)) cuyo diferencial coincide con la forma dada. Esto se parece a campos conservativos en física: si existe potencial, la solución queda como curva de nivel \(F=C\).</p>
+<p>El teorema de existencia y unicidad está por encima de todos los métodos. Una ecuación puede resolverse formalmente, pero el teorema decide dónde tiene sentido garantizar una única curva por cada punto.</p>
+<p>La oposición clave es:</p>
+<div class="formula-block">\[
+\text{método algebraico de resolución} \neq \text{estudio del dominio}.
+\]</div>
+<p>En examen, resolver sin dominio puede dejar una respuesta incompleta si el enunciado pide existencia, unicidad o intervalo.</p>
+</div>
+</section>
+<section class="page" id="s6-errores"><div class="page-head"><h2>6. Errores habituales</h2><span class="page-no">p.6</span></div>
+<details class="accordion" open><summary>Error 1: separar variables cuando no es separable</summary><div class="details-body">
+<p><strong>Mal:</strong> tratar \(y'=x+y\) como \(\frac{dy}{y}=dx+x\). <strong>Por qué está mal:</strong> \(x+y\) no es producto (g\(x\)h\(y\)). <strong>Corrección:</strong> reconocer que \(y'-y=x\) es lineal. <strong>Incorrecta:</strong> “\(\frac{dy}{x+y}=dx\) y se integra”. <strong>Correcta:</strong> “Es lineal: \(y'-y=x\), \(\mu=e^{-x}\)”.</p>
+</div></details>
+<details class="accordion"><summary>Error 2: confundir homogénea de primer orden con lineal homogénea</summary><div class="details-body">
+<p><strong>Mal:</strong> llamar homogénea a \(y'=F(y/x)\) como si fuera \(y'+p(x)y=0\). <strong>Corrección:</strong> en primer orden hay dos usos distintos de “homogénea”. <strong>Incorrecta:</strong> “Es homogénea porque no hay término independiente”. <strong>Correcta:</strong> “Es homogénea de primer orden porque depende de \(y/x\)”.</p>
+</div></details>
+<details class="accordion"><summary>Error 3: olvidar el cambio \(y=vx\) correctamente derivado</summary><div class="details-body">
+<p><strong>Mal:</strong> poner \(y'=v'\). <strong>Corrección:</strong> si \(y=vx\), entonces \(y'=v+xv'\). <strong>Incorrecta:</strong> \(y=vx\Rightarrow y'=v'\). <strong>Correcta:</strong> \(y=vx\Rightarrow y'=v+xv'\).</p>
+</div></details>
+<details class="accordion"><summary>Error 4: aplicar exactitud sin comprobar derivadas cruzadas</summary><div class="details-body">
+<p><strong>Mal:</strong> integrar \(M\) y \(N\) sin verificar \(M_y=N_x\). <strong>Corrección:</strong> exactitud se comprueba antes. <strong>Incorrecta:</strong> “Integro \(M\) y luego \(N\)”. <strong>Correcta:</strong> “\(M_y=N_x\), luego existe \(F\)”.</p>
+</div></details>
+<details class="accordion"><summary>Error 5: perder la función auxiliar al integrar una exacta</summary><div class="details-body">
+<p><strong>Mal:</strong> si \(F_x=M\), escribir \(F=\int Mdx\) sin añadir \(\phi(y)\). <strong>Corrección:</strong> al integrar respecto a \(x\), aparece una función de \(y\). <strong>Incorrecta:</strong> \(F=x^2y\). <strong>Correcta:</strong> \(F=x^2y+\phi(y)\).</p>
+</div></details>
+<details class="accordion"><summary>Error 6: usar mal el factor integrante de una lineal</summary><div class="details-body">
+<p><strong>Mal:</strong> \(\mu=e^{p(x)}\). <strong>Corrección:</strong> \(\mu=e^{\int p(x),dx}\). <strong>Incorrecta:</strong> para \(y'+2xy=q\), \(\mu=e^{2x}\). <strong>Correcta:</strong> \(\mu=e^{x^2}\).</p>
+</div></details>
+<details class="accordion"><summary>Error 7: confundir el factor integrante de exactas con el de lineales</summary><div class="details-body">
+<p><strong>Mal:</strong> aplicar \(\mu=e^{\int p}\) a cualquier \(Mdx+Ndy=0\). <strong>Corrección:</strong> en exactas se calcula con criterios de \((M_y-N_x)/N\) o \((N_x-M_y)/M\). <strong>Incorrecta:</strong> “El factor integrante siempre es \(e^{\int p}\)”. <strong>Correcta:</strong> “En lineales sí; en exactas depende de \(M,N\)”.</p>
+</div></details>
+<details class="accordion"><summary>Error 8: en Bernoulli, hacer \(z=y^n\) por reflejo</summary><div class="details-body">
+<p><strong>Mal:</strong> usar \(z=y^n\). <strong>Corrección:</strong> el cambio estándar es \(z=y^{1-n}\). <strong>Incorrecta:</strong> si \(n=2\), \(z=y^2\). <strong>Correcta:</strong> si \(n=2\), \(z=y^{-1}\).</p>
+</div></details>
+<details class="accordion"><summary>Error 9: Riccati sin particular conocida</summary><div class="details-body">
+<p><strong>Mal:</strong> intentar resolver una Riccati general como si siempre tuviera método elemental. <strong>Corrección:</strong> el caso básico exige una solución particular. <strong>Incorrecta:</strong> “Toda Riccati se resuelve con Bernoulli directamente”. <strong>Correcta:</strong> “Conocida \(y_p\), \(y=y_p+1/z\) la reduce a lineal”.</p>
+</div></details>
+<details class="accordion"><summary>Error 10: no estudiar dominio</summary><div class="details-body">
+<p><strong>Mal:</strong> resolver \(\frac{dy}{dx}=\frac{y}{x}\) y olvidar \(x\neq 0\). <strong>Corrección:</strong> el intervalo solución no puede cruzar singularidades del campo. <strong>Incorrecta:</strong> \(y=Cx\) en todo \(\mathbb{R}\). <strong>Correcta:</strong> \(y=Cx\) en intervalos \(x&gt;0\) o \(x&lt;0\).</p>
+</div></details>
+</section>
+<section class="page" id="s7-preguntas"><div class="page-head"><h2>7. Preguntas orientadas a examen</h2><span class="page-no">p.7</span></div>
+<div class="grid auto">
+<article class="card"><h3>10 preguntas fáciles</h3><ol class="question-list"><li value="1">¿Qué es una EDO de primer orden?</li><li value="2">¿Qué diferencia hay entre solución general y solución particular?</li><li value="3">¿Qué es un problema de Cauchy?</li><li value="4">Enuncia una condición suficiente de existencia y unicidad para \(y'=f(x,y)\).</li><li value="5">¿Cuándo una ecuación es separable?</li><li value="6">¿Qué cambio se usa en una homogénea \(y'=F(y/x)\)?</li><li value="7">¿Cuál es la forma estándar de una lineal de primer orden?</li><li value="8">¿Cuál es el factor integrante de \(y'+p(x)y=q(x)\)?</li><li value="9">¿Cuándo \(Mdx+Ndy=0\) es exacta?</li><li value="10">¿Qué cambio transforma una Bernoulli en lineal?</li></ol></article>
+<article class="card"><h3>10 preguntas medias</h3><ol class="question-list"><li value="11">Resuelve \(y'=xy\).</li><li value="12">Resuelve \(y'+\frac1x y=x\), \(x&gt;0\).</li><li value="13">Clasifica \(y'=\frac{x+y}{x}\) y da el primer cambio.</li><li value="14">Comprueba si \((2xy+1)dx+x^2dy=0\) es exacta y resuelve.</li><li value="15">Calcula el factor integrante lineal de \(y'+2xy=x\).</li><li value="16">Transforma \(y'+y=xy^2\) en lineal.</li><li value="17">Explica por qué \(y'=y^{1/3}\) puede tener problema de unicidad en \(y=0\).</li><li value="18">En \(Mdx+Ndy=0\), ¿cómo se busca un factor integrante \(\mu(x)\)?</li><li value="19">¿Qué significa geométricamente \(y'=f(x,y)\)?</li><li value="20">¿Por qué una solución de primer orden suele contener una constante?</li></ol></article>
+<article class="card"><h3>5 preguntas difíciles</h3><ol class="question-list"><li value="21">Estudia existencia y unicidad de \(y'=\frac{(y-2)^{1/3}}{\sqrt{x^2-1}}\).</li><li value="22">Resuelve una homogénea reducible por traslación: \(y'=\frac{x+y+4}{x-y-6}\), indicando el cambio inicial.</li><li value="23">Demuestra que Bernoulli se reduce a lineal mediante \(z=y^{1-n}\).</li><li value="24">Dada Riccati \(y'=a(x)y^2+b(x)y+c(x)\) y una particular \(y_p\), deduce la ecuación lineal para \(z\) usando \(y=y_p+1/z\).</li><li value="25">Para una no exacta, deduce el criterio de factor integrante \(\mu(x)\).</li></ol></article>
+<article class="card"><h3>5 preguntas de desarrollo largo</h3><ol class="question-list"><li value="26">Explica el problema de Cauchy y su relación con el campo de pendientes.</li><li value="27">Desarrolla el método de resolución de ecuaciones lineales de primer orden.</li><li value="28">Explica el método de exactas y factores integrantes.</li><li value="29">Compara separables, homogéneas y reducibles.</li><li value="30">Explica Bernoulli y Riccati como reducciones a ecuaciones lineales.</li></ol></article>
+<article class="card"><h3>5 preguntas de relación entre conceptos</h3><ol class="question-list"><li value="31">Relaciona exactas con campos conservativos o potenciales.</li><li value="32">Relaciona existencia/unicidad con cruce de curvas solución.</li><li value="33">Relaciona Bernoulli y Riccati.</li><li value="34">Relaciona solución general, condición inicial y constante arbitraria.</li><li value="35">Relaciona clasificación de EDO con estrategia de examen.</li></ol></article>
+</div>
+</section>
+<section class="page" id="s8-respuestas"><div class="page-head"><h2>8. Respuestas modelo</h2><span class="page-no">p.8</span></div>
+<details class="accordion" open><summary>Respuesta 1</summary><div class="details-body">
+<p>Una EDO de primer orden es una ecuación que relaciona una función desconocida (y\(x\)), la variable \(x\) y la derivada \(y'(x)\). Su forma general es \(F(x,y,y')=0\), y si se puede despejar la derivada, \(y'=f(x,y)\).</p>
+</div></details>
+<details class="accordion" open><summary>Respuesta 2</summary><div class="details-body">
+<p>La solución general contiene una constante arbitraria y representa una familia de curvas. Una solución particular se obtiene fijando esa constante, normalmente mediante una condición inicial.</p>
+</div></details>
+<details class="accordion" open><summary>Respuesta 3</summary><div class="details-body">
+<p>Es una EDO junto con una condición inicial. Tiene forma \(y'=f(x,y)\), \(y(x_0)=y_0\). Plantea si existe una solución que pase por \((x_0,y_0)\) y si es única.</p>
+</div></details>
+<details class="accordion"><summary>Respuesta 4</summary><div class="details-body">
+<p>Si \(f\) y \(f_y\) son continuas en un dominio que contiene \((x_0,y_0)\), entonces existe una única solución local del problema de Cauchy.</p>
+</div></details>
+<details class="accordion"><summary>Respuesta 5</summary><div class="details-body">
+<p>Es separable si puede escribirse como \(y'=g(x)h(y)\). Entonces se reordena como \(\frac{dy}{h(y)}=g(x),dx\) y se integra.</p>
+</div></details>
+<details class="accordion"><summary>Respuesta 6</summary><div class="details-body">
+<p>Se usa \(y=vx\), con \(v=v(x)\). Entonces \(y'=v+xv'\). El objetivo es transformar la ecuación en separable.</p>
+</div></details>
+<details class="accordion"><summary>Respuesta 7</summary><div class="details-body">
+<p>La forma estándar es \(y'+p(x)y=q(x)\). Si \(q=0\), la lineal asociada es homogénea.</p>
+</div></details>
+<details class="accordion"><summary>Respuesta 8</summary><div class="details-body">
+<p>El factor integrante es \(\mu(x)=e^{\int p(x),dx}\). Multiplicando por \(\mu\), el lado izquierdo se convierte en \((\mu y)'\).</p>
+</div></details>
+<details class="accordion"><summary>Respuesta 9</summary><div class="details-body">
+<p>Es exacta si existe \(F\) tal que \(F_x=M\) y \(F_y=N\). En condiciones regulares, esto equivale a \(M_y=N_x\).</p>
+</div></details>
+<details class="accordion"><summary>Respuesta 10</summary><div class="details-body">
+<p>El cambio es \(z=y^{1-n}\), para \(y'+p(x)y=q(x)y^n\), con \(n\neq 0,1\).</p>
+</div></details>
+<details class="accordion"><summary>Respuesta 11</summary><div class="details-body">
+<p>\(y'=xy\). Separando: \(\frac{dy}{y}=x,dx\). Integrando: \(\ln|y|=\frac{x^2}{2}+C\). Por tanto, \(y=Ce^{x^2/2}\).</p>
+</div></details>
+<details class="accordion"><summary>Respuesta 12</summary><div class="details-body">
+<p>\(y'+\frac1x y=x\). Factor integrante: \(\mu=e^{\int 1/x,dx}=x\), para \(x&gt;0\). Entonces \((xy)'=x^2\). Integrando: \(xy=\frac{x^3}{3}+C\), luego \(y=\frac{x^2}{3}+\frac{C}{x}\).</p>
+</div></details>
+<details class="accordion"><summary>Respuesta 13</summary><div class="details-body">
+<p>Es homogénea de primer orden porque \(y'=1+y/x\). Se usa \(y=vx\), \(y'=v+xv'\).</p>
+</div></details>
+<details class="accordion"><summary>Respuesta 14</summary><div class="details-body">
+<p>\(M=2xy+1\), \(N=x^2\). Como \(M_y=2x=N_x\), es exacta. Se busca \(F\): \(F_x=2xy+1\), luego \(F=x^2y+x+\phi(y)\). Como \(F_y=x^2+\phi'(y)=x^2\), \(\phi'=0\). Solución: \(x^2y+x=C\).</p>
+</div></details>
+<details class="accordion"><summary>Respuesta 15</summary><div class="details-body">
+<p>Para \(y'+2xy=x\), \(p(x)=2x\), luego \(\mu=e^{\int 2x,dx}=e^{x^2}\).</p>
+</div></details>
+<details class="accordion"><summary>Respuesta 16</summary><div class="details-body">
+<p>\(y'+y=xy^2\). Es Bernoulli con \(n=2\). Se toma \(z=y^{-1}\). Dividiendo por \(y^2\): \(y'/y^2+1/y=x\). Como \(z'=-y'/y^2\), queda \(-z'+z=x\), es decir, \(z'-z=-x\).</p>
+</div></details>
+<details class="accordion"><summary>Respuesta 17</summary><div class="details-body">
+<p>\(f(y)=y^{1/3}\) es continua, pero \(f_y=\frac13y^{-2/3}\) no es continua en \(y=0\). Por tanto, el teorema usual no garantiza unicidad en puntos con \(y=0\).</p>
+</div></details>
+<details class="accordion"><summary>Respuesta 18</summary><div class="details-body">
+<p>Se comprueba si \(\frac{M_y-N_x}{N}\) depende solo de \(x\). Si es así, \(\mu(x)=e^{\int ((M_y-N_x)/N),dx}\).</p>
+</div></details>
+<details class="accordion"><summary>Respuesta 19</summary><div class="details-body">
+<p>Significa que cada punto \((x,y)\) del dominio tiene asignada una pendiente. Las soluciones son curvas tangentes a esas pendientes.</p>
+</div></details>
+<details class="accordion"><summary>Respuesta 20</summary><div class="details-body">
+<p>Porque integrar una derivada introduce una constante. Geométricamente, una EDO de primer orden define una familia uniparamétrica de curvas.</p>
+</div></details>
+<details class="accordion"><summary>Respuesta 21</summary><div class="details-body">
+<p>Para \(y'=\frac{(y-2)^{1/3}}{\sqrt{x^2-1}}\), el campo exige \(|x|&gt;1\). Además, \(f_y\propto (y-2)^{-2/3}\), no continua en \(y=2\). Hay existencia donde \(|x|&gt;1\), pero el teorema de unicidad falla sobre la recta \(y=2\).</p>
+</div></details>
+<details class="accordion"><summary>Respuesta 22</summary><div class="details-body">
+<p>Se resuelven las rectas \(x+y+4=0\), \(x-y-6=0\). Sale \((1,-5)\). Se hace \(X=x-1\), \(Y=y+5\). Entonces \(Y'=(X+Y)/(X-Y)\), homogénea, y se aplica \(Y=vX\).</p>
+</div></details>
+<details class="accordion"><summary>Respuesta 23</summary><div class="details-body">
+<p>En \(y'+p y=qy^n\), dividiendo por \(y^n\): \(y^{-n}y'+p y^{1-n}=q\). Si \(z=y^{1-n}\), entonces \(z'=(1-n)y^{-n}y'\). Sustituyendo: \(\frac{z'}{1-n}+pz=q\), luego \(z'+(1-n)pz=(1-n)q\), lineal.</p>
+</div></details>
+<details class="accordion"><summary>Respuesta 24</summary><div class="details-body">
+<p>Sea \(y=y_p+1/z\). Entonces \(y'=y_p'-z'/z^2\). Como \(y_p\) satisface la Riccati, al sustituir y cancelar queda una ecuación lineal en \(z\):</p>
+<div class="formula-block">\[
+z'+(2a y_p+b)z=-a.
+\]</div>
+</div></details>
+<details class="accordion"><summary>Respuesta 25</summary><div class="details-body">
+<p>Si \(\mu=\mu(x)\), exactitud exige \((\mu M)_y=(\mu N)_x\). Como \(\mu_y=0\), queda \(\mu M_y=\mu' N+\mu N_x\). Dividiendo por \(\mu N\): \(\mu'/\mu=(M_y-N_x)/N\). Si esta expresión depende solo de \(x\), existe \(\mu(x)\).</p>
+</div></details>
+<details class="accordion"><summary>Respuesta 26</summary><div class="details-body">
+<p>El problema de Cauchy añade a la EDO una condición inicial. La EDO da un campo de pendientes; la condición inicial selecciona una curva que debe pasar por un punto. El teorema de existencia y unicidad garantiza que, bajo hipótesis de continuidad de \(f\) y \(f_y\), por ese punto pasa una única curva solución local.</p>
+</div></details>
+<details class="accordion"><summary>Respuesta 27</summary><div class="details-body">
+<p>Una lineal \(y'+p(x)y=q(x)\) se resuelve multiplicando por \(\mu=e^{\int p}\). Así, \(\mu y'+\mu p y=(\mu y)'\). La ecuación queda \((\mu y)'=\mu q\). Integrando: \(\mu y=\int \mu q,dx+C\). Finalmente se despeja \(y\).</p>
+</div></details>
+<details class="accordion"><summary>Respuesta 28</summary><div class="details-body">
+<p>En una exacta \(Mdx+Ndy=0\), se busca \(F\) tal que \(F_x=M\), \(F_y=N\). Si \(M_y=N_x\), se integra uno de los dos componentes y se ajusta con una función auxiliar. Si no es exacta, puede buscarse \(\mu(x)\) o \(\mu(y)\) para hacerla exacta.</p>
+</div></details>
+<details class="accordion"><summary>Respuesta 29</summary><div class="details-body">
+<p>Las separables permiten aislar \(x\) e \(y\). Las homogéneas no son separables al inicio, pero se vuelven separables con \(y=vx\). Las reducibles suelen necesitar una traslación previa del origen antes de aplicar el cambio homogéneo.</p>
+</div></details>
+<details class="accordion"><summary>Respuesta 30</summary><div class="details-body">
+<p>Bernoulli y Riccati son importantes porque se reducen a lineales. Bernoulli usa \(z=y^{1-n}\). Riccati, si se conoce una solución particular, usa \(y=y_p+1/z\). En ambos casos el objetivo final es obtener una lineal de primer orden.</p>
+</div></details>
+<details class="accordion"><summary>Respuesta 31</summary><div class="details-body">
+<p>Una exacta equivale a reconstruir un potencial \(F\). Las soluciones \(F(x,y)=C\) son curvas de nivel. Es análogo a un campo conservativo donde el diferencial procede de una función potencial.</p>
+</div></details>
+<details class="accordion"><summary>Respuesta 32</summary><div class="details-body">
+<p>Si hay unicidad, dos soluciones distintas no pueden cruzarse en un punto del dominio, porque eso implicaría dos soluciones con la misma condición inicial.</p>
+</div></details>
+<details class="accordion"><summary>Respuesta 33</summary><div class="details-body">
+<p>Bernoulli se reduce directamente a lineal. Riccati no, salvo que se conozca una solución particular; entonces se transforma en Bernoulli o directamente en lineal.</p>
+</div></details>
+<details class="accordion"><summary>Respuesta 34</summary><div class="details-body">
+<p>La solución general contiene \(C\). La condición inicial impone una ecuación para \(C\). Si hay unicidad, ese valor de \(C\) selecciona una única solución.</p>
+</div></details>
+<details class="accordion"><summary>Respuesta 35</summary><div class="details-body">
+<p>La estrategia de examen empieza por clasificar. Si se clasifica mal, todo el procedimiento queda contaminado. El orden táctico es: forma de la ecuación, patrón, cambio o factor, integración, constante, dominio.</p>
+</div></details>
+</section>
+<section class="page" id="s9-resumen"><div class="page-head"><h2>9. Resumen final de repaso</h2><span class="page-no">p.9</span></div>
+<div class="reading-block">
+<p class="lead">Ideas principales:</p>
+<ul class="clean-list"><li>Una EDO de primer orden relaciona \(x\), \(y\) e \(y'\).</li><li>Resolverla produce una familia \(y=\varphi(x,C)\).</li><li>Cauchy añade \(y(x_0)=y_0\) y selecciona una curva.</li><li>Existencia/unicidad depende de continuidad de \(f\) y \(f_y\).</li><li>Separables: aislar variables e integrar.</li><li>Homogéneas: usar \(y=vx\).</li><li>Lineales: usar \(\mu=e^{\int p}\).</li><li>Exactas: comprobar \(M_y=N_x\), reconstruir \(F\).</li><li>Factor integrante: convertir no exacta en exacta.</li><li>Bernoulli: \(z=y^{1-n}\).</li><li>Riccati: con \(y_p\), usar \(y=y_p+1/z\).</li></ul>
+<p>Conceptos imprescindibles:</p>
+<div class="formula-block">\[
+y'=f(x,y),
+\qquad
+Mdx+Ndy=0,
+\qquad
+M_y=N_x,
+\qquad
+\mu=e^{\int p},
+\qquad
+z=y^{1-n}.
+\]</div>
+<p>Relaciones clave:</p>
+<div class="formula-block">\[
+\text{homogénea} \rightarrow \text{separable},
+\]</div>
+<div class="formula-block">\[
+\text{Bernoulli} \rightarrow \text{lineal},
+\]</div>
+<div class="formula-block">\[
+\text{Riccati con particular} \rightarrow \text{lineal},
+\]</div>
+<div class="formula-block">\[
+\text{no exacta + factor integrante} \rightarrow \text{exacta}.
+\]</div>
+<p>Errores que evitar:</p>
+<ul class="clean-list"><li>separar sin que sea separable;</li><li>olvidar \(y'=v+xv'\);</li><li>confundir exacta con lineal;</li><li>olvidar \(\phi(y)\) o \(\psi(x)\) en exactas;</li><li>usar \(\mu=e^p\) en vez de \(e^{\int p}\);</li><li>resolver sin dominio;</li><li>aplicar Riccati sin solución particular.</li></ul>
+</div>
+</section>
+<section class="page" id="s10-checklist"><div class="page-head"><h2>10. Checklist de dominio</h2><span class="page-no">p.10</span></div>
+<ul class="clean-list"><li>Si no puedes explicar qué significa \(y'=f(x,y)\), falta repasar campo de pendientes e isoclinas.</li><li>Si no puedes formular el problema de Cauchy, falta repasar condición inicial y solución particular.</li><li>Si confundes existencia con unicidad, revisar el papel de \(f\) y \(f_y\).</li><li>Si no detectas separables en menos de 10 segundos, falta entrenar forma (g\(x\)h\(y\)).</li><li>Si confundes homogénea de primer orden con lineal homogénea, revisar vocabulario.</li><li>Si al hacer \(y=vx\) escribes \(y'=v'\), falta repasar regla del producto.</li><li>Si no puedes resolver una lineal sin mirar, falta memorizar \(\mu=e^{\int p}\).</li><li>Si no puedes comprobar exactitud, falta repasar derivadas parciales \(M_y\), \(N_x\).</li><li>Si al integrar exactas pierdes \(\phi(y)\), falta practicar reconstrucción de potencial.</li><li>Si no sabes cuándo buscar \(\mu(x)\) o \(\mu(y)\), falta repasar criterios de factor integrante.</li><li>Si en Bernoulli no sale automáticamente \(z=y^{1-n}\), falta mecanización.</li><li>Si en Riccati no buscas primero una solución particular, falta clasificación.</li><li>Si puedes resolver separable, lineal, exacta, Bernoulli y Riccati con particular conocida en 12–15 minutos cada una, el capítulo está suficientemente asentado para OCR básico.</li><li>Si además puedes estudiar dominio de existencia/unicidad sin resolver la ecuación, el capítulo está asentado a nivel examen.</li></ul>
+</section>
+    <section class="page"><div class="page-head"><h2>Validación</h2><span class="page-no">fin</span></div><div class="reading-block"><p><strong>Confianza:</strong> Alta</p></div></section>
+  </main>
+</div>
+</body>
+</html>

@@ -1,0 +1,1555 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MM1 · Números complejos</title>
+  <meta name="description" content="Guía de estudio de Métodos Matemáticos I sobre números complejos: forma binómica, polar, Euler, raíces, logaritmo complejo y regiones del plano complejo." />
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/icon-32.png" />
+  <link rel="icon" type="image/png" sizes="50x50" href="assets/icons/icon-50.png" />
+  <link rel="apple-touch-icon" sizes="100x100" href="assets/icons/icon-100.png" />
+  <link rel="stylesheet" href="assets/styles.css" />
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['\\(', '\\)']],
+        displayMath: [['\\[', '\\]']],
+        processEscapes: true
+      },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+  <script defer src="assets/app.js"></script>
+</head>
+<body class="subject-mm1">
+  <header class="lesson-header">
+    <a class="back-link" href="index.html">← Índice</a>
+    <p class="eyebrow">Métodos Matemáticos I</p>
+    <h1>Números complejos</h1>
+    <p class="lesson-subtitle">Boas, capítulo 2 · Complex Numbers</p>
+    <div class="lesson-meta">
+      <span>Asignatura: MM1</span>
+      <span>Tema: T2</span>
+      <span>Estado: completo</span>
+      <span>Enfoque: examen UNED</span>
+    </div>
+  </header>
+
+  <nav class="toolbar" aria-label="Navegación del tema">
+    <a href="#mapa">Mapa</a>
+<a href="#prerrequisitos">Prerrequisitos</a>
+<a href="#idea-central">Idea</a>
+<a href="#desarrollo">Desarrollo</a>
+<a href="#conceptos">Conceptos</a>
+<a href="#errores">Errores</a>
+<a href="#preguntas">Preguntas</a>
+<a href="#respuestas">Respuestas</a>
+<a href="#resumen">Resumen</a>
+<a href="#checklist">Checklist</a>
+  </nav>
+
+  <main>
+    <section id="mapa" class="page map-page">
+      <header class="section-header">
+        <p class="section-kicker">00</p>
+        <h2>Mapa conceptual</h2>
+      </header>
+      <div class="concept-map">
+        <a class="map-card" href="#prerrequisitos"><span>Complejos</span><small>i^2=-1, forma binómica y plano complejo</small></a>
+<a class="map-card" href="#desarrollo"><span>Geometría</span><small>módulo, argumento, conjugado y regiones</small></a>
+<a class="map-card" href="#desarrollo"><span>Forma exponencial</span><small>Euler convierte trigonometría en álgebra</small></a>
+<a class="map-card" href="#desarrollo"><span>Potencias y raíces</span><small>De Moivre y argumentos equiespaciados</small></a>
+<a class="map-card" href="#desarrollo"><span>Logaritmo y ramas</span><small>multivaluación por \(2k\pi\)</small></a>
+<a class="map-card" href="#desarrollo"><span>Funciones complejas</span><small>trigonométricas e hiperbólicas</small></a>
+<a class="map-card" href="#preguntas"><span>Examen</span><small>regiones, raíces, logaritmos y desigualdades</small></a>
+      </div>
+      <div class="reading-block source-block">
+        <p>Fuente principal: Mary L. Boas, *Mathematical Methods in the Physical Sciences*, capítulo 2, <strong>Complex Numbers</strong>. El capítulo cubre partes real e imaginaria, plano complejo, forma rectangular, forma polar, conjugado, álgebra compleja, series complejas, exponencial, fórmula de Euler, potencias, raíces, funciones trigonométricas, funciones hiperbólicas, logaritmos y potencias complejas. Orientación de examen: los OCR de MM1 muestran preguntas recurrentes sobre regiones del plano complejo, raíces, logaritmo complejo, desigualdades con módulo y representación geométrica.</p>
+      </div>
+    </section>
+
+    <section id="prerrequisitos" class="page">
+<header class="section-header">
+<p class="section-kicker">01</p>
+<h2>Prerrequisitos mínimos</h2>
+</header>
+<div class="card-grid">
+<article class="definition-card">
+<h3>Álgebra elemental</h3>
+<p>Saber operar con polinomios, fracciones algebraicas y ecuaciones cuadráticas. Es necesario porque los complejos aparecen inicialmente para resolver ecuaciones como \(az^2+bz+c=0\) cuando el discriminante es negativo. Ejemplo mínimo:</p>
+<div class="formula-block">\[
+z^2+1=0 \Rightarrow z=\pm i.
+\]</div>
+</article>
+<article class="definition-card">
+<h3>Trigonometría básica</h3>
+<p>Saber manejar seno, coseno, tangente, identidades elementales y radianes. Es necesario porque la forma polar de un complejo usa:</p>
+<div class="formula-block">\[
+x=r\cos\theta,\qquad y=r\sin\theta.
+\]</div>
+<p>Ejemplo mínimo:</p>
+<div class="formula-block">\[
+1+i=\sqrt2\left(\cos\frac{\pi}{4}+i\sin\frac{\pi}{4}\right).
+\]</div>
+</article>
+<article class="definition-card">
+<h3>Geometría analítica del plano</h3>
+<p>Saber reconocer rectas, circunferencias, discos, semiplanos y desigualdades. Es necesario porque un número complejo \(z=x+iy\) se representa como punto \((x,y)\). Ejemplo:</p>
+<div class="formula-block">\[
+|z|&lt;2
+\]</div>
+<p>es el disco abierto de centro \(0\) y radio \(2\).</p>
+</article>
+<article class="definition-card">
+<h3>Exponencial real y series de Taylor</h3>
+<p>Conviene conocer:</p>
+<div class="formula-block">\[
+e^x=\sum_{n=0}^{\infty}\frac{x^n}{n!},\qquad
+\sin x=x-\frac{x^3}{3!}+\cdots,\qquad
+\cos x=1-\frac{x^2}{2!}+\cdots.
+\]</div>
+<p>Es necesario porque Boas introduce la exponencial compleja mediante series y de ahí obtiene la fórmula de Euler.</p>
+</article>
+<article class="definition-card">
+<h3>Logaritmo real</h3>
+<p>Saber que \(\ln r\) está definido para \(r&gt;0\). Es necesario porque el logaritmo complejo separa módulo y argumento:</p>
+<div class="formula-block">\[
+\log z=\ln|z|+i\arg z.
+\]</div>
+</article>
+<article class="definition-card">
+<h3>Notación funcional básica</h3>
+<p>Saber distinguir función, valor, dominio y rama. Es necesario porque \(\arg z\), \(\log z\), \(z^\alpha\) y las raíces son multivaluadas.</p>
+</article>
+</div>
+</section>
+
+<section id="idea-central" class="page">
+<header class="section-header">
+<p class="section-kicker">02</p>
+<h2>Idea central del capítulo</h2>
+</header>
+<div class="reading-block">
+<p>El capítulo transforma los números complejos de “truco algebraico para raíces negativas” en una herramienta geométrica y funcional. La idea inicial es sencilla: admitir un símbolo \(i\) con \(i^2=-1\) permite resolver ecuaciones que no tienen solución real. Pero el capítulo no se queda ahí. Muestra que un complejo no es solo \(a+ib\), sino también un punto del plano, un vector geométrico, un módulo con una dirección, una exponencial y una forma natural de representar oscilaciones, ondas, circuitos y ecuaciones diferenciales.</p>
+<p>El paso central es este:</p>
+<div class="formula-block">\[
+z=x+iy=r(\cos\theta+i\sin\theta)=re^{i\theta}.
+\]</div>
+<p>La forma binómica sirve para sumar, separar partes reales e imaginarias y trabajar con coordenadas cartesianas. La forma polar sirve para multiplicar, dividir, elevar a potencias y extraer raíces. La forma exponencial condensa la trigonometría en álgebra.</p>
+<p>Boas insiste en que los complejos no son una curiosidad formal: simplifican problemas de vibraciones, sistemas eléctricos, ecuaciones diferenciales y funciones de variable compleja. En MM1 esto tiene una consecuencia directa: no basta con “saber operar”; hay que leer geométricamente condiciones como \(|z-1|&lt;2\), \(\operatorname{Re}z&gt;0\), \(|z|^2&lt;2\operatorname{Re}z\), o calcular todas las raíces de una ecuación compleja.</p>
+<p>Dentro de la asignatura, este tema es el acceso a variable compleja. Sin dominar módulo, argumento, conjugado, polar, Euler y logaritmo, después fallan Cauchy-Riemann, ramas, Laurent, residuos e integrales de contorno. En los exámenes UNED aparece de forma operativa: describir regiones, hallar raíces, estudiar logaritmos principales y justificar identidades con módulo.</p>
+</div>
+</section>
+
+<section id="desarrollo" class="page">
+<header class="section-header">
+<p class="section-kicker">03</p>
+<h2>Desarrollo completo del capítulo</h2>
+</header>
+<div class="reading-block">
+
+</div>
+<article class="reading-block">
+<h3 id="3-1-de-los-reales-a-los-complejos">3.1. De los reales a los complejos</h3>
+<p>La motivación inicial es la ecuación cuadrática. Cuando aparece una raíz de número negativo, el sistema real no basta. Se introduce:</p>
+<div class="formula-block">\[
+i=\sqrt{-1},\qquad i^2=-1.
+\]</div>
+<p>Entonces:</p>
+<div class="formula-block">\[
+\sqrt{-16}=4i,\qquad i^3=-i,\qquad i^4=1.
+\]</div>
+<p>Un número complejo es una expresión:</p>
+<div class="formula-block">\[
+z=x+iy,
+\]</div>
+<p>donde \(x,y\in\mathbb R\). La parte real es:</p>
+<div class="formula-block">\[
+\operatorname{Re}z=x,
+\]</div>
+<p>y la parte imaginaria es:</p>
+<div class="formula-block">\[
+\operatorname{Im}z=y.
+\]</div>
+<p>El término “imaginaria” no significa que \(y\) sea irreal: \(y\) es un número real. Lo imaginario es el componente multiplicado por \(i\). Boas remarca esta distinción porque evita errores de notación posteriores.</p>
+<p>Consecuencia: los reales son complejos con \(y=0\), y los imaginarios puros son complejos con \(x=0\). Por tanto:</p>
+<div class="formula-block">\[
+\mathbb R\subset\mathbb C.
+\]</div>
+</article>
+<article class="reading-block">
+<h3 id="3-2-plano-complejo">3.2. Plano complejo</h3>
+<p>El complejo \(z=x+iy\) se representa como el punto \((x,y)\). El eje horizontal es el eje real y el vertical el eje imaginario. Así, \(3+2i\) es el punto \((3,2)\); \(-1-i\) es \((-1,-1)\).</p>
+<p>Esto permite traducir álgebra a geometría. La condición:</p>
+<div class="formula-block">\[
+\operatorname{Re}z&gt;0
+\]</div>
+<p>describe el semiplano derecho. La condición:</p>
+<div class="formula-block">\[
+\operatorname{Im}z&lt;0
+\]</div>
+<p>describe el semiplano inferior. La condición:</p>
+<div class="formula-block">\[
+|z|=3
+\]</div>
+<p>describe una circunferencia de radio \(3\) centrada en el origen.</p>
+<p>El plano complejo no es una decoración. Es el sistema de referencia del tema. En examen, muchas preguntas son simplemente traducciones entre una condición algebraica y una región geométrica.</p>
+</article>
+<article class="reading-block">
+<h3 id="3-3-forma-binomica-forma-polar-y-modulo">3.3. Forma binómica, forma polar y módulo</h3>
+<p>La forma binómica es:</p>
+<div class="formula-block">\[
+z=x+iy.
+\]</div>
+<p>La forma polar usa:</p>
+<div class="formula-block">\[
+x=r\cos\theta,\qquad y=r\sin\theta.
+\]</div>
+<p>Entonces:</p>
+<div class="formula-block">\[
+z=r(\cos\theta+i\sin\theta).
+\]</div>
+<p>El módulo es:</p>
+<div class="formula-block">\[
+|z|=r=\sqrt{x^2+y^2}.
+\]</div>
+<p>El argumento es cualquier ángulo \(\theta\) que sitúe el punto en su cuadrante correcto:</p>
+<div class="formula-block">\[
+\theta=\arg z.
+\]</div>
+<p>Hay infinitos argumentos:</p>
+<div class="formula-block">\[
+\arg z=\theta+2k\pi,\qquad k\in\mathbb Z.
+\]</div>
+<p>El argumento principal elige uno dentro de un intervalo convencional, por ejemplo:</p>
+<div class="formula-block">\[
+\operatorname{Arg}z\in(-\pi,\pi]
+\]</div>
+<p>o, según el texto, a veces \(0\leq\theta&lt;2\pi\). Lo importante es declarar la convención.</p>
+<p>Ejemplo:</p>
+<div class="formula-block">\[
+z=-1-i.
+\]</div>
+<p>Entonces:</p>
+<div class="formula-block">\[
+|z|=\sqrt2,\qquad \arg z=\frac{5\pi}{4}+2k\pi
+\]</div>
+<p>o también:</p>
+<div class="formula-block">\[
+\arg z=-\frac{3\pi}{4}+2k\pi.
+\]</div>
+</article>
+<article class="reading-block">
+<h3 id="3-4-conjugado">3.4. Conjugado</h3>
+<p>El conjugado de:</p>
+<div class="formula-block">\[
+z=x+iy
+\]</div>
+<p>es:</p>
+<div class="formula-block">\[
+\bar z=x-iy.
+\]</div>
+<p>Geométricamente, \(\bar z\) es la reflexión de \(z\) respecto del eje real. Si \(z=re^{i\theta}\), entonces:</p>
+<div class="formula-block">\[
+\bar z=re^{-i\theta}.
+\]</div>
+<p>Propiedades básicas:</p>
+<div class="formula-block">\[
+z\bar z=|z|^2,
+\]</div>
+<div class="formula-block">\[
+\overline{z_1+z_2}=\bar z_1+\bar z_2,
+\]</div>
+<div class="formula-block">\[
+\overline{z_1z_2}=\bar z_1\bar z_2,
+\]</div>
+<div class="formula-block">\[
+\left|\frac{z_1}{z_2}\right|=\frac{|z_1|}{|z_2|}.
+\]</div>
+<p>El conjugado permite dividir complejos en forma binómica:</p>
+<div class="formula-block">\[
+\begin{aligned}
+\frac{2+i}{3-i} \\
+&amp;= \frac{(2+i)(3+i)}{(3-i)(3+i)} \\
+&amp;= \frac{5+5i}{10} \\
+&amp;= \frac12+\frac12 i.
+\end{aligned}
+\]</div>
+</article>
+<article class="reading-block">
+<h3 id="3-5-algebra-compleja">3.5. Álgebra compleja</h3>
+<p>La suma y la resta se hacen componente a componente:</p>
+<div class="formula-block">\[
+(a+ib)+(c+id)=(a+c)+i(b+d).
+\]</div>
+<p>El producto usa \(i^2=-1\):</p>
+<div class="formula-block">\[
+(a+ib)(c+id)=(ac-bd)+i(ad+bc).
+\]</div>
+<p>La división puede hacerse con conjugado o en forma polar. En binómica:</p>
+<div class="formula-block">\[
+\begin{aligned}
+\frac{a+ib}{c+id} \\
+&amp;= \frac{(a+ib)(c-id)}{c^2+d^2}.
+\end{aligned}
+\]</div>
+<p>En polar, si:</p>
+<div class="formula-block">\[
+z_1=r_1e^{i\theta_1},\qquad z_2=r_2e^{i\theta_2},
+\]</div>
+<p>entonces:</p>
+<div class="formula-block">\[
+z_1z_2=r_1r_2e^{i(\theta_1+\theta_2)},
+\]</div>
+<div class="formula-block">\[
+\frac{z_1}{z_2}=\frac{r_1}{r_2}e^{i(\theta_1-\theta_2)}.
+\]</div>
+<p>Esta es la primera gran ventaja de la forma polar: multiplicar equivale a multiplicar módulos y sumar argumentos.</p>
+</article>
+<article class="reading-block">
+<h3 id="3-6-formula-de-euler">3.6. Fórmula de Euler</h3>
+<p>Boas introduce la exponencial compleja mediante series:</p>
+<div class="formula-block">\[
+e^z=\sum_{n=0}^{\infty}\frac{z^n}{n!}.
+\]</div>
+<p>Al sustituir \(z=i\theta\), los términos pares producen coseno y los impares producen seno:</p>
+<div class="formula-block">\[
+e^{i\theta}=\cos\theta+i\sin\theta.
+\]</div>
+<p>Esta es la fórmula de Euler.</p>
+<p>Consecuencia:</p>
+<div class="formula-block">\[
+z=r(\cos\theta+i\sin\theta)=re^{i\theta}.
+\]</div>
+<p>Casos básicos:</p>
+<div class="formula-block">\[
+e^{i\pi}=-1,
+\]</div>
+<div class="formula-block">\[
+e^{2\pi i}=1,
+\]</div>
+<div class="formula-block">\[
+e^{-i\theta}=\cos\theta-i\sin\theta.
+\]</div>
+<p>También:</p>
+<div class="formula-block">\[
+\cos\theta=\frac{e^{i\theta}+e^{-i\theta}}{2},
+\]</div>
+<div class="formula-block">\[
+\sin\theta=\frac{e^{i\theta}-e^{-i\theta}}{2i}.
+\]</div>
+<p>Esta traducción entre trigonometría y exponencial será esencial en oscilaciones, Fourier y EDO lineales con raíces complejas.</p>
+</article>
+<article class="reading-block">
+<h3 id="3-7-potencias-y-formula-de-de-moivre">3.7. Potencias y fórmula de De Moivre</h3>
+<p>Si:</p>
+<div class="formula-block">\[
+z=re^{i\theta},
+\]</div>
+<p>entonces:</p>
+<div class="formula-block">\[
+z^n=r^ne^{in\theta}.
+\]</div>
+<p>En forma trigonométrica:</p>
+<div class="formula-block">\[
+(\cos\theta+i\sin\theta)^n=\cos(n\theta)+i\sin(n\theta).
+\]</div>
+<p>Esto es la fórmula de De Moivre. Sirve para potencias y para deducir identidades trigonométricas. Por ejemplo:</p>
+<div class="formula-block">\[
+(\cos\theta+i\sin\theta)^2=\cos2\theta+i\sin2\theta.
+\]</div>
+<p>Comparando partes reales e imaginarias:</p>
+<div class="formula-block">\[
+\cos2\theta=\cos^2\theta-\sin^2\theta,
+\]</div>
+<div class="formula-block">\[
+\sin2\theta=2\sin\theta\cos\theta.
+\]</div>
+</article>
+<article class="reading-block">
+<h3 id="3-8-raices-complejas">3.8. Raíces complejas</h3>
+<p>Para resolver:</p>
+<div class="formula-block">\[
+w^n=z,
+\]</div>
+<p>se escribe:</p>
+<div class="formula-block">\[
+z=re^{i\theta}.
+\]</div>
+<p>Como el argumento tiene infinitos valores:</p>
+<div class="formula-block">\[
+z=re^{i(\theta+2k\pi)},
+\]</div>
+<p>las raíces son:</p>
+<div class="formula-block">\[
+w_k=r^{1/n}e^{i(\theta+2k\pi)/n},
+\qquad k=0,1,\dots,n-1.
+\]</div>
+<p>Hay exactamente \(n\) raíces distintas. Todas están sobre una circunferencia de radio:</p>
+<div class="formula-block">\[
+r^{1/n},
+\]</div>
+<p>y separadas por ángulo:</p>
+<div class="formula-block">\[
+\frac{2\pi}{n}.
+\]</div>
+<p>Ejemplo:</p>
+<div class="formula-block">\[
+z^3=8.
+\]</div>
+<p>Como:</p>
+<div class="formula-block">\[
+8=8e^{i(0+2k\pi)},
+\]</div>
+<p>las raíces son:</p>
+<div class="formula-block">\[
+z_k=2e^{2k\pi i/3},\qquad k=0,1,2.
+\]</div>
+<p>Por tanto:</p>
+<div class="formula-block">\[
+z_0=2,
+\]</div>
+<div class="formula-block">\[
+z_1=2\left(\cos\frac{2\pi}{3}+i\sin\frac{2\pi}{3}\right)=-1+i\sqrt3,
+\]</div>
+<div class="formula-block">\[
+z_2=2\left(\cos\frac{4\pi}{3}+i\sin\frac{4\pi}{3}\right)=-1-i\sqrt3.
+\]</div>
+<p>En examen, si no aparece el dibujo mental de circunferencia y ángulos equiespaciados, el ejercicio se vuelve algebra pesada.</p>
+</article>
+<article class="reading-block">
+<h3 id="3-9-exponencial-compleja-general">3.9. Exponencial compleja general</h3>
+<p>Para:</p>
+<div class="formula-block">\[
+z=x+iy,
+\]</div>
+<p>se tiene:</p>
+<div class="formula-block">\[
+e^z=e^{x+iy}=e^x e^{iy}=e^x(\cos y+i\sin y).
+\]</div>
+<p>Por tanto:</p>
+<div class="formula-block">\[
+|e^z|=e^x,
+\]</div>
+<div class="formula-block">\[
+\arg(e^z)=y+2k\pi.
+\]</div>
+<p>Ejemplo:</p>
+<div class="formula-block">\[
+e^{2-i\pi}=e^2e^{-i\pi}=-e^2.
+\]</div>
+<p>La parte real de \(z\) controla el módulo de \(e^z\); la parte imaginaria controla el ángulo.</p>
+</article>
+<article class="reading-block">
+<h3 id="3-10-funciones-trigonometricas-complejas">3.10. Funciones trigonométricas complejas</h3>
+<p>Boas define:</p>
+<div class="formula-block">\[
+\sin z=\frac{e^{iz}-e^{-iz}}{2i},
+\]</div>
+<div class="formula-block">\[
+\cos z=\frac{e^{iz}+e^{-iz}}{2}.
+\]</div>
+<p>Estas fórmulas extienden seno y coseno a complejos. Ya no es cierto que:</p>
+<div class="formula-block">\[
+|\sin z|\leq1,\qquad |\cos z|\leq1.
+\]</div>
+<p>Eso solo vale para argumentos reales.</p>
+<p>Para \(z=x+iy\):</p>
+<div class="formula-block">\[
+\sin(x+iy)=\sin x\cosh y+i\cos x\sinh y,
+\]</div>
+<div class="formula-block">\[
+\cos(x+iy)=\cos x\cosh y-i\sin x\sinh y.
+\]</div>
+<p>Esto conecta trigonometría compleja con funciones hiperbólicas.</p>
+</article>
+<article class="reading-block">
+<h3 id="3-11-funciones-hiperbolicas">3.11. Funciones hiperbólicas</h3>
+<p>Las funciones hiperbólicas se definen por:</p>
+<div class="formula-block">\[
+\sinh z=\frac{e^z-e^{-z}}{2},
+\]</div>
+<div class="formula-block">\[
+\cosh z=\frac{e^z+e^{-z}}{2},
+\]</div>
+<div class="formula-block">\[
+\tanh z=\frac{\sinh z}{\cosh z}.
+\]</div>
+<p>La identidad básica es:</p>
+<div class="formula-block">\[
+\cosh^2 z-\sinh^2 z=1.
+\]</div>
+<p>La relación con trigonométricas es:</p>
+<div class="formula-block">\[
+\sin(iy)=i\sinh y,
+\]</div>
+<div class="formula-block">\[
+\cos(iy)=\cosh y.
+\]</div>
+<p>Esto explica por qué senos y cosenos complejos pueden crecer exponencialmente cuando aparece una parte imaginaria.</p>
+</article>
+<article class="reading-block">
+<h3 id="3-12-logaritmo-complejo">3.12. Logaritmo complejo</h3>
+<p>El logaritmo complejo se define como inversa de la exponencial:</p>
+<div class="formula-block">\[
+w=\log z \quad \Longleftrightarrow \quad e^w=z.
+\]</div>
+<p>Si:</p>
+<div class="formula-block">\[
+z=re^{i\theta},
+\]</div>
+<p>entonces:</p>
+<div class="formula-block">\[
+\log z=\ln r+i(\theta+2k\pi),\qquad k\in\mathbb Z.
+\]</div>
+<p>Por tanto el logaritmo complejo es multivaluado. Su valor principal suele escribirse:</p>
+<div class="formula-block">\[
+\operatorname{Log}z=\ln|z|+i\operatorname{Arg}z.
+\]</div>
+<p>Ejemplo:</p>
+<div class="formula-block">\[
+\log(-1)=i(\pi+2k\pi).
+\]</div>
+<p>Ejemplo:</p>
+<div class="formula-block">\[
+\log(1+i)=\ln\sqrt2+i\left(\frac{\pi}{4}+2k\pi\right).
+\]</div>
+<p>La ley:</p>
+<div class="formula-block">\[
+\log(z_1z_2)=\log z_1+\log z_2
+\]</div>
+<p>debe manejarse con cuidado cuando se usa valor principal. En multivaluado es natural; en rama principal puede fallar por salto de argumento. En exámenes UNED esto aparece directamente con \(\operatorname{Log}\).</p>
+</article>
+<article class="reading-block">
+<h3 id="3-13-potencias-complejas">3.13. Potencias complejas</h3>
+<p>Boas define:</p>
+<div class="formula-block">\[
+a^b=e^{b\log a}.
+\]</div>
+<p>Como \(\log a\) puede tener infinitos valores, \(a^b\) puede ser multivaluado.</p>
+<p>Ejemplo:</p>
+<div class="formula-block">\[
+i^{-2i}=e^{-2i\log i}.
+\]</div>
+<p>Como:</p>
+<div class="formula-block">\[
+\log i=i\left(\frac{\pi}{2}+2k\pi\right),
+\]</div>
+<p>entonces:</p>
+<div class="formula-block">\[
+i^{-2i}=e^{\pi+4k\pi}.
+\]</div>
+<p>Aparecen infinitos valores reales positivos.</p>
+</article>
+<article class="reading-block">
+<h3 id="3-14-regiones-del-plano-complejo">3.14. Regiones del plano complejo</h3>
+<p>Las regiones son condiciones sobre \(x,y,r,\theta\). La receta es traducir siempre:</p>
+<div class="formula-block">\[
+z=x+iy,\qquad |z|=\sqrt{x^2+y^2},\qquad \operatorname{Re}z=x,\qquad \operatorname{Im}z=y.
+\]</div>
+<p>Ejemplo:</p>
+<div class="formula-block">\[
+|z|^2&lt;2\operatorname{Re}z.
+\]</div>
+<p>Como:</p>
+<div class="formula-block">\[
+|z|^2=x^2+y^2,
+\]</div>
+<p>queda:</p>
+<div class="formula-block">\[
+x^2+y^2&lt;2x.
+\]</div>
+<p>Completando cuadrado:</p>
+<div class="formula-block">\[
+(x-1)^2+y^2&lt;1.
+\]</div>
+<p>Es el disco abierto de centro \(1\) y radio \(1\), sin incluir la frontera.</p>
+<p>Ejemplo:</p>
+<div class="formula-block">\[
+|z-1|&lt;2.
+\]</div>
+<p>Como \(z-1=(x-1)+iy\):</p>
+<div class="formula-block">\[
+(x-1)^2+y^2&lt;4.
+\]</div>
+<p>Es el disco abierto de centro \(1\) y radio \(2\).</p>
+<p>Ejemplo:</p>
+<div class="formula-block">\[
+1&lt;|z|&lt;2
+\]</div>
+<p>es un anillo centrado en el origen.</p>
+<p>Los OCR UNED incluyen exactamente este tipo de ejercicios: describir regiones, representarlas y operar después con puntos extremos o raíces.</p>
+</article>
+</section>
+
+<section id="conceptos" class="page">
+<header class="section-header">
+<p class="section-kicker">04</p>
+<h2>Conceptos clave</h2>
+</header>
+<div class="card-grid concept-grid">
+<article class="definition-card">
+<h3>Número complejo</h3>
+<p>Definición: número de la forma:</p>
+<div class="formula-block">\[
+z=x+iy,\qquad x,y\in\mathbb R,\quad i^2=-1.
+\]</div>
+<p>Explicación: reúne reales e imaginarios en un mismo sistema algebraico. Ejemplo:</p>
+<div class="formula-block">\[
+3-2i.
+\]</div>
+<p>Relación: base de todas las formas posteriores. Examen: “Escriba en forma \(a+ib\) las raíces de una ecuación.”</p>
+</article>
+<article class="definition-card">
+<h3>Parte real y parte imaginaria</h3>
+<p>Definición:</p>
+<div class="formula-block">\[
+\operatorname{Re}(x+iy)=x,\qquad \operatorname{Im}(x+iy)=y.
+\]</div>
+<p>Explicación: permiten convertir una igualdad compleja en dos igualdades reales. Ejemplo:</p>
+<div class="formula-block">\[
+x+iy=2-3i \Rightarrow x=2,\ y=-3.
+\]</div>
+<p>Relación: conectan álgebra compleja con plano cartesiano. Examen: “Determine \(x,y\) sabiendo que una expresión compleja vale cero.”</p>
+</article>
+<article class="definition-card">
+<h3>Plano complejo</h3>
+<p>Definición: representación de \(z=x+iy\) como punto \((x,y)\). Explicación: convierte ecuaciones complejas en regiones geométricas. Ejemplo:</p>
+<div class="formula-block">\[
+\operatorname{Im}z&gt;1
+\]</div>
+<p>es el semiplano superior a la recta \(y=1\). Relación: imprescindible para módulo, argumento y regiones. Examen: “Dibuje la región \(|z|^2&lt;2\operatorname{Re}z\).”</p>
+</article>
+<article class="definition-card">
+<h3>Módulo</h3>
+<p>Definición:</p>
+<div class="formula-block">\[
+|z|=\sqrt{x^2+y^2}.
+\]</div>
+<p>Explicación: distancia de \(z\) al origen. Ejemplo:</p>
+<div class="formula-block">\[
+|3+4i|=5.
+\]</div>
+<p>Relación: radio en forma polar; aparece en logaritmos, raíces y desigualdades. Examen: “Encuentre el punto de menor módulo de una región.”</p>
+</article>
+<article class="definition-card">
+<h3>Argumento</h3>
+<p>Definición: ángulo \(\theta\) tal que:</p>
+<div class="formula-block">\[
+z=|z|(\cos\theta+i\sin\theta).
+\]</div>
+<p>Explicación: no es único; se suma \(2k\pi\). Ejemplo:</p>
+<div class="formula-block">\[
+\arg(-1)=\pi+2k\pi.
+\]</div>
+<p>Relación: controla raíces, potencias y logaritmos. Examen: “Calcule las raíces cúbicas de un complejo con argumento dado.”</p>
+</article>
+<article class="definition-card">
+<h3>Argumento principal</h3>
+<p>Definición: representante elegido de los argumentos, normalmente:</p>
+<div class="formula-block">\[
+\operatorname{Arg}z\in(-\pi,\pi].
+\]</div>
+<p>Explicación: permite definir la rama principal de \(\operatorname{Log}\). Ejemplo:</p>
+<div class="formula-block">\[
+\operatorname{Arg}(-1-i)=-\frac{3\pi}{4}.
+\]</div>
+<p>Relación: clave para \(\operatorname{Log}\), ramas y cortes. Examen: “Determine cuándo \(\operatorname{Log}(iz)=\operatorname{Log}i+\operatorname{Log}z\).”</p>
+</article>
+<article class="definition-card">
+<h3>Forma polar</h3>
+<p>Definición:</p>
+<div class="formula-block">\[
+z=r(\cos\theta+i\sin\theta).
+\]</div>
+<p>Explicación: expresa el complejo por distancia y ángulo. Ejemplo:</p>
+<div class="formula-block">\[
+-1+i=\sqrt2\left(\cos\frac{3\pi}{4}+i\sin\frac{3\pi}{4}\right).
+\]</div>
+<p>Relación: puente hacia forma exponencial. Examen: “Exprese en forma polar y halle potencias.”</p>
+</article>
+<article class="definition-card">
+<h3>Forma exponencial</h3>
+<p>Definición:</p>
+<div class="formula-block">\[
+z=re^{i\theta}.
+\]</div>
+<p>Explicación: usa Euler para sustituir trigonometría por exponenciales. Ejemplo:</p>
+<div class="formula-block">\[
+1+i=\sqrt2e^{i\pi/4}.
+\]</div>
+<p>Relación: forma óptima para productos, cocientes, potencias y raíces. Examen: “Use forma exponencial para hallar raíces.”</p>
+</article>
+<article class="definition-card">
+<h3>Conjugado</h3>
+<p>Definición:</p>
+<div class="formula-block">\[
+\bar z=x-iy.
+\]</div>
+<p>Explicación: cambia el signo de la parte imaginaria. Ejemplo:</p>
+<div class="formula-block">\[
+\overline{3-5i}=3+5i.
+\]</div>
+<p>Relación:</p>
+<div class="formula-block">\[
+z\bar z=|z|^2.
+\]</div>
+<p>Examen: “Demuestre una desigualdad usando \(w\bar w=|w|^2\).”</p>
+</article>
+<article class="definition-card">
+<h3>Fórmula de Euler</h3>
+<p>Definición:</p>
+<div class="formula-block">\[
+e^{i\theta}=\cos\theta+i\sin\theta.
+\]</div>
+<p>Explicación: une exponencial, trigonometría y geometría circular. Ejemplo:</p>
+<div class="formula-block">\[
+e^{i\pi}=-1.
+\]</div>
+<p>Relación: base de forma exponencial, Fourier, oscilaciones y EDO. Examen: “Exprese seno y coseno mediante exponenciales.”</p>
+</article>
+<article class="definition-card">
+<h3>Raíces complejas</h3>
+<p>Definición:</p>
+<div class="formula-block">\[
+z_k=r^{1/n}e^{i(\theta+2k\pi)/n},\qquad k=0,\dots,n-1.
+\]</div>
+<p>Explicación: toda raíz \(n\)-ésima tiene \(n\) valores. Ejemplo: raíces cúbicas de \(1\):</p>
+<div class="formula-block">\[
+1,\quad e^{2\pi i/3},\quad e^{4\pi i/3}.
+\]</div>
+<p>Relación: dependen del argumento multivaluado. Examen: “Explique por qué las raíces están en una circunferencia.”</p>
+</article>
+<article class="definition-card">
+<h3>Logaritmo complejo</h3>
+<p>Definición:</p>
+<div class="formula-block">\[
+\log z=\ln|z|+i(\arg z).
+\]</div>
+<p>Explicación: es multivaluado por el argumento. Ejemplo:</p>
+<div class="formula-block">\[
+\log i=i\left(\frac{\pi}{2}+2k\pi\right).
+\]</div>
+<p>Relación: base de potencias complejas y ramas. Examen: “Determine todos los valores de \(\log(z^2)\).”</p>
+</article>
+<article class="definition-card">
+<h3>Funciones trigonométricas complejas</h3>
+<p>Definición:</p>
+<div class="formula-block">\[
+\sin z=\frac{e^{iz}-e^{-iz}}{2i},\qquad
+\cos z=\frac{e^{iz}+e^{-iz}}{2}.
+\]</div>
+<p>Explicación: extienden seno y coseno a argumentos complejos. Ejemplo:</p>
+<div class="formula-block">\[
+\cos i=\frac{e^{-1}+e}{2}=\cosh1.
+\]</div>
+<p>Relación: conectan con hiperbólicas. Examen: “Calcule \(\sin(x+iy)\) en forma \(a+ib\).”</p>
+</article>
+<article class="definition-card">
+<h3>Funciones hiperbólicas</h3>
+<p>Definición:</p>
+<div class="formula-block">\[
+\sinh z=\frac{e^z-e^{-z}}2,\qquad
+\cosh z=\frac{e^z+e^{-z}}2.
+\]</div>
+<p>Explicación: aparecen al evaluar trigonométricas en argumentos imaginarios. Ejemplo:</p>
+<div class="formula-block">\[
+\sin(iy)=i\sinh y.
+\]</div>
+<p>Relación: explican crecimiento de seno y coseno complejos. Examen: “Demuestre \(\cosh^2z-\sinh^2z=1\).”</p>
+</article>
+<article class="definition-card">
+<h3>Región del plano complejo</h3>
+<p>Definición: subconjunto de \(\mathbb C\) descrito por condiciones sobre \(x,y,|z|,\arg z\). Explicación: traduce lenguaje complejo a geometría. Ejemplo:</p>
+<div class="formula-block">\[
+|z-2i|&lt;1
+\]</div>
+<p>es disco de centro \(2i\) y radio \(1\). Relación: base para dominios de funciones, ramas e integrales. Examen: “Describa y represente gráficamente la región dada.”</p>
+</article>
+</div>
+</section>
+
+<section id="relaciones" class="page">
+<header class="section-header">
+<p class="section-kicker">05</p>
+<h2>Relaciones entre ideas</h2>
+</header>
+<div class="reading-block">
+<p>La jerarquía del capítulo es:</p>
+<div class="formula-block">\[
+i^2=-1
+\Rightarrow z=x+iy
+\Rightarrow \mathbb C\simeq\mathbb R^2
+\Rightarrow z=re^{i\theta}
+\Rightarrow \text{raíces, logaritmos y funciones complejas}.
+\]</div>
+<p>La forma binómica depende de separar parte real e imaginaria. Es la forma natural para sumar, restar, comparar partes y describir regiones cartesianas. La forma polar depende de módulo y argumento. Es la forma natural para multiplicar, dividir, elevar y extraer raíces.</p>
+<p>La fórmula de Euler es el puente entre ambas:</p>
+<div class="formula-block">\[
+\cos\theta+i\sin\theta=e^{i\theta}.
+\]</div>
+<p>Sin Euler, la forma polar sería trigonométrica; con Euler, se vuelve algebra exponencial.</p>
+<p>El argumento es el punto delicado. El módulo es único; el argumento no. De esa no unicidad salen dos consecuencias importantes: las raíces tienen varios valores y el logaritmo complejo tiene infinitos valores.</p>
+<p>El conjugado conecta álgebra y geometría. Algebraicamente permite racionalizar denominadores; geométricamente refleja en el eje real; métricamente permite escribir:</p>
+<div class="formula-block">\[
+|z|^2=z\bar z.
+\]</div>
+<p>Las regiones conectan todo: una desigualdad con módulo suele ser una circunferencia o disco; una condición con parte real o imaginaria suele ser un semiplano; una condición con argumento suele ser un sector; una condición combinada puede requerir completar cuadrados.</p>
+<p>Históricamente, el capítulo refleja el paso desde los complejos como solución artificial de ecuaciones a los complejos como lenguaje natural de la física matemática. Esa evolución es coherente con el objetivo general del libro: dar herramientas matemáticas aplicables a física, química e ingeniería.</p>
+</div>
+</section>
+
+<section id="errores" class="page">
+<header class="section-header">
+<p class="section-kicker">06</p>
+<h2>Errores habituales</h2>
+</header>
+<div class="accordion-list">
+<details class="accordion">
+<summary>Error 1: creer que \(\operatorname{Im}z\) incluye la \(i\)</summary>
+<div class="accordion-body">
+<p>Está mal porque \(\operatorname{Im}(x+iy)=y\), no \(iy\). Corrección:</p>
+<div class="formula-block">\[
+\operatorname{Im}(3-2i)=-2.
+\]</div>
+<p>Incorrecto: “La parte imaginaria es \(-2i\).” Correcto: “La parte imaginaria es \(-2\).”</p>
+</div></details>
+<details class="accordion">
+<summary>Error 2: usar \(\theta=\arctan(y/x)\) sin mirar el cuadrante</summary>
+<div class="accordion-body">
+<p>Está mal porque \(\arctan\) devuelve un valor principal que puede estar en otro cuadrante. Corrección: dibujar o razonar signos de \(x,y\). Incorrecto:</p>
+<div class="formula-block">\[
+\arg(-1-i)=\frac{\pi}{4}.
+\]</div>
+<p>Correcto:</p>
+<div class="formula-block">\[
+\arg(-1-i)=\frac{5\pi}{4}+2k\pi
+\]</div>
+<p>o</p>
+<div class="formula-block">\[
+-\frac{3\pi}{4}+2k\pi.
+\]</div>
+</div></details>
+<details class="accordion">
+<summary>Error 3: olvidar los \(2k\pi\) en raíces y logaritmos</summary>
+<div class="accordion-body">
+<p>Está mal porque el argumento no es único. Corrección:</p>
+<div class="formula-block">\[
+\log z=\ln r+i(\theta+2k\pi).
+\]</div>
+<p>Incorrecto:</p>
+<div class="formula-block">\[
+\log(-1)=i\pi.
+\]</div>
+<p>Correcto:</p>
+<div class="formula-block">\[
+\log(-1)=i(\pi+2k\pi).
+\]</div>
+</div></details>
+<details class="accordion">
+<summary>Error 4: dar una sola raíz \(n\)-ésima</summary>
+<div class="accordion-body">
+<p>Está mal porque todo complejo no nulo tiene \(n\) raíces \(n\)-ésimas. Corrección:</p>
+<div class="formula-block">\[
+z_k=r^{1/n}e^{i(\theta+2k\pi)/n},\quad k=0,\dots,n-1.
+\]</div>
+<p>Incorrecto:</p>
+<div class="formula-block">\[
+\sqrt[3]{8}=2.
+\]</div>
+<p>Correcto en \(\mathbb C\):</p>
+<div class="formula-block">\[
+2,\ -1+i\sqrt3,\ -1-i\sqrt3.
+\]</div>
+</div></details>
+<details class="accordion">
+<summary>Error 5: confundir \(\log\) multivaluado con \(\operatorname{Log}\) principal</summary>
+<div class="accordion-body">
+<p>Está mal porque \(\operatorname{Log}\) escoge una rama. Corrección: declarar si se trabaja con \(\log\) o con \(\operatorname{Log}\). Incorrecto:</p>
+<div class="formula-block">\[
+\operatorname{Log}(z_1z_2)=\operatorname{Log}z_1+\operatorname{Log}z_2
+\]</div>
+<p>siempre. Correcto: puede fallar por salto de argumento principal.</p>
+</div></details>
+<details class="accordion">
+<summary>Error 6: pensar que \(|\sin z|\leq1\) para todo complejo</summary>
+<div class="accordion-body">
+<p>Está mal porque esa cota solo vale para argumentos reales. Corrección:</p>
+<div class="formula-block">\[
+\sin(x+iy)=\sin x\cosh y+i\cos x\sinh y.
+\]</div>
+<p>Incorrecto: “\(\sin(2+i)\) tiene módulo menor que 1.” Correcto: con parte imaginaria puede crecer por \(\sinh y,\cosh y\).</p>
+</div></details>
+<details class="accordion">
+<summary>Error 7: no completar cuadrados al describir regiones</summary>
+<div class="accordion-body">
+<p>Está mal porque oculta discos y circunferencias. Corrección:</p>
+<div class="formula-block">\[
+|z|^2&lt;2\operatorname{Re}z
+\Rightarrow x^2+y^2&lt;2x
+\Rightarrow (x-1)^2+y^2&lt;1.
+\]</div>
+<p>Incorrecto: “Es una parábola.” Correcto: “Es el disco abierto de centro \(1\) y radio \(1\).”</p>
+</div></details>
+<details class="accordion">
+<summary>Error 8: confundir \(|z-a|\) con \(|z|-a\)</summary>
+<div class="accordion-body">
+<p>Está mal porque \(|z-a|\) mide distancia al punto \(a\). Corrección:</p>
+<div class="formula-block">\[
+|z-(1+i)|&lt;2
+\]</div>
+<p>es disco de centro \(1+i\), radio \(2\). Incorrecto: “\(|z-1|=|z|-1\).” Correcto: solo se igualan en casos muy particulares, no como identidad.</p>
+</div></details>
+<details class="accordion">
+<summary>Error 9: usar grados dentro de fórmulas analíticas</summary>
+<div class="accordion-body">
+<p>Está mal porque derivadas, series y exponenciales usan radianes. Corrección: convertir a radianes salvo cálculo trigonométrico elemental final. Incorrecto:</p>
+<div class="formula-block">\[
+e^{i90}=i.
+\]</div>
+<p>Correcto:</p>
+<div class="formula-block">\[
+e^{i\pi/2}=i.
+\]</div>
+</div></details>
+<details class="accordion">
+<summary>Error 10: racionalizar mal por no cambiar el signo de todo el término imaginario</summary>
+<div class="accordion-body">
+<p>Está mal porque el conjugado de \(a+ib\) es \(a-ib\). Corrección:</p>
+<div class="formula-block">\[
+\frac1{2-3i}=\frac{2+3i}{13}.
+\]</div>
+<p>Incorrecto:</p>
+<div class="formula-block">\[
+\frac1{2-3i}=\frac{2-3i}{13}.
+\]</div>
+<p>Correcto:</p>
+<div class="formula-block">\[
+\frac1{2-3i}=\frac{2+3i}{13}.
+\]</div>
+</div></details>
+</div>
+</section>
+
+<section id="preguntas" class="page">
+<header class="section-header">
+<p class="section-kicker">07</p>
+<h2>Preguntas orientadas a examen</h2>
+</header>
+<div class="reading-block">
+<h3 id="10-preguntas-faciles">10 preguntas fáciles</h3>
+<ol class="numbered-list">
+<li value="1">Defina número complejo, parte real y parte imaginaria.</li>
+<li value="2">Calcule \(|3-4i|\).</li>
+<li value="3">Halle el conjugado de \(-2+5i\).</li>
+<li value="4">Escriba \(1+i\) en forma polar.</li>
+<li value="5">Exprese \(e^{i\pi}\) en forma binómica.</li>
+<li value="6">Calcule \((1+i)^2\).</li>
+<li value="7">Describa geométricamente \(|z|=2\).</li>
+<li value="8">Describa geométricamente \(\operatorname{Re}z&lt;1\).</li>
+<li value="9">Calcule \(\operatorname{Log}i\), usando (\operatorname{Arg}z\in\(-\pi,\pi]\).</li>
+<li value="10">Escriba \(\cos z\) en términos de exponenciales.</li>
+</ol>
+<h3 id="10-preguntas-medias">10 preguntas medias</h3>
+<ol class="numbered-list">
+<li value="11">Calcule \(\frac{2+i}{1-i}\) en forma binómica.</li>
+<li value="12">Exprese \(-1+i\sqrt3\) en forma exponencial.</li>
+<li value="13">Calcule todas las raíces cúbicas de \(1\).</li>
+<li value="14">Describa la región \(|z-1|&lt;2\).</li>
+<li value="15">Describa la región \(|z|^2&lt;2\operatorname{Re}z\).</li>
+<li value="16">Calcule todos los valores de \(\log(-i)\).</li>
+<li value="17">Calcule \(e^{2+i\pi/2}\).</li>
+<li value="18">Demuestre que \(z\bar z=|z|^2\).</li>
+<li value="19">Calcule \(\sin(iy)\) en función de \(\sinh y\).</li>
+<li value="20">Calcule \(\cos(x+iy)\) en forma \(a+ib\).</li>
+</ol>
+<h3 id="5-preguntas-dificiles">5 preguntas difíciles</h3>
+<ol class="numbered-list">
+<li value="21">Determine todas las raíces de \(z^6+7z^3-8=0\) y explique por qué están sobre dos circunferencias.</li>
+<li value="22">Determine cuándo se cumple:</li>
+</ol>
+<div class="formula-block">\[
+\operatorname{Log}(iz)=\operatorname{Log}i+\operatorname{Log}z.
+\]</div>
+<ol class="numbered-list">
+<li value="23">Describa la región:</li>
+</ol>
+<div class="formula-block">\[
+|z|-\operatorname{Re}z&gt;1,\qquad |z|+\operatorname{Re}z&gt;1.
+\]</div>
+<ol class="numbered-list">
+<li value="24">Demuestre la desigualdad triangular:</li>
+</ol>
+<div class="formula-block">\[
+|z_1+z_2|\leq |z_1|+|z_2|.
+\]</div>
+<ol class="numbered-list">
+<li value="25">Calcule todos los valores de \(i^{-2i}\).</li>
+</ol>
+<h3 id="5-preguntas-de-desarrollo-largo">5 preguntas de desarrollo largo</h3>
+<ol class="numbered-list">
+<li value="26">Desarrolle la construcción de la forma polar y exponencial de un número complejo, incluyendo módulo, argumento y fórmula de Euler.</li>
+<li value="27">Explique el método general para hallar raíces \(n\)-ésimas de un complejo y aplíquelo a \(z^4=-16\).</li>
+<li value="28">Explique el logaritmo complejo, su multivaluación y la diferencia entre \(\log z\) y \(\operatorname{Log}z\).</li>
+<li value="29">Explique la relación entre funciones trigonométricas complejas y funciones hiperbólicas.</li>
+<li value="30">Explique cómo se interpretan geométricamente las condiciones con \(|z-a|\), \(\operatorname{Re}z\), \(\operatorname{Im}z\) y \(\arg z\).</li>
+</ol>
+<h3 id="5-preguntas-de-relacion-entre-conceptos">5 preguntas de relación entre conceptos</h3>
+<ol class="numbered-list">
+<li value="31">Relacione conjugado, módulo y distancia en el plano complejo.</li>
+<li value="32">Relacione fórmula de Euler, De Moivre y raíces complejas.</li>
+<li value="33">Relacione argumento multivaluado, logaritmo complejo y potencias complejas.</li>
+<li value="34">Relacione forma binómica y forma polar con los tipos de operaciones donde cada una es preferible.</li>
+<li value="35">Relacione regiones del plano complejo con dominios de funciones complejas.</li>
+</ol>
+</div>
+</section>
+
+<section id="respuestas" class="page">
+<header class="section-header">
+<p class="section-kicker">08</p>
+<h2>Respuestas modelo</h2>
+</header>
+<div class="accordion-list answers-list">
+<details class="accordion">
+<summary>Respuesta 1: Un número complejo es \(z=x+iy\), con \(x,y\in\mathbb R\) e \(i^2=-1\). Su parte real es \(x\) y s</summary>
+<div class="accordion-body">
+<p>Un número complejo es \(z=x+iy\), con \(x,y\in\mathbb R\) e \(i^2=-1\). Su parte real es \(x\) y su parte imaginaria es \(y\).</p>
+</div></details>
+<details class="accordion">
+<summary>Respuesta 2: Respuesta desarrollada</summary>
+<div class="accordion-body">
+<div class="formula-block">\[
+|3-4i|=\sqrt{3^2+(-4)^2}=5.
+\]</div>
+</div></details>
+<details class="accordion">
+<summary>Respuesta 3: Respuesta desarrollada</summary>
+<div class="accordion-body">
+<div class="formula-block">\[
+\overline{-2+5i}=-2-5i.
+\]</div>
+</div></details>
+<details class="accordion">
+<summary>Respuesta 4: Respuesta desarrollada</summary>
+<div class="accordion-body">
+<div class="formula-block">\[
+1+i=\sqrt2\left(\cos\frac{\pi}{4}+i\sin\frac{\pi}{4}\right)=\sqrt2e^{i\pi/4}.
+\]</div>
+</div></details>
+<details class="accordion">
+<summary>Respuesta 5: Respuesta desarrollada</summary>
+<div class="accordion-body">
+<div class="formula-block">\[
+e^{i\pi}=\cos\pi+i\sin\pi=-1.
+\]</div>
+</div></details>
+<details class="accordion">
+<summary>Respuesta 6: Respuesta desarrollada</summary>
+<div class="accordion-body">
+<div class="formula-block">\[
+(1+i)^2=1+2i+i^2=2i.
+\]</div>
+</div></details>
+<details class="accordion">
+<summary>Respuesta 7: \(|z|=2\) es la circunferencia de centro \(0\) y radio \(2\).</summary>
+<div class="accordion-body">
+<p>\(|z|=2\) es la circunferencia de centro \(0\) y radio \(2\).</p>
+</div></details>
+<details class="accordion">
+<summary>Respuesta 8: \(\operatorname{Re}z&lt;1\) es el semiplano \(x&lt;1\), sin incluir la recta \(x=1\).</summary>
+<div class="accordion-body">
+<p>\(\operatorname{Re}z&lt;1\) es el semiplano \(x&lt;1\), sin incluir la recta \(x=1\).</p>
+</div></details>
+<details class="accordion">
+<summary>Respuesta 9: Como \(\operatorname{Arg}i=\pi/2\):</summary>
+<div class="accordion-body">
+<p>Como \(\operatorname{Arg}i=\pi/2\):</p>
+<div class="formula-block">\[
+\operatorname{Log}i=\ln1+i\frac{\pi}{2}=\frac{\pi i}{2}.
+\]</div>
+</div></details>
+<details class="accordion">
+<summary>Respuesta 10: Respuesta desarrollada</summary>
+<div class="accordion-body">
+<div class="formula-block">\[
+\cos z=\frac{e^{iz}+e^{-iz}}{2}.
+\]</div>
+</div></details>
+<details class="accordion">
+<summary>Respuesta 11: Respuesta desarrollada</summary>
+<div class="accordion-body">
+<div class="formula-block">\[
+\begin{aligned}
+\frac{2+i}{1-i} \\
+&amp;= \frac{(2+i)(1+i)}{(1-i)(1+i)} \\
+&amp;= \frac{1+3i}{2} \\
+&amp;= \frac12+\frac32i.
+\end{aligned}
+\]</div>
+</div></details>
+<details class="accordion">
+<summary>Respuesta 12: El módulo es:</summary>
+<div class="accordion-body">
+<p>El módulo es:</p>
+<div class="formula-block">\[
+r=\sqrt{1+3}=2.
+\]</div>
+<p>El argumento está en el segundo cuadrante:</p>
+<div class="formula-block">\[
+\theta=\frac{2\pi}{3}.
+\]</div>
+<p>Por tanto:</p>
+<div class="formula-block">\[
+-1+i\sqrt3=2e^{2\pi i/3}.
+\]</div>
+</div></details>
+<details class="accordion">
+<summary>Respuesta 13: Respuesta desarrollada</summary>
+<div class="accordion-body">
+<div class="formula-block">\[
+1=e^{2k\pi i}.
+\]</div>
+<p>Las raíces cúbicas son:</p>
+<div class="formula-block">\[
+z_k=e^{2k\pi i/3},\qquad k=0,1,2.
+\]</div>
+<p>Es decir:</p>
+<div class="formula-block">\[
+1,\quad -\frac12+\frac{\sqrt3}{2}i,\quad -\frac12-\frac{\sqrt3}{2}i.
+\]</div>
+</div></details>
+<details class="accordion">
+<summary>Respuesta 14: Respuesta desarrollada</summary>
+<div class="accordion-body">
+<div class="formula-block">\[
+|z-1|&lt;2
+\]</div>
+<p>es el disco abierto de centro \(1+0i\) y radio \(2\).</p>
+</div></details>
+<details class="accordion">
+<summary>Respuesta 15: Respuesta desarrollada</summary>
+<div class="accordion-body">
+<div class="formula-block">\[
+|z|^2&lt;2\operatorname{Re}z
+\Rightarrow x^2+y^2&lt;2x
+\Rightarrow (x-1)^2+y^2&lt;1.
+\]</div>
+<p>Es el disco abierto de centro \(1\) y radio \(1\).</p>
+</div></details>
+<details class="accordion">
+<summary>Respuesta 16: Respuesta desarrollada</summary>
+<div class="accordion-body">
+<div class="formula-block">\[
+-i=e^{-i\pi/2+2k\pi i}.
+\]</div>
+<p>Por tanto:</p>
+<div class="formula-block">\[
+\log(-i)=i\left(-\frac{\pi}{2}+2k\pi\right),\qquad k\in\mathbb Z.
+\]</div>
+</div></details>
+<details class="accordion">
+<summary>Respuesta 17: Respuesta desarrollada</summary>
+<div class="accordion-body">
+<div class="formula-block">\[
+e^{2+i\pi/2}=e^2e^{i\pi/2}=ie^2.
+\]</div>
+</div></details>
+<details class="accordion">
+<summary>Respuesta 18: Si \(z=x+iy\), entonces:</summary>
+<div class="accordion-body">
+<p>Si \(z=x+iy\), entonces:</p>
+<div class="formula-block">\[
+z\bar z=(x+iy)(x-iy)=x^2+y^2=|z|^2.
+\]</div>
+</div></details>
+<details class="accordion">
+<summary>Respuesta 19: Respuesta desarrollada</summary>
+<div class="accordion-body">
+<div class="formula-block">\[
+\begin{aligned}
+\sin(iy)=\frac{e^{-y}-e^y}{2i} \\
+&amp;= i\frac{e^y-e^{-y}}2 \\
+&amp;= i\sinh y.
+\end{aligned}
+\]</div>
+</div></details>
+<details class="accordion">
+<summary>Respuesta 20: Respuesta desarrollada</summary>
+<div class="accordion-body">
+<div class="formula-block">\[
+\begin{aligned}
+\cos(x+iy)=\frac{e^{i(x+iy)}+e^{-i(x+iy)}}2 \\
+&amp;= \cos x\cosh y-i\sin x\sinh y.
+\end{aligned}
+\]</div>
+</div></details>
+<details class="accordion">
+<summary>Respuesta 21: Sea \(u=z^3\). Entonces:</summary>
+<div class="accordion-body">
+<p>Sea \(u=z^3\). Entonces:</p>
+<div class="formula-block">\[
+u^2+7u-8=0
+\Rightarrow (u-1)(u+8)=0.
+\]</div>
+<p>Luego:</p>
+<div class="formula-block">\[
+z^3=1
+\]</div>
+<p>o:</p>
+<div class="formula-block">\[
+z^3=-8.
+\]</div>
+<p>Las tres raíces de \(1\) están en la circunferencia \(|z|=1\). Las tres raíces de \(-8\) tienen módulo \(2\), porque \(\sqrt[3]{8}=2\), y están en \(|z|=2\). En ambos casos están separadas por \(2\pi/3\).</p>
+</div></details>
+<details class="accordion">
+<summary>Respuesta 22: Con (\operatorname{Arg}\in\(-\pi,\pi]\), se tiene:</summary>
+<div class="accordion-body">
+<p>Con (\operatorname{Arg}\in\(-\pi,\pi]\), se tiene:</p>
+<div class="formula-block">\[
+\operatorname{Log}(iz)=\ln|z|+i\operatorname{Arg}(iz).
+\]</div>
+<p>Además:</p>
+<div class="formula-block">\[
+\begin{aligned}
+\operatorname{Log}i+\operatorname{Log}z \\
+&amp;= \frac{\pi i}{2}+\ln|z|+i\operatorname{Arg}z.
+\end{aligned}
+\]</div>
+<p>La igualdad exige:</p>
+<div class="formula-block">\[
+\operatorname{Arg}(iz)=\operatorname{Arg}z+\frac{\pi}{2}
+\]</div>
+<p>sin salto fuera del intervalo principal. Falla cuando sumar \(\pi/2\) obliga a restar \(2\pi\). Con la rama (\(-\pi,\pi]\), se cumple si:</p>
+<div class="formula-block">\[
+-\pi&lt;\operatorname{Arg}z\leq \frac{\pi}{2}.
+\]</div>
+<p>Si:</p>
+<div class="formula-block">\[
+\frac{\pi}{2}&lt;\operatorname{Arg}z\leq\pi,
+\]</div>
+<p>entonces:</p>
+<div class="formula-block">\[
+\operatorname{Log}(iz)=\operatorname{Log}i+\operatorname{Log}z-2\pi i.
+\]</div>
+</div></details>
+<details class="accordion">
+<summary>Respuesta 23: Escribiendo \(z=x+iy\):</summary>
+<div class="accordion-body">
+<p>Escribiendo \(z=x+iy\):</p>
+<div class="formula-block">\[
+|z|-x&gt;1,\qquad |z|+x&gt;1.
+\]</div>
+<p>Equivalen a:</p>
+<div class="formula-block">\[
+|z|&gt;1+x,\qquad |z|&gt;1-x.
+\]</div>
+<p>Tras analizar con cuidado los signos y elevar donde procede, ambas imponen quedar fuera de dos regiones parabólicas asociadas a focos y directrices. Operativamente en examen: se pasa a \(r,x\):</p>
+<div class="formula-block">\[
+r-x&gt;1,\qquad r+x&gt;1.
+\]</div>
+<p>En polares:</p>
+<div class="formula-block">\[
+r(1-\cos\theta)&gt;1,\qquad r(1+\cos\theta)&gt;1.
+\]</div>
+<p>Luego:</p>
+<div class="formula-block">\[
+r&gt;\frac1{1-\cos\theta},\qquad r&gt;\frac1{1+\cos\theta}.
+\]</div>
+<p>La región es la intersección exterior a ambas curvas polares.</p>
+</div></details>
+<details class="accordion">
+<summary>Respuesta 24: Se demuestra elevando al cuadrado:</summary>
+<div class="accordion-body">
+<p>Se demuestra elevando al cuadrado:</p>
+<div class="formula-block">\[
+|z_1+z_2|^2=(z_1+z_2)(\bar z_1+\bar z_2)
+\]</div>
+<div class="formula-block">\[
+=|z_1|^2+|z_2|^2+z_1\bar z_2+\bar z_1z_2.
+\]</div>
+<p>Como:</p>
+<div class="formula-block">\[
+z_1\bar z_2+\bar z_1z_2=2\operatorname{Re}(z_1\bar z_2)\leq2|z_1||z_2|,
+\]</div>
+<p>queda:</p>
+<div class="formula-block">\[
+|z_1+z_2|^2\leq(|z_1|+|z_2|)^2.
+\]</div>
+<p>Tomando raíces:</p>
+<div class="formula-block">\[
+|z_1+z_2|\leq |z_1|+|z_2|.
+\]</div>
+</div></details>
+<details class="accordion">
+<summary>Respuesta 25: Respuesta desarrollada</summary>
+<div class="accordion-body">
+<div class="formula-block">\[
+i=e^{i(\pi/2+2k\pi)}.
+\]</div>
+<p>Entonces:</p>
+<div class="formula-block">\[
+\log i=i\left(\frac{\pi}{2}+2k\pi\right).
+\]</div>
+<p>Por definición:</p>
+<div class="formula-block">\[
+\begin{aligned}
+i^{-2i}=e^{-2i\log i} \\
+&amp;= e^{-2i\cdot i(\pi/2+2k\pi)} \\
+&amp;= e^{\pi+4k\pi}.
+\end{aligned}
+\]</div>
+</div></details>
+<details class="accordion">
+<summary>Respuesta 26: La forma polar parte de identificar \(z=x+iy\) con el punto \((x,y)\). Su distancia al origen </summary>
+<div class="accordion-body">
+<p>La forma polar parte de identificar \(z=x+iy\) con el punto \((x,y)\). Su distancia al origen es:</p>
+<div class="formula-block">\[
+r=|z|=\sqrt{x^2+y^2}.
+\]</div>
+<p>Si \(\theta\) es un argumento de \(z\), entonces:</p>
+<div class="formula-block">\[
+x=r\cos\theta,\qquad y=r\sin\theta.
+\]</div>
+<p>Por tanto:</p>
+<div class="formula-block">\[
+z=r(\cos\theta+i\sin\theta).
+\]</div>
+<p>La fórmula de Euler:</p>
+<div class="formula-block">\[
+e^{i\theta}=\cos\theta+i\sin\theta
+\]</div>
+<p>permite escribir:</p>
+<div class="formula-block">\[
+z=re^{i\theta}.
+\]</div>
+<p>Esta forma es equivalente a la binómica, pero mucho mejor para productos, cocientes, potencias y raíces.</p>
+</div></details>
+<details class="accordion">
+<summary>Respuesta 27: Para hallar raíces \(n\)-ésimas de \(z=re^{i\theta}\), se usan todos los argumentos:</summary>
+<div class="accordion-body">
+<p>Para hallar raíces \(n\)-ésimas de \(z=re^{i\theta}\), se usan todos los argumentos:</p>
+<div class="formula-block">\[
+\theta+2k\pi.
+\]</div>
+<p>Entonces:</p>
+<div class="formula-block">\[
+w_k=r^{1/n}e^{i(\theta+2k\pi)/n},\qquad k=0,\dots,n-1.
+\]</div>
+<p>Para:</p>
+<div class="formula-block">\[
+z^4=-16,
+\]</div>
+<p>se escribe:</p>
+<div class="formula-block">\[
+-16=16e^{i(\pi+2k\pi)}.
+\]</div>
+<p>Luego:</p>
+<div class="formula-block">\[
+z_k=2e^{i(\pi+2k\pi)/4},\qquad k=0,1,2,3.
+\]</div>
+<p>Es decir:</p>
+<div class="formula-block">\[
+2e^{i\pi/4},\quad 2e^{i3\pi/4},\quad 2e^{i5\pi/4},\quad 2e^{i7\pi/4}.
+\]</div>
+</div></details>
+<details class="accordion">
+<summary>Respuesta 28: El logaritmo complejo resuelve \(e^w=z\). Si:</summary>
+<div class="accordion-body">
+<p>El logaritmo complejo resuelve \(e^w=z\). Si:</p>
+<div class="formula-block">\[
+z=re^{i\theta},
+\]</div>
+<p>entonces:</p>
+<div class="formula-block">\[
+w=\ln r+i(\theta+2k\pi).
+\]</div>
+<p>Por eso:</p>
+<div class="formula-block">\[
+\log z=\ln|z|+i(\arg z)
+\]</div>
+<p>es multivaluado. La rama principal:</p>
+<div class="formula-block">\[
+\operatorname{Log}z=\ln|z|+i\operatorname{Arg}z
+\]</div>
+<p>elige un solo argumento. La diferencia es esencial: \(\log z\) representa todos los valores; \(\operatorname{Log}z\) representa uno.</p>
+</div></details>
+<details class="accordion">
+<summary>Respuesta 29: Las funciones trigonométricas complejas se definen mediante exponenciales:</summary>
+<div class="accordion-body">
+<p>Las funciones trigonométricas complejas se definen mediante exponenciales:</p>
+<div class="formula-block">\[
+\sin z=\frac{e^{iz}-e^{-iz}}{2i},\qquad
+\cos z=\frac{e^{iz}+e^{-iz}}2.
+\]</div>
+<p>Las hiperbólicas son:</p>
+<div class="formula-block">\[
+\sinh z=\frac{e^z-e^{-z}}2,\qquad
+\cosh z=\frac{e^z+e^{-z}}2.
+\]</div>
+<p>Al sustituir \(z=iy\):</p>
+<div class="formula-block">\[
+\sin(iy)=i\sinh y,\qquad \cos(iy)=\cosh y.
+\]</div>
+<p>Por tanto, las hiperbólicas aparecen como trigonométricas evaluadas en argumentos imaginarios.</p>
+</div></details>
+<details class="accordion">
+<summary>Respuesta 30: \(|z-a|\) representa distancia desde \(z\) al punto \(a\). Por tanto:</summary>
+<div class="accordion-body">
+<p>\(|z-a|\) representa distancia desde \(z\) al punto \(a\). Por tanto:</p>
+<div class="formula-block">\[
+|z-a|&lt;R
+\]</div>
+<p>es un disco. \(\operatorname{Re}z=c\) es una recta vertical; \(\operatorname{Im}z=c\) es una recta horizontal. Las desigualdades con parte real o imaginaria dan semiplanos. Las condiciones con \(\arg z\) dan semirrectas o sectores angulares. Las condiciones mixtas se traducen a \(x,y\) o a \(r,\theta\) según convenga.</p>
+</div></details>
+<details class="accordion">
+<summary>Respuesta 31: El conjugado permite escribir:</summary>
+<div class="accordion-body">
+<p>El conjugado permite escribir:</p>
+<div class="formula-block">\[
+z\bar z=|z|^2.
+\]</div>
+<p>Como \(|z-a|\) mide la distancia entre \(z\) y \(a\), también:</p>
+<div class="formula-block">\[
+|z-a|^2=(z-a)(\bar z-\bar a).
+\]</div>
+<p>Así, conjugado y módulo conectan el álgebra con la geometría métrica del plano.</p>
+</div></details>
+<details class="accordion">
+<summary>Respuesta 32: Euler da:</summary>
+<div class="accordion-body">
+<p>Euler da:</p>
+<div class="formula-block">\[
+e^{i\theta}=\cos\theta+i\sin\theta.
+\]</div>
+<p>De Moivre sale al elevar:</p>
+<div class="formula-block">\[
+(e^{i\theta})^n=e^{in\theta}.
+\]</div>
+<p>Las raíces salen al invertir el proceso:</p>
+<div class="formula-block">\[
+w^n=re^{i\theta}
+\Rightarrow
+w=r^{1/n}e^{i(\theta+2k\pi)/n}.
+\]</div>
+<p>La cadena es:</p>
+<div class="formula-block">\[
+\text{Euler}\Rightarrow \text{De Moivre}\Rightarrow \text{raíces}.
+\]</div>
+</div></details>
+<details class="accordion">
+<summary>Respuesta 33: El argumento tiene infinitos valores:</summary>
+<div class="accordion-body">
+<p>El argumento tiene infinitos valores:</p>
+<div class="formula-block">\[
+\theta+2k\pi.
+\]</div>
+<p>Por eso:</p>
+<div class="formula-block">\[
+\log z=\ln r+i(\theta+2k\pi)
+\]</div>
+<p>tiene infinitos valores. Y como:</p>
+<div class="formula-block">\[
+a^b=e^{b\log a},
+\]</div>
+<p>las potencias complejas pueden ser multivaluadas. La fuente común de todos esos fenómenos es la periodicidad de la exponencial compleja.</p>
+</div></details>
+<details class="accordion">
+<summary>Respuesta 34: La forma binómica es preferible para sumar, restar, separar partes reales/imaginarias y de</summary>
+<div class="accordion-body">
+<p>La forma binómica es preferible para sumar, restar, separar partes reales/imaginarias y describir regiones cartesianas. La forma polar/exponencial es preferible para multiplicar, dividir, elevar, extraer raíces y trabajar con argumentos. En examen, elegir mal la forma aumenta el cálculo y los errores.</p>
+</div></details>
+<details class="accordion">
+<summary>Respuesta 35: Las regiones del plano complejo son dominios posibles de funciones complejas. Para funcion</summary>
+<div class="accordion-body">
+<p>Las regiones del plano complejo son dominios posibles de funciones complejas. Para funciones racionales, se excluyen ceros del denominador. Para logaritmos y raíces, además se introducen cortes de rama si se quiere continuidad de una rama. Por eso dominar discos, semiplanos, sectores y anillos es prerrequisito para analiticidad, Laurent, residuos e integrales de contorno.</p>
+</div></details>
+</div>
+</section>
+
+<section id="resumen" class="page">
+<header class="section-header">
+<p class="section-kicker">09</p>
+<h2>Resumen final de repaso</h2>
+</header>
+<div class="reading-block">
+<p>Ideas principales:</p>
+<div class="formula-block">\[
+z=x+iy
+\]</div>
+<p>representa a la vez un número, un punto y un vector del plano.</p>
+<div class="formula-block">\[
+|z|=\sqrt{x^2+y^2}
+\]</div>
+<p>es distancia al origen.</p>
+<div class="formula-block">\[
+\arg z=\theta+2k\pi
+\]</div>
+<p>es multivaluado.</p>
+<div class="formula-block">\[
+z=re^{i\theta}
+\]</div>
+<p>es la forma central del tema.</p>
+<div class="formula-block">\[
+e^{i\theta}=\cos\theta+i\sin\theta
+\]</div>
+<p>es la fórmula de Euler.</p>
+<p>Conceptos imprescindibles:</p>
+<div class="formula-block">\[
+\bar z=x-iy,\qquad z\bar z=|z|^2.
+\]</div>
+<div class="formula-block">\[
+z_1z_2=r_1r_2e^{i(\theta_1+\theta_2)}.
+\]</div>
+<div class="formula-block">\[
+\frac{z_1}{z_2}=\frac{r_1}{r_2}e^{i(\theta_1-\theta_2)}.
+\]</div>
+<div class="formula-block">\[
+z_k=r^{1/n}e^{i(\theta+2k\pi)/n}.
+\]</div>
+<div class="formula-block">\[
+\log z=\ln|z|+i(\theta+2k\pi).
+\]</div>
+<p>Relaciones clave:</p>
+<p>Forma binómica → partes reales, regiones cartesianas. Forma polar → módulo, argumento, geometría. Forma exponencial → productos, cocientes, potencias, raíces. Argumento multivaluado → raíces múltiples y logaritmo multivaluado. Conjugado → módulo, distancia, división. Trigonométricas complejas → exponenciales → hiperbólicas.</p>
+<p>Errores que evitar:</p>
+<p>No confundir \(\operatorname{Im}z\) con \(iy\). No usar \(\arctan(y/x)\) sin cuadrante. No olvidar \(2k\pi\). No dar una sola raíz compleja. No aplicar leyes del \(\operatorname{Log}\) principal como si fuera logaritmo real. No pensar que \(|\sin z|\leq1\) para complejo. No describir regiones sin traducir a \(x,y\) o \(r,\theta\).</p>
+</div>
+</section>
+
+<section id="checklist" class="page">
+<header class="section-header">
+<p class="section-kicker">10</p>
+<h2>Checklist de dominio</h2>
+</header>
+<ul class="check-list">
+<li>Si no puedes explicar por qué \(i^2=-1\) amplía los reales, falta repasar definición de complejo.</li>
+<li>Si no puedes separar \(\operatorname{Re}z\) e \(\operatorname{Im}z\), falta repasar forma binómica.</li>
+<li>Si confundes \(\operatorname{Im}z\) con \(iy\), revisar notación básica.</li>
+<li>Si no puedes dibujar \(z=x+iy\), falta repasar plano complejo.</li>
+<li>Si no puedes calcular \(|z|\), falta repasar distancia euclídea.</li>
+<li>Si calculas argumentos sin cuadrante, revisar forma polar.</li>
+<li>Si no puedes pasar de \(x+iy\) a \(re^{i\theta}\), falta repasar módulo y argumento.</li>
+<li>Si no puedes demostrar \(z\bar z=|z|^2\), falta repasar conjugado.</li>
+<li>Si no puedes dividir complejos, revisar racionalización con conjugado.</li>
+<li>Si no puedes explicar Euler, falta repasar series de \(e^z\), seno y coseno.</li>
+<li>Si no puedes usar \(e^{i\theta}\), falta repasar forma exponencial.</li>
+<li>Si multiplicas complejos en binómica cuando la polar es inmediata, revisar selección de método.</li>
+<li>Si no puedes hallar raíces \(n\)-ésimas, falta repasar argumento multivaluado.</li>
+<li>Si das menos de \(n\) raíces, revisar fórmula general de raíces.</li>
+<li>Si no puedes explicar por qué las raíces están equiespaciadas, falta repasar geometría polar.</li>
+<li>Si no puedes calcular \(\log z\), falta repasar \(\ln r+i\theta\).</li>
+<li>Si confundes \(\log z\) con \(\operatorname{Log}z\), revisar ramas y argumento principal.</li>
+<li>Si aplicas \(\operatorname{Log}(zw)=\operatorname{Log}z+\operatorname{Log}w\) sin comprobar argumentos, revisar saltos de rama.</li>
+<li>Si no puedes calcular \(\sin(iy)\) y \(\cos(iy)\), falta repasar hiperbólicas.</li>
+<li>Si crees que seno y coseno complejos están acotados por \(1\), revisar trigonométricas complejas.</li>
+<li>Si no puedes describir \(|z-a|&lt;R\), falta repasar distancia en el plano complejo.</li>
+<li>Si no puedes convertir \(|z|^2&lt;2\operatorname{Re}z\) en un disco, falta repasar completar cuadrados.</li>
+<li>Si puedes resolver raíces, logaritmos, regiones y formas binómica/polar sin mirar, el capítulo está suficientemente asentado.</li>
+</ul>
+<p>[Confianza: Alta]</p>
+</section>
+  </main>
+</body>
+</html>

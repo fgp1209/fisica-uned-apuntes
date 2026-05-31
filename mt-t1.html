@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mecánica Teórica — T1 — Lagrange y Hamilton</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/icon-32.png" />
+  <link rel="icon" type="image/png" sizes="50x50" href="assets/icons/icon-50.png" />
+  <link rel="apple-touch-icon" sizes="100x100" href="assets/icons/icon-100.png" />
+  <meta name="theme-color" content="#6f42c1" />
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+  <link rel="stylesheet" href="assets/styles.css" />
+  <script defer src="assets/app.js"></script>
+</head>
+<body class="subject-mecanica-teorica">
+<div class="wrap">
+  <header class="cover">
+    <div class="top-actions">
+      <a class="back-link" href="index.html">← Volver al índice</a>
+    </div>
+    <p class="eyebrow">UNED Física · Mecánica Teórica · Tema 1</p>
+    <h1>Guía de estudio — Mecánica Teórica T1</h1>
+    <p class="subtitle">D’Alembert, coordenadas generalizadas, principio de Hamilton, ecuaciones de Euler-Lagrange, transformación de Legendre, Hamilton y Routh.</p>
+    <div class="chips">
+      <span class="chip">UNED Física</span>
+      <span class="chip">Mecánica Teórica</span>
+      <span class="chip">MT1</span>
+      <span class="chip">MathJax</span>
+      <span class="chip">estado: maquetado</span>
+    </div>
+  </header>
+
+  <div class="toolbar no-print">
+    <nav><a href="#mapa">Mapa</a><a href="#prerrequisitos">Prerrequisitos</a><a href="#desarrollo-completo">Desarrollo</a><a href="#conceptos-clave">Conceptos</a><a href="#errores-habituales">Errores</a><a href="#preguntas-orientadas-a-examen">Preguntas</a><a href="#respuestas-modelo">Respuestas</a><a href="#resumen-final-de-repaso">Resumen</a><a href="#checklist-de-dominio">Checklist</a></nav>
+    <div class="toolbar-actions">
+      <button class="btn" onclick="printReady()">Imprimir / guardar PDF</button>
+      <button class="btn secondary" onclick="openAllDetails()">Abrir todo</button>
+      <button class="btn secondary" onclick="closeAllDetails()">Cerrar acordeones</button>
+    </div>
+  </div>
+
+  <main>
+<section class="page map-page" id="mapa">
+<div class="page-head"><h2>Mapa clicable</h2><p class="section-lead">Ruta conceptual del tema.</p></div>
+<div class="concept-map">
+  <a class="map-node" href="#prerrequisitos"><span>Prerrequisitos</span><small>Newton · trabajo virtual · coordenadas generalizadas · Legendre</small></a>
+  <a class="map-node" href="#idea-central"><span>Idea central</span><small>pasar de fuerzas a estructura: Lagrange y Hamilton</small></a>
+  <a class="map-node" href="#desarrollo-completo"><span>Desarrollo</span><small>D’Alembert · Euler-Lagrange · cíclicas · Hamilton · Routh</small></a>
+  <a class="map-node" href="#conceptos-clave"><span>Conceptos clave</span><small>acción · momento conjugado · espacio de fases · hamiltoniano</small></a>
+  <a class="map-node" href="#errores-habituales"><span>Errores de examen</span><small>mínima acción · L ≠ E · H no siempre es T + V</small></a>
+  <a class="map-node" href="#preguntas-orientadas-a-examen"><span>Examen</span><small>preguntas fáciles · medias · difíciles · desarrollo</small></a>
+  <a class="map-node" href="#respuestas-modelo"><span>Respuestas modelo</span><small>formulación completa y derivaciones mínimas</small></a>
+  <a class="map-node" href="#checklist-de-dominio"><span>Checklist</span><small>criterios de dominio antes de avanzar</small></a>
+</div>
+</section>
+<section class="page" id="prerrequisitos">
+<div class="page-head"><h2>1. Prerrequisitos mínimos</h2><span class="page-no">p.1</span></div>
+<div class="grid cards-grid">
+<article class="definition-card"><h3>Dinámica newtoniana</h3>
+<p>Definición: descripción del movimiento mediante \(\mathbf F=m\mathbf a\).</p>
+<p>Es necesaria porque D’Alembert y Lagrange reformulan esa dinámica, no la sustituyen físicamente.</p>
+<p>Ejemplo mínimo: para una partícula en (V\(x\)), Newton da \(m\ddot x=-dV/dx\).</p>
+</article>
+<article class="definition-card"><h3>Trabajo virtual</h3>
+<p>Definición: trabajo asociado a desplazamientos infinitesimales compatibles con las ligaduras en un instante fijo.</p>
+<p>Es necesario porque permite eliminar fuerzas de ligadura cuando no realizan trabajo virtual.</p>
+<p>Ejemplo: la normal de una cuenta en un aro no realiza trabajo virtual a lo largo del aro.</p>
+</article>
+<article class="definition-card"><h3>Energías \(T\) y \(V\)</h3>
+<p>Definición: energía cinética y energía potencial.</p>
+<p>Es necesario porque el lagrangiano básico de muchos sistemas es \(L=T-V\).</p>
+<p>Ejemplo: en coordenadas polares planas, (T=\frac12m\(\dot r^2+r^2\dot\theta^2\)).</p>
+</article>
+<article class="definition-card"><h3>Coordenadas generalizadas</h3>
+<p>Definición: variables \(q_i\) que determinan la configuración del sistema respetando las ligaduras.</p>
+<p>Es necesario porque las ecuaciones de Lagrange se formulan en esas variables.</p>
+<p>Ejemplo: un péndulo simple tiene una coordenada natural \(\theta\), no dos coordenadas independientes \(x,y\).</p>
+</article>
+<article class="definition-card"><h3>EDO de segundo orden y sistemas de primer orden</h3>
+<p>Definición: una ecuación tipo (\ddot q=f\(q,\dot q,t\)) necesita dos datos iniciales; un sistema hamiltoniano usa ecuaciones de primer orden.</p>
+<p>Es necesario porque Lagrange conduce a ecuaciones de segundo orden y Hamilton a \(2n\) ecuaciones de primer orden. Goldstein presenta explícitamente este paso como cambio de imagen: de \(n\) coordenadas \(q_i\) a \(2n\) variables \(\(q_i,p_i\)\).</p>
+</article>
+<article class="definition-card"><h3>Derivadas parciales</h3>
+<p>Definición: derivadas respecto a una variable manteniendo las demás constantes.</p>
+<p>Es necesario porque (L\(q,\dot q,t\)) se deriva respecto a \(q_i\) y \(\dot q_i\) como variables independientes formales.</p>
+<p>Ejemplo: si (L=\frac12m\dot q^2-V\(q\)), entonces \(\partial L/\partial \dot q=m\dot q\).</p>
+</article>
+<article class="definition-card"><h3>Cálculo variacional básico</h3>
+<p>Definición: búsqueda de funciones que hacen estacionaria una integral funcional.</p>
+<p>Es necesario porque el principio de Hamilton afirma que la acción \(S=\int L,dt\) es estacionaria. Boas lo introduce como aplicación mecánica directa del cálculo de variaciones.</p>
+</article>
+<article class="definition-card"><h3>Transformación de Legendre</h3>
+<p>Definición: cambio de variables que sustituye velocidades \(\dot q_i\) por momentos \(p_i\).</p>
+<p>Es necesario porque el hamiltoniano se obtiene desde (L\(q,\dot q,t\)) pasando a (H\(q,p,t\)).</p>
+<p>Ejemplo: si (L=\frac12m\dot q^2-V\(q\)), entonces \(p=m\dot q\) y (H=p\dot q-L=\frac{p^2}{2m}+V\(q\)).</p>
+</article>
+<article class="definition-card"><h3>Conservación de energía y momento</h3>
+<p>Definición: magnitudes constantes cuando hay simetrías o ausencia de dependencia explícita.</p>
+<p>Es necesario porque las coordenadas cíclicas, Noether y Routh dependen de detectar qué variable no aparece en \(L\) o en \(H\). Garrigós resume que una coordenada cíclica conserva su momento conjugado y que si \(L\) no depende explícitamente del tiempo se conserva la energía.</p>
+</article>
+</div>
+</section>
+<section class="page" id="idea-central">
+<div class="page-head"><h2>2. Idea central del capítulo</h2><span class="page-no">p.2</span></div>
+<div class="reading-block"><p>El capítulo enseña a pasar de la mecánica como suma de fuerzas a la mecánica como estructura. En Newton, el punto de partida es \(\mathbf F=m\mathbf a\). En Lagrange, el punto de partida es una función (L\(q,\dot q,t\)). En Hamilton, el punto de partida es otra función (H\(q,p,t\)). La física no cambia: cambia el lenguaje con el que se codifica el sistema.</p></div>
+<div class="reading-block"><p>La idea central es que el movimiento real no se obtiene necesariamente escribiendo todas las fuerzas, sino imponiendo que una cantidad integral, la acción,</p></div>
+<div class="formula-block">\[S[q]=\int_{t_1}^{t_2} L(q,\dot q,t)\,dt,\]</div>
+<div class="reading-block"><p>sea estacionaria frente a pequeñas variaciones compatibles con las ligaduras. Goldstein presenta las ecuaciones de Euler–Lagrange como la condición diferencial que resulta de hacer estacionaria esa integral.</p></div>
+<div class="reading-block"><p>Esto permite resolver sistemas donde las fuerzas de ligadura son desconocidas. En vez de calcular normales, tensiones o reacciones, se eligen coordenadas que ya incorporan la geometría permitida. Taylor destaca exactamente esas dos ventajas: las ecuaciones de Lagrange mantienen la misma forma en cualquier sistema de coordenadas y eliminan fuerzas de ligadura normalmente desconocidas.</p></div>
+<div class="reading-block"><p>La segunda mitad del capítulo introduce Hamilton. El formalismo hamiltoniano no añade nueva física, pero reorganiza el problema en el espacio de fases. Goldstein lo formula como un método más potente para desarrollos teóricos: Hamilton–Jacobi, perturbaciones, caos, mecánica estadística y mecánica cuántica.</p></div>
+<div class="reading-block"><p>El papel del tema dentro de Mecánica Teórica es fundacional. Si no se domina, no se puede avanzar de forma real a Poisson, transformaciones canónicas, Hamilton–Jacobi, Liouville, campos ni Noether avanzado. Además, los exámenes OCR de Mecánica Teórica validan directamente este bloque: aparecen Hamiltoniano, Hamilton–Jacobi, espacio de fases, Liouville y densidades lagrangianas/hamiltonianas.</p></div>
+</section>
+<section class="page" id="desarrollo-completo">
+<div class="page-head"><h2>3. Desarrollo completo del capítulo</h2><span class="page-no">p.3</span></div>
+<h3 id="3-1-de-newton-a-d-alembert">3.1. De Newton a D’Alembert</h3>
+<div class="reading-block"><p>La mecánica newtoniana parte de</p></div>
+<div class="formula-block">\[\mathbf F_i=\dot{\mathbf p}_i.\]</div>
+<div class="reading-block"><p>D’Alembert reescribe esto como una condición de equilibrio dinámico:</p></div>
+<div class="formula-block">\[\mathbf F_i-\dot{\mathbf p}_i=0.\]</div>
+<div class="reading-block"><p>La diferencia es conceptual. No se niega que el sistema acelere; se introduce una “fuerza efectiva” \(-\dot{\mathbf p}_i\) para transformar un problema dinámico en una condición de trabajo virtual. La forma útil es</p></div>
+<div class="formula-block">\[\sum_i(\mathbf F_i-\dot{\mathbf p}_i)\cdot \delta \mathbf r_i=0.\]</div>
+<div class="reading-block"><p>Goldstein deriva esta expresión precisamente para eliminar las fuerzas de ligadura bajo la condición de que su trabajo virtual sea nulo.</p></div>
+<div class="reading-block"><p>Importa porque en muchos sistemas las fuerzas más molestas no son las físicas aplicadas, sino las reacciones geométricas. En una cuenta sobre un aro, interesa la ecuación para el ángulo, no la normal exacta que ejerce el aro. D’Alembert prepara el salto a Lagrange.</p></div>
+<h3 id="3-2-ligaduras-y-grados-de-libertad">3.2. Ligaduras y grados de libertad</h3>
+<div class="reading-block"><p>Una ligadura restringe las posiciones posibles. Si depende solo de coordenadas y tiempo,</p></div>
+<div class="formula-block">\[f(q_1,\ldots,q_n,t)=0,\]</div>
+<div class="reading-block"><p>es holónoma. Si depende de velocidades de forma no integrable, es no holónoma. El formalismo estándar del tema trabaja principalmente con ligaduras holónomas.</p></div>
+<div class="reading-block"><p>Para \(N\) partículas libres hay \(3N\) coordenadas cartesianas. Si existen \(M\) ligaduras holónomas independientes, quedan</p></div>
+<div class="formula-block">\[s=3N-M\]</div>
+<div class="reading-block"><p>grados de libertad. Garrigós define precisamente las coordenadas generalizadas como las \(q_i\) restantes tras separar coordenadas libres y coordenadas ligadas \(\eta_j\); el número \(3N-M\) es el número de grados de libertad.</p></div>
+<div class="reading-block"><p>Ejemplo: un péndulo simple en el plano parece tener dos coordenadas \(x,y\), pero la ligadura \(x^2+y^2=l^2\) deja un solo grado de libertad. La coordenada natural es \(\theta\). Al usar \(\theta\), la tensión desaparece de la ecuación de movimiento.</p></div>
+<h3 id="3-3-coordenadas-generalizadas-y-espacio-de-configuracion">3.3. Coordenadas generalizadas y espacio de configuración</h3>
+<div class="reading-block"><p>Las coordenadas generalizadas \(q_i\) no tienen por qué ser longitudes. Pueden ser ángulos, distancias, parámetros curvilíneos o combinaciones. Lo único exigible es que determinen una configuración física compatible con las ligaduras.</p></div>
+<div class="reading-block"><p>El conjunto de todos los valores posibles \(\(q_1,\ldots,q_n\)\) forma el espacio de configuración. Un punto en ese espacio representa una configuración completa. Una trayectoria física se representa como una curva (q\(t\)) en ese espacio.</p></div>
+<div class="reading-block"><p>Taylor lo expresa de forma clara: las \(n\) coordenadas generalizadas definen un punto en un espacio de configuración \(n\)-dimensional, y las funciones (q_i\(t\)) definen una trayectoria en ese espacio.</p></div>
+<div class="reading-block"><p>Ejemplo: el doble péndulo tiene dos coordenadas \(\(\theta_1,\theta_2\)\). Su espacio de configuración es bidimensional. La evolución física no es una curva en el plano ordinario, sino una curva en el plano de configuraciones.</p></div>
+<h3 id="3-4-principio-de-hamilton">3.4. Principio de Hamilton</h3>
+<div class="reading-block"><p>El principio de Hamilton afirma que el movimiento real entre dos configuraciones fijas en dos tiempos dados hace estacionaria la acción:</p></div>
+<div class="formula-block">\[\delta S=0,\qquad S=\int_{t_1}^{t_2}L(q,\dot q,t)\,dt.\]</div>
+<div class="reading-block"><p>“Estacionaria” no significa necesariamente mínima. Significa que la variación de primer orden se anula. Puede ser mínimo, máximo o punto de silla funcional.</p></div>
+<div class="reading-block"><p>Si</p></div>
+<div class="formula-block">\[L=T-V,\]</div>
+<div class="reading-block"><p>la acción acumula, a lo largo del tiempo, la diferencia entre energía cinética y potencial. No es energía total. Es una función generadora de ecuaciones de movimiento.</p></div>
+<div class="reading-block"><p>Ejemplo: para una partícula vertical bajo gravedad,</p></div>
+<div class="formula-block">\[L=\frac12m\dot z^2-mgz.\]</div>
+<div class="reading-block"><p>Euler–Lagrange da</p></div>
+<div class="formula-block">\[m\ddot z=-mg.\]</div>
+<div class="reading-block"><p>La ecuación newtoniana reaparece como consecuencia del principio variacional.</p></div>
+<h3 id="3-5-ecuaciones-de-euler-lagrange">3.5. Ecuaciones de Euler–Lagrange</h3>
+<div class="reading-block"><p>La condición variacional conduce a</p></div>
+<div class="formula-block">\[\frac{d}{dt}\left(\frac{\partial L}{\partial \dot q_i}\right)-\frac{\partial L}{\partial q_i}=0.\]</div>
+<div class="reading-block"><p>Esta es la ecuación madre del bloque. Cada coordenada generalizada produce una ecuación diferencial.</p></div>
+<div class="reading-block"><p>Su importancia está en que conserva la forma bajo cambio de coordenadas. En Newton, cambiar a coordenadas polares exige transformar aceleraciones y fuerzas. En Lagrange, basta expresar \(T\) y \(V\) en las nuevas coordenadas y derivar.</p></div>
+<div class="reading-block"><p>Ejemplo: partícula en potencial central:</p></div>
+<div class="formula-block">\[L=\frac12m(\dot r^2+r^2\dot\theta^2)-V(r).\]</div>
+<div class="reading-block"><p>Para \(\theta\),</p></div>
+<div class="formula-block">\[\frac{\partial L}{\partial \theta}=0,\]</div>
+<div class="reading-block"><p>luego</p></div>
+<div class="formula-block">\[p_\theta=\frac{\partial L}{\partial\dot\theta}=mr^2\dot\theta\]</div>
+<div class="reading-block"><p>es constante. Aparece la conservación del momento angular.</p></div>
+<h3 id="3-6-coordenadas-ciclicas-y-conservacion">3.6. Coordenadas cíclicas y conservación</h3>
+<div class="reading-block"><p>Una coordenada \(q_k\) es cíclica si no aparece explícitamente en el lagrangiano:</p></div>
+<div class="formula-block">\[\frac{\partial L}{\partial q_k}=0.\]</div>
+<div class="reading-block"><p>Entonces Euler–Lagrange implica</p></div>
+<div class="formula-block">\[\frac{d}{dt}\left(\frac{\partial L}{\partial \dot q_k}\right)=0,\]</div>
+<div class="reading-block"><p>por tanto</p></div>
+<div class="formula-block">\[p_k=\frac{\partial L}{\partial \dot q_k}\]</div>
+<div class="reading-block"><p>se conserva.</p></div>
+<div class="reading-block"><p>La consecuencia práctica es brutal: cada coordenada cíclica reduce el problema. No solo da una constante; permite bajar el orden efectivo de integración.</p></div>
+<div class="reading-block"><p>Ejemplo: en un potencial central no aparece \(\theta\), así que \(p_\theta\) es constante. Eso permite transformar un problema plano en un problema radial con potencial efectivo.</p></div>
+<h3 id="3-7-energia-funcion-energia-y-hamiltoniano">3.7. Energía, función energía y hamiltoniano</h3>
+<div class="reading-block"><p>La función energía asociada a un lagrangiano es</p></div>
+<div class="formula-block">\[h(q,\dot q,t)=\sum_i \dot q_i\frac{\partial L}{\partial \dot q_i}-L.\]</div>
+<div class="reading-block"><p>Si \(L\) no depende explícitamente del tiempo, esta cantidad se conserva. En sistemas naturales con \(L=T-V\), coordenadas sin dependencia explícita temporal y potencial independiente de velocidades, esta función coincide con la energía mecánica \(T+V\).</p></div>
+<div class="reading-block"><p>Pero no siempre coincide. Garrigós insiste en que, en general, el hamiltoniano no tiene por qué ser la energía total.</p></div>
+<div class="reading-block"><p>Ejemplo simple donde sí coincide:</p></div>
+<div class="formula-block">\[L=\frac12m\dot q^2-V(q),\qquad p=m\dot q,\]</div>
+<div class="formula-block">\[H=p\dot q-L=\frac{p^2}{2m}+V(q).\]</div>
+<div class="reading-block"><p>Ejemplo conceptual donde hay que tener cuidado: si el cambio de coordenadas depende explícitamente del tiempo o hay potenciales dependientes de velocidad, el hamiltoniano puede no ser simplemente \(T+V\).</p></div>
+<h3 id="3-8-transformacion-de-legendre">3.8. Transformación de Legendre</h3>
+<div class="reading-block"><p>Hamilton aparece al sustituir las velocidades por momentos conjugados:</p></div>
+<div class="formula-block">\[p_i=\frac{\partial L}{\partial \dot q_i}.\]</div>
+<div class="reading-block"><p>Si esta relación puede invertirse para obtener</p></div>
+<div class="formula-block">\[\dot q_i=\dot q_i(q,p,t),\]</div>
+<div class="reading-block"><p>se define</p></div>
+<div class="formula-block">\[H(q,p,t)=\sum_i p_i\dot q_i-L(q,\dot q,t).\]</div>
+<div class="reading-block"><p>Goldstein presenta este paso como una transformación de variables de \(\(q,\dot q,t\)\) a \(\(q,p,t\)\), realizada mediante la transformación de Legendre.</p></div>
+<div class="reading-block"><p>Ejemplo:</p></div>
+<div class="formula-block">\[L=\frac12m\dot q^2-V(q).\]</div>
+<div class="reading-block"><p>Entonces</p></div>
+<div class="formula-block">\[p=m\dot q,\qquad \dot q=\frac{p}{m},\]</div>
+<div class="formula-block">\[H=p\frac{p}{m}-\left(\frac{p^2}{2m}-V\right) =\frac{p^2}{2m}+V(q).\]</div>
+<h3 id="3-9-ecuaciones-de-hamilton">3.9. Ecuaciones de Hamilton</h3>
+<div class="reading-block"><p>Las ecuaciones hamiltonianas son</p></div>
+<div class="formula-block">\[\dot q_i=\frac{\partial H}{\partial p_i}, \qquad \dot p_i=-\frac{\partial H}{\partial q_i}.\]</div>
+<div class="reading-block"><p>Sustituyen \(n\) ecuaciones de segundo orden por \(2n\) ecuaciones de primer orden. Garrigós las presenta exactamente como reescritura sistemática de Euler–Lagrange en coordenadas generalizadas y momentos conjugados.</p></div>
+<div class="reading-block"><p>Ejemplo:</p></div>
+<div class="formula-block">\[H=\frac{p^2}{2m}+V(q).\]</div>
+<div class="reading-block"><p>Entonces</p></div>
+<div class="formula-block">\[\dot q=\frac{p}{m}, \qquad \dot p=-\frac{dV}{dq}.\]</div>
+<div class="reading-block"><p>Al combinar:</p></div>
+<div class="formula-block">\[m\ddot q=-\frac{dV}{dq}.\]</div>
+<div class="reading-block"><p>Newton reaparece.</p></div>
+<h3 id="3-10-espacio-de-fases">3.10. Espacio de fases</h3>
+<div class="reading-block"><p>El espacio de fases está formado por las variables</p></div>
+<div class="formula-block">\[(q_1,\ldots,q_n,p_1,\ldots,p_n).\]</div>
+<div class="reading-block"><p>Tiene dimensión \(2n\). Un punto del espacio de fases representa el estado dinámico completo. Taylor distingue entre espacio de estados lagrangiano \(\(q,\dot q\)\) y espacio de fases hamiltoniano \(\(q,p\)\).</p></div>
+<div class="reading-block"><p>La ventaja del espacio de fases es que el movimiento se vuelve un flujo de primer orden. Cada condición inicial determina una órbita de fase.</p></div>
+<div class="reading-block"><p>Ejemplo: el oscilador armónico tiene</p></div>
+<div class="formula-block">\[H=\frac{p^2}{2m}+\frac12kq^2.\]</div>
+<div class="reading-block"><p>Sus órbitas de fase son elipses:</p></div>
+<div class="formula-block">\[\frac{p^2}{2m}+\frac12kq^2=E.\]</div>
+<h3 id="3-11-routh">3.11. Routh</h3>
+<div class="reading-block"><p>Routh mezcla Lagrange y Hamilton. Se usa cuando algunas coordenadas son cíclicas y otras no. Para las cíclicas se pasa a momentos; para las no cíclicas se conservan velocidades.</p></div>
+<div class="reading-block"><p>Si las coordenadas cíclicas son \(q_{s+1},\ldots,q_n\), el routhiano se define como</p></div>
+<div class="formula-block">\[R=\sum_{i=s+1}^{n}p_i\dot q_i-L.\]</div>
+<div class="reading-block"><p>Goldstein lo presenta como transformación parcial: Hamilton para coordenadas ignorables, Lagrange para las no ignorables.</p></div>
+<div class="reading-block"><p>Ejemplo clásico: problema central. \(\theta\) es cíclica. Se conserva</p></div>
+<div class="formula-block">\[p_\theta=mr^2\dot\theta.\]</div>
+<div class="reading-block"><p>El routhiano permite obtener una ecuación radial equivalente con término centrífugo. Goldstein muestra que para el problema de Kepler el routhiano se interpreta como potencial unidimensional efectivo menos la energía cinética radial.</p></div>
+</section>
+<section class="page" id="conceptos-clave">
+<div class="page-head"><h2>4. Conceptos clave</h2><span class="page-no">p.4</span></div>
+<div class="grid cards-grid">
+<article class="definition-card"><h3>Ligadura</h3>
+<p>Restricción sobre las coordenadas posibles del sistema. Si es holónoma, puede escribirse como relación entre coordenadas y quizá tiempo. Ejemplo: \(x^2+y^2=l^2\) en el péndulo. Relación: reduce grados de libertad y permite elegir coordenadas generalizadas. Examen: “Determine los grados de libertad y escriba coordenadas adecuadas”.</p>
+</article>
+<article class="definition-card"><h3>Coordenada generalizada</h3>
+<p>Variable independiente que describe la configuración. Puede tener dimensión angular, longitudinal o incluso ser una combinación. Ejemplo: \(\theta\) en un péndulo simple. Relación: permite expresar (L\(q,\dot q,t\)). Examen: “Defina coordenadas generalizadas y construya el lagrangiano”.</p>
+</article>
+<article class="definition-card"><h3>Grado de libertad</h3>
+<p>Número mínimo de coordenadas independientes necesarias para describir el sistema. Ejemplo: una partícula libre en 3D tiene 3; una cuenta en aro fijo tiene 1. Relación: determina cuántas ecuaciones de Lagrange habrá. Examen: “¿Cuántos grados de libertad tiene el sistema?”</p>
+</article>
+<article class="definition-card"><h3>Acción</h3>
+<p>Funcional [ S=\int L,dt. ] Su estacionariedad determina la trayectoria física. Ejemplo: partícula en gravedad uniforme. Relación: de ella salen Euler–Lagrange. Examen: “Explique el principio de Hamilton”.</p>
+</article>
+<article class="definition-card"><h3>Principio de Hamilton</h3>
+<p>La trayectoria real hace estacionaria la acción entre extremos fijos. No afirma que la acción sea siempre mínima. Ejemplo: (\delta\int\(T-V\),dt=0). Relación: base variacional del formalismo lagrangiano. Examen: “Derive Euler–Lagrange desde \(\delta S=0\)”.</p>
+</article>
+<article class="definition-card"><h3>Ecuaciones de Euler–Lagrange</h3>
+<p>Ecuaciones [ \frac{d}{dt}\frac{\partial L}{\partial\dot q_i} ----------------------------------------------- \frac{\partial L}{\partial q_i}=0. ] Codifican la dinámica en coordenadas generalizadas. Ejemplo: oscilador \(L=\frac12m\dot x^2-\frac12kx^2\Rightarrow m\ddot x+kx=0\). Relación: equivalentes a Newton bajo las hipótesis del formalismo. Examen: “Obtenga las ecuaciones de movimiento”.</p>
+</article>
+<article class="definition-card"><h3>Momento conjugado</h3>
+<p>Definido por [ p_i=\frac{\partial L}{\partial \dot q_i}. ] No siempre coincide con momento lineal. Ejemplo: en polares, \(p_\theta=mr^2\dot\theta\), que es momento angular. Relación: puente hacia Hamilton. Examen: “Calcule los momentos canónicos”.</p>
+</article>
+<article class="definition-card"><h3>Coordenada cíclica</h3>
+<p>Coordenada que no aparece explícitamente en \(L\). Su momento conjugado se conserva. Ejemplo: \(\theta\) en potencial central. Relación: caso simple de conservación por simetría. Examen: “Identifique las coordenadas cíclicas y las constantes”.</p>
+</article>
+<article class="definition-card"><h3>Hamiltoniano</h3>
+<p>Función [ H\(q,p,t\)=\sum_i p_i\dot q_i-L. ] Se expresa en \(q,p,t\), no en \(q,\dot q,t\). Ejemplo: oscilador (H=p^2/\(2m\)+kx^2/2). Relación: genera ecuaciones de Hamilton. Examen: “Construya \(H\) y derive sus ecuaciones”.</p>
+</article>
+<article class="definition-card"><h3>Transformación de Legendre</h3>
+<p>Procedimiento que cambia variables \(\dot q_i\to p_i\). Exige poder invertir (p_i\(q,\dot q,t\)). Ejemplo: \(p=m\dot q\Rightarrow \dot q=p/m\). Relación: convierte Lagrange en Hamilton. Examen: “Explique el paso de \(L\) a \(H\)”.</p>
+</article>
+<article class="definition-card"><h3>Espacio de fases</h3>
+<p>Espacio de dimensión \(2n\) con coordenadas \(\(q,p\)\). Un punto representa el estado dinámico completo. Ejemplo: oscilador en plano \(\(q,p\)\). Relación: base de Liouville, Poisson y Hamilton–Jacobi. Examen: “Represente o interprete una trayectoria en espacio de fases”.</p>
+</article>
+<article class="definition-card"><h3>Routhiano</h3>
+<p>Función híbrida que transforma solo coordenadas cíclicas. Ejemplo: problema central con \(\theta\) cíclica. Relación: reduce sistemas conservando la comodidad de Lagrange. Examen: “Aplique el procedimiento de Routh a una coordenada ignorable”.</p>
+</article>
+</div>
+</section>
+<section class="page" id="relaciones-entre-ideas">
+<div class="page-head"><h2>5. Relaciones entre ideas</h2><span class="page-no">p.5</span></div>
+<div class="reading-block"><p>La cadena conceptual es:</p></div>
+<div class="formula-block">\[\text{Newton} \rightarrow \text{D’Alembert} \rightarrow \text{trabajo virtual} \rightarrow \text{coordenadas generalizadas} \rightarrow \text{Hamilton} \rightarrow \text{Euler–Lagrange}.\]</div>
+<div class="reading-block"><p>D’Alembert elimina las fuerzas de ligadura si no realizan trabajo virtual. Las coordenadas generalizadas convierten las variaciones permitidas en variaciones independientes. El principio de Hamilton convierte esa independencia en una condición variacional. Euler–Lagrange es la forma local de esa condición.</p></div>
+<div class="reading-block"><p>La segunda cadena es:</p></div>
+<div class="formula-block">\[L(q,\dot q,t) \rightarrow p_i=\frac{\partial L}{\partial\dot q_i} \rightarrow H(q,p,t) \rightarrow (\dot q,\dot p).\]</div>
+<div class="reading-block"><p>Aquí el paso esencial es la transformación de Legendre. No se cambia de teoría física; se cambia de variables. Lagrange trabaja en configuración y velocidades; Hamilton trabaja en configuración y momentos.</p></div>
+<div class="reading-block"><p>La tercera cadena une simetría y conservación:</p></div>
+<div class="formula-block">\[q_k\ \text{cíclica} \Rightarrow \frac{\partial L}{\partial q_k}=0 \Rightarrow \dot p_k=0.\]</div>
+<div class="reading-block"><p>Esto es la antesala operativa de Noether. La versión elemental dice: si una coordenada no aparece, su momento conjugado se conserva. La versión profunda dice: toda simetría continua de la acción produce una cantidad conservada.</p></div>
+<div class="reading-block"><p>La oposición importante es:</p></div>
+<div class="formula-block">\[\text{espacio de configuración }(q) \neq \text{espacio de fases }(q,p).\]</div>
+<div class="reading-block"><p>El primero describe posiciones posibles. El segundo describe estados dinámicos completos.</p></div>
+<div class="reading-block"><p>Otra oposición importante:</p></div>
+<div class="formula-block">\[H=T+V\]</div>
+<div class="reading-block"><p>solo bajo condiciones concretas. No es identidad universal. Si las coordenadas dependen explícitamente del tiempo o hay potenciales dependientes de velocidad, puede fallar.</p></div>
+<div class="reading-block"><p>Históricamente, el salto va de Newton a Lagrange y Hamilton. Goldstein encuadra Hamilton no como mejora para resolver todos los problemas elementales, sino como lenguaje estructural para desarrollos posteriores: Hamilton–Jacobi, perturbaciones, caos, estadística y cuántica.</p></div>
+</section>
+<section class="page" id="errores-habituales">
+<div class="page-head"><h2>6. Errores habituales</h2><span class="page-no">p.6</span></div>
+<details class="accordion accordion-error"><summary>1. Error: “La acción siempre se minimiza”.</summary>
+<div class="details-body">
+<p>Está mal porque el principio exige acción estacionaria, no mínima.</p>
+<p>Corrección: decir \(\delta S=0\).</p>
+<p>Incorrecto: “El sistema toma siempre el camino de mínima acción”.</p>
+<p>Correcto: “El sistema sigue una trayectoria que hace estacionaria la acción”.</p>
+</div>
+</details>
+<details class="accordion accordion-error"><summary>2. Error: “\(L\) es la energía total”.</summary>
+<div class="details-body">
+<p>Está mal porque normalmente \(L=T-V\), mientras que la energía es \(T+V\).</p>
+<p>Corrección: distinguir lagrangiano, energía y hamiltoniano.</p>
+<p>Incorrecto: “Como \(L=T+V\), se conserva si no depende del tiempo”.</p>
+<p>Correcto: “Si \(L\) no depende explícitamente de \(t\), se conserva \(h=\sum\dot q_i p_i-L\)”.</p>
+</div>
+</details>
+<details class="accordion accordion-error"><summary>3. Error: “Todo momento conjugado es momento lineal”.</summary>
+<div class="details-body">
+<p>Está mal porque depende de la coordenada.</p>
+<p>Corrección: \(p_i=\partial L/\partial \dot q_i\).</p>
+<p>Incorrecto: “\(p_\theta\) es una cantidad de movimiento lineal angular”.</p>
+<p>Correcto: “\(p_\theta=mr^2\dot\theta\) es el momento angular conjugado a \(\theta\)”.</p>
+</div>
+</details>
+<details class="accordion accordion-error"><summary>4. Error: “Coordenada cíclica significa coordenada constante”.</summary>
+<div class="details-body">
+<p>Está mal porque la coordenada puede variar; lo constante es su momento conjugado.</p>
+<p>Corrección: \(\partial L/\partial q_k=0\Rightarrow p_k=\text{cte}\).</p>
+<p>Incorrecto: “\(\theta\) no aparece, luego \(\theta\) es constante”.</p>
+<p>Correcto: “\(\theta\) no aparece, luego \(p_\theta\) es constante”.</p>
+</div>
+</details>
+<details class="accordion accordion-error"><summary>5. Error: “Las ligaduras siempre se resuelven con multiplicadores”.</summary>
+<div class="details-body">
+<p>Está mal porque muchas ligaduras holónomas se eliminan eligiendo coordenadas adecuadas.</p>
+<p>Corrección: primero intentar coordenadas que incorporen la ligadura.</p>
+<p>Incorrecto: usar \(x,y,\lambda\) para un péndulo simple sin necesidad.</p>
+<p>Correcto: usar \(\theta\) como coordenada generalizada.</p>
+</div>
+</details>
+<details class="accordion accordion-error"><summary>6. Error: “Hamilton es Newton escrito raro”.</summary>
+<div class="details-body">
+<p>Está incompleto. Hamilton es equivalente en contenido, pero cambia la geometría del problema.</p>
+<p>Corrección: Hamilton define un flujo en espacio de fases.</p>
+<p>Incorrecto: “No aporta nada”.</p>
+<p>Correcto: “No cambia la física, pero habilita fase, Poisson, HJ, Liouville y cuántica”.</p>
+</div>
+</details>
+<details class="accordion accordion-error"><summary>7. Error: “El hamiltoniano siempre coincide con la energía”.</summary>
+<div class="details-body">
+<p>Está mal.</p>
+<p>Corrección: verificar condiciones: coordenadas naturales, potencial sin velocidades, sin dependencia temporal explícita problemática.</p>
+<p>Incorrecto: “\(H=T+V\) por definición”.</p>
+<p>Correcto: “\(H=\sum p_i\dot q_i-L\); a veces coincide con \(T+V\)”.</p>
+</div>
+</details>
+<details class="accordion accordion-error"><summary>8. Error: “\(\dot q\) y \(p\) son intercambiables”.</summary>
+<div class="details-body">
+<p>Está mal porque \(p\) es función de \(q,\dot q,t\), y puede no ser simplemente \(m\dot q\).</p>
+<p>Corrección: calcular siempre \(p_i\).</p>
+<p>Incorrecto: escribir \(H=\frac12m\dot q^2+V\) como si fuera hamiltoniano.</p>
+<p>Correcto: expresar \(H\) en \(q,p,t\).</p>
+</div>
+</details>
+<details class="accordion accordion-error"><summary>9. Error: “El espacio de fases es el espacio físico”.</summary>
+<div class="details-body">
+<p>Está mal porque es un espacio abstracto de estados.</p>
+<p>Corrección: distinguir posición real de estado dinámico.</p>
+<p>Incorrecto: “La elipse del oscilador es su trayectoria espacial”.</p>
+<p>Correcto: “La elipse está en el plano \(\(q,p\)\)”.</p>
+</div>
+</details>
+<details class="accordion accordion-error"><summary>10. Error: “Routh es otro formalismo independiente”.</summary>
+<div class="details-body">
+<p>Está mal porque es una reducción híbrida.</p>
+<p>Corrección: Routh transforma solo coordenadas cíclicas.</p>
+<p>Incorrecto: “Routh sustituye a Hamilton”.</p>
+<p>Correcto: “Routh usa Hamilton para variables cíclicas y Lagrange para las restantes”.</p>
+</div>
+</details>
+</section>
+<section class="page" id="preguntas-orientadas-a-examen">
+<div class="page-head"><h2>7. Preguntas orientadas a examen</h2><span class="page-no">p.7</span></div>
+<div class="grid cards-grid">
+<article class="question-card"><h3>10 preguntas fáciles</h3><ol class="question-list">
+<li>¿Qué es una coordenada generalizada?</li>
+<li>¿Qué es una ligadura holónoma?</li>
+<li>¿Qué significa que una coordenada sea cíclica?</li>
+<li>Escribe las ecuaciones de Euler–Lagrange.</li>
+<li>Define el momento conjugado \(p_i\).</li>
+<li>Define la acción.</li>
+<li>¿Qué afirma el principio de Hamilton?</li>
+<li>¿Qué variables forman el espacio de fases?</li>
+<li>¿Cuál es la definición de hamiltoniano?</li>
+<li>¿Cuándo se conserva el momento conjugado?</li>
+</ol></article>
+<article class="question-card"><h3>10 preguntas medias</h3><ol class="question-list">
+<li>Explica por qué el formalismo lagrangiano elimina fuerzas de ligadura.</li>
+<li>Dado (L=\frac12m\dot q^2-V\(q\)), obtiene Euler–Lagrange.</li>
+<li>Para (L=\frac12m\(\dot r^2+r^2\dot\theta^2\)-V\(r\)), identifica coordenadas cíclicas.</li>
+<li>Construye \(H\) para \(L=\frac12m\dot q^2-\frac12kq^2\).</li>
+<li>Explica la diferencia entre espacio de configuración y espacio de fases.</li>
+<li>¿Por qué Hamilton produce ecuaciones de primer orden?</li>
+<li>¿Qué condiciones permiten interpretar \(H\) como energía total?</li>
+<li>Explica el papel de la transformación de Legendre.</li>
+<li>¿Qué relación hay entre simetría y conservación?</li>
+<li>¿Qué problema resuelve el procedimiento de Routh?</li>
+</ol></article>
+<article class="question-card"><h3>5 preguntas difíciles</h3><ol class="question-list">
+<li>Deriva Euler–Lagrange desde \(\delta\int L,dt=0\).</li>
+<li>Demuestra que una coordenada cíclica reduce el problema dinámico.</li>
+<li>Explica por qué \(p_\theta\) no es una componente lineal del momento, sino un momento canónico.</li>
+<li>Deriva las ecuaciones de Hamilton desde \(H=\sum p_i\dot q_i-L\).</li>
+<li>Aplica Routh a un sistema con una coordenada cíclica y una no cíclica.</li>
+</ol></article>
+<article class="question-card"><h3>5 preguntas de desarrollo largo</h3><ol class="question-list">
+<li>Expón el paso conceptual de Newton a Lagrange.</li>
+<li>Expón el paso de Lagrange a Hamilton.</li>
+<li>Desarrolla el tratamiento lagrangiano de ligaduras holónomas.</li>
+<li>Explica conservación, coordenadas cíclicas y Noether elemental.</li>
+<li>Explica el espacio de fases y su importancia en Mecánica Teórica.</li>
+</ol></article>
+<article class="question-card"><h3>5 preguntas de relación entre conceptos</h3><ol class="question-list">
+<li>Relaciona D’Alembert, trabajo virtual y Euler–Lagrange.</li>
+<li>Relaciona coordenadas generalizadas, ligaduras y grados de libertad.</li>
+<li>Relaciona coordenada cíclica, momento conjugado y conservación.</li>
+<li>Relaciona Legendre, hamiltoniano y espacio de fases.</li>
+<li>Relaciona Routh con Lagrange y Hamilton.</li>
+</ol></article>
+</div>
+</section>
+<section class="page" id="respuestas-modelo">
+<div class="page-head"><h2>8. Respuestas modelo</h2><span class="page-no">p.8</span></div>
+<h3 id="respuestas-faciles">Fáciles</h3>
+<details class="accordion accordion-answer"><summary>F1. Una coordenada generalizada es una variable independiente \(q_i\) que ayud…</summary>
+<div class="details-body">
+<p>Una coordenada generalizada es una variable independiente \(q_i\) que ayuda a describir la configuración del sistema respetando sus ligaduras. No tiene por qué ser una coordenada cartesiana ni tener dimensión de longitud.</p>
+</div>
+</details>
+<details class="accordion accordion-answer"><summary>F2. Una ligadura holónoma es una restricción que puede escribirse como una e…</summary>
+<div class="details-body">
+<p>Una ligadura holónoma es una restricción que puede escribirse como una ecuación entre coordenadas y quizá el tiempo: (f\(q,t\)=0). Permite reducir el número de coordenadas independientes.</p>
+</div>
+</details>
+<details class="accordion accordion-answer"><summary>F3. Una coordenada es cíclica si no aparece explícitamente en el lagrangiano…</summary>
+<div class="details-body">
+<p>Una coordenada es cíclica si no aparece explícitamente en el lagrangiano. Puede aparecer su velocidad. Si \(q_k\) es cíclica, \(p_k=\partial L/\partial\dot q_k\) se conserva.</p>
+</div>
+</details>
+<details class="accordion accordion-answer"><summary>F4. Las ecuaciones de Euler–Lagrange son</summary>
+<div class="details-body">
+<p>Las ecuaciones de Euler–Lagrange son</p>
+<div class="formula-block">\[\frac{d}{dt}\left(\frac{\partial L}{\partial\dot q_i}\right)-\frac{\partial L}{\partial q_i}=0.\]</div>
+</div>
+</details>
+<details class="accordion accordion-answer"><summary>F5. El momento conjugado a \(q_i\) es</summary>
+<div class="details-body">
+<p>El momento conjugado a \(q_i\) es</p>
+<div class="formula-block">\[p_i=\frac{\partial L}{\partial\dot q_i}.\]</div>
+<p>Es una cantidad canónica, no necesariamente un momento lineal.</p>
+</div>
+</details>
+<details class="accordion accordion-answer"><summary>F6. La acción es el funcional</summary>
+<div class="details-body">
+<p>La acción es el funcional</p>
+<div class="formula-block">\[S[q]=\int_{t_1}^{t_2}L(q,\dot q,t)\,dt.\]</div>
+</div>
+</details>
+<details class="accordion accordion-answer"><summary>F7. El principio de Hamilton afirma que la trayectoria física hace estaciona…</summary>
+<div class="details-body">
+<p>El principio de Hamilton afirma que la trayectoria física hace estacionaria la acción frente a variaciones compatibles con los extremos y las ligaduras.</p>
+</div>
+</details>
+<details class="accordion accordion-answer"><summary>F8. El espacio de fases está formado por las coordenadas generalizadas y sus…</summary>
+<div class="details-body">
+<p>El espacio de fases está formado por las coordenadas generalizadas y sus momentos conjugados:</p>
+<div class="formula-block">\[(q_1,\ldots,q_n,p_1,\ldots,p_n).\]</div>
+</div>
+</details>
+<details class="accordion accordion-answer"><summary>F9. El hamiltoniano se define como</summary>
+<div class="details-body">
+<p>El hamiltoniano se define como</p>
+<div class="formula-block">\[H(q,p,t)=\sum_i p_i\dot q_i-L,\]</div>
+<p>con las velocidades expresadas en función de \(q,p,t\).</p>
+</div>
+</details>
+<details class="accordion accordion-answer"><summary>F10. Se conserva cuando la coordenada correspondiente no aparece explícitamen…</summary>
+<div class="details-body">
+<p>Se conserva cuando la coordenada correspondiente no aparece explícitamente en \(L\):</p>
+<div class="formula-block">\[\frac{\partial L}{\partial q_i}=0 \Rightarrow \dot p_i=0.\]</div>
+</div>
+</details>
+<h3 id="respuestas-medias">Medias</h3>
+<details class="accordion accordion-answer"><summary>M1. El formalismo lagrangiano elimina fuerzas de ligadura porque usa desplaz…</summary>
+<div class="details-body">
+<p>El formalismo lagrangiano elimina fuerzas de ligadura porque usa desplazamientos virtuales compatibles con la restricción. Si las fuerzas de ligadura no hacen trabajo virtual, no aparecen en la ecuación final. Así el problema se formula solo con fuerzas aplicadas o potenciales.</p>
+</div>
+</details>
+<details class="accordion accordion-answer"><summary>M2. Para</summary>
+<div class="details-body">
+<p>Para</p>
+<div class="formula-block">\[L=\frac12m\dot q^2-V(q),\]</div>
+<p>se tiene</p>
+<div class="formula-block">\[\frac{\partial L}{\partial\dot q}=m\dot q, \qquad \frac{d}{dt}\frac{\partial L}{\partial\dot q}=m\ddot q,\]</div>
+<div class="formula-block">\[\frac{\partial L}{\partial q}=-\frac{dV}{dq}.\]</div>
+<p>Euler–Lagrange da</p>
+<div class="formula-block">\[m\ddot q+\frac{dV}{dq}=0.\]</div>
+</div>
+</details>
+<details class="accordion accordion-answer"><summary>M3. En</summary>
+<div class="details-body">
+<p>En</p>
+<div class="formula-block">\[L=\frac12m(\dot r^2+r^2\dot\theta^2)-V(r),\]</div>
+<p>la coordenada \(\theta\) no aparece explícitamente. Es cíclica. Su momento conjugado es</p>
+<div class="formula-block">\[p_\theta=mr^2\dot\theta,\]</div>
+<p>y se conserva.</p>
+</div>
+</details>
+<details class="accordion accordion-answer"><summary>M4. Para</summary>
+<div class="details-body">
+<p>Para</p>
+<div class="formula-block">\[L=\frac12m\dot q^2-\frac12kq^2,\]</div>
+<div class="formula-block">\[p=m\dot q,\qquad \dot q=p/m.\]</div>
+<p>Entonces</p>
+<div class="formula-block">\[H=p\dot q-L =\frac{p^2}{m}-\left(\frac{p^2}{2m}-\frac12kq^2\right) =\frac{p^2}{2m}+\frac12kq^2.\]</div>
+</div>
+</details>
+<details class="accordion accordion-answer"><summary>M5. El espacio de configuración contiene solo posiciones generalizadas ((q_1…</summary>
+<div class="details-body">
+<p>El espacio de configuración contiene solo posiciones generalizadas \(\(q_1,\ldots,q_n\)\). El espacio de fases contiene posiciones y momentos \(\(q,p\)\). El primero describe configuraciones; el segundo describe estados dinámicos completos.</p>
+</div>
+</details>
+<details class="accordion accordion-answer"><summary>M6. Hamilton produce ecuaciones de primer orden porque duplica las variables…</summary>
+<div class="details-body">
+<p>Hamilton produce ecuaciones de primer orden porque duplica las variables: sustituye \(\(q,\dot q\)\) por \(\(q,p\)\). Las \(n\) ecuaciones de segundo orden se convierten en \(2n\) ecuaciones de primer orden.</p>
+</div>
+</details>
+<details class="accordion accordion-answer"><summary>M7. \(H\) puede interpretarse como energía total cuando las coordenadas son na…</summary>
+<div class="details-body">
+<p>\(H\) puede interpretarse como energía total cuando las coordenadas son naturales, el potencial no depende de velocidades y no hay dependencia explícita problemática del tiempo. En caso contrario, debe usarse la definición \(H=\sum p_i\dot q_i-L\).</p>
+</div>
+</details>
+<details class="accordion accordion-answer"><summary>M8. La transformación de Legendre cambia de variables \(\dot q_i\) a \(p_i\). Pe…</summary>
+<div class="details-body">
+<p>La transformación de Legendre cambia de variables \(\dot q_i\) a \(p_i\). Permite pasar de (L\(q,\dot q,t\)) a (H\(q,p,t\)). Es el puente matemático entre el formalismo lagrangiano y el hamiltoniano.</p>
+</div>
+</details>
+<details class="accordion accordion-answer"><summary>M9. Si una transformación deja invariante el lagrangiano o la acción, aparec…</summary>
+<div class="details-body">
+<p>Si una transformación deja invariante el lagrangiano o la acción, aparece una cantidad conservada. En el caso elemental, si \(L\) no depende de \(q_k\), entonces \(p_k\) se conserva.</p>
+</div>
+</details>
+<details class="accordion accordion-answer"><summary>M10. Routh resuelve sistemas donde algunas coordenadas son cíclicas. Evita ca…</summary>
+<div class="details-body">
+<p>Routh resuelve sistemas donde algunas coordenadas son cíclicas. Evita cargar con esas coordenadas en el lagrangiano completo: las sustituye por sus momentos conservados y deja las demás en forma lagrangiana.</p>
+</div>
+</details>
+<h3 id="respuestas-dificiles">Difíciles</h3>
+<details class="accordion accordion-answer"><summary>D1. Se considera una variación (q_i\(t\)\to q_i\(t\)+\epsilon\eta_i\(t\)), con (\e…</summary>
+<div class="details-body">
+<p>Se considera una variación (q_i\(t\)\to q_i\(t\)+\epsilon\eta_i\(t\)), con (\eta_i\(t_1\)=\eta_i\(t_2\)=0). Al imponer</p>
+<div class="formula-block">\[\left.\frac{d}{d\epsilon}S[q+\epsilon\eta]\right|_{\epsilon=0}=0,\]</div>
+<p>queda</p>
+<div class="formula-block">\[\delta S=\int_{t_1}^{t_2} \sum_i \left( \frac{\partial L}{\partial q_i}\eta_i+ \frac{\partial L}{\partial\dot q_i}\dot\eta_i \right)dt.\]</div>
+<p>Integrando por partes el término con \(\dot\eta_i\) y anulándose el término de borde,</p>
+<div class="formula-block">\[\delta S= \int_{t_1}^{t_2} \sum_i \left[ \frac{\partial L}{\partial q_i}-\frac{d}{dt}\left(\frac{\partial L}{\partial\dot q_i}\right) \right]\eta_i\,dt.\]</div>
+<p>Como las \(\eta_i\) son arbitrarias, cada corchete debe anularse. Sale Euler–Lagrange.</p>
+</div>
+</details>
+<details class="accordion accordion-answer"><summary>D2. Si \(q_k\) es cíclica,</summary>
+<div class="details-body">
+<p>Si \(q_k\) es cíclica,</p>
+<div class="formula-block">\[\frac{\partial L}{\partial q_k}=0.\]</div>
+<p>Euler–Lagrange da</p>
+<div class="formula-block">\[\frac{d}{dt}\left(\frac{\partial L}{\partial\dot q_k}\right)=0,\]</div>
+<p>luego \(p_k\) es constante. Esa constante puede sustituirse en las demás ecuaciones, reduciendo el número efectivo de incógnitas dinámicas.</p>
+</div>
+</details>
+<details class="accordion accordion-answer"><summary>D3. En coordenadas polares,</summary>
+<div class="details-body">
+<p>En coordenadas polares,</p>
+<div class="formula-block">\[p_\theta=\frac{\partial L}{\partial\dot\theta}=mr^2\dot\theta.\]</div>
+<p>Tiene dimensión de momento angular. No es la componente \(\theta\) del momento lineal. El momento canónico depende de la coordenada elegida; por eso \(p_\theta\) es conjugado a un ángulo.</p>
+</div>
+</details>
+<details class="accordion accordion-answer"><summary>D4. Partiendo de</summary>
+<div class="details-body">
+<p>Partiendo de</p>
+<div class="formula-block">\[H(q,p,t)=\sum_i p_i\dot q_i-L(q,\dot q,t),\]</div>
+<p>su diferencial es</p>
+<div class="formula-block">\[dH=\sum_i \dot q_i\,dp_i+\sum_i p_i\,d\dot q_i -\sum_i\frac{\partial L}{\partial q_i}dq_i -\sum_i\frac{\partial L}{\partial\dot q_i}d\dot q_i -\frac{\partial L}{\partial t}dt.\]</div>
+<p>Como</p>
+<div class="formula-block">\[p_i=\frac{\partial L}{\partial\dot q_i},\]</div>
+<p>se cancelan los términos \(p_i,d\dot q_i\). Además, Euler–Lagrange da</p>
+<div class="formula-block">\[\dot p_i=\frac{\partial L}{\partial q_i}.\]</div>
+<p>Queda</p>
+<div class="formula-block">\[dH=\sum_i\dot q_i\,dp_i-\sum_i\dot p_i\,dq_i-\frac{\partial L}{\partial t}dt.\]</div>
+<p>Comparando con</p>
+<div class="formula-block">\[dH=\sum_i\frac{\partial H}{\partial q_i}dq_i+ \sum_i\frac{\partial H}{\partial p_i}dp_i+ \frac{\partial H}{\partial t}dt,\]</div>
+<p>se obtiene</p>
+<div class="formula-block">\[\dot q_i=\frac{\partial H}{\partial p_i}, \qquad \dot p_i=-\frac{\partial H}{\partial q_i}.\]</div>
+</div>
+</details>
+<details class="accordion accordion-answer"><summary>D5. Para un sistema (L\(q_1,q_2,\dot q_1,\dot q_2\)) con \(q_2\) cíclica, se cal…</summary>
+<div class="details-body">
+<p>Para un sistema (L\(q_1,q_2,\dot q_1,\dot q_2\)) con \(q_2\) cíclica, se calcula</p>
+<div class="formula-block">\[p_2=\frac{\partial L}{\partial\dot q_2}=\alpha.\]</div>
+<p>Se despeja (\dot q_2=\dot q_2\(q_1,\dot q_1,\alpha\)). El routhiano es</p>
+<div class="formula-block">\[R=p_2\dot q_2-L.\]</div>
+<p>La coordenada no cíclica \(q_1\) se trata con</p>
+<div class="formula-block">\[\frac{d}{dt}\frac{\partial R}{\partial\dot q_1}-\frac{\partial R}{\partial q_1}=0,\]</div>
+<p>y la cíclica se reconstruye mediante</p>
+<div class="formula-block">\[\dot q_2=\frac{\partial R}{\partial p_2}.\]</div>
+</div>
+</details>
+<h3 id="respuestas-desarrollo-largo">Desarrollo largo</h3>
+<details class="accordion accordion-answer"><summary>L1. Newton formula la dinámica como relación local entre fuerza y aceleració…</summary>
+<div class="details-body">
+<p>Newton formula la dinámica como relación local entre fuerza y aceleración. D’Alembert transforma esa relación en una condición de equilibrio dinámico usando fuerzas efectivas. El trabajo virtual elimina fuerzas de ligadura. Lagrange expresa el sistema mediante coordenadas independientes y una función \(L=T-V\). El resultado son ecuaciones invariantes de forma bajo cambio de coordenadas.</p>
+</div>
+</details>
+<details class="accordion accordion-answer"><summary>L2. Lagrange describe la evolución con \(q_i,\dot q_i\). Hamilton cambia a (q_…</summary>
+<div class="details-body">
+<p>Lagrange describe la evolución con \(q_i,\dot q_i\). Hamilton cambia a \(q_i,p_i\). El cambio se hace mediante \(p_i=\partial L/\partial\dot q_i\) y la transformación de Legendre. El resultado es (H\(q,p,t\)), cuyas derivadas generan \(2n\) ecuaciones de primer orden. La dinámica pasa a ser un flujo en espacio de fases.</p>
+</div>
+</details>
+<details class="accordion accordion-answer"><summary>L3. Una ligadura holónoma reduce el número de coordenadas independientes. El…</summary>
+<div class="details-body">
+<p>Una ligadura holónoma reduce el número de coordenadas independientes. El método más limpio consiste en elegir coordenadas que ya respeten la ligadura. Así las variaciones permitidas son independientes y las fuerzas de reacción desaparecen. Si no se eliminan, pueden introducirse multiplicadores de Lagrange, pero para muchos problemas básicos es innecesario.</p>
+</div>
+</details>
+<details class="accordion accordion-answer"><summary>L4. Una coordenada cíclica revela una simetría: el sistema no cambia al desp…</summary>
+<div class="details-body">
+<p>Una coordenada cíclica revela una simetría: el sistema no cambia al desplazar esa coordenada. Euler–Lagrange convierte esa ausencia en una conservación. Si \(q_k\) no aparece, \(p_k\) es constante. Esto anticipa Noether: las simetrías continuas de la acción producen constantes del movimiento.</p>
+</div>
+</details>
+<details class="accordion accordion-answer"><summary>L5. El espacio de fases contiene \(q_i\) y \(p_i\). En él, un estado completo es…</summary>
+<div class="details-body">
+<p>El espacio de fases contiene \(q_i\) y \(p_i\). En él, un estado completo es un punto y la evolución es una curva. Esta representación permite estudiar flujos, conservación de volumen, corchetes de Poisson, transformaciones canónicas y Hamilton–Jacobi. Por eso Hamilton es central en Mecánica Teórica aunque no siempre simplifique los cálculos elementales.</p>
+</div>
+</details>
+<h3 id="respuestas-relaciones">Relaciones</h3>
+<details class="accordion accordion-answer"><summary>R1. D’Alembert convierte Newton en una condición de trabajo virtual. Al expr…</summary>
+<div class="details-body">
+<p>D’Alembert convierte Newton en una condición de trabajo virtual. Al expresar los desplazamientos virtuales mediante coordenadas generalizadas independientes, aparece la forma de Lagrange. Euler–Lagrange es la expresión diferencial final.</p>
+</div>
+</details>
+<details class="accordion accordion-answer"><summary>R2. Las ligaduras reducen configuraciones posibles. Las coordenadas generali…</summary>
+<div class="details-body">
+<p>Las ligaduras reducen configuraciones posibles. Las coordenadas generalizadas parametrizan solo esas configuraciones. El número de coordenadas generalizadas independientes es el número de grados de libertad.</p>
+</div>
+</details>
+<details class="accordion accordion-answer"><summary>R3. Si una coordenada es cíclica, el lagrangiano no depende de ella. Euler–L…</summary>
+<div class="details-body">
+<p>Si una coordenada es cíclica, el lagrangiano no depende de ella. Euler–Lagrange implica que su momento conjugado es constante. Esta conservación expresa una simetría.</p>
+</div>
+</details>
+<details class="accordion accordion-answer"><summary>R4. La transformación de Legendre sustituye velocidades por momentos. Eso pe…</summary>
+<div class="details-body">
+<p>La transformación de Legendre sustituye velocidades por momentos. Eso permite definir el hamiltoniano. El hamiltoniano vive en espacio de fases y genera las ecuaciones de Hamilton.</p>
+</div>
+</details>
+<details class="accordion accordion-answer"><summary>R5. Routh conserva la estructura lagrangiana para variables no cíclicas y ap…</summary>
+<div class="details-body">
+<p>Routh conserva la estructura lagrangiana para variables no cíclicas y aplica la reducción hamiltoniana a variables cíclicas. Es un formalismo mixto de reducción, no una teoría nueva.</p>
+</div>
+</details>
+</section>
+<section class="page" id="resumen-final-de-repaso">
+<div class="page-head"><h2>9. Resumen final de repaso</h2><span class="page-no">p.9</span></div>
+<div class="summary-box"><h3>Ideas principales</h3></div>
+<div class="formula-block">\[\mathbf F=m\mathbf a \quad\Rightarrow\quad \text{D’Alembert} \quad\Rightarrow\quad \delta\int L\,dt=0 \quad\Rightarrow\quad \text{Euler–Lagrange}.\]</div>
+<div class="summary-box"><h3>Conceptos imprescindibles</h3></div>
+<div class="formula-block">\[L=T-V, \qquad p_i=\frac{\partial L}{\partial\dot q_i}, \qquad H=\sum_i p_i\dot q_i-L.\]</div>
+<div class="summary-box"><h3>Ecuaciones madre</h3></div>
+<div class="formula-block">\[\frac{d}{dt}\frac{\partial L}{\partial\dot q_i}-\frac{\partial L}{\partial q_i}=0,\]</div>
+<div class="formula-block">\[\dot q_i=\frac{\partial H}{\partial p_i}, \qquad \dot p_i=-\frac{\partial H}{\partial q_i}.\]</div>
+<div class="summary-box"><h3>Relaciones clave</h3></div>
+<div class="formula-block">\[q_k\ \text{cíclica} \Rightarrow p_k=\text{cte}.\]</div>
+<div class="formula-block">\[L(q,\dot q,t) \overset{\text{Legendre}}{\longrightarrow} H(q,p,t).\]</div>
+<div class="formula-block">\[\text{configuración}: q \qquad \text{fase}: (q,p).\]</div>
+<div class="summary-box"><h3>Errores que evitar</h3></div>
+<div class="summary-box"><ul class="question-list">
+<li>Acción estacionaria no significa siempre acción mínima.</li>
+<li>\(L\neq E\).</li>
+<li>\(H\neq T+V\) siempre.</li>
+<li>\(p_i\) no siempre es momento lineal.</li>
+<li>Coordenada cíclica no significa coordenada constante.</li>
+<li>El espacio de fases no es el espacio físico ordinario.</li>
+<li>Routh no sustituye a Hamilton; reduce coordenadas cíclicas.</li>
+</ul></div>
+</section>
+<section class="page" id="checklist-de-dominio">
+<div class="page-head"><h2>10. Checklist de dominio</h2><span class="page-no">p.10</span></div>
+<div class="checklist-box"><ul class="question-list">
+<li>Si no puedes explicar por qué D’Alembert elimina fuerzas de ligadura, falta repasar trabajo virtual.</li>
+<li>Si no puedes contar grados de libertad, falta repasar ligaduras holónomas.</li>
+<li>Si no puedes elegir \(q_i\), falta repasar coordenadas generalizadas.</li>
+<li>Si no puedes construir \(T\) en las coordenadas elegidas, falta repasar cinemática.</li>
+<li>Si no puedes escribir \(L=T-V\), falta repasar energías.</li>
+<li>Si no puedes derivar Euler–Lagrange, falta repasar cálculo variacional.</li>
+<li>Si confundes \(p_i\) con momento lineal, revisar momento conjugado.</li>
+<li>Si confundes coordenada cíclica con coordenada constante, revisar conservación.</li>
+<li>Si afirmas \(H=T+V\) sin comprobar condiciones, revisar Legendre.</li>
+<li>Si escribes (H\(q,\dot q,t\)), revisar definición de hamiltoniano.</li>
+<li>Si no distingues \(\(q,\dot q\)\) de \(\(q,p\)\), revisar espacio de fases.</li>
+<li>Si no puedes reconstruir Newton desde Hamilton, falta repasar ecuaciones canónicas.</li>
+<li>Si no sabes cuándo aplicar Routh, falta repasar coordenadas cíclicas.</li>
+<li>Si puedes plantear un péndulo, un potencial central y un oscilador en Lagrange y Hamilton, el capítulo está suficientemente asentado.</li>
+<li>Si puedes explicar por qué este tema abre Poisson, Hamilton–Jacobi y Liouville, el mapa formal está asentado.</li>
+<li>[Confianza: Alta]</li>
+</ul></div>
+</section>
+  </main>
+</div>
+</body>
+</html>
