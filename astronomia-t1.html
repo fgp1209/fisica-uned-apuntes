@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Astronomía — Tema 1 — Sistemas de coordenadas astronómicas</title>
+<link rel="icon" type="image/png" sizes="32x32" href="assets/icons/icon-32.png" />
+<link rel="icon" type="image/png" sizes="50x50" href="assets/icons/icon-50.png" />
+<link rel="apple-touch-icon" sizes="100x100" href="assets/icons/icon-100.png" />
+<meta name="theme-color" content="#172554" />
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+<link rel="stylesheet" href="assets/styles.css" />
+<script defer src="assets/app.js"></script>
+</head>
+<body class="subject-astronomia">
+<div class="wrap">
+<header class="cover">
+  <div class="top-actions">
+    <a class="back-link" href="index.html">← Volver al índice</a>
+  </div>
+  <p class="eyebrow">UNED Física · Curso de Astronomía · Tema 1</p>
+  <h1>Guía de estudio — Curso de Astronomía</h1>
+  <p class="subtitle">Introducción a la Astronomía: esfera celeste y sistemas de coordenadas astronómicas.</p>
+  <div class="chips">
+    <span class="chip">Astronomía</span>
+    <span class="chip">Tema 1</span>
+    <span class="chip">coordenadas</span>
+    <span class="chip">MathJax</span>
+    <span class="chip">estado: maquetado</span>
+  </div>
+</header>
+
+<div class="toolbar no-print">
+  <nav>
+    <a href="#mapa">Mapa</a>
+    <a href="#prerrequisitos">Prerrequisitos</a>
+    <a href="#idea-central">Idea central</a>
+    <a href="#desarrollo-completo">Desarrollo</a>
+    <a href="#conceptos-clave">Conceptos</a>
+    <a href="#errores-habituales">Errores</a>
+    <a href="#preguntas-orientadas-a-examen">Preguntas</a>
+    <a href="#respuestas-modelo">Respuestas</a>
+    <a href="#resumen-final-de-repaso">Resumen</a>
+    <a href="#checklist-de-dominio">Checklist</a>
+  </nav>
+  <div class="toolbar-actions">
+    <button class="btn" onclick="printReady()">Imprimir / guardar PDF</button>
+    <button class="btn secondary" onclick="openAllDetails()">Abrir todo</button>
+    <button class="btn secondary" onclick="closeAllDetails()">Cerrar acordeones</button>
+  </div>
+</div>
+
+<main>
+<section class="page map-page" id="mapa">
+  <div class="page-head">
+    <h2>Mapa clicable</h2>
+    <p class="section-lead">Ruta de lectura: de la esfera celeste a las coordenadas locales, absolutas y terrestres.</p>
+  </div>
+  <div class="concept-map">
+    <a class="map-node" href="#idea-central"><span>Problema central</span><small>asignar coordenadas a la dirección aparente de un astro</small></a>
+    <a class="map-node" href="#desarrollo-esfera-celeste"><span>Esfera celeste</span><small>proyección · dos ángulos · vector unitario</small></a>
+    <a class="map-node" href="#desarrollo-horizontales"><span>Horizontales</span><small>horizonte · azimut · distancia cenital · altura</small></a>
+    <a class="map-node" href="#desarrollo-ecuatoriales"><span>Ecuatoriales</span><small>ángulo horario · ascensión recta · declinación · tiempo sidéreo</small></a>
+    <a class="map-node" href="#desarrollo-eclipticas"><span>Eclípticas y galácticas</span><small>eclíptica · oblicuidad · plano galáctico</small></a>
+    <a class="map-node" href="#desarrollo-transformacion"><span>Transformaciones</span><small>latitud · rotaciones · \(H=TS-\alpha\)</small></a>
+    <a class="map-node" href="#desarrollo-elipsoide"><span>Observador</span><small>elipsoide · vertical astronómica · normal geodésica</small></a>
+    <a class="map-node" href="#preguntas-orientadas-a-examen"><span>Examen</span><small>errores · preguntas · respuestas modelo · checklist</small></a>
+  </div>
+</section>
+
+<section class="page" id="prerrequisitos">
+  <div class="page-head">
+    <h2>1. Prerrequisitos mínimos</h2>
+    <p class="section-lead">Conceptos de entrada para que las coordenadas no se vuelvan una sopa de letras.</p>
+  </div>
+  <div class="grid cards-grid">
+    <article class="definition-card"><h3>Vector y sistema de referencia</h3><p>Un vector permite representar una dirección en el espacio. Un sistema de referencia fija tres ejes respecto a los cuales se expresan las componentes del vector. Es necesario porque el capítulo formula las posiciones astronómicas mediante vectores unitarios y cambios de base. Ejemplo: una estrella puede representarse por un vector unitario dirigido desde el observador hacia ella.</p></article>
+    <article class="definition-card"><h3>Producto escalar y cosenos directores</h3><p>El producto escalar permite obtener la proyección de un vector sobre un eje. El capítulo lo usa para pasar de una descripción geométrica a componentes cartesianas. Ejemplo: si un vector forma un ángulo pequeño con el eje vertical, su componente vertical será grande.</p></article>
+    <article class="definition-card"><h3>Producto vectorial y orientación dextrógira</h3><p>El producto vectorial fija el tercer eje de una base a partir de los otros dos. El libro trabaja con sistemas ortonormales dextrógiros, salvo excepciones posteriores. Es necesario para entender cómo se construyen bases como la horizontal, ecuatorial o eclíptica.</p></article>
+    <article class="definition-card"><h3>Trigonometría elemental</h3><p>Hay que manejar seno, coseno, tangente y relaciones entre ángulos complementarios. El capítulo evita la trigonometría esférica clásica, pero no evita la trigonometría. Ejemplo: la altura sobre el horizonte es el complementario de la distancia cenital: \(h = 90^\circ - z\).</p></article>
+    <article class="definition-card"><h3>Ángulos en grados y en tiempo</h3><p>La ascensión recta, el ángulo horario y el tiempo sidéreo pueden expresarse en horas. La equivalencia básica es \(360^\circ = 24^\mathrm{h}\), por tanto \(15^\circ = 1^\mathrm{h}\). Es imprescindible para problemas de coordenadas ecuatoriales.</p></article>
+    <article class="definition-card"><h3>Rotación terrestre</h3><p>La Tierra gira y, por eso, las coordenadas locales de un astro cambian durante la noche. Esto explica por qué un mismo objeto tiene distintas coordenadas horizontales según la hora y el lugar.</p></article>
+    <article class="definition-card"><h3>Plano, eje y polo</h3><p>Cada sistema astronómico se basa en un plano fundamental y un eje perpendicular a él. Horizonte, ecuador, eclíptica y plano galáctico son planos fundamentales distintos.</p></article>
+  </div>
+  <div class="reading-block"><p>El capítulo 1 del libro se dedica a los sistemas de coordenadas astronómicas: horizontales, ecuatoriales horarias, ecuatoriales absolutas, eclípticas, galácticas y coordenadas terrestres sobre el elipsoide, junto con sus transformaciones.</p></div>
+</section>
+
+<section class="page" id="idea-central">
+  <div class="page-head"><h2>2. Idea central del capítulo</h2></div>
+  <div class="key-box"><p><strong>El problema central del capítulo es cómo asignar coordenadas a un astro.</strong> En Astronomía de posición, lo primero no es conocer la distancia real al objeto, sino fijar su dirección aparente en el cielo.</p></div>
+  <div class="reading-block"><p>Por eso el libro introduce la esfera celeste: todos los astros se imaginan proyectados sobre una esfera de radio arbitrario, y su posición queda descrita por dos coordenadas angulares.</p></div>
+  <div class="reading-block"><p>El capítulo no presenta un único sistema de coordenadas, sino varios. Cada uno responde a una necesidad distinta. Las coordenadas horizontales son naturales para el observador porque usan el horizonte, el cenit y los puntos cardinales. Las ecuatoriales horarias introducen el ecuador celeste y el ángulo horario, lo que permite relacionar la posición del astro con la rotación terrestre. Las ecuatoriales absolutas sustituyen el meridiano local por el punto vernal y permiten dar coordenadas independientes del lugar de observación. Las eclípticas son útiles para objetos del sistema solar, porque su plano fundamental es la eclíptica. Las galácticas toman como referencia el plano de la Galaxia. Finalmente, las coordenadas terrestres sobre el elipsoide permiten situar al observador sobre una Tierra no perfectamente esférica.</p></div>
+  <div class="reading-block"><p>Dentro de la asignatura, este capítulo es fundacional. No sirve solo para “saber nombres de coordenadas”; sirve para poder resolver problemas posteriores de visibilidad, tiempo sidéreo, culminación, corrección de coordenadas, ocultaciones, eclipses y órbitas aparentes. Si no se domina la diferencia entre azimut, ángulo horario, ascensión recta, declinación, longitud eclíptica y latitud geográfica, los capítulos posteriores se vuelven mecánicos y propensos a errores.</p></div>
+</section>
+
+<section class="page" id="desarrollo-completo">
+  <div class="page-head"><h2>3. Desarrollo completo del capítulo</h2></div>
+
+  <h3 id="desarrollo-esfera-celeste">3.1. La esfera celeste y la reducción a dos coordenadas angulares</h3>
+  <div class="reading-block"><p>El punto de partida es que, a simple vista, los astros parecen situados sobre una bóveda común. El libro formaliza esta idea mediante la esfera celeste. Como de entrada no interesa la distancia real al astro, se prescinde de la coordenada radial y se conservan solo dos ángulos. Esta es la razón de que hablemos de coordenadas astronómicas angulares.</p></div>
+  <div class="reading-block"><p>La formulación vectorial permite describir una dirección mediante un vector unitario. En un sistema cartesiano ortonormal, un vector se expresa por sus componentes sobre tres ejes. Pero en coordenadas polares esféricas se separa la distancia \(r\) de los dos ángulos. Para Astronomía esto es natural: muchas veces se conoce bien la dirección de una estrella, pero no su distancia.</p></div>
+  <div class="reading-block"><p>La idea importante es que las coordenadas no son propiedades absolutas del astro por sí solas. Son propiedades del astro respecto a un sistema de referencia. Cambiar el plano fundamental, el origen angular o el sentido de medida cambia las coordenadas aunque el astro sea el mismo.</p></div>
+
+  <h3 id="desarrollo-horizontales">3.2. Coordenadas horizontales</h3>
+  <div class="reading-block"><p>El primer sistema usa el horizonte como plano fundamental. La vertical del lugar corta la esfera celeste en el cenit; la dirección opuesta es el nadir. El sistema queda ligado al observador: depende de dónde está situado y de cuál es su horizonte local.</p></div>
+  <div class="reading-block"><p>El libro define la base horizontal con \(Z_1\) hacia el Oeste, \(Z_2\) hacia el Sur y \(Z_3\) hacia el cenit. Las coordenadas son el azimut \(A\), medido sobre el horizonte desde el Sur hacia el Oeste, y la distancia cenital \(z\), medida desde el cenit. El vector de dirección de un astro se escribe:</p><div class="formula-block">\[\mathbf{x}=Z_1 \sin z \sin A+Z_2 \sin z \cos A+Z_3 \cos z.\]</div></div>
+  <div class="reading-block"><p>La altura sobre el horizonte es el complementario de la distancia cenital:</p><div class="formula-block">\[h = 90^\circ - z.\]</div></div>
+  <div class="reading-block"><p>Este sistema es el que más directamente se asocia con la observación: decir que un astro está a cierta altura y cierto azimut es decir hacia dónde se apunta el instrumento. Pero precisamente por ser local, sus coordenadas cambian con el tiempo debido a la rotación terrestre. El libro destaca también los verticales, los almicantarats y los primeros verticales al Este y al Oeste.</p></div>
+
+  <h3 id="desarrollo-ecuatoriales-horarias">3.3. Coordenadas ecuatoriales horarias</h3>
+  <div class="reading-block"><p>Como las coordenadas horizontales cambian continuamente, el capítulo introduce un sistema más adaptado a la rotación terrestre: las coordenadas ecuatoriales horarias. El plano fundamental pasa a ser el ecuador celeste, paralelo al ecuador terrestre. El eje fundamental es la dirección del polo Norte celeste.</p></div>
+  <div class="reading-block"><p>Las coordenadas son el ángulo horario \(H\) y la declinación \(\delta\). La declinación mide la separación angular respecto al ecuador celeste. El ángulo horario mide la separación entre el meridiano del lugar y el meridiano que contiene al astro. En este sistema, la declinación de una estrella no cambia por el movimiento diurno, mientras que el ángulo horario sí cambia.</p></div>
+  <div class="reading-block"><p>La expresión vectorial del astro es:</p><div class="formula-block">\[\mathbf{x}=P_1 \cos\delta \sin H+P_2 \cos\delta \cos H+P_3 \sin\delta.\]</div></div>
+  <div class="reading-block"><p>La importancia de este sistema es que conecta el cielo visible local con el ecuador celeste. Permite resolver problemas de paso por el meridiano, culminación, primer vertical y conversión entre posición observada y coordenadas ecuatoriales.</p></div>
+
+  <h3 id="desarrollo-ecuatoriales">3.4. Coordenadas ecuatoriales absolutas</h3>
+  <div class="reading-block"><p>El siguiente paso es eliminar la dependencia del meridiano local. Para ello se usa como origen angular el punto vernal o punto Aries, definido a partir de la intersección entre el ecuador y la eclíptica. El plano fundamental sigue siendo el ecuador, pero el origen de la longitud angular ya no depende del observador.</p></div>
+  <div class="reading-block"><p>Las coordenadas son la ascensión recta \(\alpha\) y la declinación \(\delta\). La declinación es la misma magnitud angular respecto al ecuador que en el sistema horario, pero la ascensión recta se mide desde el punto vernal. Este sistema se considera absoluto en el sentido de que, dentro del modelo del capítulo, las coordenadas \((\alpha,\delta)\) no dependen del lugar de observación ni del movimiento diurno.</p></div>
+  <div class="reading-block"><p>La relación clave entre coordenadas horarias y absolutas es:</p><div class="formula-block">\[H = TS - \alpha,\]</div><p>donde \(TS\) es el tiempo sidéreo. Esta fórmula es central para problemas: si se conoce el tiempo sidéreo local y la ascensión recta, se obtiene el ángulo horario; y con el ángulo horario, la declinación y la latitud del observador, se puede pasar a coordenadas horizontales.</p></div>
+
+  <h3 id="desarrollo-eclipticas">3.5. Coordenadas eclípticas</h3>
+  <div class="reading-block"><p>Para objetos del sistema solar, el plano ecuatorial no siempre es el más natural. La mayoría de estos objetos se mueven próximos a la eclíptica, que es el plano de la órbita terrestre alrededor del Sol. Por eso el libro introduce las coordenadas eclípticas.</p></div>
+  <div class="reading-block"><p>Las coordenadas son la longitud eclíptica \(\lambda\) y la latitud eclíptica \(\beta\). El eje perpendicular al plano de la eclíptica define el polo eclíptico. El origen se toma en el nodo ascendente, que coincide con el punto vernal. La longitud eclíptica del Sol se representa de forma especial en el libro.</p></div>
+  <div class="reading-block"><p>El ángulo entre el ecuador y la eclíptica es la oblicuidad de la eclíptica, \(\varepsilon\), cuyo valor aproximado es \(23^\circ 27'\). Este ángulo permite transformar coordenadas ecuatoriales absolutas en eclípticas y viceversa.</p></div>
+
+  <h3 id="desarrollo-transformacion">3.6. Transformación de coordenadas</h3>
+  <div class="reading-block"><p>El capítulo no se limita a definir sistemas; enseña a pasar de uno a otro. Esta es la parte operativa. Para convertir coordenadas horizontales y ecuatoriales horarias interviene la latitud geográfica del observador \(\varphi\). Las relaciones principales son:</p>
+    <div class="formula-block">\[\sin z \sin A = \cos\delta \sin H,\]</div>
+    <div class="formula-block">\[\sin z \cos A = \cos\delta \cos H \sin\varphi-\sin\delta \cos\varphi,\]</div>
+    <div class="formula-block">\[\cos z = \cos\delta \cos H \cos\varphi+\sin\delta \sin\varphi.\]</div>
+  </div>
+  <div class="reading-block"><p>Estas fórmulas muestran que la posición horizontal de un astro depende de tres datos: su declinación, su ángulo horario y la latitud del observador. Por eso la misma estrella no se ve igual desde dos lugares distintos ni en dos momentos distintos.</p></div>
+  <div class="reading-block"><p>La transformación entre ecuatoriales horarias y absolutas se condensa en \(H=TS-\alpha\). La transformación entre ecuatoriales absolutas y eclípticas depende de la oblicuidad \(\varepsilon\). Conceptualmente, no es más que una rotación entre dos planos fundamentales inclinados.</p></div>
+
+  <h3 id="desarrollo-galacticas">3.7. Coordenadas galácticas</h3>
+  <div class="reading-block"><p>El sistema galáctico toma como plano fundamental el plano de simetría de la Vía Láctea. Es un sistema natural para estudiar la distribución de estrellas y objetos galácticos. Su eje \(g_3\) apunta al polo norte galáctico y \(g_1\) se elige hacia el centro galáctico. Las coordenadas son longitud galáctica \(l\) y latitud galáctica \(b\).</p></div>
+  <div class="reading-block"><p>La diferencia esencial con las coordenadas eclípticas es física: la eclíptica está ligada al sistema solar; el plano galáctico está ligado a la estructura de la Galaxia. Por eso una misma estrella puede tener coordenadas ecuatoriales útiles para apuntar un telescopio y coordenadas galácticas útiles para interpretar su posición dentro de la Vía Láctea.</p></div>
+
+  <h3 id="desarrollo-elipsoide">3.8. Coordenadas de un punto sobre el elipsoide terrestre</h3>
+  <div class="reading-block"><p>El capítulo termina situando al observador sobre la Tierra. La Tierra no se trata como esfera perfecta, sino mediante un elipsoide de referencia. Se distinguen coordenadas astronómicas, basadas en la vertical observada mediante la plomada, y coordenadas geodésicas, basadas en la normal al elipsoide.</p></div>
+  <div class="reading-block"><p>La diferencia entre vertical y normal no es nula; el libro indica desviaciones frecuentes del orden de segundos de arco, aunque para muchas aplicaciones astronómicas se puede despreciar y suponer que coinciden. El elipsoide de referencia adoptado por la IAU en 1976 tiene radio ecuatorial \(a=6378{,}140\ \mathrm{km}\) y achatamiento \(f=1/298{,}257\).</p></div>
+  <div class="reading-block"><p>Esto conecta el cielo con el observador real. Para convertir coordenadas celestes en coordenadas observables se necesita saber dónde está el observador: latitud, longitud y, en modelos más finos, la forma terrestre y la desviación de la vertical.</p></div>
+</section>
+
+<section class="page" id="conceptos-clave">
+  <div class="page-head"><h2>4. Conceptos clave</h2><p class="section-lead">Definición, explicación, ejemplo, relación y posible pregunta de examen.</p></div>
+  <div class="grid cards-grid">
+    <article class="definition-card"><h3>Esfera celeste</h3><p><strong>Definición:</strong> esfera imaginaria de radio arbitrario sobre la que se proyectan las direcciones de los astros.</p><p><strong>Explicación:</strong> permite representar posiciones aparentes sin conocer distancias.</p><p><strong>Ejemplo:</strong> dos estrellas de distancias reales muy distintas pueden representarse como puntos sobre la misma esfera celeste.</p><p><strong>Relación:</strong> es la base visual de todos los sistemas angulares del capítulo.</p><p><strong>Pregunta de examen:</strong> “Explique por qué bastan dos coordenadas para situar un astro sobre la esfera celeste.”</p></article>
+    <article class="definition-card"><h3>Sistema de referencia</h3><p><strong>Definición:</strong> conjunto de ejes y origen respecto a los cuales se expresan las coordenadas.</p><p><strong>Explicación:</strong> cambiar de sistema cambia las coordenadas, no necesariamente la posición física.</p><p><strong>Ejemplo:</strong> una estrella tiene \((A,z)\) en horizontales y \((\alpha,\delta)\) en ecuatoriales.</p><p><strong>Relación:</strong> todos los sistemas del capítulo son elecciones distintas de plano fundamental y origen angular.</p><p><strong>Pregunta de examen:</strong> “Compare los sistemas horizontal y ecuatorial absoluto.”</p></article>
+    <article class="definition-card"><h3>Coordenadas polares esféricas</h3><p><strong>Definición:</strong> coordenadas \((r,a,d)\) que separan distancia radial y dos ángulos.</p><p><strong>Explicación:</strong> son apropiadas cuando interesa la dirección más que la distancia.</p><p><strong>Ejemplo:</strong> para apuntar a una estrella basta su dirección; no hace falta conocer su distancia.</p><p><strong>Relación:</strong> de ellas derivan las coordenadas astronómicas angulares.</p><p><strong>Pregunta de examen:</strong> “Obtenga las componentes cartesianas de un vector en coordenadas polares esféricas.”</p></article>
+    <article class="definition-card"><h3>Azimut \(A\)</h3><p><strong>Definición:</strong> coordenada horizontal medida sobre el horizonte desde el Sur hacia el Oeste, según la convención del libro.</p><p><strong>Explicación:</strong> indica la dirección horizontal hacia la que se observa.</p><p><strong>Ejemplo:</strong> \(A=90^\circ\) corresponde al primer vertical Oeste.</p><p><strong>Relación:</strong> se combina con la distancia cenital \(z\).</p><p><strong>Pregunta de examen:</strong> “Indique cómo se mide el azimut en el sistema horizontal usado en el libro.”</p></article>
+    <article class="definition-card"><h3>Distancia cenital \(z\)</h3><p><strong>Definición:</strong> ángulo entre el cenit y la dirección del astro.</p><p><strong>Explicación:</strong> mide cuánto se separa el astro de la vertical local.</p><p><strong>Ejemplo:</strong> si \(z=30^\circ\), entonces \(h=60^\circ\).</p><p><strong>Relación:</strong> es complementaria de la altura \(h\).</p><p><strong>Pregunta de examen:</strong> “Relacione altura y distancia cenital.”</p></article>
+    <article class="definition-card"><h3>Altura \(h\)</h3><p><strong>Definición:</strong> ángulo del astro sobre el horizonte.</p><p><strong>Explicación:</strong> es una magnitud directamente observable y muy usada en visibilidad.</p><p><strong>Ejemplo:</strong> un astro con \(h&lt;0^\circ\) está bajo el horizonte.</p><p><strong>Relación:</strong> \(h=90^\circ-z\).</p><p><strong>Pregunta de examen:</strong> “¿Qué altura tiene un astro cuya distancia cenital es \(75^\circ\)?”</p></article>
+    <article class="definition-card"><h3>Ángulo horario \(H\)</h3><p><strong>Definición:</strong> ángulo entre el meridiano local y el meridiano horario del astro.</p><p><strong>Explicación:</strong> mide la posición del astro respecto al meridiano del observador.</p><p><strong>Ejemplo:</strong> en la culminación superior, el ángulo horario es \(H=0\).</p><p><strong>Relación:</strong> \(H=TS-\alpha\).</p><p><strong>Pregunta de examen:</strong> “Calcule el ángulo horario a partir de tiempo sidéreo y ascensión recta.”</p></article>
+    <article class="definition-card"><h3>Declinación \(\delta\)</h3><p><strong>Definición:</strong> ángulo del astro respecto al ecuador celeste.</p><p><strong>Explicación:</strong> es positiva al norte del ecuador celeste y negativa al sur.</p><p><strong>Ejemplo:</strong> una estrella con \(\delta=0^\circ\) está sobre el ecuador celeste.</p><p><strong>Relación:</strong> aparece tanto en coordenadas ecuatoriales horarias como absolutas.</p><p><strong>Pregunta de examen:</strong> “Explique por qué la declinación no depende del meridiano local.”</p></article>
+    <article class="definition-card"><h3>Ascensión recta \(\alpha\)</h3><p><strong>Definición:</strong> coordenada ecuatorial medida sobre el ecuador desde el punto vernal.</p><p><strong>Explicación:</strong> sustituye al ángulo horario cuando se quiere una coordenada no local.</p><p><strong>Ejemplo:</strong> si \(\alpha=5^\mathrm{h}\) y \(TS=8^\mathrm{h}\), entonces \(H=3^\mathrm{h}\).</p><p><strong>Relación:</strong> junto con \(\delta\) forma el sistema ecuatorial absoluto.</p><p><strong>Pregunta de examen:</strong> “Diferencie ascensión recta y ángulo horario.”</p></article>
+    <article class="definition-card"><h3>Tiempo sidéreo \(TS\)</h3><p><strong>Definición:</strong> ángulo horario del punto vernal.</p><p><strong>Explicación:</strong> permite relacionar coordenadas absolutas con coordenadas horarias.</p><p><strong>Ejemplo:</strong> \(H=TS-\alpha\).</p><p><strong>Relación:</strong> conecta cielo fijo y rotación local.</p><p><strong>Pregunta de examen:</strong> “Explique el significado de la relación \(H=TS-\alpha\).”</p></article>
+    <article class="definition-card"><h3>Eclíptica</h3><p><strong>Definición:</strong> plano de la órbita terrestre alrededor del Sol.</p><p><strong>Explicación:</strong> es el plano fundamental de las coordenadas eclípticas.</p><p><strong>Ejemplo:</strong> muchos planetas tienen latitudes eclípticas pequeñas.</p><p><strong>Relación:</strong> forma con el ecuador el ángulo de oblicuidad \(\varepsilon\).</p><p><strong>Pregunta de examen:</strong> “¿Por qué las coordenadas eclípticas son útiles en el sistema solar?”</p></article>
+    <article class="definition-card"><h3>Oblicuidad de la eclíptica \(\varepsilon\)</h3><p><strong>Definición:</strong> ángulo entre el plano del ecuador y el plano de la eclíptica.</p><p><strong>Explicación:</strong> permite transformar coordenadas ecuatoriales en eclípticas.</p><p><strong>Ejemplo:</strong> su valor aproximado en el capítulo es \(23^\circ 27'\).</p><p><strong>Relación:</strong> es el parámetro geométrico que conecta ambos planos.</p><p><strong>Pregunta de examen:</strong> “¿Qué papel desempeña la oblicuidad en las transformaciones de coordenadas?”</p></article>
+    <article class="definition-card"><h3>Coordenadas galácticas \((l,b)\)</h3><p><strong>Definición:</strong> longitud y latitud medidas respecto al plano galáctico.</p><p><strong>Explicación:</strong> son apropiadas para estudiar posiciones en la Vía Láctea.</p><p><strong>Ejemplo:</strong> un objeto con \(b=0^\circ\) está sobre el plano galáctico.</p><p><strong>Relación:</strong> se conectan con las ecuatoriales mediante una transformación de bases.</p><p><strong>Pregunta de examen:</strong> “Compare el significado físico de coordenadas eclípticas y galácticas.”</p></article>
+    <article class="definition-card"><h3>Elipsoide de referencia</h3><p><strong>Definición:</strong> superficie matemática que aproxima la forma de la Tierra.</p><p><strong>Explicación:</strong> permite definir coordenadas geodésicas sobre una Tierra achatada.</p><p><strong>Ejemplo:</strong> el radio ecuatorial es mayor que el polar.</p><p><strong>Relación:</strong> conecta la posición del observador con las coordenadas celestes locales.</p><p><strong>Pregunta de examen:</strong> “Explique por qué no basta siempre con considerar la Tierra esférica.”</p></article>
+  </div>
+</section>
+
+<section class="page" id="relaciones-entre-ideas">
+  <div class="page-head"><h2>5. Relaciones entre ideas</h2></div>
+  <div class="reading-block"><p>La relación principal es jerárquica. Primero se introduce la esfera celeste para reducir el problema a direcciones. Después se introducen sistemas de referencia, cada uno definido por un plano fundamental y un origen angular. Finalmente se estudian transformaciones entre ellos.</p></div>
+  <div class="reading-block"><p>Las coordenadas horizontales dependen del observador porque su plano fundamental es el horizonte local. Las ecuatoriales horarias siguen dependiendo del observador, pero ya usan el ecuador celeste y separan una coordenada más estable: la declinación. Las ecuatoriales absolutas eliminan el meridiano local como origen angular y lo sustituyen por el punto vernal. Por eso \(\alpha\) es una coordenada catalogable, mientras que \(H\) cambia con el tiempo.</p></div>
+  <div class="reading-block"><p>La relación causal clave es la rotación terrestre. Como la Tierra gira, el horizonte local barre el cielo y cambian \(A\) y \(z\). Esa misma rotación hace variar el ángulo horario \(H\). El tiempo sidéreo cuantifica esa rotación respecto al punto vernal, de ahí la relación \(H=TS-\alpha\).</p></div>
+  <div class="reading-block"><p>La oposición importante es “local” frente a “absoluto”. Horizontal es local; ecuatorial horaria es semilocal porque usa el ecuador pero conserva el meridiano local; ecuatorial absoluta es independiente del lugar en el marco ideal del capítulo. Eclípticas y galácticas también son absolutas en ese sentido, pero responden a planos físicos distintos: órbita terrestre y plano galáctico.</p></div>
+  <div class="reading-block"><p>Históricamente, el capítulo también introduce la discusión sobre la forma de la Tierra. La diferencia entre coordenadas astronómicas y geodésicas surge porque la vertical observable y la normal matemática al elipsoide no tienen por qué coincidir. Esa distinción prepara el terreno para capítulos posteriores donde la precisión de la posición del observador sí importa.</p></div>
+</section>
+
+<section class="page" id="errores-habituales">
+  <div class="page-head"><h2>6. Errores habituales</h2></div>
+  <details class="accordion accordion-error" open><summary>Error 1: pensar que las coordenadas de un astro son únicas.</summary><p>Está mal porque las coordenadas dependen del sistema de referencia.</p><p><strong>Corrección:</strong> una misma dirección puede expresarse en horizontales, ecuatoriales, eclípticas o galácticas.</p><p><strong>Respuesta incorrecta:</strong> “La estrella tiene unas coordenadas verdaderas, que son su azimut y altura.”</p><p><strong>Respuesta correcta:</strong> “Azimut y altura son coordenadas horizontales locales; la misma estrella puede tener ascensión recta y declinación en el sistema ecuatorial.”</p></details>
+  <details class="accordion accordion-error"><summary>Error 2: medir el azimut desde el Norte sin advertir la convención del libro.</summary><p>Está mal porque el capítulo define el azimut desde el Sur hacia el Oeste.</p><p><strong>Corrección:</strong> en este libro \(A=0^\circ\) apunta al Sur y \(A=90^\circ\) al Oeste.</p><p><strong>Respuesta incorrecta:</strong> “El primer vertical Oeste tiene \(A=270^\circ\).”</p><p><strong>Respuesta correcta:</strong> “Con la convención del libro, el primer vertical Oeste tiene \(A=90^\circ\).”</p></details>
+  <details class="accordion accordion-error"><summary>Error 3: confundir altura y distancia cenital.</summary><p>Está mal porque son ángulos complementarios.</p><p><strong>Corrección:</strong> \(h=90^\circ-z\).</p><p><strong>Respuesta incorrecta:</strong> “Si \(z=20^\circ\), el astro está a \(20^\circ\) sobre el horizonte.”</p><p><strong>Respuesta correcta:</strong> “Si \(z=20^\circ\), la altura es \(h=70^\circ\).”</p></details>
+  <details class="accordion accordion-error"><summary>Error 4: confundir ascensión recta con ángulo horario.</summary><p>Está mal porque la ascensión recta se mide desde el punto vernal y el ángulo horario desde el meridiano local.</p><p><strong>Corrección:</strong> se relacionan mediante \(H=TS-\alpha\).</p><p><strong>Respuesta incorrecta:</strong> “La ascensión recta cambia durante la noche.”</p><p><strong>Respuesta correcta:</strong> “Lo que cambia durante la noche es el ángulo horario; la ascensión recta es la coordenada ecuatorial absoluta del astro.”</p></details>
+  <details class="accordion accordion-error"><summary>Error 5: creer que las coordenadas horizontales sirven como coordenadas de catálogo.</summary><p>Está mal porque dependen del lugar y del instante.</p><p><strong>Corrección:</strong> para catálogos se usan coordenadas ecuatoriales absolutas, con las correcciones pertinentes en capítulos posteriores.</p><p><strong>Respuesta incorrecta:</strong> “Una estrella se cataloga por su altura y azimut.”</p><p><strong>Respuesta correcta:</strong> “Una estrella se cataloga por coordenadas como \((\alpha,\delta)\), no por \((A,z)\).”</p></details>
+  <details class="accordion accordion-error"><summary>Error 6: olvidar la latitud del observador en la conversión a horizontales.</summary><p>Está mal porque el horizonte local depende de la latitud geográfica.</p><p><strong>Corrección:</strong> las fórmulas entre \((H,\delta)\) y \((A,z)\) contienen \(\varphi\).</p><p><strong>Respuesta incorrecta:</strong> “Con \(H\) y \(\delta\) ya puedo saber la altura.”</p><p><strong>Respuesta correcta:</strong> “Necesito además la latitud del lugar.”</p></details>
+  <details class="accordion accordion-error"><summary>Error 7: tratar eclíptica y ecuador como el mismo plano.</summary><p>Está mal porque forman la oblicuidad \(\varepsilon\).</p><p><strong>Corrección:</strong> se transforman mediante una rotación de ángulo \(\varepsilon\).</p><p><strong>Respuesta incorrecta:</strong> “Latitud eclíptica y declinación son lo mismo.”</p><p><strong>Respuesta correcta:</strong> “Ambas son latitudes respecto a planos distintos: eclíptica y ecuador.”</p></details>
+  <details class="accordion accordion-error"><summary>Error 8: confundir latitud geocéntrica y latitud geográfica.</summary><p>Está mal porque una se mide respecto al radio al centro terrestre y la otra respecto a la normal al elipsoide.</p><p><strong>Corrección:</strong> en coordenadas astronómicas se usa la latitud geográfica asociada a la vertical local, con las aproximaciones indicadas.</p><p><strong>Respuesta incorrecta:</strong> “La latitud siempre es el ángulo del radio con el ecuador.”</p><p><strong>Respuesta correcta:</strong> “Esa es la latitud geocéntrica; la latitud geográfica se define mediante la normal al elipsoide, aproximada a la vertical en muchas aplicaciones.”</p></details>
+</section>
+
+<section class="page" id="preguntas-orientadas-a-examen">
+  <div class="page-head"><h2>7. Preguntas orientadas a examen</h2></div>
+  <div class="grid cards-grid">
+    <article class="question-card"><h3>10 preguntas fáciles</h3><ol class="question-list"><li>¿Qué es la esfera celeste y por qué permite usar dos coordenadas angulares?</li><li>¿Qué diferencia hay entre coordenadas cartesianas y coordenadas polares esféricas?</li><li>¿Cuál es el plano fundamental del sistema horizontal?</li><li>Define cenit y nadir.</li><li>¿Qué relación hay entre altura \(h\) y distancia cenital \(z\)?</li><li>¿Qué coordenadas forman el sistema ecuatorial horario?</li><li>¿Qué coordenadas forman el sistema ecuatorial absoluto?</li><li>¿Qué es el punto vernal?</li><li>¿Qué es la eclíptica?</li><li>¿Qué representan la longitud y la latitud galácticas?</li></ol></article>
+    <article class="question-card"><h3>10 preguntas medias</h3><ol class="question-list" start="11"><li>Escribe el vector unitario de un astro en coordenadas horizontales \((A,z)\).</li><li>Explica por qué las coordenadas horizontales son locales.</li><li>¿Qué significa que el sistema ecuatorial absoluto sea independiente del lugar de observación?</li><li>Calcula \(H\) si \(TS=10^\mathrm{h}\) y \(\alpha=7^\mathrm{h}\).</li><li>Convierte \(45^\circ\) en horas de tiempo geométrico.</li><li>Si \(z=65^\circ\), ¿cuál es la altura del astro?</li><li>¿Qué papel tiene la latitud geográfica \(\varphi\) en la transformación entre ecuatoriales horarias y horizontales?</li><li>Explica qué es la oblicuidad de la eclíptica.</li><li>¿Por qué las coordenadas eclípticas son útiles para objetos del sistema solar?</li><li>Diferencia coordenadas astronómicas y geodésicas sobre la Tierra.</li></ol></article>
+    <article class="question-card"><h3>5 preguntas difíciles</h3><ol class="question-list" start="21"><li>Justifica por qué el sistema horizontal no es adecuado para catalogar estrellas.</li><li>Explica conceptualmente la transformación de \((\alpha,\delta)\) a \((A,z)\).</li><li>Compara los planos fundamentales de los sistemas horizontal, ecuatorial, eclíptico y galáctico.</li><li>¿Por qué la relación \(H=TS-\alpha\) es la clave entre coordenadas horarias y absolutas?</li><li>Explica por qué la vertical astronómica y la normal geodésica no tienen por qué coincidir.</li></ol></article>
+    <article class="question-card"><h3>5 preguntas de desarrollo largo</h3><ol class="question-list" start="26"><li>Desarrolla la estructura completa de los sistemas de coordenadas del capítulo 1.</li><li>Explica el paso desde la esfera celeste hasta las coordenadas ecuatoriales absolutas.</li><li>Describe las coordenadas horizontales y ecuatoriales horarias, y explica cómo se relacionan.</li><li>Explica las coordenadas eclípticas y galácticas, comparando su utilidad física.</li><li>Expón el problema de situar al observador sobre el elipsoide terrestre.</li></ol></article>
+    <article class="question-card"><h3>5 preguntas de relación entre conceptos</h3><ol class="question-list" start="31"><li>Relaciona altura, distancia cenital, azimut y horizonte.</li><li>Relaciona ángulo horario, ascensión recta y tiempo sidéreo.</li><li>Relaciona ecuador, eclíptica, punto vernal y oblicuidad.</li><li>Relaciona plano galáctico, longitud galáctica y latitud galáctica.</li><li>Relaciona latitud geográfica, horizonte local y transformación a coordenadas horizontales.</li></ol></article>
+  </div>
+</section>
+
+<section class="page" id="respuestas-modelo">
+  <div class="page-head"><h2>8. Respuestas modelo</h2><p class="section-lead">Acordeones pensados para repaso activo.</p></div>
+  <details class="accordion accordion-answer" open><summary>1. La esfera celeste es una esfera imaginaria de radio arbitrario...</summary><p>La esfera celeste es una esfera imaginaria de radio arbitrario sobre la que se proyectan las direcciones de los astros. Como se prescinde de la distancia real, basta con dos ángulos para fijar una dirección.</p></details>
+  <details class="accordion accordion-answer"><summary>2. Las cartesianas expresan un vector por sus proyecciones...</summary><p>Las cartesianas expresan un vector por sus proyecciones sobre tres ejes. Las polares esféricas separan la distancia \(r\) de dos ángulos, lo que resulta más natural en Astronomía de posición.</p></details>
+  <details class="accordion accordion-answer"><summary>3. El plano fundamental del sistema horizontal...</summary><p>El plano fundamental del sistema horizontal es el horizonte del observador.</p></details>
+  <details class="accordion accordion-answer"><summary>4. El cenit y el nadir...</summary><p>El cenit es el punto de la esfera celeste situado en la dirección de la vertical ascendente del lugar. El nadir es el punto opuesto, en la dirección de caída de la plomada.</p></details>
+  <details class="accordion accordion-answer"><summary>5. Altura y distancia cenital son complementarias.</summary><div class="formula-block">\[h = 90^\circ - z.\]</div></details>
+  <details class="accordion accordion-answer"><summary>6. Sistema ecuatorial horario.</summary><p>El sistema ecuatorial horario está formado por el ángulo horario \(H\) y la declinación \(\delta\).</p></details>
+  <details class="accordion accordion-answer"><summary>7. Sistema ecuatorial absoluto.</summary><p>El sistema ecuatorial absoluto está formado por la ascensión recta \(\alpha\) y la declinación \(\delta\).</p></details>
+  <details class="accordion accordion-answer"><summary>8. Punto vernal.</summary><p>El punto vernal, o punto Aries, es el nodo ascendente de la eclíptica sobre el ecuador: la dirección en la que el Sol pasa de declinación negativa a positiva.</p></details>
+  <details class="accordion accordion-answer"><summary>9. Eclíptica.</summary><p>La eclíptica es el plano de la órbita de la Tierra alrededor del Sol. Sirve como plano fundamental de las coordenadas eclípticas.</p></details>
+  <details class="accordion accordion-answer"><summary>10. Longitud y latitud galácticas.</summary><p>La longitud galáctica \(l\) mide posición sobre el plano galáctico y la latitud galáctica \(b\) mide separación respecto a ese plano.</p></details>
+  <details class="accordion accordion-answer"><summary>11. Vector unitario en coordenadas horizontales.</summary><p>En la convención del libro:</p><div class="formula-block">\[\mathbf{x}=Z_1 \sin z \sin A+Z_2 \sin z \cos A+Z_3 \cos z.\]</div></details>
+  <details class="accordion accordion-answer"><summary>12. Por qué las coordenadas horizontales son locales.</summary><p>Son locales porque dependen del horizonte, del cenit y de los puntos cardinales del observador. Si cambia el lugar de observación, cambia el sistema de referencia.</p></details>
+  <details class="accordion accordion-answer"><summary>13. Qué significa que el sistema ecuatorial absoluto sea independiente del lugar.</summary><p>Significa que, idealmente, \(\alpha\) y \(\delta\) no dependen del horizonte ni del meridiano de un observador particular. Se miden respecto al ecuador celeste y al punto vernal.</p></details>
+  <details class="accordion accordion-answer"><summary>14. Cálculo de \(H\) si \(TS=10^\mathrm{h}\) y \(\alpha=7^\mathrm{h}\).</summary><div class="formula-block">\[H=TS-\alpha=10^\mathrm{h}-7^\mathrm{h}=3^\mathrm{h}.\]</div></details>
+  <details class="accordion accordion-answer"><summary>15. Conversión de \(45^\circ\) en horas.</summary><p>Como \(15^\circ=1^\mathrm{h}\), entonces:</p><div class="formula-block">\[45^\circ=3^\mathrm{h}.\]</div></details>
+  <details class="accordion accordion-answer"><summary>16. Altura si \(z=65^\circ\).</summary><div class="formula-block">\[h=90^\circ-65^\circ=25^\circ.\]</div></details>
+  <details class="accordion accordion-answer"><summary>17. Papel de la latitud \(\varphi\).</summary><p>La latitud \(\varphi\) fija la inclinación del ecuador celeste respecto al horizonte local. Por eso aparece en las fórmulas que convierten \((H,\delta)\) en \((A,z)\).</p></details>
+  <details class="accordion accordion-answer"><summary>18. Oblicuidad de la eclíptica.</summary><p>La oblicuidad de la eclíptica es el ángulo entre el plano ecuatorial y el plano de la eclíptica. Su valor aproximado en el capítulo es \(23^\circ27'\).</p></details>
+  <details class="accordion accordion-answer"><summary>19. Utilidad de coordenadas eclípticas.</summary><p>Porque muchos cuerpos del sistema solar se mueven cerca del plano de la eclíptica. Usar ese plano como referencia simplifica la descripción de sus posiciones.</p></details>
+  <details class="accordion accordion-answer"><summary>20. Coordenadas astronómicas y geodésicas.</summary><p>Las coordenadas astronómicas se basan en la vertical observada, ligada a la plomada. Las geodésicas se basan en la normal al elipsoide de referencia.</p></details>
+  <details class="accordion accordion-answer"><summary>21. Por qué el sistema horizontal no sirve para catalogar estrellas.</summary><p>El sistema horizontal no sirve para catalogar estrellas porque sus coordenadas cambian con el lugar y con el tiempo. Una estrella tendrá distinto azimut y altura en Sabadell, Madrid o Tenerife, y también cambiarán a lo largo de la noche.</p></details>
+  <details class="accordion accordion-answer"><summary>22. Transformación conceptual de \((\alpha,\delta)\) a \((A,z)\).</summary><p>Primero se usa \(H=TS-\alpha\) para obtener el ángulo horario a partir de la ascensión recta y el tiempo sidéreo. Después, con \(H\), \(\delta\) y la latitud \(\varphi\), se aplican las fórmulas de transformación entre ecuatoriales horarias y horizontales para obtener \(A\) y \(z\).</p></details>
+  <details class="accordion accordion-answer"><summary>23. Planos fundamentales de los sistemas.</summary><p>El sistema horizontal usa el horizonte. El ecuatorial usa el ecuador celeste. El eclíptico usa la eclíptica. El galáctico usa el plano de simetría de la Galaxia. Cada plano responde a una finalidad distinta: observación local, rotación terrestre, sistema solar o estructura galáctica.</p></details>
+  <details class="accordion accordion-answer"><summary>24. Por qué \(H=TS-\alpha\) es clave.</summary><p>Porque \(\alpha\) es una coordenada fija respecto al punto vernal, mientras que \(H\) es la coordenada local respecto al meridiano. El tiempo sidéreo mide la posición del punto vernal respecto al meridiano local, de modo que permite pasar de una descripción absoluta a una horaria.</p></details>
+  <details class="accordion accordion-answer"><summary>25. Vertical astronómica y normal geodésica.</summary><p>La vertical astronómica está definida por la dirección de la plomada, observable físicamente. La normal geodésica es perpendicular al elipsoide matemático de referencia. Como la Tierra real no coincide exactamente con el elipsoide y su campo gravitatorio no es perfectamente regular, ambas direcciones pueden diferir.</p></details>
+  <details class="accordion accordion-answer"><summary>26. Estructura completa de los sistemas de coordenadas del capítulo 1.</summary><p>El capítulo comienza reduciendo la posición aparente de un astro a dos ángulos sobre la esfera celeste. Después introduce coordenadas horizontales, dependientes del observador; ecuatoriales horarias, basadas en el ecuador y el meridiano local; ecuatoriales absolutas, basadas en el ecuador y el punto vernal; eclípticas, basadas en el plano orbital terrestre; galácticas, basadas en el plano de la Vía Láctea; y coordenadas terrestres sobre un elipsoide para situar al observador.</p></details>
+  <details class="accordion accordion-answer"><summary>27. Paso desde la esfera celeste hasta las coordenadas ecuatoriales absolutas.</summary><p>La esfera celeste permite representar direcciones sin distancias. A partir de ahí se definen sistemas de referencia. El sistema horizontal es intuitivo pero local. El ecuatorial horario introduce el ecuador y la declinación, pero conserva el meridiano local mediante \(H\). El ecuatorial absoluto sustituye \(H\) por \(\alpha\), medida desde el punto vernal, y así obtiene coordenadas independientes del lugar.</p></details>
+  <details class="accordion accordion-answer"><summary>28. Coordenadas horizontales y ecuatoriales horarias.</summary><p>Las coordenadas horizontales son \(A\) y \(z\), medidas respecto al horizonte y al cenit. Las ecuatoriales horarias son \(H\) y \(\delta\), medidas respecto al ecuador celeste y al meridiano local. Se relacionan mediante fórmulas que dependen de la latitud \(\varphi\), porque el ecuador celeste corta el horizonte de forma distinta según el lugar de observación.</p></details>
+  <details class="accordion accordion-answer"><summary>29. Coordenadas eclípticas y galácticas.</summary><p>Las coordenadas eclípticas usan la eclíptica como plano fundamental y son útiles para describir posiciones de cuerpos del sistema solar. Las galácticas usan el plano galáctico y son útiles para interpretar posiciones dentro de la Vía Láctea. Ambas son sistemas no locales, pero se apoyan en realidades físicas distintas.</p></details>
+  <details class="accordion accordion-answer"><summary>30. Situar al observador sobre el elipsoide terrestre.</summary><p>Para transformar coordenadas celestes en observables hay que conocer la posición del observador. El capítulo introduce la Tierra como elipsoide de referencia, no como esfera perfecta. Distingue entre coordenadas astronómicas, ligadas a la vertical, y geodésicas, ligadas a la normal al elipsoide. Esta distinción es pequeña en muchas aplicaciones, pero conceptualmente importante.</p></details>
+  <details class="accordion accordion-answer"><summary>31. Relación entre altura, distancia cenital, azimut y horizonte.</summary><p>El horizonte es el plano fundamental del sistema horizontal. El azimut \(A\) mide dirección sobre ese plano. La distancia cenital \(z\) mide separación al cenit. La altura \(h\) mide separación sobre el horizonte y cumple \(h=90^\circ-z\).</p></details>
+  <details class="accordion accordion-answer"><summary>32. Relación entre ángulo horario, ascensión recta y tiempo sidéreo.</summary><p>La ascensión recta \(\alpha\) se mide desde el punto vernal. El ángulo horario \(H\) se mide desde el meridiano local. El tiempo sidéreo \(TS\) mide el ángulo horario del punto vernal. Por eso \(H=TS-\alpha\).</p></details>
+  <details class="accordion accordion-answer"><summary>33. Relación entre ecuador, eclíptica, punto vernal y oblicuidad.</summary><p>El ecuador y la eclíptica son dos planos inclinados. Su intersección define la línea de nodos. El nodo ascendente es el punto vernal. El ángulo entre ambos planos es la oblicuidad \(\varepsilon\).</p></details>
+  <details class="accordion accordion-answer"><summary>34. Relación entre plano galáctico, longitud y latitud galáctica.</summary><p>El plano galáctico es el plano de referencia. La longitud galáctica \(l\) mide posición angular sobre ese plano desde el origen elegido hacia el centro galáctico. La latitud galáctica \(b\) mide separación respecto al plano.</p></details>
+  <details class="accordion accordion-answer"><summary>35. Relación entre latitud geográfica, horizonte local y transformación.</summary><p>La latitud geográfica determina la orientación del horizonte local respecto al ecuador celeste. Por eso, para convertir \((H,\delta)\) en \((A,z)\), no basta con saber la posición ecuatorial del astro: también hace falta la latitud del observador.</p></details>
+</section>
+
+<section class="page" id="resumen-final-de-repaso">
+  <div class="page-head"><h2>9. Resumen final de repaso</h2></div>
+  <div class="summary-grid">
+    <article class="card summary"><h3>Ideas principales</h3><p>El capítulo enseña a representar direcciones astronómicas mediante sistemas de coordenadas. La esfera celeste permite trabajar con dos ángulos. Cada sistema se define por un plano fundamental, un eje perpendicular y un origen angular.</p></article>
+    <article class="card summary"><h3>Conceptos imprescindibles</h3><p>Esfera celeste, sistema de referencia, coordenadas polares esféricas, azimut, distancia cenital, altura, ángulo horario, declinación, ascensión recta, tiempo sidéreo, eclíptica, oblicuidad, coordenadas galácticas, elipsoide de referencia.</p></article>
+    <article class="card summary"><h3>Relaciones clave</h3><div class="formula-block">\[h=90^\circ-z.\]</div><div class="formula-block">\[H=TS-\alpha.\]</div><div class="formula-block">\[\sin z \sin A = \cos\delta \sin H.\]</div><div class="formula-block">\[\cos z = \cos\delta \cos H \cos\varphi+\sin\delta \sin\varphi.\]</div></article>
+    <article class="card summary"><h3>Errores que evitar</h3><p>No medir el azimut con una convención distinta sin avisar. No confundir altura con distancia cenital. No confundir ascensión recta con ángulo horario. No olvidar la latitud del observador. No tratar ecuador y eclíptica como el mismo plano. No usar coordenadas horizontales como si fueran de catálogo.</p></article>
+  </div>
+</section>
+
+<section class="page" id="checklist-de-dominio">
+  <div class="page-head"><h2>10. Checklist de dominio</h2><p class="section-lead">Criterio de cierre operativo.</p></div>
+  <div class="checklist-box">
+    <ul class="check-list">
+      <li>Si no puedes explicar por qué la esfera celeste permite usar solo dos ángulos, falta repasar la sección 1.1.</li>
+      <li>Si confundes coordenadas cartesianas con polares esféricas, revisar la formulación vectorial inicial.</li>
+      <li>Si no recuerdas desde dónde se mide el azimut en el libro, repasar coordenadas horizontales.</li>
+      <li>Si confundes altura con distancia cenital, revisar \(h=90^\circ-z\).</li>
+      <li>Si no sabes por qué las coordenadas horizontales cambian durante la noche, repasar rotación terrestre y sistema local.</li>
+      <li>Si confundes \(H\) con \(\alpha\), revisar coordenadas ecuatoriales horarias y absolutas.</li>
+      <li>Si no puedes usar \(H=TS-\alpha\), falta repasar tiempo sidéreo dentro del capítulo.</li>
+      <li>Si olvidas la latitud \(\varphi\) al transformar a horizontales, revisar las fórmulas 1.11 y 1.12 del capítulo.</li>
+      <li>Si confundes declinación con latitud eclíptica, revisar ecuador, eclíptica y oblicuidad.</li>
+      <li>Si no distingues coordenadas eclípticas y galácticas, revisar qué plano fundamental usa cada sistema.</li>
+      <li>Si no puedes explicar la diferencia entre vertical y normal al elipsoide, falta repasar coordenadas terrestres.</li>
+      <li>Si puedes pasar conceptualmente de \((\alpha,\delta)\) a \((A,z)\) usando \(TS\), \(H\) y \(\varphi\), el capítulo está suficientemente asentado para empezar problemas.</li>
+    </ul>
+  </div>
+</section>
+</main>
+</div>
+</body>
+</html>
