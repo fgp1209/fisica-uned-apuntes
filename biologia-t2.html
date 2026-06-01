@@ -13,7 +13,12 @@
 <link href="assets/styles.css" rel="stylesheet"/>
 <script>
     window.MathJax = {
-      tex: { inlineMath: [['\(', '\)']], displayMath: [['\[', '\]']] },
+      loader: { load: ['[tex]/mhchem'] },
+      tex: {
+        inlineMath: [['\\(', '\\)']],
+        displayMath: [['\\[', '\\]']],
+        packages: { '[+]': ['mhchem'] }
+      },
       svg: { fontCache: 'global' }
     };
   </script>
@@ -21,24 +26,28 @@
 <script defer="" src="assets/app.js"></script>
 </head>
 <body class="subject-biologia">
+<div class="wrap">
 <a class="skip-link" href="#contenido">Saltar al contenido</a>
-<header class="hero">
-<nav aria-label="Migas de pan" class="breadcrumb">
-<a href="index.html">Volver al índice</a>
-</nav>
+<header class="cover">
+<div class="top-actions">
+<a class="back-link" href="index.html">← Volver al índice</a>
+</div>
 <p class="eyebrow">Biología UNED</p>
 <h1>Proteínas: estructura, función y enzimas</h1>
-<p class="hero-summary">De los aminoácidos al enlace peptídico, los niveles de estructura proteica, el plegamiento, la desnaturalización y la catálisis enzimática.</p>
+<p class="subtitle">De los aminoácidos al enlace peptídico, los niveles de estructura proteica, el plegamiento, la desnaturalización y la catálisis enzimática.</p>
 <div aria-label="Datos de la lección" class="chips">
-<span>Biología</span>
-<span>Tema 2</span>
-<span>Freeman, Fundamentos de Biología</span>
-<span>Estado: completo</span>
+<span class="chip">Biología</span>
+<span class="chip">Tema 2</span>
+<span class="chip">Freeman, Fundamentos de Biología</span>
+<span class="chip">estado: maquetado</span>
+<span class="chip">mhchem</span>
 </div>
 </header>
-<nav aria-label="Navegación de la lección" class="toolbar">
+<div aria-label="Navegación de la lección" class="toolbar no-print">
+<nav>
 <a href="#mapa">Mapa</a>
 <a href="#prerrequisitos">Prerrequisitos</a>
+<a href="#idea-central">Idea central</a>
 <a href="#desarrollo">Desarrollo</a>
 <a href="#conceptos">Conceptos</a>
 <a href="#errores">Errores</a>
@@ -47,9 +56,18 @@
 <a href="#resumen">Resumen</a>
 <a href="#checklist">Checklist</a>
 </nav>
+<div class="toolbar-actions">
+<button class="btn" onclick="printReady()">Imprimir / guardar PDF</button>
+<button class="btn secondary" onclick="openAllDetails()">Abrir todo</button>
+<button class="btn secondary" onclick="closeAllDetails()">Cerrar acordeones</button>
+</div>
+</div>
 <main id="contenido">
 <section class="page" id="mapa">
+<div class="page-head">
 <h2>Mapa conceptual</h2>
+<p class="section-lead">Ruta rápida: composición, estructura, plegamiento, enzimas y entrenamiento de examen.</p>
+</div>
 <div class="concept-map">
 <a class="map-node" href="#prerrequisitos"><strong>Prerrequisitos</strong><span>Carbono, pH, polímeros y energía de activación</span></a>
 <a class="map-node" href="#desarrollo-aminoacidos-composicion-basica-de-las-proteinas"><strong>Aminoácidos</strong><span>Grupo amino, carboxilo y cadena R</span></a>
@@ -62,22 +80,26 @@
 </div>
 </section>
 <section class="page" id="prerrequisitos">
-<h2>Prerrequisitos mínimos</h2>
+<div class="page-head">
+<h2>1. Prerrequisitos mínimos</h2>
+<span class="page-no">p.1</span>
+</div>
 <div class="card-grid">
 <article class="definition-card">
 <h3>Átomo de carbono y enlaces covalentes.</h3>
-<p>El carbono puede formar enlaces estables con otros átomos, incluidos
+<p>El carbono (\(\ce{C}\)) puede formar enlaces estables con otros átomos, incluidos
 otros carbonos. Es necesario porque las proteínas son moléculas
 orgánicas formadas por cadenas carbonadas. Ejemplo: el carbono central
 de un aminoácido se une a un grupo amino, un grupo carboxilo, un
-hidrógeno y una cadena lateral R.</p>
+hidrógeno (\(\ce{H}\)) y una cadena lateral R.</p>
 </article>
 <article class="definition-card">
 <h3>Grupos funcionales.</h3>
 <p>Son grupos de átomos que confieren propiedades químicas concretas a
 una molécula. Es necesario para entender por qué los aminoácidos
 reaccionan, se disuelven o forman enlaces. Ejemplo: el grupo amino
-tiende a captar protones y el grupo carboxilo tiende a perderlos.</p>
+(\(\ce{-NH2}\)) tiende a captar protones (\(\ce{H+}\)) y el grupo carboxilo
+(\(\ce{-COOH}\)) tiende a perderlos.</p>
 </article>
 <article class="definition-card">
 <h3>pH y carga eléctrica.</h3>
@@ -93,8 +115,8 @@ imprescindible porque las proteínas son polímeros de aminoácidos.</p>
 </article>
 <article class="definition-card">
 <h3>Reacción de condensación e hidrólisis.</h3>
-<p>La condensación une monómeros liberando agua; la hidrólisis rompe
-enlaces usando agua. Es necesario para entender la formación y rotura
+<p>La condensación une monómeros liberando agua (\(\ce{H2O}\)); la hidrólisis rompe
+enlaces usando agua (\(\ce{H2O}\)). Es necesario para entender la formación y rotura
 del enlace peptídico.</p>
 </article>
 <article class="definition-card">
@@ -105,7 +127,10 @@ esa barrera energética.</p>
 </article>
 </div>
 </section><section class="page" id="idea-central">
-<h2>Idea central del capítulo</h2>
+<div class="page-head">
+<h2>2. Idea central del capítulo</h2>
+<span class="page-no">p.2</span>
+</div>
 <div class="reading-block">
 <p>El capítulo estudia la relación entre <strong>estructura y
 función</strong> en las proteínas. La idea dominante es que las
@@ -132,7 +157,10 @@ de proteínas con esa organización, por lo que este apartado debe
 dominarse con respuesta escrita breve y precisa.</p>
 </div>
 </section><section class="page" id="desarrollo">
-<h2>Desarrollo completo del capítulo</h2>
+<div class="page-head">
+<h2>3. Desarrollo completo del capítulo</h2>
+<span class="page-no">p.3</span>
+</div>
 <article class="reading-block" id="desarrollo-que-hacen-las-proteinas">
 <h3>3.1. Qué hacen las proteínas</h3>
 <p>Las proteínas son las moléculas funcionalmente más variadas de la
@@ -155,8 +183,8 @@ alterarse o desaparecer.</p>
 <article class="reading-block" id="desarrollo-aminoacidos-composicion-basica-de-las-proteinas">
 <h3>3.2. Aminoácidos: composición básica de las proteínas</h3>
 <p>Las proteínas están formadas por aminoácidos. Cada aminoácido posee
-un carbono central unido a cuatro grupos: un grupo amino, un grupo
-carboxilo, un átomo de hidrógeno y una cadena lateral o grupo R. La
+un carbono central unido a cuatro grupos: un grupo amino (\(\ce{-NH2}\)), un grupo
+carboxilo (\(\ce{-COOH}\)), un átomo de hidrógeno (\(\ce{H}\)) y una cadena lateral o grupo R. La
 parte común permite que todos los aminoácidos puedan formar enlaces
 peptídicos; el grupo R diferencia unos aminoácidos de otros.</p>
 <p>A pH celular, el grupo amino suele estar protonado y con carga
@@ -175,10 +203,10 @@ medio acuoso o participar en interacciones específicas.</p>
 <article class="reading-block" id="desarrollo-enlace-peptidico-y-polimerizacion">
 <h3>3.3. Enlace peptídico y polimerización</h3>
 <p>Los aminoácidos se unen mediante enlaces peptídicos. El enlace
-peptídico se forma entre el grupo carboxilo de un aminoácido y el grupo
-amino de otro. Es una reacción de condensación: al formarse el enlace,
-se libera una molécula de agua. La reacción inversa es la hidrólisis,
-que rompe el enlace incorporando agua.</p>
+peptídico se forma entre el grupo carboxilo (\(\ce{-COOH}\)) de un aminoácido y el grupo
+amino (\(\ce{-NH2}\)) de otro. Es una reacción de condensación: al formarse el enlace,
+se libera una molécula de agua (\(\ce{H2O}\)). La reacción inversa es la hidrólisis,
+que rompe el enlace incorporando agua (\(\ce{H2O}\)).</p>
 <p>El resultado de muchas uniones peptídicas es un polipéptido. Una
 proteína puede estar formada por una sola cadena polipeptídica o por
 varias. La secuencia de aminoácidos no es aleatoria: determina las
@@ -325,7 +353,10 @@ abstracto: funciona dentro de un rango físico-químico. Fuera de ese
 rango, baja su actividad o puede desnaturalizarse.</p>
 </article>
 </section><section class="page" id="conceptos">
-<h2>Conceptos clave</h2>
+<div class="page-head">
+<h2>4. Conceptos clave</h2>
+<span class="page-no">p.4</span>
+</div>
 <div class="card-grid">
 <article class="definition-card">
 <h3>Aminoácido.</h3>
@@ -440,7 +471,10 @@ puede activar o inhibir una enzima”.</p>
 </article>
 </div>
 </section><section class="page" id="relaciones">
-<h2>Relaciones entre ideas</h2>
+<div class="page-head">
+<h2>5. Relaciones entre ideas</h2>
+<span class="page-no">p.5</span>
+</div>
 <div class="reading-block">
 <p>La relación principal del capítulo es jerárquica:</p>
 <pre class="text code-block"><code>grupo R
@@ -476,7 +510,10 @@ autorreplicante, cuestión que el libro enlaza después con el mundo de
 RNA.</p>
 </div>
 </section><section class="page" id="errores">
-<h2>Errores habituales</h2>
+<div class="page-head">
+<h2>6. Errores habituales</h2>
+<span class="page-no">p.6</span>
+</div>
 <details class="accordion">
 <summary>Error: “Todos los aminoácidos se diferencian por el grupo amino”.</summary>
 <div class="accordion-body">
@@ -561,7 +598,10 @@ mal plegadas asociadas a trastornos cerebrales degenerativos”.</p>
 </div>
 </details>
 </section><section class="page" id="preguntas">
-<h2>Preguntas orientadas a examen</h2>
+<div class="page-head">
+<h2>7. Preguntas orientadas a examen</h2>
+<span class="page-no">p.7</span>
+</div>
 <details class="accordion">
 <summary>10 preguntas fáciles</summary>
 <div class="accordion-body">
@@ -646,7 +686,10 @@ catálisis.</li>
 </div>
 </details>
 </section><section class="page" id="respuestas">
-<h2>Respuestas modelo</h2>
+<div class="page-head">
+<h2>8. Respuestas modelo</h2>
+<span class="page-no">p.8</span>
+</div>
 <details class="accordion">
 <summary>Respuestas fáciles</summary>
 <div class="accordion-body">
@@ -863,7 +906,10 @@ hipótesis del mundo de RNA.</p></li>
 </div>
 </details>
 </section><section class="page" id="resumen">
-<h2>Resumen final de repaso</h2>
+<div class="page-head">
+<h2>9. Resumen final de repaso</h2>
+<span class="page-no">p.9</span>
+</div>
 <div class="card-grid">
 <article class="definition-card">
 <h3>Ideas principales</h3>
@@ -923,7 +969,10 @@ plegamiento.</li>
 </article>
 </div>
 </section><section class="page" id="checklist">
-<h2>Checklist de dominio</h2>
+<div class="page-head">
+<h2>10. Checklist de dominio</h2>
+<span class="page-no">p.10</span>
+</div>
 <div class="reading-block checklist-block">
 <ul>
 <li>Si no puedes dibujar un aminoácido genérico, falta repasar
@@ -955,5 +1004,6 @@ función → enzima, el capítulo está suficientemente asentado.</li>
 </div>
 </section>
 </main>
+</div>
 </body>
 </html>

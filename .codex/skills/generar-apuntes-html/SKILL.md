@@ -25,6 +25,7 @@ Si tienes dudas de la asignatura o del tema, pregunta al usuario. Si el texto de
 4. Convertir formulas a MathJax:
    - inline: `\(...\)`.
    - bloque: `\[...\]`, preferiblemente dentro de `.formula-block`.
+   - Si aparecen compuestos, iones, cargas o reacciones quimicas claras, cargar la extension `mhchem` de MathJax y maquetarlos con `\ce{...}`. Ejemplos: `\(\ce{H2O}\)`, `\(\ce{H+}\)`, `\(\ce{-NH2}\)`, `\(\ce{-COOH}\)`.
    - corregir formulas rotas por texto plano cuando la intencion sea inequívoca; no cambiar significado.
 5. Actualizar `index.html` solo si hace falta para enlazar el tema nuevo o corregir estado/titulo.
 6. Tocar `assets/styles.css` o `assets/app.js` solo si el HTML necesita una clase/funcion que no exista o si falla la responsividad/impresion.
@@ -78,6 +79,18 @@ Los HTML en raiz cargan:
 <link rel="icon" type="image/png" sizes="50x50" href="assets/icons/icon-50.png" />
 <link rel="apple-touch-icon" sizes="100x100" href="assets/icons/icon-100.png" />
 <link rel="stylesheet" href="assets/styles.css" />
+<script>
+window.MathJax = {
+  loader: { load: ['[tex]/mhchem'] },
+  tex: {
+    inlineMath: [['\\(','\\)']],
+    displayMath: [['\\[','\\]']],
+    packages: { '[+]': ['mhchem'] }
+  },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
 <script defer src="assets/app.js"></script>
 ```
 
@@ -114,4 +127,5 @@ Para Astronomia usar `subject-astronomia`.
 - No tocar CSS/JS global por gusto.
 - No dejar paginas huerfanas.
 - No dejar formulas en formatos ambiguos como `(h = 90^\circ - z)` si deben renderizar: convertir a `\(h = 90^\circ - z\)`.
+- No dejar compuestos quimicos claros como `H2O`, `H+`, `NH2` o `COOH` en texto plano cuando funcionen mejor como notacion quimica: usar `\ce{...}` con `mhchem`.
 - No entregar sin comprobar enlaces internos y responsividad basica.
