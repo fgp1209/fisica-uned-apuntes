@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="light dark" />
+<title>Astronomía — Tema 8 — Eclipses</title>
+<link rel="icon" type="image/png" sizes="32x32" href="assets/icons/icon-32.png" />
+<link rel="icon" type="image/png" sizes="50x50" href="assets/icons/icon-50.png" />
+<link rel="apple-touch-icon" sizes="100x100" href="assets/icons/icon-100.png" />
+<meta name="theme-color" content="#172554" />
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+<link rel="stylesheet" href="assets/styles.css" />
+<script defer src="assets/app.js"></script>
+</head>
+<body class="subject-astronomia">
+<div class="wrap">
+<header class="cover">
+  <div class="top-actions">
+    <a class="back-link" href="index.html">← Volver al índice</a>
+  </div>
+  <p class="eyebrow">UNED Física · Curso de Astronomía · Tema 8</p>
+  <h1>Guía de estudio — Curso de Astronomía</h1>
+  <p class="subtitle">Introducción a la Astronomía: eclipses, sombras, sistema de Bessel, magnitud y repetición.</p>
+  <div class="chips">
+    <span class="chip">Astronomía</span>
+    <span class="chip">Tema 8</span>
+    <span class="chip">eclipses</span>
+    <span class="chip">Bessel</span>
+    <span class="chip">Saros</span>
+    <span class="chip">estado: maquetado</span>
+  </div>
+</header>
+
+<div class="toolbar no-print">
+  <nav>
+    <a href="#mapa">Mapa</a>
+    <a href="#prerrequisitos">Prerrequisitos</a>
+    <a href="#idea-central">Idea central</a>
+    <a href="#desarrollo-completo">Desarrollo</a>
+    <a href="#conceptos-clave">Conceptos</a>
+    <a href="#errores-habituales">Errores</a>
+    <a href="#preguntas-orientadas-a-examen">Preguntas</a>
+    <a href="#respuestas-modelo">Respuestas</a>
+    <a href="#resumen-final-de-repaso">Resumen</a>
+    <a href="#checklist-de-dominio">Checklist</a>
+  </nav>
+  <div class="toolbar-actions">
+    <button class="btn" onclick="printReady()">Imprimir / guardar PDF</button>
+    <button class="btn secondary" onclick="openAllDetails()">Abrir todo</button>
+    <button class="btn secondary" onclick="closeAllDetails()">Cerrar acordeones</button>
+  </div>
+</div>
+
+<main>
+<section class="page map-page" id="mapa">
+  <div class="page-head">
+    <h2>Mapa clicable</h2>
+    <p class="section-lead">Ruta de lectura: de la alineación geométrica al cálculo de contactos, magnitud y repetición de eclipses.</p>
+  </div>
+  <div class="concept-map">
+    <a class="map-node" href="#idea-central"><span>Idea central</span><small>alineación · conos · condiciones</small></a>
+    <a class="map-node" href="#desarrollo-concepto-general-de-eclipse"><span>Concepto</span><small>interposición · sombra · penumbra</small></a>
+    <a class="map-node" href="#desarrollo-por-que-no-hay-eclipses-cada-mes"><span>Nodos</span><small>fase necesaria · condición nodal</small></a>
+    <a class="map-node" href="#desarrollo-distancia-minima-de-la-luna-al-eje-de-sombra"><span>Distancia mínima</span><small>\(d_{\min}\) · latitud lunar · límites</small></a>
+    <a class="map-node" href="#desarrollo-sistema-de-referencia-de-bessel"><span>Bessel</span><small>eje de sombra · plano fundamental</small></a>
+    <a class="map-node" href="#desarrollo-eclipses-de-luna"><span>Eclipses lunares</span><small>penumbra · sombra · totalidad</small></a>
+    <a class="map-node" href="#desarrollo-eclipses-de-sol"><span>Eclipses solares</span><small>parcial · total · anular</small></a>
+    <a class="map-node" href="#desarrollo-elementos-besselianos"><span>Elementos</span><small>\(l_1,l_2\) · \(L_1,L_2\) · contactos</small></a>
+    <a class="map-node" href="#desarrollo-frecuencia-y-repeticion-de-eclipses"><span>Saros</span><small>lunación · nodos · repetición</small></a>
+    <a class="map-node" href="#preguntas-orientadas-a-examen"><span>Examen</span><small>errores · preguntas · respuestas</small></a>
+  </div>
+</section>
+
+<section class="page" id="prerrequisitos">
+  <div class="page-head">
+    <h2>1. Prerrequisitos mínimos</h2>
+    <p class="section-lead">Base geométrica, temporal y vectorial que necesita el capítulo.</p>
+  </div>
+  <div class="grid cards-grid">
+    <article class="definition-card"><h3>Esfera celeste y coordenadas astronómicas</h3><p>Una posición astronómica se representa mediante coordenadas angulares sobre una esfera ideal. Es necesario porque el capítulo trabaja con ascensión recta, declinación, latitud eclíptica y separación angular.</p><p>Ejemplo: para decidir si hay eclipse se compara una distancia angular mínima con semidiámetros aparentes.</p></article>
+    <article class="definition-card"><h3>Sistema ecuatorial</h3><p>Sistema basado en el ecuador celeste, con ascensión recta y declinación. Es necesario porque el sistema de Bessel se expresa a partir de vectores ecuatoriales y de la dirección del eje de sombra.</p></article>
+    <article class="definition-card"><h3>Eclíptica, nodos e inclinación lunar</h3><p>La eclíptica es el plano aparente de la órbita solar; la órbita lunar está inclinada respecto a ella. Los nodos son las intersecciones entre ambos planos. Es imprescindible porque no basta con luna nueva o luna llena: el Sol y la Luna deben estar cerca de un nodo para que haya eclipse.</p></article>
+    <article class="definition-card"><h3>Conjunción y oposición</h3><p>Hay conjunción cuando Sol y Luna tienen la misma longitud eclíptica; hay oposición cuando están separados 180°. La conjunción está asociada a eclipses solares; la oposición, a eclipses lunares.</p></article>
+    <article class="definition-card"><h3>Semidiámetro aparente y paralaje</h3><p>El semidiámetro aparente mide el radio angular visible de un astro. La paralaje mide el cambio aparente de dirección debido al punto de observación. El capítulo usa semidiámetros y paralajes del Sol y la Luna para establecer condiciones de eclipse.</p></article>
+    <article class="definition-card"><h3>Tiempo y periodos lunares</h3><p>Conviene conocer periodo sidéreo, sinódico y draconítico. El capítulo usa el periodo sinódico lunar de 29,5306 días y la revolución sinódica de los nodos de 346,6195 días para explicar la repetición de eclipses.</p></article>
+    <article class="definition-card"><h3>Vectores y sistemas ortogonales</h3><p>El capítulo no se apoya solo en trigonometría esférica, sino en sistemas de referencia vectoriales. Hace falta entender producto vectorial, vectores unitarios y cambio de base para seguir el sistema de Bessel.</p></article>
+  </div>
+</section>
+
+<section class="page" id="idea-central">
+  <div class="page-head">
+    <h2>2. Idea central del capítulo</h2>
+    <p class="section-lead">El eclipse como problema geométrico de alineación y de cálculo de contactos.</p>
+  </div>
+  <div class="key-box"><p>El capítulo estudia los eclipses como un problema geométrico de alineación entre Sol, Tierra y Luna. No se centra en la descripción visual del fenómeno, sino en las condiciones matemáticas que permiten decidir si un eclipse ocurre, de qué tipo es, cuándo empiezan y terminan sus fases, y cómo se calculan sus circunstancias locales.</p></div>
+  <div class="reading-block"><p>La idea física de partida es sencilla: un cuerpo opaco iluminado por el Sol genera un cono de sombra y un cono de penumbra. En la sombra no llega radiación solar directa; en la penumbra solo se oculta una parte del disco solar. El capítulo convierte esa idea en geometría angular y en coordenadas.</p></div>
+  <div class="reading-block"><p>La dificultad real está en que la Luna no se mueve exactamente en el plano de la eclíptica. Si su órbita fuese coplanaria con la terrestre, habría un eclipse lunar en cada luna llena y un eclipse solar en cada luna nueva. Como la órbita lunar está inclinada, los eclipses solo ocurren cuando la Luna se encuentra cerca de los nodos.</p></div>
+  <div class="reading-block"><p>El capítulo ocupa un papel de síntesis dentro de Astronomía fundamental. Usa coordenadas, tiempo, movimiento lunar, paralaje, semidiámetros aparentes y sistemas de referencia. Por eso es un capítulo muy típico de examen: exige comprender la geometría y saber aplicar desigualdades y fórmulas, no solo memorizar definiciones.</p></div>
+</section>
+
+<section class="page" id="desarrollo-completo">
+  <div class="page-head">
+    <h2>3. Desarrollo completo del capítulo</h2>
+    <p class="section-lead">Condiciones geométricas, Bessel, eclipses de Luna, eclipses de Sol y repetición.</p>
+  </div>
+  <h3 id="desarrollo-concepto-general-de-eclipse">3.1. Concepto general de eclipse</h3>
+  <div class="reading-block"><p>Un eclipse se define como el oscurecimiento de un cuerpo porque otro objeto opaco se interpone entre él y la fuente luminosa. En los fenómenos principales del capítulo, la fuente luminosa es el Sol y los cuerpos implicados son la Tierra y la Luna. Un eclipse de Sol ocurre cuando la Luna se coloca entre el Sol y la Tierra. Un eclipse de Luna ocurre cuando la Tierra se coloca entre el Sol y la Luna.</p></div>
+  <div class="reading-block"><p>La misma geometría también está detrás de ocultaciones y tránsitos, aunque el libro reserva la palabra eclipse para los casos Sol-Luna-Tierra. Esto importa porque permite ver el capítulo como una teoría general de interposición de discos aparentes y conos de sombra.</p></div>
+  <div class="reading-block"><p>Cuando un cuerpo opaco es iluminado por una fuente extensa como el Sol, no se forma una única región oscura, sino dos conos. El cono de sombra está delimitado por tangentes exteriores y corresponde a la región desde la que el disco solar queda completamente oculto. El cono de penumbra está delimitado por tangentes interiores y corresponde a la región desde la que solo se ve parte del disco solar. El eje común de ambos se denomina eje de sombra.</p></div>
+  <h3 id="desarrollo-por-que-no-hay-eclipses-cada-mes">3.2. Por qué no hay eclipses cada mes</h3>
+  <div class="reading-block"><p>La Luna tiene fases cada mes sinódico, de unos 29,5306 días. En luna nueva está en conjunción con el Sol; en luna llena, en oposición. Si la órbita lunar coincidiese con la eclíptica, habría un eclipse solar en cada conjunción y un eclipse lunar en cada oposición. Pero la órbita lunar está inclinada, por lo que normalmente la Luna pasa por encima o por debajo de la línea necesaria para interceptar la sombra o la penumbra.</p></div>
+  <div class="reading-block"><p>Por eso entran en juego los nodos lunares. Un eclipse requiere que la Luna esté cerca de un nodo en el momento de conjunción u oposición. El capítulo introduce así el criterio básico: no basta con la fase; hace falta pequeña separación angular respecto al eje de sombra.</p></div>
+  <h3 id="desarrollo-distancia-minima-de-la-luna-al-eje-de-sombra">3.3. Distancia mínima de la Luna al eje de sombra</h3>
+  <div class="reading-block"><p>El criterio geométrico se formula mediante la distancia angular mínima entre el centro de la Luna y el eje relevante. En un eclipse solar interesa la separación entre los centros aparentes del Sol y la Luna. En un eclipse lunar interesa la separación entre el centro de la Luna y el punto diametralmente opuesto al Sol, que representa la dirección del eje de sombra terrestre.</p></div>
+  <div class="reading-block"><p>El capítulo obtiene una expresión fundamental:</p><div class="formula-block">\[d_{\min}=\beta \cos I\]</div></div>
+  <div class="reading-block"><p>Aquí \(\beta\) representa la latitud eclíptica lunar en el instante considerado, e \(I\) es un ángulo auxiliar ligado a la inclinación de la órbita lunar y a la relación entre los movimientos aparentes de la Luna y el Sol. Lo importante para examen no es solo copiar la fórmula, sino entender su función: da la separación mínima que se comparará con los tamaños angulares de sombra, penumbra, Sol y Luna.</p></div>
+  <div class="reading-block"><p>La consecuencia es directa. Si \(d_{\min}\) es mayor que el radio angular efectivo de la zona de contacto, no hay eclipse. Si es menor, sí lo hay, y el tipo depende de qué cono o disco sea interceptado.</p></div>
+  <h3 id="desarrollo-sistema-de-referencia-de-bessel">3.4. Sistema de referencia de Bessel</h3>
+  <div class="reading-block"><p>El sistema de referencia de Bessel es el instrumento matemático que permite convertir la geometría del eclipse en cálculo. Es un sistema ortogonal dextrógiro con origen en el centro de la Tierra. Su eje fundamental \(b_3\) se toma en la dirección del eje de sombra. En eclipses de Sol, el eje se asocia a la dirección Luna-Sol; en eclipses de Luna, a la dirección Tierra-Sol.</p></div>
+  <div class="reading-block"><p>Este sistema es útil porque coloca el problema en un plano perpendicular al eje de sombra. En ese plano, los contactos se convierten en problemas de distancias: el centro de un disco o la posición de un observador entra o sale de un círculo de sombra o penumbra.</p></div>
+  <div class="reading-block"><p>El libro relaciona la base besseliana \((b_1,b_2,b_3)\) con el sistema ecuatorial \((e_1,e_2,e_3)\). El eje \(b_2\) queda orientado hacia el norte en el plano considerado, lo que permite interpretar las coordenadas sobre el plano fundamental.</p></div>
+  <h3 id="desarrollo-eclipses-de-luna">3.5. Eclipses de Luna</h3>
+  <div class="reading-block"><p>En un eclipse de Luna, la Luna entra en el cono de penumbra o en el cono de sombra de la Tierra. Para que haya eclipse penumbral, el disco lunar debe tocar o penetrar la penumbra. Para que haya eclipse de sombra, debe tocar o penetrar la sombra. Para que sea total, todo el disco lunar debe quedar dentro del cono correspondiente.</p></div>
+  <div class="reading-block"><p>El capítulo distingue eclipse parcial de penumbra, total de penumbra, parcial de sombra y total de sombra. Además, introduce una corrección práctica: la atmósfera terrestre aumenta aproximadamente un 2 % el tamaño efectivo de los conos, por lo que las condiciones se modifican con un factor 1,02.</p></div>
+  <div class="reading-block"><p>La decisión se hace comparando \(d_{\min}\) con las separaciones angulares límite. Si la distancia mínima es menor que el límite correspondiente, se produce el contacto. En casos intermedios, el capítulo advierte que no basta con criterios generales: hay que calcular con los semidiámetros, paralajes, distancias e inclinación del día concreto.</p></div>
+  <div class="reading-block"><p>Para calcular las efemérides de un eclipse lunar, se toma un instante aproximado \(t_0\), se expresan las coordenadas de la Luna en el sistema besseliano y se aproxima su variación lineal con el tiempo. Los contactos se obtienen resolviendo una ecuación cuadrática. El signo negativo corresponde al comienzo; el positivo, a la finalización.</p></div>
+  <div class="reading-block"><p>La magnitud de un eclipse lunar parcial se define como la máxima fracción del diámetro lunar oscurecido. No es una magnitud fotométrica estelar, sino una razón geométrica entre diámetro ocultado y diámetro lunar.</p></div>
+  <h3 id="desarrollo-eclipses-de-sol">3.6. Eclipses de Sol</h3>
+  <div class="reading-block"><p>En un eclipse de Sol, la Tierra se sumerge en el cono de sombra o de penumbra generado por la Luna. Si un observador está en la penumbra, ve un eclipse parcial. Si está en la sombra y el vértice del cono permite cubrir todo el disco solar, ve un eclipse total. Si el vértice del cono de sombra queda entre la Luna y la superficie terrestre, se ve un anillo solar: eclipse anular. Los eclipses total y anular se agrupan como eclipses centrales; si el vértice cae justo sobre la superficie terrestre, el caso se denomina total-anular.</p></div>
+  <div class="reading-block"><p>La posibilidad de eclipse solar también se decide mediante \(d_{\min}\). Para eclipse parcial debe ser menor que el límite asociado a la penumbra; para eclipse central, menor que el límite asociado a la sombra. El capítulo proporciona umbrales en términos de \(\beta\) y de la distancia angular del Sol al nodo lunar, pero insiste en que las magnitudes reales cambian a lo largo del año.</p></div>
+  <div class="reading-block"><p>En los eclipses solares, el cálculo local es más delicado que en los lunares. Un eclipse de Luna es visible desde todo el hemisferio terrestre que tenga la Luna sobre el horizonte. En cambio, un eclipse de Sol depende fuertemente de la posición del observador sobre la superficie terrestre. Por eso el sistema de Bessel se usa para transformar la posición geográfica del observador en coordenadas besselianas.</p></div>
+  <h3 id="desarrollo-elementos-besselianos">3.7. Elementos besselianos</h3>
+  <div class="reading-block"><p>Los elementos besselianos son cantidades tabuladas que facilitan el cálculo de efemérides de eclipses solares. El libro menciona, entre otros, \(\mu\), \(\dot{\mu}\), \(f_1\), \(f_2\), \(l_1\), \(l_2\), \(d\), \(\dot{d}\), \(x_m\), \(y_m\). Su función no es conceptual sino operativa: permiten calcular posiciones, radios de conos y circunstancias locales a partir de tablas de almanaques.</p></div>
+  <div class="reading-block"><p>Los radios \(l_1\) y \(l_2\) representan las secciones de los conos de penumbra y sombra en el plano fundamental. Para un observador local se usan radios modificados \(L_1\) y \(L_2\), que dependen de la tercera coordenada besseliana del observador.</p></div>
+  <div class="reading-block"><p>La idea clave para examen es que un contacto se produce cuando la distancia entre el observador y el eje de sombra coincide con el radio del cono correspondiente: \(L_1\) para penumbra y \(L_2\) para sombra. Esto reduce la determinación de contactos a una ecuación de segundo grado en el tiempo.</p></div>
+  <h3 id="desarrollo-magnitud-y-punto-de-contacto-en-eclipses-solares">3.8. Magnitud y punto de contacto en eclipses solares</h3>
+  <div class="reading-block"><p>La magnitud de un eclipse solar se define como la máxima fracción del diámetro solar ocultada por la Luna. De nuevo, no debe confundirse con la escala de magnitudes estelares. Es una medida geométrica del grado de ocultación.</p></div>
+  <div class="reading-block"><p>El capítulo obtiene la magnitud mediante semejanza de triángulos sobre la geometría de los conos y los discos solar y lunar. En eclipses parciales, la magnitud depende de la posición del observador dentro de la penumbra. En eclipses anulares se obtiene una expresión análoga, y en un eclipse total la magnitud se toma igual a 1.</p></div>
+  <div class="reading-block"><p>También se introduce el punto de contacto en el disco solar. El ángulo asociado al vector entre el observador y el eje de sombra permite determinar el punto del limbo solar por el que empieza la ocultación. El ángulo de posición se expresa respecto a la dirección norte.</p></div>
+  <h3 id="desarrollo-frecuencia-y-repeticion-de-eclipses">3.9. Frecuencia y repetición de eclipses</h3>
+  <div class="reading-block"><p>El capítulo concluye explicando por qué los eclipses se repiten con cierta regularidad. La clave está en combinar el periodo sinódico lunar con el periodo sinódico de los nodos. Como el Sol vuelve al nodo lunar en unos 346,62 días y una lunación dura 29,5306 días, se pueden estudiar configuraciones repetidas Sol-Luna-nodo.</p></div>
+  <div class="reading-block"><p>El resultado más conocido es el ciclo de Saros. El capítulo muestra que 19 periodos sinódicos del nodo equivalen aproximadamente a 6585,78 días, mientras que 223 meses sinódicos lunares equivalen a 6585,32 días. La diferencia es pequeña, por lo que al cabo de unos 18 años y 11 días se repite una configuración muy parecida. El eclipse se repite, aunque no necesariamente en los mismos lugares de la superficie terrestre.</p></div>
+  <div class="reading-block"><p>El capítulo también indica límites de frecuencia anual: como mínimo hay cuatro eclipses al año, dos de Sol y dos de Luna, aunque los lunares pueden ser penumbrales; como máximo puede haber siete eclipses en un año.</p></div>
+</section>
+
+<section class="page" id="conceptos-clave">
+  <div class="page-head">
+    <h2>4. Conceptos clave</h2>
+    <p class="section-lead">Definiciones examinables y relaciones principales del capítulo.</p>
+  </div>
+  <div class="grid cards-grid">
+    <article class="definition-card"><h3>Eclipse</h3><p>Oscurecimiento producido cuando un cuerpo opaco se interpone entre otro cuerpo y la fuente luminosa. En este capítulo se aplica principalmente a Sol, Tierra y Luna. En examen puede preguntarse como definición y como distinción entre eclipse solar y lunar.</p></article>
+    <article class="definition-card"><h3>Cono de sombra</h3><p>Región desde la que el disco solar queda completamente oculto. En un eclipse solar, un observador situado dentro de la sombra lunar puede ver un eclipse total, si la geometría lo permite. Se relaciona con eclipse total, eje de sombra y elementos besselianos. Pregunta típica: explicar cuándo un eclipse solar es total.</p></article>
+    <article class="definition-card"><h3>Cono de penumbra</h3><p>Región desde la que solo se oculta parte del disco solar. Permite explicar eclipses parciales. Se relaciona con eclipse parcial, semidiámetros aparentes y contactos exteriores. Pregunta típica: diferenciar sombra y penumbra.</p></article>
+    <article class="definition-card"><h3>Eje de sombra</h3><p>Eje común de los conos de sombra y penumbra. Es la referencia geométrica central del capítulo. Se relaciona directamente con \(d_{\min}\) y con el eje \(b_3\) del sistema de Bessel. Pregunta típica: por qué se usa como eje fundamental del sistema besseliano.</p></article>
+    <article class="definition-card"><h3>Nodo lunar</h3><p>Punto donde la órbita lunar corta la eclíptica. Los eclipses solo son posibles cuando la conjunción u oposición ocurre cerca de un nodo. Se relaciona con periodo draconítico, Saros y condiciones de existencia. Pregunta típica: por qué no hay eclipses cada luna nueva o llena.</p></article>
+    <article class="definition-card"><h3>Distancia angular mínima \(d_{\min}\)</h3><p>Menor separación entre el centro lunar y el eje relevante de sombra. Se usa como criterio decisivo de posibilidad de eclipse. Ejemplo: si \(d_{\min}\) es menor que el radio angular efectivo de la penumbra, habrá eclipse parcial. Pregunta típica: aplicar \(d_{\min}=\beta\cos I\).</p></article>
+    <article class="definition-card"><h3>Sistema de referencia de Bessel</h3><p>Sistema ortogonal con origen en el centro terrestre y eje \(b_3\) en la dirección del eje de sombra. Permite transformar posiciones a un plano donde los contactos se calculan por distancias. Pregunta típica: definir el sistema y explicar su utilidad.</p></article>
+    <article class="definition-card"><h3>Elementos besselianos</h3><p>Conjunto de cantidades tabuladas para calcular efemérides de eclipses solares. Incluyen información sobre posición del eje, radios de conos y variaciones temporales. Pregunta típica: explicar para qué sirven, no necesariamente memorizar todos.</p></article>
+    <article class="definition-card"><h3>Magnitud de un eclipse</h3><p>Fracción máxima del diámetro ocultado. En eclipse lunar se refiere al diámetro lunar oscurecido; en eclipse solar, al diámetro solar ocultado. Pregunta típica: distinguir esta magnitud geométrica de la magnitud estelar.</p></article>
+    <article class="definition-card"><h3>Saros</h3><p>Ciclo de repetición de eclipses de unos 18 años y 11 días, basado en la casi coincidencia de 223 meses sinódicos lunares y 19 periodos sinódicos del nodo. Pregunta típica: explicar por qué se repiten eclipses parecidos pero no necesariamente sobre los mismos lugares.</p></article>
+  </div>
+</section>
+
+<section class="page" id="relaciones-entre-ideas">
+  <div class="page-head">
+    <h2>5. Relaciones entre ideas</h2>
+    <p class="section-lead">Cadena conceptual que conviene dominar antes de hacer ejercicios.</p>
+  </div>
+  <div class="reading-block"><p>La cadena conceptual del capítulo es:</p><div class="formula-block">\[\text{fase lunar} \rightarrow \text{proximidad al nodo} \rightarrow \text{distancia mínima al eje de sombra} \rightarrow \text{comparación con semidiámetros y paralajes} \rightarrow \text{tipo de eclipse} \rightarrow \text{cálculo de contactos} \rightarrow \text{magnitud} \rightarrow \text{repetición temporal}\]</div></div>
+  <div class="reading-block"><p>La fase lunar es condición necesaria, pero no suficiente. La conjunción habilita un eclipse solar; la oposición habilita un eclipse lunar. La condición que decide si ocurre realmente es la proximidad al nodo, porque solo cerca del nodo la Luna está suficientemente cerca del plano de la eclíptica.</p></div>
+  <div class="reading-block"><p>Los conos de sombra y penumbra son la causa geométrica de los tipos de eclipse. La penumbra produce parcialidad; la sombra produce totalidad o centralidad. En eclipses solares, la posición del vértice del cono de sombra distingue total, anular y total-anular.</p></div>
+  <div class="reading-block"><p>El sistema de Bessel aparece porque la geometría tridimensional se simplifica si se mira perpendicularmente al eje de sombra. En ese plano, el problema deja de ser una alineación espacial y pasa a ser un cálculo de distancias entre puntos y círculos.</p></div>
+  <div class="reading-block"><p>La magnitud del eclipse depende de la misma geometría que los contactos, pero mide otra cosa: no decide si hay eclipse, sino cuánto diámetro queda oculto en el máximo.</p></div>
+  <div class="reading-block"><p>El Saros conecta la geometría instantánea con la repetición temporal. Para repetir un eclipse se necesita recuperar fase lunar y proximidad al nodo. Como 223 lunaciones casi coinciden con 19 revoluciones sinódicas del nodo, la configuración se repite aproximadamente.</p></div>
+</section>
+
+<section class="page" id="errores-habituales">
+  <div class="page-head">
+    <h2>6. Errores habituales</h2>
+    <p class="section-lead">Fallos de concepto que suelen llevar a respuestas incompletas.</p>
+  </div>
+  <details class="study-toggle error-acc" open><summary>Error: “Hay eclipse de Sol en cada luna nueva.”</summary><div class="details-body"><p><strong>Está mal porque</strong> falta la condición nodal.</p><p><strong>Corrección:</strong> solo hay eclipse si la conjunción ocurre cerca de un nodo lunar.</p><p><strong>Respuesta incorrecta:</strong> “La Luna nueva siempre tapa el Sol.”</p><p><strong>Respuesta correcta:</strong> “La Luna nueva es necesaria para un eclipse solar, pero solo hay eclipse si la Luna está suficientemente cerca del nodo.”</p></div></details>
+  <details class="study-toggle error-acc"><summary>Error: “Hay eclipse de Luna en cada luna llena.”</summary><div class="details-body"><p><strong>Está mal por</strong> la inclinación de la órbita lunar.</p><p><strong>Corrección:</strong> hace falta oposición y proximidad al nodo.</p><p><strong>Respuesta incorrecta:</strong> “La sombra terrestre siempre alcanza a la Luna llena.”</p><p><strong>Respuesta correcta:</strong> “En luna llena la Luna puede pasar por encima o por debajo del cono de sombra.”</p></div></details>
+  <details class="study-toggle error-acc"><summary>Error: confundir sombra y penumbra.</summary><div class="details-body"><p><strong>Está mal porque</strong> producen fenómenos distintos.</p><p><strong>Corrección:</strong> sombra implica ocultación total del disco solar desde esa región; penumbra implica ocultación parcial.</p><p><strong>Respuesta incorrecta:</strong> “La penumbra es una sombra más débil sin importancia geométrica.”</p><p><strong>Respuesta correcta:</strong> “La penumbra define los eclipses parciales.”</p></div></details>
+  <details class="study-toggle error-acc"><summary>Error: confundir magnitud de eclipse con magnitud estelar.</summary><div class="details-body"><p><strong>Está mal porque</strong> aquí magnitud es una fracción geométrica.</p><p><strong>Corrección:</strong> la magnitud del eclipse mide diámetro ocultado dividido por diámetro total.</p><p><strong>Respuesta incorrecta:</strong> “Un eclipse de magnitud 1 es una fuente de brillo 1.”</p><p><strong>Respuesta correcta:</strong> “Un eclipse solar de magnitud 1 indica ocultación completa del diámetro solar.”</p></div></details>
+  <details class="study-toggle error-acc"><summary>Error: usar \(d_{\min}\) sin compararlo con ningún límite.</summary><div class="details-body"><p><strong>Está mal porque</strong> \(d_{\min}\) por sí sola no clasifica el eclipse.</p><p><strong>Corrección:</strong> debe compararse con los radios angulares efectivos de sombra o penumbra.</p><p><strong>Respuesta incorrecta:</strong> “Como \(d_{\min}\) es pequeño, hay eclipse total.”</p><p><strong>Respuesta correcta:</strong> “Hay que verificar si \(d_{\min}\) es menor que el límite de penumbra o de sombra.”</p></div></details>
+  <details class="study-toggle error-acc"><summary>Error: pensar que el Saros repite el eclipse en el mismo sitio.</summary><div class="details-body"><p><strong>Está mal porque</strong> la diferencia temporal no equivale a un número entero exacto de días terrestres.</p><p><strong>Corrección:</strong> se repite una configuración parecida, pero la franja de visibilidad cambia.</p><p><strong>Respuesta incorrecta:</strong> “Cada 18 años y 11 días el eclipse se repite igual en el mismo lugar.”</p><p><strong>Respuesta correcta:</strong> “El Saros repite aproximadamente la configuración Sol-Luna-nodo, no necesariamente la localización terrestre.”</p></div></details>
+</section>
+
+<section class="page" id="preguntas-orientadas-a-examen">
+  <div class="page-head">
+    <h2>7. Preguntas orientadas a examen</h2>
+    <p class="section-lead">Bloques de dificultad creciente para repasar activamente.</p>
+  </div>
+  <div class="grid cards-grid">
+    <article class="definition-card"><h3>10 preguntas fáciles</h3><ol><li>Define eclipse según el capítulo.</li><li>¿Qué diferencia hay entre eclipse de Sol y eclipse de Luna?</li><li>¿Qué son el cono de sombra y el cono de penumbra?</li><li>¿Por qué no hay eclipses todos los meses?</li><li>¿Qué papel desempeñan los nodos lunares?</li><li>¿Qué es el eje de sombra?</li><li>¿Qué condición de fase corresponde a un eclipse solar?</li><li>¿Qué condición de fase corresponde a un eclipse lunar?</li><li>¿Qué significa magnitud de un eclipse?</li><li>¿Qué es el ciclo de Saros?</li></ol></article>
+    <article class="definition-card"><h3>10 preguntas medias</h3><ol><li>Explica la utilidad de la distancia mínima \(d_{\min}\).</li><li>Interpreta la fórmula \(d_{\min}=\beta\cos I\).</li><li>Explica por qué los semidiámetros aparentes intervienen en las condiciones de eclipse.</li><li>Distingue eclipse solar parcial, total, anular y total-anular.</li><li>Explica por qué un eclipse de Sol depende del lugar de observación.</li><li>Explica por qué un eclipse de Luna tiene visibilidad más global que uno de Sol.</li><li>Describe el sistema de referencia de Bessel.</li><li>¿Para qué sirven los elementos besselianos?</li><li>¿Cómo se obtienen los instantes de contacto en un eclipse, según el planteamiento del capítulo?</li><li>¿Por qué los casos intermedios requieren cálculo con datos del día?</li></ol></article>
+    <article class="definition-card"><h3>5 preguntas difíciles</h3><ol><li>Explica cómo el sistema de Bessel transforma un problema espacial en un problema de distancias sobre un plano.</li><li>Razona por qué el criterio de existencia de eclipse se formula como comparación entre \(d_{\min}\) y una separación angular límite.</li><li>Explica la diferencia entre los radios \(l_1,l_2\) y \(L_1,L_2\) en eclipses solares.</li><li>Justifica por qué los contactos se obtienen resolviendo una ecuación cuadrática en el tiempo.</li><li>Explica matemáticamente por qué el Saros no es una repetición perfecta.</li></ol></article>
+    <article class="definition-card"><h3>5 preguntas de desarrollo largo</h3><ol><li>Desarrolla la geometría general de los eclipses a partir de los conos de sombra y penumbra.</li><li>Explica el procedimiento general para decidir si habrá eclipse de Luna y de qué tipo.</li><li>Explica el procedimiento general para decidir si habrá eclipse de Sol y de qué tipo.</li><li>Desarrolla el papel del sistema de Bessel en el cálculo de circunstancias locales de un eclipse solar.</li><li>Explica la frecuencia anual de eclipses y el ciclo de Saros.</li></ol></article>
+    <article class="definition-card"><h3>5 preguntas de relación entre conceptos</h3><ol><li>Relaciona fase lunar, nodo lunar y distancia mínima al eje de sombra.</li><li>Relaciona semidiámetro aparente, paralaje y tipo de eclipse.</li><li>Relaciona sistema de Bessel, elementos besselianos y contactos.</li><li>Relaciona eclipse parcial, penumbra y magnitud.</li><li>Relaciona periodo sinódico lunar, revolución sinódica de los nodos y Saros.</li></ol></article>
+  </div>
+</section>
+
+<section class="page" id="respuestas-modelo">
+  <div class="page-head">
+    <h2>8. Respuestas modelo</h2>
+    <p class="section-lead">Respuestas desarrolladas para comprobar comprensión y redacción.</p>
+  </div>
+  <details class="study-toggle" open><summary>Respuestas fáciles</summary><div class="details-body"><ol><li>Un eclipse es el oscurecimiento de un cuerpo porque entre él y la fuente luminosa se interpone un objeto opaco. En el caso estudiado, la fuente es el Sol y los cuerpos principales son Tierra y Luna.</li><li>En un eclipse de Sol, la Luna se interpone entre el Sol y la Tierra y oculta total o parcialmente el Sol para ciertos observadores terrestres. En un eclipse de Luna, la Tierra se interpone entre el Sol y la Luna, y la Luna entra en la sombra o penumbra terrestre.</li><li>El cono de sombra es la región desde la cual la fuente luminosa queda completamente tapada. El cono de penumbra es la región desde la cual solo queda tapada parcialmente.</li><li>Porque la órbita lunar está inclinada respecto a la eclíptica. Aunque haya conjunción u oposición cada mes, normalmente la Luna no pasa por el nodo y no intercepta el cono adecuado.</li><li>Los nodos lunares son los puntos donde la órbita lunar corta la eclíptica. Los eclipses solo son posibles cuando la Luna está cerca de ellos en conjunción u oposición.</li><li>El eje de sombra es el eje común de los conos de sombra y penumbra. Sirve como referencia geométrica para medir la separación de la Luna o del observador respecto a la zona de eclipse.</li><li>La fase correspondiente es la luna nueva, es decir, la conjunción Sol-Luna.</li><li>La fase correspondiente es la luna llena, es decir, la oposición Sol-Luna.</li><li>Es la fracción máxima del diámetro ocultado durante el eclipse. En un eclipse lunar se refiere al diámetro lunar; en uno solar, al diámetro solar.</li><li>Es un ciclo de repetición aproximada de eclipses de unos 18 años y 11 días, basado en la casi coincidencia de 223 meses sinódicos lunares con 19 revoluciones sinódicas de los nodos.</li></ol></div></details>
+  <details class="study-toggle"><summary>Respuestas medias</summary><div class="details-body"><ol><li>\(d_{\min}\) permite cuantificar la separación mínima entre el centro lunar y el eje relevante del eclipse. Se compara con los límites angulares definidos por los conos y los semidiámetros aparentes.</li><li>La fórmula expresa que la separación mínima depende de la latitud eclíptica lunar \(\beta\), corregida por un factor geométrico \(\cos I\). Si \(\beta\) es grande, la Luna pasa lejos del eje y no hay eclipse.</li><li>Porque los eclipses ocurren por contacto entre discos aparentes y conos. El tamaño angular del Sol, la Luna y la sombra decide si hay contacto parcial, total o central.</li><li>En un eclipse parcial, el observador está en la penumbra. En uno total, está en la sombra y el disco solar queda completamente oculto. En uno anular, la Luna no cubre todo el disco solar y queda un anillo visible. En uno total-anular, la geometría está en el límite entre ambos casos.</li><li>Porque la sombra lunar proyectada sobre la Tierra cubre una región limitada. Dos observadores en lugares distintos pueden estar dentro de la sombra, dentro de la penumbra o fuera de ambas.</li><li>Porque en un eclipse lunar el fenómeno ocurre en la Luna, que entra en la sombra terrestre. Todos los observadores que tengan la Luna sobre el horizonte pueden verlo, mientras que el eclipse solar depende de la trayectoria local de la sombra lunar.</li><li>Es un sistema ortogonal con origen en el centro de la Tierra y eje principal en la dirección del eje de sombra. Permite expresar la posición de la Luna, la sombra y el observador en coordenadas adaptadas al eclipse.</li><li>Sirven para calcular efemérides de eclipses solares. Incluyen datos sobre la dirección del eje de sombra, radios de conos, posición lunar y variaciones temporales.</li><li>Se parte de un instante aproximado y se linealizan las coordenadas con el tiempo. La condición de contacto se expresa como igualdad entre una distancia y un radio de sombra o penumbra, lo que conduce a una ecuación cuadrática.</li><li>Porque semidiámetros, paralajes, distancias e inclinación cambian con el tiempo. Cerca de los límites no basta una regla general: hace falta evaluar las cantidades reales del día.</li></ol></div></details>
+  <details class="study-toggle"><summary>Respuestas difíciles</summary><div class="details-body"><ol><li>El sistema de Bessel toma como eje principal el eje de sombra. Al proyectar sobre el plano perpendicular a ese eje, los conos cortan el plano en círculos. Así, el problema de alineación tridimensional se reduce a calcular si un punto entra o sale de un círculo.</li><li>Un eclipse ocurre cuando el disco lunar o la posición del observador alcanza la región de sombra o penumbra. Esa región tiene un radio angular efectivo. Por tanto, la condición natural es comparar la separación mínima con ese radio.</li><li>\(l_1\) y \(l_2\) son radios de las secciones de los conos de penumbra y sombra en el plano fundamental. \(L_1\) y \(L_2\) son los radios correspondientes en un plano paralelo que pasa por el observador. Por eso incorporan la posición local del observador.</li><li>En un intervalo corto, las coordenadas se aproximan linealmente con el tiempo. La distancia al eje aparece como norma cuadrática de un vector. Al imponer que esa distancia sea igual al radio del cono, se obtiene una ecuación de segundo grado en \(t-t_0\).</li><li>Porque 223 meses sinódicos y 19 revoluciones sinódicas del nodo no son exactamente iguales. La diferencia es pequeña, pero suficiente para desplazar la geometría sobre la Tierra. Por eso el eclipse se repite de forma parecida, no idéntica.</li></ol></div></details>
+  <details class="study-toggle"><summary>Respuestas de desarrollo largo</summary><div class="details-body"><ol><li>Un cuerpo opaco iluminado por el Sol genera un cono de sombra y otro de penumbra. Si un observador o un astro entra en la penumbra, se produce ocultación parcial; si entra en la sombra, puede producirse ocultación total. Los eclipses solares y lunares se entienden como casos concretos de esta geometría: en el solar, la Luna proyecta sombra sobre la Tierra; en el lunar, la Tierra proyecta sombra sobre la Luna.</li><li>Para decidir si habrá eclipse de Luna, se parte de una oposición Sol-Luna cercana a un nodo lunar. Se calcula la distancia mínima del centro lunar al eje de sombra terrestre. Esa distancia se compara con los límites angulares de penumbra y sombra, modificados por el efecto aproximado de la atmósfera terrestre. Según el límite que se supere, el eclipse será penumbral, parcial de sombra o total.</li><li>Para decidir si habrá eclipse de Sol, se parte de una conjunción Sol-Luna cercana a un nodo. Se calcula la distancia mínima entre el centro lunar y la dirección Sol-Tierra. Si esa distancia es menor que el límite de penumbra, hay eclipse parcial. Si además se cumplen las condiciones de entrada en la sombra, hay eclipse central, que puede ser total, anular o total-anular según la posición del vértice del cono de sombra.</li><li>El sistema de Bessel orienta el eje \(b_3\) en la dirección del eje de sombra y permite proyectar la geometría sobre un plano fundamental. En ese plano, la posición del observador y la del eje de sombra se comparan mediante distancias. Los elementos besselianos proporcionan las cantidades necesarias para calcular radios, posiciones y variaciones temporales. Las circunstancias locales se obtienen resolviendo cuándo la distancia del observador al eje coincide con los radios de penumbra o sombra.</li><li>La frecuencia de eclipses depende de la repetición de conjunciones y oposiciones cerca de los nodos. Como el Sol vuelve al nodo lunar cada 346,62 días y el mes sinódico lunar dura 29,5306 días, cada año debe haber un número mínimo de eclipses. El ciclo de Saros surge porque 223 meses sinódicos casi igualan 19 revoluciones sinódicas de los nodos. Esto da una repetición aproximada cada 18 años y 11 días.</li></ol></div></details>
+  <details class="study-toggle"><summary>Respuestas de relación entre conceptos</summary><div class="details-body"><ol><li>La fase lunar determina la alineación básica: conjunción para eclipse solar y oposición para lunar. El nodo lunar determina si la alineación ocurre cerca del plano adecuado. La distancia mínima mide cuantitativamente esa cercanía.</li><li>Los semidiámetros aparentes fijan los tamaños angulares de los discos. La paralaje modifica la geometría aparente desde la Tierra. Ambos entran en los límites que separan eclipse parcial, total, anular o ausencia de eclipse.</li><li>El sistema de Bessel proporciona las coordenadas adaptadas al eje de sombra. Los elementos besselianos dan valores tabulados para usar ese sistema. Los contactos se calculan imponiendo que la distancia al eje iguale el radio de sombra o penumbra.</li><li>Un eclipse parcial se produce en la penumbra. La magnitud mide qué fracción máxima del diámetro queda ocultada. Por tanto, cuanto más cerca esté el observador del eje de sombra, mayor será normalmente la magnitud parcial.</li><li>El periodo sinódico lunar repite la fase. La revolución sinódica de los nodos repite la proximidad del Sol al nodo lunar. El Saros aparece cuando ambas repeticiones casi coinciden.</li></ol></div></details>
+</section>
+
+<section class="page" id="resumen-final-de-repaso">
+  <div class="page-head"><h2>9. Resumen final de repaso</h2><p class="section-lead">Última vuelta antes de ejercicios o preguntas de desarrollo.</p></div>
+  <div class="grid cards-grid"><article class="definition-card"><h3>Ideas que deben quedar fijas</h3><ul><li>Los eclipses se explican por conos de sombra y penumbra.</li><li>Eclipse solar: Luna entre Sol y Tierra.</li><li>Eclipse lunar: Tierra entre Sol y Luna.</li><li>No hay eclipse cada mes porque la órbita lunar está inclinada.</li><li>La condición decisiva es la proximidad al nodo lunar.</li><li>Fórmula central: \(d_{\min}=\beta\cos I\).</li><li>Para decidir el tipo de eclipse, se compara \(d_{\min}\) con límites angulares.</li><li>El sistema de Bessel coloca el eje de sombra como eje fundamental.</li><li>Los elementos besselianos permiten calcular circunstancias locales de eclipses solares.</li><li>La magnitud de eclipse es una fracción geométrica, no una magnitud estelar.</li><li>El Saros dura aproximadamente 18 años y 11 días.</li><li>Error principal: confundir fase lunar suficiente con condición completa de eclipse.</li></ul></article></div>
+</section>
+
+<section class="page" id="checklist-de-dominio">
+  <div class="page-head"><h2>10. Checklist de dominio</h2><p class="section-lead">Señales rápidas para saber qué parte falta reforzar.</p></div>
+  <div class="checklist">
+    <label><input type="checkbox" /> Si no puedes explicar por qué no hay eclipses cada luna nueva, falta repasar nodos lunares e inclinación orbital.</label>
+    <label><input type="checkbox" /> Si confundes eclipse solar y lunar, revisa la posición relativa Sol-Tierra-Luna.</label>
+    <label><input type="checkbox" /> Si no puedes definir sombra y penumbra, falta repasar la geometría de conos.</label>
+    <label><input type="checkbox" /> Si usas \(d_{\min}\) sin compararla con un límite angular, falta repasar criterios de existencia.</label>
+    <label><input type="checkbox" /> Si confundes magnitud de eclipse con magnitud estelar, revisa la definición geométrica de magnitud en este capítulo.</label>
+    <label><input type="checkbox" /> Si no puedes explicar para qué sirve el sistema de Bessel, falta repasar el plano fundamental y el eje de sombra.</label>
+    <label><input type="checkbox" /> Si no entiendes por qué el eclipse solar depende del observador, revisa circunstancias locales.</label>
+    <label><input type="checkbox" /> Si puedes distinguir parcial, total, anular y total-anular, la clasificación solar está asentada.</label>
+    <label><input type="checkbox" /> Si puedes explicar el Saros sin decir que el eclipse se repite exactamente en el mismo lugar, la parte de repetición está asentada.</label>
+    <label><input type="checkbox" /> Si puedes resolver un ejercicio comparando \(d_{\min}\) con los límites de sombra o penumbra, el capítulo está suficientemente asentado.</label>
+  </div>
+</section>
+</main>
+</div>
+</body>
+</html>

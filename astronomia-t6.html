@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="color-scheme" content="light dark" />
+<title>Astronomía — Tema 6 — Corrección de coordenadas</title>
+<link rel="icon" type="image/png" sizes="32x32" href="assets/icons/icon-32.png" />
+<link rel="icon" type="image/png" sizes="50x50" href="assets/icons/icon-50.png" />
+<link rel="apple-touch-icon" sizes="100x100" href="assets/icons/icon-100.png" />
+<meta name="theme-color" content="#172554" />
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+<link rel="stylesheet" href="assets/styles.css" />
+<script defer src="assets/app.js"></script>
+</head>
+<body class="subject-astronomia">
+<div class="wrap">
+<header class="cover">
+  <div class="top-actions">
+    <a class="back-link" href="index.html">← Volver al índice</a>
+  </div>
+  <p class="eyebrow">UNED Física · Curso de Astronomía · Tema 6</p>
+  <h1>Guía de estudio — Curso de Astronomía / Introducción a la Astronomía</h1>
+  <p class="subtitle">Introducción a la Astronomía: corrección de coordenadas, refracción, aberración, paralaje, movimientos propios y ápex solar.</p>
+  <div class="chips">
+    <span class="chip">Astronomía</span>
+    <span class="chip">Tema 6</span>
+    <span class="chip">coordenadas aparentes</span>
+    <span class="chip">astrometría</span>
+    <span class="chip">MathJax</span>
+    <span class="chip">estado: maquetado</span>
+  </div>
+</header>
+
+<div class="toolbar no-print">
+  <nav>
+    <a href="#mapa">Mapa</a>
+    <a href="#prerrequisitos-minimos">Prerrequisitos</a>
+    <a href="#idea-central-del-capitulo">Idea central</a>
+    <a href="#desarrollo-completo-del-capitulo">Desarrollo</a>
+    <a href="#conceptos-clave">Conceptos</a>
+    <a href="#errores-habituales">Errores</a>
+    <a href="#preguntas-orientadas-a-examen">Preguntas</a>
+    <a href="#respuestas-modelo">Respuestas</a>
+    <a href="#resumen-final-de-repaso">Resumen</a>
+    <a href="#checklist-de-dominio">Checklist</a>
+  </nav>
+  <div class="toolbar-actions">
+    <button class="btn" onclick="printReady()">Imprimir / guardar PDF</button>
+    <button class="btn secondary" onclick="openAllDetails()">Abrir todo</button>
+    <button class="btn secondary" onclick="closeAllDetails()">Cerrar acordeones</button>
+  </div>
+</div>
+
+<main>
+<section class="page map-page" id="mapa">
+  <div class="page-head">
+    <h2>Mapa clicable</h2>
+    <p class="section-lead">El capítulo 6 del libro cargado corresponde a <strong>Corrección de coordenadas</strong>. Su contenido se organiza en refracción astronómica, aberración de la luz, paralaje y medida de distancias, movimientos propios estelares y ápex solar.</p>
+  </div>
+  <div class="concept-map">
+    <a class="map-node" href="#idea-central-del-capitulo"><span>Idea central</span><small>observado · corregido · efectos físicos</small></a>
+    <a class="map-node" href="#refraccion-astronomica"><span>Refracción</span><small>atmósfera · distancia cenital · horizonte</small></a>
+    <a class="map-node" href="#aberracion-de-la-luz"><span>Aberración</span><small>velocidad del observador · v/c · elipse</small></a>
+    <a class="map-node" href="#paralaje-y-medida-de-distancias"><span>Paralaje</span><small>punto de observación · distancias · Luna</small></a>
+    <a class="map-node" href="#movimientos-propios-estelares"><span>Movimiento propio</span><small>desplazamiento real · componentes · época</small></a>
+    <a class="map-node" href="#el-apex-solar"><span>Ápex solar</span><small>movimiento del Sol · entorno estelar</small></a>
+    <a class="map-node" href="#errores-habituales"><span>Errores</span><small>confusiones examinables</small></a>
+    <a class="map-node" href="#preguntas-orientadas-a-examen"><span>Examen</span><small>preguntas · respuestas · checklist</small></a>
+  </div>
+</section>
+
+<section class="page" id="prerrequisitos-minimos">
+  <div class="page-head">
+    <h2>1. Prerrequisitos mínimos</h2>
+    <p class="section-lead">Base mínima para entender por qué una coordenada observada necesita correcciones.</p>
+  </div>
+<article class="definition-card"><h3>Coordenadas horizontales</h3><div class="reading-block"><p>Definición breve: sistema local que usa altura \(h\), distancia cenital \(z\) y azimut \(A\). Por qué es necesario: la refracción depende directamente de la altura o de la distancia cenital del astro. Ejemplo mínimo: un astro bajo sobre el horizonte sufre más refracción que uno próximo al cenit.</p></div></article>
+<article class="definition-card"><h3>Coordenadas ecuatoriales</h3><div class="reading-block"><p>Definición breve: sistema basado en el ecuador celeste, con ascensión recta \(\alpha\) y declinación \(\delta\). Por qué es necesario: muchas correcciones del capítulo se expresan como variaciones en \(\alpha\) y \(\delta\). Ejemplo mínimo: corregir una posición observada exige calcular \(\Delta \alpha\) y \(\Delta \delta\).</p></div></article>
+<article class="definition-card"><h3>Coordenadas eclípticas</h3><div class="reading-block"><p>Definición breve: sistema basado en el plano de la órbita terrestre, con longitud eclíptica \(\lambda\) y latitud eclíptica \(\beta\). Por qué es necesario: la aberración anual y la paralaje anual se entienden mejor en relación con el movimiento orbital de la Tierra. Ejemplo mínimo: una estrella describe una pequeña elipse aparente por efecto del movimiento anual terrestre.</p></div></article>
+<article class="definition-card"><h3>Vectores y cambios de base</h3><div class="reading-block"><p>Definición breve: representación de posiciones y velocidades mediante componentes en sistemas de referencia. Por qué es necesario: el libro plantea las correcciones de forma vectorial, no mediante trigonometría esférica clásica. Ejemplo mínimo: el vector velocidad del observador entra directamente en las fórmulas de aberración.</p></div></article>
+<article class="definition-card"><h3>Movimiento orbital terrestre</h3><div class="reading-block"><p>Definición breve: movimiento de la Tierra alrededor del Sol, aproximadamente circular y, con más precisión, elíptico. Por qué es necesario: produce aberración anual y paralaje anual. Ejemplo mínimo: la constante de aberración depende de \(v/c\), donde \(v\) es la velocidad orbital terrestre.</p></div></article>
+<article class="definition-card"><h3>Movimiento de rotación terrestre</h3><div class="reading-block"><p>Definición breve: giro diario de la Tierra alrededor de su eje. Por qué es necesario: genera aberración diurna y paralaje diurna. Ejemplo mínimo: dos observatorios situados en lugares distintos no ven exactamente el mismo objeto en la misma dirección.</p></div></article>
+<article class="definition-card"><h3>Pequeños ángulos</h3><div class="reading-block"><p>Definición breve: aproximación matemática para ángulos muy pequeños, normalmente en segundos de arco. Por qué es necesario: las correcciones astrométricas suelen ser pequeñas, pero no despreciables. Ejemplo mínimo: \(20''\) de aberración anual es pequeño visualmente, pero enorme para astrometría precisa.</p></div></article>
+</section>
+
+<section class="page" id="idea-central-del-capitulo">
+  <div class="page-head">
+    <h2>2. Idea central del capítulo</h2>
+    <p class="section-lead">El problema común: distinguir la posición observada de la posición corregida.</p>
+  </div>
+<div class="reading-block"><p>El capítulo aborda un problema fundamental de la astronomía de posición: las coordenadas que se miden directamente no coinciden, en general, con las coordenadas que tendría el astro en un sistema ideal. La luz no llega al observador siguiendo una geometría simple, el observador no está inmóvil, la Tierra tiene atmósfera, el punto de observación no coincide siempre con el centro terrestre y las propias estrellas se mueven. Por tanto, observar una posición no basta; hay que corregirla.</p></div>
+<div class="reading-block"><p>La idea central es separar varios efectos físicos y geométricos que modifican la dirección aparente de un astro. La refracción se debe al paso de la luz por la atmósfera. La aberración se debe a la composición entre la velocidad finita de la luz y el movimiento del observador. La paralaje aparece porque el astro se observa desde puntos distintos. El movimiento propio recuerda que las estrellas no son puntos fijos en el firmamento, sino objetos con desplazamiento real proyectado sobre la esfera celeste. El capítulo termina ampliando esta idea al movimiento del Sol respecto del entorno estelar, introduciendo el ápex solar.</p></div>
+<div class="reading-block"><p>Dentro de la asignatura, este capítulo conecta las coordenadas astronómicas con la observación real. Después de aprender a definir sistemas de coordenadas, el alumno debe entender que una posición astronómica puede ser observada, topocéntrica, geocéntrica, corregida, aparente o afectada por movimientos propios. En examen UNED, este bloque aparece de forma muy operativa: cálculo de elipses de aberración, correcciones por movimiento propio, paralaje o coordenadas topocéntricas. En los exámenes cargados aparece, por ejemplo, el cálculo de semiejes y excentricidad de una elipse de aberración y un ejercicio de movimiento propio estelar.</p></div>
+</section>
+
+<section class="page" id="desarrollo-completo-del-capitulo">
+  <div class="page-head">
+    <h2>3. Desarrollo completo del capítulo</h2>
+    <p class="section-lead">Refracción, aberración, paralaje, movimientos propios y ápex solar.</p>
+  </div>
+<h3 id="refraccion-astronomica">3.1. Refracción astronómica</h3>
+<div class="reading-block"><p>La refracción astronómica aparece porque la luz de un astro atraviesa la atmósfera terrestre antes de llegar al observador. La atmósfera no se comporta como el vacío: su índice de refracción varía con la densidad, y esta depende de la altura sobre la superficie terrestre. Como consecuencia, el rayo luminoso se curva y el astro se observa en una dirección distinta de la verdadera.</p></div>
+<div class="reading-block"><p>El efecto principal es que la distancia cenital observada resulta menor que la distancia cenital verdadera. Dicho de forma física: la refracción eleva aparentemente los astros. Por eso un astro próximo al horizonte parece estar algo más alto de lo que estaría si no hubiera atmósfera. El libro modela la atmósfera mediante estratos esféricos de densidad constante e índice de refracción dependiente de la distancia al centro terrestre. Con esas hipótesis se obtiene la ley de Bouguer, que expresa la conservación de \(nr\sin I\) a lo largo del recorrido del rayo.</p></div>
+<div class="reading-block"><p>La importancia de esta sección no está en memorizar todos los pasos de la integración, sino en entender qué se corrige. La refracción modifica la dirección observada, sobre todo en altura. Cerca del cenit el efecto es pequeño; cerca del horizonte se vuelve importante. Por eso las fórmulas aproximadas del capítulo distinguen entre alturas ordinarias y grandes distancias cenitales. El libro da también un valor convencional de la refracción horizontal: para orto y ocaso se toma \(-34'\), de modo que el centro del Sol o de la Luna coincide con el horizonte cuando la distancia cenital verdadera es \(90^\circ 34'\).</p></div>
+<div class="reading-block"><p>Después, el capítulo estudia cómo la refracción afecta a las coordenadas ecuatoriales. La conexión con capítulos anteriores es clara: las coordenadas horizontales y ecuatoriales están relacionadas, de modo que una variación en la distancia cenital produce variaciones en declinación y ángulo horario. El azimut y la latitud del lugar se mantienen fijos en esta corrección, y se obtienen expresiones diferenciales para \(d\delta\) y \(dH\).</p></div>
+<div class="reading-block"><p>En examen, esta parte puede aparecer como demostración o como aplicación geométrica. Un error típico es decir que la refracción cambia la posición real del astro. No la cambia: cambia la dirección desde la que parece llegar la luz.</p></div>
+<h3 id="aberracion-de-la-luz">3.2. Aberración de la luz</h3>
+<div class="reading-block"><p>La aberración de la luz es otro tipo de corrección, pero su causa es distinta. No se debe a la atmósfera, sino a que el observador se mueve mientras la luz llega con velocidad finita. Si el telescopio se desplaza durante el tiempo que tarda el fotón en recorrer el tubo óptico idealizado, debe apuntarse a una dirección ligeramente distinta para que la luz llegue al detector. Esa diferencia angular es la aberración.</p></div>
+<div class="reading-block"><p>El capítulo presenta el razonamiento mediante el ejemplo del telescopio de Gauss y establece la relación vectorial fundamental de la aberración. A partir de ella se obtienen, en primera aproximación, las variaciones de las coordenadas observadas respecto de las coordenadas sin aberración.</p></div>
+<div class="reading-block"><p>El libro distingue tres tipos de aberración: diurna, anual y secular. La aberración diurna procede de la rotación terrestre; la anual, de la traslación de la Tierra alrededor del Sol; la secular, del movimiento del sistema solar en la Galaxia. El capítulo se centra en la diurna y la anual.</p></div>
+<div class="reading-block"><p>La aberración anual se entiende de forma natural en coordenadas eclípticas. Si se supone circular la órbita terrestre, el vector velocidad de la Tierra está en el plano de la eclíptica y es perpendicular al radio vector. De ahí resultan las correcciones en longitud y latitud eclípticas. La estrella no se desplaza al azar: describe una pequeña elipse aparente, llamada elipse de aberración.</p></div>
+<div class="reading-block"><p>La constante de aberración es esencial. El libro la relaciona con \(v/c\), es decir, con la razón entre la velocidad orbital terrestre y la velocidad de la luz. Su valor característico está en torno a \(20{,}5''\). Cuando se considera la excentricidad de la órbita terrestre, aparece una corrección adicional del orden de \(ek\), pequeña pero relevante si se exige precisión.</p></div>
+<div class="reading-block"><p>En coordenadas ecuatoriales, la aberración anual exige transformar el vector velocidad desde el sistema eclíptico al ecuatorial. El resultado introduce términos que dependen de la estrella y términos que dependen de la posición de la Tierra en su órbita. Por eso históricamente se usaron números independientes y números besselianos tabulados en efemérides.</p></div>
+<div class="reading-block"><p>La aberración diurna se obtiene cambiando el vector velocidad: ya no se usa la velocidad orbital de la Tierra, sino la velocidad del observador por la rotación terrestre. Depende de la latitud del observador y del tiempo sidéreo local. Su magnitud es menor que la anual, pero no conceptualmente distinta: sigue siendo una consecuencia de observar desde un sistema en movimiento.</p></div>
+<h3 id="paralaje-y-medida-de-distancias">3.3. Paralaje y medida de distancias</h3>
+<div class="reading-block"><p>La paralaje introduce otra causa de desplazamiento aparente: el cambio de punto de observación. Un objeto cercano se ve proyectado contra el fondo celeste en direcciones ligeramente distintas cuando se observa desde lugares distintos. La idea es geométrica y sirve para medir distancias.</p></div>
+<div class="reading-block"><p>La paralaje diurna aparece cuando se compara la observación desde la superficie terrestre con la que se haría desde el centro de la Tierra. Es importante para cuerpos relativamente próximos, como la Luna o planetas cercanos. No es relevante del mismo modo para estrellas lejanas, porque su desplazamiento diurno es extremadamente pequeño.</p></div>
+<div class="reading-block"><p>La paralaje de la Luna se trata como un caso importante porque la Luna está lo bastante cerca para que dos observadores terrestres puedan verla desde direcciones apreciablemente distintas. El capítulo incluye ejercicios donde se usan observaciones simultáneas desde dos lugares para calcular la distancia lunar.</p></div>
+<div class="reading-block"><p>La paralaje del Sol aparece vinculada a la unidad astronómica y a la escala del sistema solar. En el enfoque clásico, conocer la paralaje solar equivale a fijar la distancia Tierra-Sol. Aunque hoy las técnicas modernas son más precisas, el capítulo mantiene el valor conceptual del método: medir una pequeña diferencia angular permite deducir una distancia enorme.</p></div>
+<div class="reading-block"><p>La paralaje anual se debe al cambio de posición de la Tierra a lo largo de su órbita. Es la base geométrica de la medida de distancias estelares cercanas. Una estrella próxima parece describir una elipse anual sobre el fondo de estrellas lejanas. Esta elipse de paralaje se parece formalmente a la elipse de aberración, pero su causa es distinta: la aberración depende de la velocidad del observador; la paralaje depende del cambio de posición del observador.</p></div>
+<div class="reading-block"><p>En examen conviene distinguir con limpieza estos dos efectos. Ambos son anuales y ambos pueden producir elipses aparentes, pero no son el mismo fenómeno. La aberración se relaciona con \(v/c\); la paralaje se relaciona con la distancia al astro.</p></div>
+<h3 id="movimientos-propios-estelares">3.4. Movimientos propios estelares</h3>
+<div class="reading-block"><p>Hasta este punto, las coordenadas variaban por efectos de observación o por la posición del observador. En los movimientos propios cambia el planteamiento: las estrellas se mueven realmente. El capítulo recuerda que Halley detectó en 1718 diferencias entre coordenadas antiguas y modernas de estrellas brillantes como Sirio, Procyon y Arturo, lo que llevó a reconocer que las estrellas no son fijas.</p></div>
+<div class="reading-block"><p>El movimiento propio anual \(\mu\) es el ángulo que subtiende, en un año, el desplazamiento de la estrella proyectado sobre el plano tangente a la esfera celeste. Depende de dos factores: de la distancia a la estrella y de la orientación de su velocidad respecto de la visual. Una estrella puede tener gran velocidad espacial, pero si se mueve casi en la dirección de la visual, su movimiento propio angular será pequeño.</p></div>
+<div class="reading-block"><p>El libro adopta, como primera aproximación, movimiento rectilíneo y uniforme para cada estrella, de modo que \(\mu\) se considera constante. La estrella de Barnard se presenta como ejemplo de movimiento propio muy grande, con datos del catálogo Hipparcos.</p></div>
+<div class="reading-block"><p>El desarrollo matemático usa un sistema ortonormal local asociado a la estrella: una dirección radial, una dirección tangente al paralelo en sentido creciente de ascensión recta y una dirección tangente al meridiano en sentido creciente de declinación. Esta base permite descomponer la velocidad en componente radial y componentes tangenciales.</p></div>
+<div class="reading-block"><p>Para cálculos prácticos, el capítulo proporciona fórmulas exactas y aproximaciones. En baja precisión, basta con aplicar una corrección lineal:</p></div>
+<div class="formula-block">\[\alpha = \alpha_0 + \mu_\alpha (t-t_0), \qquad
+\delta = \delta_0 + \mu_\delta (t-t_0).\]</div>
+<div class="reading-block"><p>Si el movimiento propio es grande o el intervalo temporal es largo, deben usarse términos de orden superior o las fórmulas exactas. El propio libro advierte que las fórmulas de primer orden no siempre bastan.</p></div>
+<h3 id="el-apex-solar">3.5. El ápex solar</h3>
+<div class="reading-block"><p>El capítulo termina ampliando la idea de movimiento propio: si las estrellas se mueven respecto al sistema solar, también el Sol se mueve respecto del entorno estelar. La dirección hacia la que se desplaza el Sol se denomina ápex; el punto opuesto, antiápex.</p></div>
+<div class="reading-block"><p>El razonamiento inicial es sencillo: si se supusiera que las estrellas están fijas y solo se mueve el Sol, los movimientos propios aparentes de las estrellas mostrarían una pauta común. Las estrellas parecerían alejarse del ápex o dirigirse hacia el antiápex, según cómo se mire la composición de velocidades. El capítulo indica métodos simples basados en velocidades radiales o en movimientos propios, pero también explica por qué no son plenamente efectivos: las estrellas tienen movimientos propios reales.</p></div>
+<div class="reading-block"><p>La solución más refinada consiste en considerar un conjunto de estrellas cercanas, definir un centroide y estudiar la velocidad del Sol respecto de ese sistema. Así se pasa de una imagen cualitativa a un tratamiento estadístico y vectorial. Esta sección no suele ser la más operativa en examen, pero es conceptualmente importante porque cierra el capítulo: las coordenadas astronómicas son dinámicas, no etiquetas inmutables.</p></div>
+</section>
+
+<section class="page" id="conceptos-clave">
+  <div class="page-head">
+    <h2>4. Conceptos clave</h2>
+    <p class="section-lead">Definiciones operativas con relación y posible forma de examen.</p>
+  </div>
+<article class="definition-card"><h3>Refracción astronómica</h3><div class="reading-block"><p>Definición precisa: desviación de la luz de un astro al atravesar la atmósfera terrestre. Explicación: hace que el astro se observe a una distancia cenital menor que la verdadera. Su intensidad depende de la altura, de la presión, de la temperatura y de la estructura atmosférica. Ejemplo: en el horizonte se adopta una refracción horizontal de unos \(34'\). Relación: conecta coordenadas horizontales con correcciones en coordenadas ecuatoriales. Pregunta de examen: “Explique cómo afecta la refracción a la distancia cenital observada y derive la corrección en declinación”.</p></div></article>
+<article class="definition-card"><h3>Ley de Bouguer</h3><div class="reading-block"><p>Definición precisa: relación \(nr\sin I = \text{constante}\) para el rayo luminoso en una atmósfera estratificada. Explicación: expresa la conservación geométrica asociada a la refracción en capas esféricas. Ejemplo: al cambiar el índice de refracción de una capa a otra, cambia el ángulo de incidencia. Relación: sirve de punto de partida para obtener la ecuación fundamental de la refracción. Pregunta de examen: “Obtenga la ley de Bouguer a partir de las leyes de la refracción”.</p></div></article>
+<article class="definition-card"><h3>Distancia cenital verdadera y observada</h3><div class="reading-block"><p>Definición precisa: la distancia cenital verdadera es la que tendría el astro sin atmósfera; la observada es la afectada por refracción. Explicación: la observada suele ser menor, porque la atmósfera eleva aparentemente el astro. Ejemplo: cerca del horizonte, la diferencia es máxima. Relación: es la variable central de la refracción. Pregunta de examen: “¿Por qué la refracción disminuye la distancia cenital observada?”.</p></div></article>
+<article class="definition-card"><h3>Aberración de la luz</h3><div class="reading-block"><p>Definición precisa: cambio aparente de dirección de un astro debido al movimiento del observador y a la velocidad finita de la luz. Explicación: el observador no está inmóvil mientras recibe la luz; por eso la dirección aparente no coincide con la dirección geométrica ideal. Ejemplo: la aberración anual produce una elipse aparente. Relación: se diferencia de la paralaje porque depende de la velocidad del observador, no de su posición. Pregunta de examen: “Explique la diferencia entre aberración anual y paralaje anual”.</p></div></article>
+<article class="definition-card"><h3>Constante de aberración</h3><div class="reading-block"><p>Definición precisa: constante angular asociada a \(v/c\), con valor aproximado \(20{,}5''\). Explicación: mide la escala angular máxima de la aberración anual. Ejemplo: si la Tierra se moviera más despacio, la aberración anual sería menor. Relación: entra en las fórmulas de corrección en coordenadas eclípticas y ecuatoriales. Pregunta de examen: “Calcule los semiejes de la elipse de aberración usando \(k\)”.</p></div></article>
+<article class="definition-card"><h3>Elipse de aberración</h3><div class="reading-block"><p>Definición precisa: trayectoria aparente anual de una estrella causada por la aberración anual. Explicación: surge al combinar la velocidad orbital terrestre con la dirección de la estrella. Ejemplo: una estrella de determinada latitud eclíptica describe una elipse de semiejes dependientes de \(k\) y de \(\beta\). Relación: no debe confundirse con la elipse de paralaje. Pregunta de examen: “Determine semiejes y excentricidad de la elipse de aberración de una estrella”. Este tipo aparece en examen UNED cargado.</p></div></article>
+<article class="definition-card"><h3>Aberración anual</h3><div class="reading-block"><p>Definición precisa: aberración debida al movimiento orbital terrestre. Explicación: cambia a lo largo del año porque cambia la dirección de la velocidad terrestre. Ejemplo: depende de la longitud eclíptica del Sol. Relación: se expresa con especial naturalidad en coordenadas eclípticas. Pregunta de examen: “Calcule las correcciones anuales en coordenadas eclípticas”.</p></div></article>
+<article class="definition-card"><h3>Aberración diurna</h3><div class="reading-block"><p>Definición precisa: aberración debida a la rotación de la Tierra. Explicación: el observador situado sobre la superficie terrestre tiene velocidad tangencial. Ejemplo: depende de la latitud del observador y del tiempo sidéreo local. Relación: es análoga a la anual, pero con un vector velocidad distinto. Pregunta de examen: “Explique por qué la aberración diurna depende del lugar de observación”.</p></div></article>
+<article class="definition-card"><h3>Paralaje</h3><div class="reading-block"><p>Definición precisa: desplazamiento angular aparente de un astro al cambiar el punto de observación. Explicación: permite medir distancias mediante geometría. Ejemplo: la Luna presenta paralaje apreciable; las estrellas solo paralaje anual muy pequeña. Relación: conecta observación topocéntrica, geocéntrica y heliocéntrica. Pregunta de examen: “Obtenga la distancia de un astro a partir de su paralaje”.</p></div></article>
+<article class="definition-card"><h3>Paralaje diurna</h3><div class="reading-block"><p>Definición precisa: diferencia entre la dirección observada desde la superficie terrestre y desde el centro de la Tierra. Explicación: importa para cuerpos relativamente cercanos. Ejemplo: coordenadas topocéntricas de Júpiter a partir de coordenadas geocéntricas y paralaje horizontal. Relación: depende del radio terrestre y de la distancia al astro. Pregunta de examen: “Determine coordenadas topocéntricas usando paralaje horizontal”.</p></div></article>
+<article class="definition-card"><h3>Paralaje anual</h3><div class="reading-block"><p>Definición precisa: desplazamiento aparente anual de una estrella debido al movimiento orbital de la Tierra. Explicación: permite medir distancias estelares cercanas. Ejemplo: cuanto más cercana la estrella, mayor paralaje anual. Relación: se compara habitualmente con la aberración anual, aunque su causa física es distinta. Pregunta de examen: “Compare la dirección del desplazamiento por aberración y por paralaje anual”.</p></div></article>
+<article class="definition-card"><h3>Movimiento propio</h3><div class="reading-block"><p>Definición precisa: desplazamiento angular anual de una estrella sobre la esfera celeste. Explicación: es la proyección tangencial del movimiento espacial real de la estrella. Ejemplo: la estrella de Barnard presenta un movimiento propio muy elevado. Relación: se descompone en componentes en ascensión recta y declinación. Pregunta de examen: “Corrija las coordenadas de una estrella por movimiento propio entre dos épocas”.</p></div></article>
+<article class="definition-card"><h3>Ángulo de posición del movimiento propio</h3><div class="reading-block"><p>Definición precisa: ángulo que indica la dirección del desplazamiento sobre el plano tangente a la esfera celeste. Explicación: permite reconstruir las componentes \(\mu_\alpha\) y \(\mu_\delta\). Ejemplo: si se da \(\mu\) y el ángulo de posición, se puede calcular la variación de \(\alpha\) y \(\delta\). Relación: aparece en las fórmulas exactas del movimiento propio. Pregunta de examen: “Dado \(\mu\) y el ángulo de posición, calcule coordenadas futuras”.</p></div></article>
+<article class="definition-card"><h3>Ápex solar</h3><div class="reading-block"><p>Definición precisa: dirección hacia la que se mueve el Sol respecto del entorno estelar. Explicación: se infiere a partir de velocidades radiales y movimientos propios de estrellas cercanas. Ejemplo: si una estrella muestra velocidad radial negativa máxima en un modelo simplificado, señalaría hacia el ápex. Relación: conecta movimientos propios individuales con movimiento solar colectivo. Pregunta de examen: “Explique el concepto de ápex y antiápex solar”.</p></div></article>
+</section>
+
+<section class="page" id="relaciones-entre-ideas">
+  <div class="page-head">
+    <h2>5. Relaciones entre ideas</h2>
+    <p class="section-lead">Conexiones entre causas físicas, efectos aparentes y correcciones de coordenadas.</p>
+  </div>
+<div class="reading-block"><p>La primera relación importante es entre observación y corrección. El capítulo parte de que la posición observada no es todavía la posición astronómica que se desea usar. La refracción altera la dirección de llegada de la luz por la atmósfera; la aberración altera la dirección aparente por el movimiento del observador; la paralaje altera la dirección por el punto desde el que se observa; el movimiento propio altera las coordenadas porque el astro realmente cambia de posición.</p></div>
+<div class="reading-block"><p>La segunda relación es entre posición y velocidad. La paralaje depende de la posición del observador: superficie terrestre, centro de la Tierra o distintos puntos de la órbita terrestre. La aberración depende de la velocidad del observador: rotación terrestre u órbita alrededor del Sol. Esta oposición es básica: dos efectos pueden ser anuales y producir elipses aparentes, pero uno procede del desplazamiento espacial y otro de la composición de velocidades.</p></div>
+<div class="reading-block"><p>La tercera relación es entre escalas. La refracción puede ser grande cerca del horizonte; la aberración anual ronda decenas de segundos de arco; la paralaje anual estelar suele ser menor que un segundo de arco salvo estrellas muy próximas; el movimiento propio puede acumularse durante décadas o siglos. Por eso un problema de examen debe indicar qué correcciones se aplican y cuáles se ignoran.</p></div>
+<div class="reading-block"><p>La cuarta relación es histórica. El intento de detectar la paralaje estelar llevó al descubrimiento de la aberración. Más tarde, la comparación de catálogos antiguos y modernos reveló el movimiento propio. El capítulo muestra así que la precisión observacional transforma “errores” aparentes en fenómenos físicos.</p></div>
+<div class="reading-block"><p>La quinta relación afecta al cálculo. La refracción se trabaja con diferenciales en coordenadas horizontales y ecuatoriales. La aberración se formula con vectores velocidad. La paralaje se formula geométricamente mediante cambio de origen. El movimiento propio se formula como evolución temporal de coordenadas. El alumno debe reconocer qué herramienta corresponde a cada efecto.</p></div>
+</section>
+
+<section class="page" id="errores-habituales">
+  <div class="page-head">
+    <h2>6. Errores habituales</h2>
+    <p class="section-lead">Confusiones frecuentes y correcciones que conviene automatizar mentalmente.</p>
+  </div>
+<article class="definition-card"><h3>Error: confundir refracción con paralaje.</h3><div class="reading-block"><p>Por qué está mal: la refracción se debe a la atmósfera; la paralaje al cambio de punto de observación. Corrección: si el efecto desaparece fuera de la atmósfera, es refracción; si depende de observar desde lugares distintos, es paralaje. Respuesta incorrecta: “La refracción se produce porque la Tierra se mueve alrededor del Sol”. Respuesta correcta: “La refracción se produce porque la luz cambia de dirección al atravesar capas atmosféricas con distinto índice de refracción”.</p></div></article>
+<article class="definition-card"><h3>Error: decir que la refracción aumenta la distancia cenital observada.</h3><div class="reading-block"><p>Por qué está mal: el capítulo indica que la distancia cenital observada es menor que la verdadera. Corrección: la refracción eleva aparentemente el astro. Respuesta incorrecta: “Por refracción el astro parece más bajo”. Respuesta correcta: “Por refracción el astro parece más alto, luego \(z_{\text{obs}} &lt; z_{\text{verd}}\)”.</p></div></article>
+<article class="definition-card"><h3>Error: confundir aberración anual con paralaje anual.</h3><div class="reading-block"><p>Por qué está mal: ambas son anuales, pero tienen causas distintas. Corrección: aberración depende de la velocidad orbital; paralaje depende de la posición orbital. Respuesta incorrecta: “La elipse de aberración mide la distancia a la estrella”. Respuesta correcta: “La elipse de paralaje permite medir distancia; la de aberración depende de \(v/c\)”.</p></div></article>
+<article class="definition-card"><h3>Error: aplicar fórmulas de primer orden de movimiento propio sin comprobar el intervalo temporal.</h3><div class="reading-block"><p>Por qué está mal: para movimientos grandes o intervalos largos pueden hacer falta términos superiores. Corrección: usar la aproximación lineal solo cuando el desplazamiento angular acumulado sea pequeño. Respuesta incorrecta: “Siempre basta con \(\alpha=\alpha_0+\mu_\alpha\Delta t\)”. Respuesta correcta: “La fórmula lineal es una aproximación; para alta precisión se usan las fórmulas exactas o términos superiores”.</p></div></article>
+<article class="definition-card"><h3>Error: olvidar el factor \(\cos\delta\) en el movimiento propio en ascensión recta.</h3><div class="reading-block"><p>Por qué está mal: un desplazamiento angular en ascensión recta no representa la misma distancia sobre la esfera a todas las declinaciones. Corrección: distinguir \(\mu_\alpha\) de \(\mu_\alpha\cos\delta\). Respuesta incorrecta: “\(\mu^2=\mu_\alpha^2+\mu_\delta^2\) siempre”. Respuesta correcta: “Debe considerarse la componente tangencial en ascensión recta con el factor \(\cos\delta\)”.</p></div></article>
+<article class="definition-card"><h3>Error: creer que todas las estrellas tienen movimiento propio observable grande.</h3><div class="reading-block"><p>Por qué está mal: el movimiento propio angular depende de la distancia y de la componente transversal. Corrección: una estrella lejana puede tener velocidad espacial grande y movimiento propio pequeño. Respuesta incorrecta: “Si una estrella se mueve rápido, siempre tendrá gran movimiento propio”. Respuesta correcta: “Solo se observa como movimiento propio la componente transversal proyectada angularmente”.</p></div></article>
+<article class="definition-card"><h3>Error: mezclar coordenadas topocéntricas y geocéntricas.</h3><div class="reading-block"><p>Por qué está mal: la paralaje diurna precisamente corrige la diferencia entre ambas. Corrección: identificar desde qué origen están dadas las coordenadas. Respuesta incorrecta: “Las coordenadas geocéntricas son las medidas directamente por el observador”. Respuesta correcta: “El observador mide topocéntricamente; las geocéntricas se refieren al centro de la Tierra”.</p></div></article>
+<article class="definition-card"><h3>Error: usar la constante de aberración en grados sin convertir.</h3><div class="reading-block"><p>Por qué está mal: \(k\) se da normalmente en segundos de arco o radianes. Corrección: mantener unidades angulares coherentes. Respuesta incorrecta: “\(k=20{,}5^\circ\)”. Respuesta correcta: “\(k\simeq20{,}5''\), no grados”.</p></div></article>
+<article class="definition-card"><h3>Error: interpretar el ápex solar como una estrella o punto físico material.</h3><div class="reading-block"><p>Por qué está mal: el ápex es una dirección en la esfera celeste. Corrección: definirlo como dirección del movimiento solar respecto del entorno estelar. Respuesta incorrecta: “El ápex es el lugar al que llegará el Sol”. Respuesta correcta: “El ápex es la dirección hacia la que se mueve el Sol respecto a un sistema de referencia estelar”.</p></div></article>
+<article class="definition-card"><h3>Error: pensar que la aberración secular se calcula igual que la anual en el capítulo.</h3><div class="reading-block"><p>Por qué está mal: el capítulo la menciona, pero se ocupa de la anual y la diurna. Corrección: no desarrollar lo que el capítulo no trabaja. Respuesta incorrecta: “El capítulo calcula la aberración secular galáctica”. Respuesta correcta: “El capítulo distingue la aberración secular, pero centra el desarrollo en la anual y la diurna”.</p></div></article>
+</section>
+
+<section class="page" id="preguntas-orientadas-a-examen">
+  <div class="page-head">
+    <h2>7. Preguntas orientadas a examen</h2>
+    <p class="section-lead">Banco de preguntas graduado para repasar el capítulo.</p>
+  </div>
+<h3 id="preguntas-faciles">10 preguntas fáciles</h3>
+<ol class="exam-list" start="1">
+<li>¿Qué es la refracción astronómica?</li>
+<li>¿Por qué la refracción depende de la altura del astro?</li>
+<li>¿Qué efecto tiene la refracción sobre la distancia cenital observada?</li>
+<li>¿Qué es la aberración de la luz?</li>
+<li>Diferencia entre aberración anual y diurna.</li>
+<li>¿Qué representa la constante de aberración \(k\)?</li>
+<li>¿Qué es la paralaje?</li>
+<li>¿Qué diferencia hay entre paralaje diurna y anual?</li>
+<li>¿Qué es el movimiento propio anual de una estrella?</li>
+<li>¿Qué son el ápex y el antiápex solar?</li>
+</ol>
+<h3 id="preguntas-medias">10 preguntas medias</h3>
+<ol class="exam-list" start="11">
+<li>Explique la ley de Bouguer y su papel en la refracción astronómica.</li>
+<li>¿Por qué se adopta una refracción horizontal de unos \(34'\) en ortos y ocasos?</li>
+<li>Explique por qué la aberración anual produce una elipse aparente.</li>
+<li>¿Por qué la aberración anual se formula cómodamente en coordenadas eclípticas?</li>
+<li>¿Qué diferencia conceptual hay entre la elipse de aberración y la elipse de paralaje?</li>
+<li>¿Por qué la paralaje lunar es mucho más apreciable que la paralaje estelar?</li>
+<li>Explique el paso de coordenadas geocéntricas a topocéntricas en términos de paralaje.</li>
+<li>¿Por qué el movimiento propio depende de la distancia de la estrella?</li>
+<li>¿Qué significado tienen las componentes \(\mu_\alpha\) y \(\mu_\delta\)?</li>
+<li>¿Por qué los métodos simples para determinar el ápex solar no son suficientes?</li>
+</ol>
+<h3 id="preguntas-dificiles">5 preguntas difíciles</h3>
+<ol class="exam-list" start="21">
+<li>Derive cualitativamente la ecuación fundamental de la refracción a partir de la ley de Bouguer.</li>
+<li>Obtenga la relación entre aberración y vector velocidad del observador en primera aproximación.</li>
+<li>Justifique que la excentricidad de la órbita terrestre introduce una corrección de orden \(ek\) en la aberración anual.</li>
+<li>Explique cómo se construye la base local radial-paralelo-meridiano usada en movimientos propios.</li>
+<li>Diseñe el procedimiento para corregir las coordenadas de una estrella entre dos épocas cuando se conoce \(\mu\) y el ángulo de posición.</li>
+</ol>
+<h3 id="preguntas-de-desarrollo-largo">5 preguntas de desarrollo largo</h3>
+<ol class="exam-list" start="26">
+<li>Desarrolle el concepto de corrección de coordenadas y clasifique los efectos estudiados en el capítulo.</li>
+<li>Explique la refracción astronómica desde el modelo de atmósfera estratificada hasta sus consecuencias observacionales.</li>
+<li>Exponga la aberración de la luz, sus tipos y su formulación en coordenadas eclípticas y ecuatoriales.</li>
+<li>Desarrolle la paralaje como método de medida de distancias y compare sus formas diurna y anual.</li>
+<li>Explique los movimientos propios estelares y su relación con el ápex solar.</li>
+</ol>
+<h3 id="preguntas-de-relacion-entre-conceptos">5 preguntas de relación entre conceptos</h3>
+<ol class="exam-list" start="31">
+<li>Relacione refracción, aberración y paralaje como errores aparentes de dirección.</li>
+<li>Compare aberración anual, paralaje anual y movimiento propio anual.</li>
+<li>Relacione coordenadas horizontales, ecuatoriales y eclípticas dentro del capítulo.</li>
+<li>Compare las causas físicas de las correcciones diurnas y anuales.</li>
+<li>Relacione precisión observacional, historia de la astronomía y descubrimiento de aberración y movimientos propios.</li>
+</ol>
+</section>
+
+<section class="page" id="respuestas-modelo">
+  <div class="page-head">
+    <h2>8. Respuestas modelo</h2>
+    <p class="section-lead">Respuestas desarrolladas para contrastar el estudio.</p>
+  </div>
+<ol class="exam-list" start="1">
+<li>La refracción astronómica es la desviación que sufre la luz procedente de un astro al atravesar la atmósfera terrestre. Se debe a que el índice de refracción del aire no es el del vacío y varía con la densidad atmosférica.</li>
+<li>Depende de la altura porque la trayectoria de la luz atraviesa más atmósfera cuanto más bajo está el astro. Cerca del cenit la desviación es pequeña; cerca del horizonte es mucho mayor.</li>
+<li>La refracción hace que la distancia cenital observada sea menor que la verdadera. El astro aparece más alto sobre el horizonte de lo que estaría sin atmósfera.</li>
+<li>La aberración de la luz es el desplazamiento aparente de la dirección de un astro debido al movimiento del observador y a la velocidad finita de la luz.</li>
+<li>La aberración anual se debe al movimiento orbital de la Tierra alrededor del Sol. La aberración diurna se debe al movimiento del observador por la rotación terrestre.</li>
+<li>La constante \(k\) mide la escala de la aberración anual y está relacionada con \(v/c\), donde \(v\) es la velocidad orbital terrestre y \(c\) la velocidad de la luz. Su valor es de unas decenas de segundos de arco.</li>
+<li>La paralaje es el desplazamiento angular aparente de un astro cuando se observa desde puntos distintos. Es una herramienta geométrica para medir distancias.</li>
+<li>La paralaje diurna compara la observación desde la superficie terrestre con la observación desde el centro de la Tierra. La paralaje anual compara posiciones de la Tierra en distintos puntos de su órbita.</li>
+<li>El movimiento propio anual es el desplazamiento angular de una estrella sobre la esfera celeste durante un año. Representa la componente transversal de su movimiento espacial.</li>
+<li>El ápex solar es la dirección hacia la que se mueve el Sol respecto del entorno estelar. El antiápex es el punto diametralmente opuesto.</li>
+<li>La ley de Bouguer expresa que, en una atmósfera estratificada, la cantidad \(nr\sin I\) permanece constante a lo largo del rayo. Permite relacionar el índice de refracción, la distancia al centro terrestre y el ángulo de incidencia. Es el punto de partida para obtener la corrección en distancia cenital.</li>
+<li>Porque en el horizonte la refracción es máxima y afecta directamente al instante observado de orto u ocaso. El valor convencional permite tratar el caso en que el centro del Sol o de la Luna coincide aparentemente con el horizonte aunque su distancia cenital verdadera sea mayor que \(90^\circ\).</li>
+<li>Porque a lo largo del año cambia la dirección de la velocidad orbital terrestre. La composición entre esa velocidad y la velocidad de la luz desplaza la posición aparente de la estrella de forma periódica, generando una pequeña elipse.</li>
+<li>Porque el movimiento orbital terrestre se produce en el plano de la eclíptica. En ese sistema, el vector velocidad de la Tierra y la longitud eclíptica del Sol entran de forma directa en las expresiones.</li>
+<li>La elipse de aberración depende de la velocidad del observador y de \(v/c\). La elipse de paralaje depende del cambio de posición de la Tierra y de la distancia al astro. Solo la paralaje proporciona directamente información de distancia.</li>
+<li>Porque la Luna está muy cerca de la Tierra en comparación con las estrellas. Una misma separación entre puntos de observación produce un ángulo apreciable para la Luna y prácticamente nulo para estrellas lejanas.</li>
+<li>Las coordenadas geocéntricas se refieren al centro de la Tierra, mientras que las topocéntricas se refieren al observador real sobre la superficie. La paralaje diurna corrige la diferencia entre ambas direcciones.</li>
+<li>Porque el mismo desplazamiento lineal produce un ángulo mayor si la estrella está cerca y menor si está lejos. Además, solo se mide la componente transversal del movimiento.</li>
+<li>\(\mu_\alpha\) representa la variación temporal asociada a la ascensión recta y \(\mu_\delta\) la asociada a la declinación. Deben interpretarse como componentes del desplazamiento angular sobre la esfera, teniendo cuidado con el factor \(\cos\delta\).</li>
+<li>Porque las estrellas no están realmente fijas. Sus velocidades propias se mezclan con el movimiento solar, de modo que no basta con atribuir todos los movimientos observados al desplazamiento del Sol.</li>
+<li>Se parte de una atmósfera dividida en capas esféricas. En cada capa se aplica la ley de la refracción y se obtiene que \(nr\sin I\) es constante. Al diferenciar esta relación y conectar los ángulos geométricos del rayo con la distancia cenital, se obtiene una ecuación diferencial para la variación de \(z\). Integrarla proporciona la refracción total.</li>
+<li>El observador se mueve con velocidad \(\vec v\) mientras la luz llega con velocidad \(c\). La dirección observada resulta de componer el desplazamiento de la luz con el del observador. En primera aproximación, la corrección angular depende de las componentes de \(\vec v/c\) proyectadas sobre las direcciones tangentes a la esfera celeste.</li>
+<li>Si la órbita terrestre se toma circular, la velocidad orbital tiene módulo y dirección simples. En una órbita elíptica aparecen términos ligados a la excentricidad \(e\). Como la escala básica de la aberración es \(k\), la contribución adicional entra multiplicada por \(e\), es decir, es de orden \(ek\).</li>
+<li>Se toma primero la dirección radial hacia la estrella. Después se define una dirección tangente al paralelo celeste, en sentido creciente de ascensión recta. La tercera dirección es tangente al meridiano, en sentido creciente de declinación. Esta base permite separar velocidad radial, componente en ascensión recta y componente en declinación.</li>
+<li>Primero se identifican las coordenadas iniciales (\(\alpha_0,\delta_0\)), la época inicial \(t_0\), la época final \(t\), el movimiento propio total \(\mu\) y el ángulo de posición. Después se descompone \(\mu\) en componentes tangenciales. Si la precisión requerida es baja, se aplica la aproximación lineal. Si el intervalo es grande o \(\mu\) elevado, se usan las fórmulas exactas del capítulo.</li>
+<li>Corregir coordenadas consiste en pasar de una dirección observada a una dirección útil dentro de un sistema astronómico definido. El capítulo clasifica los efectos según su causa: la atmósfera produce refracción; el movimiento del observador produce aberración; el cambio de punto de observación produce paralaje; el movimiento real de las estrellas produce movimiento propio. La idea común es que una coordenada medida no es automáticamente una coordenada depurada.</li>
+<li>La refracción se explica modelando la atmósfera como capas esféricas de índice de refracción variable. Al atravesarlas, la luz cambia de dirección. La ley de Bouguer permite describir ese cambio y obtener una ecuación diferencial para la distancia cenital. Observacionalmente, la refracción eleva los astros, afecta mucho al horizonte y obliga a corregir alturas, declinaciones y ángulos horarios.</li>
+<li>La aberración procede de la velocidad finita de la luz y del movimiento del observador. Si el observador se mueve por la órbita terrestre, aparece aberración anual; si se mueve por la rotación terrestre, aberración diurna. En coordenadas eclípticas, la anual se expresa con la longitud del Sol y produce una elipse de aberración. En coordenadas ecuatoriales se transforma el vector velocidad y aparecen fórmulas en \(\alpha\) y \(\delta\), históricamente organizadas mediante números independientes o besselianos.</li>
+<li>La paralaje es un método geométrico de medida de distancias. La diurna compara la dirección desde la superficie terrestre y desde el centro de la Tierra, por eso importa en la Luna y planetas. La anual compara la dirección de una estrella desde distintas posiciones de la Tierra en su órbita. La paralaje anual de estrellas cercanas permite obtener distancias estelares, mientras que la paralaje solar fija la escala del sistema solar.</li>
+<li>Los movimientos propios muestran que las estrellas no son fijas. Se miden como desplazamientos angulares anuales sobre la esfera celeste y representan la componente transversal del movimiento espacial. El capítulo desarrolla una base local para tratarlos vectorialmente y da fórmulas exactas y aproximadas. El ápex solar amplía esta idea al movimiento del Sol respecto de un conjunto de estrellas cercanas.</li>
+<li>Refracción, aberración y paralaje modifican la dirección aparente de un astro. La refracción se debe al medio atmosférico, la aberración a la velocidad del observador y la paralaje a la posición del observador. Las tres obligan a distinguir entre lo observado y lo corregido.</li>
+<li>Aberración anual y paralaje anual son periódicas con el año, pero la primera depende de la velocidad terrestre y la segunda de la posición terrestre. El movimiento propio anual no es un efecto periódico de la Tierra, sino el desplazamiento real de la estrella proyectado angularmente.</li>
+<li>La refracción se formula inicialmente en coordenadas horizontales porque depende de la altura y distancia cenital. Luego se traduce a coordenadas ecuatoriales. La aberración anual se entiende mejor en coordenadas eclípticas por el movimiento orbital terrestre, pero también se expresa en ecuatoriales para uso astrométrico.</li>
+<li>Las correcciones diurnas se deben a la rotación terrestre o a la posición del observador sobre la Tierra. Las anuales se deben a la traslación de la Tierra alrededor del Sol. Por eso las diurnas dependen más del lugar y del tiempo sidéreo, mientras que las anuales dependen de la época del año.</li>
+<li>La mejora de precisión observacional permitió descubrir efectos antes invisibles. El intento de medir paralajes llevó al descubrimiento de la aberración; la comparación de catálogos antiguos y modernos reveló movimientos propios. La historia del capítulo muestra que una discrepancia observacional puede convertirse en una nueva información física.</li>
+</ol>
+</section>
+
+<section class="page" id="resumen-final-de-repaso">
+  <div class="page-head">
+    <h2>9. Resumen final de repaso</h2>
+    <p class="section-lead">Síntesis final de las ideas que deben quedar fijadas.</p>
+  </div>
+<ul class="check-list">
+<li>La <strong>refracción</strong> es atmosférica: eleva aparentemente los astros y reduce la distancia cenital observada.</li>
+<li>La <strong>aberración</strong> depende de la velocidad del observador: anual por traslación terrestre, diurna por rotación terrestre.</li>
+<li>La <strong>constante de aberración</strong> es del orden de \(20{,}5''\).</li>
+<li>La <strong>paralaje</strong> depende del cambio de posición del observador: diurna para superficie-centro terrestre, anual para la órbita terrestre.</li>
+<li>La <strong>paralaje anual</strong> mide distancias estelares; la <strong>elipse de aberración</strong> no.</li>
+<li>El <strong>movimiento propio</strong> es movimiento real proyectado sobre la esfera celeste.</li>
+<li>Para movimiento propio: usar fórmulas lineales solo si el intervalo y \(\mu\) lo permiten.</li>
+<li>El <strong>ápex solar</strong> es una dirección, no un objeto.</li>
+<li>Errores que evitar: confundir refracción/paralaje, aberración/paralaje anual, grados/segundos de arco, geocéntrico/topocéntrico y \(\mu_\alpha\) con \(\mu_\alpha\cos\delta\).</li>
+</ul>
+</section>
+
+<section class="page" id="checklist-de-dominio">
+  <div class="page-head">
+    <h2>10. Checklist de dominio</h2>
+    <p class="section-lead">Señales rápidas para saber qué queda por repasar.</p>
+  </div>
+<ul class="check-list">
+<li>Si no puedes explicar por qué la refracción eleva aparentemente un astro, falta repasar refracción y distancia cenital.</li>
+<li>Si confundes refracción con paralaje, revisar la causa física de cada corrección.</li>
+<li>Si no sabes distinguir aberración anual y diurna, falta repasar los movimientos de la Tierra.</li>
+<li>Si confundes aberración anual con paralaje anual, revisar velocidad del observador frente a posición del observador.</li>
+<li>Si no puedes explicar qué representa \(k\), falta repasar la constante de aberración.</li>
+<li>Si no sabes por qué aparece una elipse de aberración, revisar la formulación en coordenadas eclípticas.</li>
+<li>Si no sabes pasar de geocéntrico a topocéntrico conceptualmente, falta repasar paralaje diurna.</li>
+<li>Si no sabes para qué sirve la paralaje anual, falta repasar medida de distancias estelares.</li>
+<li>Si olvidas el factor \(\cos\delta\) en movimiento propio, revisar componentes tangenciales sobre la esfera celeste.</li>
+<li>Si aplicas siempre fórmulas lineales de movimiento propio, revisar las fórmulas exactas y el criterio de precisión.</li>
+<li>Si puedes explicar refracción, aberración, paralaje y movimiento propio con su causa física, el capítulo está conceptualmente asentado.</li>
+<li>Si puedes resolver un ejercicio de elipse de aberración y otro de movimiento propio, el capítulo está suficientemente preparado para examen UNED.</li>
+</ul>
+</section>
+</main>
+</div>
+</body>
+</html>
