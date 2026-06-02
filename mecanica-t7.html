@@ -27,13 +27,15 @@ window.MathJax = {
   </div>
   <p class="eyebrow">UNED Física · Mecánica Clásica · Tema 7</p>
   <h1>Guía de estudio — T7 Mecánica analítica</h1>
-  <p class="subtitle">Principio de Hamilton, Euler-Lagrange, cambios de coordenadas, ligaduras, variables conservadas, Noether y ecuaciones de Hamilton.</p>
+  <p class="subtitle">Principio de Hamilton, Euler-Lagrange, coordenadas generalizadas, ligaduras, sistemas no inerciales, coordenadas cíclicas, Noether, función energía, transformación de Legendre y ecuaciones de Hamilton.</p>
   <div class="chips">
     <span class="chip">Mecánica</span>
     <span class="chip">T7</span>
     <span class="chip">Lagrange</span>
     <span class="chip">Euler-Lagrange</span>
-    <span class="chip">estado: reubicado</span>
+    <span class="chip">Noether</span>
+    <span class="chip">Hamilton</span>
+    <span class="chip">estado: completo</span>
   </div>
 </header>
 
@@ -68,6 +70,10 @@ window.MathJax = {
     <a class="map-node" href="#prerrequisitos"><span>Prerrequisitos</span><small>Newton · energías · parciales · EDO · polares · ligaduras</small></a>
     <a class="map-node" href="#idea-central"><span>Idea central</span><small>\(L=T-V\) · acción · Euler-Lagrange</small></a>
     <a class="map-node" href="#desarrollo-completo"><span>Desarrollo</span><small>trayectorias · coordenadas · ligaduras · ejemplos UNED</small></a>
+    <a class="map-node" href="#lagrange-no-inercial"><span>No inerciales</span><small>Lagrange con potenciales efectivos</small></a>
+    <a class="map-node" href="#funcion-energia"><span>Función energía</span><small>\(h=\sum p_i\dot q_i-L\)</small></a>
+    <a class="map-node" href="#noether"><span>Noether</span><small>simetría \(\Rightarrow\) conservación</small></a>
+    <a class="map-node" href="#hamiltoniano"><span>Hamilton</span><small>Legendre · \(q,p\) · primer orden</small></a>
     <a class="map-node" href="#conceptos-clave"><span>Conceptos clave</span><small>acción · momento conjugado · coordenada cíclica</small></a>
     <a class="map-node" href="#errores"><span>Errores</span><small>signos · derivadas · fuerzas de ligadura · mínimos</small></a>
     <a class="map-node" href="#respuestas"><span>Examen</span><small>preguntas y respuestas modelo</small></a>
@@ -134,7 +140,7 @@ window.MathJax = {
   <div class="reading-block"><p>Taylor introduce el cálculo variacional como herramienta previa: no se busca un número que minimiza una función, sino una trayectoria que hace estacionaria una integral. Esa integral, en mecánica, es la acción</p><div class="formula-block">\[S=\int_{t_1}^{t_2}L(q,\dot q,t)\,dt.\]</div><p>La trayectoria física es aquella para la que la acción es estacionaria. Importa la palabra <strong>estacionaria</strong>, no necesariamente mínima. Taylor subraya que Euler-Lagrange garantiza una trayectoria estacionaria, no siempre un mínimo absoluto.</p></div>
   <div class="reading-block"><p>Garrigós/Serrano conecta esta idea con la estructura de la asignatura UNED: la mecánica analítica aparece al final, después de cinemática, Newton, sistemas de partículas, sólido rígido y fuerzas centrales. Su papel es comprimir todo lo anterior en un formalismo más potente, especialmente útil cuando hay coordenadas no cartesianas, simetrías, ligaduras y magnitudes conservadas.</p></div>
   <div class="reading-block"><p>El capítulo ocupa un lugar bisagra. Hacia atrás, valida que Newton se puede recuperar. Hacia delante, abre Hamilton, coordenadas cíclicas, momentos conjugados, espacio de fases, Noether y modos normales. En exámenes UNED aparece de forma práctica: definir coordenadas generalizadas, escribir lagrangiano, deducir ecuaciones y decir qué se conserva; por ejemplo, el péndulo con hilo elástico o la cuña móvil.</p></div>
-  <div class="warn-box"><p><strong>Estado de reordenación:</strong> este archivo conserva los apuntes existentes de Lagrange y deja señaladas las partes oficiales que aún faltan desarrollar con apuntes propios: dinámica lagrangiana en sistemas no inerciales, teorema de Noether completo y ecuaciones de Hamilton.</p></div>
+  <div class="key-box"><p><strong>Estado del tema:</strong> el Tema 7 queda cerrado como introducción operativa a la mecánica analítica: Euler-Lagrange, ligaduras, coordenadas cíclicas, simetrías de Noether, función energía y formulación hamiltoniana.</p></div>
 </section>
 
 <section class="page" id="desarrollo-completo">
@@ -176,6 +182,167 @@ window.MathJax = {
     <h3>Variables cíclicas y conservación</h3>
     <div class="reading-block"><p>Si una coordenada \(q_k\) no aparece en \(L\), pero sí puede aparecer \(\dot q_k\), entonces \(\frac{\partial L}{\partial q_k}=0\). Euler-Lagrange da</p><div class="formula-block">\[\frac{d}{dt}\left(\frac{\partial L}{\partial \dot q_k}\right)=0.\]</div><p>Por tanto, \(p_k=\frac{\partial L}{\partial \dot q_k}\) se conserva. Garrigós lo formula como coordenada cíclica y momento generalizado conservado. También indica que si \(L\) no depende explícitamente del tiempo, se conserva la energía, y que Noether asocia simetrías del lagrangiano con magnitudes conservadas.</p><p><strong>Ejemplo:</strong> si \(L\) no depende de \(\theta\), entonces \(p_\theta\) se conserva. En coordenadas polares, \(p_\theta=mr^2\dot\theta\), que es el momento angular.</p></div>
   </article>
+
+  <article class="lesson" id="lagrange-no-inercial">
+    <h3>Dinámica lagrangiana en sistemas no inerciales</h3>
+    <div class="reading-block">
+      <p>La formulación lagrangiana puede usarse también en sistemas no inerciales, pero hay que introducir correctamente los efectos debidos al movimiento del sistema de referencia. Si el sistema se traslada o rota, la energía cinética escrita en las coordenadas del sistema móvil contiene términos adicionales. Al construir \(L=T-V\), esos términos producen las fuerzas de inercia al aplicar Euler-Lagrange.</p>
+    </div>
+    <div class="reading-block">
+      <p>En un sistema que rota con velocidad angular constante \(\boldsymbol\omega\), una partícula de posición relativa \(\mathbf r'\) tiene velocidad inercial</p>
+      <div class="formula-block">\[
+\mathbf v=\mathbf v'+\boldsymbol\omega\times\mathbf r'
+\]</div>
+      <p>si se desprecia la traslación del origen. Entonces</p>
+      <div class="formula-block">\[
+T=\frac12m|\mathbf v'+\boldsymbol\omega\times\mathbf r'|^2
+\]</div>
+      <p>Al desarrollar la energía cinética aparecen términos lineales y cuadráticos en \(\boldsymbol\omega\). De ellos salen, respectivamente, los términos de Coriolis y centrífugo en las ecuaciones de movimiento.</p>
+    </div>
+    <div class="exam-box">
+      <p><strong>Lectura de examen:</strong> no se añaden fuerzas ficticias a mano si se trabaja directamente con el lagrangiano correcto en el marco móvil. La clave es escribir bien \(T\). Si en cambio se escribe Newton en el marco no inercial, aparecen explícitamente las fuerzas de inercia.</p>
+    </div>
+  </article>
+
+  <article class="lesson" id="funcion-energia">
+    <h3>Función energía y conservación</h3>
+    <div class="reading-block">
+      <p>El momento conjugado asociado a \(q_i\) es</p>
+      <div class="formula-block">\[
+p_i=\frac{\partial L}{\partial \dot q_i}
+\]</div>
+      <p>A partir de él se define la función energía:</p>
+      <div class="formula-block">\[
+h(q,\dot q,t)=\sum_i p_i\dot q_i-L
+\]</div>
+      <p>Si el lagrangiano no depende explícitamente del tiempo, entonces \(h\) se conserva:</p>
+      <div class="formula-block">\[
+\frac{\partial L}{\partial t}=0
+\quad\Rightarrow\quad
+\frac{dh}{dt}=0
+\]</div>
+    </div>
+    <div class="reading-block">
+      <p>En sistemas mecánicos naturales, con energía cinética cuadrática en las velocidades y potencial independiente de las velocidades, la función energía coincide con la energía mecánica total:</p>
+      <div class="formula-block">\[
+h=T+V
+\]</div>
+      <p>Pero esta igualdad no es universal. Si hay potenciales dependientes de la velocidad, coordenadas dependientes explícitamente del tiempo o ligaduras móviles, \(h\) puede no coincidir de forma simple con \(T+V\).</p>
+    </div>
+    <div class="exam-box">
+      <p><strong>Error típico:</strong> decir que el lagrangiano es la energía. No lo es. El lagrangiano suele ser \(L=T-V\). La función energía es \(h=\sum_i p_i\dot q_i-L\). En casos simples, \(h=T+V\).</p>
+    </div>
+  </article>
+
+  <article class="lesson" id="noether">
+    <h3>Teorema de Noether: simetrías y conservaciones</h3>
+    <div class="reading-block">
+      <p>El teorema de Noether establece que a cada simetría continua del lagrangiano le corresponde una magnitud conservada. No es una regla mnemotécnica: conecta la forma matemática de \(L\) con las constantes del movimiento.</p>
+    </div>
+    <div class="reading-block">
+      <p>Los tres casos básicos de examen son:</p>
+      <div class="formula-block">\[
+\text{invariancia temporal}\quad\Rightarrow\quad \text{energía conservada}
+\]</div>
+      <div class="formula-block">\[
+\text{invariancia por traslación espacial}\quad\Rightarrow\quad \text{momento lineal conservado}
+\]</div>
+      <div class="formula-block">\[
+\text{invariancia por rotación}\quad\Rightarrow\quad \text{momento angular conservado}
+\]</div>
+    </div>
+    <div class="reading-block">
+      <p>La versión operativa en problemas sencillos es reconocer coordenadas cíclicas. Si \(L\) no depende de \(q_k\), entonces</p>
+      <div class="formula-block">\[
+\frac{\partial L}{\partial q_k}=0
+\quad\Rightarrow\quad
+\frac{d}{dt}\left(\frac{\partial L}{\partial \dot q_k}\right)=0
+\]</div>
+      <p>y se conserva el momento conjugado \(p_k\).</p>
+    </div>
+    <div class="reading-block">
+      <p>Ejemplo: en un potencial central \(V(r)\), el lagrangiano</p>
+      <div class="formula-block">\[
+L=\frac12m(\dot r^2+r^2\dot\theta^2)-V(r)
+\]</div>
+      <p>no depende de \(\theta\). Por tanto, \(\theta\) es cíclica y se conserva</p>
+      <div class="formula-block">\[
+p_\theta=\frac{\partial L}{\partial \dot\theta}=mr^2\dot\theta=L_z
+\]</div>
+      <p>que es el momento angular.</p>
+    </div>
+  </article>
+
+  <article class="lesson" id="hamiltoniano">
+    <h3>Hamiltoniano y transformación de Legendre</h3>
+    <div class="reading-block">
+      <p>La formulación lagrangiana usa coordenadas y velocidades \((q_i,\dot q_i)\). La formulación hamiltoniana usa coordenadas y momentos conjugados \((q_i,p_i)\). El paso de una a otra se hace mediante una transformación de Legendre.</p>
+      <div class="formula-block">\[
+p_i=\frac{\partial L}{\partial \dot q_i}
+\]</div>
+      <p>Si estas ecuaciones pueden invertirse para escribir \(\dot q_i=\dot q_i(q,p,t)\), se define el hamiltoniano:</p>
+      <div class="formula-block">\[
+H(q,p,t)=\sum_i p_i\dot q_i(q,p,t)-L(q,\dot q(q,p,t),t)
+\]</div>
+    </div>
+    <div class="reading-block">
+      <p>Las ecuaciones de Hamilton son</p>
+      <div class="formula-block">\[
+\dot q_i=\frac{\partial H}{\partial p_i},
+\qquad
+\dot p_i=-\frac{\partial H}{\partial q_i}
+\]</div>
+      <p>La ventaja formal es que un sistema de \(n\) ecuaciones de segundo orden se transforma en un sistema de \(2n\) ecuaciones de primer orden. El espacio natural ya no es el espacio de configuración, sino el espacio de fases.</p>
+    </div>
+    <div class="exam-box">
+      <p><strong>Lectura de examen:</strong> Hamilton no elimina la dificultad física del problema. Reescribe la dinámica en variables \((q,p)\), muestra mejor la estructura de conservación y prepara Poisson, transformaciones canónicas y mecánica estadística/cuántica.</p>
+    </div>
+  </article>
+
+  <article class="lesson" id="ejemplos-hamilton">
+    <h3>Ejemplos mínimos de Hamilton</h3>
+    <details class="study-toggle" open>
+      <summary>Oscilador armónico</summary>
+      <div class="details-body">
+        <p>Con</p>
+        <div class="formula-block">\[
+L=\frac12m\dot x^2-\frac12kx^2
+\]</div>
+        <p>el momento conjugado es</p>
+        <div class="formula-block">\[
+p=\frac{\partial L}{\partial\dot x}=m\dot x
+\]</div>
+        <p>y el hamiltoniano queda</p>
+        <div class="formula-block">\[
+H=\frac{p^2}{2m}+\frac12kx^2
+\]</div>
+        <p>Las ecuaciones de Hamilton son</p>
+        <div class="formula-block">\[
+\dot x=\frac{p}{m},\qquad \dot p=-kx
+\]</div>
+        <p>Combinadas dan \(m\ddot x+kx=0\).</p>
+      </div>
+    </details>
+
+    <details class="study-toggle" open>
+      <summary>Partícula en potencial central</summary>
+      <div class="details-body">
+        <p>Con</p>
+        <div class="formula-block">\[
+L=\frac12m(\dot r^2+r^2\dot\theta^2)-V(r)
+\]</div>
+        <p>los momentos son</p>
+        <div class="formula-block">\[
+p_r=m\dot r,\qquad p_\theta=mr^2\dot\theta
+\]</div>
+        <p>y el hamiltoniano:</p>
+        <div class="formula-block">\[
+H=\frac{p_r^2}{2m}+\frac{p_\theta^2}{2mr^2}+V(r)
+\]</div>
+        <p>Como \(H\) no depende de \(\theta\), se conserva \(p_\theta\). Esta es la misma conservación angular que ya aparecía en Lagrange.</p>
+      </div>
+    </details>
+  </article>
 </section>
 
 <section class="page" id="conceptos-clave">
@@ -191,6 +358,52 @@ window.MathJax = {
     <article class="definition-card"><h3>Momento generalizado</h3><p><strong>Definición precisa:</strong> \(p_i=\frac{\partial L}{\partial \dot q_i}\).</p><p><strong>Explicación:</strong> generaliza el momento lineal. Si \(q_i\) es una coordenada lineal, suele parecerse a \(mv_i\). Si \(q_i\) es angular, puede ser un momento angular.</p><p><strong>Ejemplo:</strong> \(L=\frac12m(\dot r^2+r^2\dot\theta^2)-V(r)\) da \(p_\theta=mr^2\dot\theta\).</p><p><strong>Relación:</strong> si \(q_i\) es cíclica, \(p_i\) se conserva.</p><p><strong>Examen:</strong> “Calcule los momentos conjugados e identifique constantes del movimiento”.</p></article>
     <article class="definition-card"><h3>Coordenada cíclica</h3><p><strong>Definición precisa:</strong> coordenada \(q_i\) que no aparece explícitamente en \(L\): \(\frac{\partial L}{\partial q_i}=0\).</p><p><strong>Explicación:</strong> si una coordenada es cíclica, la dinámica no cambia al desplazar esa coordenada. Eso señala una simetría.</p><p><strong>Ejemplo:</strong> en un campo central \(V(r)\), \(\theta\) no aparece en \(L\), por tanto \(p_\theta\) se conserva.</p><p><strong>Relación:</strong> coordenada cíclica \(\rightarrow\) momento conjugado conservado.</p><p><strong>Examen:</strong> “¿Qué coordenadas son cíclicas? ¿Qué magnitudes se conservan?”</p></article>
     <article class="definition-card"><h3>Energía conservada</h3><p><strong>Definición precisa:</strong> si \(L\) no depende explícitamente del tiempo y las coordenadas son naturales, la energía mecánica se conserva.</p><p><strong>Explicación:</strong> no basta mirar si hay movimiento; hay que mirar si el lagrangiano cambia explícitamente con \(t\). Si \(L(q,\dot q)\), suele haber conservación de energía en sistemas conservativos.</p><p><strong>Ejemplo:</strong> péndulo simple sin rozamiento: \(L\) no depende de \(t\), por tanto se conserva la energía.</p><p><strong>Relación:</strong> simetría temporal \(\rightarrow\) conservación de energía.</p><p><strong>Examen:</strong> “Determine qué cantidades se conservan”.</p></article>
+    <article class="definition-card">
+      <h3>Momento conjugado</h3>
+      <p>Definición:</p>
+      <div class="formula-block">\[
+p_i=\frac{\partial L}{\partial \dot q_i}
+\]</div>
+      <p>No siempre coincide con \(m\dot q_i\). Coincide en coordenadas cartesianas simples con energía cinética estándar. Es la variable que sustituye a la velocidad en el formalismo hamiltoniano.</p>
+    </article>
+
+    <article class="definition-card">
+      <h3>Coordenada cíclica</h3>
+      <p>Una coordenada \(q_k\) es cíclica si \(L\) no depende explícitamente de ella. Entonces se conserva su momento conjugado:</p>
+      <div class="formula-block">\[
+\frac{\partial L}{\partial q_k}=0
+\Rightarrow
+p_k=\text{cte}
+\]</div>
+    </article>
+
+    <article class="definition-card">
+      <h3>Función energía</h3>
+      <p>Se define como</p>
+      <div class="formula-block">\[
+h=\sum_i p_i\dot q_i-L
+\]</div>
+      <p>Si \(L\) no depende explícitamente de \(t\), \(h\) se conserva. En sistemas naturales suele coincidir con \(T+V\).</p>
+    </article>
+
+    <article class="definition-card">
+      <h3>Hamiltoniano</h3>
+      <p>Función de \(q,p,t\) definida por transformación de Legendre:</p>
+      <div class="formula-block">\[
+H=\sum_i p_i\dot q_i-L
+\]</div>
+      <p>con las velocidades expresadas como funciones de \(q,p,t\). Genera las ecuaciones de Hamilton.</p>
+    </article>
+
+    <article class="definition-card">
+      <h3>Espacio de fases</h3>
+      <p>Espacio de variables \((q_i,p_i)\). Para \(n\) grados de libertad tiene dimensión \(2n\). Cada punto representa un estado dinámico completo del sistema.</p>
+    </article>
+
+    <article class="definition-card">
+      <h3>Noether</h3>
+      <p>Teorema que asocia simetrías continuas del lagrangiano con magnitudes conservadas: tiempo con energía, traslación con momento lineal, rotación con momento angular.</p>
+    </article>
   </div>
 </section>
 
@@ -207,6 +420,35 @@ window.MathJax = {
 
 <section class="page" id="errores">
   <div class="page-head"><h2>6. Errores habituales</h2></div>
+  <details class="accordion accordion-error" open>
+    <summary>Confundir \(L\) con la energía</summary>
+    <p>El lagrangiano suele ser \(L=T-V\). La energía mecánica, en casos simples, es \(E=T+V\). La función energía se calcula como \(h=\sum_i p_i\dot q_i-L\).</p>
+  </details>
+
+  <details class="accordion accordion-error">
+    <summary>Creer que toda trayectoria física minimiza la acción</summary>
+    <p>El principio de Hamilton exige acción estacionaria, no necesariamente mínima absoluta.</p>
+  </details>
+
+  <details class="accordion accordion-error">
+    <summary>Derivar mal respecto a \(\dot q\)</summary>
+    <p>En \(\partial L/\partial q\), la velocidad \(\dot q\) se trata como variable independiente. En \(\partial L/\partial \dot q\), la coordenada \(q\) se mantiene fija.</p>
+  </details>
+
+  <details class="accordion accordion-error">
+    <summary>Confundir coordenada cíclica con coordenada constante</summary>
+    <p>Una coordenada cíclica puede cambiar con el tiempo. Lo que se conserva es su momento conjugado.</p>
+  </details>
+
+  <details class="accordion accordion-error">
+    <summary>Construir \(H\) sin invertir velocidades</summary>
+    <p>El hamiltoniano debe quedar como función de \(q,p,t\), no de \(q,\dot q,t\). Primero se calcula \(p_i=\partial L/\partial\dot q_i\) y luego se expresan las velocidades en función de los momentos.</p>
+  </details>
+
+  <details class="accordion accordion-error">
+    <summary>Creer que Hamilton siempre simplifica la resolución</summary>
+    <p>Hamilton transforma \(n\) ecuaciones de segundo orden en \(2n\) ecuaciones de primer orden. No garantiza solución analítica más fácil; su ventaja es estructural.</p>
+  </details>
   <details class="study-toggle error-acc" open><summary>Error 1: confundir \(L=T-V\) con \(E=T+V\)</summary><div class="details-body"><p><strong>Por qué está mal:</strong> el lagrangiano no es la energía total. Su papel es generar ecuaciones mediante Euler-Lagrange.</p><p><strong>Corrección:</strong> usar \(L=T-V\) y reservar \(E=T+V\) para energía mecánica cuando proceda.</p><p><strong>Incorrecta:</strong> “El lagrangiano del muelle es \(L=\frac12m\dot x^2+\frac12kx^2\)”.</p><p><strong>Correcta:</strong> “El lagrangiano del muelle es \(L=\frac12m\dot x^2-\frac12kx^2\)”.</p></div></details>
   <details class="study-toggle error-acc"><summary>Error 2: escribir coordenadas de más</summary><div class="details-body"><p><strong>Por qué está mal:</strong> si hay una ligadura, no todas las coordenadas son independientes. Meter \(x,y\) y además \(\theta\) sin relación sobreparametriza.</p><p><strong>Corrección:</strong> elegir el número mínimo de coordenadas independientes.</p><p><strong>Incorrecta:</strong> “Para el péndulo simple uso \(x,y,\theta\)”.</p><p><strong>Correcta:</strong> “Para el péndulo simple plano basta \(q=\theta\)”.</p></div></details>
   <details class="study-toggle error-acc"><summary>Error 3: incluir fuerzas de ligadura en el potencial</summary><div class="details-body"><p><strong>Por qué está mal:</strong> en el tratamiento básico, el potencial incluye fuerzas activas conservativas, no normales o tensiones ideales que solo imponen restricciones.</p><p><strong>Corrección:</strong> incorporar la ligadura en las coordenadas.</p><p><strong>Incorrecta:</strong> “Añadimos la tensión \(T_h\) al potencial del péndulo”.</p><p><strong>Correcta:</strong> “La tensión no aparece; se usa \(\theta\) y se escribe \(T,V\)”.</p></div></details>
@@ -227,11 +469,56 @@ window.MathJax = {
     <article class="definition-card"><h3>5 preguntas difíciles</h3><ol start="21"><li>Dado el péndulo elástico, deduce sus dos ecuaciones de movimiento.</li><li>Para la cuña móvil, construye el lagrangiano usando \(q,s\).</li><li>En la cuña móvil, obtiene la constante asociada a la coordenada cíclica.</li><li>Demuestra que para una partícula en \(V(r)\) se conserva el momento angular.</li><li>Explica por qué el principio de Hamilton permite formular la mecánica sin empezar por \(\mathbf F=m\mathbf a\).</li></ol></article>
     <article class="definition-card"><h3>5 preguntas de desarrollo largo</h3><ol start="26"><li>Desarrolla el paso de Newton a Lagrange para una partícula en un potencial \(V(x)\).</li><li>Expón el papel del cálculo variacional en la mecánica analítica.</li><li>Explica cómo se tratan las ligaduras en la formulación lagrangiana básica.</li><li>Compara Newton y Lagrange en un problema con tensión o normal desconocida.</li><li>Desarrolla la relación entre coordenadas cíclicas, simetrías y leyes de conservación.</li></ol></article>
     <article class="definition-card"><h3>5 preguntas de relación entre conceptos</h3><ol start="31"><li>Relaciona acción, lagrangiano y Euler-Lagrange.</li><li>Relaciona coordenadas generalizadas, ligaduras y grados de libertad.</li><li>Relaciona coordenada cíclica, momento generalizado y conservación.</li><li>Relaciona invariancia bajo cambio de coordenadas y elección eficiente de variables.</li><li>Relaciona el formalismo lagrangiano con el paso posterior a Hamilton.</li></ol></article>
+    <article class="question-card">
+      <h3>Preguntas adicionales de cierre</h3>
+      <ol class="question-list">
+        <li>Define momento conjugado y explica cuándo coincide con el momento lineal ordinario.</li>
+        <li>Qué es una coordenada cíclica y qué magnitud se conserva?</li>
+        <li>Define la función energía \(h\) y explica cuándo coincide con \(T+V\).</li>
+        <li>Enuncia el teorema de Noether en forma operativa.</li>
+        <li>Relaciona invariancia temporal, traslacional y rotacional con sus conservaciones.</li>
+        <li>Construye el hamiltoniano del oscilador armónico.</li>
+        <li>Obtén las ecuaciones de Hamilton a partir de \(H=p^2/(2m)+V(q)\).</li>
+        <li>Explica la diferencia entre espacio de configuración y espacio de fases.</li>
+        <li>Explica por qué Hamilton transforma ecuaciones de segundo orden en ecuaciones de primer orden.</li>
+        <li>En un potencial central, identifica la coordenada cíclica y la magnitud conservada.</li>
+      </ol>
+    </article>
   </div>
 </section>
 
 <section class="page" id="respuestas">
   <div class="page-head"><h2>8. Respuestas modelo</h2></div>
+  <details class="accordion accordion-answer" open>
+    <summary>Respuesta madre: coordenada cíclica</summary>
+    <p>Si el lagrangiano no depende explícitamente de una coordenada \(q_k\), entonces \(\partial L/\partial q_k=0\). Euler-Lagrange da</p>
+    <div class="formula-block">\[
+\frac{d}{dt}\left(\frac{\partial L}{\partial\dot q_k}\right)=0
+\]</div>
+    <p>Por tanto, \(p_k=\partial L/\partial\dot q_k\) se conserva. La coordenada puede variar; lo constante es su momento conjugado.</p>
+  </details>
+
+  <details class="accordion accordion-answer">
+    <summary>Respuesta madre: Noether</summary>
+    <p>El teorema de Noether afirma que toda simetría continua del lagrangiano genera una cantidad conservada. Si \(L\) no cambia bajo traslaciones temporales, se conserva la energía. Si no cambia bajo traslaciones espaciales, se conserva el momento lineal. Si no cambia bajo rotaciones, se conserva el momento angular.</p>
+  </details>
+
+  <details class="accordion accordion-answer">
+    <summary>Respuesta madre: Hamiltoniano</summary>
+    <p>Primero se calculan los momentos conjugados:</p>
+    <div class="formula-block">\[
+p_i=\frac{\partial L}{\partial\dot q_i}
+\]</div>
+    <p>Después se invierte para escribir \(\dot q_i=\dot q_i(q,p,t)\). El hamiltoniano es</p>
+    <div class="formula-block">\[
+H(q,p,t)=\sum_i p_i\dot q_i-L
+\]</div>
+    <p>con las velocidades ya expresadas en función de \(q,p,t\). Las ecuaciones de Hamilton son</p>
+    <div class="formula-block">\[
+\dot q_i=\frac{\partial H}{\partial p_i},\qquad
+\dot p_i=-\frac{\partial H}{\partial q_i}
+\]</div>
+  </details>
   <details class="study-toggle answer" open><summary>1–10. Respuestas fáciles</summary><div class="details-body">
     <ol>
       <li>En un sistema conservativo simple, el lagrangiano es \(L(q,\dot q,t)=T(q,\dot q,t)-V(q,t)\). Es una función escalar que permite obtener las ecuaciones de movimiento mediante Euler-Lagrange. No debe confundirse con la energía total.</li>

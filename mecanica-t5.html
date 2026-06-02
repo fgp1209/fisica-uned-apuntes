@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="color-scheme" content="light dark" />
-<title>Mecanica - T5 - El solido rigido</title>
+<title>Mec&aacute;nica — T5 — El s&oacute;lido r&iacute;gido</title>
 <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/icon-32.png" />
 <link rel="icon" type="image/png" sizes="50x50" href="assets/icons/icon-50.png" />
 <link rel="apple-touch-icon" sizes="100x100" href="assets/icons/icon-100.png" />
@@ -22,63 +22,476 @@ window.MathJax = {
 <body class="subject-mecanica">
 <div class="wrap">
 <header class="cover">
-  <div class="top-actions"><a class="back-link" href="index.html">Volver al indice</a></div>
-  <p class="eyebrow">UNED Fisica · Mecanica Clasica · Tema 5</p>
-  <h1>Guia de estudio - T5 El solido rigido</h1>
-  <p class="subtitle">Espacio reservado para el tema oficial de solido rigido, angulos de Euler y ejemplos de rotacion.</p>
-  <div class="chips">
-    <span class="chip">Mecanica</span>
-    <span class="chip">Tema 5</span>
-    <span class="chip">solido rigido</span>
-    <span class="chip">pendiente de apuntes</span>
-  </div>
+  <div class="top-actions"><a class="back-link" href="index.html">&larr; Volver al &iacute;ndice</a></div>
+  <p class="eyebrow">UNED F&iacute;sica · Mec&aacute;nica Cl&aacute;sica · Tema 5</p>
+  <h1>Gu&iacute;a de estudio — T5 El s&oacute;lido r&iacute;gido</h1>
+  <p class="subtitle">S&oacute;lido r&iacute;gido, centro de masas, tensor de inercia, ejes principales, ecuaciones de Euler, cuerpo axisim&eacute;trico libre y peonza.</p>
+  <div class="chips"><span class="chip">Mec&aacute;nica</span><span class="chip">Tema 5</span><span class="chip">s&oacute;lido r&iacute;gido</span><span class="chip">Euler</span><span class="chip">estado: listo</span></div>
 </header>
 
 <div class="toolbar no-print">
   <nav>
-    <a href="#mapa">Mapa</a>
-    <a href="#indice-oficial">Indice oficial</a>
-    <a href="#estado">Estado</a>
+    <a href="#mapa">Mapa</a><a href="#1-prerrequisitos-minimos">Prerrequisitos</a><a href="#2-idea-central-del-capitulo">Idea central</a><a href="#3-desarrollo-completo-del-capitulo">Desarrollo</a><a href="#4-conceptos-clave">Conceptos</a><a href="#6-errores-habituales">Errores</a><a href="#7-preguntas-orientadas-a-examen">Preguntas</a><a href="#8-respuestas-modelo">Respuestas</a><a href="#9-resumen-final-de-repaso">Resumen</a><a href="#checklist-de-dominio">Checklist</a>
   </nav>
-  <div class="toolbar-actions">
-    <button class="btn" onclick="printReady()">Imprimir / guardar PDF</button>
-  </div>
+  <div class="toolbar-actions"><button class="btn" onclick="printReady()">Imprimir / guardar PDF</button><button class="btn secondary" onclick="openAllDetails()">Abrir todo</button><button class="btn secondary" onclick="closeAllDetails()">Cerrar acordeones</button></div>
 </div>
 
 <main>
 <section class="page map-page" id="mapa">
-  <div class="page-head"><h2>Mapa clicable</h2><p class="section-lead">Estructura oficial pendiente de desarrollar.</p></div>
+  <div class="page-head"><h2>Mapa clicable</h2><p class="section-lead">Ruta de estudio: de la idealizaci&oacute;n del s&oacute;lido r&iacute;gido al tensor de inercia y las ecuaciones de Euler.</p></div>
   <div class="concept-map">
-    <a class="map-node" href="#definicion"><span>Solido rigido</span><small>definicion y movimiento</small></a>
-    <a class="map-node" href="#energia"><span>\(L\) y \(T\)</span><small>momento angular y energia cinetica</small></a>
-    <a class="map-node" href="#euler"><span>Angulos de Euler</span><small>orientacion del solido</small></a>
-    <a class="map-node" href="#ejemplos"><span>Ejemplos</span><small>ejes fijos, moviles y peonza</small></a>
+    <a class="map-node" href="#1-prerrequisitos-minimos"><span>Prerrequisitos</span><small>centro de masas · tensor · Euler</small></a>
+    <a class="map-node" href="#2-idea-central-del-capitulo"><span>Idea central</span><small>traslaci&oacute;n m&aacute;s rotaci&oacute;n</small></a>
+    <a class="map-node" href="#3-desarrollo-completo-del-capitulo"><span>Desarrollo</span><small>s&oacute;lido r&iacute;gido · \(\mathbf L\) · \(T\)</small></a>
+    <a class="map-node" href="#3-5-tensor-de-inercia"><span>Tensor</span><small>productos de inercia y ejes principales</small></a>
+    <a class="map-node" href="#3-8-ecuacion-rotacional"><span>Euler</span><small>din&aacute;mica en ejes solidarios</small></a>
+    <a class="map-node" href="#3-14-peonza-axisimetrica-con-un-punto-fijo"><span>Peonza</span><small>precesi&oacute;n · nutaci&oacute;n · cierre conceptual</small></a>
+    <a class="map-node" href="#7-preguntas-orientadas-a-examen"><span>Preguntas</span><small>repaso activo</small></a>
+    <a class="map-node" href="#checklist-de-dominio"><span>Checklist</span><small>control final</small></a>
   </div>
+  <p class="source-note">Fuente principal: Garrigós, Serrano y Zúñiga, <em>Mecánica Clásica</em>, Tema 5, UNED. El tema define el sólido rígido, reduce su descripción a posición del centro de masas y orientación, introduce la descomposición traslación–rotación de \(\mathbf L\) y \(T\), y formula las ecuaciones de Euler en ejes principales. </p>
 </section>
 
-<section class="page" id="indice-oficial">
-  <div class="page-head"><h2>Indice oficial</h2></div>
+<section class="page" id="1-prerrequisitos-minimos">
+  <div class="page-head"><h2>1. Prerrequisitos mínimos</h2></div>
   <div class="grid cards-grid">
-    <article class="definition-card" id="definicion"><h3>Que es un solido rigido</h3><p>Pendiente de apuntes.</p></article>
-    <article class="definition-card" id="energia"><h3>Momento angular y energia cinetica de un solido rigido</h3><p>Pendiente de apuntes.</p></article>
-    <article class="definition-card"><h3>Como se mueve un solido rigido</h3><p>Pendiente de apuntes.</p></article>
-    <article class="definition-card" id="euler"><h3>Angulos de Euler</h3><p>Pendiente de apuntes.</p></article>
-    <article class="definition-card" id="ejemplos"><h3>Ejemplos del movimiento de solidos rigidos</h3><p>Pendiente de apuntes.</p></article>
-    <article class="definition-card"><h3>Solido libre que gira a velocidad angular constante</h3><p>Pendiente de apuntes.</p></article>
-    <article class="definition-card"><h3>Cuando se conserva el momento angular</h3><p>Pendiente de apuntes.</p></article>
-    <article class="definition-card"><h3>Eje de rotacion fijo coincidiendo con un eje de simetria del solido</h3><p>Pendiente de apuntes.</p></article>
-    <article class="definition-card"><h3>Eje de rotacion movil y paralelo al eje de simetria</h3><p>Pendiente de apuntes.</p></article>
-    <article class="definition-card"><h3>Eje de rotacion fijo que no es eje de simetria</h3><p>Pendiente de apuntes.</p></article>
-    <article class="definition-card"><h3>Cuerpo axisimetrico libre</h3><p>Pendiente de apuntes.</p></article>
-    <article class="definition-card"><h3>Peonza axisimetrica con un punto fijo</h3><p>Pendiente de apuntes.</p></article>
-  </div>
+<article class="definition-card" id="sistema-de-part-culas"><h3>Sistema de partículas</h3><p>Definición breve: conjunto de partículas puntuales \(m_i\) con posiciones \(\mathbf r_i\).</p>
+<p>Por qué es necesario: un sólido rígido no se introduce como cuerpo continuo abstracto, sino como caso especial de sistema de partículas con distancias internas constantes.</p>
+<p>Ejemplo mínimo: dos masas unidas por una varilla rígida ideal forman el modelo más simple de sólido rígido.</p></article>
+<article class="definition-card" id="t5-prerreq-centro-de-masas"><h3>Centro de masas</h3><p>Definición breve:</p>
+<div class="formula-block">\[\mathbf R_{\mathrm{cm}}=\frac{1}{M}\sum_i m_i\mathbf r_i,\qquad M=\sum_i m_i\]</div>
+<p>Por qué es necesario: el movimiento del sólido se separa en traslación del centro de masas y rotación alrededor del centro de masas.</p>
+<p>Ejemplo mínimo: para dos masas iguales en \(\pm a\hat{\mathbf x}\), el centro de masas está en el origen.</p></article>
+<article class="definition-card" id="momento-lineal-momento-angular-y-energ-a"><h3>Momento lineal, momento angular y energía</h3><p>Definición breve:</p>
+<div class="formula-block">\[\mathbf P=\sum_i m_i\mathbf v_i,\qquad
+\mathbf L=\sum_i \mathbf r_i\times m_i\mathbf v_i,\qquad
+T=\frac12\sum_i m_i v_i^2\]</div>
+<p>Por qué es necesario: el Tema 5 usa los teoremas del Tema 4 para obtener las ecuaciones de movimiento del sólido. El propio texto remarca que las relaciones de transformación de \(\mathbf P\), \(\mathbf L\) y \(T\) llevan de forma natural al centro de masas y al tensor de inercia.</p>
+<p>Ejemplo mínimo: una rueda que se desplaza y gira tiene energía cinética de traslación del centro y energía cinética de rotación.</p></article>
+<article class="definition-card" id="momento-de-una-fuerza"><h3>Momento de una fuerza</h3><p>Definición breve:</p>
+<div class="formula-block">\[\mathbf N=\sum_i \mathbf r_i\times \mathbf F_i^{\mathrm{ext}}\]</div>
+<p>Por qué es necesario: la rotación del sólido está determinada por la variación temporal del momento angular:</p>
+<div class="formula-block">\[\frac{d\mathbf L}{dt}=\mathbf N^{\mathrm{ext}}\]</div>
+<p>El texto lo usa como punto de partida de la dinámica rotacional del sólido rígido.</p>
+<p>Ejemplo mínimo: una fuerza aplicada en el centro de masas no produce momento respecto al centro de masas; aplicada fuera de él, sí.</p></article>
+<article class="definition-card" id="velocidad-angular"><h3>Velocidad angular</h3><p>Definición breve: vector \(\boldsymbol\omega\) que describe la rapidez y orientación instantánea de la rotación.</p>
+<p>Por qué es necesario: en un sólido rígido todos los puntos comparten la misma velocidad angular, aunque tengan velocidades lineales distintas.</p>
+<p>Ejemplo mínimo: en un disco que gira con \(\omega\), un punto a distancia \(R\) del eje tiene velocidad \(v=\omega R\).</p></article>
+<article class="definition-card" id="matriz-de-rotaci-n"><h3>Matriz de rotación</h3><p>Definición breve: matriz \(R(t)\) que relaciona los ejes solidarios al cuerpo con los ejes del laboratorio.</p>
+<p>Por qué es necesario: resolver el sólido rígido no significa solo hallar \(\boldsymbol\omega(t)\); también hay que hallar la orientación \(R(t)\). El texto insiste en que la velocidad angular se obtiene primero y la orientación requiere una segunda integración mediante ángulos de Euler.</p>
+<p>Ejemplo mínimo: un cuerpo puede tener el mismo centro de masas, pero orientaciones distintas.</p></article>
+<article class="definition-card" id="t5-prerreq-tensor-de-inercia"><h3>Tensor de inercia</h3><p>Definición breve:</p>
+<div class="formula-block">\[I_{\mathrm{cm}}^{\prime\prime}=\sum_i m_i(\mathbf r_i-\mathbf R_{\mathrm{cm}})^2\mathbf 1-\sum_i m_i(\mathbf r_i-\mathbf R_{\mathrm{cm}})(\mathbf r_i-\mathbf R_{\mathrm{cm}})^T\]</div>
+<p>Por qué es necesario: sustituye al momento de inercia escalar cuando la rotación no es alrededor de un eje fijo simple. En general, \(\mathbf L\) y \(\boldsymbol\omega\) no tienen por qué ser paralelos.</p>
+<p>Ejemplo mínimo: una varilla girando alrededor de su eje longitudinal tiene un momento de inercia distinto que si gira alrededor de un eje perpendicular.</p></article>
+<article class="definition-card" id="t5-prerreq-ejes-principales"><h3>Ejes principales</h3><p>Definición breve: sistema solidario al cuerpo en el que el tensor de inercia es diagonal.</p>
+<p>Por qué es necesario: las ecuaciones de Euler se escriben de forma manejable en ejes principales porque el tensor es diagonal e independiente del tiempo.</p>
+<p>Ejemplo mínimo: en un cilindro homogéneo, el eje de simetría es eje principal.</p></article>
+<article class="definition-card" id="diagonalizaci-n-de-matrices-sim-tricas"><h3>Diagonalización de matrices simétricas</h3><p>Definición breve: proceso de hallar autovalores y autovectores de una matriz simétrica.</p>
+<p>Por qué es necesario: los momentos principales son autovalores del tensor de inercia; los ejes principales son sus autovectores. Goldstein formula explícitamente esta identificación entre autovalores del tensor y momentos principales.</p>
+<p>Ejemplo mínimo: si</p>
+<div class="formula-block">\[I=
+\begin{pmatrix}
+A&0&0\\
+0&B&0\\
+0&0&C
+\end{pmatrix},\]</div>
+<p>los momentos principales son \(A,B,C\).</p></article>
+<article class="definition-card" id="ecuaciones-diferenciales-ordinarias"><h3>Ecuaciones diferenciales ordinarias</h3><p>Definición breve: ecuaciones donde aparecen funciones desconocidas y sus derivadas temporales.</p>
+<p>Por qué es necesario: las ecuaciones de Euler son ecuaciones diferenciales acopladas para las componentes de \(\boldsymbol\omega\). En general son no lineales.</p>
+<p>Ejemplo mínimo: en el cuerpo axisimétrico libre aparecen ecuaciones equivalentes a un oscilador armónico para \(\omega_x'\) y \(\omega_y'\).</p></article>
+</div>
 </section>
 
-<section class="page" id="estado">
-  <div class="page-head"><h2>Estado</h2></div>
-  <div class="warn-box">
-    <p>Este tema queda vacio a proposito. El contenido anterior de fuerzas centrales se ha movido al Tema 6, que es su posicion oficial.</p>
-  </div>
+<section class="page" id="2-idea-central-del-capitulo">
+  <div class="page-head"><h2>2. Idea central del capítulo</h2></div>
+  <div class="reading-block"><p>El capítulo aborda el paso desde sistemas de partículas generales a una idealización extremadamente útil: el sólido rígido. La condición esencial es que las distancias relativas entre partículas permanecen constantes. Esto elimina los grados de libertad internos asociados a deformaciones, vibraciones o cambios de forma. A cambio, el problema queda reducido a describir dónde está el cuerpo y cómo está orientado.</p></div>
+<div class="reading-block"><p>La idea física básica es que un sólido rígido posee dos movimientos simultáneos: traslación del centro de masas y rotación alrededor de él. La traslación se trata como si toda la masa estuviera concentrada en el centro de masas. La rotación exige una magnitud nueva: el tensor de inercia. En una partícula puntual bastan \(\mathbf r\), \(\mathbf v\), \(\mathbf p\). En un cuerpo extenso, la distribución espacial de masa importa, porque dos cuerpos con la misma masa y el mismo centro de masas pueden oponerse de forma distinta a la rotación.</p></div>
+<div class="reading-block"><p>El capítulo enseña que el momento angular y la energía cinética del sólido se separan en una parte traslacional y otra rotacional. Esa separación no es decorativa: permite escribir ecuaciones de movimiento separadas para \(\mathbf R_{\mathrm{cm}}\) y para \(\boldsymbol\omega\). El texto resume esta estructura mediante</p></div>
+<div class="formula-block">\[\mathbf L=M\mathbf R_{\mathrm{cm}}\times \mathbf V_{\mathrm{cm}}+I_{\mathrm{cm}}^{\prime\prime}\boldsymbol\omega\]</div>
+<div class="formula-block">\[T=\frac{M}{2}V_{\mathrm{cm}}^2+\frac12\boldsymbol\omega^T I_{\mathrm{cm}}^{\prime\prime}\boldsymbol\omega\]</div>
+<div class="reading-block"><p>junto con la ecuación de traslación del centro de masas.</p></div>
+<div class="reading-block"><p>El núcleo técnico del capítulo son las ecuaciones de Euler. Estas ecuaciones expresan la dinámica rotacional en el sistema de ejes principales del sólido, donde el tensor de inercia es diagonal. La ventaja es enorme: los coeficientes \(I'_{xx},I'_{yy},I'_{zz}\) son constantes. La dificultad permanece: las ecuaciones contienen productos de componentes de la velocidad angular, por lo que suelen ser no lineales.</p></div>
+<div class="reading-block"><p>El capítulo culmina aplicando esas ecuaciones a casos concretos: giro libre, rotación con momento angular conservado, eje fijo, eje móvil paralelo al eje de simetría, eje fijo no simétrico, cuerpo axisimétrico libre y peonza. Para examen, el bloque más operativo es tensor de inercia, ejes principales, momento angular, energía cinética y casos de eje fijo. La peonza debe leerse como cierre conceptual, no como prioridad resolutiva.</p></div>
+</section>
+
+<section class="page" id="3-desarrollo-completo-del-capitulo">
+  <div class="page-head"><h2>3. Desarrollo completo del capítulo</h2></div>
+  <h3 id="3-1-qu-es-un-s-lido-r-gido">3.1. Qué es un sólido rígido</h3>
+<div class="reading-block"><p>Un sólido rígido es un sistema de partículas en el que todas las distancias internas permanecen constantes. Matemáticamente, para cualquier par de partículas \(i,j\),</p>
+<div class="formula-block">\[|\mathbf r_i(t)-\mathbf r_j(t)|=\text{constante}\]</div>
+<p>Esto significa que el cuerpo no se deforma. No se estira, no se comprime, no vibra internamente. En la realidad no existen sólidos perfectamente rígidos, porque todos los cuerpos se deforman algo bajo fuerzas. El propio texto lo presenta como idealización conveniente, suficientemente buena para muchos sistemas.</p>
+<p>La consecuencia fundamental es que no hace falta seguir cada partícula de forma independiente. Basta con conocer la posición del centro de masas y la orientación del cuerpo. Por eso el problema del sólido rígido tiene seis grados de libertad: tres para la posición y tres para la orientación.</p>
+<p>Ejemplo: una piedra lanzada al aire. Su centro de masas sigue una trayectoria parabólica, pero la piedra puede ir rotando mientras avanza. Para describirla completamente no basta con decir dónde está su centro de masas; hay que decir también cómo está orientada.</p></div>
+  <h3 id="3-2-posici-n-del-centro-de-masas-y-orientaci-n">3.2. Posición del centro de masas y orientación</h3>
+<div class="reading-block"><p>Resolver el movimiento de un sólido rígido significa encontrar dos objetos:</p>
+<div class="formula-block">\[\mathbf R_{\mathrm{cm}}(t)\]</div>
+<p>y</p>
+<div class="formula-block">\[R(t)\]</div>
+<p>donde \(R(t)\) es la matriz que da la orientación de unos ejes solidarios al cuerpo respecto al laboratorio. El texto lo formula explícitamente así: posición del centro de masas más orientación de los ejes solidarios.</p>
+<p>La elección natural de los ejes solidarios es el sistema de ejes principales con origen en el centro de masas. En ese sistema, el tensor de inercia toma forma diagonal:</p>
+<div class="formula-block">\[I_D'=
+\begin{pmatrix}
+I'_{xx}&0&0\\
+0&I'_{yy}&0\\
+0&0&I'_{zz}
+\end{pmatrix}\]</div>
+<p>Esto simplifica la dinámica porque, al estar esos ejes pegados al cuerpo, la distribución de masa no cambia con el tiempo en ese sistema.</p></div>
+  <h3 id="3-3-momento-angular-del-s-lido-r-gido">3.3. Momento angular del sólido rígido</h3>
+<div class="reading-block"><p>Para una partícula, el momento angular es</p>
+<div class="formula-block">\[\mathbf L=\mathbf r\times \mathbf p\]</div>
+<p>Para un sólido rígido, el momento angular total se puede separar en dos contribuciones:</p>
+<div class="formula-block">\[\mathbf L=
+M\mathbf R_{\mathrm{cm}}\times \mathbf V_{\mathrm{cm}}
++
+I_{\mathrm{cm}}^{\prime\prime}\boldsymbol\omega\]</div>
+<p>La primera parte es el momento angular que tendría una partícula puntual de masa \(M\) situada en el centro de masas. La segunda parte es el momento angular debido a la rotación del sólido alrededor de su centro de masas.</p>
+<p>La importancia física es directa: si un cuerpo se traslada sin girar, solo aparece la parte orbital o traslacional. Si el centro de masas está quieto pero el cuerpo gira, solo aparece la parte rotacional. Si hace ambas cosas, aparecen las dos.</p>
+<p>Ejemplo: una rueda que avanza rodando tiene momento angular por el movimiento de su centro y por su giro propio.</p></div>
+  <h3 id="3-4-energ-a-cin-tica-del-s-lido-r-gido">3.4. Energía cinética del sólido rígido</h3>
+<div class="reading-block"><p>La energía cinética también se separa:</p>
+<div class="formula-block">\[T=
+\frac{M}{2}V_{\mathrm{cm}}^2
++
+\frac12\boldsymbol\omega^T I_{\mathrm{cm}}^{\prime\prime}\boldsymbol\omega\]</div>
+<p>La primera parte es traslación. La segunda es rotación. Esta fórmula generaliza la expresión elemental</p>
+<div class="formula-block">\[T_{\mathrm{rot}}=\frac12 I\omega^2\]</div>
+<p>pero ahora \(I\) ya no es necesariamente un escalar: es un tensor.</p>
+<p>Ejemplo: un disco que rueda sin deslizar tiene</p>
+<div class="formula-block">\[T=\frac12MV_{\mathrm{cm}}^2+\frac12I_{\mathrm{cm}}\omega^2\]</div>
+<p>y si además \(V_{\mathrm{cm}}=R\omega\), la condición de rodadura conecta ambas partes.</p></div>
+  <h3 id="3-5-tensor-de-inercia">3.5. Tensor de inercia</h3>
+<div class="reading-block"><p>El tensor de inercia respecto al centro de masas aparece en el resumen del tema como</p>
+<div class="formula-block">\[I_{\mathrm{cm}}^{\prime\prime}=\sum_i m_i(\mathbf r_i-\mathbf R_{\mathrm{cm}})^2\mathbf 1-\sum_i m_i(\mathbf r_i-\mathbf R_{\mathrm{cm}})(\mathbf r_i-\mathbf R_{\mathrm{cm}})^T\]</div>
+<p>Su función es codificar cómo está distribuida la masa alrededor del centro de masas. No mide solo “cuánta masa hay”, sino dónde está colocada respecto a los ejes.</p>
+<p>En componentes, para ejes cartesianos:</p>
+<div class="formula-block">\[I_{xx}=\sum_i m_i(y_i^2+z_i^2)\]</div>
+<div class="formula-block">\[I_{yy}=\sum_i m_i(x_i^2+z_i^2)\]</div>
+<div class="formula-block">\[I_{zz}=\sum_i m_i(x_i^2+y_i^2)\]</div>
+<div class="formula-block">\[I_{xy}=-\sum_i m_ix_iy_i,\quad
+I_{xz}=-\sum_i m_ix_iz_i,\quad
+I_{yz}=-\sum_i m_iy_iz_i\]</div>
+<p>Los términos diagonales son momentos de inercia respecto a los ejes. Los términos fuera de la diagonal son productos de inercia. Si estos productos no son cero, \(\mathbf L\) no tiene por qué ser paralelo a \(\boldsymbol\omega\). Esta idea se refuerza también en Boas: para rotaciones generales, el escalar \(I\) debe reemplazarse por un tensor de segundo rango.</p></div>
+  <h3 id="3-6-ejes-principales">3.6. Ejes principales</h3>
+<div class="reading-block"><p>Los ejes principales son los ejes en los que el tensor de inercia queda diagonal. En esos ejes,</p>
+<div class="formula-block">\[\mathbf L'=
+\begin{pmatrix}
+I'_{xx}\omega'_x\\
+I'_{yy}\omega'_y\\
+I'_{zz}\omega'_z
+\end{pmatrix}\]</div>
+<p>La consecuencia es que si el cuerpo gira alrededor de un eje principal, entonces \(\mathbf L\) y \(\boldsymbol\omega\) son paralelos. Si gira alrededor de un eje que no es principal, puede hacer falta un par externo para mantener ese giro.</p>
+<p>Ejemplo: una varilla delgada tiene un eje principal a lo largo de la varilla y dos ejes principales perpendiculares a ella. Girar la varilla alrededor de uno u otro eje no es dinámicamente equivalente.</p></div>
+  <h3 id="3-7-ecuacion-de-traslacion">3.7. Ecuación de traslación</h3>
+<div class="reading-block"><p>La traslación del centro de masas obedece</p>
+<div class="formula-block">\[
+M\frac{d^2\mathbf R_{\mathrm{cm}}}{dt^2}
+=
+\sum_i\mathbf F_i^{\mathrm{ext}}
+\]</div>
+<p>Esta ecuación gobierna los tres grados de libertad traslacionales. El sólido, respecto a su movimiento global, se comporta como una partícula puntual de masa total \(M\) situada en el centro de masas y sometida a la resultante de las fuerzas externas.</p>
+<p>Ejemplo: si se lanza un martillo al aire, su centro de masas sigue la misma ecuación que una partícula sometida a la gravedad, aunque el martillo gire de forma compleja alrededor del centro de masas.</p></div>
+  <h3 id="3-8-ecuacion-rotacional">3.8. Ecuación rotacional</h3>
+<div class="reading-block"><p>La rotación se obtiene desde</p>
+<div class="formula-block">\[\frac{d\mathbf L}{dt}=\mathbf N^{\mathrm{ext}}\]</div>
+<p>En el sistema de ejes principales solidarios al cuerpo, el texto llega a</p>
+<div class="formula-block">\[\boldsymbol\omega'\times(I_D'\boldsymbol\omega')+I_D'\dot{\boldsymbol\omega'}=\mathbf N'_{\mathrm{ext}}\]</div>
+<p>y, en componentes, a las ecuaciones de Euler:</p>
+<div class="formula-block">\[I'_{xx}\dot\omega'_x-(I'_{yy}-I'_{zz})\omega'_y\omega'_z=N_x^{\prime\mathrm{ext}}\]</div>
+<div class="formula-block">\[I'_{yy}\dot\omega'_y-(I'_{zz}-I'_{xx})\omega'_z\omega'_x=N_y^{\prime\mathrm{ext}}\]</div>
+<div class="formula-block">\[I'_{zz}\dot\omega'_z-(I'_{xx}-I'_{yy})\omega'_x\omega'_y=N_z^{\prime\mathrm{ext}}\]</div>
+<div class="exam-box">
+  <p><strong>Lectura de examen:</strong> las ecuaciones de Euler son útiles porque se escriben en ejes principales solidarios al cuerpo. En esos ejes el tensor de inercia es diagonal y constante. Si el sólido gira alrededor de un eje principal y no hay momento externo, \(\mathbf L\) y \(\boldsymbol\omega\) permanecen paralelos. Si el eje fijo no es principal, puede aparecer un momento externo necesario para mantener la rotación.</p>
+</div>
+<p>Estas son las ecuaciones de Euler del sólido rígido. Físicamente, expresan la variación del momento angular en el sistema solidario al cuerpo. Matemáticamente, son ecuaciones diferenciales acopladas para \(\omega'_x,\omega'_y,\omega'_z\). El texto subraya que su dificultad está en los productos \(\omega'_y\omega'_z\), etc., que las hacen no lineales.</p></div>
+  <h3 id="3-9-ngulos-de-euler">3.9. Ángulos de Euler</h3>
+<div class="reading-block"><p>Las ecuaciones de Euler dan \(\boldsymbol\omega'(t)\), pero eso no basta para conocer la orientación del sólido. Para reconstruir la orientación se introducen los ángulos de Euler \(\alpha,\beta,\gamma\).</p>
+<p>El texto da la relación entre las componentes de \(\boldsymbol\omega'\) y las derivadas de los ángulos:</p>
+<div class="formula-block">\[\omega'_x=\dot\alpha\sin\beta\sin\gamma+\dot\beta\cos\gamma\]</div>
+<div class="formula-block">\[\omega'_y=\dot\alpha\sin\beta\cos\gamma-\dot\beta\sin\gamma\]</div>
+<div class="formula-block">\[\omega'_z=\dot\alpha\cos\beta+\dot\gamma\]</div>
+<p>También proporciona el sistema inverso para \(\dot\alpha,\dot\beta,\dot\gamma\). Estas ecuaciones son de primer orden y permiten obtener la orientación una vez conocida la velocidad angular.</p>
+<p>Idea clave: Euler no sustituye a Newton; organiza la rotación del sólido en variables adaptadas al cuerpo.</p></div>
+  <h3 id="3-10-s-lido-libre-con-velocidad-angular-constante">3.10. Sólido libre con velocidad angular constante</h3>
+<div class="reading-block"><p>El caso más sencillo es un sólido sin fuerzas externas que gira con velocidad angular constante. Si los tres momentos principales son distintos, las ecuaciones de Euler solo permiten una velocidad angular constante si esta apunta a uno de los ejes principales. El texto lo interpreta físicamente así: un sólido gira sin necesidad de momentos externos solo alrededor de ejes principales.</p>
+<p>Consecuencia: los ejes principales no son una construcción algebraica gratuita; son los ejes naturales de rotación libre.</p>
+<p>Ejemplo: una caja rectangular lanzada girando alrededor de uno de sus ejes principales puede mantener un giro simple; si se lanza alrededor de un eje arbitrario, aparece bamboleo.</p></div>
+  <h3 id="3-11-rotaci-n-con-eje-fijo-coincidiendo-con-eje-de-simetr-a">3.11. Rotación con eje fijo coincidiendo con eje de simetría</h3>
+<div class="reading-block"><p>Si el eje de rotación fijo coincide con un eje de simetría, el problema se reduce casi a la mecánica elemental:</p>
+<div class="formula-block">\[L=I\omega,\qquad T=\frac12I\omega^2\]</div>
+<p>y el momento externo necesario puede ser nulo si el eje es principal y no hay cambios de \(\omega\).</p>
+<p>Ejemplo: un disco que gira alrededor de su eje central.</p></div>
+  <h3 id="3-12-eje-fijo-que-no-es-eje-de-simetr-a">3.12. Eje fijo que no es eje de simetría</h3>
+<div class="reading-block"><p>Si el cuerpo gira alrededor de un eje fijo que no coincide con un eje principal, el momento angular no es paralelo a la velocidad angular. Aunque \(\omega\) sea constante en módulo, \(\mathbf L\) puede cambiar de dirección en el laboratorio. Entonces el eje debe ejercer fuerzas o pares para mantener ese movimiento.</p>
+<p>Ejemplo típico UNED: un disco uniforme que gira alrededor de un eje paralelo al eje del disco, pero desplazado una distancia \(d&lt;R\), pidiendo fuerza y momento sobre el eje. Este tipo aparece en exámenes de Mecánica.</p></div>
+  <h3 id="3-13-cuerpo-axisim-trico-libre">3.13. Cuerpo axisimétrico libre</h3>
+<div class="reading-block"><p>Un cuerpo axisimétrico tiene dos momentos principales iguales:</p>
+<div class="formula-block">\[I'_{xx}=I'_{yy}=I',\qquad I'_{zz}\neq I'\]</div>
+<p>Las ecuaciones de Euler sin torque se simplifican:</p>
+<div class="formula-block">\[I'\dot\omega'_x-(I'-I'_{zz})\omega'_y\omega'_z=0\]</div>
+<div class="formula-block">\[I'\dot\omega'_y-(I'_{zz}-I')\omega'_z\omega'_x=0\]</div>
+<div class="formula-block">\[I'_{zz}\dot\omega'_z=0\]</div>
+<p>La última ecuación implica que \(\omega'_z\) es constante. Las otras dos se convierten en un sistema lineal equivalente a un oscilador armónico para \(\omega'_x\) y \(\omega'_y\). El texto define</p>
+<div class="formula-block">\[\dot\gamma_0=\frac{I'-I'_{zz}}{I'}\omega'_z(0)\]</div>
+<p>y obtiene soluciones sinusoidales para \(\omega'_x(t)\) y \(\omega'_y(t)\).</p>
+<p>Interpretación: en el sistema solidario al cuerpo, la componente transversal de la velocidad angular gira alrededor del eje de simetría. En el laboratorio, el momento angular se conserva.</p></div>
+  <h3 id="3-14-peonza-axisimetrica-con-un-punto-fijo">3.14. Peonza axisimétrica con un punto fijo</h3>
+<div class="reading-block"><p>La peonza introduce un torque gravitatorio. Si el punto fijo está en el origen y el centro de masas está sobre el eje de simetría a distancia \(L\), el momento de la gravedad en ejes del cuerpo se obtiene como</p>
+<div class="formula-block">\[\mathbf N'_{\mathrm{ext}}=MgL\sin\beta(\cos\gamma,-\sin\gamma,0)\]</div>
+<p>El texto escribe entonces las ecuaciones de Euler acopladas a los ángulos de Euler.</p>
+<p>Este caso es más difícil porque ya no basta con resolver ecuaciones de Euler libres; hay acoplamiento entre \(\omega'_x,\omega'_y,\omega'_z\) y los ángulos \(\alpha,\beta,\gamma\). Para este bloque, lectura conceptual: torque gravitatorio, precesión, nutación, conservación de \(\omega'_z\), componente vertical de \(\mathbf L\) y energía.</p></div>
+</section>
+
+<section class="page" id="4-conceptos-clave">
+  <div class="page-head"><h2>4. Conceptos clave</h2></div>
+  <div class="grid cards-grid">
+<article class="definition-card" id="t5-concepto-solido-rigido"><h3>Sólido rígido</h3><p>Definición precisa: sistema de partículas cuyas distancias relativas permanecen constantes.</p>
+<p>Explicación: es una idealización que elimina deformaciones internas. Permite describir el sistema por \(\mathbf R_{\mathrm{cm}}\) y orientación.</p>
+<p>Ejemplo: una varilla rígida ideal formada por dos masas puntuales.</p>
+<p>Relación: conecta sistemas de partículas, centro de masas, tensor de inercia y rotación.</p>
+<p>Pregunta de examen: “Defina sólido rígido y explique cuántos grados de libertad tiene.”</p></article>
+<article class="definition-card" id="t5-concepto-centro-de-masas"><h3>Centro de masas</h3><p>Definición precisa: punto ponderado por las masas que representa la traslación global del sistema.</p>
+<p>Explicación: separa la dinámica en movimiento global y movimiento relativo.</p>
+<p>Ejemplo: dos masas iguales en \(\pm a\hat{\mathbf x}\) tienen \(\mathbf R_{\mathrm{cm}}=0\).</p>
+<p>Relación: aparece en \(\mathbf L\), \(T\), ecuación de traslación y tensor respecto al centro de masas.</p>
+<p>Pregunta de examen: “Explique por qué la traslación de un sólido rígido se trata como la de una partícula de masa \(M\).”</p></article>
+<article class="definition-card" id="t5-concepto-tensor-de-inercia"><h3>Tensor de inercia</h3><p>Definición precisa: tensor simétrico que relaciona \(\mathbf L\) con \(\boldsymbol\omega\):</p>
+<div class="formula-block">\[\mathbf L=I\boldsymbol\omega\]</div>
+<p>en el sistema considerado.</p>
+<p>Explicación: mide cómo la distribución de masa se opone a la rotación alrededor de distintos ejes.</p>
+<p>Ejemplo: cilindro homogéneo: \(I_z\) respecto al eje del cilindro difiere de \(I_x,I_y\).</p>
+<p>Relación: sus autovalores son momentos principales; sus autovectores son ejes principales.</p>
+<p>Pregunta de examen: “Calcule el tensor de inercia de un sistema discreto de masas y determine sus momentos principales.”</p></article>
+<article class="definition-card" id="productos-de-inercia"><h3>Productos de inercia</h3><p>Definición precisa: elementos no diagonales del tensor:</p>
+<div class="formula-block">\[I_{xy}=-\sum_i m_ix_iy_i\]</div>
+<p>Explicación: miden acoplamiento entre rotación alrededor de un eje y momento angular en otro eje.</p>
+<p>Ejemplo: si una distribución no es simétrica respecto a los planos coordenados, pueden aparecer productos de inercia no nulos.</p>
+<p>Relación: desaparecen en ejes principales.</p>
+<p>Pregunta de examen: “¿Qué significa físicamente que \(I_{xy}\neq 0\)?”</p></article>
+<article class="definition-card" id="t5-concepto-ejes-principales"><h3>Ejes principales</h3><p>Definición precisa: ejes en los que el tensor de inercia es diagonal.</p>
+<p>Explicación: son los ejes naturales de rotación; en ellos se simplifican \(\mathbf L\), \(T\) y las ecuaciones de Euler.</p>
+<p>Ejemplo: eje de simetría de un cilindro.</p>
+<p>Relación: son autovectores del tensor de inercia.</p>
+<p>Pregunta de examen: “Determine los ejes principales de dos masas unidas por una varilla.”</p></article>
+<article class="definition-card" id="momento-angular-rotacional"><h3>Momento angular rotacional</h3><p>Definición precisa:</p>
+<div class="formula-block">\[\mathbf L_{\mathrm{rot}}=I_{\mathrm{cm}}^{\prime\prime}\boldsymbol\omega\]</div>
+<p>Explicación: es la parte del momento angular debida al giro alrededor del centro de masas.</p>
+<p>Ejemplo: una rueda quieta en el espacio pero girando sobre sí misma tiene \(\mathbf L_{\mathrm{rot}}\neq 0\).</p>
+<p>Relación: entra en \(\dot{\mathbf L}=\mathbf N^{\mathrm{ext}}\).</p>
+<p>Pregunta de examen: “Calcule el momento angular de una varilla que gira alrededor de un eje fijo.”</p></article>
+<article class="definition-card" id="energ-a-cin-tica-rotacional"><h3>Energía cinética rotacional</h3><p>Definición precisa:</p>
+<div class="formula-block">\[T_{\mathrm{rot}}=\frac12\boldsymbol\omega^T I_{\mathrm{cm}}^{\prime\prime}\boldsymbol\omega\]</div>
+<p>Explicación: generaliza \(\frac12I\omega^2\). Solo se reduce a forma escalar simple si la rotación es alrededor de un eje principal o si el tensor actúa como escalar en ese eje.</p>
+<p>Ejemplo: disco girando alrededor de su eje central.</p>
+<p>Relación: aparece en conservación de energía, rodadura y problemas con eje fijo.</p>
+<p>Pregunta de examen: “Escriba la energía cinética total de un sólido rígido en términos de traslación y rotación.”</p></article>
+<article class="definition-card" id="momento-externo"><h3>Momento externo</h3><p>Definición precisa:</p>
+<div class="formula-block">\[\mathbf N^{\mathrm{ext}}=\sum_i \mathbf r_i\times \mathbf F_i^{\mathrm{ext}}\]</div>
+<p>Explicación: causa la variación del momento angular.</p>
+<p>Ejemplo: el peso de una peonza con punto fijo genera torque respecto al punto de apoyo.</p>
+<p>Relación: lado derecho de las ecuaciones de Euler.</p>
+<p>Pregunta de examen: “Determine el par necesario para mantener una rotación con eje fijo no principal.”</p></article>
+<article class="definition-card" id="ecuaciones-de-euler"><h3>Ecuaciones de Euler</h3><p>Definición precisa: ecuaciones diferenciales para \(\omega'_x,\omega'_y,\omega'_z\) en ejes principales.</p>
+<p>Explicación: son la forma adaptada de \(\dot{\mathbf L}=\mathbf N\) al sistema solidario al cuerpo.</p>
+<p>Ejemplo: cuerpo axisimétrico libre.</p>
+<p>Relación: requieren tensor diagonal y se completan con ángulos de Euler para conocer orientación.</p>
+<p>Pregunta de examen: “Escriba e interprete las ecuaciones de Euler para un sólido rígido.”</p></article>
+<article class="definition-card" id="ngulos-de-euler"><h3>Ángulos de Euler</h3><p>Definición precisa: tres ángulos que parametrizan la orientación de un sólido rígido.</p>
+<p>Explicación: permiten reconstruir \(R(t)\) a partir de \(\boldsymbol\omega'(t)\).</p>
+<p>Ejemplo: en un giro simple alrededor del eje \(z'\), puede quedar \(\gamma(t)=\gamma_0+\omega t\).</p>
+<p>Relación: cierran la descripción cinemática de la orientación.</p>
+<p>Pregunta de examen: “¿Por qué conocer \(\boldsymbol\omega(t)\) no basta para conocer la orientación del sólido?”</p></article>
+<article class="definition-card" id="cuerpo-axisim-trico"><h3>Cuerpo axisimétrico</h3><p>Definición precisa: sólido con dos momentos principales iguales:</p>
+<div class="formula-block">\[I_1=I_2\neq I_3\]</div>
+<p>Explicación: su simetría reduce las ecuaciones de Euler y permite soluciones analíticas en el caso libre.</p>
+<p>Ejemplo: disco, cilindro, peonza ideal.</p>
+<p>Relación: puente entre sólido rígido general y peonza.</p>
+<p>Pregunta de examen: “Resuelva cualitativamente el movimiento libre de un cuerpo axisimétrico.”</p></article>
+<article class="definition-card" id="peonza"><h3>Peonza</h3><p>Definición precisa: cuerpo axisimétrico con un punto fijo sometido a gravedad.</p>
+<p>Explicación: combina rotación propia, precesión y nutación. La gravedad introduce torque.</p>
+<p>Ejemplo: trompo que gira apoyado en una punta.</p>
+<p>Relación: aplicación avanzada de Euler + ángulos de Euler + conservación.</p>
+<p>Pregunta de examen: “Explique qué magnitudes se conservan en una peonza simétrica con punto fijo.”</p></article>
+</div>
+</section>
+
+<section class="page" id="5-relaciones-entre-ideas">
+  <div class="page-head"><h2>5. Relaciones entre ideas</h2></div>
+  <div class="reading-block"><p>La jerarquía conceptual es:</p></div>
+<div class="formula-block">\[\text{sistema de partículas}
+\rightarrow
+\text{sólido rígido}
+\rightarrow
+(\mathbf R_{\mathrm{cm}},R)
+\rightarrow
+(I_{\mathrm{cm}},\boldsymbol\omega)
+\rightarrow
+(\mathbf L,T)
+\rightarrow
+\text{ecuaciones de Euler}\]</div>
+<div class="reading-block"><p>Primero se reduce el sistema: de muchas partículas se pasa a un cuerpo cuya forma no cambia. Esa reducción permite describir el movimiento mediante centro de masas y orientación.</p></div>
+<div class="reading-block"><p>Después aparece la separación entre traslación y rotación. La traslación depende de la fuerza externa total; la rotación depende del momento externo total. Esta separación es una consecuencia directa de usar el centro de masas.</p></div>
+<div class="reading-block"><p>Luego entra el tensor de inercia. La masa total basta para la traslación, pero no para la rotación. Para rotar importa cómo está distribuida la masa respecto al eje. Por eso el análogo rotacional de \(M\) no es en general un número, sino una matriz.</p></div>
+<div class="reading-block"><p>La diagonalización del tensor produce los ejes principales. Esta es la conexión entre álgebra lineal y física: los autovectores no son “vectores matemáticos” sin interpretación, sino direcciones naturales de giro.</p></div>
+<div class="reading-block"><p>Las ecuaciones de Euler dependen de los momentos principales. Si los tres son distintos, el movimiento libre general es complicado. Si hay simetría axial, se simplifica. Si además no hay torque, el problema se vuelve integrable de forma elemental.</p></div>
+<div class="reading-block"><p>La oposición importante es:</p></div>
+<div class="formula-block">\[\text{eje principal}
+\quad \text{frente a} \quad
+\text{eje arbitrario}\]</div>
+<div class="reading-block"><p>En un eje principal, \(\mathbf L\parallel \boldsymbol\omega\). En un eje arbitrario, no necesariamente. Esta diferencia explica por qué algunos giros se mantienen sin par externo y otros requieren fuerzas o momentos sobre el eje.</p></div>
+<div class="reading-block"><p>Evolución dentro del tema:</p></div>
+<ol class="question-list"><li>Definir el sólido rígido.</li><li>Separar traslación y rotación.</li><li>Introducir tensor de inercia.</li><li>Elegir ejes principales.</li><li>Formular Euler.</li><li>Resolver casos simples.</li><li>Leer la peonza como caso avanzado.</li></ol>
+</section>
+
+<section class="page" id="6-errores-habituales">
+  <div class="page-head"><h2>6. Errores habituales</h2></div>
+  <details class="accordion accordion-error" open id="error-1-tratar-siempre-el-momento-de-inercia-como-escalar"><summary>Error 1: tratar siempre el momento de inercia como escalar</summary><p>Por qué está mal: solo es escalar para rotación alrededor de un eje fijo concreto o en casos de simetría especial.</p>
+<p>Corrección: usar tensor cuando la rotación es tridimensional.</p>
+<p>Respuesta incorrecta: “\(\mathbf L=I\boldsymbol\omega\), siempre con \(I\) escalar.”</p>
+<p>Respuesta correcta: “En general \(\mathbf L=I\boldsymbol\omega\), con \(I\) tensor; solo en ejes principales concretos puede usarse \(L_i=I_i\omega_i\).”</p></details>
+  <details class="accordion accordion-error" id="error-2-confundir-s-lido-r-gido-con-s-lido-indeformable-real"><summary>Error 2: confundir sólido rígido con sólido indeformable real</summary><p>Por qué está mal: el sólido rígido es una idealización; los cuerpos reales se deforman.</p>
+<p>Corrección: decir que se desprecia la deformación interna.</p>
+<p>Respuesta incorrecta: “Un sólido rígido es un cuerpo que existe físicamente sin deformarse nunca.”</p>
+<p>Respuesta correcta: “Es un modelo de sistema de partículas con distancias relativas constantes.”</p></details>
+  <details class="accordion accordion-error" id="error-3-pensar-que-mathbf-l-y-boldsymbol-omega-son-siempre-paralelos"><summary>Error 3: pensar que \(\mathbf L\) y \(\boldsymbol\omega\) son siempre paralelos</summary><p>Por qué está mal: solo ocurre en ejes principales o en cuerpos con simetría suficiente.</p>
+<p>Corrección: comprobar si el tensor es diagonal y si \(\boldsymbol\omega\) apunta a un eje principal.</p>
+<p>Respuesta incorrecta: “Si el cuerpo gira alrededor de cualquier eje, \(\mathbf L\) va en ese eje.”</p>
+<p>Respuesta correcta: “Si el eje no es principal, \(\mathbf L\) puede tener componentes fuera de la dirección de \(\boldsymbol\omega\).”</p></details>
+  <details class="accordion accordion-error" id="error-4-olvidar-la-parte-traslacional-de-mathbf-l"><summary>Error 4: olvidar la parte traslacional de \(\mathbf L\)</summary><p>Por qué está mal: el momento angular total respecto al origen incluye traslación del centro de masas.</p>
+<p>Corrección:</p>
+<div class="formula-block">\[\mathbf L=M\mathbf R_{\mathrm{cm}}\times\mathbf V_{\mathrm{cm}}+I_{\mathrm{cm}}\boldsymbol\omega\]</div>
+<p>Respuesta incorrecta: “El momento angular del sólido es siempre \(I\omega\).”</p>
+<p>Respuesta correcta: “\(I\omega\) es solo la parte rotacional respecto al centro de masas.”</p></details>
+  <details class="accordion accordion-error" id="error-5-usar-el-tensor-respecto-a-un-origen-equivocado"><summary>Error 5: usar el tensor respecto a un origen equivocado</summary><p>Por qué está mal: el tensor depende del origen. No es igual respecto al centro de masas que respecto a un punto de apoyo.</p>
+<p>Corrección: fijar siempre origen antes de calcular.</p>
+<p>Respuesta incorrecta: “El tensor de inercia del cuerpo es único.”</p>
+<p>Respuesta correcta: “El tensor depende del punto y de los ejes elegidos.”</p></details>
+  <details class="accordion accordion-error" id="error-6-olvidar-los-productos-de-inercia"><summary>Error 6: olvidar los productos de inercia</summary><p>Por qué está mal: si la distribución no es simétrica respecto a los planos coordenados, los términos no diagonales pueden no anularse.</p>
+<p>Corrección: calcular \(I_{xy},I_{xz},I_{yz}\) salvo que haya simetría que los elimine.</p>
+<p>Respuesta incorrecta: “El tensor siempre es diagonal si los ejes son cartesianos.”</p>
+<p>Respuesta correcta: “Solo es diagonal en ejes principales o por simetría.”</p></details>
+  <details class="accordion accordion-error" id="error-7-confundir-ejes-del-laboratorio-con-ejes-solidarios"><summary>Error 7: confundir ejes del laboratorio con ejes solidarios</summary><p>Por qué está mal: las ecuaciones de Euler se escriben en ejes principales solidarios al cuerpo.</p>
+<p>Corrección: indicar si las componentes son primadas o no.</p>
+<p>Respuesta incorrecta: “Uso \(I_D\) diagonal en el laboratorio aunque el cuerpo esté girando.”</p>
+<p>Respuesta correcta: “Uso \(I_D'\) en el sistema solidario de ejes principales; en el laboratorio el tensor puede depender del tiempo.”</p></details>
+  <details class="accordion accordion-error" id="error-8-creer-que-resolver-euler-ya-da-la-orientaci-n"><summary>Error 8: creer que resolver Euler ya da la orientación</summary><p>Por qué está mal: Euler da \(\boldsymbol\omega'(t)\), no directamente \(R(t)\).</p>
+<p>Corrección: integrar después las ecuaciones cinemáticas de los ángulos de Euler.</p>
+<p>Respuesta incorrecta: “Con \(\omega(t)\) el sólido está completamente resuelto.”</p>
+<p>Respuesta correcta: “Hace falta obtener también \(\alpha(t),\beta(t),\gamma(t)\) o \(R(t)\).”</p></details>
+  <details class="accordion accordion-error" id="error-9-aplicar-conservaci-n-de-energ-a-cuando-hay-pares-externos-que-hacen-trabajo"><summary>Error 9: aplicar conservación de energía cuando hay pares externos que hacen trabajo</summary><p>Por qué está mal: la energía solo se conserva si las fuerzas y pares externos no realizan trabajo neto o si el sistema es conservativo.</p>
+<p>Corrección: analizar fuerzas externas y ligaduras.</p>
+<p>Respuesta incorrecta: “En todo sólido rígido se conserva la energía.”</p>
+<p>Respuesta correcta: “Se conserva si las fuerzas externas derivan de potencial o no hacen trabajo.”</p></details>
+  <details class="accordion accordion-error" id="error-10-sobredesarrollar-la-peonza-antes-de-dominar-tensor-y-euler"><summary>Error 10: sobredesarrollar la peonza antes de dominar tensor y Euler</summary><p>Por qué está mal: la peonza combina todo el tema y añade torque gravitatorio.</p>
+<p>Corrección: dominar antes tensor, ejes principales, Euler libre y cuerpo axisimétrico.</p>
+<p>Respuesta incorrecta: “La peonza es el bloque central operativo del tema.”</p>
+<p>Respuesta correcta: “La peonza es cierre conceptual avanzado; el núcleo de examen es tensor, \(T\), \(\mathbf L\), eje fijo y Euler básico.”</p></details>
+</section>
+
+<section class="page" id="7-preguntas-orientadas-a-examen">
+  <div class="page-head"><h2>7. Preguntas orientadas a examen</h2></div>
+  <div class="grid cards-grid">
+<article class="question-card" id="10-preguntas-f-ciles"><h3>10 preguntas fáciles</h3><ol class="question-list"><li>¿Qué es un sólido rígido?</li><li>¿Cuántos grados de libertad tiene un sólido rígido libre en el espacio?</li><li>¿Qué dos datos son necesarios para describir completamente el movimiento de un sólido rígido?</li><li>Escriba la descomposición de la energía cinética de un sólido rígido.</li><li>Escriba la descomposición del momento angular de un sólido rígido.</li><li>¿Qué es el tensor de inercia?</li><li>¿Qué son los ejes principales?</li><li>¿Cuándo \(\mathbf L\) y \(\boldsymbol\omega\) son paralelos?</li><li>¿Qué magnitud causa la variación del momento angular?</li><li>¿Para qué sirven los ángulos de Euler?</li></ol></article>
+<article class="question-card" id="10-preguntas-medias"><h3>10 preguntas medias</h3><ol class="question-list"><li>Explique por qué el movimiento de traslación del sólido puede tratarse como el de una partícula situada en el centro de masas.</li><li>Derive la forma general de \(T_{\mathrm{rot}}\) a partir de la idea de tensor de inercia.</li><li>Explique la diferencia entre momento de inercia y tensor de inercia.</li><li>Dado un tensor de inercia diagonal, escriba \(\mathbf L'\) en función de \(\boldsymbol\omega'\).</li><li>Escriba las ecuaciones de Euler para un sólido rígido en ejes principales.</li><li>¿Por qué las ecuaciones de Euler son en general no lineales?</li><li>¿Qué ocurre en un sólido libre que gira con velocidad angular constante si sus tres momentos principales son distintos?</li><li>Explique por qué un eje de simetría suele ser eje principal.</li><li>¿Qué simplificación aparece en un cuerpo axisimétrico libre?</li><li>¿Por qué la peonza introduce un problema más complicado que el cuerpo axisimétrico libre?</li></ol></article>
+<article class="question-card" id="5-preguntas-dif-ciles"><h3>5 preguntas difíciles</h3><ol class="question-list"><li>Explique físicamente por qué un cuerpo que gira alrededor de un eje no principal necesita un par externo para mantener el giro.</li><li>Para un cuerpo axisimétrico libre, explique por qué \(\omega'_z\) es constante y qué comportamiento tienen \(\omega'_x,\omega'_y\).</li><li>Explique la diferencia entre conservar \(\mathbf L\) en el laboratorio y describir \(\boldsymbol\omega'\) en ejes solidarios.</li><li>Analice por qué las ecuaciones de Euler se simplifican en ejes principales pero no necesariamente en ejes del laboratorio.</li><li>Explique qué papel juega el tensor de inercia en la estabilidad de los giros libres.</li></ol></article>
+<article class="question-card" id="5-preguntas-de-desarrollo-largo"><h3>5 preguntas de desarrollo largo</h3><ol class="question-list"><li>Desarrolle la dinámica completa del sólido rígido desde la separación traslación–rotación hasta las ecuaciones de Euler.</li><li>Explique el significado físico y matemático del tensor de inercia, incluyendo productos de inercia y ejes principales.</li><li>Compare el movimiento de una partícula, un sistema de partículas y un sólido rígido.</li><li>Describa el movimiento libre de un cuerpo axisimétrico y su interpretación física.</li><li>Explique el caso de la peonza axisimétrica con punto fijo como aplicación avanzada de las ecuaciones de Euler.</li></ol></article>
+<article class="question-card" id="5-preguntas-de-relaci-n-entre-conceptos"><h3>5 preguntas de relación entre conceptos</h3><ol class="question-list"><li>Relacione centro de masas, tensor de inercia y energía cinética.</li><li>Relacione ejes principales, diagonalización y ecuaciones de Euler.</li><li>Relacione momento externo, conservación de momento angular y rotación libre.</li><li>Relacione ángulos de Euler, velocidad angular y orientación.</li><li>Relacione simetría axial, momentos principales y peonza.</li></ol></article>
+</div>
+</section>
+
+<section class="page" id="8-respuestas-modelo">
+  <div class="page-head"><h2>8. Respuestas modelo</h2></div>
+  <details class="accordion accordion-answer" open id="1-qu-es-un-s-lido-r-gidou"><summary>1. ¿Qué es un sólido rígido?</summary><p>Un sólido rígido es un sistema de partículas cuyas distancias relativas permanecen constantes en el tiempo. Es una idealización, porque los cuerpos reales se deforman, pero permite describir muchos sistemas despreciando deformaciones internas.</p></details>
+  <details class="accordion accordion-answer" id="2-cu-ntos-grados-de-libertad-tiene-un-s-lido-r-gido-libre-en-el-espaciou"><summary>2. ¿Cuántos grados de libertad tiene un sólido rígido libre en el espacio?</summary><p>Tiene seis grados de libertad: tres corresponden a la posición del centro de masas y tres a la orientación del cuerpo en el espacio.</p></details>
+  <details class="accordion accordion-answer" id="3-qu-dos-datos-son-necesarios-para-describir-completamente-el-movimiento-de-un-s-lido-r-gidou"><summary>3. ¿Qué dos datos son necesarios para describir completamente el movimiento de un sólido rígido?</summary><p>Hace falta conocer \(\mathbf R_{\mathrm{cm}}(t)\), posición del centro de masas, y \(R(t)\), orientación del sistema solidario al cuerpo respecto al laboratorio.</p></details>
+  <details class="accordion accordion-answer" id="4-escriba-la-descomposici-n-de-la-energ-a-cin-tica-de-un-s-lido-r-gido"><summary>4. Escriba la descomposición de la energía cinética de un sólido rígido.</summary><div class="formula-block">\[T=
+\frac12MV_{\mathrm{cm}}^2+
+\frac12\boldsymbol\omega^T I_{\mathrm{cm}}\boldsymbol\omega\]</div>
+<p>La primera parte es traslación; la segunda, rotación alrededor del centro de masas.</p></details>
+  <details class="accordion accordion-answer" id="5-escriba-la-descomposici-n-del-momento-angular-de-un-s-lido-r-gido"><summary>5. Escriba la descomposición del momento angular de un sólido rígido.</summary><div class="formula-block">\[\mathbf L=
+M\mathbf R_{\mathrm{cm}}\times\mathbf V_{\mathrm{cm}}
++
+I_{\mathrm{cm}}\boldsymbol\omega\]</div>
+<p>La primera parte es el momento angular orbital del centro de masas; la segunda es el momento angular rotacional.</p></details>
+  <details class="accordion accordion-answer" id="6-qu-es-el-tensor-de-inerciau"><summary>6. ¿Qué es el tensor de inercia?</summary><p>Es una matriz simétrica que codifica la distribución de masa respecto a un punto y relaciona el momento angular rotacional con la velocidad angular:</p>
+<div class="formula-block">\[\mathbf L_{\mathrm{rot}}=I\boldsymbol\omega\]</div></details>
+  <details class="accordion accordion-answer" id="7-qu-son-los-ejes-principalesu"><summary>7. ¿Qué son los ejes principales?</summary><p>Son los ejes en los que el tensor de inercia queda diagonal. Sus direcciones son los autovectores del tensor y sus momentos principales son los autovalores.</p></details>
+  <details class="accordion accordion-answer" id="8-cu-ndo-mathbf-l-y-boldsymbol-omega-son-paralelosu"><summary>8. ¿Cuándo \(\mathbf L\) y \(\boldsymbol\omega\) son paralelos?</summary><p>Cuando \(\boldsymbol\omega\) apunta a un eje principal o cuando el cuerpo posee simetría tal que el tensor actúa como múltiplo de la identidad en la dirección considerada.</p></details>
+  <details class="accordion accordion-answer" id="9-qu-magnitud-causa-la-variaci-n-del-momento-angularu"><summary>9. ¿Qué magnitud causa la variación del momento angular?</summary><p>El momento de las fuerzas externas:</p>
+<div class="formula-block">\[\frac{d\mathbf L}{dt}=\mathbf N^{\mathrm{ext}}\]</div></details>
+  <details class="accordion accordion-answer" id="10-para-qu-sirven-los-ngulos-de-euleru"><summary>10. ¿Para qué sirven los ángulos de Euler?</summary><p>Sirven para parametrizar la orientación del sólido rígido. Una vez conocida \(\boldsymbol\omega'(t)\), permiten reconstruir la matriz de rotación \(R(t)\).</p></details>
+  <details class="accordion accordion-answer" id="11-explique-por-qu-el-movimiento-de-traslaci-n-del-s-lido-puede-tratarse-como-el-de-una-part-cula-situada-en-el-centro-de-masas"><summary>11. Explique por qué el movimiento de traslación del sólido puede tratarse como el de una partícula situada en el centro de masas.</summary><p>Porque la segunda ley para el sistema completo da</p>
+<div class="formula-block">\[M\ddot{\mathbf R}_{\mathrm{cm}}=\sum_i\mathbf F_i^{\mathrm{ext}}\]</div>
+<p>Las fuerzas internas se cancelan en la ecuación del centro de masas. Por eso la traslación global depende solo de la fuerza externa total.</p></details>
+  <details class="accordion accordion-answer" id="12-derive-la-forma-general-de-t-mathrm-rot-a-partir-de-la-idea-de-tensor-de-inercia"><summary>12. Derive la forma general de \(T_{\mathrm{rot}}\) a partir de la idea de tensor de inercia.</summary><p>En una rotación rígida, la velocidad de cada partícula respecto al centro de masas depende de \(\boldsymbol\omega\). Al sumar \(\frac12m_iv_i^2\) sobre todas las partículas, aparecen términos cuadráticos en las componentes de \(\boldsymbol\omega\). Esos coeficientes forman el tensor de inercia, por lo que</p>
+<div class="formula-block">\[T_{\mathrm{rot}}=\frac12\boldsymbol\omega^T I_{\mathrm{cm}}\boldsymbol\omega\]</div></details>
+  <details class="accordion accordion-answer" id="13-explique-la-diferencia-entre-momento-de-inercia-y-tensor-de-inercia"><summary>13. Explique la diferencia entre momento de inercia y tensor de inercia.</summary><p>El momento de inercia es un escalar asociado a un eje concreto. El tensor de inercia contiene la información para cualquier dirección de rotación y permite tratar casos donde \(\mathbf L\) no es paralelo a \(\boldsymbol\omega\).</p></details>
+  <details class="accordion accordion-answer" id="14-dado-un-tensor-de-inercia-diagonal-escriba-mathbf-l-en-funci-n-de-boldsymbol-omega"><summary>14. Dado un tensor de inercia diagonal, escriba \(\mathbf L'\) en función de \(\boldsymbol\omega'\).</summary><p>Si</p>
+<div class="formula-block">\[I_D'=\operatorname{diag}(I'_{xx},I'_{yy},I'_{zz}),\]</div>
+<p>entonces</p>
+<div class="formula-block">\[\mathbf L'=
+(I'_{xx}\omega'_x,\ I'_{yy}\omega'_y,\ I'_{zz}\omega'_z)\]</div></details>
+  <details class="accordion accordion-answer" id="15-escriba-las-ecuaciones-de-euler-para-un-s-lido-r-gido-en-ejes-principales"><summary>15. Escriba las ecuaciones de Euler para un sólido rígido en ejes principales.</summary><div class="formula-block">\[I'_{xx}\dot\omega'_x-(I'_{yy}-I'_{zz})\omega'_y\omega'_z=N_x^{\prime\mathrm{ext}}\]</div>
+<div class="formula-block">\[I'_{yy}\dot\omega'_y-(I'_{zz}-I'_{xx})\omega'_z\omega'_x=N_y^{\prime\mathrm{ext}}\]</div>
+<div class="formula-block">\[I'_{zz}\dot\omega'_z-(I'_{xx}-I'_{yy})\omega'_x\omega'_y=N_z^{\prime\mathrm{ext}}\]</div></details>
+  <details class="accordion accordion-answer" id="16-por-qu-las-ecuaciones-de-euler-son-en-general-no-linealesu"><summary>16. ¿Por qué las ecuaciones de Euler son en general no lineales?</summary><p>Porque contienen productos de componentes de la velocidad angular, como \(\omega'_y\omega'_z\). Esos términos acoplan las componentes y hacen que el sistema no sea lineal.</p></details>
+  <details class="accordion accordion-answer" id="17-qu-ocurre-en-un-s-lido-libre-que-gira-con-velocidad-angular-constante-si-sus-tres-momentos-principales-son-distintosu"><summary>17. ¿Qué ocurre en un sólido libre que gira con velocidad angular constante si sus tres momentos principales son distintos?</summary><p>Debe girar alrededor de un eje principal. Si no, los términos cruzados de las ecuaciones de Euler no se anulan y haría falta un momento externo para mantener una velocidad angular constante.</p></details>
+  <details class="accordion accordion-answer" id="18-explique-por-qu-un-eje-de-simetr-a-suele-ser-eje-principal"><summary>18. Explique por qué un eje de simetría suele ser eje principal.</summary><p>Porque la simetría elimina productos de inercia respecto a ese eje. Las direcciones equivalentes por simetría no pueden generar acoplamientos privilegiados, así que el tensor queda diagonal en ejes adaptados a la simetría.</p></details>
+  <details class="accordion accordion-answer" id="19-qu-simplificaci-n-aparece-en-un-cuerpo-axisim-trico-libreu"><summary>19. ¿Qué simplificación aparece en un cuerpo axisimétrico libre?</summary><p>Dos momentos principales son iguales:</p>
+<div class="formula-block">\[I'_{xx}=I'_{yy}=I'\]</div>
+<p>La ecuación para \(\omega'_z\) da \(\dot\omega'_z=0\), y las ecuaciones de \(\omega'_x,\omega'_y\) se reducen a un sistema lineal sinusoidal.</p></details>
+  <details class="accordion accordion-answer" id="20-por-qu-la-peonza-introduce-un-problema-m-s-complicado-que-el-cuerpo-axisim-trico-libreu"><summary>20. ¿Por qué la peonza introduce un problema más complicado que el cuerpo axisimétrico libre?</summary><p>Porque la gravedad ejerce un momento respecto al punto fijo. Ese torque acopla las ecuaciones de Euler con los ángulos de Euler, generando precesión y nutación.</p></details>
+  <details class="accordion accordion-answer" id="21-explique-f-sicamente-por-qu-un-cuerpo-que-gira-alrededor-de-un-eje-no-principal-necesita-un-par-externo-para-mantener-el-giro"><summary>21. Explique físicamente por qué un cuerpo que gira alrededor de un eje no principal necesita un par externo para mantener el giro.</summary><p>Si el eje no es principal, \(\mathbf L\) no es paralelo a \(\boldsymbol\omega\). Aunque \(\boldsymbol\omega\) sea constante en el cuerpo, \(\mathbf L\) puede cambiar en el laboratorio. Como \(\dot{\mathbf L}=\mathbf N\), ese cambio exige un momento externo.</p></details>
+  <details class="accordion accordion-answer" id="22-para-un-cuerpo-axisim-trico-libre-explique-por-qu-omega-z-es-constante-y-qu-comportamiento-tienen-omega-x-omega-y"><summary>22. Para un cuerpo axisimétrico libre, explique por qué \(\omega'_z\) es constante y qué comportamiento tienen \(\omega'_x,\omega'_y\).</summary><p>En ausencia de torque y con \(I'_{xx}=I'_{yy}=I'\), la tercera ecuación de Euler queda</p>
+<div class="formula-block">\[I'_{zz}\dot\omega'_z=0\]</div>
+<p>por tanto \(\omega'_z\) es constante. Las otras dos ecuaciones forman un sistema lineal equivalente a un oscilador armónico: las componentes transversales giran sinusoidalmente en el sistema del cuerpo.</p></details>
+  <details class="accordion accordion-answer" id="23-explique-la-diferencia-entre-conservar-mathbf-l-en-el-laboratorio-y-describir-boldsymbol-omega-en-ejes-solidarios"><summary>23. Explique la diferencia entre conservar \(\mathbf L\) en el laboratorio y describir \(\boldsymbol\omega'\) en ejes solidarios.</summary><p>Si no hay torque externo, \(\mathbf L\) se conserva como vector en el laboratorio. Pero las componentes de \(\boldsymbol\omega\) en ejes solidarios pueden variar porque esos ejes están girando con el cuerpo. No hay contradicción: son descripciones en sistemas distintos.</p></details>
+  <details class="accordion accordion-answer" id="24-analice-por-qu-las-ecuaciones-de-euler-se-simplifican-en-ejes-principales-pero-no-necesariamente-en-ejes-del-laboratorio"><summary>24. Analice por qué las ecuaciones de Euler se simplifican en ejes principales pero no necesariamente en ejes del laboratorio.</summary><p>En ejes principales solidarios, el tensor de inercia es diagonal y constante. En el laboratorio, el cuerpo cambia de orientación, así que el tensor puede depender del tiempo y tener productos de inercia variables. Por eso Euler se formula en ejes del cuerpo.</p></details>
+  <details class="accordion accordion-answer" id="25-explique-qu-papel-juega-el-tensor-de-inercia-en-la-estabilidad-de-los-giros-libres"><summary>25. Explique qué papel juega el tensor de inercia en la estabilidad de los giros libres.</summary><p>El tensor determina los momentos principales. Los giros alrededor de ejes principales son soluciones simples. En el análisis más completo, la estabilidad depende de qué momento principal corresponde al eje de giro: los ejes de momento máximo y mínimo son estables; el intermedio es inestable. Esta conclusión es estándar, aunque el nivel operativo del tema se centra más en formular Euler y resolver casos simples.</p></details>
+  <details class="accordion accordion-answer" id="26-desarrolle-la-din-mica-completa-del-s-lido-r-gido-desde-la-separaci-n-traslaci-n-rotaci-n-hasta-las-ecuaciones-de-euler"><summary>26. Desarrolle la dinámica completa del sólido rígido desde la separación traslación–rotación hasta las ecuaciones de Euler.</summary><p>Un sólido rígido se describe mediante \(\mathbf R_{\mathrm{cm}}\) y la orientación \(R\). La energía cinética y el momento angular se separan en partes traslacional y rotacional:</p>
+<div class="formula-block">\[T=
+\frac12MV_{\mathrm{cm}}^2+
+\frac12\boldsymbol\omega^T I_{\mathrm{cm}}\boldsymbol\omega\]</div>
+<div class="formula-block">\[\mathbf L=
+M\mathbf R_{\mathrm{cm}}\times\mathbf V_{\mathrm{cm}}
++
+I_{\mathrm{cm}}\boldsymbol\omega\]</div>
+<p>La traslación obedece</p>
+<div class="formula-block">\[M\ddot{\mathbf R}_{\mathrm{cm}}=\sum_i\mathbf F_i^{\mathrm{ext}}\]</div>
+<p>La rotación obedece</p>
+<div class="formula-block">\[\dot{\mathbf L}=\mathbf N^{\mathrm{ext}}\]</div>
+<p>Para hacer manejable esta ecuación se eligen ejes principales solidarios al cuerpo. En ellos \(I\) es diagonal y constante. La ecuación vectorial se convierte en las ecuaciones de Euler, que determinan \(\omega'_x,\omega'_y,\omega'_z\). Finalmente, mediante ángulos de Euler se integra la orientación.</p></details>
+  <details class="accordion accordion-answer" id="27-explique-el-significado-f-sico-y-matem-tico-del-tensor-de-inercia-incluyendo-productos-de-inercia-y-ejes-principales"><summary>27. Explique el significado físico y matemático del tensor de inercia, incluyendo productos de inercia y ejes principales.</summary><p>Físicamente, el tensor de inercia mide cómo está distribuida la masa respecto al punto elegido. Matemáticamente, es una matriz simétrica que relaciona \(\mathbf L\) y \(\boldsymbol\omega\). Sus elementos diagonales son momentos de inercia respecto a los ejes; sus elementos no diagonales son productos de inercia y expresan acoplamiento entre ejes. Al diagonalizarlo se obtienen los ejes principales y los momentos principales. En esos ejes, la relación entre momento angular y velocidad angular es más simple.</p></details>
+  <details class="accordion accordion-answer" id="28-compare-el-movimiento-de-una-part-cula-un-sistema-de-part-culas-y-un-s-lido-r-gido"><summary>28. Compare el movimiento de una partícula, un sistema de partículas y un sólido rígido.</summary><p>Una partícula se describe por \(\mathbf r(t)\). Un sistema de partículas requiere todas las posiciones \(\mathbf r_i(t)\), aunque puede simplificarse mediante centro de masas y variables internas. Un sólido rígido es un sistema de partículas con distancias internas constantes; por eso no requiere describir deformaciones internas. Basta con centro de masas y orientación.</p></details>
+  <details class="accordion accordion-answer" id="29-describa-el-movimiento-libre-de-un-cuerpo-axisim-trico-y-su-interpretaci-n-f-sica"><summary>29. Describa el movimiento libre de un cuerpo axisimétrico y su interpretación física.</summary><p>En un cuerpo axisimétrico libre no hay torque externo y dos momentos principales son iguales. La componente de la velocidad angular sobre el eje de simetría es constante. Las componentes perpendiculares oscilan sinusoidalmente en los ejes del cuerpo. Físicamente, el cuerpo mantiene constante su momento angular en el laboratorio, mientras su eje de simetría describe una rotación alrededor de esa dirección.</p></details>
+  <details class="accordion accordion-answer" id="30-explique-el-caso-de-la-peonza-axisim-trica-con-punto-fijo-como-aplicaci-n-avanzada-de-las-ecuaciones-de-euler"><summary>30. Explique el caso de la peonza axisimétrica con punto fijo como aplicación avanzada de las ecuaciones de Euler.</summary><p>La peonza es un cuerpo axisimétrico sometido a gravedad con un punto fijo. El peso genera un momento respecto al punto de apoyo. Ese momento depende de la orientación del eje de simetría, por lo que las ecuaciones de Euler quedan acopladas con las ecuaciones cinemáticas de los ángulos de Euler. El movimiento resultante combina rotación propia, precesión y nutación. Su análisis completo es más avanzado, pero sirve para ver cómo Euler permite tratar rotaciones reales no triviales.</p></details>
+  <details class="accordion accordion-answer" id="31-relacione-centro-de-masas-tensor-de-inercia-y-energ-a-cin-tica"><summary>31. Relacione centro de masas, tensor de inercia y energía cinética.</summary><p>El centro de masas permite separar la energía cinética total en traslación y rotación. La traslación depende de \(M\) y \(V_{\mathrm{cm}}\). La rotación depende de la distribución de masa alrededor del centro de masas, codificada por \(I_{\mathrm{cm}}\).</p></details>
+  <details class="accordion accordion-answer" id="32-relacione-ejes-principales-diagonalizaci-n-y-ecuaciones-de-euler"><summary>32. Relacione ejes principales, diagonalización y ecuaciones de Euler.</summary><p>Diagonalizar el tensor de inercia da los ejes principales. En esos ejes, el tensor es diagonal y constante si los ejes son solidarios al cuerpo. Esa elección permite escribir las ecuaciones de Euler en su forma estándar.</p></details>
+  <details class="accordion accordion-answer" id="33-relacione-momento-externo-conservaci-n-de-momento-angular-y-rotaci-n-libre"><summary>33. Relacione momento externo, conservación de momento angular y rotación libre.</summary><p>Si \(\mathbf N^{\mathrm{ext}}=0\), entonces \(\dot{\mathbf L}=0\) y el momento angular se conserva en el laboratorio. La rotación libre del sólido debe respetar esa conservación, aunque las componentes de \(\boldsymbol\omega\) en el cuerpo puedan variar.</p></details>
+  <details class="accordion accordion-answer" id="34-relacione-ngulos-de-euler-velocidad-angular-y-orientaci-n"><summary>34. Relacione ángulos de Euler, velocidad angular y orientación.</summary><p>La velocidad angular describe el giro instantáneo. Los ángulos de Euler describen la orientación acumulada. Las ecuaciones que relacionan \(\omega'_x,\omega'_y,\omega'_z\) con \(\dot\alpha,\dot\beta,\dot\gamma\) permiten pasar de velocidad angular a orientación.</p></details>
+  <details class="accordion accordion-answer" id="35-relacione-simetr-a-axial-momentos-principales-y-peonza"><summary>35. Relacione simetría axial, momentos principales y peonza.</summary><p>La simetría axial implica dos momentos principales iguales. Esto simplifica la dinámica libre. Si además el cuerpo tiene un punto fijo y está sometido a gravedad, aparece la peonza: un caso axisimétrico con torque externo, donde se combinan conservación parcial, precesión y nutación.</p></details>
+</section>
+
+<section class="page" id="9-resumen-final-de-repaso">
+  <div class="page-head"><h2>9. Resumen final de repaso</h2></div>
+  <div class="reading-block"><p>Ideas principales:</p></div>
+<ul><li>Un sólido rígido es un sistema de partículas con distancias internas constantes.</li><li>Su movimiento se describe mediante centro de masas y orientación.</li><li>La traslación se rige por:</li></ul>
+<div class="formula-block">\[M\ddot{\mathbf R}_{\mathrm{cm}}=\sum_i\mathbf F_i^{\mathrm{ext}}\]</div>
+<ul><li>La rotación se rige por:</li></ul>
+<div class="formula-block">\[\dot{\mathbf L}=\mathbf N^{\mathrm{ext}}\]</div>
+<ul><li>Momento angular y energía cinética se separan en traslación y rotación.</li><li>La rotación requiere tensor de inercia, no solo masa.</li><li>En ejes principales, el tensor es diagonal.</li><li>Las ecuaciones de Euler gobiernan \(\boldsymbol\omega'\).</li><li>Los ángulos de Euler reconstruyen la orientación.</li><li>El cuerpo axisimétrico libre es el caso resoluble central.</li><li>La peonza es aplicación avanzada: leer, no priorizar cálculo completo.</li></ul>
+<div class="reading-block"><p>Conceptos imprescindibles:</p></div>
+<div class="formula-block">\[\mathbf L=M\mathbf R_{\mathrm{cm}}\times\mathbf V_{\mathrm{cm}}+I_{\mathrm{cm}}\boldsymbol\omega\]</div>
+<div class="formula-block">\[T=\frac12MV_{\mathrm{cm}}^2+\frac12\boldsymbol\omega^T I_{\mathrm{cm}}\boldsymbol\omega\]</div>
+<div class="formula-block">\[\boldsymbol\omega'\times(I_D'\boldsymbol\omega')+I_D'\dot{\boldsymbol\omega'}=\mathbf N'_{\mathrm{ext}}\]</div>
+<div class="reading-block"><p>Errores que evitar:</p></div>
+<ul><li>Usar \(I\) escalar cuando toca tensor.</li><li>Confundir ejes del laboratorio con ejes del cuerpo.</li><li>Olvidar productos de inercia.</li><li>Suponer siempre \(\mathbf L\parallel\boldsymbol\omega\).</li><li>Creer que \(\boldsymbol\omega(t)\) ya da la orientación.</li><li>Estudiar peonza antes de dominar tensor y Euler básico.</li></ul>
+</section>
+
+<section class="page" id="checklist-de-dominio">
+  <div class="page-head"><h2>10. Checklist de dominio</h2></div>
+  <div class="checklist-box"><ul><li>Si no puedes explicar qué es un sólido rígido, falta repasar definición e idealización.</li><li>Si no puedes separar \(T\) en traslación y rotación, falta repasar centro de masas.</li><li>Si confundes momento de inercia con tensor de inercia, revisar tensor y productos de inercia.</li><li>Si supones que \(\mathbf L\parallel\boldsymbol\omega\) siempre, revisar ejes principales.</li><li>Si no puedes calcular \(I_{xx},I_{yy},I_{zz},I_{xy}\) para masas discretas, falta práctica de tensor.</li><li>Si no sabes cuándo los productos de inercia se anulan por simetría, revisar simetrías geométricas.</li><li>Si no puedes escribir las ecuaciones de Euler, falta memorizar y reconstruir su origen.</li><li>Si no sabes qué sistema de referencia usa Euler, revisar ejes principales solidarios.</li><li>Si no puedes explicar por qué Euler es no lineal, revisar los términos \(\omega_i\omega_j\).</li><li>Si no puedes resolver cualitativamente el cuerpo axisimétrico libre, falta repasar \(I_1=I_2\neq I_3\).</li><li>Si confundes precesión y rotación propia en la peonza, revisar ángulos de Euler.</li><li>Si puedes plantear un problema de tensor de inercia de masas discretas, el bloque geométrico está asentado.</li><li>Si puedes escribir \(T\), \(\mathbf L\), \(\mathbf N\) y Euler para un eje fijo, el bloque dinámico está operativo.</li><li>Si puedes explicar por qué un eje no principal exige par externo, el capítulo está suficientemente asentado.</li></ul>
+<p>[Confianza: Alta]</p></div>
 </section>
 </main>
 </div>
