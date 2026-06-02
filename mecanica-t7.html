@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="light dark" />
+<title>Mecánica — T7 — Mecánica analítica</title>
+<link rel="icon" type="image/png" sizes="32x32" href="assets/icons/icon-32.png" />
+<link rel="icon" type="image/png" sizes="50x50" href="assets/icons/icon-50.png" />
+<link rel="apple-touch-icon" sizes="100x100" href="assets/icons/icon-100.png" />
+<meta name="theme-color" content="#1f5fbf" />
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+<link rel="stylesheet" href="assets/styles.css" />
+<script defer src="assets/app.js"></script>
+</head>
+<body class="subject-mecanica">
+<div class="wrap">
+<header class="cover">
+  <div class="top-actions">
+    <a class="back-link" href="index.html">← Volver al índice</a>
+  </div>
+  <p class="eyebrow">UNED Física · Mecánica Clásica · Tema 7</p>
+  <h1>Guía de estudio — T7 Mecánica analítica</h1>
+  <p class="subtitle">Principio de Hamilton, Euler-Lagrange, cambios de coordenadas, ligaduras, variables conservadas, Noether y ecuaciones de Hamilton.</p>
+  <div class="chips">
+    <span class="chip">Mecánica</span>
+    <span class="chip">T7</span>
+    <span class="chip">Lagrange</span>
+    <span class="chip">Euler-Lagrange</span>
+    <span class="chip">estado: reubicado</span>
+  </div>
+</header>
+
+<div class="toolbar no-print">
+  <nav>
+    <a href="#mapa">Mapa</a>
+    <a href="#prerrequisitos">Prerrequisitos</a>
+    <a href="#idea-central">Idea central</a>
+    <a href="#desarrollo-completo">Desarrollo</a>
+    <a href="#conceptos-clave">Conceptos</a>
+    <a href="#relaciones">Relaciones</a>
+    <a href="#errores">Errores</a>
+    <a href="#preguntas">Preguntas</a>
+    <a href="#respuestas">Respuestas</a>
+    <a href="#resumen">Resumen</a>
+    <a href="#checklist">Checklist</a>
+  </nav>
+  <div class="toolbar-actions">
+    <button class="btn" onclick="printReady()">Imprimir / guardar PDF</button>
+    <button class="btn secondary" onclick="openAllDetails()">Abrir todo</button>
+    <button class="btn secondary" onclick="closeAllDetails()">Cerrar acordeones</button>
+  </div>
+</div>
+
+<main>
+<section class="page map-page" id="mapa">
+  <div class="page-head">
+    <h2>Mapa clicable</h2>
+    <p class="section-lead">Ruta de lectura: de Newton a Lagrange, y de ahí a simetrías y conservaciones.</p>
+  </div>
+  <div class="concept-map">
+    <a class="map-node" href="#prerrequisitos"><span>Prerrequisitos</span><small>Newton · energías · parciales · EDO · polares · ligaduras</small></a>
+    <a class="map-node" href="#idea-central"><span>Idea central</span><small>\(L=T-V\) · acción · Euler-Lagrange</small></a>
+    <a class="map-node" href="#desarrollo-completo"><span>Desarrollo</span><small>trayectorias · coordenadas · ligaduras · ejemplos UNED</small></a>
+    <a class="map-node" href="#conceptos-clave"><span>Conceptos clave</span><small>acción · momento conjugado · coordenada cíclica</small></a>
+    <a class="map-node" href="#errores"><span>Errores</span><small>signos · derivadas · fuerzas de ligadura · mínimos</small></a>
+    <a class="map-node" href="#respuestas"><span>Examen</span><small>preguntas y respuestas modelo</small></a>
+  </div>
+</section>
+
+<section class="page" id="prerrequisitos">
+  <div class="page-head"><h2>1. Prerrequisitos mínimos</h2><p class="section-lead">Herramientas mínimas para leer Lagrange sin perderse en la notación.</p></div>
+  <div class="grid cards-grid">
+    <article class="definition-card">
+      <h3>Segunda ley de Newton</h3>
+      <p>La segunda ley afirma que la dinámica de una partícula se obtiene de</p>
+      <div class="formula-block">\[\mathbf F=m\mathbf a.\]</div>
+      <p>Es necesaria porque la formulación lagrangiana no contradice a Newton: lo reformula. Taylor presenta las ecuaciones de Lagrange como equivalentes a la segunda ley en sistemas mecánicos clásicos adecuados, pero más cómodas cuando las coordenadas cartesianas no son las naturales del problema.</p>
+      <p><strong>Ejemplo mínimo:</strong> para una masa en un muelle, \(m\ddot x=-kx\). La formulación lagrangiana debe devolver la misma ecuación.</p>
+    </article>
+    <article class="definition-card">
+      <h3>Energía cinética y potencial</h3>
+      <p>La energía cinética mide el movimiento; la potencial codifica fuerzas conservativas. En sistemas conservativos ordinarios,</p>
+      <div class="formula-block">\[L=T-V.\]</div>
+      <p>Es necesario porque el lagrangiano básico de Mecánica se construye con esas dos piezas. No se suman: se restan. El error típico es creer que \(L\) es la energía total \(E=T+V\). Taylor insiste en que el lagrangiano \(T-U\) no es la energía total.</p>
+      <p><strong>Ejemplo mínimo:</strong> \(T=\frac12m\dot x^2,\quad V=\frac12kx^2,\quad L=\frac12m\dot x^2-\frac12kx^2.\)</p>
+    </article>
+    <article class="definition-card">
+      <h3>Derivadas parciales</h3>
+      <p>Las ecuaciones de Euler-Lagrange usan derivadas parciales respecto a coordenadas y velocidades generalizadas:</p>
+      <div class="formula-block">\[\frac{\partial L}{\partial q_i},\qquad \frac{\partial L}{\partial \dot q_i}.\]</div>
+      <p>Es necesario distinguir qué variable se mantiene fija. Si \(L(q,\dot q,t)\), al derivar respecto a \(q\) se trata \(\dot q\) como independiente.</p>
+      <p><strong>Ejemplo mínimo:</strong> si \(L=\frac12m\dot q^2-V(q)\), entonces \(\frac{\partial L}{\partial \dot q}=m\dot q\) y \(\frac{\partial L}{\partial q}=-\frac{dV}{dq}\).</p>
+    </article>
+    <article class="definition-card">
+      <h3>Ecuaciones diferenciales ordinarias</h3>
+      <p>Las ecuaciones de Lagrange producen ecuaciones diferenciales de segundo orden en el tiempo. Es necesario saber reconocer, resolver o al menos clasificar ecuaciones como</p>
+      <div class="formula-block">\[\ddot q+\omega^2q=0.\]</div>
+      <p><strong>Ejemplo mínimo:</strong> si Euler-Lagrange da \(m\ddot x+kx=0\), la solución es un movimiento armónico simple.</p>
+    </article>
+    <article class="definition-card">
+      <h3>Coordenadas polares</h3>
+      <p>Muchos problemas de Lagrange son más simples en coordenadas no cartesianas. En el plano,</p>
+      <div class="formula-block">\[x=r\cos\theta,\qquad y=r\sin\theta,\qquad v^2=\dot r^2+r^2\dot\theta^2.\]</div>
+      <p>Es necesario porque péndulos, movimientos circulares, fuerzas centrales y cuentas sobre aros se simplifican con coordenadas angulares.</p>
+    </article>
+    <article class="definition-card">
+      <h3>Trabajo virtual y ligaduras</h3>
+      <p>Una ligadura restringe el movimiento posible. Garrigós interpreta físicamente las ligaduras como idealizaciones de fuerzas intensas y desconocidas que mantienen ciertas coordenadas confinadas.</p>
+      <p><strong>Ejemplo mínimo:</strong> una partícula sobre un círculo de radio \(R\) satisface</p>
+      <div class="formula-block">\[x^2+y^2=R^2.\]</div>
+      <p>En lugar de usar \(x,y\), basta usar \(\theta\).</p>
+    </article>
+    <article class="definition-card">
+      <h3>Regla de la cadena</h3>
+      <p>Al cambiar de coordenadas, las velocidades cambian mediante regla de la cadena:</p>
+      <div class="formula-block">\[\mathbf r=\mathbf f(q,t),\qquad \dot{\mathbf r}=\frac{\partial \mathbf f}{\partial q}\dot q+\frac{\partial \mathbf f}{\partial t}.\]</div>
+      <p>Garrigós usa precisamente esta estructura para definir el nuevo lagrangiano \(L'(q,\dot q,t)\).</p>
+      <p><strong>Ejemplo mínimo:</strong> si \(x=l\sin\theta\), entonces \(\dot x=l\cos\theta\,\dot\theta\).</p>
+    </article>
+  </div>
+</section>
+
+<section class="page" id="idea-central">
+  <div class="page-head"><h2>2. Idea central del capítulo</h2></div>
+  <div class="reading-block"><p>El capítulo enseña a pasar de la mecánica como suma de fuerzas a la mecánica como formulación estructural del movimiento. En Newton se parte de fuerzas: se dibuja un diagrama, se proyecta \(\mathbf F=m\mathbf a\), se obtienen ecuaciones. En Lagrange se parte de una función escalar,</p><div class="formula-block">\[L(q,\dot q,t)=T(q,\dot q,t)-V(q,t),\]</div><p>y se extraen las ecuaciones de movimiento mediante una regla universal:</p><div class="formula-block">\[\frac{d}{dt}\left(\frac{\partial L}{\partial \dot q_i}\right)-\frac{\partial L}{\partial q_i}=0.\]</div></div>
+  <div class="reading-block"><p>La ventaja no es “hacerlo más abstracto”. La ventaja es que las fuerzas de ligadura dejan de aparecer explícitamente cuando se eligen buenas coordenadas. En un péndulo simple, la tensión del hilo existe, pero no interesa si se usa \(\theta\). En una cuenta sobre un aro, la normal existe, pero no interesa si se usa el ángulo sobre el aro. En una cuña móvil, las normales y restricciones geométricas complican Newton, mientras que Lagrange permite escribir \(T\), \(V\), elegir \(q,s\) y derivar.</p></div>
+  <div class="reading-block"><p>Taylor introduce el cálculo variacional como herramienta previa: no se busca un número que minimiza una función, sino una trayectoria que hace estacionaria una integral. Esa integral, en mecánica, es la acción</p><div class="formula-block">\[S=\int_{t_1}^{t_2}L(q,\dot q,t)\,dt.\]</div><p>La trayectoria física es aquella para la que la acción es estacionaria. Importa la palabra <strong>estacionaria</strong>, no necesariamente mínima. Taylor subraya que Euler-Lagrange garantiza una trayectoria estacionaria, no siempre un mínimo absoluto.</p></div>
+  <div class="reading-block"><p>Garrigós/Serrano conecta esta idea con la estructura de la asignatura UNED: la mecánica analítica aparece al final, después de cinemática, Newton, sistemas de partículas, sólido rígido y fuerzas centrales. Su papel es comprimir todo lo anterior en un formalismo más potente, especialmente útil cuando hay coordenadas no cartesianas, simetrías, ligaduras y magnitudes conservadas.</p></div>
+  <div class="reading-block"><p>El capítulo ocupa un lugar bisagra. Hacia atrás, valida que Newton se puede recuperar. Hacia delante, abre Hamilton, coordenadas cíclicas, momentos conjugados, espacio de fases, Noether y modos normales. En exámenes UNED aparece de forma práctica: definir coordenadas generalizadas, escribir lagrangiano, deducir ecuaciones y decir qué se conserva; por ejemplo, el péndulo con hilo elástico o la cuña móvil.</p></div>
+  <div class="warn-box"><p><strong>Estado de reordenación:</strong> este archivo conserva los apuntes existentes de Lagrange y deja señaladas las partes oficiales que aún faltan desarrollar con apuntes propios: dinámica lagrangiana en sistemas no inerciales, teorema de Noether completo y ecuaciones de Hamilton.</p></div>
+</section>
+
+<section class="page" id="desarrollo-completo">
+  <div class="page-head"><h2>3. Desarrollo completo del capítulo</h2></div>
+  <article class="lesson" id="trayectorias">
+    <h3>Del problema de fuerzas al problema de trayectorias</h3>
+    <div class="reading-block"><p>En mecánica newtoniana se formula el movimiento imponiendo que la aceleración sea la que exige la fuerza resultante. Esto funciona muy bien cuando las coordenadas son cartesianas y las fuerzas son conocidas. El problema aparece cuando las fuerzas de ligadura son desconocidas o incómodas: tensiones, normales, reacciones de superficies, fuerzas que no hacen trabajo en los desplazamientos permitidos.</p></div>
+    <div class="reading-block"><p>La mecánica analítica cambia la pregunta. No pregunta directamente qué fuerza actúa en cada dirección cartesiana, sino qué trayectoria del sistema hace estacionaria una cantidad integral. Esa cantidad es la acción. En cálculo ordinario, un punto crítico satisface \(f'(x)=0\). En cálculo variacional, una trayectoria crítica satisface una ecuación diferencial: Euler-Lagrange.</p></div>
+    <div class="reading-block"><p>Boas presenta el problema variacional general como la búsqueda de una función \(y(x)\) que hace estacionaria una integral</p><div class="formula-block">\[I=\int_{x_1}^{x_2}F(x,y,y')\,dx.\]</div><p>La condición necesaria es</p><div class="formula-block">\[\frac{d}{dx}\left(\frac{\partial F}{\partial y'}\right)-\frac{\partial F}{\partial y}=0.\]</div><p>En mecánica se sustituye \(x\) por \(t\), la función \(y(x)\) por las coordenadas \(q_i(t)\), y \(F\) por el lagrangiano \(L\).</p></div>
+  </article>
+  <article class="lesson" id="lagrangiano-dinamica">
+    <h3>El lagrangiano como función generadora de la dinámica</h3>
+    <div class="reading-block"><p>El lagrangiano básico de una partícula sometida a fuerzas conservativas es \(L=T-V\). No es una energía que se conserve automáticamente. Es una función cuya estructura permite generar las ecuaciones de movimiento. Para una partícula unidimensional en un potencial \(V(x)\),</p><div class="formula-block">\[L=\frac12m\dot x^2-V(x).\]</div></div>
+    <div class="reading-block"><p>Entonces</p><div class="formula-block">\[\frac{\partial L}{\partial \dot x}=m\dot x,\qquad \frac{d}{dt}\left(\frac{\partial L}{\partial \dot x}\right)=m\ddot x,\qquad \frac{\partial L}{\partial x}=-\frac{dV}{dx}.\]</div><p>Euler-Lagrange da \(m\ddot x+\frac{dV}{dx}=0\), o equivalentemente \(m\ddot x=-\frac{dV}{dx}=F\). La segunda ley de Newton aparece como consecuencia. No se ha perdido física; se ha reescrito en una forma más flexible.</p></div>
+  </article>
+  <article class="lesson" id="coordenadas-generalizadas">
+    <h3>Coordenadas generalizadas</h3>
+    <div class="reading-block"><p>Una coordenada generalizada es cualquier variable que permite localizar la configuración del sistema respetando sus restricciones. No tiene por qué ser una longitud. Puede ser un ángulo, una distancia sobre una guía, una elongación, una coordenada radial o una combinación.</p></div>
+    <div class="reading-block"><p>Taylor introduce \(q_1,\dots,q_n\) como coordenadas capaces de describir la configuración del sistema, y señala que el objetivo en mecánica lagrangiana es encontrar las funciones \(q_i(t)\). Esa evolución puede verse como una curva en el espacio de configuración.</p><p><strong>Ejemplo:</strong> un péndulo simple plano no necesita \(x,y\). Si la longitud \(l\) es fija, basta \(q=\theta\). La posición queda determinada por \(x=l\sin\theta,\quad y=-l\cos\theta\). El sistema tiene un grado de libertad.</p></div>
+  </article>
+  <article class="lesson" id="invariancia">
+    <h3>Invariancia de Euler-Lagrange bajo cambios de coordenadas</h3>
+    <div class="reading-block"><p>El punto fuerte de Lagrange es que las ecuaciones conservan su forma al cambiar de coordenadas. Garrigós lo formula explícitamente: si se pasa de coordenadas cartesianas \(\mathbf r\) a coordenadas \(q\), y se define</p><div class="formula-block">\[L'(q,\dot q,t)=L(\mathbf r(q,t),\dot{\mathbf r}(q,\dot q,t),t),\]</div><p>las ecuaciones de Euler-Lagrange tienen la misma forma en las nuevas variables.</p></div>
+    <div class="reading-block"><p>Esto importa porque permite elegir coordenadas adaptadas al sistema. En Newton, cambiar a polares introduce aceleraciones con términos geométricos que hay que recordar. En Lagrange, esos términos salen automáticamente de derivar \(T\). Para una partícula libre en el plano, \(T=\frac12m(\dot x^2+\dot y^2)\), y en polares \(T=\frac12m(\dot r^2+r^2\dot\theta^2)\). Si no hay potencial angular, \(\theta\) será cíclica y aparecerá conservación del momento angular.</p></div>
+  </article>
+  <article class="lesson" id="ligaduras">
+    <h3>Ligaduras</h3>
+    <div class="reading-block"><p>Una ligadura reduce los movimientos posibles. Si una partícula está sobre una superficie, no puede moverse libremente en tres dimensiones. Si dos masas están unidas por una varilla rígida, su distancia permanece fija. Si una cuenta está sobre un aro, el radio es constante.</p></div>
+    <div class="reading-block"><p>Garrigós distingue coordenadas generalizadas \(q_i\) y coordenadas ligadas \(\eta_j\). Las ligaduras se expresan como \(\eta_j=0\), y el número de grados de libertad pasa a ser \(3N-M\), donde \(M\) es el número de ligaduras independientes.</p><p>La idea operativa es eliminar las coordenadas ligadas. Si el radio está fijado, no se escribe una ecuación radial salvo que se quiera hallar la fuerza de ligadura. Garrigós da una receta explícita: identificar ligaduras, elegir coordenadas que conviertan algunas variables en constantes, escribir \(T\) y \(V\), transformar a coordenadas generalizadas, imponer las coordenadas ligadas y sus velocidades a cero, y escribir Euler-Lagrange solo para las coordenadas libres.</p></div>
+  </article>
+  <article class="lesson" id="ejemplos">
+    <h3>Ejemplos básicos y de examen</h3>
+    <details class="study-toggle" open><summary>Ejemplo 1: oscilador armónico</summary><div class="details-body"><p>Sistema: masa \(m\), muelle \(k\), movimiento en \(x\).</p><div class="formula-block">\[T=\frac12m\dot x^2,\qquad V=\frac12kx^2,\qquad L=\frac12m\dot x^2-\frac12kx^2.\]</div><p>Euler-Lagrange:</p><div class="formula-block">\[\frac{d}{dt}(m\dot x)-(-kx)=0,\qquad m\ddot x+kx=0.\]</div><p>Se recupera el MAS. La utilidad aquí no es simplificar Newton, sino fijar el patrón.</p></div></details>
+    <details class="study-toggle" open><summary>Ejemplo 2: péndulo simple</summary><div class="details-body"><p>Sistema: masa \(m\), hilo rígido de longitud \(l\), gravedad, plano vertical. Con \(q=\theta\),</p><div class="formula-block">\[T=\frac12ml^2\dot\theta^2,\qquad V=mgl(1-\cos\theta).\]</div><div class="formula-block">\[L=\frac12ml^2\dot\theta^2-mgl(1-\cos\theta).\]</div><p>Euler-Lagrange:</p><div class="formula-block">\[ml^2\ddot\theta+mgl\sin\theta=0,\qquad \ddot\theta+\frac{g}{l}\sin\theta=0.\]</div><p>Para pequeñas oscilaciones, \(\sin\theta\simeq\theta\), y queda \(\ddot\theta+\frac{g}{l}\theta=0\). La tensión no aparece porque la coordenada \(\theta\) ya respeta la ligadura.</p></div></details>
+    <details class="study-toggle" open><summary>Ejemplo 3: péndulo con hilo elástico</summary><div class="details-body"><p>Sistema: masa \(m\), hilo elástico de constante \(k\), longitud natural \(l_0\), movimiento plano. Es un prototipo muy UNED: coordenadas generalizadas, lagrangiano, ecuaciones y conservaciones.</p><div class="formula-block">\[q_1=r,\qquad q_2=\theta.\]</div><div class="formula-block">\[T=\frac12m(\dot r^2+r^2\dot\theta^2),\qquad V=\frac12k(r-l_0)^2-mgr\cos\theta.\]</div><div class="formula-block">\[L=\frac12m(\dot r^2+r^2\dot\theta^2)-\frac12k(r-l_0)^2+mgr\cos\theta.\]</div><p>Ecuación radial:</p><div class="formula-block">\[m\ddot r-mr\dot\theta^2+k(r-l_0)-mg\cos\theta=0.\]</div><p>Ecuación angular:</p><div class="formula-block">\[\frac{d}{dt}(mr^2\dot\theta)+mgr\sin\theta=0.\]</div><p>Aquí ya no basta una coordenada: el radio cambia. La tensión elástica no es una ligadura ideal, sino una fuerza conservativa incluida en \(V\).</p></div></details>
+    <details class="study-toggle" open><summary>Ejemplo 4: cuña móvil</summary><div class="details-body"><p>Sistema: cuña de masa \(m_1\), bloque de masa \(m_2\), plano inclinado de ángulo \(\alpha\), sin rozamiento horizontal. El examen UNED lo formula con coordenadas \(q\) para la posición de la cuña y \(s\) para la distancia del bloque al punto alto de la cuña.</p><div class="formula-block">\[q=\text{posición horizontal de la cuña},\qquad s=\text{distancia sobre el plano}.\]</div><p>Si el bloque baja por la cuña,</p><div class="formula-block">\[x_2=q+s\cos\alpha,\qquad y_2=-s\sin\alpha.\]</div><div class="formula-block">\[\dot x_2=\dot q+\dot s\cos\alpha,\qquad \dot y_2=-\dot s\sin\alpha,\qquad v_2^2=\dot q^2+2\dot q\dot s\cos\alpha+\dot s^2.\]</div><div class="formula-block">\[T=\frac12m_1\dot q^2+\frac12m_2(\dot q^2+2\dot q\dot s\cos\alpha+\dot s^2),\qquad V=-m_2gs\sin\alpha.\]</div><div class="formula-block">\[L=\frac12(m_1+m_2)\dot q^2+m_2\dot q\dot s\cos\alpha+\frac12m_2\dot s^2+m_2gs\sin\alpha.\]</div><p>Como \(q\) no aparece explícitamente, \(q\) es cíclica y se conserva</p><div class="formula-block">\[p_q=\frac{\partial L}{\partial \dot q}=(m_1+m_2)\dot q+m_2\dot s\cos\alpha.\]</div><p>Esta conservación expresa la conservación del momento horizontal total.</p></div></details>
+  </article>
+  <article class="lesson" id="ciclicas">
+    <h3>Variables cíclicas y conservación</h3>
+    <div class="reading-block"><p>Si una coordenada \(q_k\) no aparece en \(L\), pero sí puede aparecer \(\dot q_k\), entonces \(\frac{\partial L}{\partial q_k}=0\). Euler-Lagrange da</p><div class="formula-block">\[\frac{d}{dt}\left(\frac{\partial L}{\partial \dot q_k}\right)=0.\]</div><p>Por tanto, \(p_k=\frac{\partial L}{\partial \dot q_k}\) se conserva. Garrigós lo formula como coordenada cíclica y momento generalizado conservado. También indica que si \(L\) no depende explícitamente del tiempo, se conserva la energía, y que Noether asocia simetrías del lagrangiano con magnitudes conservadas.</p><p><strong>Ejemplo:</strong> si \(L\) no depende de \(\theta\), entonces \(p_\theta\) se conserva. En coordenadas polares, \(p_\theta=mr^2\dot\theta\), que es el momento angular.</p></div>
+  </article>
+</section>
+
+<section class="page" id="conceptos-clave">
+  <div class="page-head"><h2>4. Conceptos clave</h2></div>
+  <div class="grid cards-grid">
+    <article class="definition-card"><h3>Lagrangiano</h3><p><strong>Definición precisa:</strong> función escalar \(L=L(q,\dot q,t)\), que en sistemas conservativos simples suele tomar la forma \(L=T-V\).</p><p><strong>Explicación:</strong> no es una energía observable directa en general, sino una función generadora de ecuaciones de movimiento. Su importancia está en que concentra cinemática, potenciales y restricciones en una única expresión.</p><p><strong>Ejemplo:</strong> masa-muelle: \(L=\frac12m\dot x^2-\frac12kx^2\).</p><p><strong>Relación:</strong> se introduce en la acción \(S=\int Ldt\), genera Euler-Lagrange y define momentos conjugados.</p><p><strong>Examen:</strong> “Obtenga el lagrangiano del sistema y deduzca las ecuaciones de movimiento”.</p></article>
+    <article class="definition-card"><h3>Acción</h3><p><strong>Definición precisa:</strong> \(S[q]=\int_{t_1}^{t_2}L(q,\dot q,t)\,dt\).</p><p><strong>Explicación:</strong> es un funcional, porque toma una trayectoria completa \(q(t)\) y devuelve un número. La trayectoria física hace estacionaria la acción.</p><p><strong>Ejemplo:</strong> \(S[x]=\int_{t_1}^{t_2}\left(\frac12m\dot x^2-V(x)\right)dt\).</p><p><strong>Relación:</strong> el principio de Hamilton afirma \(\delta S=0\). De ahí salen Euler-Lagrange.</p><p><strong>Examen:</strong> “Explique el principio de Hamilton y su relación con Euler-Lagrange”.</p></article>
+    <article class="definition-card"><h3>Funcional estacionario</h3><p><strong>Definición precisa:</strong> un funcional es estacionario cuando su variación de primer orden se anula ante variaciones admisibles de la trayectoria.</p><p><strong>Explicación:</strong> estacionario no significa necesariamente mínimo. Puede ser mínimo, máximo o punto silla. Taylor destaca que Euler-Lagrange solo garantiza estacionariedad.</p><p><strong>Ejemplo:</strong> una geodésica en una esfera puede ser estacionaria sin ser la ruta más corta global.</p><p><strong>Relación:</strong> es el análogo variacional de \(f'(x)=0\).</p><p><strong>Examen:</strong> “¿Por qué se habla de acción estacionaria y no siempre de acción mínima?”</p></article>
+    <article class="definition-card"><h3>Ecuaciones de Euler-Lagrange</h3><p><strong>Definición precisa:</strong></p><div class="formula-block">\[\frac{d}{dt}\left(\frac{\partial L}{\partial \dot q_i}\right)-\frac{\partial L}{\partial q_i}=0.\]</div><p><strong>Explicación:</strong> son las ecuaciones diferenciales que deben satisfacer las coordenadas generalizadas para que la acción sea estacionaria.</p><p><strong>Ejemplo:</strong> para \(L=\frac12m\dot x^2-\frac12kx^2\), \(m\ddot x+kx=0\).</p><p><strong>Relación:</strong> equivalen a Newton en el dominio clásico conservativo adecuado, pero tienen forma invariante bajo cambios de coordenadas.</p><p><strong>Examen:</strong> “A partir de \(L\), deduzca las ecuaciones de movimiento”.</p></article>
+    <article class="definition-card"><h3>Coordenadas generalizadas</h3><p><strong>Definición precisa:</strong> conjunto mínimo de variables independientes \(q_i\) que describen la configuración del sistema.</p><p><strong>Explicación:</strong> no tienen que ser cartesianas ni tener dimensión de longitud. Deben adaptarse a las ligaduras y simetrías.</p><p><strong>Ejemplo:</strong> péndulo simple: \(q=\theta\). Péndulo elástico: \(q_1=r,q_2=\theta\).</p><p><strong>Relación:</strong> el número de coordenadas generalizadas independientes es el número de grados de libertad.</p><p><strong>Examen:</strong> “Defina las coordenadas generalizadas adecuadas para este sistema”.</p></article>
+    <article class="definition-card"><h3>Grados de libertad</h3><p><strong>Definición precisa:</strong> número de coordenadas independientes necesarias para determinar la configuración.</p><p><strong>Explicación:</strong> si un sistema de \(N\) partículas en 3D tiene \(M\) ligaduras independientes, normalmente tiene \(3N-M\) grados de libertad. Garrigós formula esta reducción al separar coordenadas generalizadas y coordenadas ligadas.</p><p><strong>Ejemplo:</strong> una partícula libre en 3D tiene 3 grados; una partícula sobre una esfera tiene 2; un péndulo simple plano tiene 1.</p><p><strong>Relación:</strong> cada grado de libertad genera una ecuación de Euler-Lagrange.</p><p><strong>Examen:</strong> “Indique los grados de libertad del sistema”.</p></article>
+    <article class="definition-card"><h3>Ligadura</h3><p><strong>Definición precisa:</strong> restricción geométrica o cinemática que limita las configuraciones o movimientos posibles.</p><p><strong>Explicación:</strong> puede venir de hilos, superficies, varillas, aros, guías o contactos. En Lagrange conviene elegir coordenadas que la incorporen desde el principio.</p><p><strong>Ejemplo:</strong> \(x^2+y^2=l^2\) para una masa unida a un hilo rígido de longitud \(l\).</p><p><strong>Relación:</strong> reduce grados de libertad y puede eliminar fuerzas desconocidas.</p><p><strong>Examen:</strong> “Identifique las ligaduras y plantee coordenadas compatibles”.</p></article>
+    <article class="definition-card"><h3>Momento generalizado</h3><p><strong>Definición precisa:</strong> \(p_i=\frac{\partial L}{\partial \dot q_i}\).</p><p><strong>Explicación:</strong> generaliza el momento lineal. Si \(q_i\) es una coordenada lineal, suele parecerse a \(mv_i\). Si \(q_i\) es angular, puede ser un momento angular.</p><p><strong>Ejemplo:</strong> \(L=\frac12m(\dot r^2+r^2\dot\theta^2)-V(r)\) da \(p_\theta=mr^2\dot\theta\).</p><p><strong>Relación:</strong> si \(q_i\) es cíclica, \(p_i\) se conserva.</p><p><strong>Examen:</strong> “Calcule los momentos conjugados e identifique constantes del movimiento”.</p></article>
+    <article class="definition-card"><h3>Coordenada cíclica</h3><p><strong>Definición precisa:</strong> coordenada \(q_i\) que no aparece explícitamente en \(L\): \(\frac{\partial L}{\partial q_i}=0\).</p><p><strong>Explicación:</strong> si una coordenada es cíclica, la dinámica no cambia al desplazar esa coordenada. Eso señala una simetría.</p><p><strong>Ejemplo:</strong> en un campo central \(V(r)\), \(\theta\) no aparece en \(L\), por tanto \(p_\theta\) se conserva.</p><p><strong>Relación:</strong> coordenada cíclica \(\rightarrow\) momento conjugado conservado.</p><p><strong>Examen:</strong> “¿Qué coordenadas son cíclicas? ¿Qué magnitudes se conservan?”</p></article>
+    <article class="definition-card"><h3>Energía conservada</h3><p><strong>Definición precisa:</strong> si \(L\) no depende explícitamente del tiempo y las coordenadas son naturales, la energía mecánica se conserva.</p><p><strong>Explicación:</strong> no basta mirar si hay movimiento; hay que mirar si el lagrangiano cambia explícitamente con \(t\). Si \(L(q,\dot q)\), suele haber conservación de energía en sistemas conservativos.</p><p><strong>Ejemplo:</strong> péndulo simple sin rozamiento: \(L\) no depende de \(t\), por tanto se conserva la energía.</p><p><strong>Relación:</strong> simetría temporal \(\rightarrow\) conservación de energía.</p><p><strong>Examen:</strong> “Determine qué cantidades se conservan”.</p></article>
+  </div>
+</section>
+
+<section class="page" id="relaciones">
+  <div class="page-head"><h2>5. Relaciones entre ideas</h2></div>
+  <div class="reading-block"><p>La jerarquía conceptual es:</p><div class="formula-block">\[\text{configuración} \rightarrow \text{coordenadas generalizadas} \rightarrow T,V \rightarrow L \rightarrow S \rightarrow \text{Euler-Lagrange} \rightarrow q_i(t).\]</div></div>
+  <div class="reading-block"><p>Primero se decide cómo describir el sistema. Esa elección no es decorativa: determina si el problema será simple o inmanejable. Si hay ligaduras, las coordenadas deben incorporarlas. Si hay simetrías, conviene que queden visibles como coordenadas cíclicas.</p></div>
+  <div class="reading-block"><p>La acción depende del lagrangiano. El lagrangiano depende de las coordenadas y velocidades. Las ecuaciones de Euler-Lagrange salen de imponer que la acción sea estacionaria. Por eso la mecánica analítica no empieza con fuerzas: empieza con una función escalar.</p></div>
+  <div class="reading-block"><p>Newton y Lagrange no son teorías rivales dentro de este contexto. Taylor muestra la equivalencia entre \(F=ma\), las ecuaciones de Lagrange y el principio de Hamilton para sistemas adecuados.</p></div>
+  <div class="reading-block"><p>La oposición importante es entre fuerzas activas y fuerzas de ligadura. Las fuerzas activas conservativas entran en \(V\). Las fuerzas de ligadura ideal se eliminan eligiendo coordenadas compatibles. Si se quiere hallar la fuerza de ligadura, entonces hacen falta multiplicadores de Lagrange o un análisis adicional.</p></div>
+  <div class="reading-block"><p>La evolución histórica va de Newton a Lagrange y Hamilton. Newton formula la dinámica en términos de fuerzas. Lagrange reorganiza el problema en coordenadas generalizadas y acción. Hamilton transforma la dinámica de segundo orden en un sistema de primer orden sobre coordenadas y momentos. Garrigós cierra el Tema 7 precisamente pasando de Euler-Lagrange al Hamiltoniano.</p></div>
+  <div class="reading-block"><p>La conexión con Noether es posterior pero aparece ya en forma operativa: si una coordenada no aparece, hay una conservación. Si el tiempo no aparece explícitamente, hay conservación de energía. Si el ángulo no aparece, hay conservación de momento angular. Si una coordenada lineal no aparece, hay conservación de momento lineal.</p></div>
+</section>
+
+<section class="page" id="errores">
+  <div class="page-head"><h2>6. Errores habituales</h2></div>
+  <details class="study-toggle error-acc" open><summary>Error 1: confundir \(L=T-V\) con \(E=T+V\)</summary><div class="details-body"><p><strong>Por qué está mal:</strong> el lagrangiano no es la energía total. Su papel es generar ecuaciones mediante Euler-Lagrange.</p><p><strong>Corrección:</strong> usar \(L=T-V\) y reservar \(E=T+V\) para energía mecánica cuando proceda.</p><p><strong>Incorrecta:</strong> “El lagrangiano del muelle es \(L=\frac12m\dot x^2+\frac12kx^2\)”.</p><p><strong>Correcta:</strong> “El lagrangiano del muelle es \(L=\frac12m\dot x^2-\frac12kx^2\)”.</p></div></details>
+  <details class="study-toggle error-acc"><summary>Error 2: escribir coordenadas de más</summary><div class="details-body"><p><strong>Por qué está mal:</strong> si hay una ligadura, no todas las coordenadas son independientes. Meter \(x,y\) y además \(\theta\) sin relación sobreparametriza.</p><p><strong>Corrección:</strong> elegir el número mínimo de coordenadas independientes.</p><p><strong>Incorrecta:</strong> “Para el péndulo simple uso \(x,y,\theta\)”.</p><p><strong>Correcta:</strong> “Para el péndulo simple plano basta \(q=\theta\)”.</p></div></details>
+  <details class="study-toggle error-acc"><summary>Error 3: incluir fuerzas de ligadura en el potencial</summary><div class="details-body"><p><strong>Por qué está mal:</strong> en el tratamiento básico, el potencial incluye fuerzas activas conservativas, no normales o tensiones ideales que solo imponen restricciones.</p><p><strong>Corrección:</strong> incorporar la ligadura en las coordenadas.</p><p><strong>Incorrecta:</strong> “Añadimos la tensión \(T_h\) al potencial del péndulo”.</p><p><strong>Correcta:</strong> “La tensión no aparece; se usa \(\theta\) y se escribe \(T,V\)”.</p></div></details>
+  <details class="study-toggle error-acc"><summary>Error 4: derivar \(\partial L/\partial q\) tratando \(\dot q\) como dependiente</summary><div class="details-body"><p><strong>Por qué está mal:</strong> en la derivada parcial de \(L(q,\dot q,t)\), \(q\) y \(\dot q\) se tratan como variables independientes.</p><p><strong>Corrección:</strong> derivar parcialmente y solo después aplicar \(d/dt\).</p><p><strong>Incorrecta:</strong> “Como \(\dot q=dq/dt\), al derivar respecto a \(q\) también derivo \(\dot q\)”.</p><p><strong>Correcta:</strong> “En \(\partial L/\partial q\), \(\dot q\) se mantiene fija”.</p></div></details>
+  <details class="study-toggle error-acc"><summary>Error 5: olvidar que \(d/dt\) actúa sobre todo \(\partial L/\partial\dot q\)</summary><div class="details-body"><p><strong>Por qué está mal:</strong> \(\partial L/\partial\dot q\) puede depender de \(q,\dot q,t\).</p><p><strong>Corrección:</strong> aplicar derivada total.</p><p><strong>Incorrecta:</strong> \(\frac{d}{dt}(mr^2\dot\theta)=mr^2\ddot\theta\).</p><p><strong>Correcta:</strong> \(\frac{d}{dt}(mr^2\dot\theta)=m(2r\dot r\dot\theta+r^2\ddot\theta)\).</p></div></details>
+  <details class="study-toggle error-acc"><summary>Error 6: no detectar coordenadas cíclicas</summary><div class="details-body"><p><strong>Por qué está mal:</strong> se pierden constantes del movimiento y se trabaja de más.</p><p><strong>Corrección:</strong> antes de derivar, mirar qué coordenadas no aparecen en \(L\).</p><p><strong>Incorrecta:</strong> “En la cuña \(q\) no aparece, pero se deriva igual sin comentar nada”.</p><p><strong>Correcta:</strong> “Como \(q\) es cíclica, \(p_q\) se conserva”.</p></div></details>
+  <details class="study-toggle error-acc"><summary>Error 7: confundir coordenada cíclica con velocidad nula</summary><div class="details-body"><p><strong>Por qué está mal:</strong> que \(q\) no aparezca en \(L\) no significa que \(\dot q=0\). Significa que su momento conjugado es constante.</p><p><strong>Corrección:</strong> distinguir ausencia de \(q\) y presencia de \(\dot q\).</p><p><strong>Incorrecta:</strong> “Si \(\theta\) es cíclica, entonces \(\dot\theta=0\)”.</p><p><strong>Correcta:</strong> “Si \(\theta\) es cíclica, \(p_\theta=\partial L/\partial\dot\theta\) es constante”.</p></div></details>
+  <details class="study-toggle error-acc"><summary>Error 8: usar Newton por reflejo en problemas con ligaduras</summary><div class="details-body"><p><strong>Por qué está mal:</strong> introduce normales y tensiones que no se piden y puede ocultar la estructura.</p><p><strong>Corrección:</strong> si el enunciado pide lagrangiano, empezar por grados de libertad, coordenadas, \(T,V,L\).</p><p><strong>Incorrecta:</strong> “Dibujo todas las fuerzas de la cuña y proyecto normales”.</p><p><strong>Correcta:</strong> “Uso \(q,s\), escribo \(T,V\), construyo \(L\), aplico Euler-Lagrange”.</p></div></details>
+  <details class="study-toggle error-acc"><summary>Error 9: signo incorrecto del potencial gravitatorio</summary><div class="details-body"><p><strong>Por qué está mal:</strong> cambia las ecuaciones de movimiento.</p><p><strong>Corrección:</strong> fijar eje y origen antes de escribir \(V=mgy\).</p><p><strong>Incorrecta:</strong> con \(y=-l\cos\theta\), escribir \(V=+mgl\cos\theta\).</p><p><strong>Correcta:</strong> \(V=mgy=-mgl\cos\theta\), o equivalentemente \(V=mgl(1-\cos\theta)\), que solo difiere por una constante.</p></div></details>
+  <details class="study-toggle error-acc"><summary>Error 10: creer que estacionario significa mínimo</summary><div class="details-body"><p><strong>Por qué está mal:</strong> Euler-Lagrange da condición de estacionariedad, no clasificación global.</p><p><strong>Corrección:</strong> usar “estacionaria” salvo que se haya probado mínimo.</p><p><strong>Incorrecta:</strong> “La acción siempre se minimiza”.</p><p><strong>Correcta:</strong> “La trayectoria física hace estacionaria la acción”.</p></div></details>
+</section>
+
+<section class="page" id="preguntas">
+  <div class="page-head"><h2>7. Preguntas orientadas a examen</h2></div>
+  <div class="grid cards-grid">
+    <article class="definition-card"><h3>10 preguntas fáciles</h3><ol><li>Define lagrangiano en un sistema conservativo simple.</li><li>Escribe la ecuación de Euler-Lagrange para una coordenada \(q\).</li><li>¿Qué es una coordenada generalizada?</li><li>¿Cuántos grados de libertad tiene un péndulo simple plano?</li><li>¿Qué diferencia hay entre \(L=T-V\) y \(E=T+V\)?</li><li>¿Qué significa que una coordenada sea cíclica?</li><li>Define momento generalizado.</li><li>¿Por qué no aparece la tensión en el lagrangiano del péndulo simple?</li><li>Escribe \(T\) para una partícula en coordenadas polares planas.</li><li>¿Qué se conserva si \(L\) no depende explícitamente del tiempo?</li></ol></article>
+    <article class="definition-card"><h3>10 preguntas medias</h3><ol start="11"><li>Deriva con Euler-Lagrange la ecuación del oscilador armónico.</li><li>Plantea el lagrangiano del péndulo simple.</li><li>Deduce la ecuación exacta del péndulo simple.</li><li>Explica por qué Euler-Lagrange conserva su forma al cambiar de coordenadas.</li><li>Plantea \(T\), \(V\) y \(L\) para el péndulo con hilo elástico.</li><li>Identifica las coordenadas cíclicas en una partícula bajo potencial central \(V(r)\).</li><li>Calcula \(p_\theta\) para \(L=\frac12m(\dot r^2+r^2\dot\theta^2)-V(r)\).</li><li>Explica la receta para tratar ligaduras en Lagrange.</li><li>En una cuña móvil sin rozamiento, ¿por qué la coordenada horizontal de la cuña puede ser cíclica?</li><li>¿Qué diferencia hay entre una ligadura ideal y una fuerza conservativa real como un muelle?</li></ol></article>
+    <article class="definition-card"><h3>5 preguntas difíciles</h3><ol start="21"><li>Dado el péndulo elástico, deduce sus dos ecuaciones de movimiento.</li><li>Para la cuña móvil, construye el lagrangiano usando \(q,s\).</li><li>En la cuña móvil, obtiene la constante asociada a la coordenada cíclica.</li><li>Demuestra que para una partícula en \(V(r)\) se conserva el momento angular.</li><li>Explica por qué el principio de Hamilton permite formular la mecánica sin empezar por \(\mathbf F=m\mathbf a\).</li></ol></article>
+    <article class="definition-card"><h3>5 preguntas de desarrollo largo</h3><ol start="26"><li>Desarrolla el paso de Newton a Lagrange para una partícula en un potencial \(V(x)\).</li><li>Expón el papel del cálculo variacional en la mecánica analítica.</li><li>Explica cómo se tratan las ligaduras en la formulación lagrangiana básica.</li><li>Compara Newton y Lagrange en un problema con tensión o normal desconocida.</li><li>Desarrolla la relación entre coordenadas cíclicas, simetrías y leyes de conservación.</li></ol></article>
+    <article class="definition-card"><h3>5 preguntas de relación entre conceptos</h3><ol start="31"><li>Relaciona acción, lagrangiano y Euler-Lagrange.</li><li>Relaciona coordenadas generalizadas, ligaduras y grados de libertad.</li><li>Relaciona coordenada cíclica, momento generalizado y conservación.</li><li>Relaciona invariancia bajo cambio de coordenadas y elección eficiente de variables.</li><li>Relaciona el formalismo lagrangiano con el paso posterior a Hamilton.</li></ol></article>
+  </div>
+</section>
+
+<section class="page" id="respuestas">
+  <div class="page-head"><h2>8. Respuestas modelo</h2></div>
+  <details class="study-toggle answer" open><summary>1–10. Respuestas fáciles</summary><div class="details-body">
+    <ol>
+      <li>En un sistema conservativo simple, el lagrangiano es \(L(q,\dot q,t)=T(q,\dot q,t)-V(q,t)\). Es una función escalar que permite obtener las ecuaciones de movimiento mediante Euler-Lagrange. No debe confundirse con la energía total.</li>
+      <li>\(\frac{d}{dt}\left(\frac{\partial L}{\partial \dot q}\right)-\frac{\partial L}{\partial q}=0\). Es la condición diferencial que satisface la trayectoria física cuando la acción es estacionaria.</li>
+      <li>Es una variable independiente que describe la configuración del sistema respetando sus restricciones. Puede ser una longitud, un ángulo o cualquier parámetro adecuado.</li>
+      <li>Tiene un grado de libertad. La longitud es fija y el movimiento está restringido al plano, por lo que basta una coordenada angular \(\theta\).</li>
+      <li>\(L=T-V\) es el lagrangiano y genera las ecuaciones de movimiento. \(E=T+V\) es la energía mecánica total en sistemas conservativos. No cumplen la misma función.</li>
+      <li>Significa que \(L\) no depende explícitamente de esa coordenada: \(\frac{\partial L}{\partial q}=0\). Entonces su momento conjugado se conserva.</li>
+      <li>\(p_i=\frac{\partial L}{\partial \dot q_i}\). Es la magnitud conjugada a la coordenada generalizada \(q_i\).</li>
+      <li>Porque la tensión es una fuerza de ligadura. Si se usa \(\theta\) como coordenada, la condición de longitud fija ya está incorporada y la tensión no realiza trabajo virtual sobre los desplazamientos permitidos.</li>
+      <li>\(T=\frac12m(\dot r^2+r^2\dot\theta^2)\).</li>
+      <li>En coordenadas naturales y sistemas conservativos, se conserva la energía mecánica.</li>
+    </ol>
+  </div></details>
+  <details class="study-toggle answer"><summary>11–20. Respuestas medias</summary><div class="details-body">
+    <ol start="11">
+      <li>Con \(L=\frac12m\dot x^2-\frac12kx^2\), se tiene \(\frac{\partial L}{\partial \dot x}=m\dot x\) y \(\frac{\partial L}{\partial x}=-kx\). Euler-Lagrange da \(\frac{d}{dt}(m\dot x)-(-kx)=0\), luego \(m\ddot x+kx=0\).</li>
+      <li>Con \(q=\theta\), \(T=\frac12ml^2\dot\theta^2\), \(V=mgl(1-\cos\theta)\) y \(L=\frac12ml^2\dot\theta^2-mgl(1-\cos\theta)\).</li>
+      <li>\(\frac{\partial L}{\partial \dot\theta}=ml^2\dot\theta\), \(\frac{d}{dt}\frac{\partial L}{\partial \dot\theta}=ml^2\ddot\theta\) y \(\frac{\partial L}{\partial \theta}=-mgl\sin\theta\). Euler-Lagrange da \(ml^2\ddot\theta+mgl\sin\theta=0\), es decir \(\ddot\theta+\frac{g}{l}\sin\theta=0\).</li>
+      <li>Porque la acción es un escalar y su estacionariedad no depende de la parametrización usada para describir la configuración. Al transformar \(\mathbf r=f(q,t)\), se define \(L'(q,\dot q,t)\), y las ecuaciones mantienen la forma de Euler-Lagrange.</li>
+      <li>Con \(r,\theta\), \(T=\frac12m(\dot r^2+r^2\dot\theta^2)\), \(V=\frac12k(r-l_0)^2-mgr\cos\theta\) y \(L=\frac12m(\dot r^2+r^2\dot\theta^2)-\frac12k(r-l_0)^2+mgr\cos\theta\).</li>
+      <li>En movimiento plano con \(L=\frac12m(\dot r^2+r^2\dot\theta^2)-V(r)\), la coordenada \(\theta\) es cíclica porque \(L\) no depende explícitamente de \(\theta\).</li>
+      <li>\(p_\theta=\frac{\partial L}{\partial \dot\theta}=mr^2\dot\theta\). Es el momento angular respecto al origen.</li>
+      <li>Primero se identifican las restricciones. Después se eligen coordenadas que las incorporen. Luego se escriben \(T\) y \(V\), se construye \(L=T-V\), y se aplican Euler-Lagrange solo a las coordenadas independientes.</li>
+      <li>Porque el sistema no cambia si se traslada horizontalmente todo el conjunto. El lagrangiano depende de \(\dot q\), pero no de \(q\). Por tanto, \(p_q\) se conserva.</li>
+      <li>La ligadura ideal restringe geométricamente el movimiento y suele eliminarse mediante coordenadas. Un muelle ejerce una fuerza conservativa real y debe entrar en el potencial \(V\).</li>
+    </ol>
+  </div></details>
+  <details class="study-toggle answer"><summary>21–25. Respuestas difíciles</summary><div class="details-body">
+    <ol start="21">
+      <li>Con \(L=\frac12m(\dot r^2+r^2\dot\theta^2)-\frac12k(r-l_0)^2+mgr\cos\theta\), para \(r\): \(\frac{\partial L}{\partial \dot r}=m\dot r\), \(\frac{\partial L}{\partial r}=mr\dot\theta^2-k(r-l_0)+mg\cos\theta\), y queda \(m\ddot r-mr\dot\theta^2+k(r-l_0)-mg\cos\theta=0\). Para \(\theta\): \(\frac{\partial L}{\partial \dot\theta}=mr^2\dot\theta\), \(\frac{\partial L}{\partial \theta}=-mgr\sin\theta\), y queda \(\frac{d}{dt}(mr^2\dot\theta)+mgr\sin\theta=0\).</li>
+      <li>Con \(x_2=q+s\cos\alpha\), \(y_2=-s\sin\alpha\), \(v_2^2=\dot q^2+2\dot q\dot s\cos\alpha+\dot s^2\). Así, \(T=\frac12m_1\dot q^2+\frac12m_2(\dot q^2+2\dot q\dot s\cos\alpha+\dot s^2)\), \(V=-m_2gs\sin\alpha\), y \(L=\frac12(m_1+m_2)\dot q^2+m_2\dot q\dot s\cos\alpha+\frac12m_2\dot s^2+m_2gs\sin\alpha\).</li>
+      <li>Como \(q\) no aparece explícitamente, \(p_q=\frac{\partial L}{\partial \dot q}\) se conserva. Del lagrangiano, \(p_q=(m_1+m_2)\dot q+m_2\dot s\cos\alpha=\text{cte}\). Representa el momento horizontal total.</li>
+      <li>Para \(L=\frac12m(\dot r^2+r^2\dot\theta^2)-V(r)\), \(\frac{\partial L}{\partial \theta}=0\). Euler-Lagrange da \(\frac{d}{dt}\left(\frac{\partial L}{\partial \dot\theta}\right)=0\), luego \(\frac{d}{dt}(mr^2\dot\theta)=0\) y \(mr^2\dot\theta=\text{cte}\).</li>
+      <li>Porque la condición \(\delta S=0\) genera directamente las ecuaciones de Euler-Lagrange. Para sistemas mecánicos clásicos adecuados, esas ecuaciones son equivalentes a Newton, pero se obtienen a partir de una propiedad global de la trayectoria y no de un balance local de fuerzas.</li>
+    </ol>
+  </div></details>
+  <details class="study-toggle answer"><summary>26–35. Desarrollo y relación entre conceptos</summary><div class="details-body">
+    <ol start="26">
+      <li>Newton escribe \(m\ddot x=F(x)\). Si la fuerza es conservativa, \(F(x)=-\frac{dV}{dx}\), luego \(m\ddot x=-\frac{dV}{dx}\). En Lagrange se define \(L=\frac12m\dot x^2-V(x)\). Euler-Lagrange da \(\frac{d}{dt}(m\dot x)-\left(-\frac{dV}{dx}\right)=0\), luego \(m\ddot x=-\frac{dV}{dx}\). Se recupera Newton.</li>
+      <li>El cálculo variacional permite encontrar funciones que hacen estacionaria una integral. En mecánica, la función buscada es la trayectoria \(q(t)\), y la integral es la acción \(S=\int L\,dt\). La condición de estacionariedad produce las ecuaciones de Euler-Lagrange. Por eso el cálculo variacional es el puente matemático entre acción y dinámica.</li>
+      <li>Las ligaduras se incorporan eligiendo coordenadas compatibles con ellas. Una vez elegidas, se escribe el lagrangiano solo en función de las coordenadas independientes. Así desaparecen fuerzas de ligadura como tensiones y normales, salvo que se quieran calcular explícitamente.</li>
+      <li>Newton exige escribir fuerzas y proyectarlas. Eso obliga a introducir tensiones o normales. Lagrange permite elegir coordenadas que respetan la restricción, escribir energías y obtener ecuaciones sin calcular directamente esas fuerzas. Por eso es superior en péndulos, cuentas sobre guías, cuñas y sistemas articulados.</li>
+      <li>Si \(L\) no depende de una coordenada \(q_i\), el sistema es simétrico frente a desplazamientos en esa coordenada. Entonces \(p_i=\frac{\partial L}{\partial \dot q_i}\) se conserva. Una simetría angular produce conservación del momento angular. Una simetría traslacional produce conservación del momento lineal. La simetría temporal produce conservación de energía.</li>
+      <li>El lagrangiano \(L(q,\dot q,t)\) es el integrando de la acción \(S=\int L\,dt\). La trayectoria física hace estacionaria la acción. La condición \(\delta S=0\) conduce a las ecuaciones de Euler-Lagrange.</li>
+      <li>Las ligaduras reducen el número de coordenadas independientes. Las coordenadas generalizadas son las variables elegidas para describir justo esos grados de libertad restantes. Si se eligen bien, la ligadura queda incorporada en la descripción.</li>
+      <li>Si \(q_i\) no aparece en \(L\), entonces \(\frac{\partial L}{\partial q_i}=0\). Euler-Lagrange implica \(\frac{dp_i}{dt}=0\), con \(p_i=\frac{\partial L}{\partial\dot q_i}\). Luego \(p_i\) se conserva.</li>
+      <li>Como Euler-Lagrange mantiene su forma bajo cambios de coordenadas, se pueden elegir las variables que simplifican el problema. Esa libertad permite adaptar la descripción a simetrías y ligaduras.</li>
+      <li>El formalismo lagrangiano usa \(q_i,\dot q_i\) y produce ecuaciones de segundo orden. El paso a Hamilton define momentos \(p_i=\frac{\partial L}{\partial\dot q_i}\) y construye \(H=\sum_i p_i\dot q_i-L\). Así la dinámica se reescribe como ecuaciones de primer orden para \(q_i,p_i\), que es la entrada al espacio de fases.</li>
+    </ol>
+  </div></details>
+</section>
+
+<section class="page" id="resumen">
+  <div class="page-head"><h2>9. Resumen final de repaso</h2></div>
+  <div class="reading-block"><p><strong>Ideas principales:</strong></p><div class="formula-block">\[L=T-V,\qquad S=\int L\,dt,\qquad \delta S=0,\qquad \frac{d}{dt}\left(\frac{\partial L}{\partial\dot q_i}\right)-\frac{\partial L}{\partial q_i}=0.\]</div></div>
+  <div class="grid cards-grid">
+    <article class="definition-card"><h3>Conceptos imprescindibles</h3><ul><li>Coordenada generalizada: variable independiente adaptada al sistema.</li><li>Grado de libertad: número de coordenadas independientes.</li><li>Ligadura: restricción que reduce configuraciones posibles.</li><li>Momento generalizado: \(p_i=\partial L/\partial\dot q_i\).</li><li>Coordenada cíclica: coordenada ausente de \(L\).</li><li>Conservación: consecuencia de simetría.</li></ul></article>
+    <article class="definition-card"><h3>Relaciones clave</h3><ul><li>Ligadura \(\rightarrow\) menos grados de libertad.</li><li>Buena coordenada \(\rightarrow\) desaparecen tensiones/normales.</li><li>Simetría \(\rightarrow\) coordenada cíclica.</li><li>Coordenada cíclica \(\rightarrow\) momento conjugado conservado.</li><li>\(L\) sin \(t\) explícito \(\rightarrow\) energía conservada.</li><li>Lagrange \(\rightarrow\) Hamilton mediante \(p_i\) y transformada de Legendre.</li></ul></article>
+    <article class="definition-card"><h3>Errores que evitar</h3><ul><li>Usar \(L=T+V\).</li><li>Meter fuerzas de ligadura en \(V\).</li><li>No fijar signos del potencial gravitatorio.</li><li>Derivar mal \(d/dt(\partial L/\partial\dot q)\).</li><li>Confundir coordenada cíclica con coordenada constante.</li><li>Olvidar que estacionario no significa siempre mínimo.</li><li>Usar más coordenadas que grados de libertad.</li></ul></article>
+  </div>
+</section>
+
+<section class="page" id="checklist">
+  <div class="page-head"><h2>10. Checklist de dominio</h2></div>
+  <div class="reading-block">
+    <ul>
+      <li>Si no puedes explicar por qué \(L=T-V\) no es la energía total, falta repasar el papel del lagrangiano.</li>
+      <li>Si no puedes escribir Euler-Lagrange sin mirar, falta repasar la fórmula madre.</li>
+      <li>Si confundes \(\partial L/\partial q\) con \(dL/dq\), revisar derivadas parciales.</li>
+      <li>Si confundes \(d/dt\) con \(\partial/\partial t\), revisar derivada total.</li>
+      <li>Si no sabes elegir coordenadas para un péndulo, falta repasar ligaduras.</li>
+      <li>Si usas \(x,y\) para un péndulo simple sin necesidad, falta repasar grados de libertad.</li>
+      <li>Si metes tensión o normal en el lagrangiano básico, revisar fuerzas de ligadura.</li>
+      <li>Si no detectas coordenadas cíclicas, revisar simetrías.</li>
+      <li>Si no puedes calcular \(p_i=\partial L/\partial\dot q_i\), falta repasar momento generalizado.</li>
+      <li>Si no puedes derivar el oscilador armónico por Lagrange, el capítulo no está asentado.</li>
+      <li>Si no puedes derivar el péndulo simple exacto, falta práctica mínima.</li>
+      <li>Si no puedes plantear el péndulo elástico con \(r,\theta\), falta control de coordenadas polares.</li>
+      <li>Si no puedes plantear la cuña móvil con \(q,s\), falta traducción geométrica a energías.</li>
+      <li>Si puedes escribir \(T,V,L\), aplicar Euler-Lagrange y detectar conservaciones, el capítulo está suficientemente asentado.</li>
+    </ul>
+  </div>
+</section>
+</main>
+</div>
+</body>
+</html>
