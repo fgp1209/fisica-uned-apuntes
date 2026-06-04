@@ -31,7 +31,7 @@ window.MathJax = {
     <span class="chip">Formulario</span>
     <span class="chip">7 temas</span>
     <span class="chip">MathJax</span>
-    <span class="chip">estado: limpio</span>
+    <span class="chip">estado: ampliado T1–T5</span>
   </div>
 </header>
 
@@ -87,6 +87,48 @@ window.MathJax = {
 \mathbf v=\dot{\mathbf r},\qquad \mathbf a=\ddot{\mathbf r}
 \]</div>
       <p>En ejes cartesianos fijos se derivan solo las componentes. En ejes móviles también se derivan los vectores de base.</p>
+    </article>
+
+
+    <article class="definition-card">
+      <h3>Cambio de base en el plano</h3>
+      <div class="formula-block">\[
+C(\theta)=
+\begin{pmatrix}
+\cos\theta&-\sin\theta\\
+\sin\theta&\cos\theta
+\end{pmatrix},\qquad
+C^{-1}=C^T
+\]</div>
+      <div class="formula-block">\[
+\mathbf r=\mathbf R+C\mathbf r',\qquad
+\mathbf r'=C^T(\mathbf r-\mathbf R)
+\]</div>
+      <div class="formula-block">\[
+\rho=\sqrt{x^2+y^2},\qquad
+\theta=\operatorname{atan2}(y,x)
+\]</div>
+      <p>
+        \((\rho,\theta)\) son coordenadas polares. Las componentes de \(\mathbf r\) en la base polar son \([\mathbf r]_{(\mathbf e_r,\mathbf e_\theta)}=(\rho,0)^T\).
+      </p>
+    </article>
+
+    <article class="definition-card">
+      <h3>Velocidad angular desde matriz de rotación</h3>
+      <div class="formula-block">\[
+\boldsymbol\Omega=\dot C C^T,
+\qquad
+\boldsymbol\Omega\mathbf A=\boldsymbol\omega\times\mathbf A
+\]</div>
+      <div class="formula-block">\[
+\boldsymbol\Omega=\dot\theta
+\begin{pmatrix}
+0&-1\\
+1&0
+\end{pmatrix},\qquad
+\boldsymbol\omega=\dot\theta\,\mathbf e_z
+\]</div>
+      <p>En movimiento circular uniforme: \(\mathbf r=C(\omega t)(R,0)^T\), \(\mathbf a=-\omega^2\mathbf r\).</p>
     </article>
 
     <article class="definition-card">
@@ -192,6 +234,8 @@ v=\omega R,\qquad a_n=\frac{v^2}{R}=\omega^2R,\qquad a_t=\alpha R
           <tr><td>Rozamiento cinético</td><td>\(f_k=\mu_kN\)</td></tr>
           <tr><td>Muelle</td><td>\(\mathbf F=-k(x-x_0)\mathbf e_x\)</td></tr>
           <tr><td>Viscosa lineal</td><td>\(\mathbf F=-b\mathbf v\)</td></tr>
+          <tr><td>Gravitación puntual</td><td>\(\mathbf F=-GMm\mathbf e_r/r^2\)</td></tr>
+          <tr><td>Elástica radial</td><td>\(\mathbf F=-k(r-l_0)\mathbf e_r\)</td></tr>
         </tbody>
       </table>
     </article>
@@ -344,6 +388,9 @@ I=I_{\mathrm{cm}}+Md^2
       <div class="formula-block">\[
 (\mathbf I-\lambda_i\mathbf 1)\mathbf e_i=0
 \]</div>
+      <div class="formula-block">\[
+\mathbf I_{\mathrm{principal}}=\operatorname{diag}(I_1,I_2,I_3)
+\]</div>
       <p>Autovalores: momentos principales. Autovectores: ejes principales.</p>
     </article>
   </div>
@@ -466,6 +513,20 @@ v_2'=\frac{2m_1}{m_1+m_2}v_1+
       <p>Un sólido rígido tiene 6 grados de libertad: 3 de traslación y 3 de orientación.</p>
     </article>
 
+
+    <article class="definition-card">
+      <h3>Campo de velocidades y aceleraciones</h3>
+      <div class="formula-block">\[
+\mathbf v_P=\mathbf V_O+\boldsymbol\omega\times(\mathbf r_P-\mathbf r_O)
+\]</div>
+      <div class="formula-block">\[
+\mathbf a_P=\mathbf A_O+\boldsymbol\alpha\times\boldsymbol\rho
++\boldsymbol\omega\times(\boldsymbol\omega\times\boldsymbol\rho),
+\qquad \boldsymbol\rho=\mathbf r_P-\mathbf r_O
+\]</div>
+      <p>Es la versión de sólido rígido de la cinemática relativa.</p>
+    </article>
+
     <article class="definition-card">
       <h3>Momento angular y energía</h3>
       <div class="formula-block">\[
@@ -529,9 +590,13 @@ T=\frac12Mv_{\mathrm{cm}}^2+\frac12I_{\mathrm{cm}}\omega^2
           <tr><td>Varilla \(L\)</td><td>extremo perpendicular</td><td>\(ML^2/3\)</td></tr>
           <tr><td>Aro \(R\)</td><td>eje central</td><td>\(MR^2\)</td></tr>
           <tr><td>Disco/cilindro macizo</td><td>eje central</td><td>\(MR^2/2\)</td></tr>
+          <tr><td>Disco fino</td><td>diámetro</td><td>\(MR^2/4\)</td></tr>
+          <tr><td>Aro fino</td><td>diámetro</td><td>\(MR^2/2\)</td></tr>
+          <tr><td>Cilindro macizo \(R,h\)</td><td>diámetro transversal CM</td><td>\(M(3R^2+h^2)/12\)</td></tr>
           <tr><td>Esfera maciza</td><td>diámetro</td><td>\(2MR^2/5\)</td></tr>
           <tr><td>Esfera hueca</td><td>diámetro</td><td>\(2MR^2/3\)</td></tr>
           <tr><td>Placa rectangular \(a,b\)</td><td>perpendicular CM</td><td>\(M(a^2+b^2)/12\)</td></tr>
+          <tr><td>Placa rectangular \(a,b\)</td><td>eje paralelo a lado \(a\)</td><td>\(Mb^2/12\)</td></tr>
         </tbody>
       </table>
     </article>
