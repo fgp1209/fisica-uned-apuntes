@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="light dark" />
+  <title>Mecánica Teórica — T7 — Medios continuos</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/icon-32.png" />
+  <link rel="icon" type="image/png" sizes="50x50" href="assets/icons/icon-50.png" />
+  <link rel="apple-touch-icon" sizes="100x100" href="assets/icons/icon-100.png" />
+  <meta name="theme-color" content="#6f42c1" />
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+  <link rel="stylesheet" href="assets/styles.css" />
+  <script defer src="assets/app.js"></script>
+</head>
+<body class="subject-mecanica-teorica">
+<div class="wrap">
+  <header class="cover">
+    <div class="top-actions">
+      <a class="back-link" href="index.html">← Volver al índice</a>
+    </div>
+    <p class="eyebrow">UNED Física · Mecánica Teórica · Tema 7</p>
+    <h1>Guía de estudio — Mecánica Teórica / Medios continuos</h1>
+    <p class="subtitle">Medios continuos, campos, densidad lagrangiana, Euler-Lagrange de campo, densidad hamiltoniana y leyes de conservación.</p>
+    <div class="chips">
+      <span class="chip">UNED Física</span>
+      <span class="chip">Mecánica Teórica</span>
+      <span class="chip">MT7</span>
+      <span class="chip">MathJax</span>
+      <span class="chip">estado: maquetado</span>
+    </div>
+  </header>
+
+  <div class="toolbar no-print">
+    <nav><a href="#mapa">Mapa</a><a href="#prerrequisitos">Prerrequisitos</a><a href="#desarrollo-completo">Desarrollo</a><a href="#conceptos-clave">Conceptos</a><a href="#errores-habituales">Errores</a><a href="#preguntas-orientadas-a-examen">Preguntas</a><a href="#respuestas-modelo">Respuestas</a><a href="#resumen-final-de-repaso">Resumen</a><a href="#checklist-de-dominio">Checklist</a></nav>
+    <div class="toolbar-actions">
+      <button class="btn" onclick="printReady()">Imprimir / guardar PDF</button>
+      <button class="btn secondary" onclick="openAllDetails()">Abrir todo</button>
+      <button class="btn secondary" onclick="closeAllDetails()">Cerrar acordeones</button>
+    </div>
+  </div>
+
+  <main>
+<section class="page map-page" id="mapa">
+<div class="page-head"><h2>Mapa clicable</h2><p class="section-lead">Ruta conceptual del tema.</p></div>
+<div class="concept-map">
+  <a class="map-node" href="#prerrequisitos"><span>Prerrequisitos</span><small>coordenadas · Euler-Lagrange · derivadas parciales · onda</small></a>
+  <a class="map-node" href="#idea-central"><span>Idea central</span><small>de grados finitos a infinitos grados de libertad</small></a>
+  <a class="map-node" href="#desarrollo-completo"><span>Desarrollo</span><small>discreto-continuo · acción · campo · Hamilton</small></a>
+  <a class="map-node" href="#conceptos-clave"><span>Conceptos clave</span><small>campo · densidades · momento conjugado · tensor energía-momento</small></a>
+  <a class="map-node" href="#relaciones-entre-ideas"><span>Relaciones</span><small>simetrías, densidades locales y conservaciones globales</small></a>
+  <a class="map-node" href="#errores-habituales"><span>Errores</span><small>x no se varía · término espacial · fronteras · signos</small></a>
+  <a class="map-node" href="#preguntas-orientadas-a-examen"><span>Examen</span><small>35 preguntas graduadas</small></a>
+  <a class="map-node" href="#respuestas-modelo"><span>Respuestas modelo</span><small>derivaciones y respuestas completas</small></a>
+</div>
+</section>
+<section class="page" id="fuente">
+<div class="page-head"><h2>Fuente nuclear</h2><span class="page-no">nota</span></div>
+<div class="reading-block"><p>Fuente nuclear: Goldstein, capítulo 13, “Introduction to the Lagrangian and Hamiltonian Formulations for Continuous Systems and Fields”, especialmente transición discreto-continuo, formulación lagrangiana, tensor energía-momento y formulación hamiltoniana. El bloque aparece en exámenes UNED como “Bloque III — Medios continuos”, con ejercicios sobre densidad lagrangiana, ecuación de movimiento, densidad hamiltoniana y conservación de energía/momento.</p></div>
+</section>
+<section class="page" id="prerrequisitos">
+<div class="page-head"><h2>1. Prerrequisitos mínimos</h2><span class="page-no">p.1</span></div>
+<div class="grid cards-grid">
+<article class="definition-card"><h3>Coordenadas generalizadas</h3>
+<p>Una coordenada generalizada \(q_i(t)\) describe un grado de libertad de un sistema mecánico. Es necesaria porque un medio continuo se obtiene al pasar de un conjunto discreto \(q_1(t),q_2(t),\dots,q_N(t)\) a una función \(y(x,t)\), donde el índice discreto se convierte en posición espacial. Ejemplo: una cadena de masas acopladas tiene desplazamientos \(q_i(t)\); una cuerda continua tiene desplazamiento \(y(x,t)\).</p>
+</article>
+<article class="definition-card"><h3>Lagrangiano discreto</h3>
+<p>En sistemas de partículas, el lagrangiano es</p>
+<div class="formula-block">\[L(q_i,\dot q_i,t)=T-V\]</div>
+<p>Es necesario porque el capítulo generaliza esta idea a una densidad lagrangiana \(\mathcal L\). En vez de sumar grados de libertad discretos, se integra una densidad sobre el espacio.</p>
+</article>
+<article class="definition-card"><h3>Ecuaciones de Euler-Lagrange</h3>
+<p>Para un sistema discreto,</p>
+<div class="formula-block">\[\frac{d}{dt}\frac{\partial L}{\partial \dot q_i}-\frac{\partial L}{\partial q_i}=0\]</div>
+<p>Es necesario porque en medios continuos aparece una versión con derivadas respecto al tiempo y al espacio. El cambio formal central es pasar de \(q_i(t)\) a \(y(x,t)\).</p>
+</article>
+<article class="definition-card"><h3>Derivadas parciales</h3>
+<p>En un campo \(y(x,t)\), \(y_t=\partial y/\partial t\) mide velocidad local de la perturbación, mientras \(y_x=\partial y/\partial x\) mide deformación espacial. Es necesario porque la densidad lagrangiana depende típicamente de \(y\), \(y_t\) y \(y_x\).</p>
+</article>
+<article class="definition-card"><h3>Integración por partes</h3>
+<p>Es necesaria para derivar la ecuación de Euler-Lagrange de campo desde el principio de Hamilton. Al variar la acción, aparecen términos con \(\delta y_t\) y \(\delta y_x\); se integran por partes para dejar la variación como factor común \(\delta y\).</p>
+</article>
+<article class="definition-card"><h3>Condiciones de contorno</h3>
+<p>La variación \(\delta y\) se anula en los extremos temporales y espaciales del dominio. Es necesario porque así desaparecen los términos de frontera al derivar la ecuación de movimiento. Ejemplo: cuerda fija en los extremos, \(y(0,t)=y(L,t)=0\).</p>
+</article>
+<article class="definition-card"><h3>Densidad de masa y tensión</h3>
+<p>En una cuerda homogénea, \(\rho\) mide masa por unidad de longitud y \(T\) mide tensión. Son necesarias porque la energía cinética local suele ser \(\frac12\rho y_t^2\) y la energía elástica local \(\frac12T y_x^2\).</p>
+</article>
+<article class="definition-card"><h3>Ecuación de ondas</h3>
+<p>La ecuación</p>
+<div class="formula-block">\[y_{tt}=c^2y_{xx}\]</div>
+<p>describe propagación de perturbaciones. Es necesaria porque aparece como caso básico al aplicar Euler-Lagrange a una cuerda continua.</p>
+</article>
+<article class="definition-card"><h3>Momento conjugado</h3>
+<p>En un campo, la densidad de momento conjugado es</p>
+<div class="formula-block">\[\pi(x,t)=\frac{\partial \mathcal L}{\partial y_t}\]</div>
+<p>Es necesaria para construir la densidad hamiltoniana y para interpretar leyes de conservación.</p>
+</article>
+<article class="definition-card"><h3>Simetría y conservación</h3>
+<p>Si la densidad lagrangiana no depende explícitamente de una variable, aparece una conservación asociada. Es necesario porque el capítulo conecta traslaciones temporales con energía, traslaciones espaciales con momento y traslaciones del campo \(y\to y+\varepsilon\) con otra cantidad conservada.</p>
+</article>
+</div>
+</section>
+<section class="page" id="idea-central">
+<div class="page-head"><h2>2. Idea central del capítulo</h2><span class="page-no">p.2</span></div>
+<div class="reading-block"><p>El capítulo enseña cómo extender la mecánica lagrangiana y hamiltoniana desde sistemas con un número finito de grados de libertad hasta sistemas con infinitos grados de libertad. En una partícula, la incógnita es una función \(q(t)\). En un medio continuo, la incógnita es una función de espacio y tiempo, por ejemplo \(y(x,t)\). La posición \(x\) deja de ser una coordenada dinámica y pasa a etiquetar el punto del medio.</p></div>
+<div class="reading-block"><p>La idea física es simple: una cuerda, una varilla, una membrana o un campo no se describen siguiendo una sola partícula, sino asignando a cada punto del espacio una variable dinámica. Cada punto del medio tiene su pequeña “coordenada generalizada”, pero hay infinitas. El formalismo de Goldstein convierte esa infinitud en una formulación compacta mediante una densidad lagrangiana \(\mathcal L\), cuya integral espacial da el lagrangiano total.</p></div>
+<div class="reading-block"><p>La idea matemática central es que la acción deja de ser</p></div>
+<div class="formula-block">\[S=\int L\,dt\]</div>
+<div class="reading-block"><p>y pasa a ser</p></div>
+<div class="formula-block">\[S=\iint \mathcal L\,dx\,dt\]</div>
+<div class="reading-block"><p>Al aplicar el principio de Hamilton, la variación ya no produce una ecuación diferencial ordinaria, sino una ecuación en derivadas parciales. Goldstein escribe la ecuación de Euler-Lagrange para campos en forma análoga a la discreta, pero con derivadas respecto a \(t\) y \(x\).</p></div>
+<div class="reading-block"><p>Dentro de la asignatura, este bloque es el puente entre Mecánica Teórica y Teoría de Campos. Hasta aquí, Lagrange, Hamilton, Poisson, Hamilton-Jacobi y Liouville se aplicaban a sistemas finitos. En medios continuos, el mismo lenguaje permite estudiar cuerdas, sólidos elásticos, fluidos idealizados y campos clásicos. Por eso los exámenes UNED preguntan directamente densidades lagrangianas, ecuaciones de campo, densidad hamiltoniana y leyes de conservación.</p></div>
+</section>
+<section class="page" id="desarrollo-completo">
+<div class="page-head"><h2>3. Desarrollo completo del capítulo</h2><span class="page-no">p.3</span></div>
+<h3>3.1. Del sistema discreto al medio continuo</h3>
+<div class="reading-block"><p>Un sistema discreto tiene coordenadas \(q_i(t)\), con \(i=1,\dots,N\). Si se piensa en una cadena de masas unidas por muelles, cada masa tiene un desplazamiento transversal o longitudinal. Cuando el número de masas crece y la separación \(a\) entre ellas tiende a cero, la etiqueta \(i\) se sustituye por una coordenada espacial \(x\). Entonces el desplazamiento ya no se escribe \(q_i(t)\), sino \(y(x,t)\).</p></div>
+<div class="reading-block"><p>Este paso no es una simple comodidad matemática. Cambia el tipo de problema. En el sistema discreto, hay \(N\) ecuaciones diferenciales ordinarias. En el continuo, hay una ecuación diferencial parcial que contiene toda la evolución de infinitos puntos. Goldstein subraya que una sola ecuación de campo equivale a una familia continua de ecuaciones, una para cada punto \(x\).</p></div>
+<div class="reading-block"><p>Ejemplo: una cuerda tensa. Si \(y(x,t)\) representa el desplazamiento transversal, cada punto de la cuerda oscila, pero no independientemente. La dependencia en \(y_x\) introduce acoplamiento entre puntos vecinos. Si la cuerda se deforma mucho en el espacio, aumenta la energía elástica.</p></div>
+<h3>3.2. Densidad lagrangiana</h3>
+<div class="reading-block"><p>En un sistema discreto se escribe \(L=T-V\). En un continuo no se asigna un lagrangiano independiente a cada punto sin más; se define una densidad lagrangiana \(\mathcal L\), de modo que</p></div>
+<div class="formula-block">\[L(t)=\int_{x_1}^{x_2}\mathcal L(y,y_t,y_x,x,t)\,dx\]</div>
+<div class="reading-block"><p>Goldstein presenta para una varilla o cuerda el caso típico</p></div>
+<div class="formula-block">\[\mathcal L=\frac12\mu y_t^2-\frac12Y y_x^2,\]</div>
+<div class="reading-block"><p>donde el primer término es densidad de energía cinética y el segundo representa energía elástica almacenada por deformación espacial.</p></div>
+<div class="reading-block"><p>En una cuerda tensa se suele escribir</p></div>
+<div class="formula-block">\[\mathcal L=\frac12\rho y_t^2-\frac12T y_x^2\]</div>
+<div class="reading-block"><p>Aquí \(\rho\) es densidad lineal de masa y \(T\) tensión. El término \(y_t^2\) mide movimiento local; el término \(y_x^2\) mide inclinación o deformación.</p></div>
+<div class="reading-block"><p>La densidad lagrangiana puede depender explícitamente de \(x\) y \(t\), pero si no lo hace aparecen simetrías importantes. Si no depende explícitamente de \(t\), hay conservación de energía. Si no depende explícitamente de \(x\), hay conservación de momento asociado a traslación espacial.</p></div>
+<h3>3.3. Acción de un campo</h3>
+<div class="reading-block"><p>La acción del medio continuo es</p></div>
+<div class="formula-block">\[S[y]=\int_{t_1}^{t_2}\int_{x_1}^{x_2}\mathcal L(y,y_t,y_x,x,t)\,dx\,dt\]</div>
+<div class="reading-block"><p>La trayectoria física no es ahora una curva \(q(t)\), sino una configuración completa \(y(x,t)\). El principio de Hamilton dice que la configuración real hace estacionaria la acción.</p></div>
+<div class="reading-block"><p>La variación se toma como</p></div>
+<div class="formula-block">\[y(x,t)\to y(x,t)+\alpha \zeta(x,t),\]</div>
+<div class="reading-block"><p>donde \(\zeta\) se anula en las fronteras. La anulación en las fronteras evita términos de borde y permite extraer la ecuación local. Goldstein usa este procedimiento para obtener la ecuación de Euler-Lagrange de campo.</p></div>
+<h3>3.4. Ecuación de Euler-Lagrange para un campo</h3>
+<div class="reading-block"><p>La ecuación de movimiento para un campo unidimensional es</p></div>
+<div class="formula-block">\[\frac{\partial \mathcal L}{\partial y}
+-\frac{\partial}{\partial t}\left(\frac{\partial \mathcal L}{\partial y_t}\right)
+-\frac{\partial}{\partial x}\left(\frac{\partial \mathcal L}{\partial y_x}\right)=0\]</div>
+<div class="reading-block"><p>Equivalente:</p></div>
+<div class="formula-block">\[\frac{\partial}{\partial t}\left(\frac{\partial \mathcal L}{\partial y_t}\right)
++\frac{\partial}{\partial x}\left(\frac{\partial \mathcal L}{\partial y_x}\right)
+-\frac{\partial \mathcal L}{\partial y}=0\]</div>
+<div class="reading-block"><p>La estructura es la misma que en mecánica discreta, pero aparece un término espacial adicional. En mecánica de partículas solo se deriva respecto a \(\dot q\); en campos se deriva también respecto a \(y_x\).</p></div>
+<div class="reading-block"><p>Ejemplo básico:</p></div>
+<div class="formula-block">\[\mathcal L=\frac12\rho y_t^2-\frac12T y_x^2\]</div>
+<div class="reading-block"><p>Entonces</p></div>
+<div class="formula-block">\[\frac{\partial \mathcal L}{\partial y}=0,\qquad
+\frac{\partial \mathcal L}{\partial y_t}=\rho y_t,\qquad
+\frac{\partial \mathcal L}{\partial y_x}=-T y_x\]</div>
+<div class="reading-block"><p>La ecuación queda</p></div>
+<div class="formula-block">\[\rho y_{tt}-T y_{xx}=0,\]</div>
+<div class="reading-block"><p>o bien</p></div>
+<div class="formula-block">\[y_{tt}=c^2y_{xx},\qquad c^2=\frac{T}{\rho}\]</div>
+<div class="reading-block"><p>Esta es la ecuación de ondas de una cuerda homogénea.</p></div>
+<h3>3.5. Interpretación física de la ecuación de ondas</h3>
+<div class="reading-block"><p>El término \(\rho y_{tt}\) representa inercia local: cuanto mayor es la densidad lineal, más cuesta acelerar un elemento de cuerda. El término \(T y_{xx}\) representa fuerza restauradora debida a la curvatura: si la cuerda está curvada, la tensión tiene una resultante transversal.</p></div>
+<div class="reading-block"><p>La ecuación no dice que cada punto oscile solo. Dice que la aceleración de cada punto depende de cómo se curva la cuerda alrededor de él. Por eso la información se propaga.</p></div>
+<div class="reading-block"><p>Si \(T\) aumenta, aumenta \(c\). Si \(\rho\) aumenta, disminuye \(c\). Es exactamente lo esperable: una cuerda más tensa transmite más rápido; una cuerda más pesada transmite más lento.</p></div>
+<h3>3.6. Notación compacta con varios campos</h3>
+<div class="reading-block"><p>Goldstein generaliza el caso de un solo campo \(y(x,t)\) a varios campos \(\eta_\rho\), dependientes de coordenadas espacio-temporales \(x^\mu\). La forma compacta es</p></div>
+<div class="formula-block">\[\frac{\partial}{\partial x^\nu}
+\left(
+\frac{\partial \mathcal L}{\partial \eta_{\rho,\nu}}
+\right)
+-------
+
+\frac{\partial \mathcal L}{\partial \eta_\rho}=0\]</div>
+<div class="reading-block"><p>Aquí \(\eta_{\rho,\nu}\) significa derivada parcial del campo \(\eta_\rho\) respecto a \(x^\nu\). Esta notación anticipa la teoría de campos, donde los campos pueden tener varias componentes: desplazamientos vectoriales, campos escalares complejos o campos electromagnéticos.</p></div>
+<div class="reading-block"><p>La clave conceptual es que el formalismo no depende de que exista una cuerda material. Matemáticamente, un campo es una función de espacio y tiempo. Puede representar una deformación mecánica o una entidad física más abstracta.</p></div>
+<h3>3.7. Densidad de momento conjugado</h3>
+<div class="reading-block"><p>En mecánica discreta,</p></div>
+<div class="formula-block">\[p_i=\frac{\partial L}{\partial \dot q_i}\]</div>
+<div class="reading-block"><p>En medios continuos se define una densidad de momento conjugado:</p></div>
+<div class="formula-block">\[\pi(x,t)=\frac{\partial \mathcal L}{\partial y_t}\]</div>
+<div class="reading-block"><p>Para la cuerda homogénea,</p></div>
+<div class="formula-block">\[\pi=\rho y_t\]</div>
+<div class="reading-block"><p>No es todavía el momento lineal total de la cuerda en el sentido de traslación espacial. Es el momento conjugado al campo \(y\), es decir, la cantidad canónica asociada a la variable dinámica \(y(x,t)\).</p></div>
+<div class="reading-block"><p>Esto es importante en examen: \(\pi\) no debe confundirse automáticamente con el momento de traslación espacial. En los exámenes UNED aparece explícitamente la distinción entre</p></div>
+<div class="formula-block">\[P_y=\int \rho y_t\,dx\]</div>
+<div class="reading-block"><p>y</p></div>
+<div class="formula-block">\[P=\int \rho y_t y_x\,dx,\]</div>
+<div class="reading-block"><p>con interpretaciones físicas distintas.</p></div>
+<h3>3.8. Densidad hamiltoniana</h3>
+<div class="reading-block"><p>La formulación hamiltoniana se obtiene por transformación de Legendre local:</p></div>
+<div class="formula-block">\[\mathcal H=\pi y_t-\mathcal L\]</div>
+<div class="reading-block"><p>Goldstein define esta densidad hamiltoniana como el análogo continuo del hamiltoniano discreto. El hamiltoniano total es</p></div>
+<div class="formula-block">\[H=\int \mathcal H\,dx\]</div>
+<div class="reading-block"><p>Para la cuerda homogénea,</p></div>
+<div class="formula-block">\[\mathcal H
+= \rho y_t^2-\left(\frac12\rho y_t^2-\frac12T y_x^2\right)
+=\frac12\rho y_t^2+\frac12T y_x^2\]</div>
+<div class="reading-block"><p>Físicamente, \(\mathcal H\) es densidad de energía: cinética local más energía elástica local.</p></div>
+<h3>3.9. Conservación de la energía</h3>
+<div class="reading-block"><p>Si \(\mathcal L\) no depende explícitamente del tiempo, la energía total se conserva siempre que no haya flujo neto por la frontera. En una cuerda finita, esto exige extremos fijos, condiciones periódicas o condiciones que hagan anular el flujo energético en los bordes.</p></div>
+<div class="reading-block"><p>La energía total es</p></div>
+<div class="formula-block">\[E=\int \mathcal H\,dx\]</div>
+<div class="reading-block"><p>Para la cuerda:</p></div>
+<div class="formula-block">\[E=\int\left(\frac12\rho y_t^2+\frac12T y_x^2\right)dx\]</div>
+<div class="reading-block"><p>La conservación no significa que la energía cinética local sea constante. La energía puede moverse de una región a otra. Lo que se conserva es la integral total, si el sistema está cerrado.</p></div>
+<h3>3.10. Conservación del momento</h3>
+<div class="reading-block"><p>Si \(\mathcal L\) no depende explícitamente de \(x\), hay invariancia bajo traslación espacial. La magnitud conservada asociada es el momento del campo. En una dimensión y con la convención usada habitualmente en UNED,</p></div>
+<div class="formula-block">\[P=\int \pi y_x\,dx\]</div>
+<div class="reading-block"><p>Para la cuerda homogénea,</p></div>
+<div class="formula-block">\[P=\int \rho y_t y_x\,dx\]</div>
+<div class="reading-block"><p>Este momento no es “masa total por velocidad del centro de masas”. Es el momento canónico asociado a traslaciones espaciales de la perturbación. La distinción es esencial.</p></div>
+<h3>3.11. Simetría \(y\to y+\varepsilon\)</h3>
+<div class="reading-block"><p>Si la densidad lagrangiana no depende explícitamente de \(y\), sino solo de \(y_t\) y \(y_x\), entonces es invariante bajo traslaciones verticales del campo:</p></div>
+<div class="formula-block">\[y\to y+\varepsilon\]</div>
+<div class="reading-block"><p>La cantidad conservada asociada es</p></div>
+<div class="formula-block">\[P_y=\int \pi\,dx\]</div>
+<div class="reading-block"><p>Para la cuerda homogénea:</p></div>
+<div class="formula-block">\[P_y=\int \rho y_t\,dx\]</div>
+<div class="reading-block"><p>Su significado físico es el momento conjugado total asociado al desplazamiento transversal. Si los extremos o las condiciones de frontera rompen esa simetría, puede no conservarse.</p></div>
+<h3>3.12. Tensor energía-momento</h3>
+<div class="reading-block"><p>Goldstein introduce el tensor energía-momento como objeto que organiza densidades y flujos conservados. Si \(\mathcal L\) no depende explícitamente de las coordenadas \(x^\mu\), aparecen ecuaciones de continuidad.</p></div>
+<div class="reading-block"><p>La forma general es</p></div>
+<div class="formula-block">\[\frac{\partial T^\nu_{\ \mu}}{\partial x^\nu}=0\]</div>
+<div class="reading-block"><p>Esto significa: variación temporal de una densidad más divergencia de su flujo igual a cero. No es una fórmula decorativa; es la forma local de una conservación.</p></div>
+<div class="reading-block"><p>La componente de energía se interpreta como densidad de energía. Las componentes espaciales se relacionan con densidad de momento y tensiones. En sistemas elásticos, los términos espaciales se conectan con el tensor de tensiones, que expresa fuerzas internas sobre superficies.</p></div>
+</section>
+<section class="page" id="conceptos-clave">
+<div class="page-head"><h2>4. Conceptos clave</h2><span class="page-no">p.4</span></div>
+<div class="grid cards-grid">
+<article class="definition-card"><h3>Medio continuo</h3>
+<p>Un medio continuo es un sistema con infinitos grados de libertad descrito por funciones de espacio y tiempo. No se sigue cada partícula individual, sino una variable de campo en cada punto.</p>
+<p>Ejemplo: \(y(x,t)\) para una cuerda transversal.</p>
+<p>Relación: generaliza \(q_i(t)\).</p>
+<p>Pregunta de examen: “Explique por qué un medio continuo tiene infinitos grados de libertad y cómo se representa su configuración.”</p>
+</article>
+<article class="definition-card"><h3>Campo</h3>
+<p>Un campo es una función definida en cada punto del espacio y del tiempo. En este capítulo, el campo suele ser una perturbación \(y(x,t)\).</p>
+<p>Ejemplo: desplazamiento transversal de una cuerda.</p>
+<p>Relación: es la variable dinámica del medio continuo.</p>
+<p>Pregunta de examen: “¿Qué papel juega \(y(x,t)\) en la formulación lagrangiana de un medio continuo?”</p>
+</article>
+<article class="definition-card"><h3>Densidad lagrangiana</h3>
+<p>Es la función \(\mathcal L\) cuya integral espacial da el lagrangiano total:</p>
+<div class="formula-block">\[L=\int \mathcal L\,dx\]</div>
+<p>Explicación: sustituye al lagrangiano discreto cuando hay infinitos grados de libertad.</p>
+<p>Ejemplo:</p>
+<div class="formula-block">\[\mathcal L=\frac12\rho y_t^2-\frac12T y_x^2\]</div>
+<p>Relación: permite construir la acción.</p>
+<p>Pregunta de examen: “Dada una densidad lagrangiana, obtenga la ecuación de movimiento.”</p>
+</article>
+<article class="definition-card"><h3>Acción de campo</h3>
+<p>Es el funcional</p>
+<div class="formula-block">\[S=\iint \mathcal L\,dx\,dt\]</div>
+<p>Explicación: la dinámica se obtiene imponiendo \(\delta S=0\).</p>
+<p>Ejemplo: acción de una cuerda en el intervalo \(0&lt;x&lt;L\).</p>
+<p>Relación: generaliza el principio de Hamilton.</p>
+<p>Pregunta de examen: “Escriba la acción de un medio continuo y explique qué se varía.”</p>
+</article>
+<article class="definition-card"><h3>Euler-Lagrange de campo</h3>
+<p>Es la ecuación</p>
+<div class="formula-block">\[\frac{\partial \mathcal L}{\partial y}
+-\partial_t\frac{\partial \mathcal L}{\partial y_t}
+-\partial_x\frac{\partial \mathcal L}{\partial y_x}=0\]</div>
+<p>Explicación: da la ecuación local de movimiento.</p>
+<p>Ejemplo: con \(\mathcal L=\frac12\rho y_t^2-\frac12T y_x^2\), da \(\rho y_{tt}-Ty_{xx}=0\).</p>
+<p>Relación: generaliza Euler-Lagrange discreta.</p>
+<p>Pregunta de examen: “Derive la ecuación de ondas desde la densidad lagrangiana.”</p>
+</article>
+<article class="definition-card"><h3>Momento conjugado de campo</h3>
+<div class="formula-block">\[\pi=\frac{\partial \mathcal L}{\partial y_t}\]</div>
+<p>Explicación: es la variable canónica conjugada al campo.</p>
+<p>Ejemplo: \(\pi=\rho y_t\).</p>
+<p>Relación: permite pasar a Hamilton.</p>
+<p>Pregunta de examen: “Obtenga la densidad de momento conjugado y la densidad hamiltoniana.”</p>
+</article>
+<article class="definition-card"><h3>Densidad hamiltoniana</h3>
+<div class="formula-block">\[\mathcal H=\pi y_t-\mathcal L\]</div>
+<p>Explicación: es la energía local del campo cuando la transformación de Legendre es regular.</p>
+<p>Ejemplo:</p>
+<div class="formula-block">\[\mathcal H=\frac12\rho y_t^2+\frac12T y_x^2\]</div>
+<p>Relación: su integral es el hamiltoniano total.</p>
+<p>Pregunta de examen: “Calcule \(\mathcal H\) para una cuerda homogénea.”</p>
+</article>
+<article class="definition-card"><h3>Conservación de energía</h3>
+<p>La energía se conserva si \(\mathcal L\) no depende explícitamente de \(t\) y no hay flujo neto por la frontera.</p>
+<p>Ejemplo: cuerda fija sin fuerzas externas dependientes del tiempo.</p>
+<p>Relación: simetría temporal.</p>
+<p>Pregunta de examen: “Analice la conservación de la energía para una densidad lagrangiana dada.”</p>
+</article>
+<article class="definition-card"><h3>Conservación de momento espacial</h3>
+<p>El momento se conserva si \(\mathcal L\) no depende explícitamente de \(x\) y las fronteras no rompen la simetría.</p>
+<p>Ejemplo:</p>
+<div class="formula-block">\[P=\int \rho y_t y_x\,dx\]</div>
+<p>Relación: simetría bajo traslación espacial.</p>
+<p>Pregunta de examen: “Determine bajo qué condiciones \(P\) es constante.”</p>
+</article>
+<article class="definition-card"><h3>Simetría interna \(y\to y+\varepsilon\)</h3>
+<p>Si \(\mathcal L\) no depende de \(y\), hay invariancia bajo desplazamiento uniforme del campo.</p>
+<p>Ejemplo:</p>
+<div class="formula-block">\[P_y=\int \rho y_t\,dx\]</div>
+<p>Relación: conservación asociada a traslación del valor del campo, no del espacio.</p>
+<p>Pregunta de examen: “Explique el significado físico de \(P_y\).”</p>
+</article>
+<article class="definition-card"><h3>Tensor energía-momento</h3>
+<p>Agrupa densidades y flujos de energía y momento.</p>
+<p>Ejemplo:</p>
+<div class="formula-block">\[T^\nu_{\ \mu}=\frac{\partial\mathcal L}{\partial \eta_{\rho,\nu}}\eta_{\rho,\mu}-\mathcal L\delta^\nu_\mu\]</div>
+<p>Relación: formaliza las leyes locales de conservación.</p>
+<p>Pregunta de examen: “Explique por qué las ecuaciones \(\partial_\nu T^\nu_{\ \mu}=0\) son ecuaciones de continuidad.”</p>
+</article>
+</div>
+</section>
+<section class="page" id="relaciones-entre-ideas">
+<div class="page-head"><h2>5. Relaciones entre ideas</h2><span class="page-no">p.5</span></div>
+<div class="reading-block"><p>La dependencia principal es:</p></div>
+<div class="formula-block">\[q_i(t)\longrightarrow y(x,t)\longrightarrow \mathcal L(y,y_t,y_x)\longrightarrow S[y]\longrightarrow \text{Euler-Lagrange de campo}\]</div>
+<div class="reading-block"><p>Primero se sustituye una colección discreta de coordenadas por un campo. Después se sustituye el lagrangiano por una densidad lagrangiana. Luego se integra esa densidad en espacio y tiempo para obtener la acción. Finalmente, la estacionariedad de la acción produce una ecuación de campo.</p></div>
+<div class="reading-block"><p>La jerarquía conceptual es:</p></div>
+<div class="formula-block">\[\text{campo} &lt; \text{densidad lagrangiana} &lt; \text{acción} &lt; \text{ecuación de movimiento} &lt; \text{conservaciones}\]</div>
+<div class="reading-block"><p>Noether entra después, no antes. Primero debe saberse derivar la ecuación de movimiento. Luego se interpreta qué simetrías tiene \(\mathcal L\). Si no hay dependencia explícita en \(t\), conservación de energía. Si no hay dependencia explícita en \(x\), conservación de momento. Si no hay dependencia explícita en \(y\), conservación del momento conjugado integrado.</p></div>
+<div class="reading-block"><p>Oposición importante:</p></div>
+<div class="formula-block">\[P_y=\int \rho y_t\,dx\]</div>
+<div class="reading-block"><p>no es lo mismo que</p></div>
+<div class="formula-block">\[P=\int \rho y_t y_x\,dx\]</div>
+<div class="reading-block"><p>El primero procede de traslación del campo \(y\). El segundo procede de traslación espacial. Confundirlos es un error típico de examen.</p></div>
+<div class="reading-block"><p>Otra oposición importante: densidad local frente a cantidad global. \(\mathcal H(x,t)\) es densidad de energía. \(H=\int \mathcal H dx\) es energía total. La densidad puede cambiar localmente aunque la integral sea constante.</p></div>
+<div class="reading-block"><p>Evolución histórica conceptual: el formalismo lagrangiano nació para sistemas mecánicos finitos, pero su fuerza real aparece al extenderse a campos. Goldstein remarca que esa extensión permite tratar tanto sistemas materiales continuos como campos que no tienen por qué ser vibración de un soporte mecánico.</p></div>
+</section>
+<section class="page" id="errores-habituales">
+<div class="page-head"><h2>6. Errores habituales</h2><span class="page-no">p.6</span></div>
+<details class="accordion accordion-error"><summary>Error 1: tratar \(x\) como coordenada generalizada dinámica</summary>
+<div class="details-body">
+<p>Por qué está mal: en \(y(x,t)\), \(x\) etiqueta el punto del medio; la variable dinámica es \(y\).</p>
+<p>Corrección: variar \(y\), no \(x\).</p>
+<p>Incorrecto: “La coordenada generalizada es \(x(t)\).”</p>
+<p>Correcto: “El campo dinámico es \(y(x,t)\); \(x\) es parámetro espacial.”</p>
+</div>
+</details>
+<details class="accordion accordion-error"><summary>Error 2: usar Euler-Lagrange discreta sin término espacial</summary>
+<div class="details-body">
+<p>Por qué está mal: \(\mathcal L\) depende también de \(y_x\).</p>
+<p>Corrección:</p>
+<div class="formula-block">\[\partial_t\frac{\partial\mathcal L}{\partial y_t}+\partial_x\frac{\partial\mathcal L}{\partial y_x}-\frac{\partial\mathcal L}{\partial y}=0\]</div>
+<p>Incorrecto: \(\frac{d}{dt}\frac{\partial \mathcal L}{\partial y_t}-\frac{\partial \mathcal L}{\partial y}=0\).</p>
+<p>Correcto: incluir el término \(\partial_x(\partial \mathcal L/\partial y_x)\).</p>
+</div>
+</details>
+<details class="accordion accordion-error"><summary>Error 3: cambiar mal el signo del término elástico</summary>
+<div class="details-body">
+<p>Por qué está mal: si</p>
+<div class="formula-block">\[\mathcal L=\frac12\rho y_t^2-\frac12T y_x^2,\]</div>
+<p>entonces</p>
+<div class="formula-block">\[\frac{\partial \mathcal L}{\partial y_x}=-Ty_x\]</div>
+<p>Corrección: la ecuación final es \(\rho y_{tt}-Ty_{xx}=0\).</p>
+<p>Incorrecto: \(\rho y_{tt}+Ty_{xx}=0\).</p>
+<p>Correcto: \(\rho y_{tt}=Ty_{xx}\).</p>
+</div>
+</details>
+<details class="accordion accordion-error"><summary>Error 4: confundir densidad lagrangiana con lagrangiano total</summary>
+<div class="details-body">
+<p>Por qué está mal: \(\mathcal L\) es por unidad de longitud; \(L\) es integral espacial.</p>
+<p>Corrección:</p>
+<div class="formula-block">\[L=\int \mathcal L\,dx\]</div>
+<p>Incorrecto: “El lagrangiano de la cuerda es \(\mathcal L\).”</p>
+<p>Correcto: “\(\mathcal L\) es la densidad; el lagrangiano total se obtiene integrando.”</p>
+</div>
+</details>
+<details class="accordion accordion-error"><summary>Error 5: confundir \(\pi\) con \(P\)</summary>
+<div class="details-body">
+<p>Por qué está mal: \(\pi=\rho y_t\) es densidad de momento conjugado; \(P=\int \rho y_t y_x\,dx\) es momento asociado a traslación espacial.</p>
+<p>Corrección: identificar la simetría antes de nombrar la cantidad conservada.</p>
+<p>Incorrecto: “Como \(\pi=\rho y_t\), el momento lineal es \(\int \rho y_t\,dx\).”</p>
+<p>Correcto: “\(\int \rho y_t\,dx\) corresponde a traslación del campo; el momento espacial canónico incluye \(y_x\).”</p>
+</div>
+</details>
+<details class="accordion accordion-error"><summary>Error 6: afirmar conservación sin comprobar fronteras</summary>
+<div class="details-body">
+<p>Por qué está mal: una ley local puede tener flujo por los extremos.</p>
+<p>Corrección: comprobar condiciones de contorno.</p>
+<p>Incorrecto: “Como \(\mathcal L\) no depende de \(t\), siempre se conserva la energía.”</p>
+<p>Correcto: “Se conserva si no hay dependencia explícita en \(t\) y el flujo por la frontera se anula.”</p>
+</div>
+</details>
+<details class="accordion accordion-error"><summary>Error 7: pensar que toda conservación viene de una simetría visible simple</summary>
+<div class="details-body">
+<p>Por qué está mal: Noether da simetría \(\Rightarrow\) conservación, pero el recíproco no siempre es directo. Goldstein menciona casos con conservaciones no obtenidas de una simetría simple aparente.</p>
+<p>Corrección: para examen básico, usar Noether en simetrías estándar; no inventar simetrías.</p>
+<p>Incorrecto: “Toda constante de movimiento debe salir de una traslación simple.”</p>
+<p>Correcto: “Las simetrías continuas de la acción producen conservaciones, pero no toda conservación se identifica necesariamente por inspección elemental.”</p>
+</div>
+</details>
+<details class="accordion accordion-error"><summary>Error 8: olvidar que \(\mathcal H\) exige expresar \(y_t\) en función de \(\pi\)</summary>
+<div class="details-body">
+<p>Por qué está mal: la transformación hamiltoniana debe quedar en variables \(y,\pi\).</p>
+<p>Corrección: primero \(\pi=\partial \mathcal L/\partial y_t\), luego despejar \(y_t\).</p>
+<p>Incorrecto: \(\mathcal H=\pi y_t-\mathcal L\) dejando \(y_t\) sin relacionar.</p>
+<p>Correcto: si \(\pi=\rho y_t\), entonces \(y_t=\pi/\rho\) y</p>
+<div class="formula-block">\[\mathcal H=\frac{\pi^2}{2\rho}+\frac12Ty_x^2\]</div>
+</div>
+</details>
+</section>
+<section class="page" id="preguntas-orientadas-a-examen">
+<div class="page-head"><h2>7. Preguntas orientadas a examen</h2><span class="page-no">p.7</span></div>
+<div class="grid cards-grid">
+<article class="question-card"><h3>10 preguntas fáciles</h3><ol class="question-list">
+<li>¿Qué diferencia hay entre un sistema discreto y un medio continuo?</li>
+<li>¿Qué representa \(y(x,t)\) en una cuerda vibrante?</li>
+<li>Define densidad lagrangiana.</li>
+<li>Escribe la acción de un campo unidimensional.</li>
+<li>Escribe la ecuación de Euler-Lagrange para \(\mathcal L(y,y_t,y_x)\).</li>
+<li>Dada \(\mathcal L=\frac12\rho y_t^2-\frac12T y_x^2\), calcula \(\partial \mathcal L/\partial y_t\).</li>
+<li>Con la misma \(\mathcal L\), calcula \(\partial \mathcal L/\partial y_x\).</li>
+<li>¿Qué es la densidad de momento conjugado?</li>
+<li>¿Qué es la densidad hamiltoniana?</li>
+<li>¿Qué condición sobre \(\mathcal L\) sugiere conservación de energía?</li>
+</ol></article>
+<article class="question-card"><h3>10 preguntas medias</h3><ol class="question-list">
+<li>Deriva la ecuación de ondas desde \(\mathcal L=\frac12\rho y_t^2-\frac12T y_x^2\).</li>
+<li>Interpreta físicamente los dos términos de esa densidad lagrangiana.</li>
+<li>Calcula \(\mathcal H\) para la cuerda homogénea.</li>
+<li>Explica por qué la ecuación de campo es una EDP y no una EDO.</li>
+<li>Explica la diferencia entre \(\pi=\rho y_t\) y \(P=\int \rho y_t y_x\,dx\).</li>
+<li>¿Qué simetría produce la conservación de \(P_y=\int \rho y_t\,dx\)?</li>
+<li>¿Qué simetría produce la conservación de \(P=\int \rho y_t y_x\,dx\)?</li>
+<li>¿Qué condiciones de frontera permiten conservar energía?</li>
+<li>¿Qué ocurre si \(\mathcal L\) depende explícitamente de \(x\)?</li>
+<li>¿Por qué una densidad local puede no conservarse aunque la cantidad total sí?</li>
+</ol></article>
+<article class="question-card"><h3>5 preguntas difíciles</h3><ol class="question-list">
+<li>Para \(\mathcal L=\frac12\rho y_t^2-\frac12f(y_x)\), obtén la ecuación de movimiento.</li>
+<li>Deduce la condición para que \(P_y=\int \rho y_t\,dx\) sea constante.</li>
+<li>Deduce la condición para que \(P=\int \rho y_t y_x\,dx\) sea constante.</li>
+<li>Explica el papel del tensor energía-momento en las conservaciones locales.</li>
+<li>Construye la versión hamiltoniana de una densidad lagrangiana general \(\mathcal L(y,y_t,y_x)\).</li>
+</ol></article>
+<article class="question-card"><h3>5 preguntas de desarrollo largo</h3><ol class="question-list">
+<li>Explica la transición de una cadena discreta de osciladores a un medio continuo.</li>
+<li>Desarrolla la formulación lagrangiana de un medio continuo unidimensional.</li>
+<li>Explica la formulación hamiltoniana de un campo clásico.</li>
+<li>Analiza energía y momento en una cuerda homogénea.</li>
+<li>Explica la conexión entre simetrías de la acción y leyes de conservación en medios continuos.</li>
+</ol></article>
+<article class="question-card"><h3>5 preguntas de relación entre conceptos</h3><ol class="question-list">
+<li>Relaciona \(q_i(t)\), \(y(x,t)\), \(\mathcal L\) y \(S[y]\).</li>
+<li>Relaciona Euler-Lagrange discreta y Euler-Lagrange de campo.</li>
+<li>Relaciona densidad hamiltoniana y conservación de energía.</li>
+<li>Relaciona \(P_y\), \(P\) y sus simetrías respectivas.</li>
+<li>Relaciona tensor energía-momento, ecuaciones de continuidad y cantidades conservadas.</li>
+</ol></article>
+</div>
+</section>
+<section class="page" id="respuestas-modelo">
+<div class="page-head"><h2>8. Respuestas modelo</h2><span class="page-no">p.8</span></div>
+<details class="accordion accordion-answer"><summary>Respuesta 1</summary>
+<div class="details-body">
+<p>Un sistema discreto tiene un número finito o numerable de coordenadas \(q_i(t)\). Un medio continuo se describe mediante un campo \(y(x,t)\), donde cada punto espacial aporta un grado de libertad.</p>
+</div>
+</details>
+<details class="accordion accordion-answer"><summary>Respuesta 2</summary>
+<div class="details-body">
+<p>\(y(x,t)\) representa el desplazamiento del punto de la cuerda situado en \(x\) en el instante \(t\). Es la variable dinámica del sistema.</p>
+</div>
+</details>
+<details class="accordion accordion-answer"><summary>Respuesta 3</summary>
+<div class="details-body">
+<p>La densidad lagrangiana \(\mathcal L\) es una función local cuya integral espacial da el lagrangiano total:</p>
+<div class="formula-block">\[L=\int \mathcal L\,dx\]</div>
+</div>
+</details>
+<details class="accordion accordion-answer"><summary>Respuesta 4</summary>
+<div class="details-body">
+<p>La acción es</p>
+<div class="formula-block">\[S[y]=\int_{t_1}^{t_2}\int_{x_1}^{x_2}\mathcal L(y,y_t,y_x,x,t)\,dx\,dt\]</div>
+</div>
+</details>
+<details class="accordion accordion-answer"><summary>Respuesta 5</summary>
+<div class="details-body">
+<p>La ecuación es</p>
+<div class="formula-block">\[\frac{\partial \mathcal L}{\partial y}
+-\partial_t\left(\frac{\partial \mathcal L}{\partial y_t}\right)
+-\partial_x\left(\frac{\partial \mathcal L}{\partial y_x}\right)=0\]</div>
+</div>
+</details>
+<details class="accordion accordion-answer"><summary>Respuesta 6</summary>
+<div class="details-body">
+<p>Se obtiene</p>
+<div class="formula-block">\[\frac{\partial \mathcal L}{\partial y_t}=\rho y_t\]</div>
+</div>
+</details>
+<details class="accordion accordion-answer"><summary>Respuesta 7</summary>
+<div class="details-body">
+<p>Se obtiene</p>
+<div class="formula-block">\[\frac{\partial \mathcal L}{\partial y_x}=-Ty_x\]</div>
+</div>
+</details>
+<details class="accordion accordion-answer"><summary>Respuesta 8</summary>
+<div class="details-body">
+<p>Es</p>
+<div class="formula-block">\[\pi=\frac{\partial \mathcal L}{\partial y_t}\]</div>
+<p>Es la cantidad canónica conjugada al campo \(y\).</p>
+</div>
+</details>
+<details class="accordion accordion-answer"><summary>Respuesta 9</summary>
+<div class="details-body">
+<p>Es</p>
+<div class="formula-block">\[\mathcal H=\pi y_t-\mathcal L\]</div>
+<p>Su integral espacial da el hamiltoniano total.</p>
+</div>
+</details>
+<details class="accordion accordion-answer"><summary>Respuesta 10</summary>
+<div class="details-body">
+<p>Si \(\mathcal L\) no depende explícitamente de \(t\), hay simetría temporal y, con condiciones de frontera adecuadas, conservación de energía.</p>
+</div>
+</details>
+<details class="accordion accordion-answer"><summary>Respuesta 11</summary>
+<div class="details-body">
+<p>Con</p>
+<div class="formula-block">\[\mathcal L=\frac12\rho y_t^2-\frac12T y_x^2,\]</div>
+<p>se tiene</p>
+<div class="formula-block">\[\partial_t(\rho y_t)+\partial_x(-Ty_x)=0\]</div>
+<p>Si \(\rho\) y \(T\) son constantes:</p>
+<div class="formula-block">\[\rho y_{tt}-Ty_{xx}=0\]</div>
+<p>Por tanto,</p>
+<div class="formula-block">\[y_{tt}=\frac{T}{\rho}y_{xx}\]</div>
+</div>
+</details>
+<details class="accordion accordion-answer"><summary>Respuesta 12</summary>
+<div class="details-body">
+<p>El término \(\frac12\rho y_t^2\) es energía cinética por unidad de longitud. El término \(\frac12T y_x^2\) es energía elástica por unidad de longitud. Aparece con signo negativo porque \(\mathcal L=T-V\).</p>
+</div>
+</details>
+<details class="accordion accordion-answer"><summary>Respuesta 13</summary>
+<div class="details-body">
+<p>Como \(\pi=\rho y_t\),</p>
+<div class="formula-block">\[\mathcal H=\pi y_t-\mathcal L
+=\frac12\rho y_t^2+\frac12T y_x^2\]</div>
+<p>En variables canónicas:</p>
+<div class="formula-block">\[\mathcal H=\frac{\pi^2}{2\rho}+\frac12T y_x^2\]</div>
+</div>
+</details>
+<details class="accordion accordion-answer"><summary>Respuesta 14</summary>
+<div class="details-body">
+<p>Porque \(y\) depende de dos variables independientes, \(x\) y \(t\). La ecuación contiene derivadas respecto al tiempo y al espacio, por tanto es una ecuación en derivadas parciales.</p>
+</div>
+</details>
+<details class="accordion accordion-answer"><summary>Respuesta 15</summary>
+<div class="details-body">
+<p>\(\pi=\rho y_t\) es densidad de momento conjugado al campo \(y\). En cambio,</p>
+<div class="formula-block">\[P=\int \rho y_t y_x\,dx\]</div>
+<p>es el momento asociado a traslaciones espaciales de la perturbación. No representan la misma simetría.</p>
+</div>
+</details>
+<details class="accordion accordion-answer"><summary>Respuesta 16</summary>
+<div class="details-body">
+<p>La simetría es</p>
+<div class="formula-block">\[y\to y+\varepsilon\]</div>
+<p>Existe si \(\mathcal L\) no depende explícitamente de \(y\).</p>
+</div>
+</details>
+<details class="accordion accordion-answer"><summary>Respuesta 17</summary>
+<div class="details-body">
+<p>La simetría es la traslación espacial</p>
+<div class="formula-block">\[x\to x+\varepsilon\]</div>
+<p>Existe si \(\mathcal L\) no depende explícitamente de \(x\).</p>
+</div>
+</details>
+<details class="accordion accordion-answer"><summary>Respuesta 18</summary>
+<div class="details-body">
+<p>Extremos fijos, condiciones periódicas o condiciones que anulen el flujo energético en la frontera. Sin ello puede haber intercambio de energía con el exterior.</p>
+</div>
+</details>
+<details class="accordion accordion-answer"><summary>Respuesta 19</summary>
+<div class="details-body">
+<p>Se rompe la invariancia por traslación espacial. En general, el momento asociado a dicha simetría deja de conservarse.</p>
+</div>
+</details>
+<details class="accordion accordion-answer"><summary>Respuesta 20</summary>
+<div class="details-body">
+<p>Porque la conservación es local mediante una ecuación de continuidad. La densidad puede disminuir en una región y aumentar en otra por flujo interno. La integral total se conserva si no hay flujo neto por el contorno.</p>
+</div>
+</details>
+<details class="accordion accordion-answer"><summary>Respuesta 21</summary>
+<div class="details-body">
+<p>Para</p>
+<div class="formula-block">\[\mathcal L=\frac12\rho y_t^2-\frac12f(y_x),\]</div>
+<p>se obtiene</p>
+<div class="formula-block">\[\frac{\partial \mathcal L}{\partial y}=0,\qquad
+\frac{\partial \mathcal L}{\partial y_t}=\rho y_t,\qquad
+\frac{\partial \mathcal L}{\partial y_x}=-\frac12 f'(y_x)\]</div>
+<p>Luego</p>
+<div class="formula-block">\[\rho y_{tt}-\frac12\partial_x[f'(y_x)]=0\]</div>
+</div>
+</details>
+<details class="accordion accordion-answer"><summary>Respuesta 22</summary>
+<div class="details-body">
+<p>Si</p>
+<div class="formula-block">\[P_y=\int \rho y_t\,dx,\]</div>
+<p>entonces se conserva cuando la acción es invariante bajo \(y\to y+\varepsilon\), es decir, cuando \(\mathcal L\) no depende explícitamente de \(y\), y además los términos de frontera no aportan flujo neto.</p>
+</div>
+</details>
+<details class="accordion accordion-answer"><summary>Respuesta 23</summary>
+<div class="details-body">
+<p>\(P\) se conserva cuando la densidad lagrangiana no depende explícitamente de \(x\) y las condiciones de frontera no rompen la traslación espacial. Para la cuerda homogénea infinita, periódica o con flujo nulo, \(dP/dt=0\).</p>
+</div>
+</details>
+<details class="accordion accordion-answer"><summary>Respuesta 24</summary>
+<div class="details-body">
+<p>El tensor energía-momento reúne densidades y flujos. Sus ecuaciones</p>
+<div class="formula-block">\[\partial_\nu T^\nu_{\ \mu}=0\]</div>
+<p>son ecuaciones de continuidad. La componente temporal se asocia a energía; las espaciales, a momento y tensiones. Su utilidad es convertir simetrías espacio-temporales en conservaciones locales.</p>
+</div>
+</details>
+<details class="accordion accordion-answer"><summary>Respuesta 25</summary>
+<div class="details-body">
+<p>Primero se define</p>
+<div class="formula-block">\[\pi=\frac{\partial \mathcal L}{\partial y_t}\]</div>
+<p>Si puede invertirse para expresar \(y_t=y_t(y,\pi,y_x)\), entonces</p>
+<div class="formula-block">\[\mathcal H(y,\pi,y_x)=\pi y_t-\mathcal L\]</div>
+<p>La dinámica hamiltoniana del campo se formula en términos de \(y(x,t)\) y \(\pi(x,t)\).</p>
+</div>
+</details>
+<details class="accordion accordion-answer"><summary>Respuesta 26</summary>
+<div class="details-body">
+<p>Una cadena discreta tiene desplazamientos \(q_i(t)\). Si las masas están separadas una distancia \(a\), el índice \(i\) puede asociarse a \(x_i=ia\). Al hacer \(a\to0\), la colección \(q_i(t)\) pasa a una función \(y(x,t)\). Las sumas sobre masas se transforman en integrales y las diferencias entre vecinos se transforman en derivadas espaciales. Así aparece una densidad lagrangiana. La dinámica pasa de \(N\) ecuaciones diferenciales ordinarias a una ecuación diferencial parcial.</p>
+</div>
+</details>
+<details class="accordion accordion-answer"><summary>Respuesta 27</summary>
+<div class="details-body">
+<p>En un medio continuo unidimensional, el estado se describe mediante \(y(x,t)\). Se define una densidad lagrangiana \(\mathcal L(y,y_t,y_x,x,t)\), se construye la acción</p>
+<div class="formula-block">\[S=\iint \mathcal L\,dx\,dt,\]</div>
+<p>y se impone \(\delta S=0\). Tras integrar por partes los términos con \(\delta y_t\) y \(\delta y_x\), y anular las variaciones en la frontera, se obtiene la ecuación de Euler-Lagrange de campo. Esta ecuación determina la evolución local del medio.</p>
+</div>
+</details>
+<details class="accordion accordion-answer"><summary>Respuesta 28</summary>
+<div class="details-body">
+<p>La formulación hamiltoniana introduce la densidad de momento conjugado</p>
+<div class="formula-block">\[\pi=\partial \mathcal L/\partial y_t\]</div>
+<p>Después se define</p>
+<div class="formula-block">\[\mathcal H=\pi y_t-\mathcal L\]</div>
+<p>La integral de \(\mathcal H\) da el hamiltoniano total. En una cuerda homogénea, \(\mathcal H\) coincide con la densidad de energía. La formulación hamiltoniana es útil para conectar con espacio de fases infinito-dimensional y con teorías de campo.</p>
+</div>
+</details>
+<details class="accordion accordion-answer"><summary>Respuesta 29</summary>
+<div class="details-body">
+<p>Para la cuerda homogénea,</p>
+<div class="formula-block">\[\mathcal L=\frac12\rho y_t^2-\frac12T y_x^2\]</div>
+<p>La energía es</p>
+<div class="formula-block">\[E=\int\left(\frac12\rho y_t^2+\frac12T y_x^2\right)dx\]</div>
+<p>El momento conjugado total asociado a \(y\to y+\varepsilon\) es</p>
+<div class="formula-block">\[P_y=\int \rho y_t\,dx\]</div>
+<p>El momento asociado a traslación espacial es</p>
+<div class="formula-block">\[P=\int \rho y_t y_x\,dx\]</div>
+<p>Cada conservación depende de una simetría distinta y de condiciones de frontera compatibles.</p>
+</div>
+</details>
+<details class="accordion accordion-answer"><summary>Respuesta 30</summary>
+<div class="details-body">
+<p>En medios continuos, las simetrías de la acción producen leyes de conservación. La invariancia temporal produce conservación de energía. La invariancia espacial produce conservación de momento. La invariancia bajo desplazamiento del campo produce conservación de la integral del momento conjugado. El tensor energía-momento organiza estas leyes como ecuaciones locales de continuidad.</p>
+</div>
+</details>
+<details class="accordion accordion-answer"><summary>Respuesta 31</summary>
+<div class="details-body">
+<p>\(q_i(t)\) son coordenadas discretas. En el límite continuo pasan a \(y(x,t)\). La dinámica de \(y\) se codifica en \(\mathcal L\). La integral espacio-temporal de \(\mathcal L\) da \(S[y]\). La condición \(\delta S=0\) da la ecuación de campo.</p>
+</div>
+</details>
+<details class="accordion accordion-answer"><summary>Respuesta 32</summary>
+<div class="details-body">
+<p>La Euler-Lagrange discreta tiene derivada temporal de \(\partial L/\partial\dot q\). La de campo añade derivada espacial de \(\partial \mathcal L/\partial y_x\), porque la densidad depende de la deformación espacial.</p>
+</div>
+</details>
+<details class="accordion accordion-answer"><summary>Respuesta 33</summary>
+<div class="details-body">
+<p>La densidad hamiltoniana \(\mathcal H\) es la energía local si \(\mathcal L\) tiene forma cinética menos potencial. Si \(\mathcal L\) no depende explícitamente de \(t\), la integral de \(\mathcal H\) se conserva bajo condiciones de frontera cerradas.</p>
+</div>
+</details>
+<details class="accordion accordion-answer"><summary>Respuesta 34</summary>
+<div class="details-body">
+<p>\(P_y\) procede de trasladar el valor del campo \(y\). \(P\) procede de trasladar la coordenada espacial \(x\). Tienen expresiones distintas porque pertenecen a simetrías distintas.</p>
+</div>
+</details>
+<details class="accordion accordion-answer"><summary>Respuesta 35</summary>
+<div class="details-body">
+<p>El tensor energía-momento contiene densidades y flujos. Sus ecuaciones de divergencia nula expresan continuidad local. Al integrar esas ecuaciones en el volumen y anular flujos de frontera, aparecen cantidades conservadas globales.</p>
+</div>
+</details>
+</section>
+<section class="page" id="resumen-final-de-repaso">
+<div class="page-head"><h2>9. Resumen final de repaso</h2><span class="page-no">p.9</span></div>
+<div class="reading-block"><p>Ideas principales:</p></div>
+<div class="formula-block">\[q_i(t)\to y(x,t)\]</div>
+<div class="formula-block">\[L=\int \mathcal L\,dx\]</div>
+<div class="formula-block">\[S=\iint\mathcal L\,dx\,dt\]</div>
+<div class="formula-block">\[\partial_t\frac{\partial\mathcal L}{\partial y_t}+\partial_x\frac{\partial\mathcal L}{\partial y_x}-\frac{\partial\mathcal L}{\partial y}=0\]</div>
+<div class="reading-block"><p>Conceptos imprescindibles:</p></div>
+<div class="formula-block">\[\pi=\frac{\partial \mathcal L}{\partial y_t}\]</div>
+<div class="formula-block">\[\mathcal H=\pi y_t-\mathcal L\]</div>
+<div class="formula-block">\[E=\int \mathcal H\,dx\]</div>
+<div class="formula-block">\[P_y=\int \pi\,dx\]</div>
+<div class="formula-block">\[P=\int \pi y_x\,dx\]</div>
+<div class="reading-block"><p>Relaciones clave:</p></div>
+<div class="summary-box"><ul>
+<li>Sin dependencia explícita en \(t\): energía.</li>
+<li>Sin dependencia explícita en \(x\): momento espacial.</li>
+<li>Sin dependencia explícita en \(y\): momento conjugado integrado.</li>
+<li>Densidad local no equivale automáticamente a cantidad conservada global.</li>
+<li>Toda conservación global exige controlar la frontera.</li>
+</ul></div>
+<div class="reading-block"><p>Errores que evitar:</p></div>
+<div class="summary-box"><ul>
+<li>Olvidar el término espacial en Euler-Lagrange.</li>
+<li>Confundir \(\mathcal L\) con \(L\).</li>
+<li>Confundir \(\pi\), \(P_y\) y \(P\).</li>
+<li>Afirmar conservación sin condiciones de frontera.</li>
+<li>Cambiar el signo del término elástico.</li>
+</ul></div>
+</section>
+<section class="page" id="checklist-de-dominio">
+<div class="page-head"><h2>10. Checklist de dominio</h2><span class="page-no">p.10</span></div>
+<div class="checklist-box"><ul class="checklist">
+<li>Si no puedes explicar por qué \(q_i(t)\) pasa a \(y(x,t)\), falta repasar transición discreto-continuo.</li>
+<li>Si no puedes distinguir \(x\) de \(y(x,t)\), falta repasar qué es un campo.</li>
+<li>Si confundes \(\mathcal L\) con \(L\), revisar densidades e integrales espaciales.</li>
+<li>Si olvidas \(\partial_x(\partial \mathcal L/\partial y_x)\), revisar Euler-Lagrange de campo.</li>
+<li>Si no obtienes \(\rho y_{tt}-Ty_{xx}=0\), falta practicar derivación de la cuerda.</li>
+<li>Si no sabes calcular \(\pi\), revisar momento conjugado de campo.</li>
+<li>Si no sabes pasar de \(\mathcal L\) a \(\mathcal H\), revisar transformación de Legendre.</li>
+<li>Si confundes \(P_y\) con \(P\), revisar simetrías: traslación del campo frente a traslación espacial.</li>
+<li>Si afirmas conservación sin mirar fronteras, revisar ecuaciones de continuidad.</li>
+<li>Si puedes derivar ecuación de movimiento, densidad hamiltoniana y conservaciones para \(\mathcal L=\frac12\rho y_t^2-\frac12T y_x^2\), el capítulo está suficientemente asentado.</li>
+</ul></div>
+</section>
+  </main>
+</div>
+</body>
+</html>

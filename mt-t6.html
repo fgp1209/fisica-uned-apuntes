@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="light dark" />
+  <title>Mecánica Teórica — T6 — Teoría del campo medio</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/icon-32.png" />
+  <link rel="icon" type="image/png" sizes="50x50" href="assets/icons/icon-50.png" />
+  <link rel="apple-touch-icon" sizes="100x100" href="assets/icons/icon-100.png" />
+  <meta name="theme-color" content="#6f42c1" />
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+  <link rel="stylesheet" href="assets/styles.css" />
+  <script defer src="assets/app.js"></script>
+</head>
+<body class="subject-mecanica-teorica">
+<div class="wrap">
+  <header class="cover">
+    <div class="top-actions">
+      <a class="back-link" href="index.html">← Volver al índice</a>
+    </div>
+    <p class="eyebrow">UNED Física · Mecánica Teórica · Tema 6</p>
+    <h1>Guía de estudio — Mecánica Teórica / TII.3: Teoría del campo medio</h1>
+    <p class="subtitle">Campo medio, densidad, potencial promedio, auto-consistencia, polarización, puntos fijos y transición de fase.</p>
+    <div class="chips">
+      <span class="chip">UNED Física</span>
+      <span class="chip">Mecánica Teórica</span>
+      <span class="chip">MT6</span>
+      <span class="chip">MathJax</span>
+      <span class="chip">estado: maquetado</span>
+    </div>
+  </header>
+
+  <div class="toolbar no-print">
+    <nav><a href="#mapa">Mapa</a><a href="#prerrequisitos">Prerrequisitos</a><a href="#desarrollo-completo">Desarrollo</a><a href="#conceptos-clave">Conceptos</a><a href="#errores-habituales">Errores</a><a href="#preguntas-orientadas-a-examen">Preguntas</a><a href="#respuestas-modelo">Respuestas</a><a href="#resumen-final-de-repaso">Resumen</a><a href="#checklist-de-dominio">Checklist</a></nav>
+    <div class="toolbar-actions">
+      <button class="btn" onclick="printReady()">Imprimir / guardar PDF</button>
+      <button class="btn secondary" onclick="openAllDetails()">Abrir todo</button>
+      <button class="btn secondary" onclick="closeAllDetails()">Cerrar acordeones</button>
+    </div>
+  </div>
+
+  <main>
+<section class="page map-page" id="mapa">
+<div class="page-head"><h2>Mapa clicable</h2><p class="section-lead">Ruta conceptual del tema.</p></div>
+<div class="concept-map">
+  <a class="map-node" href="#prerrequisitos"><span>Prerrequisitos</span><small>densidad · interacción · potencial promedio · punto fijo</small></a>
+  <a class="map-node" href="#idea-central"><span>Idea central</span><small>cerrar el bucle n → Φ[n] → n</small></a>
+  <a class="map-node" href="#desarrollo-completo"><span>Desarrollo</span><small>normalización · sensibilidad · polarización · parámetro crítico</small></a>
+  <a class="map-node" href="#conceptos-clave"><span>Conceptos clave</span><small>campo medio · auto-consistencia · parámetro de orden</small></a>
+  <a class="map-node" href="#relaciones-entre-ideas"><span>Relaciones</span><small>V, Φ, n, P, α y pérdida de correlaciones</small></a>
+  <a class="map-node" href="#errores-habituales"><span>Errores</span><small>V ≠ Φ · C no opcional · estabilidad no garantizada</small></a>
+  <a class="map-node" href="#preguntas-orientadas-a-examen"><span>Examen</span><small>35 preguntas graduadas</small></a>
+  <a class="map-node" href="#respuestas-modelo"><span>Respuestas modelo</span><small>soluciones y desarrollos mínimos</small></a>
+</div>
+</section>
+<section class="page" id="fuente">
+<div class="page-head"><h2>Fuente efectiva localizada</h2><span class="page-no">nota</span></div>
+<div class="reading-block"><p>Fuente efectiva localizada: el documento cargado contiene este bloque como ejercicio de examen, no como capítulo desarrollado. El bloque define un sistema unidimensional \(0\le x\le L\), una densidad \(n(x)=C e^{-\Phi(x)/\alpha}\), un potencial promedio \(\Phi(x)=\int n(y)V(x,y)\,dy\), una polarización \(P=\int x\,n(x)\,dx\), y una condición simplificada \(P=e^{P/\alpha}-1\).  El tema aparece dentro del Tema 4 de Mecánica Teórica junto con Liouville, colectividad, ergodicidad, invariantes integrales e invariantes adiabáticos.</p></div>
+</section>
+<section class="page" id="prerrequisitos">
+<div class="page-head"><h2>1. Prerrequisitos mínimos</h2><span class="page-no">p.1</span></div>
+<div class="grid cards-grid">
+<article class="definition-card"><h3>Densidad de número</h3>
+<p>Una densidad \(n(x)\) indica cuántas partículas hay por unidad de longitud alrededor de \(x\). En una dimensión, el número total de partículas se obtiene integrando:</p>
+<div class="formula-block">\[N=\int_0^L n(x)\,dx\]</div>
+<p>Es necesaria porque la teoría no sigue partícula por partícula, sino la distribución colectiva.</p>
+</article>
+<article class="definition-card"><h3>Potencial de interacción \(V(x,y)\)</h3>
+<p>Es la energía de interacción entre una partícula situada en \(x\) y otra situada en \(y\). Es necesario porque el campo medio sustituye muchas interacciones microscópicas por un potencial promedio.</p>
+</article>
+<article class="definition-card"><h3>Potencial promedio \(\Phi(x)\)</h3>
+<p>Se define como</p>
+<div class="formula-block">\[\Phi(x)=\int_0^L n(y)V(x,y)\,dy\]</div>
+<p>Mide el efecto medio que todas las partículas distribuidas según \(n(y)\) ejercen sobre una partícula situada en \(x\). Es el núcleo del capítulo.</p>
+</article>
+<article class="definition-card"><h3>Peso exponencial tipo Boltzmann</h3>
+<p>La forma</p>
+<div class="formula-block">\[n(x)=C e^{-\Phi(x)/\alpha}\]</div>
+<p>indica que las zonas con mayor potencial promedio son menos pobladas si \(\Phi\) actúa como coste energético. El parámetro \(\alpha&gt;0\) controla cuánto responde la distribución al potencial.</p>
+</article>
+<article class="definition-card"><h3>Condición de consistencia</h3>
+<p>Una teoría de campo medio es circular: \(n\) determina \(\Phi\), pero \(\Phi\) determina \(n\). La consistencia exige que la distribución usada para construir el campo sea la misma que resulta de ese campo.</p>
+</article>
+<article class="definition-card"><h3>Polarización \(P\)</h3>
+<p>En el enunciado:</p>
+<div class="formula-block">\[P=\int_0^L x\,n(x)\,dx\]</div>
+<p>Es un momento espacial de la densidad. Valores bajos indican distribución poco desplazada hacia posiciones grandes; valores altos indican concentración o sesgo hacia posiciones grandes.</p>
+</article>
+<article class="definition-card"><h3>Punto fijo</h3>
+<p>Una ecuación como</p>
+<div class="formula-block">\[P=e^{P/\alpha}-1\]</div>
+<p>no da \(P\) directamente: impone que \(P\) sea igual a una función de sí mismo. Resolverla equivale a encontrar puntos fijos.</p>
+</article>
+<article class="definition-card"><h3>Transición de fase</h3>
+<p>En este contexto significa que al variar \(\alpha\) cambia cualitativamente el conjunto de soluciones posibles para \(P\). El punto crítico aparece cuando nace o desaparece una rama de solución no trivial.</p>
+</article>
+</div>
+</section>
+<section class="page" id="idea-central">
+<div class="page-head"><h2>2. Idea central del capítulo</h2><span class="page-no">p.2</span></div>
+<div class="reading-block"><p>El capítulo aborda un problema típico de sistemas colectivos: describir muchas partículas que interaccionan entre sí sin seguir cada interacción individual. En lugar de calcular todas las fuerzas o energías entre pares, se introduce un campo promedio \(\Phi(x)\). Ese campo resume el efecto del conjunto sobre una partícula situada en \(x\).</p></div>
+<div class="reading-block"><p>La dificultad está en que el campo promedio no está dado externamente. Depende de la densidad \(n(y)\), pero esa densidad depende a su vez del campo \(\Phi(x)\). Por tanto, el problema no es simplemente “calcular una integral”, sino cerrar un bucle de auto-consistencia:</p></div>
+<div class="formula-block">\[n \longrightarrow \Phi[n] \longrightarrow n\]</div>
+<div class="reading-block"><p>El capítulo enseña a reconocer cuándo una descripción de campo medio está bien planteada: debe haber una condición que garantice que la cantidad macroscópica calculada desde la distribución coincide con la cantidad usada para definirla.</p></div>
+<div class="reading-block"><p>El papel de la polarización \(P\) es convertir la distribución completa en una variable colectiva. No interesa cada detalle microscópico de \(n(x)\), sino si el sistema está poco o muy polarizado. Por eso \(P\) funciona como parámetro de orden: distingue estados macroscópicamente distintos.</p></div>
+<div class="reading-block"><p>La parte final analiza una condición simplificada:</p></div>
+<div class="formula-block">\[P=e^{P/\alpha}-1\]</div>
+<div class="reading-block"><p>Esta ecuación contiene el rasgo típico de una transición de fase: \(P=0\) siempre es solución, pero para ciertos valores de \(\alpha\) aparece una solución no nula. El cambio en el número y tipo de soluciones marca el punto crítico.</p></div>
+</section>
+<section class="page" id="desarrollo-completo">
+<div class="page-head"><h2>3. Desarrollo completo del capítulo</h2><span class="page-no">p.3</span></div>
+<div class="reading-block"><p>El punto de partida es un sistema unidimensional acotado. Las partículas solo pueden ocupar posiciones dentro del intervalo:</p></div>
+<div class="formula-block">\[0\le x\le L\]</div>
+<div class="reading-block"><p>El sistema no se describe mediante coordenadas individuales \(x_1,\dots,x_N\), sino mediante una densidad continua \(n(x)\). Esto supone pasar de una descripción microscópica a una descripción mesoscópica o colectiva.</p></div>
+<div class="reading-block"><p>El campo medio aparece cuando se define el potencial promedio:</p></div>
+<div class="formula-block">\[\Phi(x)=\int_0^L n(y)V(x,y)\,dy\]</div>
+<div class="reading-block"><p>Esta expresión afirma que una partícula en \(x\) siente la suma ponderada de las interacciones con partículas situadas en \(y\). La ponderación es \(n(y)\): si hay muchas partículas cerca de cierto \(y\), esa zona contribuye más al campo medio.</p></div>
+<div class="reading-block"><p>La densidad se define como</p></div>
+<div class="formula-block">\[n(x)=C e^{-\Phi(x)/\alpha}\]</div>
+<div class="reading-block"><p>La constante \(C\) no es decorativa: sirve para normalizar la densidad. Si el número total de partículas \(N\) está fijado, debe cumplirse:</p></div>
+<div class="formula-block">\[\int_0^L n(x)\,\,dx=N\]</div>
+<div class="reading-block"><p>Así, \(C\) se determina después de conocer \(\Phi\). Si se olvida esta normalización, la teoría queda incompleta.</p></div>
+<div class="reading-block"><p>La forma exponencial implica que la densidad depende del potencial promedio. Si \(\Phi(x)\) aumenta, \(n(x)\) disminuye. Por tanto, las partículas tienden a ocupar zonas de menor coste efectivo. El parámetro \(\alpha\) regula la sensibilidad: si \(\alpha\) es pequeño, pequeñas variaciones de \(\Phi\) producen grandes cambios en \(n\); si \(\alpha\) es grande, la densidad responde de manera más suave.</p></div>
+<div class="reading-block"><p>La estructura esencial es circular:</p></div>
+<div class="formula-block">\[\Phi(x)=\int n(y)V(x,y)\,dy\]</div>
+<div class="formula-block">\[n(x)=C e^{-\Phi(x)/\alpha}\]</div>
+<div class="reading-block"><p>La primera ecuación construye el campo desde la densidad. La segunda construye la densidad desde el campo. Una solución física no puede escoger ambas de forma independiente. Deben ser compatibles.</p></div>
+<div class="reading-block"><p>La polarización se introduce como</p></div>
+<div class="formula-block">\[P=\int_0^L x\,n(x)\,dx\]</div>
+<div class="reading-block"><p>Esta magnitud mide el desplazamiento medio de la distribución hacia valores grandes de \(x\). Si \(n(x)\) está concentrada cerca de \(x=0\), \(P\) es bajo. Si está concentrada cerca de \(x=L\), \(P\) es alto. Si se normaliza por \(N\), (P/N) sería la posición media.</p></div>
+<div class="reading-block"><p>La condición de consistencia para \(P\) debe tener esta forma conceptual:</p></div>
+<div class="formula-block">\[P_{\text{impuesto}}=P_{\text{calculado}}[n]\]</div>
+<div class="reading-block"><p>Es decir, si una aproximación de campo medio usa \(P\) como variable macroscópica, al calcular la distribución resultante y volver a integrar debe recuperarse el mismo \(P\). Sin esto, el campo medio sería arbitrario.</p></div>
+<div class="reading-block"><p>En el caso simplificado del enunciado:</p></div>
+<div class="formula-block">\[P=e^{P/\alpha}-1\]</div>
+<div class="reading-block"><p>La solución \(P=0\) siempre existe. Para estudiar si aparece otra solución, se comparan las pendientes en el origen. La función del lado derecho es</p></div>
+<div class="formula-block">\[f(P)=e^{P/\alpha}-1\]</div>
+<div class="reading-block"><p>y su pendiente en \(P=0\) es</p></div>
+<div class="formula-block">\[f&#x27;(0)=\frac{1}{\alpha}\]</div>
+<div class="reading-block"><p>La recta del lado izquierdo tiene pendiente (1). El punto crítico se obtiene cuando ambas pendientes coinciden:</p></div>
+<div class="formula-block">\[\frac{1}{\alpha}=1 \quad\Rightarrow\quad \alpha_c=1\]</div>
+<div class="reading-block"><p>Para \(\alpha\le 1\), no aparece solución positiva no trivial. Para \(\alpha&gt;1\), aparece una rama \(P&gt;0\). Cerca de \(\alpha=1\), expandiendo:</p></div>
+<div class="formula-block">\[e^{P/\alpha}-1\simeq \frac{P}{\alpha}+\frac{P^2}{2\alpha^2}\]</div>
+<div class="reading-block"><p>La condición queda, para \(P\neq0\),</p></div>
+<div class="formula-block">\[1\simeq \frac{1}{\alpha}+\frac{P}{2\alpha^2}\]</div>
+<div class="reading-block"><p>por tanto,</p></div>
+<div class="formula-block">\[P\simeq 2\alpha(\alpha-1)\]</div>
+<div class="reading-block"><p>Esto muestra una aparición continua de la solución no nula al cruzar \(\alpha=1\). La transición es una bifurcación de la solución de auto-consistencia.</p></div>
+<div class="reading-block"><p>Físicamente, valores bajos de \(P\) representan un sistema poco polarizado o poco desplazado espacialmente. Valores altos de \(P\) representan un sistema con mayor concentración hacia posiciones grandes del intervalo. La transición indica que, al variar \(\alpha\), el sistema puede pasar de un estado sin polarización macroscópica a uno con polarización macroscópica.</p></div>
+</section>
+<section class="page" id="conceptos-clave">
+<div class="page-head"><h2>4. Conceptos clave</h2><span class="page-no">p.4</span></div>
+<div class="grid cards-grid">
+<article class="definition-card"><h3>Campo medio</h3>
+<p>Definición: sustitución del efecto de muchas partículas por un campo promedio \(\Phi(x)\). Explicación: evita resolver todas las interacciones de pares y trabaja con una magnitud efectiva. Ejemplo: \(\Phi(x)=\int n(y)V(x,y)\,dy\). Relación: depende de \(n\), y \(n\) depende de \(\Phi\). Pregunta de examen: “Explique qué representa el potencial promedio en una teoría de campo medio.”</p>
+</article>
+<article class="definition-card"><h3>Densidad de número</h3>
+<p>Definición: número de partículas por unidad de longitud. Explicación: permite pasar de sumas discretas a integrales continuas. Ejemplo: \(N=\int_0^L n(x)\,dx\). Relación: entra en \(\Phi(x)\) y en \(P\). Pregunta de examen: “¿Por qué la constante \(C\) debe fijarse mediante normalización?”</p>
+</article>
+<article class="definition-card"><h3>Potencial de interacción</h3>
+<p>Definición: función \(V(x,y)\) que mide la interacción entre partículas situadas en \(x\) e \(y\). Explicación: es el dato microscópico que se promedia. Ejemplo: si \(V(x,y)\) crece con la distancia, las posiciones lejanas contribuyen más al campo. Relación: aparece dentro de la integral de \(\Phi\). Pregunta de examen: “Distinga \(V(x,y)\) de \(\Phi(x)\).”</p>
+</article>
+<article class="definition-card"><h3>Potencial promedio</h3>
+<p>Definición: campo efectivo creado por toda la distribución. Explicación: no es una interacción de dos partículas, sino una interacción de una partícula con el conjunto. Ejemplo: \(\Phi(x)=\int n(y)V(x,y)\,dy\). Relación: determina \(n(x)\). Pregunta de examen: “Explique por qué \(\Phi\) es un funcional de \(n\).”</p>
+</article>
+<article class="definition-card"><h3>Auto-consistencia</h3>
+<p>Definición: condición que exige que la magnitud macroscópica calculada coincida con la usada para definir el campo. Explicación: cierra el bucle \(n\to\Phi\to n\). Ejemplo: \(P=\int x n(x)\,dx\). Relación: convierte el problema en una ecuación de punto fijo. Pregunta de examen: “Explique cómo debe definirse la condición de consistencia para \(P\).”</p>
+</article>
+<article class="definition-card"><h3>Polarización</h3>
+<p>Definición: momento espacial de la densidad. Explicación: mide si la distribución está desplazada hacia valores altos de \(x\). Ejemplo: si \(n(x)\) está concentrada cerca de \(L\), \(P\) es alto. Relación: actúa como parámetro de orden. Pregunta de examen: “Interprete físicamente valores altos y bajos de \(P\).”</p>
+</article>
+<article class="definition-card"><h3>Punto fijo</h3>
+<p>Definición: solución de una ecuación \(P=F(P)\). Explicación: representa una configuración que se reproduce al aplicar la regla de campo medio. Ejemplo: \(P=e^{P/\alpha}-1\). Relación: la transición de fase se detecta estudiando cómo cambian los puntos fijos. Pregunta de examen: “Determine los puntos fijos y analice su dependencia con \(\alpha\).”</p>
+</article>
+<article class="definition-card"><h3>Parámetro crítico</h3>
+<p>Definición: valor de \(\alpha\) donde cambia cualitativamente la solución. Explicación: se obtiene comparando pendientes en el origen. Ejemplo: \(\alpha_c=1\). Relación: separa régimen no polarizado y régimen con solución polarizada. Pregunta de examen: “Determine si existe transición de fase y halle \(\alpha_c\).”</p>
+</article>
+<article class="definition-card"><h3>Transición de fase</h3>
+<p>Definición: cambio cualitativo del estado macroscópico al variar un parámetro. Explicación: aquí se manifiesta como aparición de una solución \(P&gt;0\). Ejemplo: para \(\alpha&gt;1\), la ecuación simplificada admite una solución positiva no trivial. Relación: depende de la condición de consistencia. Pregunta de examen: “Interprete físicamente la aparición de una rama no nula de \(P\).”</p>
+</article>
+</div>
+</section>
+<section class="page" id="relaciones-entre-ideas">
+<div class="page-head"><h2>5. Relaciones entre ideas</h2><span class="page-no">p.5</span></div>
+<div class="reading-block"><p>La densidad \(n(x)\) es la variable colectiva básica. A partir de ella se calcula el campo promedio \(\Phi(x)\). Ese campo vuelve a determinar la densidad mediante una ley exponencial. Por tanto, \(n\) y \(\Phi\) no son datos independientes.</p></div>
+<div class="reading-block"><p>El potencial microscópico \(V(x,y)\) está por debajo de \(\Phi(x)\). \(V\) describe interacción entre dos posiciones; \(\Phi\) describe el efecto acumulado de toda la distribución sobre una posición concreta.</p></div>
+<div class="reading-block"><p>La polarización \(P\) está por encima de \(n(x)\). Es una reducción macroscópica de la distribución. Muchas densidades distintas pueden dar valores parecidos de \(P\), pero para el análisis de fase basta seguir \(P\).</p></div>
+<div class="reading-block"><p>La condición de consistencia une los dos niveles: el nivel funcional \(n(x),\Phi(x)\) y el nivel reducido \(P\). El error típico es pensar que \(P\) se define una vez y ya está; en realidad debe comprobarse que el \(P\) calculado desde \(n\) coincide con el \(P\) que entra en la descripción media.</p></div>
+<div class="reading-block"><p>La transición de fase surge cuando la ecuación de consistencia cambia de estructura. En el ejemplo, el cambio se detecta en el origen: la pendiente de \(e^{P/\alpha}-1\) pasa por la pendiente de la recta \(P\). Esa igualdad da \(\alpha_c=1\).</p></div>
+<div class="reading-block"><p>Históricamente, el campo medio es una estrategia común en física estadística: sustituir interacciones colectivas complicadas por un campo efectivo. La ganancia es enorme: un problema de muchas partículas se convierte en una ecuación de consistencia. La pérdida es que se ignoran fluctuaciones y correlaciones locales.</p></div>
+</section>
+<section class="page" id="errores-habituales">
+<div class="page-head"><h2>6. Errores habituales</h2><span class="page-no">p.6</span></div>
+<details class="accordion accordion-error"><summary>Error 1: confundir \(V(x,y)\) con \(\Phi(x)\)</summary>
+<div class="details-body">
+<p>Está mal porque \(V\) es una interacción de par y \(\Phi\) es un promedio sobre toda la distribución. Corrección: escribir siempre \(\Phi(x)=\int n(y)V(x,y)\,dy\). Incorrecto: “\(\Phi(x)\) es el potencial entre dos partículas.” Correcto: “\(\Phi(x)\) es el potencial medio que siente una partícula en \(x\) debido a todas las demás.”</p>
+</div>
+</details>
+<details class="accordion accordion-error"><summary>Error 2: tratar \(n(x)\) como dato externo</summary>
+<div class="details-body">
+<p>Está mal porque en campo medio \(n\) depende de \(\Phi\), y \(\Phi\) depende de \(n\). Corrección: resolver el bucle de auto-consistencia. Incorrecto: “Se calcula \(\Phi\) integrando una densidad conocida.” Correcto: “La densidad y el campo deben determinarse conjuntamente.”</p>
+</div>
+</details>
+<details class="accordion accordion-error"><summary>Error 3: olvidar la constante de normalización</summary>
+<div class="details-body">
+<p>Está mal porque \(C\) fija el número total de partículas. Corrección: imponer \(\int_0^L n(x)\,\,dx=N\). Incorrecto: “\(C\) es irrelevante.” Correcto: “\(C\) asegura que la densidad tenga la normalización física adecuada.”</p>
+</div>
+</details>
+<details class="accordion accordion-error"><summary>Error 4: interpretar \(P\) como una carga eléctrica necesariamente</summary>
+<div class="details-body">
+<p>Está mal porque aquí \(P\) está definido matemáticamente como \(\int x n(x)\,dx\). Corrección: llamarlo polarización en sentido de momento espacial de la distribución. Incorrecto: “\(P\) mide carga neta.” Correcto: “\(P\) mide el sesgo espacial de la densidad.”</p>
+</div>
+</details>
+<details class="accordion accordion-error"><summary>Error 5: afirmar transición de fase sin analizar soluciones</summary>
+<div class="details-body">
+<p>Está mal porque la transición se detecta por cambio cualitativo en los puntos fijos. Corrección: resolver o analizar \(P=e^{P/\alpha}-1\). Incorrecto: “Hay transición porque aparece una exponencial.” Correcto: “Hay transición porque en \(\alpha_c=1\) aparece una rama no trivial \(P&gt;0\).”</p>
+</div>
+</details>
+<details class="accordion accordion-error"><summary>Error 6: creer que \(P=0\) deja de ser solución</summary>
+<div class="details-body">
+<p>Está mal porque \(P=0\) satisface siempre \(0=e^0-1\). Corrección: distinguir solución trivial y solución no trivial. Incorrecto: “Para \(\alpha&gt;1\), \(P=0\) desaparece.” Correcto: “Para \(\alpha&gt;1\), \(P=0\) sigue existiendo y aparece además una solución positiva.”</p>
+</div>
+</details>
+<details class="accordion accordion-error"><summary>Error 7: no comparar pendientes en el origen</summary>
+<div class="details-body">
+<p>Está mal porque el punto crítico se detecta precisamente ahí. Corrección: calcular \(f'(0)=1/\alpha\). Incorrecto: “El punto crítico se ve probando valores.” Correcto: “El punto crítico cumple \(1/\alpha=1\), luego \(\alpha_c=1\).”</p>
+</div>
+</details>
+<details class="accordion accordion-error"><summary>Error 8: leer \(\alpha\) automáticamente como temperatura física</summary>
+<div class="details-body">
+<p>Está mal porque el enunciado solo dice que \(\alpha&gt;0\). Corrección: interpretarlo como parámetro de control de la sensibilidad al potencial. Incorrecto: “Como \(\alpha\) es temperatura, al subir siempre se desordena.” Correcto: “En este modelo concreto, la rama no trivial aparece para \(\alpha&gt;1\); la interpretación física debe seguir la ecuación dada.”</p>
+</div>
+</details>
+</section>
+<section class="page" id="preguntas-orientadas-a-examen">
+<div class="page-head"><h2>7. Preguntas orientadas a examen</h2><span class="page-no">p.7</span></div>
+<div class="grid cards-grid">
+<article class="question-card"><h3>10 preguntas fáciles</h3><ol class="question-list">
+<li>¿Qué representa \(n(x)\)?</li>
+<li>¿Qué representa \(V(x,y)\)?</li>
+<li>¿Qué representa \(\Phi(x)\)?</li>
+<li>Escribe la relación entre \(n(x)\) y \(\Phi(x)\).</li>
+<li>¿Para qué sirve la constante \(C\)?</li>
+<li>¿Cómo se define la polarización \(P\)?</li>
+<li>¿Qué significa que \(P\) sea alto?</li>
+<li>¿Qué significa que \(P\) sea bajo?</li>
+<li>¿Qué es una condición de consistencia?</li>
+<li>¿Por qué el campo medio reduce un problema de muchas partículas?</li>
+</ol></article>
+<article class="question-card"><h3>10 preguntas medias</h3><ol class="question-list">
+<li>Explica por qué \(\Phi(x)\) es un funcional de \(n\).</li>
+<li>Explica el bucle \(n\to\Phi\to n\).</li>
+<li>Formula la condición de consistencia para \(P\).</li>
+<li>Determina si \(P=0\) es solución de \(P=e^{P/\alpha}-1\).</li>
+<li>Calcula la pendiente de \(e^{P/\alpha}-1\) en \(P=0\).</li>
+<li>Determina el valor crítico \(\alpha_c\).</li>
+<li>Explica qué ocurre para \(\alpha&lt;1\).</li>
+<li>Explica qué ocurre para \(\alpha&gt;1\).</li>
+<li>¿Por qué la aparición de una solución \(P&gt;0\) puede interpretarse como transición de fase?</li>
+<li>¿Qué limitación tiene una teoría de campo medio?</li>
+</ol></article>
+<article class="question-card"><h3>5 preguntas difíciles</h3><ol class="question-list">
+<li>Usa una expansión para obtener la rama no trivial de \(P\) cerca de \(\alpha=1\).</li>
+<li>Analiza gráficamente las soluciones de \(P=e^{P/\alpha}-1\).</li>
+<li>Discute si la condición \(P=e^{P/\alpha}-1\) basta para decidir estabilidad.</li>
+<li>Explica cómo se determinaría \(C\) si el número total de partículas fuese \(N\).</li>
+<li>Explica cómo cambiaría el planteamiento si el intervalo fuese simétrico \([-L,L]\).</li>
+</ol></article>
+<article class="question-card"><h3>5 preguntas de desarrollo largo</h3><ol class="question-list">
+<li>Desarrolla la construcción completa de una teoría de campo medio para el sistema del enunciado.</li>
+<li>Explica la condición de consistencia de \(P\) y su papel físico.</li>
+<li>Analiza la transición de fase asociada a \(P=e^{P/\alpha}-1\).</li>
+<li>Interpreta físicamente la polarización como parámetro de orden.</li>
+<li>Explica ventajas y límites de la aproximación de campo medio.</li>
+</ol></article>
+<article class="question-card"><h3>5 preguntas de relación entre conceptos</h3><ol class="question-list">
+<li>Relaciona \(V(x,y)\), \(\Phi(x)\) y \(n(x)\).</li>
+<li>Relaciona \(P\), auto-consistencia y punto fijo.</li>
+<li>Relaciona \(\alpha\), sensibilidad al potencial y transición de fase.</li>
+<li>Relaciona campo medio y pérdida de correlaciones microscópicas.</li>
+<li>Relaciona densidad, normalización y significado físico de \(C\).</li>
+</ol></article>
+</div>
+</section>
+<section class="page" id="respuestas-modelo">
+<div class="page-head"><h2>8. Respuestas modelo</h2><span class="page-no">p.8</span></div>
+<details class="accordion accordion-answer"><summary>Respuesta 1</summary>
+<div class="details-body">
+<p>\(n(x)\) representa la densidad de número de partículas en la posición \(x\). En una dimensión indica cuántas partículas hay por unidad de longitud.</p>
+</div>
+</details>
+<details class="accordion accordion-answer"><summary>Respuesta 2</summary>
+<div class="details-body">
+<p>\(V(x,y)\) representa el potencial de interacción entre una partícula situada en \(x\) y otra situada en \(y\).</p>
+</div>
+</details>
+<details class="accordion accordion-answer"><summary>Respuesta 3</summary>
+<div class="details-body">
+<p>\(\Phi(x)\) representa el potencial promedio que siente una partícula en \(x\) debido a la distribución completa de partículas.</p>
+</div>
+</details>
+<details class="accordion accordion-answer"><summary>Respuesta 4</summary>
+<div class="details-body">
+<p>La relación es \(n(x)=C e^{-\Phi(x)/\alpha}\), con \(\alpha&gt;0\).</p>
+</div>
+</details>
+<details class="accordion accordion-answer"><summary>Respuesta 5</summary>
+<div class="details-body">
+<p>\(C\) sirve para normalizar la densidad. Si el número total de partículas es \(N\), debe imponerse \(\int_0^L n(x)\,\,dx=N\).</p>
+</div>
+</details>
+<details class="accordion accordion-answer"><summary>Respuesta 6</summary>
+<div class="details-body">
+<p>Se define como \(P=\int_0^L x\,n(x)\,dx\).</p>
+</div>
+</details>
+<details class="accordion accordion-answer"><summary>Respuesta 7</summary>
+<div class="details-body">
+<p>Un \(P\) alto indica que la densidad está desplazada hacia valores grandes de \(x\).</p>
+</div>
+</details>
+<details class="accordion accordion-answer"><summary>Respuesta 8</summary>
+<div class="details-body">
+<p>Un \(P\) bajo indica que la densidad está poco desplazada hacia valores grandes de \(x\), o concentrada cerca de posiciones bajas.</p>
+</div>
+</details>
+<details class="accordion accordion-answer"><summary>Respuesta 9</summary>
+<div class="details-body">
+<p>Una condición de consistencia exige que la magnitud calculada desde la distribución coincida con la magnitud usada para definir el campo medio.</p>
+</div>
+</details>
+<details class="accordion accordion-answer"><summary>Respuesta 10</summary>
+<div class="details-body">
+<p>Lo reduce porque sustituye muchas interacciones individuales por un campo efectivo promedio.</p>
+</div>
+</details>
+<details class="accordion accordion-answer"><summary>Respuesta 11</summary>
+<div class="details-body">
+<p>\(\Phi(x)\) es un funcional de \(n\) porque no depende solo de \(x\), sino de toda la función \(n(y)\) a través de la integral \(\Phi(x)=\int n(y)V(x,y)\,dy\).</p>
+</div>
+</details>
+<details class="accordion accordion-answer"><summary>Respuesta 12</summary>
+<div class="details-body">
+<p>La densidad \(n\) genera el campo \(\Phi\) mediante una integral; ese campo genera de nuevo la densidad mediante una exponencial. La solución física debe cerrar ese ciclo.</p>
+</div>
+</details>
+<details class="accordion accordion-answer"><summary>Respuesta 13</summary>
+<div class="details-body">
+<p>La condición es \(P_{\text{usado}}=P_{\text{calculado}}\), con \(P_{\text{calculado}}=\int_0^L x\,n(x)\,dx\).</p>
+</div>
+</details>
+<details class="accordion accordion-answer"><summary>Respuesta 14</summary>
+<div class="details-body">
+<p>Sí. Si \(P=0\), el lado derecho vale \(e^0-1=0\). Por tanto, \(P=0\) siempre es solución.</p>
+</div>
+</details>
+<details class="accordion accordion-answer"><summary>Respuesta 15</summary>
+<div class="details-body">
+<p>La derivada de \(e^{P/\alpha}-1\) es \(\frac{1}{\alpha}e^{P/\alpha}\). En \(P=0\) vale \(1/\alpha\).</p>
+</div>
+</details>
+<details class="accordion accordion-answer"><summary>Respuesta 16</summary>
+<div class="details-body">
+<p>El valor crítico se obtiene igualando pendientes: \(1/\alpha=1\). Luego \(\alpha_c=1\).</p>
+</div>
+</details>
+<details class="accordion accordion-answer"><summary>Respuesta 17</summary>
+<div class="details-body">
+<p>Para \(\alpha&lt;1\), la pendiente inicial del lado derecho es mayor que la de la recta, pero la convexidad impide una solución positiva no trivial compatible. La solución positiva relevante no aparece.</p>
+</div>
+</details>
+<details class="accordion accordion-answer"><summary>Respuesta 18</summary>
+<div class="details-body">
+<p>Para \(\alpha&gt;1\), además de \(P=0\), aparece una solución positiva no trivial.</p>
+</div>
+</details>
+<details class="accordion accordion-answer"><summary>Respuesta 19</summary>
+<div class="details-body">
+<p>Porque el sistema pasa de tener solo solución no polarizada a admitir una solución polarizada. Cambia la estructura macroscópica de soluciones.</p>
+</div>
+</details>
+<details class="accordion accordion-answer"><summary>Respuesta 20</summary>
+<div class="details-body">
+<p>La limitación principal es que ignora fluctuaciones y correlaciones entre partículas. Sustituye el entorno real de cada partícula por un promedio.</p>
+</div>
+</details>
+<details class="accordion accordion-answer"><summary>Respuesta 21</summary>
+<div class="details-body">
+<p>Cerca de \(\alpha=1\), se expande:</p>
+<div class="formula-block">\[e^{P/\alpha}-1\simeq \frac{P}{\alpha}+\frac{P^2}{2\alpha^2}\]</div>
+<p>Igualando a \(P\) y dividiendo por \(P\neq0\):</p>
+<div class="formula-block">\[1\simeq \frac{1}{\alpha}+\frac{P}{2\alpha^2}\]</div>
+<p>De donde</p>
+<div class="formula-block">\[P\simeq 2\alpha(\alpha-1)\]</div>
+<p>La rama no trivial aparece continuamente para \(\alpha&gt;1\).</p>
+</div>
+</details>
+<details class="accordion accordion-answer"><summary>Respuesta 22</summary>
+<div class="details-body">
+<p>Gráficamente se comparan \(y=P\) y \(y=e^{P/\alpha}-1\). Ambas pasan por el origen. Si \(\alpha=1\), son tangentes en el origen. Si \(\alpha&gt;1\), aparece una segunda intersección positiva.</p>
+</div>
+</details>
+<details class="accordion accordion-answer"><summary>Respuesta 23</summary>
+<div class="details-body">
+<p>No basta completamente. La ecuación de consistencia da estados posibles, pero la estabilidad requiere una dinámica concreta o una función tipo potencial libre. Sin esa información, se puede hablar de existencia de ramas, no de estabilidad definitiva.</p>
+</div>
+</details>
+<details class="accordion accordion-answer"><summary>Respuesta 24</summary>
+<div class="details-body">
+<p>Se impone</p>
+<div class="formula-block">\[N=\int_0^L C e^{-\Phi(x)/\alpha},dx\]</div>
+<p>Por tanto,</p>
+<div class="formula-block">\[C=\frac{N}{\int_0^L e^{-\Phi(x)/\alpha},dx}\]</div>
+</div>
+</details>
+<details class="accordion accordion-answer"><summary>Respuesta 25</summary>
+<div class="details-body">
+<p>En un intervalo simétrico \([-L,L]\), una distribución simétrica puede dar \(P=0\) por cancelación entre zonas positivas y negativas. La polarización mediría ruptura de simetría izquierda-derecha. En \([0,L]\), \(P\) mide desplazamiento hacia posiciones altas, no cancelación entre signos.</p>
+</div>
+</details>
+<details class="accordion accordion-answer"><summary>Respuesta 26</summary>
+<div class="details-body">
+<p>Se define primero una densidad \(n(x)\). A partir de ella se calcula el campo medio \(\Phi(x)=\int n(y)V(x,y)\,dy\). Después se impone que la densidad compatible con ese campo tenga la forma \(n(x)=C e^{-\Phi(x)/\alpha}\). Finalmente se calcula una magnitud macroscópica, la polarización \(P=\int x n(x)\,dx\), y se exige que sea consistente con el valor usado en la descripción media.</p>
+</div>
+</details>
+<details class="accordion accordion-answer"><summary>Respuesta 27</summary>
+<div class="details-body">
+<p>La condición de consistencia impide que el campo medio sea arbitrario. Si el campo se construye suponiendo una determinada polarización, al calcular la distribución resultante debe recuperarse esa misma polarización. Matemáticamente es una ecuación de punto fijo; físicamente selecciona estados colectivos posibles.</p>
+</div>
+</details>
+<details class="accordion accordion-answer"><summary>Respuesta 28</summary>
+<div class="details-body">
+<p>La ecuación \(P=e^{P/\alpha}-1\) siempre admite \(P=0\). La aparición de una solución \(P&gt;0\) se estudia comparando pendientes en el origen. La condición crítica es \(1/\alpha=1\), luego \(\alpha_c=1\). Para \(\alpha&gt;1\) aparece una rama no trivial, aproximadamente \(P\simeq2\alpha(\alpha-1)\) cerca del punto crítico. Esto representa una transición hacia un estado polarizado.</p>
+</div>
+</details>
+<details class="accordion accordion-answer"><summary>Respuesta 29</summary>
+<div class="details-body">
+<p>\(P\) resume la distribución espacial. No describe el detalle microscópico, sino un rasgo colectivo: hacia dónde está sesgada la densidad. Por eso funciona como parámetro de orden. Si \(P\) cambia de cero o bajo a un valor alto, cambia el estado macroscópico del sistema.</p>
+</div>
+</details>
+<details class="accordion accordion-answer"><summary>Respuesta 30</summary>
+<div class="details-body">
+<p>La ventaja del campo medio es convertir un problema de muchas partículas en un problema cerrado de densidad, campo promedio y consistencia. Su límite es que sustituye el entorno real de cada partícula por un promedio, perdiendo correlaciones, fluctuaciones y posibles efectos locales importantes.</p>
+</div>
+</details>
+<details class="accordion accordion-answer"><summary>Respuesta 31</summary>
+<div class="details-body">
+<p>\(V(x,y)\) es la interacción elemental. \(\Phi(x)\) es el promedio de esa interacción sobre la densidad. \(n(x)\) es la distribución que genera \(\Phi\) y que, a la vez, depende de \(\Phi\).</p>
+</div>
+</details>
+<details class="accordion accordion-answer"><summary>Respuesta 32</summary>
+<div class="details-body">
+<p>\(P\) se calcula desde \(n(x)\). La auto-consistencia exige que ese valor coincida con el \(P\) usado en el modelo. Eso da una ecuación de punto fijo.</p>
+</div>
+</details>
+<details class="accordion accordion-answer"><summary>Respuesta 33</summary>
+<div class="details-body">
+<p>\(\alpha\) controla la sensibilidad de \(n(x)\) frente a \(\Phi(x)\). Al variar \(\alpha\), cambia la forma de la ecuación de consistencia y puede aparecer una rama polarizada.</p>
+</div>
+</details>
+<details class="accordion accordion-answer"><summary>Respuesta 34</summary>
+<div class="details-body">
+<p>El campo medio conserva una descripción colectiva sencilla, pero pierde información sobre cómo se correlacionan partículas concretas entre sí.</p>
+</div>
+</details>
+<details class="accordion accordion-answer"><summary>Respuesta 35</summary>
+<div class="details-body">
+<p>La densidad debe integrarse para dar el número total de partículas. La constante \(C\) asegura esa normalización. Sin \(C\), \(n(x)\) no tiene contenido físico completo.</p>
+</div>
+</details>
+</section>
+<section class="page" id="resumen-final-de-repaso">
+<div class="page-head"><h2>9. Resumen final de repaso</h2><span class="page-no">p.9</span></div>
+<div class="reading-block"><p>Ideas principales:</p></div>
+<div class="summary-box"><ul>
+<li>El campo medio sustituye interacciones entre muchas partículas por un potencial promedio.</li>
+<li>La densidad \(n(x)\) genera \(\Phi(x)\), y \(\Phi(x)\) genera \(n(x)\).</li>
+<li>La teoría solo está bien planteada si se impone auto-consistencia.</li>
+<li>La polarización \(P=\int x n(x)\,dx\) mide el sesgo espacial de la distribución.</li>
+<li>La ecuación \(P=e^{P/\alpha}-1\) tiene punto crítico \(\alpha_c=1\).</li>
+<li>Para \(\alpha&gt;1\), aparece una solución polarizada \(P&gt;0\).</li>
+</ul></div>
+<div class="reading-block"><p>Conceptos imprescindibles:</p></div>
+<div class="formula-block">\[\Phi(x)=\int_0^L n(y)V(x,y)\,dy\]</div>
+<div class="formula-block">\[n(x)=C e^{-\Phi(x)/\alpha}\]</div>
+<div class="formula-block">\[P=\int_0^L x\,n(x)\,dx\]</div>
+<div class="formula-block">\[P=e^{P/\alpha}-1\]</div>
+<div class="reading-block"><p>Errores que evitar:</p></div>
+<div class="summary-box"><ul>
+<li>Confundir \(V\) con \(\Phi\).</li>
+<li>Olvidar la normalización.</li>
+<li>Tratar \(n\) como dato externo.</li>
+<li>Decir “transición” sin estudiar puntos fijos.</li>
+<li>Pensar que \(P=0\) desaparece.</li>
+<li>Atribuir a \(\alpha\) una interpretación no dada por el enunciado.</li>
+</ul></div>
+</section>
+<section class="page" id="checklist-de-dominio">
+<div class="page-head"><h2>10. Checklist de dominio</h2><span class="page-no">p.10</span></div>
+<div class="checklist-box"><ul class="checklist">
+<li>Si no puedes explicar qué es \(\Phi(x)\), falta repasar potencial medio y promedio sobre densidad.</li>
+<li>Si confundes \(V(x,y)\) con \(\Phi(x)\), revisar interacción de par frente a campo efectivo.</li>
+<li>Si no puedes escribir \(n\to\Phi\to n\), falta repasar auto-consistencia.</li>
+<li>Si olvidas \(C\), revisar normalización de densidades.</li>
+<li>Si no puedes interpretar \(P=\int x n(x)\,dx\), revisar momento espacial de una distribución.</li>
+<li>Si dices que \(P=0\) no es solución, revisar la ecuación de punto fijo.</li>
+<li>Si no obtienes \(\alpha_c=1\), revisar comparación de pendientes en el origen.</li>
+<li>Si afirmas estabilidad sin dinámica o energía libre, revisar diferencia entre existencia de solución y estabilidad.</li>
+<li>Si puedes explicar por qué aparece una rama \(P&gt;0\) para \(\alpha&gt;1\), el núcleo conceptual está asentado.</li>
+<li>Si puedes redactar en 10 líneas la condición de consistencia de \(P\), el tema está preparado para examen.</li>
+</ul></div>
+</section>
+  </main>
+</div>
+</body>
+</html>
