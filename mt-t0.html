@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="light dark" />
+  <title>Mecánica Teórica — T0 — Introducción variacional y tensorial</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/icon-32.png" />
+  <link rel="icon" type="image/png" sizes="50x50" href="assets/icons/icon-50.png" />
+  <link rel="apple-touch-icon" sizes="100x100" href="assets/icons/icon-100.png" />
+  <meta name="theme-color" content="#6f42c1" />
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+  <link rel="stylesheet" href="assets/styles.css" />
+  <script defer src="assets/app.js"></script>
+</head>
+<body class="subject-mecanica-teorica">
+<div class="wrap">
+  <header class="cover">
+    <div class="top-actions">
+      <a class="back-link" href="index.html">← Volver al índice</a>
+    </div>
+    <p class="eyebrow">UNED Física · Mecánica Teórica · Tema 0</p>
+    <h1>Guía de estudio — T0 Introducción variacional y tensorial</h1>
+    <p class="subtitle">Bisagra entre Newton, Lagrange, Hamilton, simetrías, conservación y tensor de inercia.</p>
+    <div class="chips">
+      <span class="chip">UNED Física</span>
+      <span class="chip">Mecánica Teórica</span>
+      <span class="chip">MT0</span>
+      <span class="chip">MathJax</span>
+      <span class="chip">estado: maquetado</span>
+    </div>
+  </header>
+
+  <div class="toolbar no-print">
+    <nav><a href="#mapa">Mapa</a><a href="#prerrequisitos">Prerrequisitos</a><a href="#idea-central">Idea central</a><a href="#desarrollo-completo">Desarrollo</a><a href="#conceptos-clave">Conceptos</a><a href="#relaciones-entre-ideas">Relaciones</a><a href="#errores-habituales">Errores</a><a href="#preguntas-orientadas-a-examen">Preguntas</a><a href="#respuestas-modelo">Respuestas</a><a href="#resumen-final-de-repaso">Resumen</a><a href="#checklist-de-dominio">Checklist</a></nav>
+    <div class="toolbar-actions">
+      <button class="btn" onclick="printReady()">Imprimir / guardar PDF</button>
+      <button class="btn secondary" onclick="openAllDetails()">Abrir todo</button>
+      <button class="btn secondary" onclick="closeAllDetails()">Cerrar acordeones</button>
+    </div>
+  </div>
+
+  <main>
+<section class="page map-page" id="mapa">
+<div class="page-head"><h2>Mapa clicable</h2><p class="section-lead">Ruta conceptual del tema.</p></div>
+<div class="concept-map">
+  <a class="map-node" href="#prerrequisitos"><span>Prerrequisitos</span><small>Newton · energías · coordenadas · EDO · álgebra lineal</small></a>
+  <a class="map-node" href="#idea-central"><span>Idea central</span><small>cambio de lenguaje: acción, simetrías y tensores</small></a>
+  <a class="map-node" href="#desarrollo-completo"><span>Desarrollo</span><small>Newton → Lagrange → Hamilton · tensor de inercia</small></a>
+  <a class="map-node" href="#conceptos-clave"><span>Conceptos clave</span><small>acción · lagrangiano · momento conjugado · tensor</small></a>
+  <a class="map-node" href="#relaciones-entre-ideas"><span>Relaciones</span><small>jerarquías variacional y tensorial</small></a>
+  <a class="map-node" href="#errores-habituales"><span>Errores</span><small>L ≠ energía · mínima acción · matriz ≠ tensor</small></a>
+  <a class="map-node" href="#preguntas-orientadas-a-examen"><span>Examen</span><small>fáciles · medias · difíciles · desarrollo · relación</small></a>
+  <a class="map-node" href="#checklist-de-dominio"><span>Checklist</span><small>criterios para saber si T0 está asentado</small></a>
+</div>
+</section>
+
+<section class="page" id="fuente-base">
+<div class="page-head"><h2>Fuente base</h2><span class="page-no">p.0</span></div>
+<div class="reading-block"><p>Mecánica Clásica UNED, especialmente geometría de sistemas de partículas, tensor de inercia y mecánica analítica; apoyo formal en Boas para cálculo variacional y análisis tensorial; Taylor y Goldstein para formulación lagrangiana/hamiltoniana, espacio de configuración y tensor de inercia; Escors como mapa conceptual postnewtoniano: Newton → Lagrange → Hamilton → Poisson/Noether.</p></div>
+</section>
+
+<section class="page" id="prerrequisitos">
+<div class="page-head"><h2>1. Prerrequisitos mínimos</h2><span class="page-no">p.1</span></div>
+<div class="grid cards-grid">
+<article class="definition-card"><h3>Leyes de Newton</h3><p>Definición: relación entre fuerzas y aceleración mediante \(\mathbf F=m\mathbf a\).</p><p>Es necesario porque la formulación variacional no sustituye la física newtoniana en este nivel: la reformula.</p><p>Ejemplo mínimo: una partícula bajo gravedad cumple \(m\ddot z=-mg\).</p></article>
+<article class="definition-card"><h3>Energía cinética y potencial</h3><p>Definición: \(T\) mide energía asociada al movimiento; \(V\) mide energía asociada a posición o configuración.</p><p>Es necesario porque el lagrangiano elemental se construye como</p><div class="formula-block">\[L=T-V.\]</div></article>
+<article class="definition-card"><h3>Coordenadas generalizadas</h3><p>Definición: variables \(q_i\) que describen el estado configuracional mínimo de un sistema.</p><p>Es necesario porque Lagrange trabaja con coordenadas adaptadas al problema, no necesariamente cartesianas.</p><p>Ejemplo mínimo: un péndulo simple no necesita \(x,y\) independientes; basta \(\theta\).</p></article>
+<article class="definition-card"><h3>Cálculo diferencial parcial</h3><p>Definición: derivación respecto a una variable manteniendo las demás constantes.</p><p>Es necesario porque Euler-Lagrange usa \(\partial L/\partial q_i\) y \(\partial L/\partial\dot q_i\).</p><p>Ejemplo mínimo: si \(L=\frac12m\dot x^2-V(x)\), entonces \(\partial L/\partial\dot x=m\dot x\).</p></article>
+<article class="definition-card"><h3>Ecuaciones diferenciales ordinarias</h3><p>Definición: ecuaciones que relacionan una función desconocida y sus derivadas.</p><p>Es necesario porque Euler-Lagrange y Hamilton producen EDO.</p><p>Ejemplo mínimo: \(m\ddot x+kx=0\).</p></article>
+<article class="definition-card"><h3>Álgebra lineal</h3><p>Definición: estudio de vectores, matrices, autovalores, cambios de base y operadores lineales.</p><p>Es necesario porque el tensor de inercia es una matriz simétrica que relaciona \(\mathbf L\) con \(\boldsymbol\omega\).</p><p>Ejemplo mínimo: diagonalizar \(\mathbf I\) da los ejes principales.</p></article>
+<article class="definition-card"><h3>Producto escalar y vectorial</h3><p>Definición: operaciones vectoriales para proyectar, medir ángulos y construir momentos.</p><p>Es necesario porque el momento angular usa \(\mathbf r\times\mathbf p\), y el tensor de inercia aparece en rotación.</p><p>Ejemplo mínimo: \(\mathbf L=\mathbf r\times\mathbf p\).</p></article>
+<article class="definition-card"><h3>Cambio de base</h3><p>Definición: descripción de los mismos vectores mediante distintos sistemas de coordenadas.</p><p>Es necesario porque las componentes cambian, pero la entidad física no.</p><p>Ejemplo mínimo: el mismo vector puede tener componentes distintas en ejes rotados.</p></article>
+<article class="definition-card"><h3>Índices y sumatorio</h3><p>Definición: notación compacta para componentes: \(x_i\), \(I_{ij}\), \(\sum_i\).</p><p>Es necesario porque la notación tensorial exige controlar índices libres y mudos.</p><p>Ejemplo mínimo: \(L_i=I_{ij}\omega_j\).</p></article>
+</div>
+</section>
+
+<section class="page" id="idea-central">
+<div class="page-head"><h2>2. Idea central del capítulo</h2><span class="page-no">p.2</span></div>
+<div class="reading-block"><p>Este T0 no introduce todavía una teoría dinámica completa. Su función es preparar el cambio de lenguaje. La mecánica deja de presentarse como una lista de fuerzas aplicadas a cuerpos y pasa a formularse mediante estructuras: <strong>acción</strong>, <strong>lagrangiano</strong>, <strong>coordenadas generalizadas</strong>, <strong>simetrías</strong>, <strong>cantidades conservadas</strong> y <strong>operadores tensoriales</strong>.</p></div>
+<div class="reading-block"><p>La idea variacional es que la trayectoria física no se obtiene necesariamente escribiendo todas las fuerzas en cartesianas, sino imponiendo que una magnitud global asociada al movimiento, la acción, sea estacionaria:</p></div>
+<div class="formula-block">\[S=\int_{t_1}^{t_2}L(q,\dot q,t)\,dt.\]</div>
+<div class="reading-block"><p>La idea tensorial es complementaria. Algunos objetos físicos no quedan bien descritos por escalares ni por vectores. En rotación rígida, por ejemplo, \(\mathbf L\) y \(\boldsymbol\omega\) no tienen por qué ser paralelos. Entonces el “momento de inercia” deja de ser un número y se convierte en un operador lineal: el tensor de inercia. Boas lo presenta precisamente como el paso de \(I\) escalar a \(\mathbf I\).</p></div>
+<div class="reading-block"><p>El capítulo ocupa el lugar de bisagra entre Mecánica newtoniana, Mecánica analítica y formulación moderna. La UNED coloca la mecánica analítica después de cinemática, dinámica, conservación, sistemas de partículas, sólido rígido y fuerzas centrales; no es casual. Antes de usar \(L\), \(H\) o tensores, hay que saber qué sistema físico se está describiendo.</p></div>
+</section>
+
+<section class="page" id="desarrollo-completo">
+<div class="page-head"><h2>3. Desarrollo completo del capítulo</h2><span class="page-no">p.3</span></div>
+<h3 id="3-1-de-newton-a-una-formulacion-estructural">3.1. De Newton a una formulación estructural</h3>
+<div class="reading-block"><p>La formulación newtoniana parte de fuerzas. Se dibujan fuerzas, se escriben componentes, se obtiene una ecuación diferencial. Este método es directo y potente, pero puede volverse torpe cuando hay ligaduras, coordenadas no cartesianas o fuerzas de restricción desconocidas.</p></div>
+<div class="reading-block"><p>Una partícula obligada a moverse sobre un aro recibe una fuerza normal del aro. Esa fuerza existe, pero muchas veces no interesa calcularla. Lo que importa es que la partícula solo tiene un grado de libertad: el ángulo. La formulación lagrangiana permite eliminar la ligadura incorporándola en las coordenadas.</p></div>
+<div class="reading-block"><p>La consecuencia es metodológica: antes de escribir ecuaciones hay que decidir los grados de libertad. Un problema de Lagrange no empieza con fórmulas; empieza con sistema físico, coordenadas, energía cinética, energía potencial y ligaduras.</p></div>
+<h3 id="3-2-coordenadas-generalizadas-y-espacio-de-configuracion">3.2. Coordenadas generalizadas y espacio de configuración</h3>
+<div class="reading-block"><p>Un sistema con \(n\) grados de libertad se describe mediante \(q_1,\ldots,q_n\). Cada conjunto de valores define un punto del espacio de configuración. No es necesariamente el espacio físico ordinario. Para un doble péndulo, el espacio de configuración puede ser el plano \((\theta_1,\theta_2)\), aunque las masas se muevan en el espacio real.</p></div>
+<div class="reading-block"><p>Esta distinción es fundamental. La trayectoria física se convierte en una curva en el espacio de configuración. En lugar de preguntar “¿por dónde va cada partícula?”, se pregunta “¿cómo evoluciona el punto del sistema en el espacio de configuraciones?”. Goldstein explicita que la configuración instantánea se describe por coordenadas generalizadas y que el movimiento del sistema es una curva en ese espacio.</p></div>
+<div class="reading-block"><p>Ejemplo: péndulo simple. En coordenadas cartesianas hay \(x,y\), pero la cuerda impone \(x^2+y^2=l^2\). La descripción mínima es \(\theta\). El espacio de configuración es una circunferencia parametrizada por \(\theta\).</p></div>
+<h3 id="3-3-lagrangiano">3.3. Lagrangiano</h3>
+<div class="reading-block"><p>El lagrangiano elemental de sistemas conservativos es</p></div>
+<div class="formula-block">\[L(q,\dot q,t)=T(q,\dot q,t)-V(q,t).\]</div>
+<div class="reading-block"><p>No es “energía total”. Es una función generadora de ecuaciones de movimiento. Contiene la información dinámica útil del sistema. En Escors se insiste en esta lectura: la lagrangiana codifica la información necesaria para generar las ecuaciones que gobiernan el sistema físico.</p></div>
+<div class="reading-block"><p>Ejemplo: masa-muelle unidimensional.</p></div>
+<div class="formula-block">\[L=\frac12m\dot x^2-\frac12kx^2.\]</div>
+<div class="reading-block"><p>Euler-Lagrange da</p></div>
+<div class="formula-block">\[m\ddot x+kx=0.\]</div>
+<div class="reading-block"><p>La consecuencia es clara: si se escribe bien \(T\) y \(V\), la ecuación sale sola.</p></div>
+<h3 id="3-4-accion-y-principio-de-hamilton">3.4. Acción y principio de Hamilton</h3>
+<div class="formula-block">\[S[q]=\int_{t_1}^{t_2}L(q,\dot q,t)\,dt.\]</div>
+<div class="reading-block"><p>El principio de Hamilton afirma que la trayectoria real hace estacionaria la acción:</p></div>
+<div class="formula-block">\[\delta S=0.\]</div>
+<div class="reading-block"><p>“Estacionaria” no significa siempre mínima. Puede ser mínimo, máximo o punto de silla funcional. En examen, decir “mínima acción” sin matiz puede ser impreciso; mejor “acción estacionaria”.</p></div>
+<div class="reading-block"><p>Boas conecta directamente este principio con la mecánica: para un sistema de partículas, Hamilton afirma que el movimiento hace estacionaria la integral de \(L\).</p></div>
+<h3 id="3-5-ecuaciones-de-euler-lagrange">3.5. Ecuaciones de Euler-Lagrange</h3>
+<div class="reading-block"><p>De \(\delta S=0\) se obtiene</p></div>
+<div class="formula-block">\[\frac{d}{dt}\left(\frac{\partial L}{\partial \dot q_i}\right)-\frac{\partial L}{\partial q_i}=0.\]</div>
+<div class="reading-block"><p>Esta ecuación sustituye, en coordenadas generalizadas, a las ecuaciones de Newton. No aporta física nueva en el caso clásico elemental, pero sí aporta una forma más limpia de obtener ecuaciones cuando el sistema tiene ligaduras o coordenadas curvas.</p></div>
+<div class="reading-block"><p>Ejemplo: partícula bajo gravedad con \(L=\frac12m(\dot x^2+\dot y^2+\dot z^2)-mgz\). Las ecuaciones resultantes son \(m\ddot x=0\), \(m\ddot y=0\), \(m\ddot z=-mg\), equivalentes a Newton. Boas muestra explícitamente esta equivalencia.</p></div>
+<h3 id="3-6-momento-conjugado-y-coordenada-ciclica">3.6. Momento conjugado y coordenada cíclica</h3>
+<div class="formula-block">\[p_i=\frac{\partial L}{\partial \dot q_i}.\]</div>
+<div class="reading-block"><p>No siempre coincide con \(m\dot q_i\). Coincide en sistemas simples con coordenadas cartesianas, pero en coordenadas angulares o con campos puede diferir.</p></div>
+<div class="reading-block"><p>Una coordenada \(q_i\) es cíclica si \(L\) no depende explícitamente de \(q_i\). Entonces</p></div>
+<div class="formula-block">\[\frac{d}{dt}\left(\frac{\partial L}{\partial \dot q_i}\right)=0,\]</div>
+<div class="reading-block"><p>y \(p_i\) se conserva.</p></div>
+<div class="reading-block"><p>Ejemplo: si \(L\) no depende de \(\theta\), entonces \(p_\theta\) es constante. En un campo central, esa conservación suele corresponder al momento angular.</p></div>
+<h3 id="3-7-simetria-y-conservacion">3.7. Simetría y conservación</h3>
+<div class="reading-block"><p>La simetría significa invariancia de la descripción física bajo una transformación: traslación, rotación, desplazamiento temporal, etc. Noether formaliza la conexión entre simetría continua y cantidad conservada. La UNED lo introduce en Mecánica Analítica: si el lagrangiano no depende de cierta coordenada aparece una magnitud conservada, y Noether generaliza esta idea.</p></div>
+<div class="formula-block">\[\text{traslación espacial} \rightarrow \text{momento lineal},\]</div>
+<div class="formula-block">\[\text{rotación} \rightarrow \text{momento angular},\]</div>
+<div class="formula-block">\[\text{traslación temporal} \rightarrow \text{energía}.\]</div>
+<div class="reading-block"><p>Escors usa esta relación como una de las ideas centrales del curso postnewtoniano: las simetrías codificadas en la lagrangiana se relacionan con cantidades conservadas.</p></div>
+<h3 id="3-8-hamiltoniano-como-siguiente-cambio-de-lenguaje">3.8. Hamiltoniano como siguiente cambio de lenguaje</h3>
+<div class="formula-block">\[H(q,p,t)=\sum_i p_i\dot q_i-L.\]</div>
+<div class="reading-block"><p>En sistemas naturales simples suele coincidir con la energía total, pero conceptualmente es la función que genera la evolución en el espacio de fases.</p></div>
+<div class="formula-block">\[\dot q_i=\frac{\partial H}{\partial p_i},\qquad \dot p_i=-\frac{\partial H}{\partial q_i}.\]</div>
+<div class="reading-block"><p>La UNED recalca que Hamilton es matemáticamente equivalente a Lagrange, pero más simétrico y más generalizable hacia teorías de campos, mecánica estadística y cuántica.</p></div>
+<h3 id="3-9-por-que-hace-falta-lenguaje-tensorial">3.9. Por qué hace falta lenguaje tensorial</h3>
+<div class="reading-block"><p>Un escalar tiene una componente. Un vector tiene componentes que cambian con la base pero representan la misma flecha física. Un tensor de segundo orden, en mecánica elemental, puede verse como un operador lineal que transforma vectores en vectores.</p></div>
+<div class="reading-block"><p>La rotación rígida exige este lenguaje. Si el cuerpo gira alrededor de un eje principal, puede ocurrir \(\mathbf L=I\boldsymbol\omega\) con \(I\) escalar. Pero en una rotación general, \(\mathbf L\) no es paralelo a \(\boldsymbol\omega\). Entonces:</p></div>
+<div class="formula-block">\[\mathbf L=\mathbf I\,\boldsymbol\omega.\]</div>
+<div class="reading-block"><p>En componentes:</p></div>
+<div class="formula-block">\[L_i=I_{ij}\omega_j.\]</div>
+<div class="reading-block"><p>Boas explica que, si \(\mathbf L\) y \(\boldsymbol\omega\) no son paralelos, \(I\) ya no puede ser un escalar y debe reemplazarse por un tensor de segundo rango.</p></div>
+<h3 id="3-10-tensor-de-inercia">3.10. Tensor de inercia</h3>
+<div class="reading-block"><p>El tensor de inercia resume cómo está distribuida la masa respecto a los ejes. Para partículas puntuales,</p></div>
+<div class="formula-block">\[I_{ij}=\sum_a m_a\left(r_a^2\delta_{ij}-x_{a,i}x_{a,j}\right).\]</div>
+<div class="reading-block"><p>Sus términos diagonales miden resistencia a girar alrededor de ejes coordenados. Los términos no diagonales, productos de inercia, miden acoplamientos entre ejes. Si los productos de inercia no son cero, una rotación alrededor de un eje puede generar momento angular en otra dirección.</p></div>
+<div class="reading-block"><p>Goldstein presenta el tensor de inercia como un tensor de segundo rango que actúa como operador lineal entre velocidad angular y momento angular.</p></div>
+<h3 id="3-11-ejes-principales">3.11. Ejes principales</h3>
+<div class="reading-block"><p>Como el tensor de inercia de un cuerpo rígido es simétrico, puede diagonalizarse. Los autovectores son los ejes principales y los autovalores son los momentos principales.</p></div>
+<div class="formula-block">\[\mathbf I=\begin{pmatrix}I_1&0&0\\\\0&I_2&0\\\\0&0&I_3\end{pmatrix}.\]</div>
+<div class="formula-block">\[L_1=I_1\omega_1,\quad L_2=I_2\omega_2,\quad L_3=I_3\omega_3.\]</div>
+<div class="reading-block"><p>La consecuencia física es fuerte: elegir ejes principales elimina acoplamientos y simplifica la rotación.</p></div>
+<h3 id="3-12-union-de-lo-variacional-y-lo-tensorial">3.12. Unión de lo variacional y lo tensorial</h3>
+<div class="reading-block"><p>La conexión profunda es que ambos lenguajes eliminan mala elección de coordenadas. El variacional permite elegir coordenadas adaptadas a ligaduras. El tensorial permite cambiar de base sin cambiar la entidad física. Ambos son antídotos contra el cálculo ciego en componentes.</p></div>
+<div class="reading-block"><p>En problemas de oscilaciones pequeñas, esta unión reaparece: se escribe una lagrangiana cuadrática, aparecen matrices de masa y rigidez, y el problema se reduce a autovalores. Por eso este T0 prepara también Vibraciones y Ondas y Mecánica Teórica.</p></div>
+</section>
+
+<section class="page" id="conceptos-clave">
+<div class="page-head"><h2>4. Conceptos clave</h2><span class="page-no">p.4</span></div>
+<div class="grid cards-grid">
+<article class="definition-card"><h3>Acción</h3><p>Definición: funcional \(S[q]=\int L\,dt\).</p><p>Explicación: asigna un número a una trayectoria completa.</p><p>Ejemplo: para una partícula libre, \(S=\int \frac12m\dot x^2dt\).</p><p>Relación: su estacionariedad produce Euler-Lagrange.</p><p>Examen: “Explique qué significa \(\delta S=0\)”.</p></article>
+<article class="definition-card"><h3>Lagrangiano</h3><p>Definición: función \(L(q,\dot q,t)\), normalmente \(T-V\).</p><p>Explicación: codifica la dinámica en coordenadas generalizadas.</p><p>Ejemplo: \(L=\frac12m\dot x^2-\frac12kx^2\).</p><p>Relación: se integra para formar la acción.</p><p>Examen: “Construya el lagrangiano de un péndulo”.</p></article>
+<article class="definition-card"><h3>Coordenada generalizada</h3><p>Definición: variable mínima que describe un grado de libertad.</p><p>Explicación: no tiene por qué ser una coordenada espacial directa.</p><p>Ejemplo: \(\theta\) en un péndulo.</p><p>Relación: define el espacio de configuración.</p><p>Examen: “Identifique los grados de libertad del sistema”.</p></article>
+<article class="definition-card"><h3>Ligadura</h3><p>Definición: restricción sobre posiciones o velocidades.</p><p>Explicación: reduce grados de libertad o impone relaciones entre coordenadas.</p><p>Ejemplo: \(x^2+y^2=l^2\) en un péndulo.</p><p>Relación: Lagrange permite incorporarla eligiendo coordenadas adecuadas.</p><p>Examen: “Explique por qué una cuenta en un aro tiene un grado de libertad”.</p></article>
+<article class="definition-card"><h3>Euler-Lagrange</h3><p>Definición: ecuación</p><div class="formula-block">\[\frac{d}{dt}\frac{\partial L}{\partial\dot q_i}-\frac{\partial L}{\partial q_i}=0.\]</div><p>Ejemplo: masa-muelle.</p><p>Relación: conecta cálculo variacional y dinámica.</p><p>Examen: “Derive la ecuación de movimiento a partir de \(L\)”.</p></article>
+<article class="definition-card"><h3>Momento conjugado</h3><p>Definición: \(p_i=\partial L/\partial\dot q_i\).</p><p>Explicación: cantidad asociada a la velocidad generalizada.</p><p>Ejemplo: en polar, \(p_\theta=mr^2\dot\theta\).</p><p>Relación: si \(q_i\) es cíclica, \(p_i\) se conserva.</p><p>Examen: “Calcule el momento conjugado de \(\theta\)”.</p></article>
+<article class="definition-card"><h3>Coordenada cíclica</h3><p>Definición: coordenada que no aparece explícitamente en \(L\).</p><p>Explicación: implica conservación de su momento conjugado.</p><p>Ejemplo: ángulo en potencial central.</p><p>Relación: caso operativo de simetría.</p><p>Examen: “Detecte cantidades conservadas”.</p></article>
+<article class="definition-card"><h3>Simetría</h3><p>Definición: transformación que deja invariante la física del sistema.</p><p>Explicación: revela qué magnitudes no cambian.</p><p>Ejemplo: invariancia por rotación en campo central.</p><p>Relación: Noether.</p><p>Examen: “Relacione simetría de rotación y momento angular”.</p></article>
+<article class="definition-card"><h3>Hamiltoniano</h3><p>Definición: \(H=\sum_i p_i\dot q_i-L\).</p><p>Explicación: función generadora de la evolución en espacio de fases.</p><p>Ejemplo: masa-muelle: \(H=p^2/(2m)+kx^2/2\).</p><p>Relación: pasa de \((q,\dot q)\) a \((q,p)\).</p><p>Examen: “Obtenga \(H\) a partir de \(L\)”.</p></article>
+<article class="definition-card"><h3>Espacio de fases</h3><p>Definición: espacio de variables \((q_i,p_i)\).</p><p>Explicación: cada punto representa estado dinámico completo.</p><p>Ejemplo: oscilador: plano \((q,p)\).</p><p>Relación: Hamilton y Liouville.</p><p>Examen: “Diferencie espacio de configuración y espacio de fases”.</p></article>
+<article class="definition-card"><h3>Tensor</h3><p>Definición: objeto multilineal cuyas componentes transforman de forma controlada bajo cambios de base.</p><p>Explicación: en mecánica básica, un tensor de segundo orden puede entenderse como operador que transforma vectores en vectores.</p><p>Ejemplo: tensor de inercia.</p><p>Relación: permite escribir leyes independientes de la base.</p><p>Examen: “Explique por qué el tensor de inercia no es un escalar”.</p></article>
+<article class="definition-card"><h3>Tensor de inercia</h3><p>Definición: tensor \(I_{ij}\) que relaciona \(\mathbf L\) y \(\boldsymbol\omega\).</p><p>Explicación: contiene distribución geométrica de masa.</p><p>Ejemplo: \(I_{ij}=\sum_a m_a(r_a^2\delta_{ij}-x_{a,i}x_{a,j})\).</p><p>Relación: sólido rígido, diagonalización, ejes principales.</p><p>Examen: “Calcule el tensor de inercia de un sistema de partículas”.</p></article>
+<article class="definition-card"><h3>Ejes principales</h3><p>Definición: autovectores del tensor de inercia.</p><p>Explicación: ejes donde el tensor queda diagonal.</p><p>Ejemplo: ejes de simetría de un cilindro homogéneo.</p><p>Relación: autovalores = momentos principales.</p><p>Examen: “Obtenga momentos principales”.</p></article>
+</div>
+</section>
+
+<section class="page" id="relaciones-entre-ideas">
+<div class="page-head"><h2>5. Relaciones entre ideas</h2><span class="page-no">p.5</span></div>
+<div class="reading-block"><p>La jerarquía conceptual es:</p></div>
+<div class="formula-block">\[\text{Newton} \rightarrow \text{coordenadas generalizadas} \rightarrow L \rightarrow S \rightarrow \delta S=0 \rightarrow \text{Euler-Lagrange}.\]</div>
+<div class="reading-block"><p>Newton da la dinámica local. Lagrange la reformula como problema de trayectoria estacionaria. Hamilton la reformula de nuevo como flujo en espacio de fases.</p></div>
+<div class="reading-block"><p>La cadena tensorial es:</p></div>
+<div class="formula-block">\[\text{rotación} \rightarrow \boldsymbol\omega \rightarrow \mathbf L \rightarrow \mathbf I \rightarrow \text{ejes principales}.\]</div>
+<div class="reading-block"><p>El momento de inercia escalar es solo un caso especial. El caso general exige tensor.</p></div>
+<div class="reading-block"><p>La relación central entre variacional y tensorial es la invariancia. En Lagrange, las ecuaciones mantienen su forma bajo cambios de coordenadas generalizadas. En tensores, la entidad física se conserva aunque cambien sus componentes. Ambas ideas fuerzan a separar física de representación.</p></div>
+<div class="reading-block"><p>Oposición importante: componente no es objeto. Una componente de un vector o tensor depende de la base. El objeto físico no. Error típico: creer que si cambia la matriz, cambia el sistema físico. No cambia el cuerpo; cambia la base.</p></div>
+<div class="reading-block"><p>Otra oposición: mínimo no es estacionario. El principio correcto en este nivel es acción estacionaria. Decir “mínima acción” puede ser tolerable informalmente, pero formalmente incompleto.</p></div>
+<div class="reading-block"><p>Evolución histórica mínima: Newton formula fuerzas y movimiento; Lagrange reescribe la dinámica mediante coordenadas y energía; Hamilton pasa a espacio de fases; Noether conecta simetrías y conservación; el lenguaje tensorial permite expresar leyes físicas sin quedar atado a componentes particulares. Escors presenta este salto como el paso postnewtoniano que prepara física moderna.</p></div>
+</section>
+
+<section class="page" id="errores-habituales">
+<div class="page-head"><h2>6. Errores habituales</h2><span class="page-no">p.6</span></div>
+<details class="accordion" open><summary>Error 1: creer que \(L\) es la energía total</summary><p>Está mal porque \(L=T-V\), mientras que en sistemas simples \(E=T+V\). Corrección: \(L\) genera ecuaciones; \(H\) suele coincidir con energía.</p><p>Incorrecta: “El lagrangiano del muelle es \(T+V\)”. Correcta: “El lagrangiano es \(T-V\)”.</p></details>
+<details class="accordion"><summary>Error 2: decir siempre “mínima acción”</summary><p>Está mal porque la condición general es estacionariedad. Corrección: usar \(\delta S=0\). Incorrecta: “La trayectoria real minimiza siempre la acción”. Correcta: “La trayectoria real hace estacionaria la acción”.</p></details>
+<details class="accordion"><summary>Error 3: usar demasiadas coordenadas</summary><p>Está mal porque las ligaduras deben reducir grados de libertad. Corrección: elegir coordenadas independientes. Incorrecta: péndulo con \(x,y\) sin imponer cuerda. Correcta: péndulo descrito por \(\theta\).</p></details>
+<details class="accordion"><summary>Error 4: confundir momento conjugado con momento lineal</summary><p>Está mal porque \(p_i=\partial L/\partial\dot q_i\) depende de la coordenada. Corrección: calcularlo siempre desde \(L\). Incorrecta: “\(p_i=m\dot q_i\) siempre”. Correcta: “\(p_i=\partial L/\partial\dot q_i\)”.</p></details>
+<details class="accordion"><summary>Error 5: creer que coordenada cíclica significa coordenada constante</summary><p>Está mal porque lo constante es el momento conjugado, no la coordenada. Corrección: si \(\partial L/\partial q_i=0\), entonces \(p_i=\text{cte}\). Incorrecta: “\(\theta\) no aparece, luego \(\theta\) es constante”. Correcta: “\(\theta\) no aparece, luego \(p_\theta\) es constante”.</p></details>
+<details class="accordion"><summary>Error 6: tratar el tensor de inercia como un número</summary><p>Está mal en rotación general. Corrección: usar \(\mathbf L=\mathbf I\boldsymbol\omega\). Incorrecta: “Siempre \(L=I\omega\) con \(I\) escalar”. Correcta: “Solo en eje principal o simetría adecuada puede reducirse a escalar”.</p></details>
+<details class="accordion"><summary>Error 7: confundir matriz con tensor</summary><p>Está mal porque una matriz puede representar muchas cosas; un tensor tiene ley de transformación. Corrección: un tensor es el objeto; la matriz son sus componentes en una base. Incorrecta: “El tensor cambia al girar los ejes”. Correcta: “Cambian sus componentes; el tensor físico es el mismo”.</p></details>
+<details class="accordion"><summary>Error 8: diagonalizar sin interpretar</summary><p>Está mal porque los autovectores tienen significado físico. Corrección: autovectores = ejes principales; autovalores = momentos principales. Incorrecta: “Diagonalizo y ya está”. Correcta: “La base diagonal elimina productos de inercia”.</p></details>
+<details class="accordion"><summary>Error 9: no separar espacio de configuración y espacio físico</summary><p>Está mal porque las coordenadas generalizadas pueden no ser posiciones reales. Corrección: cada punto del espacio de configuración representa una configuración completa. Incorrecta: “El doble péndulo se mueve en el plano \((\theta_1,\theta_2)\)”. Correcta: “Su estado configuracional se representa en el plano \((\theta_1,\theta_2)\)”.</p></details>
+<details class="accordion"><summary>Error 10: empezar problemas variacionales por la ecuación final</summary><p>Está mal porque el núcleo está en construir \(L\). Corrección: grados de libertad → coordenadas → \(T\) → \(V\) → \(L\) → Euler-Lagrange. Incorrecta: escribir Euler-Lagrange antes de definir coordenadas. Correcta: definir primero el sistema y sus variables independientes.</p></details>
+</section>
+
+<section class="page" id="preguntas-orientadas-a-examen">
+<div class="page-head"><h2>7. Preguntas orientadas a examen</h2><span class="page-no">p.7</span></div>
+<div class="grid cards-grid">
+<article class="question-card"><h3>10 preguntas fáciles</h3><ol class="question-list"><li>¿Qué es una coordenada generalizada?</li><li>¿Qué diferencia hay entre \(T\), \(V\) y \(L\)?</li><li>Escribe la acción de un sistema lagrangiano.</li><li>¿Qué significa que \(\delta S=0\)?</li><li>Escribe las ecuaciones de Euler-Lagrange.</li><li>Define momento conjugado.</li><li>¿Qué es una coordenada cíclica?</li><li>¿Qué es un tensor de segundo orden en mecánica básica?</li><li>¿Qué relaciona el tensor de inercia?</li><li>¿Qué son los ejes principales?</li></ol></article>
+<article class="question-card"><h3>10 preguntas medias</h3><ol class="question-list" start="11"><li>Explica por qué Lagrange es útil en sistemas con ligaduras.</li><li>Construye el lagrangiano de un oscilador armónico.</li><li>Obtén la ecuación de movimiento del oscilador desde Euler-Lagrange.</li><li>Explica por qué \(p_\theta\) se conserva si \(\theta\) no aparece en \(L\).</li><li>Diferencia espacio de configuración y espacio de fases.</li><li>Explica por qué \(\mathbf L\) y \(\boldsymbol\omega\) no tienen por qué ser paralelos.</li><li>¿Por qué el tensor de inercia es diagonalizable en ejes principales?</li><li>Relaciona simetría de traslación y conservación del momento lineal.</li><li>Relaciona simetría de rotación y conservación del momento angular.</li><li>¿Cuándo coincide el hamiltoniano con la energía total?</li></ol></article>
+<article class="question-card"><h3>5 preguntas difíciles</h3><ol class="question-list" start="21"><li>Explica por qué el principio variacional no añade física nueva respecto a Newton en sistemas clásicos simples, pero sí cambia la potencia formal del método.</li><li>Para una partícula en coordenadas polares con \(V(r)\), identifica cantidades conservadas.</li><li>Justifica por qué el tensor de inercia contiene información geométrica de la distribución de masa.</li><li>Explica la diferencia entre una transformación de coordenadas y una simetría física.</li><li>Explica por qué una coordenada cíclica es un caso particular de Noether.</li></ol></article>
+<article class="question-card"><h3>5 preguntas de desarrollo largo</h3><ol class="question-list" start="26"><li>Desarrolla el paso de Newton a Lagrange: limitaciones de \(\mathbf F=m\mathbf a\), ligaduras, coordenadas generalizadas, acción y Euler-Lagrange.</li><li>Explica el principio de Hamilton y su relación con las ecuaciones de Euler-Lagrange.</li><li>Desarrolla el concepto de tensor de inercia desde la rotación alrededor de eje fijo hasta la rotación general.</li><li>Explica la relación entre simetrías, coordenadas cíclicas y cantidades conservadas.</li><li>Compara formulación lagrangiana y hamiltoniana.</li></ol></article>
+<article class="question-card"><h3>5 preguntas de relación entre conceptos</h3><ol class="question-list" start="31"><li>Relaciona acción, lagrangiano y Euler-Lagrange.</li><li>Relaciona tensor de inercia, autovalores y ejes principales.</li><li>Relaciona coordenadas generalizadas, ligaduras y grados de libertad.</li><li>Relaciona Noether, simetría y conservación.</li><li>Relaciona espacio de configuración, espacio de fases y evolución temporal.</li></ol></article>
+</div>
+</section>
+
+<section class="page" id="respuestas-modelo">
+<div class="page-head"><h2>8. Respuestas modelo</h2><span class="page-no">p.8</span></div>
+<details class="accordion" open><summary>Respuestas 1–10</summary><ol class="question-list"><li>Una coordenada generalizada es una variable independiente que describe un grado de libertad del sistema. Puede ser una distancia, un ángulo u otra variable adaptada a la ligadura.</li><li>\(T\) es energía cinética, \(V\) energía potencial y \(L\) es el lagrangiano. \(L\) no es la energía total; es la función que genera las ecuaciones de movimiento.</li><li>La acción es <div class="formula-block">\[S[q]=\int_{t_1}^{t_2}L(q,\dot q,t)\,dt.\]</div></li><li>Significa que, para pequeñas variaciones admisibles de la trayectoria con extremos fijos, la primera variación de la acción se anula. La trayectoria real es estacionaria.</li><li><div class="formula-block">\[\frac{d}{dt}\left(\frac{\partial L}{\partial\dot q_i}\right)-\frac{\partial L}{\partial q_i}=0.\]</div></li><li>El momento conjugado de \(q_i\) es <div class="formula-block">\[p_i=\frac{\partial L}{\partial\dot q_i}.\]</div></li><li>Una coordenada cíclica es una coordenada que no aparece explícitamente en \(L\). Su momento conjugado se conserva.</li><li>En mecánica básica, un tensor de segundo orden puede entenderse como un operador lineal que transforma vectores en vectores y cuyas componentes dependen de la base.</li><li>Relaciona la velocidad angular con el momento angular: <div class="formula-block">\[L_i=I_{ij}\omega_j.\]</div></li><li>Son las direcciones propias del tensor de inercia. En esa base, el tensor queda diagonal y sus autovalores son los momentos principales.</li></ol></details>
+<details class="accordion"><summary>Respuestas 11–20</summary><ol class="question-list" start="11"><li>Porque las ligaduras introducen fuerzas desconocidas o incómodas. Al elegir coordenadas compatibles con la restricción, esas fuerzas pueden desaparecer del planteamiento dinámico.</li><li>Para una masa \(m\) unida a un muelle \(k\): <div class="formula-block">\[T=\frac12m\dot x^2,\qquad V=\frac12kx^2,\qquad L=T-V=\frac12m\dot x^2-\frac12kx^2.\]</div></li><li><div class="formula-block">\[\frac{\partial L}{\partial\dot x}=m\dot x,\qquad \frac{d}{dt}\frac{\partial L}{\partial\dot x}=m\ddot x,\qquad \frac{\partial L}{\partial x}=-kx,\]</div><div class="formula-block">\[m\ddot x+kx=0.\]</div></li><li>Si \(L\) no depende de \(\theta\), entonces \(\partial L/\partial\theta=0\). Euler-Lagrange da <div class="formula-block">\[\frac{d}{dt}\left(\frac{\partial L}{\partial\dot\theta}\right)=0,\]</div> por tanto \(p_\theta\) es constante.</li><li>El espacio de configuración usa coordenadas \(q_i\) y describe configuraciones. El espacio de fases usa \((q_i,p_i)\) y describe estados dinámicos completos.</li><li>En un sólido rígido general, la distribución de masa no es isotrópica respecto a cualquier eje. Por eso el operador que transforma \(\boldsymbol\omega\) en \(\mathbf L\) puede cambiar la dirección.</li><li>Porque el tensor de inercia es simétrico para cuerpos mecánicos ordinarios. Las matrices reales simétricas admiten una base ortogonal de autovectores.</li><li>Si el lagrangiano no cambia al trasladar el sistema, el espacio es homogéneo para ese sistema. La cantidad conservada asociada es el momento lineal.</li><li>Si el lagrangiano no cambia bajo rotaciones, no hay dirección privilegiada. La cantidad conservada asociada es el momento angular.</li><li>Coincide con la energía total cuando el sistema es natural, las ligaduras no dependen explícitamente del tiempo y el potencial no depende de velocidades ni del tiempo.</li></ol></details>
+<details class="accordion"><summary>Respuestas 21–35</summary><ol class="question-list" start="21"><li>En sistemas clásicos simples, Newton y Lagrange conducen a las mismas ecuaciones. La ventaja de Lagrange no es añadir otra física, sino reformularla en un lenguaje más flexible: coordenadas generalizadas, ligaduras, simetrías y transición natural a Hamilton, campos y cuántica.</li><li><div class="formula-block">\[L=\frac12m(\dot r^2+r^2\dot\theta^2)-V(r).\]</div> Como \(\theta\) no aparece explícitamente, \(p_\theta=mr^2\dot\theta\) se conserva.</li><li>Cada componente \(I_{ij}\) depende de las posiciones de las masas respecto a los ejes. Por eso el tensor no solo mide “cuánta masa hay”, sino cómo está distribuida geométricamente respecto a las posibles rotaciones.</li><li>Una transformación de coordenadas puede ser solo un cambio de descripción. Una simetría física es una transformación que deja invariante el sistema físico y produce una conservación asociada.</li><li>Si una coordenada es cíclica, desplazarla no cambia \(L\). Esa invariancia continua implica conservación de su momento conjugado. Eso es un caso elemental del teorema de Noether.</li><li>Newton empieza por \(\mathbf F=m\mathbf a\). En sistemas con ligaduras esto puede ser incómodo porque aparecen fuerzas de restricción desconocidas. Lagrange cambia el punto de partida: se eligen coordenadas generalizadas independientes, se construyen \(T\), \(V\), \(L\), se define la acción \(S\) y se impone \(\delta S=0\). El resultado son las ecuaciones de Euler-Lagrange, equivalentes a Newton pero mejor adaptadas a coordenadas no cartesianas y restricciones.</li><li>El principio de Hamilton afirma que la trayectoria física entre dos instantes hace estacionaria la acción. Al variar la trayectoria con extremos fijos, integrar por partes y exigir que la variación sea arbitraria, aparece la ecuación de Euler-Lagrange. Así, una condición global sobre una trayectoria se convierte en ecuaciones diferenciales locales.</li><li>En rotación alrededor de un eje fijo y principal puede usarse \(L=I\omega\) con \(I\) escalar. En rotación general, \(\mathbf L\) y \(\boldsymbol\omega\) pueden no ser paralelos. Entonces \(I\) debe ser un tensor: \(\mathbf L=\mathbf I\boldsymbol\omega\). Sus componentes dependen de la distribución de masa. Al diagonalizarlo se obtienen ejes principales y momentos principales.</li><li>Una simetría es una transformación que deja invariante el lagrangiano. Si la transformación corresponde a desplazar una coordenada que no aparece en \(L\), esa coordenada es cíclica y su momento conjugado se conserva. Noether generaliza esta relación: toda simetría continua implica una cantidad conservada.</li><li>Lagrange trabaja con \((q,\dot q)\) y produce ecuaciones de segundo orden. Hamilton trabaja con \((q,p)\) y produce ecuaciones de primer orden. Lagrange suele ser más directo para construir problemas mecánicos; Hamilton es más simétrico, más geométrico y prepara espacio de fases, Poisson, Liouville, mecánica estadística y cuántica.</li><li>El lagrangiano \(L\) se integra en el tiempo para formar la acción \(S\). La condición \(\delta S=0\) aplicada a variaciones admisibles produce las ecuaciones de Euler-Lagrange.</li><li>El tensor de inercia es una matriz simétrica. Sus autovectores son ejes principales y sus autovalores son momentos principales. En esa base, la relación entre \(\mathbf L\) y \(\boldsymbol\omega\) se desacopla.</li><li>Las ligaduras reducen los grados de libertad. Las coordenadas generalizadas deben elegirse para describir solo los grados independientes. Así se evita introducir fuerzas de ligadura innecesarias.</li><li>Noether establece que una simetría continua del lagrangiano genera una cantidad conservada. Traslación espacial: momento lineal. Rotación: momento angular. Traslación temporal: energía.</li><li>El espacio de configuración contiene posiciones generalizadas \(q_i\). El espacio de fases contiene \((q_i,p_i)\). En Lagrange la evolución aparece como curva en configuración; en Hamilton aparece como flujo en espacio de fases.</li></ol></details>
+</section>
+
+<section class="page" id="resumen-final-de-repaso">
+<div class="page-head"><h2>9. Resumen final de repaso</h2><span class="page-no">p.9</span></div>
+<div class="summary-box"><h3>Ideas principales</h3><ul class="question-list"><li>Newton describe fuerzas; Lagrange reformula mediante \(L\).</li><li>La acción es \(S=\int Ldt\).</li><li>La trayectoria real cumple \(\delta S=0\).</li><li>Euler-Lagrange da las ecuaciones de movimiento.</li><li>Coordenada cíclica implica momento conjugado conservado.</li><li>Simetría continua implica conservación.</li><li>Hamilton pasa de \((q,\dot q)\) a \((q,p)\).</li><li>Tensor no es matriz “sin más”: es objeto físico con ley de transformación.</li><li>Tensor de inercia relaciona \(\mathbf L\) y \(\boldsymbol\omega\).</li><li>Ejes principales diagonalizan el tensor de inercia.</li></ul></div>
+<div class="formula-block">\[L=T-V,\qquad S=\int Ldt,\]</div>
+<div class="formula-block">\[\frac{d}{dt}\left(\frac{\partial L}{\partial\dot q_i}\right)-\frac{\partial L}{\partial q_i}=0,\qquad p_i=\frac{\partial L}{\partial\dot q_i},\]</div>
+<div class="formula-block">\[H=\sum_i p_i\dot q_i-L,\qquad L_i=I_{ij}\omega_j.\]</div>
+<div class="summary-box"><h3>Relaciones clave</h3><ul class="question-list"><li>\(\text{ligadura} \rightarrow \text{menos grados de libertad} \rightarrow \text{coordenadas generalizadas}\).</li><li>\(\text{coordenada cíclica} \rightarrow \text{momento conjugado conservado}\).</li><li>\(\text{simetría} \rightarrow \text{conservación}\).</li><li>\(\text{tensor de inercia} \rightarrow \text{autovalores} \rightarrow \text{momentos principales}\).</li></ul></div>
+<div class="summary-box"><h3>Errores que evitar</h3><ul class="question-list"><li>Confundir \(L\) con energía.</li><li>Decir “mínima acción” sin matiz.</li><li>Usar coordenadas redundantes.</li><li>Confundir momento conjugado con momento lineal.</li><li>Tratar siempre \(I\) como escalar.</li><li>Diagonalizar sin interpretar físicamente.</li><li>Confundir cambio de coordenadas con simetría.</li></ul></div>
+</section>
+
+<section class="page" id="checklist-de-dominio">
+<div class="page-head"><h2>10. Checklist de dominio</h2><span class="page-no">p.10</span></div>
+<div class="checklist-box"><ul class="question-list"><li>Si no puedes explicar por qué \(L\) no es energía total, falta repasar lagrangiano y hamiltoniano.</li><li>Si no puedes construir \(T\) y \(V\) de un sistema simple, falta repasar Mecánica básica.</li><li>Si no puedes pasar de \(\delta S=0\) a Euler-Lagrange, falta repasar cálculo variacional.</li><li>Si no puedes identificar grados de libertad, falta repasar ligaduras.</li><li>Si confundes coordenada cíclica con coordenada constante, revisar momento conjugado.</li><li>Si confundes \(p_i\) con \(m\dot q_i\), revisar definición formal de momento conjugado.</li><li>Si no puedes explicar \(\delta S=0\), falta repasar acción estacionaria.</li><li>Si no puedes distinguir espacio de configuración y espacio de fases, falta repasar Lagrange frente a Hamilton.</li><li>Si no puedes explicar por qué \(\mathbf L\) y \(\boldsymbol\omega\) pueden no ser paralelos, falta repasar tensor de inercia.</li><li>Si confundes matriz y tensor, revisar cambio de base y ley de transformación.</li><li>Si no sabes interpretar autovalores del tensor de inercia, revisar ejes principales.</li><li>Si puedes construir \(L\), obtener Euler-Lagrange, detectar coordenadas cíclicas y explicar \(\mathbf L=\mathbf I\boldsymbol\omega\), T0 está suficientemente asentado.</li></ul></div>
+<p class="section-lead">Confianza: Alta.</p>
+</section>
+  </main>
+</div>
+</body>
+</html>
