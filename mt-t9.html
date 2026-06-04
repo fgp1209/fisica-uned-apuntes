@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="light dark" />
+  <title>Mecánica Teórica — T9 — Medios continuos y campos</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/icon-32.png" />
+  <link rel="icon" type="image/png" sizes="50x50" href="assets/icons/icon-50.png" />
+  <link rel="apple-touch-icon" sizes="100x100" href="assets/icons/icon-100.png" />
+  <meta name="theme-color" content="#6f42c1" />
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+  <link rel="stylesheet" href="assets/styles.css" />
+  <script defer src="assets/app.js"></script>
+</head>
+<body class="subject-mecanica-teorica">
+<div class="wrap">
+  <header class="cover">
+    <div class="top-actions"><a class="back-link" href="index.html">← Volver al índice</a></div>
+    <p class="eyebrow">UNED Física · Mecánica Teórica · Tema 9</p>
+    <h1>Guía de estudio — Goldstein / Mecánica Teórica: medios continuos y campos</h1>
+    <p class="subtitle">Del sistema discreto al continuo: densidad lagrangiana, Euler-Lagrange de campo, tensor energía-momento, formulación hamiltoniana, covariancia y Noether.</p>
+    <div class="chips">
+      <span class="chip">UNED Física</span><span class="chip">Mecánica Teórica</span><span class="chip">MT9</span><span class="chip">Goldstein cap. 13</span><span class="chip">MathJax</span><span class="chip">estado: maquetado</span>
+    </div>
+  </header>
+
+  <div class="toolbar no-print">
+    <nav>
+      <a href="#mapa">Mapa</a><a href="#prerrequisitos-minimos">Prerrequisitos</a><a href="#idea-central-del-capitulo">Idea central</a><a href="#desarrollo-completo-del-capitulo">Desarrollo</a><a href="#conceptos-clave">Conceptos</a><a href="#relaciones-entre-ideas">Relaciones</a><a href="#errores-habituales">Errores</a>
+    </nav>
+    <div class="toolbar-actions"><button class="btn" onclick="printReady()">Imprimir / guardar PDF</button></div>
+  </div>
+
+  <main>
+    <section class="page map-page" id="mapa">
+      <div class="page-head"><h2>Mapa clicable</h2><p class="section-lead">Ruta conceptual del tema.</p></div>
+      <div class="concept-map">
+        <a class="map-node" href="#prerrequisitos-minimos"><span>Prerrequisitos</span><small>Hamilton · Euler-Lagrange · densidades · campos</small></a>
+        <a class="map-node" href="#idea-central-del-capitulo"><span>Idea central</span><small>del discreto al continuo</small></a>
+        <a class="map-node" href="#desarrollo-completo-del-capitulo"><span>Desarrollo</span><small>continuo · acción · EL de campo · tensor · Hamilton · Noether</small></a>
+        <a class="map-node" href="#conceptos-clave"><span>Conceptos clave</span><small>campo clásico · densidades · tensor energía-momento · covariancia</small></a>
+        <a class="map-node" href="#relaciones-entre-ideas"><span>Relaciones</span><small>acción → ecuaciones · simetrías → conservación</small></a>
+        <a class="map-node" href="#errores-habituales"><span>Errores habituales</span><small>campo vs coordenada · L vs densidad</small></a>
+      </div>
+    </section>
+
+    <section class="page" id="fuente-base">
+      <div class="page-head"><h2>Fuente base</h2><span class="page-no">p.0</span></div>
+      <div class="reading-block"><p>Fuente principal: Goldstein, capítulo 13, “Introduction to the Lagrangian and Hamiltonian Formulations for Continuous Systems and Fields”, que cubre transición discreto-continuo, formulación lagrangiana, tensor energía-momento, formulación hamiltoniana, campos relativistas, ejemplos y Noether. Validación UNED: los exámenes de Mecánica Teórica incluyen explícitamente el bloque “Medios continuos”, con densidad lagrangiana, ecuaciones de Euler-Lagrange de campo, densidad hamiltoniana y conservación de energía/momento.</p></div>
+    </section>
+
+    <section class="page" id="prerrequisitos-minimos">
+      <div class="page-head"><h2>1. Prerrequisitos mínimos</h2><span class="page-no">p.1</span></div>
+      <article class="definition-card"><h3>Principio de Hamilton</h3><p>La trayectoria física extrema la acción. En sistemas discretos:</p></article>
+      <div class="formula-block">\[S=\int_{t_1}^{t_2}L(q,\dot q,t)\,dt\]</div>
+      <div class="reading-block"><p>Es necesario porque la teoría clásica de campos no empieza escribiendo fuerzas, sino una acción. En vez de buscar \(F=ma\), se busca qué campo hace estacionaria una integral.</p></div>
+      <article class="definition-card"><h3>Ecuaciones de Euler-Lagrange discretas</h3><p>Para coordenadas generalizadas:</p></article>
+      <div class="formula-block">\[\frac{d}{dt}\left(\frac{\partial L}{\partial \dot q_i}\right)-\frac{\partial L}{\partial q_i}=0\]</div>
+      <div class="reading-block"><p>Son necesarias porque las ecuaciones de campo son su generalización cuando el índice discreto \(i\) se sustituye por una variable continua \(x\).</p></div>
+      <article class="definition-card"><h3>Densidad</h3><p>Una magnitud extensiva puede expresarse por unidad de longitud, área o volumen. Por ejemplo, en una cuerda:</p></article>
+      <div class="formula-block">\[dm=\mu\,dx\]</div>
+      <div class="reading-block"><p>Es necesario porque en un continuo no se suma sobre masas puntuales, sino que se integra una densidad.</p></div>
+      <article class="definition-card"><h3>Campo</h3><p>Un campo es una función definida en cada punto del espacio y del tiempo:</p></article>
+      <div class="formula-block">\[\eta=\eta(x,t)\]</div>
+      <div class="reading-block"><p>o, en general,</p></div>
+      <div class="formula-block">\[\eta_\rho=\eta_\rho(x^\mu)\]</div>
+      <div class="reading-block"><p>Es necesario porque el objeto dinámico ya no es una coordenada \(q(t)\), sino una función completa. En una cuerda vibrante, \(y(x,t)\) da el desplazamiento transversal del punto situado en \(x\).</p></div>
+      <article class="definition-card"><h3>Derivadas parciales</h3><p>Un campo depende de varias variables independientes. Por tanto aparecen:</p></article>
+      <div class="formula-block">\[\frac{\partial \eta}{\partial t},\qquad \frac{\partial \eta}{\partial x}\]</div>
+      <div class="reading-block"><p>Es necesario distinguir variación temporal y variación espacial. En una cuerda, \(\eta_t\) mide velocidad transversal; \(\eta_x\) mide pendiente o deformación.</p></div>
+      <article class="definition-card"><h3>Ecuación de continuidad</h3><p>Tiene forma:</p></article>
+      <div class="formula-block">\[\frac{\partial \rho}{\partial t}+\nabla\cdot \mathbf j=0\]</div>
+      <div class="reading-block"><p>Es necesaria porque las leyes de conservación en campos aparecen como conservación local: lo que disminuye en una región sale por su frontera.</p></div>
+      <article class="definition-card"><h3>Transformada de Legendre</h3><p>En mecánica discreta:</p></article>
+      <div class="formula-block">\[p_i=\frac{\partial L}{\partial \dot q_i},\qquad H=\sum_i p_i\dot q_i-L\]</div>
+      <div class="reading-block"><p>Es necesaria porque la formulación hamiltoniana de campos define un momento conjugado por unidad de volumen:</p></div>
+      <div class="formula-block">\[\pi_\rho=\frac{\partial \mathcal L}{\partial \dot\eta_\rho}\]</div>
+      <div class="reading-block"><p>Goldstein subraya que en campos la formulación hamiltoniana existe, pero privilegia el tiempo frente al espacio, por lo que es menos natural que la lagrangiana para teorías relativistas.</p></div>
+      <article class="definition-card"><h3>Simetría y conservación</h3><p>En mecánica analítica, si una transformación deja invariante el lagrangiano, aparece una magnitud conservada. Garrigós formula esta idea como el contenido central del teorema de Noether: cada simetría del lagrangiano da una magnitud conservada.</p></article>
+    </section>
+
+    <section class="page" id="idea-central-del-capitulo">
+      <div class="page-head"><h2>2. Idea central del capítulo</h2><span class="page-no">p.2</span></div>
+      <div class="reading-block"><p>El capítulo transforma la mecánica analítica de sistemas con un número finito de grados de libertad en una teoría para sistemas con infinitos grados de libertad. En una partícula se estudia \(q(t)\). En un sistema de \(N\) partículas se estudian \(q_1(t),\ldots,q_N(t)\). En un continuo, el índice \(i\) deja de ser una etiqueta discreta y pasa a ser una posición espacial. El sistema ya no queda descrito por una lista de coordenadas, sino por una función \(\eta(x,t)\).</p></div>
+      <div class="reading-block"><p>El problema físico de fondo es claro: una cuerda, una varilla, un fluido, un sólido elástico o un campo electromagnético no se describen cómodamente como una colección finita de partículas. Cada punto puede moverse, deformarse o transportar energía. La mecánica clásica de campos proporciona el lenguaje para escribir una acción, derivar ecuaciones diferenciales en derivadas parciales y obtener leyes de conservación.</p></div>
+      <div class="reading-block"><p>La idea formal central es sustituir el lagrangiano \(L\) por una densidad lagrangiana \(\mathcal L\). Para un sistema discreto:</p></div>
+      <div class="formula-block">\[S=\int L\,dt\]</div>
+      <div class="reading-block"><p>Para un campo:</p></div>
+      <div class="formula-block">\[S=\int \mathcal L(\eta_\rho,\eta_{\rho,\mu},x^\mu)\,d^4x\]</div>
+      <div class="reading-block"><p>La notación \(\eta_{\rho,\mu}\) significa derivada del campo respecto a la coordenada \(x^\mu\). En una teoría no relativista simple, \(x^\mu\) representa \(t,x,y,z\), aunque todavía no se esté imponiendo covariancia relativista.</p></div>
+      <div class="reading-block"><p>El capítulo también enseña que las ecuaciones de campo y las conservaciones no son dos temas separados. Si la acción es estacionaria, se obtienen las ecuaciones de Euler-Lagrange de campo. Si además la densidad lagrangiana no depende explícitamente de ciertas coordenadas, aparecen ecuaciones de continuidad. De ahí surge el tensor energía-momento, que organiza densidad de energía, corriente de energía, densidad de momento y tensiones. Goldstein presenta esta construcción como el análogo en campos de la integral de Jacobi y las conservaciones mecánicas.</p></div>
+      <div class="reading-block"><p>Dentro de Mecánica Teórica, este capítulo es cierre y puente. Cierra Lagrange, Hamilton, Poisson, Hamilton-Jacobi, Liouville y Noether al llevarlos a sistemas continuos. Y abre la puerta a relatividad, electrodinámica, mecánica cuántica y teoría cuántica de campos.</p></div>
+    </section>
+
+    <section class="page" id="desarrollo-completo-del-capitulo">
+      <div class="page-head"><h2>3. Desarrollo completo del capítulo</h2><span class="page-no">p.3</span></div>
+      <h3 id="1-de-un-sistema-discreto-a-un-continuo">3.1. De un sistema discreto a un continuo</h3>
+      <div class="reading-block"><p>El punto de partida es una cadena de masas. Cada masa tiene una coordenada \(\eta_i(t)\), que puede representar el desplazamiento longitudinal o transversal de la partícula \(i\). Si las masas están separadas una distancia (a), la posición \(i\) puede asociarse a \(x_i=ia\). Cuando \(a\to 0\), la lista de coordenadas \(\eta_i(t)\) se convierte en una función continua:</p></div>
+      <div class="formula-block">\[\eta_i(t)\longrightarrow \eta(x,t)\]</div>
+      <div class="reading-block"><p>La suma sobre partículas se convierte en una integral espacial:</p></div>
+      <div class="formula-block">\[\sum_i a\,f_i \longrightarrow \int f(x)\,dx\]</div>
+      <div class="reading-block"><p>Esto importa porque cambia la naturaleza matemática del problema. Ya no se obtiene un sistema de ecuaciones diferenciales ordinarias, sino una ecuación en derivadas parciales. La dinámica de cada punto está acoplada a la de sus vecinos mediante derivadas espaciales.</p></div>
+      <div class="reading-block"><p>Ejemplo físico: una cuerda tensa. Si \(y(x,t)\) es el desplazamiento transversal, la energía cinética depende de \(y_t^2\), mientras que la energía potencial elástica depende de la pendiente \(y_x^2\). La densidad lagrangiana típica queda:</p></div>
+      <div class="formula-block">\[\mathcal L=\frac12\mu y_t^2-\frac12T y_x^2\]</div>
+      <div class="reading-block"><p>La consecuencia inmediata es la ecuación de ondas:</p></div>
+      <div class="formula-block">\[\mu y_{tt}-T y_{xx}=0\]</div>
+      <div class="reading-block"><p>o</p></div>
+      <div class="formula-block">\[y_{tt}=v^2 y_{xx},\qquad v^2=\frac{T}{\mu}\]</div>
+      <div class="reading-block"><p>Esta es la versión de campos del oscilador: cada punto oscila, pero no independientemente, sino unido al resto por la elasticidad del medio.</p></div>
+      <h3 id="2-densidad-lagrangiana-y-accion-de-campo">3.2. Densidad lagrangiana y acción de campo</h3>
+      <div class="reading-block"><p>En mecánica discreta, \(L\) contiene toda la información dinámica. En campos, la información local está en \(\mathcal L\). El lagrangiano total se obtiene integrando:</p></div>
+      <div class="formula-block">\[L=\int \mathcal L\,dV\]</div>
+      <div class="reading-block"><p>y la acción:</p></div>
+      <div class="formula-block">\[S=\int dt\int dV\,\mathcal L\]</div>
+      <div class="reading-block"><p>o en notación de cuatro variables:</p></div>
+      <div class="formula-block">\[S=\int \mathcal L\,d^4x\]</div>
+      <div class="reading-block"><p>La densidad lagrangiana puede depender del campo, de sus derivadas y de las coordenadas:</p></div>
+      <div class="formula-block">\[\mathcal L=\mathcal L(\eta_\rho,\eta_{\rho,\mu},x^\mu)\]</div>
+      <div class="reading-block"><p>Esto es la generalización directa de:</p></div>
+      <div class="formula-block">\[L=L(q_i,\dot q_i,t)\]</div>
+      <div class="reading-block"><p>La diferencia es que ahora las derivadas relevantes no son solo temporales. En una teoría de campos, la variación espacial del campo también contiene energía y dinámica. Por eso \(\mathcal L\) depende de \(\eta_x\), \(\eta_y\), \(\eta_z\) además de \(\eta_t\).</p></div>
+      <h3 id="3-ecuaciones-de-euler-lagrange-para-campos">3.3. Ecuaciones de Euler-Lagrange para campos</h3>
+      <div class="reading-block"><p>La acción se hace estacionaria bajo variaciones del campo:</p></div>
+      <div class="formula-block">\[\eta_\rho\to \eta_\rho+\delta\eta_\rho\]</div>
+      <div class="reading-block"><p>con variaciones nulas en la frontera. Al integrar por partes y exigir \(\delta S=0\), aparece:</p></div>
+      <div class="formula-block">\[\frac{\partial \mathcal L}{\partial \eta_\rho}-\frac{\partial}{\partial x^\mu}\left(\frac{\partial \mathcal L}{\partial \eta_{\rho,\mu}}\right)=0\]</div>
+      <div class="reading-block"><p>o equivalentemente:</p></div>
+      <div class="formula-block">\[\frac{\partial}{\partial x^\mu}\left(\frac{\partial \mathcal L}{\partial \eta_{\rho,\mu}}\right)-\frac{\partial \mathcal L}{\partial \eta_\rho}=0\]</div>
+      <div class="reading-block"><p>Esta es la ecuación madre del capítulo. Es a campos lo que Euler-Lagrange discreta es a partículas.</p></div>
+      <div class="reading-block"><p>Ejemplo:</p></div>
+      <div class="formula-block">\[\mathcal L=\frac12\mu y_t^2-\frac12T y_x^2\]</div>
+      <div class="reading-block"><p>Entonces:</p></div>
+      <div class="formula-block">\[\frac{\partial\mathcal L}{\partial y}=0,\qquad \frac{\partial\mathcal L}{\partial y_t}=\mu y_t,\qquad \frac{\partial\mathcal L}{\partial y_x}=-T y_x\]</div>
+      <div class="reading-block"><p>La ecuación de campo da:</p></div>
+      <div class="formula-block">\[\frac{\partial}{\partial t}(\mu y_t) + \frac{\partial}{\partial x}(-T y_x)=0\]</div>
+      <div class="formula-block">\[\mu y_{tt}-T y_{xx}=0\]</div>
+      <div class="reading-block"><p>Importancia: no se memoriza la ecuación de ondas; se deriva desde la acción.</p></div>
+      <h3 id="4-campos-como-generalizacion-de-la-mecanica">3.4. Campos como generalización de la mecánica</h3>
+      <div class="reading-block"><p>Goldstein insiste en que la formulación no queda limitada a medios mecánicos. Matemáticamente, un campo es un conjunto de funciones de espacio y tiempo. No necesita estar sostenido por un “medio” material. Esta separación histórica permite tratar el campo electromagnético o campos relativistas sin imaginar un éter mecánico.</p></div>
+      <div class="reading-block"><p>La idea física es profunda: primero se llega a la teoría de campos desde cuerdas, varillas y gases; después se observa que el formalismo sirve aunque no haya cuerda, varilla ni gas. Lo esencial no es el soporte material, sino la existencia de funciones dinámicas definidas sobre el espacio-tiempo.</p></div>
+      <div class="reading-block"><p>Consecuencia: la mecánica analítica deja de ser solo una técnica para partículas y se convierte en una estructura universal para escribir teorías físicas.</p></div>
+      <h3 id="5-conservaciones-y-tensor-energia-momento">3.5. Conservaciones y tensor energía-momento</h3>
+      <div class="reading-block"><p>La densidad lagrangiana no solo da ecuaciones de movimiento. También contiene información de conservación. Si \(\mathcal L\) no depende explícitamente de una coordenada \(x^\mu\), aparece una ecuación de continuidad:</p></div>
+      <div class="formula-block">\[\frac{\partial T^\mu{}_\nu}{\partial x^\mu}=0\]</div>
+      <div class="reading-block"><p>Goldstein introduce el tensor energía-momento en la forma:</p></div>
+      <div class="formula-block">\[T^\mu{}_{\nu}= \frac{\partial\mathcal L}{\partial \eta_{\rho,\mu}}\eta_{\rho,\nu} -\delta^\mu{}_\nu\mathcal L\]</div>
+      <div class="reading-block"><p>La estructura exacta puede variar según convención de índices, pero la idea examinable es estable: el tensor energía-momento organiza las magnitudes conservadas asociadas a traslaciones en el espacio-tiempo.</p></div>
+      <div class="reading-block"><p>El componente temporal está relacionado con la densidad de energía. Goldstein identifica \(T^0{}_0\) con una densidad de energía cuando \(\mathcal L=T-V\), igual que en mecánica discreta la integral de Jacobi se asocia a energía.</p></div>
+      <div class="reading-block"><p>Los componentes espaciales se relacionan con momento y tensiones. En un sólido o una cuerda, las tensiones internas transportan momento. Goldstein interpreta \(T^i{}_j\) como tensor de tensiones en el caso mecánico continuo.</p></div>
+      <div class="reading-block"><p>La forma local de conservación es más fuerte que decir “la energía total se conserva”. Una ecuación de continuidad afirma que la energía no desaparece: fluye. Si una región pierde energía, esa energía cruza su frontera.</p></div>
+      <h3 id="6-formulacion-hamiltoniana-de-campos">3.6. Formulación hamiltoniana de campos</h3>
+      <div class="reading-block"><p>Para pasar a Hamilton, se define el momento conjugado del campo:</p></div>
+      <div class="formula-block">\[\pi_\rho=\frac{\partial\mathcal L}{\partial \dot\eta_\rho}\]</div>
+      <div class="reading-block"><p>La densidad hamiltoniana es:</p></div>
+      <div class="formula-block">\[\mathcal H=\pi_\rho\dot\eta_\rho-\mathcal L\]</div>
+      <div class="reading-block"><p>y el Hamiltoniano total:</p></div>
+      <div class="formula-block">\[H=\int \mathcal H\,dV\]</div>
+      <div class="reading-block"><p>Goldstein explica que las variables \(\eta_\rho(x^i,t)\) y \(\pi_\rho(x^i,t)\) definen un espacio de fases infinito-dimensional. Cada punto espacial aporta grados de libertad.</p></div>
+      <div class="reading-block"><p>Ejemplo de cuerda:</p></div>
+      <div class="formula-block">\[\mathcal L=\frac12\mu y_t^2-\frac12T y_x^2\]</div>
+      <div class="formula-block">\[\pi=\frac{\partial\mathcal L}{\partial y_t}=\mu y_t\]</div>
+      <div class="formula-block">\[\mathcal H=\pi y_t-\mathcal L =\frac{\pi^2}{2\mu}+\frac12T y_x^2\]</div>
+      <div class="reading-block"><p>La densidad hamiltoniana es energía por unidad de longitud: parte cinética más parte elástica.</p></div>
+      <div class="reading-block"><p>Punto delicado: Hamilton separa el tiempo del espacio. En campos relativistas, esto es menos elegante que la formulación lagrangiana, que trata espacio y tiempo de forma más simétrica. Goldstein lo señala explícitamente: la formulación hamiltoniana es directa, pero menos adecuada para una descripción relativísticamente covariante.</p></div>
+      <h3 id="7-teoria-relativista-de-campos">3.7. Teoría relativista de campos</h3>
+      <div class="reading-block"><p>En partículas relativistas, la formulación lagrangiana y hamiltoniana es incómoda porque el tiempo suele actuar como parámetro externo, mientras que las coordenadas espaciales son variables dinámicas. En campos, esto mejora: espacio y tiempo aparecen como coordenadas independientes donde se evalúa el campo.</p></div>
+      <div class="reading-block"><p>Por eso la teoría clásica de campos encaja naturalmente con relatividad. Se introducen coordenadas:</p></div>
+      <div class="formula-block">\[x^\mu=(ct,x,y,z)\]</div>
+      <div class="reading-block"><p>y campos con propiedades tensoriales definidas: escalares, vectores, tensores. La densidad lagrangiana debe comportarse adecuadamente bajo transformaciones de Lorentz si la teoría quiere ser relativista.</p></div>
+      <div class="reading-block"><p>Goldstein explica que en teoría de campos el espacio y el tiempo actúan como parámetros que definen puntos del continuo espacio-temporal, lo que hace natural una formulación covariante de campos.</p></div>
+      <div class="reading-block"><p>Ejemplo típico:</p></div>
+      <div class="formula-block">\[\mathcal L=\frac12\left(\partial_\mu\phi\,\partial^\mu\phi-m^2\phi^2\right)\]</div>
+      <div class="reading-block"><p>Produce una ecuación de Klein-Gordon:</p></div>
+      <div class="formula-block">\[(\Box+m^2)\phi=0\]</div>
+      <div class="reading-block"><p>El objetivo no es estudiar física cuántica todavía, sino reconocer cómo el lenguaje de Lagrange se prepara para ella.</p></div>
+      <h3 id="8-noether-en-campos">3.8. Noether en campos</h3>
+      <div class="reading-block"><p>Noether en campos afirma que una simetría continua de la acción produce una corriente conservada:</p></div>
+      <div class="formula-block">\[\partial_\mu j^\mu=0\]</div>
+      <div class="reading-block"><p>La conservación ya no aparece solo como una constante temporal, sino como una ecuación local. En mecánica discreta:</p></div>
+      <div class="formula-block">\[\frac{dQ}{dt}=0\]</div>
+      <div class="reading-block"><p>En campos:</p></div>
+      <div class="formula-block">\[\partial_\mu j^\mu=0\]</div>
+      <div class="reading-block"><p>y la carga conservada es:</p></div>
+      <div class="formula-block">\[Q=\int j^0\,dV\]</div>
+      <div class="reading-block"><p>Si no hay flujo por la frontera:</p></div>
+      <div class="formula-block">\[\frac{dQ}{dt}=0\]</div>
+      <div class="reading-block"><p>Ejemplos:</p></div>
+      <div class="reading-block"><p>Traslación temporal \(\Rightarrow\) conservación de energía.</p></div>
+      <div class="reading-block"><p>Traslación espacial \(\Rightarrow\) conservación de momento.</p></div>
+      <div class="reading-block"><p>Rotación espacial \(\Rightarrow\) conservación de momento angular.</p></div>
+      <div class="reading-block"><p>Desplazamiento interno del campo \(\eta\to \eta+\epsilon\) \(\Rightarrow\) conservación de una cantidad asociada al momento conjugado del campo, si la densidad lagrangiana no depende explícitamente de \(\eta\).</p></div>
+      <div class="reading-block"><p>Los exámenes UNED preguntan exactamente este tipo de conexión: dada una densidad lagrangiana de una perturbación en un medio continuo, demostrar conservación de cantidades asociadas a simetrías y obtener densidad hamiltoniana.</p></div>
+    </section>
+
+    <section class="page" id="conceptos-clave">
+      <div class="page-head"><h2>4. Conceptos clave</h2><span class="page-no">p.4</span></div>
+      <article class="definition-card"><h3>Campo clásico</h3><p>Un campo clásico es una función, o conjunto de funciones, definida en cada punto del espacio y del tiempo. Su valor es un número, vector o tensor. Ejemplo: \(y(x,t)\) en una cuerda. Relación: sustituye a las coordenadas discretas \(q_i(t)\). Pregunta de examen: “Explique qué significa que un medio continuo tenga infinitos grados de libertad”.</p></article>
+      <article class="definition-card"><h3>Densidad lagrangiana</h3><p>Función local que describe la dinámica por unidad de volumen:</p></article>
+      <div class="formula-block">\[\mathcal L=\mathcal L(\eta,\eta_\mu,x^\mu)\]</div>
+      <div class="reading-block"><p>Ejemplo: \(\mathcal L=\frac12\mu y_t^2-\frac12Ty_x^2\). Relación: su integral espacial da \(L\); su integral espacio-temporal da \(S\). Pregunta: “Dada \(\mathcal L\), obtenga la ecuación de movimiento”.</p></div>
+      <article class="definition-card"><h3>Acción de campo</h3><p>Integral de la densidad lagrangiana en el dominio espacio-temporal:</p></article>
+      <div class="formula-block">\[S=\int\mathcal L\,d^4x\]</div>
+      <div class="reading-block"><p>Ejemplo: en una cuerda entre (0) y \(L\):</p></div>
+      <div class="formula-block">\[S=\int dt\int_0^L dx\,\mathcal L\]</div>
+      <div class="reading-block"><p>Relación: su estacionariedad produce las ecuaciones de campo. Pregunta: “Formule el principio variacional para un campo”.</p></div>
+      <article class="definition-card"><h3>Euler-Lagrange de campo</h3><p>Ecuación diferencial que sustituye a Euler-Lagrange discreta:</p></article>
+      <div class="formula-block">\[\partial_\mu\left(\frac{\partial\mathcal L}{\partial \eta_{\rho,\mu}}\right)-\frac{\partial\mathcal L}{\partial \eta_\rho}=0\]</div>
+      <div class="reading-block"><p>Ejemplo: da la ecuación de ondas para la cuerda. Relación: conecta variación, dinámica y EDP. Pregunta: “Derive la ecuación de movimiento de un medio continuo”.</p></div>
+      <article class="definition-card"><h3>Momento conjugado de campo</h3><p>Densidad de momento canónico:</p></article>
+      <div class="formula-block">\[\pi_\rho=\frac{\partial\mathcal L}{\partial\dot\eta_\rho}\]</div>
+      <div class="reading-block"><p>Ejemplo: para la cuerda, \(\pi=\mu y_t\). Relación: permite construir \(\mathcal H\). Pregunta: “Obtenga el momento conjugado y la densidad hamiltoniana”.</p></div>
+      <article class="definition-card"><h3>Densidad hamiltoniana</h3><p>Transformada de Legendre local:</p></article>
+      <div class="formula-block">\[\mathcal H=\pi_\rho\dot\eta_\rho-\mathcal L\]</div>
+      <div class="reading-block"><p>Ejemplo:</p></div>
+      <div class="formula-block">\[\mathcal H=\frac{\pi^2}{2\mu}+\frac12Ty_x^2\]</div>
+      <div class="reading-block"><p>Relación: integra la energía total si el sistema es natural. Pregunta: “¿Qué representa físicamente \(\mathcal H\)?”</p></div>
+      <article class="definition-card"><h3>Tensor energía-momento</h3><p>Objeto que agrupa densidad de energía, corriente de energía, densidad de momento y tensiones:</p></article>
+      <div class="formula-block">\[T^\mu{}_{\nu}= \frac{\partial\mathcal L}{\partial \eta_{\rho,\mu}}\eta_{\rho,\nu} -\delta^\mu{}_\nu\mathcal L\]</div>
+      <div class="reading-block"><p>Ejemplo: en un medio elástico, sus componentes espaciales se interpretan como tensor de tensiones. Relación: surge de invariancia bajo traslaciones. Pregunta: “Explique el significado físico de los componentes del tensor energía-momento”.</p></div>
+      <article class="definition-card"><h3>Corriente conservada</h3><p>Conjunto de magnitudes \(j^\mu\) que satisfacen:</p></article>
+      <div class="formula-block">\[\partial_\mu j^\mu=0\]</div>
+      <div class="reading-block"><p>Ejemplo: corriente de energía. Relación: forma local de una ley de conservación. Pregunta: “Demuestre que cierta cantidad integral se conserva”.</p></div>
+      <article class="definition-card"><h3>Simetría continua</h3><p>Transformación infinitesimal que deja invariante la acción. Ejemplo: \(y\to y+\epsilon\) si \(\mathcal L\) no depende de \(y\). Relación: por Noether genera corriente conservada. Pregunta: “Identifique la simetría asociada a una conservación”.</p></article>
+      <article class="definition-card"><h3>Covariancia relativista</h3><p>Propiedad de una teoría cuya forma no cambia bajo transformaciones de Lorentz. Ejemplo: densidad lagrangiana escalar. Relación: los campos encajan mejor que partículas con el formalismo covariante. Pregunta: “Por qué la formulación lagrangiana de campos es más natural para relatividad que la hamiltoniana”.</p></article>
+    </section>
+
+    <section class="page" id="relaciones-entre-ideas">
+      <div class="page-head"><h2>5. Relaciones entre ideas</h2><span class="page-no">p.5</span></div>
+      <div class="reading-block"><p>La relación principal es:</p></div>
+      <div class="formula-block">\[q_i(t)\longrightarrow \eta(x,t)\]</div>
+      <div class="reading-block"><p>El paso de coordenadas discretas a campos transforma sumas en integrales, lagrangianos en densidades lagrangianas y ecuaciones ordinarias en ecuaciones en derivadas parciales.</p></div>
+      <div class="reading-block"><p>La acción ocupa la cúspide conceptual. De ella salen dos ramas. Primera rama: variación de la acción \(\Rightarrow\) ecuaciones de Euler-Lagrange de campo. Segunda rama: simetrías de la acción \(\Rightarrow\) leyes de conservación.</p></div>
+      <div class="reading-block"><p>La densidad lagrangiana es el centro operativo. Si se sabe escribir \(\mathcal L\), se puede obtener la ecuación de movimiento, el momento conjugado, la densidad hamiltoniana y las conservaciones. Por tanto, el error grave no suele estar en derivar, sino en identificar mal qué términos entran en \(\mathcal L\).</p></div>
+      <div class="reading-block"><p>El tensor energía-momento es una síntesis. No es “otra fórmula”: es el empaquetado de las conservaciones asociadas a traslaciones espacio-temporales. La conservación de energía procede de la invariancia temporal; la conservación de momento procede de la invariancia espacial.</p></div>
+      <div class="reading-block"><p>La formulación hamiltoniana es útil, pero menos simétrica. En mecánica discreta, Hamilton es más potente para espacio de fases. En campos, define un espacio de fases infinito-dimensional, pero separa tiempo y espacio. Por eso la formulación lagrangiana domina cuando se quiere covariancia relativista.</p></div>
+      <div class="reading-block"><p>Históricamente, el capítulo reproduce un desplazamiento conceptual: de medios materiales continuos a campos sin soporte mecánico. Primero se entiende una cuerda o un sólido elástico; después se acepta que un campo electromagnético o relativista puede tratarse con la misma maquinaria variacional.</p></div>
+    </section>
+
+    <section class="page" id="errores-habituales">
+      <div class="page-head"><h2>6. Errores habituales</h2><span class="page-no">p.6</span></div>
+      <article class="definition-card"><h3>Error 1: tratar \(\eta(x,t)\) como una coordenada ordinaria</h3><p>Está mal porque \(\eta\) depende de varias variables. No basta con derivar respecto a \(t\).</p><p>Corrección: tratar \(\eta\), \(\eta_t\), \(\eta_x\) como argumentos independientes al aplicar Euler-Lagrange.</p><p>Incorrecto: “\(\frac{d}{dt}\frac{\partial L}{\partial \dot\eta}-\frac{\partial L}{\partial\eta}=0\)”.</p><p>Correcto: “\(\partial_t\frac{\partial\mathcal L}{\partial\eta_t}+\partial_x\frac{\partial\mathcal L}{\partial\eta_x}-\frac{\partial\mathcal L}{\partial\eta}=0\)”.</p></article>
+      <article class="definition-card"><h3>Error 2: confundir \(L\) con \(\mathcal L\)</h3><p>Está mal porque \(L\) es el lagrangiano total y \(\mathcal L\) es densidad.</p><p>Correcc</p></article>
+    </section>
+  </main>
+</div>
+</body>
+</html>

@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="light dark" />
+  <title>Mecánica Teórica — T8 — No lineales. Solitones</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/icon-32.png" />
+  <link rel="icon" type="image/png" sizes="50x50" href="assets/icons/icon-50.png" />
+  <link rel="apple-touch-icon" sizes="100x100" href="assets/icons/icon-100.png" />
+  <meta name="theme-color" content="#6f42c1" />
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+  <link rel="stylesheet" href="assets/styles.css" />
+  <script defer src="assets/app.js"></script>
+</head>
+<body class="subject-mecanica-teorica">
+<div class="wrap">
+  <header class="cover">
+    <div class="top-actions"><a class="back-link" href="index.html">← Volver al índice</a></div>
+    <p class="eyebrow">UNED Física · Mecánica Teórica · Tema 8</p>
+    <h1>Guía de estudio — Goldstein / Mecánica Teórica: TIII.2 — No lineales. Solitones</h1>
+    <p class="subtitle">TIII.2 — No lineales. Solitones: Klein-Gordon, seno-Gordon, densidad hamiltoniana, soluciones viajeras y solitones.</p>
+    <div class="chips">
+      <span class="chip">UNED Física</span><span class="chip">Mecánica Teórica</span><span class="chip">MT8</span><span class="chip">Goldstein cap. 13.6.B</span><span class="chip">MathJax</span><span class="chip">estado: maquetado</span>
+    </div>
+  </header>
+
+  <div class="toolbar no-print">
+    <nav>
+      <a href="#mapa">Mapa</a><a href="#prerrequisitos-minimos">Prerrequisitos</a><a href="#idea-central-del-capitulo">Idea central</a><a href="#desarrollo-completo-del-capitulo">Desarrollo</a><a href="#conceptos-clave">Conceptos</a><a href="#relaciones-entre-ideas">Relaciones</a><a href="#errores-habituales">Errores</a><a href="#preguntas-orientadas-a-examen">Preguntas</a><a href="#respuestas-modelo">Respuestas</a><a href="#resumen-final-de-repaso">Resumen</a><a href="#checklist-de-dominio">Checklist</a>
+    </nav>
+    <div class="toolbar-actions"><button class="btn" onclick="printReady()">Imprimir / guardar PDF</button></div>
+  </div>
+
+  <main>
+    <section class="page map-page" id="mapa">
+      <div class="page-head"><h2>Mapa clicable</h2><p class="section-lead">Ruta conceptual del tema.</p></div>
+      <div class="concept-map">
+        <a class="map-node" href="#prerrequisitos-minimos"><span>Prerrequisitos</span><small>campo escalar · densidad lagrangiana · ondas · dispersión</small></a>
+        <a class="map-node" href="#idea-central-del-capitulo"><span>Idea central</span><small>del régimen lineal al campo no lineal</small></a>
+        <a class="map-node" href="#desarrollo-completo-del-capitulo"><span>Desarrollo</span><small>Klein-Gordon · seno-Gordon · energía · viajeras · KdV</small></a>
+        <a class="map-node" href="#conceptos-clave"><span>Conceptos clave</span><small>no linealidad · solitón · momento conjugado · densidades</small></a>
+        <a class="map-node" href="#relaciones-entre-ideas"><span>Relaciones</span><small>linealización → no linealidad → soluciones coherentes</small></a>
+        <a class="map-node" href="#errores-habituales"><span>Errores habituales</span><small>superposición · caos · densidades · dispersión</small></a>
+        <a class="map-node" href="#preguntas-orientadas-a-examen"><span>Preguntas orientadas a examen</span><small>35 preguntas por dificultad y relación</small></a>
+        <a class="map-node" href="#respuestas-modelo"><span>Respuestas modelo</span><small>respuestas completas para repaso activo</small></a>
+        <a class="map-node" href="#resumen-final-de-repaso"><span>Resumen final de repaso</span><small>ideas, conceptos y relaciones imprescindibles</small></a>
+        <a class="map-node" href="#checklist-de-dominio"><span>Checklist de dominio</span><small>criterios antes de avanzar</small></a>
+      </div>
+    </section>
+
+    <section class="page" id="fuente-base">
+      <div class="page-head"><h2>Fuente base</h2><span class="page-no">p.0</span></div>
+      <div class="reading-block"><p>Capítulo trabajado: <strong>TIII.2 — No lineales. Solitones</strong>. Fuente principal: Goldstein, <em>Classical Mechanics</em>, cap. 13.6.B, dentro del capítulo 13 sobre formulaciones lagrangiana y hamiltoniana para sistemas continuos y campos. El capítulo 13 incluye la transición a sistemas continuos, formalismo lagrangiano, tensor energía-momento, formalismo hamiltoniano, teoría relativista de campos, ejemplos y teorema de Noether.</p></div>
+    </section>
+
+    <section class="page" id="prerrequisitos-minimos">
+      <div class="page-head"><h2>1. Prerrequisitos mínimos</h2><span class="page-no">p.1</span></div>
+      <article class="definition-card"><h3>Campo escalar</h3><p>Un campo escalar asigna un número a cada punto del espacio y del tiempo: \(\phi(x,t)\). Es necesario porque el capítulo no estudia ya una partícula con coordenada \(q(t)\), sino una variable física extendida en el espacio. Ejemplo mínimo: la elongación de una cuerda \(y(x,t)\) o un campo real \(\phi(x,t)\).</p></article>
+      <article class="definition-card"><h3>Densidad lagrangiana</h3><p>En campos no se trabaja con un lagrangiano ordinario \(L(q,\dot q,t)\), sino con una densidad \(\mathcal L\), que se integra sobre el espacio para obtener \(L\). Es necesaria porque Goldstein formula Klein-Gordon y seno-Gordon a partir de una densidad lagrangiana.</p></article>
+      <article class="definition-card"><h3>Ecuación de Euler-Lagrange para campos</h3><p>Es la generalización de Euler-Lagrange cuando la variable dinámica es \(\phi(x,t)\). Permite obtener la ecuación de campo desde \(\mathcal L\). Es necesaria porque el paso clave del capítulo es ir de una densidad lagrangiana a una ecuación diferencial parcial.</p></article>
+      <article class="definition-card"><h3>Ecuación de ondas</h3><p>Una ecuación de ondas lineal describe perturbaciones que se propagan. Sirve como base para entender por contraste la ecuación de Klein-Gordon y, después, la seno-Gordon. Ejemplo mínimo:</p></article>
+      <div class="formula-block">\[\frac{\partial^2 \phi}{\partial t^2}=c^2\frac{\partial^2\phi}{\partial x^2}.\]</div>
+      <article class="definition-card"><h3>Linealidad</h3><p>Una ecuación es lineal si la incógnita y sus derivadas aparecen solo de forma lineal. Taylor recuerda que muchos sistemas físicos corrientes son no lineales, como el péndulo con \(\sin\theta\), y que los lineales suelen ser tratables analíticamente, mientras que los no lineales rara vez lo son.</p></article>
+      <article class="definition-card"><h3>Relación de dispersión</h3><p>Relaciona frecuencia y número de onda, \(\omega=\omega(k)\). Es necesaria porque el capítulo compara la dispersión lineal de Klein-Gordon con la dispersión dependiente de la amplitud en seno-Gordon.</p></article>
+      <article class="definition-card"><h3>Momento conjugado de un campo</h3><p>Es el análogo continuo de \(p=\partial L/\partial \dot q\). Para el campo seno-Gordon, Goldstein identifica \(\pi(x,t)=\dot\phi\). Es necesario para entender la densidad hamiltoniana.</p></article>
+      <article class="definition-card"><h3>Energía de campo</h3><p>En un campo, la energía se describe mediante una densidad. El capítulo da una densidad de energía para seno-Gordon que coincide en magnitud con la densidad hamiltoniana.</p></article>
+    </section>
+
+    <section class="page" id="idea-central-del-capitulo">
+      <div class="page-head"><h2>2. Idea central del capítulo</h2><span class="page-no">p.2</span></div>
+      <div class="reading-block"><p>El capítulo aborda qué ocurre cuando se abandona el régimen lineal de los campos. La línea argumental es: primero se presenta una ecuación lineal de campo, Klein-Gordon; después se interpreta como una aproximación de campo pequeño; finalmente se sustituye el término cuadrático por un potencial periódico y aparece la ecuación seno-Gordon, que ya es no lineal.</p></div>
+      <div class="reading-block"><p>La idea física importante es que la no linealidad no es una rareza matemática. En mecánica aparece ya en el péndulo real: \(\sin\theta\) no es igual a \(\theta\) salvo para pequeñas oscilaciones. En campos sucede algo análogo: Klein-Gordon se parece a un oscilador armónico distribuido; seno-Gordon se parece a un péndulo distribuido con amplitud finita. Goldstein subraya precisamente esta analogía entre Klein-Gordon y oscilador armónico, y entre seno-Gordon y el péndulo.</p></div>
+      <div class="reading-block"><p>El punto más característico del capítulo es que algunas ecuaciones no lineales, pese a no obedecer el principio de superposición, admiten perturbaciones viajeras que conservan su forma. Estas perturbaciones pueden atravesarse entre sí y salir casi intactas, salvo un posible desplazamiento de fase. A estas ondas solitarias robustas se las denomina <strong>solitones</strong>. Goldstein menciona como ejemplos la ecuación seno-Gordon y la ecuación de Korteweg-de Vries.</p></div>
+      <div class="reading-block"><p>Dentro de la asignatura, este capítulo sirve de puente entre la mecánica analítica clásica y la física de campos. El alumno debe ver que los conceptos de lagrangiano, hamiltoniano, energía, momento conjugado, simetría y conservación no desaparecen al pasar a campos: se reformulan como densidades y ecuaciones locales.</p></div>
+    </section>
+
+    <section class="page" id="desarrollo-completo-del-capitulo">
+      <div class="page-head"><h2>3. Desarrollo completo del capítulo</h2><span class="page-no">p.3</span></div>
+      <h3 id="1-de-klein-gordon-lineal-a-seno-gordon-no-lineal">3.1. De Klein-Gordon lineal a seno-Gordon no lineal</h3>
+      <div class="reading-block"><p>Goldstein parte de un campo escalar real en una dimensión espacial. La primera densidad lagrangiana considerada contiene términos cuadráticos en \(\dot\phi\), en \(\partial\phi/\partial x\) y en \(\phi\). De ella se obtiene la ecuación de Klein-Gordon unidimensional:</p></div>
+      <div class="formula-block">\[\frac{\partial^2\phi}{\partial x^2}-\frac{1}{c^2}\frac{\partial^2\phi}{\partial t^2}=\mu_0^2\phi.\]</div>
+      <div class="reading-block"><p>Esta ecuación es lineal: si \(\phi_1\) y \(\phi_2\) son soluciones, entonces una combinación lineal también lo es. Por eso admite una representación como suma de ondas planas. Goldstein conecta esto con una descripción en espacio de momentos, donde el campo puede construirse como superposición de modos.</p></div>
+      <div class="reading-block"><p>El siguiente paso es interpretar esa lagrangiana cuadrática como aproximación de campo pequeño. En vez de mantener un potencial proporcional a \(\phi^2\), se introduce un potencial periódico proporcional a \(1-\cos\phi\). Al expandir \(\cos\phi\) para \(\phi\) pequeño, aparece el término cuadrático, de modo que Klein-Gordon queda como límite de pequeña amplitud.</p></div>
+      <div class="reading-block"><p>Con esta sustitución aparece la ecuación seno-Gordon:</p></div>
+      <div class="formula-block">\[\frac{\partial^2\phi}{\partial x^2}-\frac{1}{c^2}\frac{\partial^2\phi}{\partial t^2}=\mu_0^2\sin\phi.\]</div>
+      <div class="reading-block"><p>La diferencia esencial está en el término \(\sin\phi\). La ecuación ya no es lineal en el campo. No puede analizarse simplemente como suma de ondas elementales independientes.</p></div>
+      <h3 id="2-analogia-con-el-pendulo">3.2. Analogía con el péndulo</h3>
+      <div class="reading-block"><p>Goldstein indica que Klein-Gordon recuerda al oscilador armónico, mientras que seno-Gordon recuerda al péndulo de amplitud finita. La analogía es importante porque el péndulo pequeño se linealiza como \(\sin\theta\simeq\theta\), pero el péndulo real conserva el \(\sin\theta\).</p></div>
+      <div class="reading-block"><p>En Klein-Gordon, el término proporcional a \(\phi\) equivale al régimen de pequeñas oscilaciones. En seno-Gordon, el término \(\sin\phi\) conserva la estructura completa del potencial periódico. Esto hace que la frecuencia efectiva dependa de la amplitud, igual que en el péndulo no lineal.</p></div>
+      <div class="reading-block"><p>Consecuencia: la dispersión de seno-Gordon no es solo una relación fija \(\omega(k)\). Goldstein señala que en amplitud finita la relación de dispersión se vuelve dependiente de la amplitud, rasgo característico de las ecuaciones no lineales.</p></div>
+      <h3 id="3-energia-y-densidad-hamiltoniana">3.3. Energía y densidad hamiltoniana</h3>
+      <div class="reading-block"><p>En el caso seno-Gordon, Goldstein presenta la densidad de energía:</p></div>
+      <div class="formula-block">\[T^{00}=\frac12\left[\dot\phi^2+c^2\left(\frac{\partial\phi}{\partial x}\right)^2\right]+\mu_0^2c^2(1-\cos\phi).\]</div>
+      <div class="reading-block"><p>Esta expresión contiene tres contribuciones: energía cinética del campo, energía asociada al gradiente espacial y energía potencial no lineal. El término \(1-\cos\phi\) es el responsable de la estructura periódica del modelo.</p></div>
+      <div class="reading-block"><p>La densidad hamiltoniana tiene la misma forma, usando el momento conjugado \(\pi(x,t)=\dot\phi\):</p></div>
+      <div class="formula-block">\[\mathcal H=\frac12\left[\pi^2+c^2\left(\frac{\partial\phi}{\partial x}\right)^2\right]+\mu_0^2c^2(1-\cos\phi).\]</div>
+      <div class="reading-block"><p>Esto muestra que el formalismo hamiltoniano no queda limitado a sistemas discretos. La variable \(q_i\) se sustituuye por \(\phi(x,t)\), y el momento \(p_i\) por \(\pi(x,t)\).</p></div>
+      <h3 id="4-soluciones-viajeras">3.4. Soluciones viajeras</h3>
+      <div class="reading-block"><p>Aunque la ecuación seno-Gordon no se resuelve por superposición de ondas planas, Goldstein indica que puede buscarse una solución viajera. La idea consiste en suponer que el campo depende de una sola combinación de \(x\) y \(t\), por ejemplo:</p></div>
+      <div class="formula-block">\[\tau=t-\frac{x}{v}.\]</div>
+      <div class="reading-block"><p>Esto representa una perturbación que se desplaza con velocidad \(v\) manteniendo su perfil. Al introducir esta forma, la ecuación parcial se reduce a una ecuación ordinaria:</p></div>
+      <div class="formula-block">\[\frac{d^2\phi}{d\tau^2}-A\sin\phi=0,\]</div>
+      <div class="reading-block"><p>con</p></div>
+      <div class="formula-block">\[A=\frac{\mu_0^2c^2v^2}{c^2-v^2}.\]</div>
+      <div class="reading-block"><p>Goldstein interpreta esta ecuación como la ecuación de un péndulo de amplitud finita escrita en la variable \(\tau\).</p></div>
+      <div class="reading-block"><p>La consecuencia conceptual es fuerte: una ecuación de campo no lineal puede contener soluciones que se comportan como objetos localizados en movimiento. No son partículas puntuales, pero tampoco ondas sinusoidales extendidas. Son perturbaciones localizadas y persistentes.</p></div>
+      <h3 id="5-solitones">3.5. Solitones</h3>
+      <div class="reading-block"><p>El capítulo introduce el término <strong>solitón</strong> para ondas solitarias que conservan su forma incluso al interactuar con otras. Goldstein destaca que estas perturbaciones pueden pasar unas a través de otras y emerger con la misma forma, salvo quizá un cambio de fase.</p></div>
+      <div class="reading-block"><p>Esto distingue un solitón de una onda cualquiera. Una onda lineal conserva su forma por superposición y dispersión controlada. Un solitón, en cambio, conserva su forma gracias a un equilibrio no trivial entre no linealidad y dispersión. En el capítulo no se desarrolla una teoría completa de solitones, pero sí se fija la idea central: algunas ecuaciones no lineales admiten estructuras estables con comportamiento casi corpuscular.</p></div>
+      <div class="reading-block"><p>Goldstein menciona también la ecuación de Korteweg-de Vries:</p></div>
+      <div class="formula-block">\[\frac{\partial\phi}{\partial t}+\alpha\phi\frac{\partial\phi}{\partial x}+\nu\frac{\partial^3\phi}{\partial x^3}=0.\]</div>
+      <div class="reading-block"><p>Esta ecuación combina un término no lineal, \(\phi\phi_x\), con un término dispersivo de tercer orden. También admite ondas solitarias.</p></div>
+      <h3 id="6-aplicaciones-fisicas">3.6. Aplicaciones físicas</h3>
+      <div class="reading-block"><p>Goldstein indica que los solitones aparecen en muchas áreas de la física, desde partículas elementales hasta física del estado sólido. También menciona que seno-Gordon se ha usado en relación con familias de partículas elementales y con la teoría de uniones Josephson.</p></div>
+      <div class="reading-block"><p>Esto no significa que el capítulo convierta seno-Gordon en una teoría fundamental de partículas. El papel del ejemplo es mostrar cómo la mecánica analítica de campos permite construir modelos no lineales con soluciones físicamente significativas.</p></div>
+    </section>
+
+    <section class="page" id="conceptos-clave">
+      <div class="page-head"><h2>4. Conceptos clave</h2><span class="page-no">p.4</span></div>
+      <article class="definition-card"><h3>No linealidad</h3><p>Una ecuación es no lineal si el campo o sus derivadas aparecen mediante funciones no lineales, productos o potencias. En seno-Gordon, la no linealidad está en \(\sin\phi\). Ejemplo: (\phi_{xx}-c^{-2}\phi_{tt}=\mu_0^2\sin\phi). Se relaciona con la imposibilidad general de superponer soluciones. En examen puede preguntarse: “¿Por qué seno-Gordon es no lineal?”</p></article>
+      <article class="definition-card"><h3>Klein-Gordon</h3><p>Ecuación lineal de campo escalar con término proporcional a \(\phi\). Sirve como modelo base y como aproximación de campo pequeño de seno-Gordon. Ejemplo: sustituir \(\sin\phi\simeq\phi\). Se relaciona con osciladores armónicos distribuidos. En examen puede preguntarse: “Compara Klein-Gordon y seno-Gordon.”</p></article>
+      <article class="definition-card"><h3>Aproximación de campo pequeño</h3><p>Consiste en reemplazar funciones no lineales por sus primeros términos: \(\sin\phi\simeq\phi\), \(1-\cos\phi\simeq\phi^2/2\). Ejemplo: seno-Gordon pasa a Klein-Gordon. Se relaciona con linealización. En examen puede preguntarse: “Explica cómo aparece Klein-Gordon como límite de seno-Gordon.”</p></article>
+      <article class="definition-card"><h3>Densidad lagrangiana</h3><p>Función local de \(\phi\), sus derivadas y las coordenadas. Permite obtener ecuaciones de campo. Ejemplo: términos cinéticos, de gradiente y potencial. Se relaciona con Euler-Lagrange de campos. En examen puede preguntarse: “¿Qué papel desempeña \(\mathcal L\) en una teoría de campos?”</p></article>
+      <article class="definition-card"><h3>Densidad hamiltoniana</h3><p>Densidad de energía expresada en términos del campo y su momento conjugado. Ejemplo: \(\mathcal H\) de seno-Gordon contiene \(\pi^2\), \(\phi_x^2\) y \(1-\cos\phi\). Se relaciona con energía y conservación. En examen puede preguntarse: “Identifica las contribuciones energéticas del modelo seno-Gordon.”</p></article>
+      <article class="definition-card"><h3>Momento conjugado del campo</h3><p>Variable canónica asociada a \(\phi\). En el capítulo, \(\pi=\dot\phi\). Ejemplo: sustituir \(\dot\phi\) por \(\pi\) en \(\mathcal H\). Se relaciona con el paso lagrangiano-hamiltoniano. En examen puede preguntarse: “¿Cuál es el momento conjugado del campo seno-Gordon?”</p></article>
+      <article class="definition-card"><h3>Solución viajera</h3><p>Solución que depende de \(t-x/v\), por lo que se desplaza con velocidad \(v\) sin cambiar de forma. Ejemplo: \(\phi(x,t)=F(t-x/v)\). Se relaciona con reducción de EDP a EDO. En examen puede preguntarse: “¿Qué significa buscar una solución viajera?”</p></article>
+      <article class="definition-card"><h3>Dispersión dependiente de la amplitud</h3><p>En una ecuación no lineal, la relación entre frecuencia y número de onda puede depender de la amplitud. Ejemplo: péndulo de amplitud finita. Se relaciona con la pérdida del análisis puramente modal. En examen puede preguntarse: “¿Qué cambia en la dispersión al pasar de Klein-Gordon a seno-Gordon?”</p></article>
+      <article class="definition-card"><h3>Solitón</h3><p>Onda solitaria localizada que conserva su forma incluso tras interaccionar con otras. Ejemplo: soluciones de seno-Gordon o Korteweg-de Vries. Se relaciona con no linealidad y dispersión. En examen puede preguntarse: “Define solitón y distingue solitón de onda lineal.”</p></article>
+      <article class="definition-card"><h3>Korteweg-de Vries</h3><p>Ecuación no lineal dispersiva mencionada por Goldstein como otro ejemplo que admite solitones. Se relaciona con ondas solitarias fuera del modelo seno-Gordon. En examen puede preguntarse: “¿Por qué KdV aparece junto a seno-Gordon en la discusión de solitones?”</p></article>
+    </section>
+
+    <section class="page" id="relaciones-entre-ideas">
+      <div class="page-head"><h2>5. Relaciones entre ideas</h2><span class="page-no">p.5</span></div>
+      <div class="reading-block"><p>Klein-Gordon y seno-Gordon forman una jerarquía conceptual. Klein-Gordon es el modelo lineal; seno-Gordon es el modelo no lineal cuyo límite de pequeña amplitud recupera Klein-Gordon. La relación es la misma que entre el oscilador armónico y el péndulo real.</p></div>
+      <div class="reading-block"><p>La densidad lagrangiana genera la ecuación de campo. Cuando el potencial es cuadrático, aparece una ecuación lineal. Cuando el potencial es periódico, aparece una ecuación no lineal. Por tanto, la forma del potencial determina la estructura dinámica.</p></div>
+      <div class="reading-block"><p>La no linealidad rompe la superposición. En Klein-Gordon puede hablarse de suma de ondas planas; en seno-Gordon esto deja de ser el método natural. Sin embargo, la no linealidad no implica desorden absoluto: ciertas ecuaciones no lineales admiten soluciones coherentes.</p></div>
+      <div class="reading-block"><p>La solución viajera reduce el problema. Una EDP complicada puede convertirse en una EDO si se impone que la perturbación se mueva sin deformarse. En seno-Gordon esa EDO se interpreta como un péndulo de amplitud finita.</p></div>
+      <div class="reading-block"><p>El solitón aparece como consecuencia excepcional. Muchas ecuaciones no lineales son difíciles y no admiten soluciones simples. Algunas, como seno-Gordon y KdV, permiten ondas solitarias estables. Esa estabilidad no viene de la linealidad, sino del equilibrio interno entre efectos no lineales y dispersivos.</p></div>
+      <div class="reading-block"><p>Históricamente, este bloque pertenece a la ampliación moderna de la mecánica clásica: los métodos de Lagrange y Hamilton pasan de partículas a campos, y luego permiten estudiar fenómenos no lineales, caos, ondas coherentes y teorías de campo.</p></div>
+    </section>
+
+    <section class="page" id="errores-habituales">
+      <div class="page-head"><h2>6. Errores habituales</h2><span class="page-no">p.6</span></div>
+      <article class="definition-card"><h3>Error 1: creer que “no lineal” significa “caótico”</h3><p>Está mal porque la no linealidad es condición posible para caos, pero no lo garantiza. Taylor señala que la no linealidad es necesaria para el caos, pero no suficiente.</p><p>Corrección: una ecuación no lineal puede ser regular, integrable o admitir solitones.</p><p>Incorrecto: “Seno-Gordon es no lineal, luego es caótica.”</p><p>Correcto: “Seno-Gordon es no lineal y puede admitir solitones; no se deduce caos solo por no linealidad.”</p></article>
+      <article class="definition-card"><h3>Error 2: tratar seno-Gordon como suma de ondas planas</h3><p>Está mal porque el término \(\sin\phi\) rompe la superposición.</p><p>Corrección: para seno-Gordon se buscan otros métodos, como soluciones viajeras.</p><p>Incorrecto: “La solución general es suma de modos \(e^{i(kx-\omega t)}\).”</p><p>Correcto: “Ese razonamiento vale para Klein-Gordon lineal, no directamente para seno-Gordon.”</p></article>
+      <article class="definition-card"><h3>Error 3: confundir solitón con cualquier pulso</h3><p>Está mal porque un pulso puede dispersarse o deformarse.</p><p>Corrección: un solitón conserva forma incluso tras interaccionar.</p><p>Incorrecto: “Todo paquete de onda localizado es un solitón.”</p><p>Correcto: “Un solitón es una onda solitaria con estabilidad especial y comportamiento robusto en interacciones.”</p></article>
+      <div class="reading-block"><p><strong>Error 4: pensar que Klein-Gordon y seno-Gordon son ecuaciones independientes sin relación.</strong> Está mal porque Klein-Gordon aparece como aproximación de campo pequeño de seno-Gordon. Corrección: usar \(\sin\phi\simeq\phi\) y \(1-\cos\phi\simeq\phi^2/2\). Incorrecto: “Son dos modelos sin conexión.” Correcto: “Klein-Gordon es el límite lineal de seno-Gordon.”</p></div>
+      <article class="definition-card"><h3>Error 5: olvidar que \(\mathcal H\) es densidad, no energía total</h3><p>Está mal porque en campos la energía total se obtiene integrando la densidad en el espacio.</p><p>Corrección: distinguir densidad local y magnitud global.</p><p>Incorrecto: “\(\mathcal H\) es la energía total.”</p><p>Correcto: “\(\mathcal H\) es la densidad hamiltoniana; la energía total se obtiene integrando.”</p></article>
+      <article class="definition-card"><h3>Error 6: interpretar \(\tau=t-x/v\) como un cambio arbitrario sin significado físico</h3><p>Está mal porque \(\tau\) selecciona perfiles que se desplazan con velocidad \(v\).</p><p>Corrección: explicar que \(\phi(x,t)=F(\tau)\) mantiene forma.</p><p>Incorrecto: “Se introduce \(\tau\) para simplificar.”</p><p>Correcto: “Se introduce \(\tau\) porque describe una onda viajera de perfil fijo.”</p></article>
+      <article class="definition-card"><h3>Error 7: confundir dispersión no lineal con dispersión lineal no proporcional</h3><p>Está mal porque Goldstein distingue que en Klein-Gordon la relación \(\omega(k)\) no tiene por qué ser lineal en \(k\), pero la ecuación sí es lineal; en seno-Gordon la propia ecuación es no lineal y la dispersión depende de la amplitud.</p><p>Corrección: separar linealidad de la ecuación y linealidad de la relación de dispersión.</p><p>Incorrecto: “Si \(\omega(k)\) no es lineal, la ecuación es no lineal.”</p><p>Correcto: “Una ecuación puede ser lineal aunque su relación de dispersión no sea lineal.”</p></article>
+    </section>
+
+    <section class="page" id="preguntas-orientadas-a-examen">
+      <div class="page-head"><h2>7. Preguntas orientadas a examen</h2><span class="page-no">p.7</span></div>
+      <h3 id="10-preguntas-faciles">10 preguntas fáciles</h3>
+      <ol class="question-list"><li>¿Qué significa que una ecuación de campo sea lineal?</li><li>¿Por qué la ecuación seno-Gordon es no lineal?</li><li>¿Qué variable dinámica usa el modelo seno-Gordon?</li><li>¿Qué representa \(\phi(x,t)\)?</li><li>¿Cuál es la diferencia básica entre Klein-Gordon y seno-Gordon?</li><li>¿Qué aproximación convierte \(\sin\phi\) en \(\phi\)?</li><li>¿Qué significa una solución viajera?</li><li>¿Qué es un solitón?</li><li>¿Qué magnitud representa \(\pi(x,t)\) en el formalismo hamiltoniano de campos?</li><li>¿Qué ecuación menciona Goldstein además de seno-Gordon como ejemplo con solitones?</li></ol>
+      <h3 id="10-preguntas-medias">10 preguntas medias</h3>
+      <ol class="question-list"><li>Explica por qué Klein-Gordon puede analizarse mediante ondas planas.</li><li>Explica por qué seno-Gordon no puede tratarse, en general, por superposición de ondas planas.</li><li>Relaciona el potencial \(1-\cos\phi\) con la no linealidad del modelo.</li><li>Interpreta la densidad de energía de seno-Gordon.</li><li>Explica por qué la analogía con el péndulo es útil.</li><li>¿Qué significa que la dispersión dependa de la amplitud?</li><li>¿Qué se gana al introducir \(\tau=t-x/v\)?</li><li>¿Cómo se reduce seno-Gordon a una ecuación ordinaria para una onda viajera?</li><li>¿Por qué un solitón se parece a una partícula sin ser una partícula puntual?</li><li>¿Por qué KdV aparece en el mismo contexto conceptual que seno-Gordon?</li></ol>
+      <h3 id="5-preguntas-dificiles">5 preguntas difíciles</h3>
+      <ol class="question-list"><li>Demuestra conceptualmente cómo Klein-Gordon aparece como límite lineal de seno-Gordon.</li><li>Explica la diferencia entre linealidad de la ecuación y linealidad de la relación de dispersión.</li><li>Analiza por qué la existencia de solitones es sorprendente en una ecuación no lineal.</li><li>Explica la estructura energética del modelo seno-Gordon desde la densidad hamiltoniana.</li><li>Compara la descripción modal de Klein-Gordon con la descripción por ondas viajeras de seno-Gordon.</li></ol>
+      <h3 id="5-preguntas-de-desarrollo-largo">5 preguntas de desarrollo largo</h3>
+      <ol class="question-list"><li>Desarrolla el paso de Klein-Gordon a seno-Gordon y explica el papel de la no linealidad.</li><li>Expón la interpretación mecánica de seno-Gordon como análogo de un péndulo continuo.</li><li>Describe qué es un solitón y por qué su existencia es físicamente relevante.</li><li>Explica la formulación lagrangiana y hamiltoniana del campo seno-Gordon.</li><li>Compara ondas lineales, ondas dispersivas y solitones.</li></ol>
+      <h3 id="5-preguntas-de-relacion-entre-conceptos">5 preguntas de relación entre conceptos</h3>
+      <ol class="question-list"><li>Relaciona campo pequeño, linealización y Klein-Gordon.</li><li>Relaciona potencial periódico, seno-Gordon y péndulo.</li><li>Relaciona no linealidad, pérdida de superposición y soluciones viajeras.</li><li>Relaciona densidad lagrangiana, densidad hamiltoniana y conservación de energía.</li><li>Relaciona seno-Gordon, Korteweg-de Vries y solitones.</li></ol>
+    </section>
+
+    <section class="page" id="respuestas-modelo">
+      <div class="page-head"><h2>8. Respuestas modelo</h2><span class="page-no">p.8</span></div>
+      <ol class="question-list"><li>Una ecuación de campo es lineal si el campo y sus derivadas aparecen solo en primer grado y sin funciones no lineales del campo. Esto permite que combinaciones lineales de soluciones sigan siendo soluciones.</li></ol>
+      <ol class="question-list"><li>Es no lineal porque contiene el término \(\sin\phi\), que no es proporcional a \(\phi\) salvo en la aproximación de campo pequeño.</li></ol>
+      <ol class="question-list"><li>La variable dinámica es el campo escalar real \(\phi(x,t)\), definido en una dimensión espacial y en el tiempo.</li></ol>
+      <ol class="question-list"><li>Representa el valor del campo en el punto \(x\) y en el instante \(t\). No es la coordenada de una partícula, sino una variable continua.</li></ol>
+      <ol class="question-list"><li>Klein-Gordon tiene un término proporcional a \(\phi\) y es lineal. Seno-Gordon sustituye ese término por \(\sin\phi\) y es no lineal.</li></ol>
+      <ol class="question-list"><li>La aproximación de campo pequeño: para \(|\phi|\ll1\), se toma \(\sin\phi\simeq\phi\).</li></ol>
+      <ol class="question-list"><li>Una solución viajera es una perturbación que se desplaza con velocidad \(v\) manteniendo su forma. Matemáticamente depende de \(t-x/v\).</li></ol>
+      <ol class="question-list"><li>Un solitón es una onda solitaria localizada que conserva su forma y puede atravesar otras perturbaciones similares saliendo casi intacta.</li></ol>
+      <ol class="question-list"><li>\(\pi(x,t)\) es el momento conjugado del campo. En el modelo presentado, \(\pi=\dot\phi\).</li></ol>
+      <ol class="question-list"><li>La ecuación de Korteweg-de Vries.</li></ol>
+      <ol class="question-list"><li>Klein-Gordon es lineal, por lo que admite superposición. Esto permite construir el campo como suma de modos ondulatorios, típicamente ondas planas con una relación de dispersión.</li></ol>
+      <ol class="question-list"><li>Seno-Gordon contiene \(\sin\phi\). La suma de dos soluciones no tiene por qué ser solución, porque \(\sin(\phi_1+\phi_2)\neq \sin\phi_1+\sin\phi_2\).</li></ol>
+      <ol class="question-list"><li>El potencial \(1-\cos\phi\) genera, al derivar, un término proporcional a \(\sin\phi\). Esa función periódica no es lineal, salvo cerca de \(\phi=0\).</li></ol>
+      <ol class="question-list"><li>La densidad de energía contiene una parte cinética \(\dot\phi^2/2\), una parte espacial asociada al gradiente \(c^2\phi_x^2/2\), y una parte potencial \(\mu_0^2c^2(1-\cos\phi)\). Describe energía local del campo.</li></ol>
+      <ol class="question-list"><li>Porque el péndulo pequeño es linealizable, pero el péndulo de amplitud finita conserva \(\sin\theta\). Seno-Gordon reproduce esa misma lógica en un campo continuo.</li></ol>
+      <ol class="question-list"><li>Significa que la frecuencia de la perturbación no queda determinada solo por \(k\), sino también por el tamaño de la oscilación. Es típico de sistemas no lineales.</li></ol>
+      <ol class="question-list"><li>Se gana reducir una EDP en \(x,t\) a una EDO en una sola variable. Además, esa variable codifica una perturbación que se desplaza con velocidad fija.</li></ol>
+      <ol class="question-list"><li>Se supone \(\phi(x,t)=F(\tau)\), con \(\tau=t-x/v\). Las derivadas parciales se convierten en derivadas ordinarias respecto de \(\tau\), y queda una ecuación del tipo péndulo.</li></ol>
+      <ol class="question-list"><li>Porque es localizado, estable y se propaga como una entidad reconocible. Pero no es una partícula puntual: es una configuración extendida del campo.</li></ol>
+      <ol class="question-list"><li>Porque ambas son ecuaciones no lineales que admiten ondas solitarias robustas. Goldstein usa KdV como segundo ejemplo de ecuación con solitones.</li></ol>
+      <ol class="question-list"><li>La lagrangiana no lineal contiene un potencial \(1-\cos\phi\). Para campos pequeños, \(\cos\phi\simeq1-\phi^2/2\), luego \(1-\cos\phi\simeq\phi^2/2\). La ecuación de campo correspondiente contiene \(\sin\phi\simeq\phi\), recuperando una ecuación lineal tipo Klein-Gordon.</li></ol>
+      <ol class="question-list"><li>La linealidad de la ecuación se refiere a cómo aparece el campo en la ecuación diferencial. La relación de dispersión describe cómo se relacionan \(\omega\) y \(k\) para soluciones ondulatorias. Una ecuación puede ser lineal aunque \(\omega(k)\) no sea una función lineal.</li></ol>
+      <ol class="question-list"><li>Es sorprendente porque en un sistema no lineal se espera deformación, mezcla de modos y pérdida de superposición. Un solitón, en cambio, mantiene forma y sobrevive a interacciones. Eso revela una estructura dinámica especial.</li></ol>
+      <ol class="question-list"><li>La densidad hamiltoniana suma energía cinética del campo, energía de gradiente y energía potencial no lineal. La parte de gradiente penaliza variaciones espaciales; la parte potencial impone la estructura periódica; la parte cinética mide la variación temporal.</li></ol>
+      <ol class="question-list"><li>Klein-Gordon se analiza mediante modos independientes porque es lineal. Seno-Gordon no admite esa descomposición directa; se buscan soluciones no lineales coherentes, como ondas viajeras o solitones.</li></ol>
+      <ol class="question-list"><li>Klein-Gordon aparece primero como campo escalar lineal con término proporcional a \(\phi\). Seno-Gordon modifica el potencial y sustituye el término lineal por \(\sin\phi\). Para campos pequeños, ambos modelos coinciden aproximadamente. Para amplitudes finitas, seno-Gordon conserva la no linealidad y aparecen fenómenos que Klein-Gordon no puede describir, como dispersión dependiente de amplitud y ondas solitarias robustas.</li></ol>
+      <ol class="question-list"><li>Seno-Gordon se interpreta como un campo continuo cuyo comportamiento local recuerda al péndulo. En pequeña amplitud se comporta como un oscilador armónico, igual que el péndulo linealizado. En amplitud finita conserva el término seno, como el péndulo real. Al buscar una solución viajera, la ecuación se reduce a una ecuación ordinaria formalmente semejante a la del péndulo de amplitud finita.</li></ol>
+      <ol class="question-list"><li>Un solitón es una onda solitaria que mantiene su forma durante la propagación y tras la interacción con otras ondas similares. Su relevancia física está en que permite que una teoría de campo no lineal tenga estructuras localizadas estables, útiles como modelos efectivos en distintas áreas, desde física de partículas hasta materia condensada.</li></ol>
+      <ol class="question-list"><li>En la formulación lagrangiana, se parte de una densidad \(\mathcal L\) con términos cinéticos, espaciales y potenciales. Al aplicar Euler-Lagrange de campos se obtiene la ecuación seno-Gordon. En la formulación hamiltoniana, se introduce el momento conjugado \(\pi=\dot\phi\) y se construye una densidad \(\mathcal H\) que representa la energía local del campo.</li></ol>
+      <ol class="question-list"><li>Una onda lineal permite superposición: varias soluciones se suman sin alterar su identidad matemática. Una onda dispersiva puede deformarse porque distintas componentes viajan con velocidades distintas. Un solitón, pese a vivir en una ecuación no lineal y dispersiva, conserva su forma por un equilibrio entre efectos no lineales y dispersivos.</li></ol>
+      <ol class="question-list"><li>Campo pequeño permite aproximar \(\sin\phi\) por \(\phi\). Esa linealización convierte seno-Gordon en Klein-Gordon.</li></ol>
+      <ol class="question-list"><li>El potencial periódico \(1-\cos\phi\) produce \(\sin\phi\) en la ecuación de campo. Esa estructura es análoga al péndulo real.</li></ol>
+      <ol class="question-list"><li>La no linealidad impide la superposición general. Por eso se buscan soluciones especiales, como perfiles viajeros.</li></ol>
+      <ol class="question-list"><li>La densidad lagrangiana genera la dinámica; la densidad hamiltoniana expresa la energía local. Si no hay dependencia explícita en tiempo, aparece conservación de energía.</li></ol>
+      <ol class="question-list"><li>Seno-Gordon y Korteweg-de Vries son ejemplos de ecuaciones no lineales que admiten solitones. Ambas muestran que no linealidad no equivale necesariamente a pérdida completa de estructura.</li></ol>
+    </section>
+
+    <section class="page" id="resumen-final-de-repaso">
+      <div class="page-head"><h2>9. Resumen final de repaso</h2><span class="page-no">p.9</span></div>
+      <div class="reading-block"><p>Ideas principales:</p></div>
+      <ul class="checklist"><li>Klein-Gordon es lineal.</li><li>Seno-Gordon es no lineal por el término \(\sin\phi\).</li><li>Klein-Gordon aparece como límite de campo pequeño de seno-Gordon.</li><li>La densidad de energía de seno-Gordon contiene parte cinética, gradiente espacial y potencial periódico.</li><li>En ecuaciones lineales se usa superposición; en seno-Gordon no.</li><li>Una solución viajera depende de \(t-x/v\).</li><li>Un solitón es una onda solitaria que conserva forma tras propagarse e interaccionar.</li><li>KdV es otro ejemplo de ecuación no lineal con solitones.</li></ul>
+      <div class="reading-block"><p>Conceptos imprescindibles:</p></div>
+      <ul class="checklist"><li>\(\phi(x,t)\)</li><li>\(\mathcal L\)</li><li>\(\mathcal H\)</li><li>\(\pi=\dot\phi\)</li><li>linealización</li><li>dispersión</li><li>solución viajera</li><li>solitón</li></ul>
+      <div class="reading-block"><p>Relaciones clave:</p></div>
+      <ul class="checklist"><li>\(\sin\phi\simeq\phi\) conecta seno-Gordon con Klein-Gordon.</li><li>\(1-\cos\phi\) conecta el potencial periódico con la ecuación seno-Gordon.</li><li>No linealidad rompe superposición.</li><li>Solitón conserva forma pese a la no linealidad.</li><li>Seno-Gordon se entiende por analogía con el péndulo.</li></ul>
+      <div class="reading-block"><p>Errores que evitar:</p></div>
+      <ul class="checklist"><li>No llamar solitón a cualquier pulso.</li><li>No resolver seno-Gordon como suma general de ondas planas.</li><li>No confundir densidad hamiltoniana con energía total.</li><li>No identificar no linealidad con caos automáticamente.</li><li>No confundir relación de dispersión no lineal con ecuación no lineal.</li></ul>
+    </section>
+
+    <section class="page" id="checklist-de-dominio">
+      <div class="page-head"><h2>10. Checklist de dominio</h2><span class="page-no">p.10</span></div>
+      <ul class="checklist"><li>Si no puedes explicar por qué \(\sin\phi\) hace no lineal la ecuación, falta repasar linealidad.</li><li>Si confundes Klein-Gordon con seno-Gordon, revisar la aproximación \(\sin\phi\simeq\phi\).</li><li>Si no puedes interpretar \(1-\cos\phi\), falta repasar potencial periódico y analogía con el péndulo.</li><li>Si no puedes distinguir \(\mathcal L\) de \(\mathcal H\), falta repasar formalismo lagrangiano y hamiltoniano de campos.</li><li>Si no sabes qué significa \(\pi=\dot\phi\), falta repasar momento conjugado en campos.</li><li>Si tratas seno-Gordon por superposición modal general, revisar no linealidad.</li><li>Si no puedes explicar \(\tau=t-x/v\), falta repasar ondas viajeras.</li><li>Si llamas solitón a cualquier paquete localizado, revisar definición de solitón.</li><li>Si puedes explicar el paso Klein-Gordon \(\rightarrow\) seno-Gordon \(\rightarrow\) solitón, el capítulo está conceptualmente asentado.</li><li>Si puedes comparar seno-Gordon y KdV como ecuaciones no lineales con ondas solitarias, el capítulo está suficientemente dominado.</li></ul>
+    </section>
+  </main>
+</div>
+</body>
+</html>
