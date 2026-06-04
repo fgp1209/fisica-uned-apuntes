@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="light dark" />
+  <title>Mecánica Teórica — T3 — Hamilton-Jacobi</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/icon-32.png" />
+  <link rel="icon" type="image/png" sizes="50x50" href="assets/icons/icon-50.png" />
+  <link rel="apple-touch-icon" sizes="100x100" href="assets/icons/icon-100.png" />
+  <meta name="theme-color" content="#6f42c1" />
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+  <link rel="stylesheet" href="assets/styles.css" />
+  <script defer src="assets/app.js"></script>
+</head>
+<body class="subject-mecanica-teorica">
+<div class="wrap">
+  <header class="cover">
+    <div class="top-actions"><a class="back-link" href="index.html">← Volver al índice</a></div>
+    <p class="eyebrow">UNED Física · Mecánica Teórica · Tema 3</p>
+    <h1>Guía de estudio — T3 Hamilton-Jacobi</h1>
+    <p class="subtitle">Goldstein, cap. 10.1–10.5: función principal, oscilador armónico, función característica, separación de variables y coordenadas ignorables/Képler.</p>
+    <div class="chips"><span class="chip">UNED Física</span><span class="chip">Mecánica Teórica</span><span class="chip">MT3</span><span class="chip">MathJax</span><span class="chip">estado: maquetado</span></div>
+  </header>
+
+  <div class="toolbar no-print">
+    <nav><a href="#mapa">Mapa</a><a href="#prerrequisitos-minimos">Prerrequisitos</a><a href="#idea-central-del-capitulo">Idea central</a><a href="#desarrollo-completo-del-capitulo">Desarrollo</a><a href="#conceptos-clave">Conceptos</a><a href="#relaciones-entre-ideas">Relaciones</a><a href="#errores-habituales">Errores</a><a href="#preguntas-orientadas-a-examen">Preguntas</a><a href="#respuestas-modelo">Respuestas</a><a href="#resumen-final-de-repaso">Resumen</a><a href="#checklist-de-dominio">Checklist</a></nav>
+    <div class="toolbar-actions"><button class="btn" onclick="printReady()">Imprimir / guardar PDF</button><button class="btn secondary" onclick="openAllDetails()">Abrir todo</button><button class="btn secondary" onclick="closeAllDetails()">Cerrar acordeones</button></div>
+  </div>
+
+  <main>
+    <section class="page map-page" id="mapa">
+      <div class="page-head"><h2>Mapa clicable</h2><p class="section-lead">Ruta conceptual del tema.</p></div>
+      <div class="concept-map">
+        <a class="map-node" href="#prerrequisitos-minimos"><span>Prerrequisitos</span><small>Hamiltoniano · Hamilton · canónicas · generadoras</small></a>
+        <a class="map-node" href="#idea-central-del-capitulo"><span>Idea central</span><small>función de acción · S · W · separación</small></a>
+        <a class="map-node" href="#desarrollo-completo-del-capitulo"><span>Desarrollo</span><small>HJ · oscilador · coordenadas ignorables · Kepler</small></a>
+        <a class="map-node" href="#conceptos-clave"><span>Conceptos clave</span><small>función principal · característica · solución completa</small></a>
+        <a class="map-node" href="#relaciones-entre-ideas"><span>Relaciones</span><small>acción · energía · simetrías · cuadraturas</small></a>
+        <a class="map-node" href="#errores-habituales"><span>Errores</span><small>S≠H · constante aditiva · derivadas respecto a constantes</small></a>
+        <a class="map-node" href="#preguntas-orientadas-a-examen"><span>Examen</span><small>fáciles · medias · difíciles · desarrollo</small></a>
+        <a class="map-node" href="#checklist-de-dominio"><span>Checklist</span><small>criterios de dominio operativo</small></a>
+      </div>
+    </section>
+    <section class="page" id="prerrequisitos-minimos">
+      <div class="page-head"><h2>1. Prerrequisitos mínimos</h2><span class="page-no">p.1</span></div>
+      <article class="definition-card"><h3>Hamiltoniano.</h3>
+      <div class="reading-block"><p>Función \(H(q,p,t)\) que describe la evolución en el espacio de fases. En sistemas naturales suele coincidir con la energía total. Es necesario porque la ecuación de Hamilton-Jacobi se construye sustituyendo \(p_i\) por derivadas de una función generadora. Ejemplo:</p></div>
+      <div class="formula-block">\[H(q,p)=\frac{p^2}{2m}+V(q).\]</div>
+      </article>
+      <article class="definition-card"><h3>Ecuaciones de Hamilton.</h3>
+      <div class="reading-block"><p>Sistema de \(2n\) ecuaciones de primer orden:</p></div>
+      <div class="formula-block">\[\dot q_i=\frac{\partial H}{\partial p_i},\qquad
+\dot p_i=-\frac{\partial H}{\partial q_i}.\]</div>
+      <div class="reading-block"><p>Son necesarias porque Hamilton-Jacobi no cambia la física: transforma el problema de resolver estas ecuaciones en resolver una ecuación diferencial parcial.</p></div>
+      </article>
+      <article class="definition-card"><h3>Transformaciones canónicas.</h3>
+      <div class="reading-block"><p>Cambios de variables \((q,p)\mapsto(Q,P)\) que conservan la forma hamiltoniana de las ecuaciones. Hamilton-Jacobi se entiende como búsqueda de una transformación canónica especialmente fuerte: una que convierte las nuevas variables en constantes o en variables de evolución trivial. Goldstein plantea la función principal \(S\) como generadora de una transformación hacia coordenadas y momentos constantes.</p></div>
+      </article>
+      <article class="definition-card"><h3>Función generadora.</h3>
+      <div class="reading-block"><p>Función que define una transformación canónica mediante derivadas parciales. En Hamilton-Jacobi, la función generadora principal es \(S(q,P,t)\). Su derivada respecto a \(q_i\) da el momento antiguo:</p></div>
+      <div class="formula-block">\[p_i=\frac{\partial S}{\partial q_i}.\]</div>
+      <div class="reading-block"><p>Esto es el punto técnico central del capítulo.</p></div>
+      </article>
+      <article class="definition-card"><h3>Constantes de integración.</h3>
+      <div class="reading-block"><p>Resolver una ecuación de primer orden en \(n+1\) variables produce constantes. En Hamilton-Jacobi interesa una solución completa con \(n\) constantes no triviales. Esas constantes se pueden tomar como nuevos momentos \(P_i\).</p></div>
+      </article>
+      <article class="definition-card"><h3>Separación de variables.</h3>
+      <div class="reading-block"><p>Método para resolver ecuaciones diferenciales buscando soluciones como suma de partes dependientes de variables distintas. En Hamilton-Jacobi es decisivo: la técnica solo se vuelve práctica cuando la ecuación se puede separar.</p></div>
+      </article>
+      <article class="definition-card"><h3>Coordenadas cíclicas o ignorables.</h3>
+      <div class="reading-block"><p>Una coordenada es ignorable si el Hamiltoniano no depende explícitamente de ella. Su momento conjugado se conserva. En Hamilton-Jacobi, esa coordenada se separa de forma inmediata:</p></div>
+      <div class="formula-block">\[W_j=\alpha_j q_j.\]</div>
+      <div class="reading-block"><p>En problemas centrales, la coordenada angular es el ejemplo típico.</p></div>
+      </article>
+    </section>
+    <section class="page" id="idea-central-del-capitulo">
+      <div class="page-head"><h2>2. Idea central del capítulo</h2><span class="page-no">p.2</span></div>
+      <div class="reading-block"><p>Hamilton-Jacobi reformula la mecánica hamiltoniana como una ecuación diferencial parcial para una función \(S\). En lugar de integrar directamente las \(2n\) ecuaciones de Hamilton, se busca una función generadora que codifique de una vez la transformación canónica capaz de simplificar el movimiento.</p></div>
+      <div class="reading-block"><p>La idea física es fuerte: el movimiento queda contenido en una función escalar. Esa función no es una energía ni un potencial. Es una función de acción. Goldstein muestra que la función principal de Hamilton cumple</p></div>
+      <div class="formula-block">\[\frac{dS}{dt}=L,\]</div>
+      <div class="reading-block"><p>por lo que \(S\) difiere como mucho de la integral temporal del lagrangiano en una constante:</p></div>
+      <div class="formula-block">\[S=\int L,dt+\text{cte}.\]</div>
+      <div class="reading-block"><p>Así, Hamilton-Jacobi conecta Hamilton, Lagrange y principio de acción.</p></div>
+      <div class="reading-block"><p>El capítulo enseña dos formas de usar esa idea. La primera usa la <strong>función principal</strong> \(S(q,P,t)\), válida para Hamiltonianos generales, incluso dependientes del tiempo. La segunda usa la <strong>función característica</strong> \(W(q,P)\), apropiada cuando el Hamiltoniano no depende explícitamente del tiempo. En ese caso se separa</p></div>
+      <div class="formula-block">\[S(q,P,t)=W(q,P)-\alpha_1 t,\]</div>
+      <div class="reading-block"><p>donde \(\alpha_1\) suele ser la energía.</p></div>
+      <div class="reading-block"><p>La utilidad práctica aparece con la separación de variables. Goldstein advierte que, en principio, no parece haberse ganado mucho: se sustituyen \(2n\) EDO por una EDP. La ventaja aparece cuando esa EDP se separa y se reduce a cuadraturas. Ahí Hamilton-Jacobi se convierte en método de integración.</p></div>
+      <div class="reading-block"><p>Dentro de la asignatura, este tema es cierre formal del bloque Hamiltoniano: después de Lagrange, Hamilton, Poisson y transformaciones canónicas, Hamilton-Jacobi muestra la versión más condensada de la mecánica clásica. En examen UNED aparece como bloque reconocible: dada una \(S\), obtener \(H\), deducir la ley de movimiento o reconstruir una función generadora alternativa.</p></div>
+    </section>
+    <section class="page" id="desarrollo-completo-del-capitulo">
+      <div class="page-head"><h2>3. Desarrollo completo del capítulo</h2><span class="page-no">p.3</span></div>
+      <h3 id="3-1-funcion-principal-de-hamilton">3.1. Función principal de Hamilton</h3>
+      <div class="reading-block"><p>El punto de partida es una transformación canónica desde las variables antiguas \((q,p)\) a unas nuevas variables \((Q,P)\). Se busca que el nuevo Hamiltoniano \(K\) sea cero. Si</p></div>
+      <div class="formula-block">\[K=0,\]</div>
+      <div class="reading-block"><p>entonces las ecuaciones nuevas son triviales:</p></div>
+      <div class="formula-block">\[\dot Q_i=0,\qquad \dot P_i=0.\]</div>
+      <div class="reading-block"><p>Esto significa que \(Q_i\) y \(P_i\) son constantes. El movimiento físico no desaparece; queda escondido en la transformación inversa.</p></div>
+      <div class="reading-block"><p>Como el nuevo Hamiltoniano se relaciona con el antiguo mediante</p></div>
+      <div class="formula-block">\[K=H+\frac{\partial F}{\partial t},\]</div>
+      <div class="reading-block"><p>pedir \(K=0\) obliga a</p></div>
+      <div class="formula-block">\[H+\frac{\partial F}{\partial t}=0.\]</div>
+      <div class="reading-block"><p>Tomando \(F=F_2(q,P,t)\) y usando</p></div>
+      <div class="formula-block">\[p_i=\frac{\partial F_2}{\partial q_i},\]</div>
+      <div class="reading-block"><p>se obtiene la ecuación de Hamilton-Jacobi:</p></div>
+      <div class="formula-block">\[\boxed{
+H\left(q_1,\ldots,q_n;
+\frac{\partial S}{\partial q_1},\ldots,\frac{\partial S}{\partial q_n};
+t\right)
++\frac{\partial S}{\partial t}=0
+}\]</div>
+      <div class="reading-block"><p>donde \(S\) es la función principal de Hamilton.</p></div>
+      <div class="reading-block"><p>La consecuencia es que resolver Hamilton-Jacobi con una solución completa permite reconstruir el movimiento. Las constantes de integración \(\alpha_i\) se interpretan como nuevos momentos. Las ecuaciones</p></div>
+      <div class="formula-block">\[p_i=\frac{\partial S}{\partial q_i},
+\qquad
+Q_i=\frac{\partial S}{\partial \alpha_i}=\beta_i\]</div>
+      <div class="reading-block"><p>permiten obtener \(q_i(t)\) y luego \(p_i(t)\). Goldstein subraya que así se obtiene la solución completa de las ecuaciones de Hamilton.</p></div>
+      <div class="reading-block"><p>Ejemplo mínimo: para</p></div>
+      <div class="formula-block">\[H=\frac{p^2}{2m}+V(q),\]</div>
+      <div class="reading-block"><p>Hamilton-Jacobi queda</p></div>
+      <div class="formula-block">\[\frac{1}{2m}\left(\frac{\partial S}{\partial q}\right)^2+V(q)+\frac{\partial S}{\partial t}=0.\]</div>
+      <div class="reading-block"><p>No es todavía una solución; es la ecuación que debe cumplir la función \(S\).</p></div>
+      <h3 id="3-2-significado-fisico-de-s">3.2. Significado físico de \(S\)</h3>
+      <div class="reading-block"><p>La función \(S\) no es una función auxiliar cualquiera. Como</p></div>
+      <div class="formula-block">\[p_i=\frac{\partial S}{\partial q_i},\]</div>
+      <div class="reading-block"><p>sus derivadas espaciales dan los momentos. Además, usando la ecuación de Hamilton-Jacobi se obtiene</p></div>
+      <div class="formula-block">\[\frac{dS}{dt}=p_i\dot q_i-H=L.\]</div>
+      <div class="reading-block"><p>Por tanto,</p></div>
+      <div class="formula-block">\[S=\int L,dt+\text{cte}.\]</div>
+      <div class="reading-block"><p>Esto conecta Hamilton-Jacobi con el principio de Hamilton. \(S\) acumula acción a lo largo de la trayectoria real. Por eso la teoría es una forma extrema de la mecánica analítica: no describe el movimiento fuerza a fuerza, sino mediante una función de acción.</p></div>
+      <div class="reading-block"><p>Ejemplo: en una partícula libre,</p></div>
+      <div class="formula-block">\[L=\frac12m\dot x^2.\]</div>
+      <div class="reading-block"><p>Si la velocidad es constante, la acción crece linealmente con el tiempo. Hamilton-Jacobi empaqueta esa información en \(S(x,t)\).</p></div>
+      <h3 id="3-3-solucion-completa-y-constantes">3.3. Solución completa y constantes</h3>
+      <div class="reading-block"><p>Una solución completa de Hamilton-Jacobi debe contener \(n\) constantes independientes no triviales. No cuenta la constante aditiva, porque \(S\) solo aparece derivada.</p></div>
+      <div class="reading-block"><p>Esto importa porque un sistema con \(n\) grados de libertad necesita \(2n\) constantes para fijar completamente el movimiento: \(n\) constantes \(\alpha_i\), que se toman como nuevos momentos, y \(n\) constantes \(\beta_i\), que aparecen al derivar \(S\) respecto a esas constantes.</p></div>
+      <div class="reading-block"><p>El procedimiento es:</p></div>
+      <div class="formula-block">\[S=S(q_1,\ldots,q_n;\alpha_1,\ldots,\alpha_n;t),\]</div>
+      <div class="formula-block">\[p_i=\frac{\partial S}{\partial q_i},\]</div>
+      <div class="formula-block">\[\frac{\partial S}{\partial \alpha_i}=\beta_i.\]</div>
+      <div class="reading-block"><p>Las ecuaciones \(\partial S/\partial\alpha_i=\beta_i\) son las que dan la trayectoria. Después se usan las condiciones iniciales para fijar \(\alpha_i,\beta_i\).</p></div>
+      <div class="reading-block"><p>Ejemplo: en un sistema unidimensional, una solución completa tiene una constante no trivial, normalmente la energía \(E\). La otra constante aparece al imponer</p></div>
+      <div class="formula-block">\[\frac{\partial S}{\partial E}=\beta.\]</div>
+      <h3 id="3-4-oscilador-armonico-como-ejemplo">3.4. Oscilador armónico como ejemplo</h3>
+      <div class="reading-block"><p>Goldstein usa el oscilador armónico como ejemplo del método. Para</p></div>
+      <div class="formula-block">\[H=\frac{p^2}{2m}+\frac12m\omega^2q^2,\]</div>
+      <div class="reading-block"><p>Hamilton-Jacobi es</p></div>
+      <div class="formula-block">\[\frac{1}{2m}\left(\frac{\partial S}{\partial q}\right)^2+
+\frac12m\omega^2q^2+
+\frac{\partial S}{\partial t}=0.\]</div>
+      <div class="reading-block"><p>Como el Hamiltoniano no depende explícitamente del tiempo, se puede probar</p></div>
+      <div class="formula-block">\[S(q,E,t)=W(q,E)-Et.\]</div>
+      <div class="reading-block"><p>Entonces:</p></div>
+      <div class="formula-block">\[\frac{1}{2m}\left(\frac{dW}{dq}\right)^2+
+\frac12m\omega^2q^2=E.\]</div>
+      <div class="reading-block"><p>De aquí:</p></div>
+      <div class="formula-block">\[\frac{dW}{dq}=
+\sqrt{2mE-m^2\omega^2q^2}.\]</div>
+      <div class="reading-block"><p>La función \(W\) se obtiene por cuadratura:</p></div>
+      <div class="formula-block">\[W(q,E)=\int \sqrt{2mE-m^2\omega^2q^2},dq.\]</div>
+      <div class="reading-block"><p>La trayectoria sale de</p></div>
+      <div class="formula-block">\[\frac{\partial S}{\partial E}=\beta.\]</div>
+      <div class="reading-block"><p>Físicamente, reaparece el movimiento sinusoidal del oscilador. La ventaja no está en que este ejemplo sea más fácil que Newton o Hamilton directo; está en mostrar cómo una sola función contiene el movimiento.</p></div>
+      <h3 id="3-5-funcion-caracteristica-de-hamilton">3.5. Función característica de Hamilton</h3>
+      <div class="reading-block"><p>Cuando \(H\) no depende explícitamente del tiempo, puede separarse</p></div>
+      <div class="formula-block">\[S(q,P,t)=W(q,P)-\alpha_1t.\]</div>
+      <div class="reading-block"><p>Entonces la ecuación de Hamilton-Jacobi se reduce a</p></div>
+      <div class="formula-block">\[\boxed{
+H\left(q_i,\frac{\partial W}{\partial q_i}\right)=\alpha_1
+}\]</div>
+      <div class="reading-block"><p>Esta es la ecuación restringida de Hamilton-Jacobi. \(W\) se llama función característica. La constante \(\alpha_1\) es el valor constante del Hamiltoniano, normalmente la energía.</p></div>
+      <div class="reading-block"><p>La diferencia conceptual es clara. \(S\) genera una transformación con \(K=0\), de modo que todas las nuevas coordenadas y momentos son constantes. \(W\) genera una transformación en la que los nuevos momentos son constantes, pero las nuevas coordenadas evolucionan linealmente:</p></div>
+      <div class="formula-block">\[Q_i=\nu_i t+\beta_i.\]</div>
+      <div class="reading-block"><p>Goldstein resume ambos métodos en paralelo: función principal para Hamiltonianos generales; función característica para Hamiltonianos conservativos.</p></div>
+      <h3 id="3-6-separacion-de-variables">3.6. Separación de variables</h3>
+      <div class="reading-block"><p>La ecuación de Hamilton-Jacobi es una EDP. Resolver una EDP suele ser más difícil que resolver EDO. Por eso el método solo es operativo cuando se puede separar.</p></div>
+      <div class="reading-block"><p>Una coordenada \(q_j\) es separable si la función principal puede escribirse como suma de una parte que depende solo de \(q_j\) y otra que no depende de \(q_j\). Si todas las coordenadas son separables:</p></div>
+      <div class="formula-block">\[S=\sum_i S_i(q_i;\alpha_1,\ldots,\alpha_n;t).\]</div>
+      <div class="reading-block"><p>En sistemas independientes del tiempo se usa:</p></div>
+      <div class="formula-block">\[W=\sum_i W_i(q_i;\alpha_1,\ldots,\alpha_n).\]</div>
+      <div class="reading-block"><p>La separación convierte la EDP en varias ecuaciones ordinarias, cada una resoluble por integración. Goldstein afirma que, bajo separación, la solución se reduce a cuadraturas.</p></div>
+      <div class="reading-block"><p>Ejemplo mínimo: si</p></div>
+      <div class="formula-block">\[H=\frac{p_x^2}{2m}+\frac{p_y^2}{2m}+V_x(x)+V_y(y),\]</div>
+      <div class="reading-block"><p>se prueba</p></div>
+      <div class="formula-block">\[W(x,y)=W_x(x)+W_y(y).\]</div>
+      <div class="reading-block"><p>Cada coordenada aporta su propia constante de separación.</p></div>
+      <h3 id="3-7-coordenadas-ignorables">3.7. Coordenadas ignorables</h3>
+      <div class="reading-block"><p>Si una coordenada no aparece en el Hamiltoniano, su momento conjugado es constante. En Hamilton-Jacobi esto se traduce directamente en que la parte correspondiente de \(W\) es lineal:</p></div>
+      <div class="formula-block">\[W_j=\alpha_j q_j.\]</div>
+      <div class="reading-block"><p>Esto es importante porque reduce el problema sin cálculo adicional. Las simetrías siguen apareciendo como constantes del movimiento, pero ahora dentro de la solución de \(W\).</p></div>
+      <div class="reading-block"><p>Ejemplo: en un potencial central plano,</p></div>
+      <div class="formula-block">\[H=\frac{1}{2m}\left(p_r^2+\frac{p_\psi^2}{r^2}\right)+V(r).\]</div>
+      <div class="reading-block"><p>La coordenada \(\psi\) es ignorable, así que</p></div>
+      <div class="formula-block">\[W=W_r(r)+\alpha_\psi\psi.\]</div>
+      <div class="reading-block"><p>\(\alpha_\psi\) es el momento angular.</p></div>
+      <h3 id="3-8-problema-central-y-kepler">3.8. Problema central y Képler</h3>
+      <div class="reading-block"><p>Goldstein aplica Hamilton-Jacobi al problema de fuerzas centrales. En coordenadas polares planas, la separación da:</p></div>
+      <div class="formula-block">\[W=W_r(r)+\alpha_\psi\psi,\]</div>
+      <div class="formula-block">\[\left(\frac{dW_r}{dr}\right)^2+\frac{\alpha_\psi^2}{r^2}+2mV(r)=2mE.\]</div>
+      <div class="reading-block"><p>Por tanto:</p></div>
+      <div class="formula-block">\[W_r=\int \sqrt{2m(E-V(r))-\frac{\alpha_\psi^2}{r^2}},dr.\]</div>
+      <div class="reading-block"><p>La derivada respecto a \(E\) da la relación radial con el tiempo. La derivada respecto a \(\alpha_\psi\) da la ecuación de la órbita. Goldstein muestra que al cambiar a \(u=1/r\), se recupera la ecuación orbital obtenida previamente por el método de fuerzas centrales.</p></div>
+      <div class="reading-block"><p>La lectura física es importante: Hamilton-Jacobi no inventa una dinámica nueva. Recupera el mismo problema de Kepler, pero lo hace mediante constantes de separación y cuadraturas.</p></div>
+      <h3 id="3-9-separacion-en-coordenadas-esfericas">3.9. Separación en coordenadas esféricas</h3>
+      <div class="reading-block"><p>Goldstein también trata el problema central en coordenadas esféricas, sin imponer desde el principio que la órbita está en un plano. El Hamiltoniano es</p></div>
+      <div class="formula-block">\[H=\frac{1}{2m}\left(
+p_r^2+\frac{p_\theta^2}{r^2}
++\frac{p_\phi^2}{r^2\sin^2\theta}
+\right)+V(r).\]</div>
+      <div class="reading-block"><p>Se propone</p></div>
+      <div class="formula-block">\[W=W_r(r)+W_\theta(\theta)+W_\phi(\phi).\]</div>
+      <div class="reading-block"><p>Como \(\phi\) es cíclica:</p></div>
+      <div class="formula-block">\[W_\phi=\alpha_\phi\phi.\]</div>
+      <div class="reading-block"><p>La separación produce una constante angular \(\alpha_\theta\), con ecuaciones separadas para \(\theta\) y \(r\). De nuevo, el problema se reduce a cuadraturas.</p></div>
+      <div class="reading-block"><p>Goldstein extrae además la forma general de potencial separable en coordenadas esféricas:</p></div>
+      <div class="formula-block">\[V(q)=V_r(r)+\frac{V_\theta(\theta)}{r^2}
++\frac{V_\phi(\phi)}{r^2\sin^2\theta}.\]</div>
+      <div class="reading-block"><p>Esto muestra que la separabilidad no depende solo de la fuerza, sino también de la elección de coordenadas.</p></div>
+    </section>
+    <section class="page" id="conceptos-clave">
+      <div class="page-head"><h2>4. Conceptos clave</h2><span class="page-no">p.4</span></div>
+      <article class="definition-card"><h3>Ecuación de Hamilton-Jacobi.</h3>
+      <div class="reading-block"><p>Definición: ecuación diferencial parcial</p></div>
+      <div class="formula-block">\[H\left(q_i,\frac{\partial S}{\partial q_i},t\right)+
+\frac{\partial S}{\partial t}=0.\]</div>
+      <div class="reading-block"><p>Explicación: sustituye los momentos por derivadas de una función generadora. Si se obtiene una solución completa, se recupera el movimiento. Ejemplo: para una partícula en \(V(q)\),</p></div>
+      <div class="formula-block">\[\frac{1}{2m}\left(\frac{\partial S}{\partial q}\right)^2+V(q)+S_t=0.\]</div>
+      <div class="reading-block"><p>Relación: nace de transformaciones canónicas y conecta con la acción. Pregunta de examen: “Escriba la ecuación de Hamilton-Jacobi para un Hamiltoniano dado”.</p></div>
+      </article>
+      <article class="definition-card"><h3>Función principal \(S\).</h3>
+      <div class="reading-block"><p>Definición: función generadora \(S(q,P,t)\) que lleva a variables nuevas constantes si \(K=0\). Explicación: contiene la acción acumulada y permite obtener momentos y trayectorias mediante derivadas. Ejemplo:</p></div>
+      <div class="formula-block">\[p_i=\frac{\partial S}{\partial q_i},
+\qquad
+\frac{\partial S}{\partial \alpha_i}=\beta_i.\]</div>
+      <div class="reading-block"><p>Relación: es la versión dependiente del tiempo; se reduce a \(W-Et\) si \(H\) no depende de \(t\). Pregunta de examen: “Dada una función \(S(q,t;E)\), determine el Hamiltoniano del sistema”.</p></div>
+      </article>
+      <article class="definition-card"><h3>Función característica \(W\).</h3>
+      <div class="reading-block"><p>Definición: parte independiente del tiempo de \(S\) cuando el Hamiltoniano es conservativo. Explicación:</p></div>
+      <div class="formula-block">\[S=W-\alpha_1t.\]</div>
+      <div class="reading-block"><p>Satisface</p></div>
+      <div class="formula-block">\[H\left(q_i,\frac{\partial W}{\partial q_i}\right)=\alpha_1.\]</div>
+      <div class="reading-block"><p>Ejemplo: en el oscilador, \(W\) se obtiene integrando la raíz del momento. Relación: es el punto de partida de separación de variables y de acción-ángulo. Pregunta de examen: “Explique la diferencia entre \(S\) y \(W\)”.</p></div>
+      </article>
+      <article class="definition-card"><h3>Solución completa.</h3>
+      <div class="reading-block"><p>Definición: solución de Hamilton-Jacobi con \(n\) constantes independientes no triviales. Explicación: esas constantes se toman como nuevos momentos; sus derivadas producen las constantes restantes. Ejemplo: para \(n=1\), basta una constante \(E\), más la constante \(\beta\). Relación: convierte una solución de EDP en solución mecánica. Pregunta de examen: “¿Por qué una constante aditiva de \(S\) no cuenta como constante no trivial?”.</p></div>
+      </article>
+      <article class="definition-card"><h3>Separabilidad.</h3>
+      <div class="reading-block"><p>Definición: posibilidad de escribir \(S\) o \(W\) como suma de funciones de variables individuales. Explicación: reduce la EDP a EDO integrables. Ejemplo:</p></div>
+      <div class="formula-block">\[W(r,\psi)=W_r(r)+W_\psi(\psi).\]</div>
+      <div class="reading-block"><p>Relación: hace que Hamilton-Jacobi sea útil como método de cálculo. Pregunta de examen: “¿Por qué la separación de variables es esencial en Hamilton-Jacobi?”.</p></div>
+      </article>
+      <article class="definition-card"><h3>Coordenada ignorable.</h3>
+      <div class="reading-block"><p>Definición: coordenada ausente del Hamiltoniano. Explicación: su momento conjugado es constante y su contribución a \(W\) es lineal. Ejemplo:</p></div>
+      <div class="formula-block">\[W_\psi=\alpha_\psi\psi.\]</div>
+      <div class="reading-block"><p>Relación: conecta simetría, conservación y separación. Pregunta de examen: “Muestre cómo se separa una coordenada cíclica en Hamilton-Jacobi”.</p></div>
+      </article>
+      <article class="definition-card"><h3>Cuadratura.</h3>
+      <div class="reading-block"><p>Definición: reducción de la solución a integrales explícitas. Explicación: aunque no siempre se obtenga una fórmula elemental, el problema queda formalmente integrado. Ejemplo:</p></div>
+      <div class="formula-block">\[W_r=\int \sqrt{2m(E-V)-\frac{l^2}{r^2}},dr.\]</div>
+      <div class="reading-block"><p>Relación: es el resultado práctico de separar la ecuación. Pregunta de examen: “Explique qué significa resolver por cuadraturas”.</p></div>
+      </article>
+      <article class="definition-card"><h3>Constantes de separación.</h3>
+      <div class="reading-block"><p>Definición: constantes que aparecen al separar variables. Explicación: suelen corresponder a magnitudes conservadas: energía, momento angular, componentes angulares. Ejemplo: en potencial central, \(E\) y \(l\). Relación: permiten reconstruir la trayectoria. Pregunta de examen: “Identifique las constantes de separación en el problema central”.</p></div>
+      </article>
+    </section>
+    <section class="page" id="relaciones-entre-ideas">
+      <div class="page-head"><h2>5. Relaciones entre ideas</h2><span class="page-no">p.5</span></div>
+      <div class="reading-block"><p>Hamilton-Jacobi depende de Hamilton. Sin espacio de fases, momentos conjugados y transformaciones canónicas, la ecuación aparece como truco formal. Con ellos, se ve que \(S\) es una función generadora.</p></div>
+      <div class="reading-block"><p>La jerarquía conceptual es:</p></div>
+      <div class="formula-block">\[L(q,\dot q,t)\rightarrow H(q,p,t)\rightarrow \text{transformación canónica}\rightarrow S(q,P,t)\rightarrow \text{trayectoria}.\]</div>
+      <div class="reading-block"><p>Lagrange da la acción. Hamilton da el espacio de fases. Hamilton-Jacobi une ambos: \(S\) es función generadora y también integral del lagrangiano.</p></div>
+      <div class="reading-block"><p>La oposición principal es entre resolver ecuaciones de movimiento y resolver una ecuación para la acción. En Hamilton se resuelven \(2n\) EDO. En Hamilton-Jacobi se resuelve una EDP. La EDP no es automáticamente más fácil. Solo gana cuando hay separabilidad.</p></div>
+      <div class="reading-block"><p>La función principal \(S\) y la función característica \(W\) se oponen por su dependencia temporal. \(S\) vale para Hamiltonianos generales. \(W\) aparece cuando \(H\) no depende explícitamente del tiempo. Entonces la energía entra como constante de separación.</p></div>
+      <div class="reading-block"><p>Las coordenadas ignorables son el puente entre simetría y método. En Lagrange/Hamilton, una coordenada cíclica da conservación del momento conjugado. En Hamilton-Jacobi, esa conservación permite escribir inmediatamente una parte lineal de \(W\).</p></div>
+      <div class="reading-block"><p>El problema central sirve como síntesis: energía por independencia temporal, momento angular por coordenada angular ignorable, separación radial-angular, cuadratura radial y recuperación de la órbita.</p></div>
+      <div class="reading-block"><p>Históricamente, Hamilton-Jacobi es una formulación clásica, pero su estructura anticipa lenguaje de óptica geométrica y mecánica cuántica semiclasica. En el nivel de este capítulo, basta con entender que concentra la dinámica clásica en una función de acción.</p></div>
+    </section>
+    <section class="page" id="errores-habituales">
+      <div class="page-head"><h2>6. Errores habituales</h2><span class="page-no">p.6</span></div>
+      <div class="reading-block"><p><strong>Error 1: creer que \(S\) es el Hamiltoniano.</strong> Está mal porque \(H\) es energía o generador temporal; \(S\) es función generadora/acción. Corrección: \(S\) cumple una ecuación donde aparece \(H\). Incorrecto: “La función principal es la energía del sistema”. Correcto: “La función principal genera la transformación canónica y sus derivadas dan los momentos”.</p></div>
+      <div class="reading-block"><p><strong>Error 2: olvidar sustituir \(p_i=\partial S/\partial q_i\).</strong> Está mal porque esa sustitución es precisamente lo que convierte Hamilton en Hamilton-Jacobi. Corrección: toda aparición de \(p_i\) en \(H\) debe reemplazarse por \(S_{q_i}\). Incorrecto:</p></div>
+      <div class="formula-block">\[H(q,p,t)+S_t=0.\]</div>
+      <div class="reading-block"><p>Correcto:</p></div>
+      <div class="formula-block">\[H(q,S_q,t)+S_t=0.\]</div>
+      <div class="reading-block"><p><strong>Error 3: contar la constante aditiva de \(S\) como constante física.</strong> Está mal porque la ecuación solo contiene derivadas de \(S\). Corrección: una solución completa necesita \(n\) constantes no triviales. Incorrecto: “Para \(n=1\), \(S\) tiene \(E\) y una constante aditiva, luego ya están las dos constantes del movimiento”. Correcto: “La constante aditiva no cuenta; la segunda constante sale de \(\partial S/\partial E=\beta\)”.</p></div>
+      <div class="reading-block"><p><strong>Error 4: confundir \(S\) y \(W\).</strong> Está mal porque \(S\) depende del tiempo y \(W\) no. Corrección: si \(H\) no depende de \(t\), entonces \(S=W-Et\). Incorrecto: “La función característica cumple siempre la ecuación completa con \(S_t\)”. Correcto: “La función característica cumple la ecuación restringida \(H(q,W_q)=E\)”.</p></div>
+      <div class="reading-block"><p><strong>Error 5: pensar que Hamilton-Jacobi siempre simplifica.</strong> Está mal porque resolver una EDP puede ser peor que resolver Hamilton directamente. Corrección: la ventaja aparece con separación de variables. Incorrecto: “Hamilton-Jacobi es siempre el método más corto”. Correcto: “Hamilton-Jacobi es potente cuando la ecuación se separa”.</p></div>
+      <div class="reading-block"><p><strong>Error 6: no distinguir coordenada cíclica de constante de separación.</strong> Está mal porque la cíclica produce directamente un momento constante, pero no toda constante de separación viene de una coordenada cíclica visible. Corrección: identificar primero si \(H\) depende de la coordenada. Incorrecto: “Toda constante de separación es un momento conjugado”. Correcto: “Una coordenada ignorable da un momento constante; otras constantes pueden aparecer al separar”.</p></div>
+      <div class="reading-block"><p><strong>Error 7: derivar \(W\) respecto a coordenadas cuando toca derivar respecto a constantes.</strong> Está mal porque \(p_i=W_{q_i}\), pero la trayectoria sale de \(W_{\alpha_i}\). Corrección: usar cada derivada para su papel. Incorrecto: “Derivo \(W\) respecto a \(r\) y ya tengo la órbita”. Correcto: “\(W_r'\) da \(p_r\); la órbita sale de derivar \(W\) respecto al momento angular”.</p></div>
+      <div class="reading-block"><p><strong>Error 8: olvidar el término \(-Et\).</strong> Está mal porque sin él no se satisface la ecuación completa para \(S\). Corrección:</p></div>
+      <div class="formula-block">\[S=W-Et.\]</div>
+      <div class="reading-block"><p>Incorrecto: “Si \(H\) es conservativo, \(S=W\)”. Correcto: “Si \(H\) es conservativo, \(S=W-Et\)”.</p></div>
+      <div class="reading-block"><p><strong>Error 9: interpretar cuadratura como solución elemental.</strong> Está mal porque una cuadratura puede ser una integral no elemental. Corrección: cuadratura significa reducción formal a integrales. Incorrecto: “Si no puedo integrar con funciones elementales, no está resuelto”. Correcto: “Si queda reducido a integrales definidas, está formalmente resuelto”.</p></div>
+      <div class="reading-block"><p><strong>Error 10: perder el vínculo con condiciones iniciales.</strong> Está mal porque \(\alpha_i,\beta_i\) deben fijarse con \((q_0,p_0)\). Corrección: la solución formal no está cerrada hasta ajustar constantes. Incorrecto: “La \(S\) completa ya da una única trayectoria”. Correcto: “La \(S\) completa da una familia; las condiciones iniciales escogen una trayectoria”.</p></div>
+    </section>
+    <section class="page" id="preguntas-orientadas-a-examen">
+      <div class="page-head"><h2>7. Preguntas orientadas a examen</h2><span class="page-no">p.7</span></div>
+      <h3 id="10-preguntas-faciles">10 preguntas fáciles</h3>
+      <ol class="question-list">
+        <li>Escribe la ecuación de Hamilton-Jacobi para \(S(q,t)\).</li>
+        <li>¿Qué relación hay entre \(p_i\) y \(S\)?</li>
+        <li>¿Qué significa imponer \(K=0\)?</li>
+        <li>¿Qué es la función principal de Hamilton?</li>
+        <li>¿Qué es la función característica de Hamilton?</li>
+        <li>¿Cuándo puede escribirse \(S=W-Et\)?</li>
+        <li>¿Qué es una solución completa?</li>
+        <li>¿Por qué la constante aditiva de \(S\) no cuenta?</li>
+        <li>¿Qué es una coordenada ignorable?</li>
+        <li>¿Qué significa resolver por cuadraturas?</li>
+      </ol>
+      <h3 id="10-preguntas-medias">10 preguntas medias</h3>
+      <ol class="question-list">
+        <li>Deriva la ecuación de Hamilton-Jacobi a partir de \(K=H+\partial F/\partial t\).</li>
+        <li>Explica cómo se obtiene la trayectoria a partir de \(S\).</li>
+        <li>Escribe la ecuación de Hamilton-Jacobi para \(H=p^2/(2m)+V(q)\).</li>
+        <li>Para el oscilador armónico, plantea la ecuación para \(W(q,E)\).</li>
+        <li>Explica la diferencia entre \(Q_i=\beta_i\) en el método de \(S\) y \(Q_i=\nu_i t+\beta_i\) en el método de \(W\).</li>
+        <li>Muestra cómo una coordenada cíclica se separa en \(W\).</li>
+        <li>En un potencial central plano, identifica las constantes de separación.</li>
+        <li>Explica por qué la separación de variables reduce la EDP a EDO.</li>
+        <li>¿Por qué Hamilton-Jacobi no es automáticamente más sencillo que Hamilton?</li>
+        <li>¿Qué papel desempeñan las condiciones iniciales en Hamilton-Jacobi?</li>
+      </ol>
+      <h3 id="5-preguntas-dificiles">5 preguntas difíciles</h3>
+      <ol class="question-list">
+        <li>Dado</li>
+      </ol>
+      <div class="formula-block">\[S(q,t;E)=\sqrt{2E},e^q-Et,\]</div>
+      <div class="reading-block"><p>determina el Hamiltoniano \(H(q,p)\).</p></div>
+      <ol class="question-list">
+        <li>Para</li>
+      </ol>
+      <div class="formula-block">\[H=\frac{1}{2m}\left(p_r^2+\frac{p_\psi^2}{r^2}\right)+V(r),\]</div>
+      <div class="reading-block"><p>obtén la ecuación separada para \(W_r(r)\).</p></div>
+      <ol class="question-list">
+        <li>En coordenadas esféricas con potencial central, separa formalmente la ecuación de Hamilton-Jacobi.</li>
+        <li>Explica cómo se recupera la ecuación orbital de un problema central derivando \(W\) respecto al momento angular.</li>
+        <li>Justifica por qué la función \(W\) genera una transformación en la que los momentos son constantes pero las coordenadas no tienen por qué ser constantes.</li>
+      </ol>
+      <h3 id="5-preguntas-de-desarrollo-largo">5 preguntas de desarrollo largo</h3>
+      <ol class="question-list">
+        <li>Desarrolla la teoría de Hamilton-Jacobi como transformación canónica hacia variables constantes.</li>
+        <li>Explica la relación entre función principal, acción y lagrangiano.</li>
+        <li>Compara los métodos de \(S\) y \(W\) en Hamilton-Jacobi.</li>
+        <li>Desarrolla el método de separación de variables en Hamilton-Jacobi.</li>
+        <li>Aplica Hamilton-Jacobi al problema de fuerzas centrales y explica el significado de las constantes.</li>
+      </ol>
+      <h3 id="5-preguntas-de-relacion-entre-conceptos">5 preguntas de relación entre conceptos</h3>
+      <ol class="question-list">
+        <li>Relaciona coordenadas cíclicas, simetrías y separación en Hamilton-Jacobi.</li>
+        <li>Relaciona Hamilton-Jacobi con el principio de Hamilton.</li>
+        <li>Relaciona Hamilton-Jacobi con las ecuaciones de Hamilton.</li>
+        <li>Relaciona separabilidad y elección de coordenadas.</li>
+        <li>Relaciona el problema de Kepler con la función característica \(W\).</li>
+      </ol>
+    </section>
+    <section class="page" id="respuestas-modelo">
+      <div class="page-head"><h2>8. Respuestas modelo</h2><span class="page-no">p.8</span></div>
+      <ol class="question-list">
+        <li>La ecuación es</li>
+      </ol>
+      <div class="formula-block">\[H\left(q_i,\frac{\partial S}{\partial q_i},t\right)+\frac{\partial S}{\partial t}=0.\]</div>
+      <div class="reading-block"><p>Para un grado de libertad:</p></div>
+      <div class="formula-block">\[H(q,S_q,t)+S_t=0.\]</div>
+      <ol class="question-list" start="2">
+        <li>La relación es</li>
+      </ol>
+      <div class="formula-block">\[p_i=\frac{\partial S}{\partial q_i}.\]</div>
+      <div class="reading-block"><p>Los momentos antiguos se obtienen derivando la función principal respecto a las coordenadas antiguas.</p></div>
+      <ol class="question-list" start="3">
+        <li>Imponer \(K=0\) significa escoger una transformación canónica tal que el nuevo Hamiltoniano sea nulo. Entonces:</li>
+      </ol>
+      <div class="formula-block">\[\dot Q_i=0,\qquad \dot P_i=0.\]</div>
+      <div class="reading-block"><p>Las nuevas variables son constantes.</p></div>
+      <ol class="question-list" start="4">
+        <li>La función principal de Hamilton es la función generadora \(S(q,P,t)\) que satisface la ecuación de Hamilton-Jacobi y permite transformar el sistema a variables constantes.</li>
+      </ol>
+      <ol class="question-list" start="5">
+        <li>La función característica \(W(q,P)\) es la parte independiente del tiempo de la función principal cuando el Hamiltoniano no depende explícitamente del tiempo. Cumple:</li>
+      </ol>
+      <div class="formula-block">\[H(q,W_q)=\alpha_1.\]</div>
+      <ol class="question-list" start="6">
+        <li>Puede escribirse</li>
+      </ol>
+      <div class="formula-block">\[S=W-Et\]</div>
+      <div class="reading-block"><p>cuando el Hamiltoniano no depende explícitamente del tiempo y, por tanto, su valor es constante.</p></div>
+      <ol class="question-list" start="7">
+        <li>Una solución completa es una solución de Hamilton-Jacobi que contiene \(n\) constantes independientes no triviales para un sistema de \(n\) grados de libertad.</li>
+      </ol>
+      <ol class="question-list" start="8">
+        <li>Porque \(S\) aparece solo a través de sus derivadas. Sumar una constante no cambia \(S_q\) ni \(S_t\), así que no añade información dinámica.</li>
+      </ol>
+      <ol class="question-list" start="9">
+        <li>Es una coordenada que no aparece explícitamente en el Hamiltoniano. Su momento conjugado se conserva.</li>
+      </ol>
+      <ol class="question-list" start="10">
+        <li>Resolver por cuadraturas significa reducir el problema a integrales explícitas, aunque esas integrales no tengan forma elemental.</li>
+      </ol>
+      <ol class="question-list" start="11">
+        <li>Si una transformación canónica tiene generadora \(F_2(q,P,t)\), el nuevo Hamiltoniano cumple</li>
+      </ol>
+      <div class="formula-block">\[K=H+\frac{\partial F_2}{\partial t}.\]</div>
+      <div class="reading-block"><p>Si se exige \(K=0\),</p></div>
+      <div class="formula-block">\[H+\frac{\partial F_2}{\partial t}=0.\]</div>
+      <div class="reading-block"><p>Como</p></div>
+      <div class="formula-block">\[p_i=\frac{\partial F_2}{\partial q_i},\]</div>
+      <div class="reading-block"><p>queda</p></div>
+      <div class="formula-block">\[H\left(q_i,\frac{\partial F_2}{\partial q_i},t\right)+
+\frac{\partial F_2}{\partial t}=0.\]</div>
+      <div class="reading-block"><p>Llamando \(F_2=S\), se obtiene Hamilton-Jacobi.</p></div>
+      <ol class="question-list" start="12">
+        <li>Primero se obtiene una solución completa</li>
+      </ol>
+      <div class="formula-block">\[S(q,\alpha,t).\]</div>
+      <div class="reading-block"><p>Después se usan</p></div>
+      <div class="formula-block">\[p_i=\frac{\partial S}{\partial q_i},
+\qquad
+\frac{\partial S}{\partial \alpha_i}=\beta_i.\]</div>
+      <div class="reading-block"><p>Las segundas ecuaciones se resuelven para \(q_i(t)\). Luego se sustituyen en la primera para obtener \(p_i(t)\).</p></div>
+      <ol class="question-list" start="13">
+        <li>Para</li>
+      </ol>
+      <div class="formula-block">\[H=\frac{p^2}{2m}+V(q),\]</div>
+      <div class="reading-block"><p>se sustituye \(p=S_q\):</p></div>
+      <div class="formula-block">\[\frac{1}{2m}(S_q)^2+V(q)+S_t=0.\]</div>
+      <ol class="question-list" start="14">
+        <li>Para el oscilador:</li>
+      </ol>
+      <div class="formula-block">\[H=\frac{p^2}{2m}+\frac12m\omega^2q^2.\]</div>
+      <div class="reading-block"><p>Como \(H\) no depende de \(t\), se pone \(S=W-Et\), y queda:</p></div>
+      <div class="formula-block">\[\frac{1}{2m}\left(\frac{dW}{dq}\right)^2+
+\frac12m\omega^2q^2=E.\]</div>
+      <ol class="question-list" start="15">
+        <li>Con \(S\), se escoge \(K=0\), por tanto</li>
+      </ol>
+      <div class="formula-block">\[Q_i=\beta_i,\qquad P_i=\gamma_i.\]</div>
+      <div class="reading-block"><p>Con \(W\), el nuevo Hamiltoniano no es cero, sino función de los nuevos momentos. Entonces:</p></div>
+      <div class="formula-block">\[Q_i=\nu_i t+\beta_i,\qquad P_i=\gamma_i.\]</div>
+      <ol class="question-list" start="16">
+        <li>Si \(q_j\) es cíclica, \(H\) no depende de \(q_j\). Entonces el momento conjugado es constante:</li>
+      </ol>
+      <div class="formula-block">\[p_j=\alpha_j.\]</div>
+      <div class="reading-block"><p>Como</p></div>
+      <div class="formula-block">\[p_j=\frac{\partial W}{\partial q_j},\]</div>
+      <div class="reading-block"><p>se integra:</p></div>
+      <div class="formula-block">\[W_j=\alpha_jq_j.\]</div>
+      <ol class="question-list" start="17">
+        <li>En el potencial central plano, las constantes son la energía \(E\) y el momento angular \(\alpha_\psi=l\). La coordenada angular \(\psi\) es ignorable y la parte radial contiene el movimiento efectivo.</li>
+      </ol>
+      <ol class="question-list" start="18">
+        <li>Si</li>
+      </ol>
+      <div class="formula-block">\[W=\sum_i W_i(q_i),\]</div>
+      <div class="reading-block"><p>cada derivada \(W_{q_i}\) depende solo de una coordenada. La ecuación puede reorganizarse en términos donde cada variable aparece separada. Cada bloque debe igualarse a una constante, produciendo EDO.</p></div>
+      <ol class="question-list" start="19">
+        <li>Porque sustituye \(2n\) ecuaciones ordinarias por una ecuación diferencial parcial. Si no hay separación de variables, esa EDP puede ser más difícil.</li>
+      </ol>
+      <ol class="question-list" start="20">
+        <li>Las condiciones iniciales fijan las constantes \(\alpha_i,\beta_i\). Sin ellas, la solución completa da una familia de trayectorias, no una trayectoria concreta.</li>
+      </ol>
+      <ol class="question-list" start="21">
+        <li>Dada</li>
+      </ol>
+      <div class="formula-block">\[S(q,t;E)=\sqrt{2E},e^q-Et,\]</div>
+      <div class="reading-block"><p>se tiene</p></div>
+      <div class="formula-block">\[p=\frac{\partial S}{\partial q}=\sqrt{2E},e^q.\]</div>
+      <div class="reading-block"><p>Entonces</p></div>
+      <div class="formula-block">\[p^2=2E e^{2q},
+\qquad
+E=\frac{p^2}{2e^{2q}}=\frac12p^2e^{-2q}.\]</div>
+      <div class="reading-block"><p>Además</p></div>
+      <div class="formula-block">\[S_t=-E.\]</div>
+      <div class="reading-block"><p>La ecuación de Hamilton-Jacobi exige</p></div>
+      <div class="formula-block">\[H+S_t=0,\]</div>
+      <div class="reading-block"><p>luego</p></div>
+      <div class="formula-block">\[H=E=\frac12p^2e^{-2q}.\]</div>
+      <ol class="question-list" start="22">
+        <li>Se propone</li>
+      </ol>
+      <div class="formula-block">\[W=W_r(r)+\alpha_\psi\psi.\]</div>
+      <div class="reading-block"><p>Entonces</p></div>
+      <div class="formula-block">\[p_r=\frac{dW_r}{dr},
+\qquad
+p_\psi=\alpha_\psi.\]</div>
+      <div class="reading-block"><p>Sustituyendo:</p></div>
+      <div class="formula-block">\[\frac{1}{2m}\left[
+\left(\frac{dW_r}{dr}\right)^2+
+\frac{\alpha_\psi^2}{r^2}
+\right]+V(r)=E.\]</div>
+      <div class="reading-block"><p>Por tanto:</p></div>
+      <div class="formula-block">\[\left(\frac{dW_r}{dr}\right)^2
+=2m(E-V(r))-\frac{\alpha_\psi^2}{r^2}.\]</div>
+      <ol class="question-list" start="23">
+        <li>Con</li>
+      </ol>
+      <div class="formula-block">\[H=\frac{1}{2m}\left(
+p_r^2+\frac{p_\theta^2}{r^2}
++\frac{p_\phi^2}{r^2\sin^2\theta}
+\right)+V(r),\]</div>
+      <div class="reading-block"><p>se propone</p></div>
+      <div class="formula-block">\[W=W_r(r)+W_\theta(\theta)+W_\phi(\phi).\]</div>
+      <div class="reading-block"><p>Como \(\phi\) es cíclica:</p></div>
+      <div class="formula-block">\[W_\phi=\alpha_\phi\phi.\]</div>
+      <div class="reading-block"><p>La ecuación se separa en una parte angular:</p></div>
+      <div class="formula-block">\[\left(\frac{dW_\theta}{d\theta}\right)^2+
+\frac{\alpha_\phi^2}{\sin^2\theta}
+=\alpha_\theta^2,\]</div>
+      <div class="reading-block"><p>y una radial:</p></div>
+      <div class="formula-block">\[\left(\frac{dW_r}{dr}\right)^2+
+\frac{\alpha_\theta^2}{r^2}
+=2m(E-V(r)).\]</div>
+      <ol class="question-list" start="24">
+        <li>En el problema central,</li>
+      </ol>
+      <div class="formula-block">\[W=W_r(r;E,l)+l\psi.\]</div>
+      <div class="reading-block"><p>La ecuación</p></div>
+      <div class="formula-block">\[\frac{\partial W}{\partial l}=\beta\]</div>
+      <div class="reading-block"><p>da</p></div>
+      <div class="formula-block">\[\frac{\partial W_r}{\partial l}+\psi=\beta.\]</div>
+      <div class="reading-block"><p>De aquí se despeja \(\psi\) como función de \(r\), lo que da la órbita. La derivada respecto a \(l\) introduce la relación angular.</p></div>
+      <ol class="question-list" start="25">
+        <li>\(W\) no impone \(K=0\). En el caso independiente del tiempo, el nuevo Hamiltoniano queda como función de los nuevos momentos:</li>
+      </ol>
+      <div class="formula-block">\[K=H(P)=\alpha_1.\]</div>
+      <div class="reading-block"><p>Por eso</p></div>
+      <div class="formula-block">\[\dot P_i=0,\]</div>
+      <div class="reading-block"><p>pero</p></div>
+      <div class="formula-block">\[\dot Q_i=\frac{\partial K}{\partial P_i}=\nu_i.\]</div>
+      <div class="reading-block"><p>Así, los momentos son constantes y las coordenadas evolucionan linealmente.</p></div>
+      <ol class="question-list" start="26">
+        <li>Hamilton-Jacobi parte de una transformación canónica generada por \(S(q,P,t)\). Se busca que el nuevo Hamiltoniano sea nulo. Entonces las nuevas variables son constantes. La condición \(K=0\), junto con \(K=H+S_t\), produce la ecuación</li>
+      </ol>
+      <div class="formula-block">\[H(q,S_q,t)+S_t=0.\]</div>
+      <div class="reading-block"><p>Resolver esta ecuación con una solución completa permite obtener \(p_i=S_{q_i}\) y \(Q_i=S_{\alpha_i}=\beta_i\). De ese sistema se reconstruyen \(q_i(t)\) y \(p_i(t)\). El problema dinámico queda convertido en hallar una función generadora adecuada.</p></div>
+      <ol class="question-list" start="27">
+        <li>La función principal \(S\) cumple</li>
+      </ol>
+      <div class="formula-block">\[\frac{dS}{dt}=L.\]</div>
+      <div class="reading-block"><p>Por tanto,</p></div>
+      <div class="formula-block">\[S=\int L,dt+\text{cte}.\]</div>
+      <div class="reading-block"><p>Esto significa que \(S\) es acción evaluada sobre la trayectoria. A la vez, \(S\) es función generadora de una transformación canónica. Así une el principio de Hamilton, basado en la acción, con el formalismo hamiltoniano, basado en el espacio de fases.</p></div>
+      <ol class="question-list" start="28">
+        <li>El método de \(S\) sirve para Hamiltonianos generales \(H(q,p,t)\). Se exige \(K=0\), de modo que las nuevas coordenadas y momentos son constantes. La ecuación es</li>
+      </ol>
+      <div class="formula-block">\[H(q,S_q,t)+S_t=0.\]</div>
+      <div class="reading-block"><p>El método de \(W\) se usa cuando \(H\) no depende explícitamente de \(t\). Se escribe</p></div>
+      <div class="formula-block">\[S=W-Et,\]</div>
+      <div class="reading-block"><p>y queda</p></div>
+      <div class="formula-block">\[H(q,W_q)=E.\]</div>
+      <div class="reading-block"><p>En este segundo método los momentos nuevos son constantes, pero las coordenadas nuevas evolucionan linealmente.</p></div>
+      <ol class="question-list" start="29">
+        <li>Separar variables consiste en proponer</li>
+      </ol>
+      <div class="formula-block">\[W=\sum_i W_i(q_i).\]</div>
+      <div class="reading-block"><p>Al sustituir en Hamilton-Jacobi, cada variable queda agrupada en un término distinto. Cada agrupación se iguala a una constante de separación. Así la EDP se transforma en varias EDO. El resultado final se expresa mediante cuadraturas. La separabilidad depende del Hamiltoniano y del sistema de coordenadas elegido.</p></div>
+      <ol class="question-list" start="30">
+        <li>En un potencial central plano,</li>
+      </ol>
+      <div class="formula-block">\[H=\frac{1}{2m}\left(p_r^2+\frac{p_\psi^2}{r^2}\right)+V(r).\]</div>
+      <div class="reading-block"><p>Como \(\psi\) es ignorable,</p></div>
+      <div class="formula-block">\[W=W_r(r)+l\psi.\]</div>
+      <div class="reading-block"><p>La ecuación radial es</p></div>
+      <div class="formula-block">\[\left(\frac{dW_r}{dr}\right)^2=
+2m(E-V)-\frac{l^2}{r^2}.\]</div>
+      <div class="reading-block"><p>\(E\) representa la energía y \(l\) el momento angular. Derivar \(W\) respecto a \(E\) da la relación temporal radial. Derivar respecto a \(l\) da la ecuación orbital.</p></div>
+      <ol class="question-list" start="31">
+        <li>Una coordenada cíclica indica una simetría: el Hamiltoniano no cambia al variar esa coordenada. Por Noether/Hamilton, el momento conjugado se conserva. En Hamilton-Jacobi, esa conservación aparece como separación inmediata:</li>
+      </ol>
+      <div class="formula-block">\[W_j=\alpha_jq_j.\]</div>
+      <ol class="question-list" start="32">
+        <li>Hamilton-Jacobi se relaciona con el principio de Hamilton porque \(S\) es la acción evaluada sobre la trayectoria. La ecuación \(dS/dt=L\) muestra que la función principal no es solo una generadora formal, sino la integral dinámica central de Lagrange.</li>
+      </ol>
+      <ol class="question-list" start="33">
+        <li>Hamilton-Jacobi equivale a resolver las ecuaciones de Hamilton cuando se dispone de una solución completa. Las ecuaciones de Hamilton dan el flujo directamente; Hamilton-Jacobi busca una función cuya transformación canónica haga trivial ese flujo.</li>
+      </ol>
+      <ol class="question-list" start="34">
+        <li>La separabilidad depende de las coordenadas. Un mismo problema puede no separarse en un sistema y separarse en otro. El potencial central se separa naturalmente en coordenadas polares o esféricas porque la simetría rotacional se refleja en coordenadas angulares.</li>
+      </ol>
+      <ol class="question-list" start="35">
+        <li>El problema de Kepler es un caso de potencial central. En Hamilton-Jacobi, la función característica se separa en parte radial y angular. Las constantes de separación son energía y momento angular. La ecuación orbital se obtiene derivando \(W\) respecto al momento angular, reproduciendo el resultado clásico del problema central.</li>
+      </ol>
+    </section>
+    <section class="page" id="resumen-final-de-repaso">
+      <div class="page-head"><h2>9. Resumen final de repaso</h2><span class="page-no">p.9</span></div>
+      <div class="reading-block"><p>Ideas principales:</p></div>
+      <ul class="check-list">
+        <li>Hamilton-Jacobi busca una función \(S\) que genere una transformación canónica simplificadora.</li>
+        <li>La ecuación central es:</li>
+      </ul>
+      <div class="formula-block">\[H(q,S_q,t)+S_t=0.\]</div>
+      <ul class="check-list">
+        <li>\(p_i=S_{q_i}\).</li>
+        <li>La trayectoria sale de:</li>
+      </ul>
+      <div class="formula-block">\[S_{\alpha_i}=\beta_i.\]</div>
+      <ul class="check-list">
+        <li>Si \(H\) no depende de \(t\):</li>
+      </ul>
+      <div class="formula-block">\[S=W-Et,
+\qquad
+H(q,W_q)=E.\]</div>
+      <div class="reading-block"><p>Conceptos imprescindibles:</p></div>
+      <ul class="check-list">
+        <li>función principal \(S\),</li>
+        <li>función característica \(W\),</li>
+        <li>solución completa,</li>
+        <li>constantes de separación,</li>
+        <li>coordenadas ignorables,</li>
+        <li>separación por cuadraturas.</li>
+      </ul>
+      <div class="reading-block"><p>Relaciones clave:</p></div>
+      <ul class="check-list">
+        <li>\(S\) conecta acción lagrangiana y transformación canónica.</li>
+        <li>\(W\) aparece cuando la energía se conserva.</li>
+        <li>Coordenada cíclica \(\Rightarrow\) momento conservado \(\Rightarrow\) separación inmediata.</li>
+        <li>Problema central \(\Rightarrow\) energía + momento angular \(\Rightarrow\) cuadratura radial + órbita.</li>
+      </ul>
+      <div class="reading-block"><p>Errores que evitar:</p></div>
+      <ul class="check-list">
+        <li>confundir \(S\) con \(H\),</li>
+        <li>olvidar \(p=S_q\),</li>
+        <li>olvidar \(-Et\),</li>
+        <li>contar la constante aditiva,</li>
+        <li>pensar que HJ siempre simplifica,</li>
+        <li>derivar respecto a coordenadas cuando toca derivar respecto a constantes.</li>
+      </ul>
+    </section>
+    <section class="page" id="checklist-de-dominio">
+      <div class="page-head"><h2>10. Checklist de dominio</h2><span class="page-no">p.10</span></div>
+      <ul class="check-list">
+        <li>Si no puedes escribir \(H(q,S_q,t)+S_t=0\), falta repasar la derivación de Hamilton-Jacobi.</li>
+        <li>Si no puedes explicar por qué \(K=0\) hace constantes \(Q_i,P_i\), falta repasar transformaciones canónicas.</li>
+        <li>Si confundes \(S\) con \(W\), revisar función principal frente a función característica.</li>
+        <li>Si olvidas \(S=W-Et\), revisar Hamiltonianos independientes del tiempo.</li>
+        <li>Si no puedes obtener \(p_i=S_{q_i}\), falta repasar funciones generadoras.</li>
+        <li>Si no puedes explicar \(S_{\alpha_i}=\beta_i\), falta repasar solución completa.</li>
+        <li>Si cuentas la constante aditiva como constante dinámica, revisar independencia de constantes.</li>
+        <li>Si no puedes separar el oscilador armónico, falta repasar el método básico.</li>
+        <li>Si no puedes separar el problema central, falta repasar coordenadas cíclicas y momento angular.</li>
+        <li>Si confundes \(p_\psi=l\) con una hipótesis externa, revisar coordenadas ignorables.</li>
+        <li>Si no puedes pasar de \(W=W_r+l\psi\) a la ecuación radial, falta práctica algebraica.</li>
+        <li>Si no puedes explicar qué significa cuadratura, falta repasar separación de variables.</li>
+        <li>Si puedes obtener \(H\) a partir de una \(S\) dada, el núcleo de examen está asentado.</li>
+        <li>Si puedes plantear Hamilton-Jacobi para un Hamiltoniano nuevo, el capítulo está funcional.</li>
+        <li>Si puedes reconstruir \(q(t),p(t)\) desde \(S\), el capítulo está dominado.</li>
+      </ul>
+    </section>
+  </main>
+</div>
+</body>
+</html>
