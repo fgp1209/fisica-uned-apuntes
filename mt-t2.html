@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="light dark" />
+  <title>Mecánica Teórica — T2 — Corchetes de Poisson</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/icon-32.png" />
+  <link rel="icon" type="image/png" sizes="50x50" href="assets/icons/icon-50.png" />
+  <link rel="apple-touch-icon" sizes="100x100" href="assets/icons/icon-100.png" />
+  <meta name="theme-color" content="#6f42c1" />
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+  <link rel="stylesheet" href="assets/styles.css" />
+  <script defer src="assets/app.js"></script>
+</head>
+<body class="subject-mecanica-teorica">
+<div class="wrap">
+  <header class="cover">
+    <div class="top-actions">
+      <a class="back-link" href="index.html">← Volver al índice</a>
+    </div>
+    <p class="eyebrow">UNED Física · Mecánica Teórica · Tema 2</p>
+    <h1>Guía de estudio — Goldstein TI.2: Corchetes de Poisson</h1>
+    <p class="subtitle">Corchetes de Poisson, invariantes canónicos, ecuaciones de movimiento, transformaciones infinitesimales y álgebra del momento angular.</p>
+    <div class="chips">
+      <span class="chip">UNED Física</span>
+      <span class="chip">Mecánica Teórica</span>
+      <span class="chip">MT2</span>
+      <span class="chip">Goldstein cap. 9</span>
+      <span class="chip">MathJax</span>
+      <span class="chip">estado: maquetado</span>
+    </div>
+  </header>
+
+  <div class="toolbar no-print">
+    <nav>
+      <a href="#mapa">Mapa</a><a href="#prerrequisitos">Prerrequisitos</a><a href="#idea-central">Idea central</a><a href="#desarrollo-completo">Desarrollo</a><a href="#conceptos-clave">Conceptos</a><a href="#relaciones-entre-ideas">Relaciones</a><a href="#errores-habituales">Errores</a><a href="#preguntas-orientadas-a-examen">Preguntas</a><a href="#respuestas-modelo">Respuestas</a><a href="#resumen-final-de-repaso">Resumen</a><a href="#checklist-de-dominio">Checklist</a>
+    </nav>
+    <div class="toolbar-actions">
+      <button class="btn" onclick="printReady()">Imprimir / guardar PDF</button>
+      <button class="btn secondary" onclick="openAllDetails()">Abrir todo</button>
+      <button class="btn secondary" onclick="closeAllDetails()">Cerrar acordeones</button>
+    </div>
+  </div>
+
+  <main>
+    <section class="page map-page" id="mapa">
+      <div class="page-head"><h2>Mapa clicable</h2><p class="section-lead">Ruta conceptual del tema.</p></div>
+      <div class="concept-map">
+        <a class="map-node" href="#prerrequisitos"><span>Prerrequisitos</span><small>Hamilton · fase · funciones dinámicas · canónicas</small></a>
+        <a class="map-node" href="#idea-central"><span>Idea central</span><small>evolución como álgebra de funciones</small></a>
+        <a class="map-node" href="#desarrollo-completo"><span>Desarrollo</span><small>definición · fundamentales · Jacobi · conservación</small></a>
+        <a class="map-node" href="#conceptos-clave"><span>Conceptos clave</span><small>Poisson · invariantes · generadores · momento angular</small></a>
+        <a class="map-node" href="#relaciones-entre-ideas"><span>Relaciones</span><small>Hamilton → Poisson → conservación</small></a>
+        <a class="map-node" href="#errores-habituales"><span>Errores</span><small>signos · dependencia temporal · canonicidad</small></a>
+        <a class="map-node" href="#preguntas-orientadas-a-examen"><span>Examen</span><small>35 preguntas por dificultad y relación</small></a>
+        <a class="map-node" href="#checklist-de-dominio"><span>Checklist</span><small>criterios de dominio antes de avanzar</small></a>
+      </div>
+    </section>
+
+    <section class="page" id="fuente-base">
+      <div class="page-head"><h2>Fuente base</h2><span class="page-no">p.0</span></div>
+      <div class="reading-block">
+        <p><strong>Capítulo trabajado:</strong> TI.2 — Corchetes de Poisson.</p>
+        <p><strong>Fuente principal:</strong> Goldstein, cap. 9, especialmente 9.5–9.7: corchetes de Poisson, invariantes canónicos, ecuaciones de movimiento, transformaciones infinitesimales y relaciones del momento angular. Goldstein sitúa este bloque dentro de las transformaciones canónicas, justo después de la formulación simpléctica y antes de Liouville.</p>
+      </div>
+    </section>
+
+    <section class="page" id="prerrequisitos">
+      <div class="page-head"><h2>1. Prerrequisitos mínimos</h2><span class="page-no">p.1</span></div>
+      <div class="grid cards-grid">
+        <article class="definition-card">
+          <h3>Formalismo hamiltoniano</h3>
+          <p>Un sistema con \(n\) grados de libertad se describe mediante coordenadas generalizadas \(q_i\), momentos conjugados \(p_i\) y Hamiltoniano \(H(q,p,t)\).</p>
+          <p>Es necesario porque el corchete de Poisson vive en el espacio de fases, no en el espacio de configuraciones.</p>
+          <div class="formula-block">\[\dot q_i=\frac{\partial H}{\partial p_i},\qquad \dot p_i=-\frac{\partial H}{\partial q_i}.\]</div>
+        </article>
+        <article class="definition-card">
+          <h3>Espacio de fases</h3>
+          <p>Es el espacio coordinado por \((q_i,p_i)\). Cada punto representa un estado mecánico completo.</p>
+          <p>Es necesario porque el corchete mide cómo dos funciones cambian al moverse sobre ese espacio. Ejemplo: para una partícula en una dimensión, el espacio de fases es el plano \((q,p)\).</p>
+        </article>
+        <article class="definition-card">
+          <h3>Funciones dinámicas</h3>
+          <p>Una magnitud física se representa como función \(u(q,p,t)\). Puede ser \(q_i\), \(p_i\), \(H\), \(L_i\), energía parcial, momento angular o cualquier cantidad construida con coordenadas y momentos.</p>
+          <p>Es necesario porque el corchete de Poisson actúa sobre funciones, no directamente sobre trayectorias.</p>
+        </article>
+        <article class="definition-card">
+          <h3>Derivadas parciales</h3>
+          <p>El corchete de Poisson se define mediante derivadas respecto a \(q_i\) y \(p_i\).</p>
+          <p>Es necesario distinguir derivada total temporal y dependencia explícita. Si \(u=u(q,p,t)\), entonces cambia porque cambian \(q,p\) y porque puede depender explícitamente de \(t\).</p>
+        </article>
+        <article class="definition-card">
+          <h3>Transformaciones canónicas</h3>
+          <p>Son cambios de variables \((q,p)\mapsto(Q,P)\) que conservan la forma de las ecuaciones de Hamilton.</p>
+          <p>Son necesarias porque Goldstein presenta los corchetes como invariantes canónicos: su valor no depende del sistema de variables canónicas elegido.</p>
+        </article>
+        <article class="definition-card">
+          <h3>Constantes del movimiento</h3>
+          <p>Una magnitud \(u\) es constante del movimiento si su derivada total temporal se anula sobre la evolución.</p>
+          <p>Es necesario porque una aplicación central del corchete es probar conservación mediante \([u,H]=0\) cuando \(u\) no depende explícitamente del tiempo. Goldstein formula este criterio como prueba general para identificar constantes del sistema.</p>
+        </article>
+        <article class="definition-card">
+          <h3>Simetrías y generadores</h3>
+          <p>Una transformación continua suele estar asociada a una cantidad generadora: el momento lineal genera traslaciones, el momento angular genera rotaciones y el Hamiltoniano genera evolución temporal.</p>
+          <p>Es necesario porque el corchete expresa cómo una magnitud cambia bajo una transformación generada por otra.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="page" id="idea-central">
+      <div class="page-head"><h2>2. Idea central del capítulo</h2><span class="page-no">p.2</span></div>
+      <div class="reading-block"><p>El capítulo introduce una operación algebraica nueva entre magnitudes dinámicas: el <strong>corchete de Poisson</strong>. Esta operación permite escribir la mecánica hamiltoniana de forma compacta, coordenada-independiente dentro de variables canónicas y directamente conectada con simetrías, constantes del movimiento y transformaciones canónicas.</p></div>
+      <div class="reading-block"><p>La idea física es simple: si \(u\) es una magnitud observable del sistema, su evolución temporal está gobernada por su corchete con el Hamiltoniano. En lugar de resolver directamente todas las ecuaciones de Hamilton, puede estudiarse cómo cambia cualquier función dinámica mediante</p></div>
+      <div class="formula-block">\[\frac{du}{dt}=[u,H]+\frac{\partial u}{\partial t}.\]</div>
+      <div class="reading-block"><p>Esto convierte el Hamiltoniano en generador de evolución temporal.</p></div>
+      <div class="reading-block"><p>La idea matemática es más profunda. El corchete no es una notación decorativa; define una estructura algebraica sobre las funciones del espacio de fases. Es bilineal, antisimétrico, cumple regla de Leibniz y satisface la identidad de Jacobi. Estas propiedades permiten operar con magnitudes físicas como si formasen un álgebra.</p></div>
+      <div class="reading-block"><p>Goldstein subraya que los corchetes de Poisson son invariantes bajo transformaciones canónicas: si se calculan en un sistema canónico u otro, el resultado tiene el mismo valor. Por eso son una herramienta natural para expresar leyes físicas sin quedar atado a unas coordenadas concretas.</p></div>
+      <div class="reading-block"><p>En examen UNED, este bloque aparece de forma operativa: dado un Hamiltoniano, se piden constantes del movimiento, verificación de conservación mediante corchetes de Poisson y discusión sobre si nuevos corchetes generan constantes independientes.</p></div>
+    </section>
+
+    <section class="page" id="desarrollo-completo">
+      <div class="page-head"><h2>3. Desarrollo completo del capítulo</h2><span class="page-no">p.3</span></div>
+      <h3 id="3-1-definicion-del-corchete-de-poisson">3.1. Definición del corchete de Poisson</h3>
+      <div class="reading-block"><p>Para dos funciones \(u(q,p,t)\) y \(v(q,p,t)\), el corchete de Poisson se define como</p></div>
+      <div class="formula-block">\[[u,v]=\sum_i\left(\frac{\partial u}{\partial q_i}\frac{\partial v}{\partial p_i}-\frac{\partial u}{\partial p_i}\frac{\partial v}{\partial q_i}\right).\]</div>
+      <div class="reading-block"><p>Goldstein lo introduce como una expresión bilineal con estructura simpléctica, en la que las coordenadas \(q_i\) se emparejan con los momentos \(p_i\).</p></div>
+      <div class="reading-block"><p>La definición no dice todavía “física”; dice cómo combinar derivadas parciales. La física aparece al elegir una de las funciones como el Hamiltoniano. Entonces el corchete mide evolución temporal.</p></div>
+      <div class="formula-block">\[[q_i,H]=\frac{\partial H}{\partial p_i},\qquad [p_i,H]=-\frac{\partial H}{\partial q_i}.\]</div>
+      <div class="reading-block"><p>Es decir, las ecuaciones de Hamilton quedan contenidas dentro de los corchetes.</p></div>
+
+      <h3 id="3-2-corchetes-fundamentales">3.2. Corchetes fundamentales</h3>
+      <div class="reading-block"><p>Al aplicar la definición a las propias variables canónicas, aparecen las relaciones básicas:</p></div>
+      <div class="formula-block">\[[q_j,q_k]=0,\qquad [p_j,p_k]=0,\qquad [q_j,p_k]=\delta_{jk}.\]</div>
+      <div class="reading-block"><p>Estas son las reglas elementales del álgebra canónica clásica. Funcionan como reglas de conmutación clásicas.</p></div>
+      <div class="formula-block">\[[q,p^2]=[q,p]p+p[q,p]=2p.\]</div>
+      <div class="reading-block"><p>Así se obtiene el mismo resultado que derivando explícitamente.</p></div>
+
+      <h3 id="3-3-propiedades-algebraicas">3.3. Propiedades algebraicas</h3>
+      <div class="formula-block">\[[u,u]=0,\qquad [u,v]=-[v,u],\]</div>
+      <div class="formula-block">\[[au+bv,w]=a[u,w]+b[v,w],\qquad [uv,w]=u[v,w]+[u,w]v.\]</div>
+      <div class="reading-block"><p>Goldstein destaca además la identidad de Jacobi:</p></div>
+      <div class="formula-block">\[[u,[v,w]]+[v,[w,u]]+[w,[u,v]]=0.\]</div>
+      <div class="reading-block"><p>Esta identidad no es un detalle técnico: permite demostrar el teorema de Poisson, según el cual el corchete de dos constantes del movimiento también es constante del movimiento, aunque no siempre independiente.</p></div>
+
+      <h3 id="3-4-ecuaciones-de-movimiento-en-forma-de-poisson">3.4. Ecuaciones de movimiento en forma de Poisson</h3>
+      <div class="reading-block"><p>Para cualquier función dinámica \(u(q,p,t)\),</p></div>
+      <div class="formula-block">\[\frac{du}{dt}=[u,H]+\frac{\partial u}{\partial t}.\]</div>
+      <div class="reading-block"><p>Si \(u=q_i\), se recupera:</p></div>
+      <div class="formula-block">\[\dot q_i=[q_i,H]=\frac{\partial H}{\partial p_i}.\]</div>
+      <div class="reading-block"><p>Si \(u=p_i\), se recupera:</p></div>
+      <div class="formula-block">\[\dot p_i=[p_i,H]=-\frac{\partial H}{\partial q_i}.\]</div>
+      <div class="reading-block"><p>La consecuencia es fuerte: las ecuaciones de Hamilton no son dos ecuaciones separadas, sino casos particulares de una ecuación general para cualquier observable clásico.</p></div>
+
+      <h3 id="3-5-criterio-de-conservacion">3.5. Criterio de conservación</h3>
+      <div class="reading-block"><p>Si \(u\) no depende explícitamente del tiempo, entonces</p></div>
+      <div class="formula-block">\[\frac{du}{dt}=[u,H].\]</div>
+      <div class="reading-block"><p>Por tanto,</p></div>
+      <div class="formula-block">\[[u,H]=0\]</div>
+      <div class="reading-block"><p>equivale a que \(u\) sea constante del movimiento.</p></div>
+      <div class="reading-block"><p>Si \(u\) depende explícitamente del tiempo, la condición correcta es</p></div>
+      <div class="formula-block">\[[u,H]+\frac{\partial u}{\partial t}=0,\qquad [H,u]=\frac{\partial u}{\partial t}.\]</div>
+      <div class="reading-block"><p>Goldstein presenta esta relación como una prueba general para localizar constantes del movimiento.</p></div>
+      <div class="reading-block"><p>Ejemplo: si \(H\) no depende de una coordenada \(q_k\), entonces</p></div>
+      <div class="formula-block">\[\dot p_k=[p_k,H]=-\frac{\partial H}{\partial q_k}=0.\]</div>
+      <div class="reading-block"><p>Luego \(p_k\) se conserva.</p></div>
+
+      <h3 id="3-6-teorema-de-poisson">3.6. Teorema de Poisson</h3>
+      <div class="reading-block"><p>Si \(u\) y \(v\) son constantes del movimiento sin dependencia explícita del tiempo, entonces \([u,v]\) también es constante del movimiento. La prueba usa Jacobi:</p></div>
+      <div class="formula-block">\[[H,[u,v]]=0.\]</div>
+      <div class="reading-block"><p>Este resultado permite buscar nuevas constantes a partir de otras conocidas. En la práctica hay que comprobar independencia: muchas veces \([u,v]\) es cero o función de las constantes ya conocidas. Goldstein advierte que el procedimiento puede no producir cantidades nuevas, aunque conceptualmente es importante.</p></div>
+
+      <h3 id="3-7-transformaciones-canonicas-e-invariancia">3.7. Transformaciones canónicas e invariancia</h3>
+      <div class="reading-block"><p>La propiedad esencial de una transformación canónica es conservar la forma de las ecuaciones de Hamilton. Los corchetes de Poisson son compatibles con esa idea: su valor es el mismo al calcularlos en cualquier conjunto de variables canónicas.</p></div>
+      <div class="reading-block"><p>Goldstein lo expresa diciendo que todos los corchetes de Poisson son invariantes canónicos. Por eso ya no hace falta indicar siempre si el corchete se calcula en \((q,p)\) o en \((Q,P)\), siempre que ambas sean variables canónicas.</p></div>
+      <div class="reading-block"><p>Esto tiene una consecuencia de examen: para probar que una transformación es canónica puede bastar verificar los corchetes fundamentales:</p></div>
+      <div class="formula-block">\[[Q_i,Q_j]=0,\qquad [P_i,P_j]=0,\qquad [Q_i,P_j]=\delta_{ij}.\]</div>
+
+      <h3 id="3-8-transformaciones-infinitesimales-y-generadores">3.8. Transformaciones infinitesimales y generadores</h3>
+      <div class="reading-block"><p>Una transformación canónica infinitesimal cambia las variables mediante una cantidad generadora \(G\):</p></div>
+      <div class="formula-block">\[\delta u=\varepsilon [u,G].\]</div>
+      <div class="reading-block"><p>Si \(G=H\) y \(\varepsilon=dt\), entonces</p></div>
+      <div class="formula-block">\[\delta u=dt[u,H],\]</div>
+      <div class="reading-block"><p>es decir, la evolución temporal es una transformación canónica infinitesimal generada por el Hamiltoniano. Goldstein interpreta el movimiento del sistema como una sucesión de transformaciones canónicas infinitesimales.</p></div>
+      <div class="formula-block">\[G=p_x \Rightarrow \text{traslación en }x,\qquad G=L_z \Rightarrow \text{rotación alrededor de }z,\qquad G=H \Rightarrow \text{evolución temporal}.\]</div>
+
+      <h3 id="3-9-momento-angular-y-algebra-de-rotaciones">3.9. Momento angular y álgebra de rotaciones</h3>
+      <div class="reading-block"><p>Para el momento angular aparecen relaciones características:</p></div>
+      <div class="formula-block">\[[L_i,L_j]=\varepsilon_{ijk}L_k.\]</div>
+      <div class="reading-block"><p>Goldstein muestra que el momento angular canónico genera rotaciones rígidas del sistema y que sus componentes no conmutan entre sí bajo el corchete de Poisson.</p></div>
+      <div class="reading-block"><p>Esto es clave porque anticipa la estructura cuántica del momento angular: en mecánica cuántica, los corchetes de Poisson se sustituyen por conmutadores de operadores, con factores adecuados. Goldstein señala esta analogía con la imagen de Heisenberg.</p></div>
+
+      <h3 id="3-10-uso-tipico-en-examen">3.10. Uso típico en examen</h3>
+      <div class="reading-block"><p>El patrón UNED es: dado un Hamiltoniano, encontrar constantes usando ecuaciones de Hamilton y después verificar otra cantidad mediante corchetes de Poisson. También puede pedirse si el corchete entre constantes permite construir una nueva constante independiente.</p></div>
+      <div class="reading-block"><p>El procedimiento correcto:</p></div>
+      <ol class="question-list">
+        <li>Identificar variables canónicas.</li>
+        <li>Escribir \(H(q,p,t)\).</li>
+        <li>Calcular \(\dot u=[u,H]+\partial u/\partial t\).</li>
+        <li>Si \(u\) no depende explícitamente de \(t\), exigir \([u,H]=0\).</li>
+        <li>Si aparecen varias constantes, comprobar independencia funcional.</li>
+        <li>Si se usa el teorema de Poisson, distinguir “constante” de “constante nueva”.</li>
+      </ol>
+    </section>
+
+    <section class="page" id="conceptos-clave">
+      <div class="page-head"><h2>4. Conceptos clave</h2><span class="page-no">p.4</span></div>
+      <div class="grid cards-grid">
+        <article class="definition-card"><h3>Corchete de Poisson</h3><p>Definición: operación bilineal entre funciones del espacio de fases:</p><div class="formula-block">\[[u,v]=\sum_i\left(u_{q_i}v_{p_i}-u_{p_i}v_{q_i}\right).\]</div><p>Explicación: mide la compatibilidad dinámica entre dos magnitudes. Si una de ellas es \(H\), mide evolución temporal.</p><p>Ejemplo: \([q,p]=1\).</p><p>Relación: conecta Hamilton, transformaciones canónicas, simetrías y constantes.</p><p>Pregunta de examen: “Defina el corchete de Poisson y calcule los corchetes fundamentales.”</p></article>
+        <article class="definition-card"><h3>Corchetes fundamentales</h3><div class="formula-block">\[[q_i,q_j]=0,\quad [p_i,p_j]=0,\quad [q_i,p_j]=\delta_{ij}.\]</div><p>Explicación: son las reglas básicas del álgebra canónica.</p><p>Ejemplo: \([q,p]=1\), pero \([p,q]=-1\).</p><p>Relación: sirven para verificar si una transformación es canónica.</p><p>Pregunta: “Compruebe si unas variables \((Q,P)\) son canónicas calculando sus corchetes.”</p></article>
+        <article class="definition-card"><h3>Evolución temporal</h3><div class="formula-block">\[\dot u=[u,H]+\frac{\partial u}{\partial t}.\]</div><p>Explicación: toda magnitud evoluciona por su corchete con el Hamiltoniano más su dependencia explícita.</p><p>Ejemplo: \(\dot q_i=[q_i,H]\).</p><p>Relación: generaliza las ecuaciones de Hamilton.</p><p>Pregunta: “Obtenga las ecuaciones de Hamilton usando corchetes.”</p></article>
+        <article class="definition-card"><h3>Constante del movimiento</h3><p>Definición: \(u\) es constante si \(du/dt=0\).</p><p>Explicación: si no depende explícitamente de \(t\), basta probar \([u,H]=0\).</p><p>Ejemplo: si \(H\) no depende de \(q_k\), entonces \(p_k\) se conserva.</p><p>Relación: conecta con simetrías y coordenadas cíclicas.</p><p>Pregunta: “Demuestre mediante corchetes que \(u\) es constante del movimiento.”</p></article>
+        <article class="definition-card"><h3>Identidad de Jacobi</h3><div class="formula-block">\[[u,[v,w]]+[v,[w,u]]+[w,[u,v]]=0.\]</div><p>Explicación: garantiza coherencia algebraica del corchete.</p><p>Ejemplo: permite probar que si \(u,v\) son constantes, \([u,v]\) también lo es.</p><p>Relación: base del teorema de Poisson.</p><p>Pregunta: “Use la identidad de Jacobi para justificar el teorema de Poisson.”</p></article>
+        <article class="definition-card"><h3>Teorema de Poisson</h3><p>Definición: el corchete de dos constantes del movimiento también es constante del movimiento.</p><p>Explicación: no garantiza que sea una constante independiente.</p><p>Ejemplo: si \(u,v\) se conservan, entonces \([u,v]\) también.</p><p>Relación: conecta conservación con estructura algebraica.</p><p>Pregunta: “¿Puede obtenerse una nueva constante independiente a partir de dos constantes dadas?”</p></article>
+        <article class="definition-card"><h3>Invariante canónico</h3><p>Definición: cantidad cuyo valor se conserva bajo cambios de variables canónicas.</p><p>Explicación: el corchete de Poisson tiene el mismo valor en cualquier sistema canónico.</p><p>Ejemplo: \([Q_i,P_j]=\delta_{ij}\) si \((Q,P)\) son canónicas.</p><p>Relación: conecta con transformaciones simplécticas.</p><p>Pregunta: “Explique por qué los corchetes de Poisson son invariantes canónicos.”</p></article>
+        <article class="definition-card"><h3>Generador infinitesimal</h3><p>Definición: función \(G\) que produce cambios infinitesimales mediante</p><div class="formula-block">\[\delta u=\varepsilon[u,G].\]</div><p>Explicación: codifica transformaciones continuas.</p><p>Ejemplo: \(H\) genera evolución temporal.</p><p>Relación: base de simetrías, Noether y transformaciones canónicas.</p><p>Pregunta: “Determine qué transformación genera una cantidad dada.”</p></article>
+        <article class="definition-card"><h3>Momento angular como generador</h3><p>Definición: \(L_z\) genera rotaciones alrededor del eje \(z\).</p><p>Explicación: sus componentes cumplen</p><div class="formula-block">\[[L_i,L_j]=\varepsilon_{ijk}L_k.\]</div><p>Ejemplo: \([L_x,L_y]=L_z\).</p><p>Relación: anticipa el álgebra cuántica del momento angular.</p><p>Pregunta: “Calcule los corchetes entre componentes del momento angular.”</p></article>
+        <article class="definition-card"><h3>Correspondencia clásica-cuántica</h3><p>Definición: en la transición formal a mecánica cuántica, el corchete de Poisson se relaciona con el conmutador de operadores.</p><p>Explicación: no convierte automáticamente una teoría clásica en cuántica, pero da la estructura algebraica de partida.</p><p>Ejemplo: \([u,v]_{PB}\) se relaciona con \([\hat u,\hat v]/(i\hbar)\).</p><p>Relación: conecta Goldstein con formalismo cuántico.</p><p>Pregunta: “Explique la importancia de los corchetes de Poisson en la formulación cuántica.”</p></article>
+      </div>
+    </section>
+
+    <section class="page" id="relaciones-entre-ideas">
+      <div class="page-head"><h2>5. Relaciones entre ideas</h2><span class="page-no">p.5</span></div>
+      <div class="reading-block"><p>El capítulo depende de Hamilton. Sin variables canónicas y Hamiltoniano no hay corchete de Poisson operativo. El corchete condensa las ecuaciones de Hamilton porque convierte \(\dot q_i\) y \(\dot p_i\) en casos particulares de \(\dot u\).</p></div>
+      <div class="reading-block"><p>La jerarquía conceptual es:</p></div>
+      <div class="formula-block">\[(q,p,H)\rightarrow [u,v]\rightarrow \dot u=[u,H]+\partial_tu\rightarrow [u,H]=0\rightarrow \text{conservación}.\]</div>
+      <div class="reading-block"><p>Las transformaciones canónicas aparecen como el segundo eje. Primero se define una operación sobre funciones; después se descubre que esa operación es invariante bajo cambios canónicos. La consecuencia es que el corchete no depende de una elección accidental de coordenadas, sino de la estructura hamiltoniana del sistema.</p></div>
+      <div class="reading-block"><p>La identidad de Jacobi da el puente hacia el teorema de Poisson. Si dos magnitudes se conservan, su corchete también se conserva. Pero hay una oposición importante: <strong>ser constante no significa ser independiente</strong>. En examen, este matiz separa una respuesta formal de una respuesta completa.</p></div>
+      <div class="reading-block"><p>La conexión histórica es clara: Newton describe fuerzas y aceleraciones; Lagrange reescribe la dinámica mediante coordenadas generalizadas y acción; Hamilton pasa al espacio de fases; Poisson convierte la evolución y las simetrías en un álgebra. En el material de Escors se presenta Poisson como la forma más condensada de la mecánica clásica y como puente hacia los conmutadores cuánticos.</p></div>
+    </section>
+
+    <section class="page" id="errores-habituales">
+      <div class="page-head"><h2>6. Errores habituales</h2><span class="page-no">p.6</span></div>
+      <details class="accordion" open><summary>Error 1: creer que el corchete es un producto</summary><p>Está mal porque \([u,v]\) no multiplica funciones: combina derivadas cruzadas respecto a \(q\) y \(p\). Corrección: tratarlo como una operación bilineal diferencial.</p><p>Incorrecto: “\([u,v]=uv\) en mecánica clásica.” Correcto: “\([u,v]=u_qv_p-u_pv_q\)”.</p></details>
+      <details class="accordion"><summary>Error 2: olvidar el sumatorio sobre grados de libertad</summary><p>Está mal porque en sistemas multidimensionales contribuyen todos los pares \((q_i,p_i)\). Corrección: sumar sobre cada coordenada canónica.</p><p>Incorrecto: calcular solo con \(q_1,p_1\) en un sistema \(n\)-dimensional. Correcto: incluir términos de todos los \(q_i,p_i\).</p></details>
+      <details class="accordion"><summary>Error 3: cambiar el signo</summary><p>Está mal porque la antisimetría es estructural. Corrección: fijar la convención:</p><div class="formula-block">\[[u,v]=u_qv_p-u_pv_q.\]</div><p>Incorrecto: \([q,p]=-1\). Correcto: \([q,p]=1\).</p></details>
+      <details class="accordion"><summary>Error 4: usar \([u,H]\) y \([H,u]\) indistintamente</summary><p>Está mal porque difieren en signo. Corrección: recordar \([H,u]=-[u,H]\). Incorrecto: \(\dot u=[H,u]\). Correcto: \(\dot u=[u,H]+\partial_tu\).</p></details>
+      <details class="accordion"><summary>Error 5: olvidar la dependencia explícita del tiempo</summary><p>Está mal porque una función puede cambiar aunque su corchete con \(H\) no baste.</p><div class="formula-block">\[\frac{du}{dt}=[u,H]+\frac{\partial u}{\partial t}.\]</div><p>Incorrecto: “Si \([u,H]\neq0\), nunca puede conservarse.” Correcto: “Puede conservarse si \([u,H]+\partial_tu=0\)”.</p></details>
+      <details class="accordion"><summary>Error 6: confundir coordenada cíclica con corchete nulo sin justificar</summary><p>Está mal porque hay que conectar \(H\) con la coordenada. Corrección: si \(\partial H/\partial q_k=0\), entonces \(\dot p_k=0\).</p><p>Incorrecto: “\(p_k\) se conserva porque \(q_k\) no aparece en \(L\)” sin pasar a \(H\). Correcto: “En Hamilton, \(\dot p_k=[p_k,H]=-\partial H/\partial q_k=0\)”.</p></details>
+      <details class="accordion"><summary>Error 7: pensar que toda constante obtenida por Poisson es nueva</summary><p>Está mal porque puede ser cero o función de las anteriores. Corrección: comprobar independencia funcional.</p><p>Incorrecto: “\([u,v]\), luego hay otra constante.” Correcto: “Ese corchete solo verifica conservación; no genera una constante nueva por sí mismo.”</p></details>
+      <details class="accordion"><summary>Error 8: decir que todos los cambios de variables conservan corchetes</summary><p>Está mal porque solo ocurre para transformaciones canónicas. Corrección: verificar corchetes fundamentales.</p><p>Incorrecto: “Cualquier cambio \((q,p)\to(Q,P)\) mantiene \([Q,P]=1\)”. Correcto: “Solo si la transformación es canónica.”</p></details>
+      <details class="accordion"><summary>Error 9: confundir momento angular canónico con tres variables canónicas simultáneas</summary><p>Está mal porque \([L_i,L_j]=\varepsilon_{ijk}L_k\). Corrección: las componentes de \(\mathbf L\) no pueden ser todas momentos canónicos independientes simultáneos.</p><p>Incorrecto: “\(L_x,L_y,L_z\) pueden tomarse como tres momentos canónicos a la vez.” Correcto: “Sus corchetes no se anulan; cumplen el álgebra de rotaciones.”</p></details>
+      <details class="accordion"><summary>Error 10: reducir el tema a cálculo mecánico</summary><p>Está mal porque el capítulo no solo enseña a calcular corchetes; enseña una estructura de la mecánica. Corrección: conectar cálculo, conservación, simetría e invariancia canónica.</p><p>Incorrecto: “Poisson es una fórmula para derivar más rápido.” Correcto: “Poisson reformula la dinámica hamiltoniana como álgebra de funciones sobre el espacio de fases.”</p></details>
+    </section>
+
+    <section class="page" id="preguntas-orientadas-a-examen">
+      <div class="page-head"><h2>7. Preguntas orientadas a examen</h2><span class="page-no">p.7</span></div>
+      <div class="grid cards-grid">
+        <article class="question-card"><h3>10 preguntas fáciles</h3><ol class="question-list"><li>Defina el corchete de Poisson de dos funciones \(u\) y \(v\).</li><li>Calcule \([q_i,q_j]\), \([p_i,p_j]\) y \([q_i,p_j]\).</li><li>¿Qué significa que el corchete sea antisimétrico?</li><li>Escriba la evolución temporal de una función \(u\) mediante corchetes.</li><li>¿Qué condición debe cumplir \(u\) para ser constante del movimiento si no depende explícitamente de \(t\)?</li><li>Calcule \([q,H]\) para un sistema unidimensional.</li><li>Calcule \([p,H]\) para un sistema unidimensional.</li><li>¿Qué genera el Hamiltoniano en la formulación de Poisson?</li><li>¿Qué significa que una transformación preserve los corchetes fundamentales?</li><li>¿Por qué \([u,u]=0\)?</li></ol></article>
+        <article class="question-card"><h3>10 preguntas medias</h3><ol class="question-list" start="11"><li>Demuestre que las ecuaciones de Hamilton se obtienen de \(\dot u=[u,H]+\partial_tu\).</li><li>Para \(H=p^2/(2m)+V(q)\), calcule \([q,H]\) y \([p,H]\).</li><li>Si \(H\) no depende de \(q_k\), demuestre que \(p_k\) se conserva.</li><li>Si \(u\) depende explícitamente del tiempo, escriba la condición completa de conservación.</li><li>Use la regla de Leibniz para calcular \([q,p^2]\).</li><li>Compruebe si \(Q=aq\), \(P=p/a\) es transformación canónica.</li><li>Explique por qué el corchete de Poisson es invariante canónico.</li><li>Enuncie el teorema de Poisson sobre constantes del movimiento.</li><li>Explique por qué el corchete de dos constantes puede no dar una constante independiente nueva.</li><li>Calcule \([L_x,L_y]\).</li></ol></article>
+        <article class="question-card"><h3>5 preguntas difíciles</h3><ol class="question-list" start="21"><li>Demuestre, usando Jacobi, que si \(u\) y \(v\) son constantes del movimiento sin dependencia explícita de \(t\), entonces \([u,v]\) también lo es.</li><li>Dado un Hamiltoniano \(H\), describa un método sistemático para buscar constantes mediante corchetes.</li><li>Demuestre que una transformación es canónica si preserva los corchetes fundamentales.</li><li>Explique por qué el Hamiltoniano puede interpretarse como generador de una transformación canónica infinitesimal temporal.</li><li>Para el momento angular, explique por qué las componentes \(L_i\) no pueden ser simultáneamente momentos canónicos independientes.</li></ol></article>
+        <article class="question-card"><h3>5 preguntas de desarrollo largo</h3><ol class="question-list" start="26"><li>Desarrolle el papel de los corchetes de Poisson en la reformulación de la mecánica hamiltoniana.</li><li>Explique la relación entre corchetes de Poisson, transformaciones canónicas e invariantes canónicos.</li><li>Analice la relación entre simetrías, generadores y constantes del movimiento usando corchetes de Poisson.</li><li>Compare la formulación hamiltoniana estándar con la formulación mediante corchetes de Poisson.</li><li>Explique la importancia de los corchetes de Poisson como puente hacia la mecánica cuántica.</li></ol></article>
+        <article class="question-card"><h3>5 preguntas de relación entre conceptos</h3><ol class="question-list" start="31"><li>Relacione coordenadas cíclicas, conservación del momento conjugado y corchetes de Poisson.</li><li>Relacione identidad de Jacobi y teorema de Poisson.</li><li>Relacione transformaciones canónicas e invariancia de los corchetes fundamentales.</li><li>Relacione momento angular, generadores de rotaciones y álgebra de Poisson.</li><li>Relacione Hamiltoniano, evolución temporal y conservación de la energía.</li></ol></article>
+      </div>
+    </section>
+
+    <section class="page" id="respuestas-modelo">
+      <div class="page-head"><h2>8. Respuestas modelo</h2><span class="page-no">p.8</span></div>
+      <details class="accordion" open><summary>Respuestas 1–10</summary><ol class="question-list"><li>El corchete de Poisson de \(u\) y \(v\) es <div class="formula-block">\[[u,v]=\sum_i\left(\frac{\partial u}{\partial q_i}\frac{\partial v}{\partial p_i}-\frac{\partial u}{\partial p_i}\frac{\partial v}{\partial q_i}\right).\]</div> Es una operación bilineal sobre funciones del espacio de fases.</li><li>Los corchetes fundamentales son <div class="formula-block">\[[q_i,q_j]=0,\qquad [p_i,p_j]=0,\qquad [q_i,p_j]=\delta_{ij}.\]</div></li><li>Significa que al intercambiar los argumentos cambia el signo: <div class="formula-block">\[[u,v]=-[v,u].\]</div></li><li>La evolución temporal es <div class="formula-block">\[\frac{du}{dt}=[u,H]+\frac{\partial u}{\partial t}.\]</div></li><li>Si \(u\) no depende explícitamente de \(t\), debe cumplirse <div class="formula-block">\[[u,H]=0.\]</div></li><li>Para una dimensión, <div class="formula-block">\[[q,H]=\frac{\partial H}{\partial p}.\]</div></li><li>Para una dimensión, <div class="formula-block">\[[p,H]=-\frac{\partial H}{\partial q}.\]</div></li><li>El Hamiltoniano genera la evolución temporal. Un cambio infinitesimal temporal viene dado por <div class="formula-block">\[\delta u=dt[u,H].\]</div></li><li>Significa que las nuevas variables cumplen <div class="formula-block">\[[Q_i,Q_j]=0,\quad [P_i,P_j]=0,\quad [Q_i,P_j]=\delta_{ij}.\]</div> Por tanto, son variables canónicas.</li><li>Porque el corchete es antisimétrico: <div class="formula-block">\[[u,u]=-[u,u]\Rightarrow [u,u]=0.\]</div></li></ol></details>
+      <details class="accordion"><summary>Respuestas 11–20</summary><ol class="question-list" start="11"><li>Tomando \(u=q_i\), <div class="formula-block">\[\dot q_i=[q_i,H]=\frac{\partial H}{\partial p_i}.\]</div> Tomando \(u=p_i\), <div class="formula-block">\[\dot p_i=[p_i,H]=-\frac{\partial H}{\partial q_i}.\]</div> Estas son las ecuaciones de Hamilton.</li><li>Para <div class="formula-block">\[H=\frac{p^2}{2m}+V(q),\]</div> se obtiene <div class="formula-block">\[[q,H]=\frac{p}{m},\qquad [p,H]=-\frac{dV}{dq}.\]</div></li><li>Si \(H\) no depende de \(q_k\), <div class="formula-block">\[\dot p_k=[p_k,H]=-\frac{\partial H}{\partial q_k}=0.\]</div> Luego \(p_k\) se conserva.</li><li>Debe cumplirse <div class="formula-block">\[[u,H]+\frac{\partial u}{\partial t}=0.\]</div></li><li>Usando Leibniz: <div class="formula-block">\[[q,p^2]=[q,p]p+p[q,p]=p+p=2p.\]</div></li><li>Para \(Q=aq\), \(P=p/a\), <div class="formula-block">\[[Q,P]=\frac{\partial Q}{\partial q}\frac{\partial P}{\partial p}=a\cdot\frac1a=1.\]</div> Además \([Q,Q]=0\), \([P,P]=0\). Es canónica.</li><li>Porque una transformación canónica conserva la estructura simpléctica. Como el corchete expresa esa estructura, su valor no cambia al pasar de unas variables canónicas a otras.</li><li>Si \(u\) y \(v\) son constantes del movimiento, entonces \([u,v]\) también es constante del movimiento.</li><li>Porque \([u,v]\) puede ser cero o depender funcionalmente de \(u\) y \(v\). En ese caso no añade información dinámica nueva.</li><li>El álgebra del momento angular da <div class="formula-block">\[[L_x,L_y]=L_z.\]</div></li></ol></details>
+      <details class="accordion"><summary>Respuestas 21–35</summary><ol class="question-list" start="21"><li>Si \(u\) y \(v\) se conservan, entonces \([H,u]=[H,v]=0\). Usando Jacobi con \(H,u,v\): <div class="formula-block">\[[H,[u,v]]+[u,[v,H]]+[v,[H,u]]=0.\]</div> Los dos últimos términos se anulan. Queda \([H,[u,v]]=0\). Luego \([u,v]\) se conserva.</li><li>Método: escribir \(H\), detectar coordenadas ausentes, obtener conservaciones directas, proponer funciones candidatas \(u\), calcular \([u,H]+\partial_tu\), imponer que se anule y verificar independencia funcional. Si ya hay constantes \(u,v\), calcular \([u,v]\) y comprobar si produce una constante nueva.</li><li>Una transformación es canónica si conserva la estructura de los corchetes fundamentales. Si las nuevas variables satisfacen <div class="formula-block">\[[Q_i,Q_j]=0,\quad [P_i,P_j]=0,\quad [Q_i,P_j]=\delta_{ij},\]</div> entonces reproducen la misma estructura canónica que \((q,p)\), por lo que las ecuaciones hamiltonianas mantienen su forma.</li><li>Una transformación infinitesimal generada por \(G\) produce <div class="formula-block">\[\delta u=\varepsilon[u,G].\]</div> Si \(G=H\) y \(\varepsilon=dt\), <div class="formula-block">\[\delta u=dt[u,H].\]</div> Pero eso coincide con el cambio temporal de \(u\) si no hay dependencia explícita. Por tanto, el Hamiltoniano genera el flujo temporal en el espacio de fases.</li><li>Porque sus corchetes no se anulan: <div class="formula-block">\[[L_i,L_j]=\varepsilon_{ijk}L_k.\]</div> Los momentos canónicos independientes deberían tener corchetes nulos entre sí. Como las componentes de \(\mathbf L\) forman un álgebra no conmutativa, no pueden ser simultáneamente momentos canónicos independientes.</li><li>Los corchetes de Poisson reformulan la mecánica hamiltoniana porque permiten escribir la evolución de cualquier magnitud dinámica como \(\dot u=[u,H]+\partial_tu\). Las ecuaciones de Hamilton aparecen como casos particulares al elegir \(u=q_i\) o \(u=p_i\). Además, las leyes de conservación se reducen a condiciones algebraicas: si \(u\) no depende explícitamente del tiempo, \(u\) se conserva cuando \([u,H]=0\). Esto transforma la dinámica en un álgebra de funciones sobre el espacio de fases.</li><li>Una transformación canónica conserva la forma de las ecuaciones de Hamilton. Los corchetes de Poisson son invariantes bajo esas transformaciones, de modo que el valor de \([u,v]\) no depende del conjunto concreto de variables canónicas utilizado. Por eso sirven para expresar propiedades físicas estructurales, no meros resultados dependientes de coordenadas.</li><li>Una simetría continua está asociada a un generador. El generador produce cambios infinitesimales mediante corchetes. El momento lineal genera traslaciones, el momento angular genera rotaciones y el Hamiltoniano genera evolución temporal. Si una magnitud tiene corchete nulo con el Hamiltoniano, se conserva. Así se conecta simetría con conservación.</li><li>La formulación hamiltoniana estándar usa directamente <div class="formula-block">\[\dot q_i=\partial H/\partial p_i,\qquad \dot p_i=-\partial H/\partial q_i.\]</div> La formulación con corchetes escribe todo como <div class="formula-block">\[\dot u=[u,H]+\partial_tu.\]</div> La segunda contiene a la primera y permite estudiar cualquier función dinámica, no solo las variables canónicas básicas.</li><li>Los corchetes de Poisson son importantes para la mecánica cuántica porque su estructura algebraica anticipa los conmutadores de operadores. La relación clásica \([u,v]_{PB}\) se corresponde formalmente con la relación cuántica \([\hat u,\hat v]/(i\hbar)\). Goldstein subraya que la formulación de Poisson es el análogo clásico de la imagen de Heisenberg.</li><li>Si una coordenada \(q_i\) es cíclica, el Hamiltoniano no depende de ella. Entonces <div class="formula-block">\[\dot p_i=[p_i,H]=-\partial H/\partial q_i=0.\]</div> Por tanto, el momento conjugado se conserva.</li><li>La identidad de Jacobi permite demostrar el teorema de Poisson. Al aplicarla a \(H,u,v\), si \(u\) y \(v\) conmutan con \(H\), también conmuta con \(H\) el corchete \([u,v]\).</li><li>Las transformaciones canónicas son precisamente las que conservan la estructura de los corchetes fundamentales. Si las nuevas variables cumplen los mismos corchetes que las antiguas, mantienen la estructura hamiltoniana.</li><li>El momento angular genera rotaciones. Sus componentes cumplen <div class="formula-block">\[[L_i,L_j]=\varepsilon_{ijk}L_k.\]</div> Esto expresa algebraicamente que las rotaciones en distintos ejes no son independientes ni conmutativas.</li><li>El Hamiltoniano genera evolución temporal. Si \(H\) no depende explícitamente del tiempo, <div class="formula-block">\[\dot H=[H,H]+\partial_tH=0.\]</div> Como \([H,H]=0\), la energía se conserva si el Hamiltoniano representa la energía total y no depende explícitamente del tiempo.</li></ol></details>
+    </section>
+
+    <section class="page" id="resumen-final-de-repaso">
+      <div class="page-head"><h2>9. Resumen final de repaso</h2><span class="page-no">p.9</span></div>
+      <div class="summary-box">
+        <h3>Ideas principales</h3>
+        <ul class="question-list">
+          <li>El corchete de Poisson es una operación entre funciones del espacio de fases.</li>
+          <li>Las ecuaciones de Hamilton son casos particulares de \(\dot u=[u,H]+\partial_tu\).</li>
+          <li>Si \(u\) no depende explícitamente de \(t\), se conserva cuando \([u,H]=0\).</li>
+          <li>Los corchetes fundamentales son \([q_i,q_j]=0\), \([p_i,p_j]=0\), \([q_i,p_j]=\delta_{ij}\).</li>
+          <li>Los corchetes son invariantes bajo transformaciones canónicas.</li>
+          <li>El Hamiltoniano genera evolución temporal.</li>
+          <li>El momento angular genera rotaciones.</li>
+          <li>La identidad de Jacobi permite el teorema de Poisson.</li>
+          <li>El corchete de dos constantes es constante, pero no necesariamente nueva.</li>
+          <li>La estructura anticipa los conmutadores cuánticos.</li>
+        </ul>
+      </div>
+      <div class="summary-box">
+        <h3>Errores que evitar</h3>
+        <ul class="question-list">
+          <li>Cambiar el signo del corchete.</li>
+          <li>Olvidar grados de libertad.</li>
+          <li>Confundir \([u,H]\) con \([H,u]\).</li>
+          <li>Ignorar \(\partial u/\partial t\).</li>
+          <li>Dar por nueva una constante que depende de las anteriores.</li>
+          <li>Llamar canónico a cualquier cambio de variables.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="page" id="checklist-de-dominio">
+      <div class="page-head"><h2>10. Checklist de dominio</h2><span class="page-no">p.10</span></div>
+      <div class="checklist-box">
+        <ul class="question-list">
+          <li>Si no puedes escribir la definición de \([u,v]\), falta repasar la estructura diferencial del corchete.</li>
+          <li>Si confundes \([u,H]\) con \([H,u]\), revisar antisimetría y signos.</li>
+          <li>Si no puedes obtener \(\dot q_i\) y \(\dot p_i\) desde corchetes, falta repasar Hamilton.</li>
+          <li>Si no sabes cuándo una magnitud se conserva, revisar \(du/dt=[u,H]+\partial_tu\).</li>
+          <li>Si olvidas \(\partial u/\partial t\), revisar derivada total frente a derivada parcial.</li>
+          <li>Si no puedes calcular \([q_i,p_j]\), falta repasar corchetes fundamentales.</li>
+          <li>Si no puedes verificar si una transformación es canónica, revisar conservación de corchetes fundamentales.</li>
+          <li>Si crees que \([u,v]\) siempre da una constante nueva, revisar independencia funcional.</li>
+          <li>Si no puedes demostrar el teorema de Poisson, revisar identidad de Jacobi.</li>
+          <li>Si no conectas \(H\) con evolución temporal, falta repasar generadores infinitesimales.</li>
+          <li>Si no conectas \(L_z\) con rotaciones, falta repasar momento angular en espacio de fases.</li>
+          <li>Si puedes resolver un ejercicio UNED donde se pide demostrar una constante mediante \([u,H]\), el capítulo está suficientemente asentado.</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+</div>
+</body>
+</html>
