@@ -1,0 +1,1629 @@
+﻿<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="light dark" />
+  <title>Métodos Matemáticos I - Sistemas de ecuaciones</title>
+  <meta name="description" content="Lección de Métodos Matemáticos I sobre sistemas de ecuaciones diferenciales, matriz fundamental, autovalores, variación de constantes, Laplace y plano de fases." />
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/icon-32.png" />
+  <link rel="icon" type="image/png" sizes="50x50" href="assets/icons/icon-50.png" />
+  <link rel="apple-touch-icon" sizes="100x100" href="assets/icons/icon-100.png" />
+  <link rel="stylesheet" href="assets/styles.css" />
+  <script>
+    window.MathJax = { tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']], processEscapes: true }, svg: { fontCache: 'global' } };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+  <script defer src="assets/app.js"></script>
+</head>
+<body class="subject-mm1">
+  <div class="wrap">
+  <header class="cover">
+    <div class="top-actions"><a class="back-link" href="index.html">&larr; Índice</a></div>
+    <div class="cover-content">
+      <p class="eyebrow">Métodos Matemáticos I</p>
+      <h1>Sistemas de ecuaciones diferenciales</h1>
+      <p class="subtitle">Sistemas de primer orden, métodos de eliminación y operador \(D\), teoría lineal, matriz fundamental, soluciones particulares, Laplace y clasificación del plano de fases.</p>
+      <div class="chips"><span class="chip">Tema 6</span><span class="chip">Fuente: Sanz/Torres</span><span class="chip">Estado: completo</span></div>
+    </div>
+  </header>
+  <div class="toolbar no-print" aria-label="Navegación de la lección">
+    <nav>
+      <a href="#mapa">Mapa</a><a href="#prerrequisitos">Prerrequisitos</a><a href="#desarrollo">Desarrollo</a><a href="#conceptos">Conceptos</a><a href="#relaciones">Relaciones</a><a href="#errores">Errores</a><a href="#preguntas">Preguntas</a><a href="#respuestas">Respuestas</a><a href="#resumen">Resumen</a><a href="#checklist">Checklist</a>
+    </nav>
+  </div>
+  <main>
+    <section class="page hero-page" id="mapa">
+      <header class="section-header"><p class="eyebrow">Mapa conceptual</p><h2>Ruta de resolución</h2></header>
+      <div class="concept-map">
+        <a class="map-card" href="#desarrollo-sistemas-lineales"><span>Sistema lineal</span><p>La forma central es \(X'=A(t)X+F(t)\).</p></a>
+        <a class="map-card" href="#desarrollo-sistema-fundamental-de-soluciones"><span>Sistema fundamental</span><p>Una base de soluciones construye toda la solución homogénea.</p></a>
+        <a class="map-card" href="#desarrollo-criterio-de-matriz-fundamental"><span>Matriz fundamental</span><p>Sus columnas son soluciones independientes y cumplen \(M'=AM\).</p></a>
+        <a class="map-card" href="#desarrollo-sistemas-homogeneos-con-coeficientes-constantes"><span>Autovalores</span><p>En \(X'=AX\), cada par \((\lambda,v)\) genera \(ve^{\lambda t}\).</p></a>
+        <a class="map-card" href="#desarrollo-plano-de-fases-y-punto-critico"><span>Fase</span><p>Los autovalores clasifican silla, nodo, foco o centro.</p></a>
+      </div>
+      <div class="formula-block">\[
+X'=A(t)X+F(t),\qquad X(t)=X_h(t)+X_p(t)
+\]</div>
+    </section>
+<section class="page" id="prerrequisitos">
+<header class="section-header">
+<p class="eyebrow">Sección 1</p>
+<h2>1. Prerrequisitos mínimos</h2>
+</header>
+<div class="card-grid">
+<article class="definition-card" id="pre-edo-de-primer-orden">
+<h3>EDO de primer orden</h3>
+<p>Una ecuación diferencial ordinaria relaciona una función desconocida con una o varias derivadas respecto a una única variable independiente. En este tema la variable suele ser \(t\), y las incógnitas son varias funciones (x_1\(t\),x_2\(t\),\dots,x_n\(t\)).</p>
+<p>Es necesario porque un sistema de EDO no es más que varias EDO acopladas. Ejemplo mínimo:</p>
+<div class="formula-block">\[
+x_1'=x_2,\qquad x_2'=-x_1.
+\]</div>
+<p>Aquí \(x_1\) no evoluciona sola: depende de \(x_2\), y \(x_2\) depende de \(x_1\).</p>
+</article>
+<article class="definition-card" id="pre-algebra-matricial">
+<h3>Álgebra matricial</h3>
+<p>Un sistema lineal se escribe de forma compacta como</p>
+<div class="formula-block">\[
+X'(t)=A(t)X(t)+F(t),
+\]</div>
+<p>donde</p>
+<div class="formula-block">\[
+X(t)=
+\begin{pmatrix}
+x_1(t)\\
+x_2(t)\\
+\vdots\\
+x_n(t)
+\end{pmatrix}.
+\]</div>
+<p>Es necesario porque la resolución del sistema depende de matrices: determinantes, inversas, rango, autovalores, autovectores y diagonalización. Ejemplo mínimo:</p>
+<div class="formula-block">\[
+\begin{pmatrix}x'\\y'\end{pmatrix}
+=
+
+\begin{pmatrix}2&1\\0&3\end{pmatrix}
+\begin{pmatrix}x\\y\end{pmatrix}.
+\]</div>
+</article>
+<article class="definition-card" id="pre-independencia-lineal">
+<h3>Independencia lineal</h3>
+<p>Un conjunto de vectores solución \(X_1,\dots,X_n\) es linealmente independiente si ninguna solución puede obtenerse como combinación lineal de las otras.</p>
+<p>Es necesario porque la solución general de un sistema homogéneo se construye combinando \(n\) soluciones independientes:</p>
+<div class="formula-block">\[
+X(t)=C_1X_1(t)+\cdots+C_nX_n(t).
+\]</div>
+<p>Si falta independencia, faltan soluciones para cubrir todos los datos iniciales.</p>
+</article>
+<article class="definition-card" id="pre-determinante">
+<h3>Determinante</h3>
+<p>El determinante detecta si una matriz cuadrada es invertible. Si \(\det M\neq 0\), existe \(M^{-1}\).</p>
+<p>Es necesario porque una matriz fundamental debe tener determinante no nulo en algún punto del intervalo. Sanz/Torres formula precisamente este criterio para reconocer matrices fundamentales.</p>
+</article>
+<article class="definition-card" id="pre-autovalores-y-autovectores">
+<h3>Autovalores y autovectores</h3>
+<p>Un autovector \(v\neq 0\) de una matriz \(A\) cumple</p>
+<div class="formula-block">\[
+Av=\lambda v.
+\]</div>
+<p>El número \(\lambda\) es el autovalor.</p>
+<p>Es necesario porque en sistemas homogéneos de coeficientes constantes se busca una solución de la forma</p>
+<div class="formula-block">\[
+X(t)=ve^{\lambda t}.
+\]</div>
+<p>Al sustituir, aparece</p>
+<div class="formula-block">\[
+(A-\lambda I)v=0.
+\]</div>
+<p>Para que haya solución no trivial, debe cumplirse</p>
+<div class="formula-block">\[
+\det(A-\lambda I)=0.
+\]</div>
+</article>
+<article class="definition-card" id="pre-edo-lineales-homogeneas-de-orden-superior">
+<h3>EDO lineales homogéneas de orden superior</h3>
+<p>Una ecuación como</p>
+<div class="formula-block">\[
+y''+ay'+by=0
+\]</div>
+<p>se resuelve mediante ecuación característica. Este mecanismo se repite en sistemas: las raíces de la ecuación característica pasan a ser autovalores de la matriz \(A\).</p>
+<p>Es necesario porque el tema generaliza la idea de “exponenciales asociadas a raíces” desde una ecuación escalar a un sistema vectorial.</p>
+</article>
+<article class="definition-card" id="pre-exponenciales-senos-y-cosenos">
+<h3>Exponenciales, senos y cosenos</h3>
+<p>Si aparece un autovalor complejo</p>
+<div class="formula-block">\[
+\lambda=\alpha+i\beta,
+\]</div>
+<p>las soluciones reales se escriben usando</p>
+<div class="formula-block">\[
+e^{\alpha t}\cos(\beta t),\qquad e^{\alpha t}\sin(\beta t).
+\]</div>
+<p>Es necesario porque muchos sistemas físicos tienen oscilaciones, focos y centros.</p>
+</article>
+<article class="definition-card" id="pre-problema-de-cauchy">
+<h3>Problema de Cauchy</h3>
+<p>Un problema de Cauchy fija el sistema y el valor inicial:</p>
+<div class="formula-block">\[
+X'(t)=A(t)X(t)+F(t),\qquad X(t_0)=X_0.
+\]</div>
+<p>Es necesario porque resolver el sistema general no basta: en examen suele pedirse la solución particular que cumple unas condiciones iniciales.</p>
+</article>
+</div>
+</section>
+<section class="page" id="idea-central">
+<header class="section-header">
+<p class="eyebrow">Sección 2</p>
+<h2>2. Idea central del capítulo</h2>
+</header>
+<div class="reading-block">
+<p>El capítulo aborda el paso desde una única ecuación diferencial a varios procesos que evolucionan a la vez. En una EDO escalar, una función (y\(t\)) cambia según una ley. En un sistema, varias funciones (x_1\(t\),\dots,x_n\(t\)) cambian simultáneamente y cada una puede depender de las demás.</p>
+<p>La idea física y matemática es que muchos modelos reales no se describen con una sola magnitud. En un oscilador, por ejemplo, se puede escribir</p>
+<div class="formula-block">\[
+x'=v,\qquad v'=-\omega^2x.
+\]</div>
+<p>La posición y la velocidad son dos variables acopladas. En mecánica, esto anticipa el espacio de fases; en vibraciones, los modos normales; en estabilidad, el análisis de trayectorias alrededor de puntos críticos.</p>
+<p>El capítulo enseña a reconocer cuándo un sistema es lineal, cuándo es homogéneo, cuándo tiene coeficientes constantes y cómo se aprovecha la estructura matricial. La ecuación</p>
+<div class="formula-block">\[
+X'=A(t)X+F(t)
+\]</div>
+<p>es el centro del tema. Si (F\(t\)=0), el sistema es homogéneo. Si (F\(t\)\neq 0), es completo o no homogéneo. Si \(A\) es constante, el problema se reduce en gran parte a álgebra lineal.</p>
+<p>La matriz fundamental es el concepto organizador. En vez de resolver cada componente por separado, se buscan \(n\) soluciones vectoriales independientes y se colocan como columnas de una matriz (M\(t\)). Entonces la solución homogénea queda condensada en</p>
+<div class="formula-block">\[
+X(t)=M(t)C.
+\]</div>
+<p>Esto convierte el problema diferencial en una estructura lineal: hallar una base del espacio de soluciones.</p>
+<p>Dentro de MM1, este tema no es decorativo. Es un puente directo hacia vibraciones acopladas, sistemas dinámicos, estabilidad, mecánica hamiltoniana y diagonalización modal. En examen UNED aparece de forma operativa: resolver el sistema, aplicar condiciones iniciales, clasificar el punto crítico y esbozar el diagrama de fases.</p>
+</div>
+</section>
+<section class="page" id="desarrollo">
+<header class="section-header">
+<p class="eyebrow">Sección 3</p>
+<h2>3. Desarrollo completo del capítulo</h2>
+</header>
+<article class="reading-block" id="desarrollo-de-una-edo-escalar-a-un-sistema">
+<h3>3.1. De una EDO escalar a un sistema</h3>
+<p>Hasta este punto se han estudiado ecuaciones donde aparece una sola función incógnita. El capítulo parte de la observación de que muchos problemas técnicos y físicos requieren varias incógnitas relacionadas entre sí. Cada componente del sistema tiene su propia ecuación, pero ninguna se entiende aisladamente.</p>
+<p>Un sistema general de primer orden puede escribirse como</p>
+<div class="formula-block">\[
+\begin{cases}
+x_1'=f_1(t,x_1,\dots,x_n),\\
+x_2'=f_2(t,x_1,\dots,x_n),\\
+\vdots\\
+x_n'=f_n(t,x_1,\dots,x_n).
+\end{cases}
+\]</div>
+<p>En forma vectorial:</p>
+<div class="formula-block">\[
+X'=F(t,X).
+\]</div>
+<p>La ventaja de esta escritura es conceptual: el sistema define un campo de velocidades en el espacio de estados. En cada punto \(X\), la función \(F\) indica hacia dónde se mueve la solución.</p>
+<p>Ejemplo:</p>
+<div class="formula-block">\[
+\begin{cases}
+x'=y,\\
+y'=-x.
+\end{cases}
+\]</div>
+<p>Este sistema representa una rotación en el plano de fases. Su solución no es una curva (y\(x\)) en el sentido ordinario, sino una trayectoria ((x\(t\),y\(t\))).</p>
+</article>
+<article class="reading-block" id="desarrollo-sistemas-lineales">
+<h3>3.2. Sistemas lineales</h3>
+<p>Un sistema es lineal cuando las incógnitas y sus derivadas aparecen en grado uno y no se multiplican entre sí. La forma normal es</p>
+<div class="formula-block">\[
+X'(t)=A(t)X(t)+F(t).
+\]</div>
+<p>Aquí (A\(t\)) contiene los coeficientes del sistema y (F\(t\)) contiene los términos independientes. Sanz/Torres destaca esta forma matricial como la expresión natural de los sistemas lineales.</p>
+<p>Ejemplo lineal:</p>
+<div class="formula-block">\[
+\begin{cases}
+x'=2x-y+t,\\
+y'=x+3y+e^t.
+\end{cases}
+\]</div>
+<p>Ejemplo no lineal:</p>
+<div class="formula-block">\[
+\begin{cases}
+x'=xy,\\
+y'=x^2+y.
+\end{cases}
+\]</div>
+<p>La diferencia importa porque los sistemas lineales tienen una teoría cerrada: existencia, unicidad, estructura de espacio vectorial en el caso homogéneo, matriz fundamental y solución general por superposición.</p>
+</article>
+<article class="reading-block" id="desarrollo-sistema-homogeneo-asociado">
+<h3>3.3. Sistema homogéneo asociado</h3>
+<p>Dado</p>
+<div class="formula-block">\[
+X'=A(t)X+F(t),
+\]</div>
+<p>el homogéneo asociado es</p>
+<div class="formula-block">\[
+X'=A(t)X.
+\]</div>
+<p>La solución del sistema completo se construye como</p>
+<div class="formula-block">\[
+X(t)=X_h(t)+X_p(t),
+\]</div>
+<p>donde \(X_h\) es la solución general del homogéneo y \(X_p\) una solución particular del completo.</p>
+<p>Esto generaliza lo ya visto en EDO lineales escalares:</p>
+<div class="formula-block">\[
+y=y_h+y_p.
+\]</div>
+<p>La consecuencia práctica es clara: primero se resuelve el homogéneo; después se busca una particular.</p>
+</article>
+<article class="reading-block" id="desarrollo-espacio-vectorial-de-soluciones">
+<h3>3.4. Espacio vectorial de soluciones</h3>
+<p>En un sistema homogéneo lineal, si \(X_1\) y \(X_2\) son soluciones, entonces</p>
+<div class="formula-block">\[
+C_1X_1+C_2X_2
+\]</div>
+<p>también es solución. Por tanto, el conjunto de soluciones forma un espacio vectorial.</p>
+<p>Para un sistema de \(n\) ecuaciones lineales homogéneas de primer orden, la solución general depende de \(n\) constantes. Por eso se necesitan \(n\) soluciones linealmente independientes.</p>
+<p>Ejemplo:</p>
+<div class="formula-block">\[
+X_1(t)=
+\begin{pmatrix}
+e^t\\
+0
+\end{pmatrix},
+\qquad
+X_2(t)=
+\begin{pmatrix}
+0\\
+e^{2t}
+\end{pmatrix}.
+\]</div>
+<p>Entonces</p>
+<div class="formula-block">\[
+X(t)=C_1
+\begin{pmatrix}
+e^t\\
+0
+\end{pmatrix}
++
+C_2
+\begin{pmatrix}
+0\\
+e^{2t}
+\end{pmatrix}
+=
+
+\begin{pmatrix}
+C_1e^t\\
+C_2e^{2t}
+\end{pmatrix}.
+\]</div>
+</article>
+<article class="reading-block" id="desarrollo-sistema-fundamental-de-soluciones">
+<h3>3.5. Sistema fundamental de soluciones</h3>
+<p>Un sistema fundamental de soluciones es una base del espacio de soluciones del homogéneo. Si el sistema tiene dimensión \(n\), hacen falta \(n\) soluciones independientes:</p>
+<div class="formula-block">\[
+X_1(t),X_2(t),\dots,X_n(t).
+\]</div>
+<p>Sanz/Torres define la matriz fundamental como la matriz cuyas columnas son un sistema fundamental de soluciones.</p>
+<p>La matriz fundamental es</p>
+<div class="formula-block">\[
+M(t)=
+\begin{pmatrix}
+|&|&&|\\
+X_1(t)&X_2(t)&\cdots&X_n(t)\\
+|&|&&|
+\end{pmatrix}.
+\]</div>
+<p>Entonces la solución general queda en forma compacta:</p>
+<div class="formula-block">\[
+X(t)=M(t)C.
+\]</div>
+<p>Esto es una idea central: resolver el sistema homogéneo equivale a encontrar una matriz fundamental.</p>
+</article>
+<article class="reading-block" id="desarrollo-criterio-de-matriz-fundamental">
+<h3>3.6. Criterio de matriz fundamental</h3>
+<p>Una matriz (M\(t\)) formada por soluciones del sistema</p>
+<div class="formula-block">\[
+X'=A(t)X
+\]</div>
+<p>es fundamental si sus columnas son independientes. El criterio operativo es</p>
+<div class="formula-block">\[
+\det M(t_0)\neq 0
+\]</div>
+<p>para algún punto \(t_0\) del intervalo. Sanz/Torres usa este criterio para caracterizar matrices fundamentales.</p>
+<p>Además, toda matriz fundamental cumple</p>
+<div class="formula-block">\[
+M'(t)=A(t)M(t).
+\]</div>
+<p>Este resultado es natural: cada columna de \(M\) es una solución, luego al derivarla debe cumplir la ecuación del sistema.</p>
+</article>
+<article class="reading-block" id="desarrollo-problema-de-valores-iniciales-con-matriz-fundamental">
+<h3>3.7. Problema de valores iniciales con matriz fundamental</h3>
+<p>Si</p>
+<div class="formula-block">\[
+X'=A(t)X,\qquad X(t_0)=X_0,
+\]</div>
+<p>y (M\(t\)) es matriz fundamental, entonces</p>
+<div class="formula-block">\[
+X(t)=M(t)C.
+\]</div>
+<p>Imponiendo el dato inicial:</p>
+<div class="formula-block">\[
+X_0=M(t_0)C.
+\]</div>
+<p>Si (M\(t_0\)) es invertible,</p>
+<div class="formula-block">\[
+C=M^{-1}(t_0)X_0.
+\]</div>
+<p>Por tanto,</p>
+<div class="formula-block">\[
+X(t)=M(t)M^{-1}(t_0)X_0.
+\]</div>
+<p>Esta fórmula es importante porque separa la parte dinámica (M\(t\)) del dato inicial \(X_0\).</p>
+</article>
+<article class="reading-block" id="desarrollo-sistemas-homogeneos-con-coeficientes-constantes">
+<h3>3.8. Sistemas homogéneos con coeficientes constantes</h3>
+<p>El caso más importante en examen es</p>
+<div class="formula-block">\[
+X'=AX,
+\]</div>
+<p>con \(A\) constante. Sanz/Torres lo trata como bloque específico del capítulo y lo conecta con autovalores y autovectores.</p>
+<p>Se busca una solución de la forma</p>
+<div class="formula-block">\[
+X(t)=ve^{\lambda t}.
+\]</div>
+<p>Sustituyendo:</p>
+<div class="formula-block">\[
+\lambda ve^{\lambda t}=Ave^{\lambda t}.
+\]</div>
+<p>Como \(e^{\lambda t}\neq 0\),</p>
+<div class="formula-block">\[
+Av=\lambda v.
+\]</div>
+<p>Luego \(\lambda\) debe ser autovalor de \(A\), y \(v\) autovector asociado.</p>
+<p>La ecuación característica es</p>
+<div class="formula-block">\[
+\det(A-\lambda I)=0.
+\]</div>
+<p>Cada par (\(\lambda,v\)) genera una solución</p>
+<div class="formula-block">\[
+X(t)=ve^{\lambda t}.
+\]</div>
+</article>
+<article class="reading-block" id="desarrollo-autovalores-reales-distintos">
+<h3>3.9. Autovalores reales distintos</h3>
+<p>Si \(A\) tiene \(n\) autovalores reales distintos</p>
+<div class="formula-block">\[
+\lambda_1,\dots,\lambda_n
+\]</div>
+<p>con autovectores independientes</p>
+<div class="formula-block">\[
+v_1,\dots,v_n,
+\]</div>
+<p>entonces la solución general es</p>
+<div class="formula-block">\[
+X(t)=C_1v_1e^{\lambda_1t}+\cdots+C_nv_ne^{\lambda_nt}.
+\]</div>
+<p>Ejemplo:</p>
+<div class="formula-block">\[
+A=
+\begin{pmatrix}
+1&0\\
+0&3
+\end{pmatrix}.
+\]</div>
+<p>Autovalores:</p>
+<div class="formula-block">\[
+\lambda_1=1,\qquad \lambda_2=3.
+\]</div>
+<p>Autovectores:</p>
+<div class="formula-block">\[
+v_1=
+\begin{pmatrix}1\\0\end{pmatrix},
+\qquad
+v_2=
+\begin{pmatrix}0\\1\end{pmatrix}.
+\]</div>
+<p>Solución:</p>
+<div class="formula-block">\[
+X(t)=
+C_1
+\begin{pmatrix}1\\0\end{pmatrix}e^t
++
+C_2
+\begin{pmatrix}0\\1\end{pmatrix}e^{3t}.
+\]</div>
+</article>
+<article class="reading-block" id="desarrollo-autovalores-complejos">
+<h3>3.10. Autovalores complejos</h3>
+<p>Si aparece</p>
+<div class="formula-block">\[
+\lambda=\alpha+i\beta,
+\]</div>
+<p>con autovector complejo</p>
+<div class="formula-block">\[
+v=a+ib,
+\]</div>
+<p>entonces una solución compleja es</p>
+<div class="formula-block">\[
+(a+ib)e^{(\alpha+i\beta)t}.
+\]</div>
+<p>De ella se obtienen dos soluciones reales independientes: la parte real y la parte imaginaria.</p>
+<p>Al expandir:</p>
+<div class="formula-block">\[
+(a+ib)e^{\alpha t}(\cos\beta t+i\sin\beta t).
+\]</div>
+<p>Parte real:</p>
+<div class="formula-block">\[
+e^{\alpha t}(a\cos\beta t-b\sin\beta t).
+\]</div>
+<p>Parte imaginaria:</p>
+<div class="formula-block">\[
+e^{\alpha t}(a\sin\beta t+b\cos\beta t).
+\]</div>
+<p>Estas soluciones describen rotaciones, espirales o centros según el valor de \(\alpha\). Si \(\alpha&lt;0\), la trayectoria se acerca al origen. Si \(\alpha&gt;0\), se aleja. Si \(\alpha=0\), gira sin amortiguarse en el caso lineal ideal.</p>
+</article>
+<article class="reading-block" id="desarrollo-autovalores-repetidos">
+<h3>3.11. Autovalores repetidos</h3>
+<p>Si un autovalor \(\lambda\) aparece repetido, hay que mirar cuántos autovectores independientes tiene.</p>
+<p>Si tiene tantos autovectores como multiplicidad, se procede igual:</p>
+<div class="formula-block">\[
+X(t)=C_1v_1e^{\lambda t}+C_2v_2e^{\lambda t}.
+\]</div>
+<p>Si no hay suficientes autovectores, aparece un vector generalizado \(w\) que cumple</p>
+<div class="formula-block">\[
+(A-\lambda I)w=v.
+\]</div>
+<p>Entonces una segunda solución puede tener la forma</p>
+<div class="formula-block">\[
+X_2(t)=e^{\lambda t}(tv+w).
+\]</div>
+<p>En un examen básico de MM1, lo más frecuente es que el sistema sea diagonalizable o de dimensión \(2\) con caso manejable.</p>
+</article>
+<article class="reading-block" id="desarrollo-sistemas-no-homogeneos">
+<h3>3.12. Sistemas no homogéneos</h3>
+<p>El sistema completo es</p>
+<div class="formula-block">\[
+X'=A(t)X+F(t).
+\]</div>
+<p>La solución general se escribe como</p>
+<div class="formula-block">\[
+X(t)=X_h(t)+X_p(t).
+\]</div>
+<p>Si (M\(t\)) es matriz fundamental del homogéneo, se puede usar variación de constantes. En vez de</p>
+<div class="formula-block">\[
+X_h=M(t)C,
+\]</div>
+<p>se prueba</p>
+<div class="formula-block">\[
+X(t)=M(t)C(t).
+\]</div>
+<p>Derivando:</p>
+<div class="formula-block">\[
+X'=M'C+MC'.
+\]</div>
+<p>Como \(M'=AM\), queda</p>
+<div class="formula-block">\[
+AM C+MC'=A M C+F.
+\]</div>
+<p>Por tanto:</p>
+<div class="formula-block">\[
+MC'=F,
+\]</div>
+<p>y</p>
+<div class="formula-block">\[
+C'=M^{-1}F.
+\]</div>
+<p>Integrando:</p>
+<div class="formula-block">\[
+C(t)=C_0+\int M^{-1}(t)F(t),dt.
+\]</div>
+<p>Así:</p>
+<div class="formula-block">\[
+X(t)=M(t)\left(C_0+\int M^{-1}(t)F(t),dt\right).
+\]</div>
+<p>Para un PVI:</p>
+<div class="formula-block">\[
+X(t)=M(t)\left[M^{-1}(t_0)X_0+\int_{t_0}^{t}M^{-1}(s)F(s),ds\right].
+\]</div>
+</article>
+<article class="reading-block" id="desarrollo-metodo-de-eliminacion">
+<h3>3.13. Método de eliminación</h3>
+<p>El método de eliminación transforma un sistema en una ecuación diferencial escalar de orden superior.</p>
+<p>Ejemplo:</p>
+<div class="formula-block">\[
+\begin{cases}
+x'=y,\\
+y'=-x.
+\end{cases}
+\]</div>
+<p>De la primera:</p>
+<div class="formula-block">\[
+y=x'.
+\]</div>
+<p>Derivando:</p>
+<div class="formula-block">\[
+y'=x''.
+\]</div>
+<p>Pero la segunda dice</p>
+<div class="formula-block">\[
+y'=-x.
+\]</div>
+<p>Luego</p>
+<div class="formula-block">\[
+x''=-x,
+\]</div>
+<p>es decir,</p>
+<div class="formula-block">\[
+x''+x=0.
+\]</div>
+<p>Se resuelve:</p>
+<div class="formula-block">\[
+x=C_1\cos t+C_2\sin t.
+\]</div>
+<p>Después:</p>
+<div class="formula-block">\[
+y=x'=-C_1\sin t+C_2\cos t.
+\]</div>
+<p>Este método es útil cuando el sistema es pequeño y permite eliminar rápido.</p>
+</article>
+<article class="reading-block" id="desarrollo-operador-d">
+<h3>3.14. Operador \(D\)</h3>
+<p>El operador diferencial</p>
+<div class="formula-block">\[
+D=\frac{d}{dt}
+\]</div>
+<p>permite escribir sistemas con coeficientes constantes como expresiones algebraicas en \(D\).</p>
+<p>Ejemplo:</p>
+<div class="formula-block">\[
+x'=x+y,\qquad y'=2x.
+\]</div>
+<p>Se escribe:</p>
+<div class="formula-block">\[
+(D-1)x-y=0,
+\]</div>
+<div class="formula-block">\[
+-2x+Dy=0.
+\]</div>
+<p>Luego se elimina como si fuera un sistema algebraico con \(D\), recordando que \(D\) actúa sobre funciones. Es una técnica clásica y rentable en sistemas de coeficientes constantes.</p>
+</article>
+<article class="reading-block" id="desarrollo-transformada-de-laplace">
+<h3>3.15. Transformada de Laplace</h3>
+<p>Sanz/Torres menciona Laplace como técnica para convertir sistemas diferenciales en algebraicos.</p>
+<p>Para un sistema con condiciones iniciales:</p>
+<div class="formula-block">\[
+X'=AX+F(t),\qquad X(0)=X_0,
+\]</div>
+<p>aplicando Laplace:</p>
+<div class="formula-block">\[
+s\mathcal L{X}-X_0=A\mathcal L{X}+\mathcal L{F}.
+\]</div>
+<p>Si</p>
+<div class="formula-block">\[
+\widehat X(s)=\mathcal L{X(t)},
+\]</div>
+<p>entonces</p>
+<div class="formula-block">\[
+(sI-A)\widehat X(s)=X_0+\widehat F(s).
+\]</div>
+<p>Por tanto:</p>
+<div class="formula-block">\[
+\widehat X(s)=(sI-A)^{-1}(X_0+\widehat F(s)).
+\]</div>
+<p>Después se hace transformada inversa. Este método es especialmente útil con condiciones iniciales, escalones, impulsos o términos forzantes sencillos.</p>
+</article>
+<article class="reading-block" id="desarrollo-plano-de-fases-y-punto-critico">
+<h3>3.16. Plano de fases y punto crítico</h3>
+<p>Para un sistema autónomo</p>
+<div class="formula-block">\[
+X'=F(X),
+\]</div>
+<p>un punto crítico cumple</p>
+<div class="formula-block">\[
+F(X_*)=0.
+\]</div>
+<p>En un sistema lineal homogéneo</p>
+<div class="formula-block">\[
+X'=AX,
+\]</div>
+<p>el origen suele ser el punto crítico, salvo que \(A\) sea singular y haya más puntos.</p>
+<p>En dimensión \(2\), los autovalores de \(A\) clasifican el origen:</p>
+<ul><li>Autovalores reales de signo opuesto: silla, inestable.</li><li>Reales negativos: nodo estable.</li><li>Reales positivos: nodo inestable.</li><li>Complejos con parte real negativa: foco estable.</li><li>Complejos con parte real positiva: foco inestable.</li><li>Imaginarios puros: centro, estabilidad neutral lineal.</li></ul>
+<p>Esto aparece explícitamente como patrón de examen: resolver sistema, clasificar punto crítico y dibujar fase.</p>
+</article>
+</section>
+<section class="page" id="conceptos">
+<header class="section-header">
+<p class="eyebrow">Sección 4</p>
+<h2>4. Conceptos clave</h2>
+</header>
+<div class="card-grid">
+<article class="definition-card" id="conceptos-sistema-de-ecuaciones-diferenciales">
+<h3>Sistema de ecuaciones diferenciales</h3>
+<p>Definición: conjunto de varias ecuaciones diferenciales con varias funciones incógnitas.</p>
+<p>Explicación: cada ecuación controla una componente, pero el conjunto describe la evolución conjunta del vector (X\(t\)).</p>
+<p><strong>Ejemplo:</strong></p>
+<div class="formula-block">\[
+x'=x+y,\qquad y'=x-y.
+\]</div>
+<p>Relación: es la generalización natural de una EDO escalar.</p>
+<p><strong>Examen:</strong> “Escriba el sistema en forma matricial y determine su solución general”.</p>
+</article>
+<article class="definition-card" id="conceptos-sistema-lineal">
+<h3>Sistema lineal</h3>
+<p>Definición: sistema donde las incógnitas aparecen linealmente:</p>
+<div class="formula-block">\[
+X'=A(t)X+F(t).
+\]</div>
+<p>Explicación: conserva estructura de superposición en el homogéneo.</p>
+<p><strong>Ejemplo:</strong></p>
+<div class="formula-block">\[
+\begin{pmatrix}x'\\y'\end{pmatrix}
+=
+
+\begin{pmatrix}1&2\\3&4\end{pmatrix}
+\begin{pmatrix}x\\y\end{pmatrix}
++
+\begin{pmatrix}e^t\\0\end{pmatrix}.
+\]</div>
+<p>Relación: si \(F=0\), es homogéneo.</p>
+<p><strong>Examen:</strong> “Determine si el sistema es lineal y resuélvalo”.</p>
+</article>
+<article class="definition-card" id="conceptos-sistema-homogeneo">
+<h3>Sistema homogéneo</h3>
+<p>Definición:</p>
+<div class="formula-block">\[
+X'=A(t)X.
+\]</div>
+<p>Explicación: no tiene término independiente. Su conjunto de soluciones forma un espacio vectorial.</p>
+<p><strong>Ejemplo:</strong></p>
+<div class="formula-block">\[
+x'=2x-y,\qquad y'=x+3y.
+\]</div>
+<p>Relación: es la base para resolver el sistema completo.</p>
+<p><strong>Examen:</strong> “Halle un sistema fundamental de soluciones del homogéneo asociado”.</p>
+</article>
+<article class="definition-card" id="conceptos-sistema-no-homogeneo">
+<h3>Sistema no homogéneo</h3>
+<p>Definición:</p>
+<div class="formula-block">\[
+X'=A(t)X+F(t),\qquad F(t)\neq 0.
+\]</div>
+<p>Explicación: su solución general es homogénea más particular.</p>
+<p><strong>Ejemplo:</strong></p>
+<div class="formula-block">\[
+x'=x+y+t,\qquad y'=2x-y.
+\]</div>
+<p>Relación: se resuelve tras conocer el homogéneo.</p>
+<p><strong>Examen:</strong> “Aplique variación de constantes”.</p>
+</article>
+<article class="definition-card" id="conceptos-sistema-fundamental-de-soluciones">
+<h3>Sistema fundamental de soluciones</h3>
+<p>Definición: base del espacio vectorial de soluciones del homogéneo.</p>
+<p>Explicación: contiene las soluciones independientes necesarias para construir cualquier solución.</p>
+<p><strong>Ejemplo:</strong></p>
+<div class="formula-block">\[
+X_1=
+\begin{pmatrix}e^t\\0\end{pmatrix},
+\quad
+X_2=
+\begin{pmatrix}0\e^{2t}\end{pmatrix}.
+\]</div>
+<p>Relación: sus columnas forman la matriz fundamental.</p>
+<p><strong>Examen:</strong> “Compruebe que las soluciones dadas forman un sistema fundamental”.</p>
+</article>
+<article class="definition-card" id="conceptos-matriz-fundamental">
+<h3>Matriz fundamental</h3>
+<p>Definición: matriz cuyas columnas son un sistema fundamental de soluciones.</p>
+<p>Explicación: permite escribir</p>
+<div class="formula-block">\[
+X(t)=M(t)C.
+\]</div>
+<p><strong>Ejemplo:</strong></p>
+<div class="formula-block">\[
+M(t)=
+\begin{pmatrix}
+e^t&0\\
+0&e^{2t}
+\end{pmatrix}.
+\]</div>
+<p>Relación: debe cumplir \(M'=AM\) y \(\det M\neq 0\).</p>
+<p><strong>Examen:</strong> “Determine una matriz fundamental del sistema”.</p>
+</article>
+<article class="definition-card" id="conceptos-matriz-exponencial">
+<h3>Matriz exponencial</h3>
+<p>Definición:</p>
+<div class="formula-block">\[
+e^{At}=I+At+\frac{A^2t^2}{2!}+\cdots.
+\]</div>
+<p>Explicación: es la solución matricial canónica de</p>
+<div class="formula-block">\[
+X'=AX.
+\]</div>
+<p><strong>Ejemplo:</strong></p>
+<p>si \(A\) es diagonal,</p>
+<div class="formula-block">\[
+A=
+\begin{pmatrix}
+\lambda_1&0\\
+0&\lambda_2
+\end{pmatrix},
+\quad
+e^{At}=
+\begin{pmatrix}
+e^{\lambda_1t}&0\\
+0&e^{\lambda_2t}
+\end{pmatrix}.
+\]</div>
+<p>Relación: una matriz fundamental natural es (M\(t\)=e^{At}).</p>
+<p><strong>Examen:</strong> “Exprese la solución usando \(e^{At}\)”.</p>
+</article>
+<article class="definition-card" id="conceptos-autovalor">
+<h3>Autovalor</h3>
+<p>Definición: número \(\lambda\) tal que existe \(v\neq0\) con</p>
+<div class="formula-block">\[
+Av=\lambda v.
+\]</div>
+<p>Explicación: indica una dirección propia de evolución exponencial.</p>
+<p><strong>Ejemplo:</strong></p>
+<div class="formula-block">\[
+A=
+\begin{pmatrix}2&0\\0&5\end{pmatrix}
+\]</div>
+<p>tiene autovalores \(2\) y \(5\).</p>
+<p>Relación: genera soluciones \(ve^{\lambda t}\).</p>
+<p><strong>Examen:</strong> “Calcule los autovalores y construya la solución”.</p>
+</article>
+<article class="definition-card" id="conceptos-autovector">
+<h3>Autovector</h3>
+<p>Definición: vector no nulo \(v\) que satisface</p>
+<div class="formula-block">\[
+(A-\lambda I)v=0.
+\]</div>
+<p>Explicación: da la dirección espacial de la solución asociada al autovalor.</p>
+<p><strong>Ejemplo:</strong></p>
+<p>para</p>
+<div class="formula-block">\[
+A=
+\begin{pmatrix}2&0\\0&5\end{pmatrix},
+\]</div>
+<p>los autovectores son direcciones de los ejes.</p>
+<p>Relación: sin autovectores independientes suficientes no se diagonaliza.</p>
+<p><strong>Examen:</strong> “Halle los autovectores asociados y escriba el sistema fundamental”.</p>
+</article>
+<article class="definition-card" id="conceptos-punto-critico">
+<h3>Punto crítico</h3>
+<p>Definición: punto \(X_*\) donde</p>
+<div class="formula-block">\[
+F(X_*)=0.
+\]</div>
+<p>Explicación: si el sistema empieza ahí, permanece ahí.</p>
+<p><strong>Ejemplo:</strong></p>
+<div class="formula-block">\[
+x'=x,\quad y'=-y
+\]</div>
+<p>tiene punto crítico (\(0,0\)).</p>
+<p>Relación: su tipo se clasifica con autovalores.</p>
+<p><strong>Examen:</strong> “Clasifique el punto crítico del sistema”.</p>
+</article>
+<article class="definition-card" id="conceptos-diagrama-de-fases">
+<h3>Diagrama de fases</h3>
+<p>Definición: representación geométrica de las trayectorias (X\(t\)) en el espacio de variables.</p>
+<p>Explicación: no dibuja (x\(t\)) o (y\(t\)) por separado, sino la trayectoria ((x\(t\),y\(t\))).</p>
+<p><strong>Ejemplo:</strong></p>
+<div class="formula-block">\[
+x'=y,\qquad y'=-x
+\]</div>
+<p>produce circunferencias.</p>
+<p>Relación: conecta sistemas de EDO con dinámica cualitativa.</p>
+<p><strong>Examen:</strong> “Realice un esquema aproximado del diagrama de fases”.</p>
+</article>
+</div>
+</section>
+<section class="page" id="relaciones">
+<header class="section-header">
+<p class="eyebrow">Sección 5</p>
+<h2>5. Relaciones entre ideas</h2>
+</header>
+<div class="reading-block">
+<p>El tema tiene una jerarquía clara:</p>
+<div class="formula-block">\[
+\text{sistema general}
+\to
+\text{sistema lineal}
+\to
+\text{homogéneo}
+\to
+\text{sistema fundamental}
+\to
+\text{matriz fundamental}
+\to
+\text{solución general}.
+\]</div>
+<p>Primero se identifica si hay linealidad. Si no hay linealidad, no se aplica directamente la teoría matricial del capítulo. Si hay linealidad, se separa el problema en homogéneo y no homogéneo.</p>
+<p>El sistema homogéneo es prioritario porque contiene la estructura principal. En él hay superposición, espacio vectorial de soluciones y matriz fundamental. La matriz fundamental no es un adorno: es la forma compacta de guardar todas las soluciones independientes.</p>
+<p>Los coeficientes constantes simplifican el problema porque transforman la resolución diferencial en álgebra lineal. La ecuación característica</p>
+<div class="formula-block">\[
+\det(A-\lambda I)=0
+\]</div>
+<p>es la puerta de entrada: de sus raíces salen los exponentes temporales.</p>
+<p>Los autovalores gobiernan el crecimiento, decrecimiento u oscilación. Los autovectores gobiernan las direcciones. En dimensión \(2\), esto se traduce en geometría de fase: nodos, sillas, focos y centros.</p>
+<p>El sistema no homogéneo depende del homogéneo. La solución particular no sustituye al sistema fundamental; se añade a él. Por eso la forma estructural es</p>
+<div class="formula-block">\[
+X=X_h+X_p.
+\]</div>
+<p>Laplace actúa como vía alternativa cuando hay condiciones iniciales claras o términos forzantes cómodos. No cambia la teoría, pero convierte derivadas en expresiones algebraicas.</p>
+<p>Históricamente, este bloque une dos tradiciones: la teoría de EDO y el álgebra lineal. En física, esa unión se vuelve esencial: modos normales, estabilidad, espacio de fases y sistemas acoplados dependen de la misma estructura.</p>
+</div>
+</section>
+<section class="page" id="errores">
+<header class="section-header">
+<p class="eyebrow">Sección 6</p>
+<h2>6. Errores habituales</h2>
+</header>
+<details class="accordion" id="errores-error-1-resolver-componente-a-componente-como-si-no-hubiera-acoplamiento">
+<summary>Error 1: resolver componente a componente como si no hubiera acoplamiento</summary>
+<div class="accordion-content">
+<p><strong>Error:</strong> tratar</p>
+<div class="formula-block">\[
+x'=x+y
+\]</div>
+<p>como si dependiera solo de \(x\).</p>
+<p>Por qué está mal: \(x\) depende de \(y\), y \(y\) puede depender de \(x\). El sistema debe resolverse simultáneamente.</p>
+<p>Corrección: escribir en forma matricial y analizar \(A\).</p>
+<p><strong>Incorrecto:</strong> “\(x'=x+y\), luego \(x=Ce^t\)”.</p>
+<p><strong>Correcto:</strong> “El sistema es \(X'=AX\); hay que calcular autovalores de \(A\)”.</p>
+</div></details>
+<details class="accordion" id="errores-error-2-olvidar-el-termino-no-homogeneo">
+<summary>Error 2: olvidar el término no homogéneo</summary>
+<div class="accordion-content">
+<p><strong>Error:</strong> resolver solo</p>
+<div class="formula-block">\[
+X'=AX
+\]</div>
+<p>cuando el sistema real es</p>
+<div class="formula-block">\[
+X'=AX+F(t).
+\]</div>
+<p>Por qué está mal: falta la solución particular.</p>
+<p>Corrección:</p>
+<div class="formula-block">\[
+X=X_h+X_p.
+\]</div>
+<p><strong>Incorrecto:</strong> “La solución general es (M\(t\)C)”.</p>
+<p><strong>Correcto:</strong> “La solución general es (M\(t\)C+X_p\(t\))”.</p>
+</div></details>
+<details class="accordion" id="errores-error-3-confundir-matriz-de-soluciones-con-matriz-fundamental">
+<summary>Error 3: confundir matriz de soluciones con matriz fundamental</summary>
+<div class="accordion-content">
+<p><strong>Error:</strong> llamar matriz fundamental a cualquier matriz cuyas columnas sean soluciones.</p>
+<p>Por qué está mal: además deben ser linealmente independientes.</p>
+<p>Corrección: comprobar</p>
+<div class="formula-block">\[
+\det M(t_0)\neq0.
+\]</div>
+<p><strong>Incorrecto:</strong> “Como las columnas son soluciones, \(M\) es fundamental”.</p>
+<p><strong>Correcto:</strong> “Como las columnas son soluciones y (\det M\(0\)\neq0), \(M\) es fundamental”.</p>
+</div></details>
+<details class="accordion" id="errores-error-4-calcular-autovalores-con-det-a-lambda-i">
+<summary>Error 4: calcular autovalores con (\det\(A+\lambda I\))</summary>
+<div class="accordion-content">
+<p><strong>Error:</strong> usar signo equivocado.</p>
+<p>Por qué está mal: la ecuación estándar es</p>
+<div class="formula-block">\[
+\det(A-\lambda I)=0.
+\]</div>
+<p>Corrección: fijar una convención y mantenerla.</p>
+<p><strong>Incorrecto:</strong></p>
+<div class="formula-block">\[
+\det(A+\lambda I)=0.
+\]</div>
+<p><strong>Correcto:</strong></p>
+<div class="formula-block">\[
+\det(A-\lambda I)=0.
+\]</div>
+</div></details>
+<details class="accordion" id="errores-error-5-perder-el-autovector">
+<summary>Error 5: perder el autovector</summary>
+<div class="accordion-content">
+<p><strong>Error:</strong> hallar \(\lambda\), pero escribir solo \(e^{\lambda t}\).</p>
+<p>Por qué está mal: en sistemas, la solución es vectorial:</p>
+<div class="formula-block">\[
+X=ve^{\lambda t}.
+\]</div>
+<p>Corrección: para cada autovalor, resolver</p>
+<div class="formula-block">\[
+(A-\lambda I)v=0.
+\]</div>
+<p><strong>Incorrecto:</strong> “Solución: \(C_1e^{2t}+C_2e^{3t}\)”.</p>
+<p><strong>Correcto:</strong></p>
+<div class="formula-block">\[
+X=C_1v_1e^{2t}+C_2v_2e^{3t}.
+\]</div>
+</div></details>
+<details class="accordion" id="errores-error-6-no-convertir-autovalores-complejos-a-soluciones-reales">
+<summary>Error 6: no convertir autovalores complejos a soluciones reales</summary>
+<div class="accordion-content">
+<p><strong>Error:</strong> dejar</p>
+<div class="formula-block">\[
+X=(a+ib)e^{(\alpha+i\beta)t}.
+\]</div>
+<p>Por qué está mal: si el sistema es real, la respuesta debe darse en términos reales.</p>
+<p>Corrección: usar parte real e imaginaria.</p>
+<p><strong>Incorrecto:</strong></p>
+<div class="formula-block">\[
+X=C(a+ib)e^{(\alpha+i\beta)t}.
+\]</div>
+<p><strong>Correcto:</strong></p>
+<div class="formula-block">\[
+X=C_1e^{\alpha t}(a\cos\beta t-b\sin\beta t)
++C_2e^{\alpha t}(a\sin\beta t+b\cos\beta t).
+\]</div>
+</div></details>
+<details class="accordion" id="errores-error-7-clasificar-estabilidad-solo-por-el-tipo">
+<summary>Error 7: clasificar estabilidad solo por el tipo</summary>
+<div class="accordion-content">
+<p><strong>Error:</strong> decir “foco” sin decir si es estable o inestable.</p>
+<p>Por qué está mal: el tipo geométrico y la estabilidad son propiedades distintas.</p>
+<p>Corrección: mirar la parte real de los autovalores.</p>
+<p><strong>Incorrecto:</strong> “Es un foco”.</p>
+<p><strong>Correcto:</strong> “Es un foco estable porque \(\operatorname{Re}\lambda&lt;0\)”.</p>
+</div></details>
+<details class="accordion" id="errores-error-8-asumir-que-todo-sistema-tiene-unico-punto-critico">
+<summary>Error 8: asumir que todo sistema tiene único punto crítico</summary>
+<div class="accordion-content">
+<p><strong>Error:</strong> imponer siempre \(X=0\).</p>
+<p>Por qué está mal: si el sistema no homogéneo o \(A\) singular, puede haber otro punto o infinitos.</p>
+<p>Corrección: resolver</p>
+<div class="formula-block">\[
+AX+B=0
+\]</div>
+<p>en sistemas autónomos afines.</p>
+<p><strong>Incorrecto:</strong> “El punto crítico es el origen”.</p>
+<p><strong>Correcto:</strong> “Los puntos críticos satisfacen \(AX+B=0\)”.</p>
+</div></details>
+<details class="accordion" id="errores-error-9-aplicar-diagonalizacion-cuando-no-hay-base-de-autovectores">
+<summary>Error 9: aplicar diagonalización cuando no hay base de autovectores</summary>
+<div class="accordion-content">
+<p><strong>Error:</strong> escribir</p>
+<div class="formula-block">\[
+A=PDP^{-1}
+\]</div>
+<p>sin comprobar que \(P\) es invertible.</p>
+<p>Por qué está mal: una matriz con autovalor repetido puede no ser diagonalizable.</p>
+<p>Corrección: verificar suficientes autovectores independientes.</p>
+<p><strong>Incorrecto:</strong> “Autovalor doble, luego dos soluciones”.</p>
+<p><strong>Correcto:</strong> “Autovalor doble; hay que comprobar la dimensión del subespacio propio”.</p>
+</div></details>
+<details class="accordion" id="errores-error-10-usar-laplace-sin-meter-condiciones-iniciales">
+<summary>Error 10: usar Laplace sin meter condiciones iniciales</summary>
+<div class="accordion-content">
+<p><strong>Error:</strong> transformar \(X'\) como \(s\widehat X\).</p>
+<p>Por qué está mal:</p>
+<div class="formula-block">\[
+\mathcal L{X'}=s\widehat X-X(0).
+\]</div>
+<p>Corrección: incluir el dato inicial.</p>
+<p><strong>Incorrecto:</strong></p>
+<div class="formula-block">\[
+s\widehat X=A\widehat X.
+\]</div>
+<p><strong>Correcto:</strong></p>
+<div class="formula-block">\[
+s\widehat X-X(0)=A\widehat X.
+\]</div>
+</div></details>
+</section>
+<section class="page" id="preguntas">
+<header class="section-header">
+<p class="eyebrow">Sección 7</p>
+<h2>7. Preguntas orientadas a examen</h2>
+</header>
+<details class="accordion" id="preguntas-10-preguntas-faciles" open>
+<summary>10 preguntas fáciles</summary>
+<div class="accordion-content">
+<ol class="question-list"><li value="1">¿Qué es un sistema de ecuaciones diferenciales ordinarias"</li><li value="2">¿Cuándo un sistema de EDO es lineal"</li><li value="3">Escribe en forma matricial \(x'=2x+y,\ y'=x-y\).</li><li value="4">¿Qué diferencia hay entre sistema homogéneo y no homogéneo"</li><li value="5">¿Qué es una solución particular"</li><li value="6">¿Qué es un sistema fundamental de soluciones"</li><li value="7">¿Qué es una matriz fundamental"</li><li value="8">¿Qué condición debe cumplir una matriz fundamental respecto a su determinante"</li><li value="9">¿Cuál es la forma típica de una solución de \(X'=AX\)"</li><li value="10">¿Qué ecuación permite calcular los autovalores de \(A\)"</li></ol>
+</div></details>
+<details class="accordion" id="preguntas-10-preguntas-medias">
+<summary>10 preguntas medias</summary>
+<div class="accordion-content">
+<ol class="question-list"><li value="11">Resuelve \(x'=x,\ y'=2y\).</li><li value="12">Resuelve \(X'=AX\), con \(A=\begin{pmatrix}2&amp;0\\0&amp;-1\end{pmatrix}\).</li><li value="13">Determina la matriz fundamental del sistema anterior.</li><li value="14">Aplica (X\(t\)=M\(t\)M^{-1}\(0\)X_0) al dato (X\(0\)=\(1,3\)^T).</li><li value="15">Resuelve \(x'=y,\ y'=-x\).</li><li value="16">Clasifica el punto crítico de \(x'=x,\ y'=-y\).</li><li value="17">Clasifica el punto crítico de \(x'=y,\ y'=-x\).</li><li value="18">Explica el método de eliminación en un sistema \(2\times2\).</li><li value="19">Explica cómo se usa Laplace en un sistema con coeficientes constantes.</li><li value="20">¿Por qué \(X_h+X_p\) resuelve un sistema no homogéneo"</li></ol>
+</div></details>
+<details class="accordion" id="preguntas-5-preguntas-dificiles">
+<summary>5 preguntas difíciles</summary>
+<div class="accordion-content">
+<ol class="question-list"><li value="21">Si \(A\) tiene autovalores \(2\) y \(2\) pero solo un autovector independiente, ¿qué forma tiene la segunda solución"</li><li value="22">Deriva la fórmula de variación de constantes para (X'=A\(t\)X+F\(t\)).</li><li value="23">Si \(A\) tiene autovalores \(\alpha\pm i\beta\), construye dos soluciones reales.</li><li value="24">Determina la solución general de \(x'=x-y,\ y'=x+y\).</li><li value="25">Clasifica el origen según la traza y el determinante de una matriz \(2\times2\).</li></ol>
+</div></details>
+<details class="accordion" id="preguntas-5-preguntas-de-desarrollo-largo">
+<summary>5 preguntas de desarrollo largo</summary>
+<div class="accordion-content">
+<ol class="question-list"><li value="26">Desarrolla la teoría de la matriz fundamental para sistemas homogéneos lineales.</li><li value="27">Explica la resolución de \(X'=AX\) mediante autovalores y autovectores.</li><li value="28">Explica la resolución de sistemas no homogéneos por variación de constantes.</li><li value="29">Relaciona sistemas lineales, autovalores y diagramas de fase.</li><li value="30">Compara eliminación, matriz fundamental y Laplace como métodos de resolución.</li></ol>
+</div></details>
+<details class="accordion" id="preguntas-5-preguntas-de-relacion-entre-conceptos">
+<summary>5 preguntas de relación entre conceptos</summary>
+<div class="accordion-content">
+<ol class="question-list"><li value="31">Relaciona sistema homogéneo, espacio vectorial y superposición.</li><li value="32">Relaciona autovalores reales y geometría de trayectorias.</li><li value="33">Relaciona autovalores complejos y oscilaciones.</li><li value="34">Relaciona matriz fundamental y problema de Cauchy.</li><li value="35">Relaciona sistemas de EDO con modos normales en física.</li></ol>
+</div></details>
+</section>
+<section class="page" id="respuestas">
+<header class="section-header">
+<p class="eyebrow">Sección 8</p>
+<h2>8. Respuestas modelo</h2>
+</header>
+<details class="accordion" id="respuestas-que-es-un-sistema-de-ecuaciones-diferenciales-ordinarias">
+<summary>1. ¿Qué es un sistema de ecuaciones diferenciales ordinarias"</summary>
+<div class="accordion-content">
+<p>Es un conjunto de ecuaciones donde aparecen varias funciones incógnitas de una misma variable independiente y sus derivadas. Si la variable es \(t\), las incógnitas pueden ser (x_1\(t\),\dots,x_n\(t\)). Un sistema de primer orden tiene la forma</p>
+<div class="formula-block">\[
+X'=F(t,X).
+\]</div>
+</div></details>
+<details class="accordion" id="respuestas-cuando-un-sistema-de-edo-es-lineal">
+<summary>2. ¿Cuándo un sistema de EDO es lineal"</summary>
+<div class="accordion-content">
+<p>Es lineal si las incógnitas aparecen solo en primer grado, no se multiplican entre sí y los coeficientes dependen como mucho de la variable independiente. Su forma normal es</p>
+<div class="formula-block">\[
+X'=A(t)X+F(t).
+\]</div>
+</div></details>
+<details class="accordion" id="respuestas-escribe-en-forma-matricial-x-2x-y-y-x-y">
+<summary>3. Escribe en forma matricial \(x'=2x+y,\ y'=x-y\)</summary>
+<div class="accordion-content">
+<div class="formula-block">\[
+\begin{pmatrix}
+x'\\y'
+\end{pmatrix}
+=
+
+\begin{pmatrix}
+2&1\\
+1&-1
+\end{pmatrix}
+\begin{pmatrix}
+x\\y
+\end{pmatrix}.
+\]</div>
+</div></details>
+<details class="accordion" id="respuestas-que-diferencia-hay-entre-sistema-homogeneo-y-no-homogeneo">
+<summary>4. ¿Qué diferencia hay entre sistema homogéneo y no homogéneo"</summary>
+<div class="accordion-content">
+<p>El homogéneo tiene forma</p>
+<div class="formula-block">\[
+X'=A(t)X.
+\]</div>
+<p>El no homogéneo tiene término independiente:</p>
+<div class="formula-block">\[
+X'=A(t)X+F(t),\qquad F(t)\neq0.
+\]</div>
+<p>El homogéneo admite superposición directa; el no homogéneo requiere sumar una solución particular.</p>
+</div></details>
+<details class="accordion" id="respuestas-que-es-una-solucion-particular">
+<summary>5. ¿Qué es una solución particular"</summary>
+<div class="accordion-content">
+<p>Es una solución concreta del sistema completo. En un sistema no homogéneo permite escribir la solución general como</p>
+<div class="formula-block">\[
+X=X_h+X_p.
+\]</div>
+</div></details>
+<details class="accordion" id="respuestas-que-es-un-sistema-fundamental-de-soluciones">
+<summary>6. ¿Qué es un sistema fundamental de soluciones"</summary>
+<div class="accordion-content">
+<p>Es una base del espacio de soluciones del sistema homogéneo. En dimensión \(n\), está formado por \(n\) soluciones linealmente independientes.</p>
+</div></details>
+<details class="accordion" id="respuestas-que-es-una-matriz-fundamental">
+<summary>7. ¿Qué es una matriz fundamental"</summary>
+<div class="accordion-content">
+<p>Es la matriz cuyas columnas son un sistema fundamental de soluciones:</p>
+<div class="formula-block">\[
+M(t)=\bigl(X_1(t)\ \cdots\ X_n(t)\bigr).
+\]</div>
+<p>Permite escribir la solución general como</p>
+<div class="formula-block">\[
+X(t)=M(t)C.
+\]</div>
+</div></details>
+<details class="accordion" id="respuestas-que-condicion-debe-cumplir-una-matriz-fundamental-respecto-a-su-determinante">
+<summary>8. ¿Qué condición debe cumplir una matriz fundamental respecto a su determinante"</summary>
+<div class="accordion-content">
+<p>Debe cumplirse</p>
+<div class="formula-block">\[
+\det M(t_0)\neq0
+\]</div>
+<p>en algún punto del intervalo de definición. Eso garantiza independencia lineal de las columnas.</p>
+</div></details>
+<details class="accordion" id="respuestas-cual-es-la-forma-tipica-de-una-solucion-de-x-ax">
+<summary>9. ¿Cuál es la forma típica de una solución de \(X'=AX\)"</summary>
+<div class="accordion-content">
+<p>Se busca</p>
+<div class="formula-block">\[
+X(t)=ve^{\lambda t},
+\]</div>
+<p>donde \(\lambda\) es autovalor de \(A\) y \(v\) autovector asociado.</p>
+</div></details>
+<details class="accordion" id="respuestas-que-ecuacion-permite-calcular-los-autovalores-de-a">
+<summary>10. ¿Qué ecuación permite calcular los autovalores de \(A\)"</summary>
+<div class="accordion-content">
+<div class="formula-block">\[
+\det(A-\lambda I)=0.
+\]</div>
+<p>Es la ecuación característica.</p>
+</div></details>
+<details class="accordion" id="respuestas-resuelve-x-x-y-2y">
+<summary>11. Resuelve \(x'=x,\ y'=2y\)</summary>
+<div class="accordion-content">
+<div class="formula-block">\[
+x=C_1e^t,\qquad y=C_2e^{2t}.
+\]</div>
+<p>En forma vectorial:</p>
+<div class="formula-block">\[
+X(t)=C_1
+\begin{pmatrix}1\\0\end{pmatrix}e^t
++
+C_2
+\begin{pmatrix}0\\1\end{pmatrix}e^{2t}.
+\]</div>
+</div></details>
+<details class="accordion" id="respuestas-resuelve-x-ax-con-a-begin-pmatrix-2-0-0-1-end-pmatrix">
+<summary>12. Resuelve \(X'=AX\), con \(A=\begin{pmatrix}2&amp;0\\0&amp;-1\end{pmatrix}\)</summary>
+<div class="accordion-content">
+<p>Autovalores:</p>
+<div class="formula-block">\[
+\lambda_1=2,\qquad \lambda_2=-1.
+\]</div>
+<p>Autovectores canónicos:</p>
+<div class="formula-block">\[
+v_1=(1,0)^T,\qquad v_2=(0,1)^T.
+\]</div>
+<p>Solución:</p>
+<div class="formula-block">\[
+X(t)=C_1
+\begin{pmatrix}1\\0\end{pmatrix}e^{2t}
++
+C_2
+\begin{pmatrix}0\\1\end{pmatrix}e^{-t}.
+\]</div>
+</div></details>
+<details class="accordion" id="respuestas-determina-la-matriz-fundamental-del-sistema-anterior">
+<summary>13. Determina la matriz fundamental del sistema anterior</summary>
+<div class="accordion-content">
+<div class="formula-block">\[
+M(t)=
+\begin{pmatrix}
+e^{2t}&0\\
+0&e^{-t}
+\end{pmatrix}.
+\]</div>
+<p>Su determinante es</p>
+<div class="formula-block">\[
+\det M(t)=e^{2t}e^{-t}=e^t\neq0.
+\]</div>
+</div></details>
+<details class="accordion" id="respuestas-aplica-x-t-m-t-m-1-0-x-0-al-dato-x-0-1-3-t">
+<summary>14. Aplica (X\(t\)=M\(t\)M^{-1}\(0\)X_0) al dato (X\(0\)=\(1,3\)^T)</summary>
+<div class="accordion-content">
+<p>Como</p>
+<div class="formula-block">\[
+M(0)=I,
+\]</div>
+<p>entonces</p>
+<div class="formula-block">\[
+X(t)=M(t)X_0=
+\begin{pmatrix}
+e^{2t}&0\\
+0&e^{-t}
+\end{pmatrix}
+\begin{pmatrix}
+1\\3
+\end{pmatrix}
+=
+
+\begin{pmatrix}
+e^{2t}\\
+3e^{-t}
+\end{pmatrix}.
+\]</div>
+</div></details>
+<details class="accordion" id="respuestas-resuelve-x-y-y-x">
+<summary>15. Resuelve \(x'=y,\ y'=-x\)</summary>
+<div class="accordion-content">
+<p>De \(x'=y\), se obtiene \(x''=y'\). Como \(y'=-x\),</p>
+<div class="formula-block">\[
+x''+x=0.
+\]</div>
+<p>Luego</p>
+<div class="formula-block">\[
+x=C_1\cos t+C_2\sin t.
+\]</div>
+<p>Y</p>
+<div class="formula-block">\[
+y=x'=-C_1\sin t+C_2\cos t.
+\]</div>
+</div></details>
+<details class="accordion" id="respuestas-clasifica-el-punto-critico-de-x-x-y-y">
+<summary>16. Clasifica el punto crítico de \(x'=x,\ y'=-y\)</summary>
+<div class="accordion-content">
+<p>La matriz es</p>
+<div class="formula-block">\[
+A=
+\begin{pmatrix}
+1&0\\
+0&-1
+\end{pmatrix}.
+\]</div>
+<p>Autovalores:</p>
+<div class="formula-block">\[
+\lambda_1=1,\qquad \lambda_2=-1.
+\]</div>
+<p>Tienen signos opuestos. El origen es una silla, por tanto inestable.</p>
+</div></details>
+<details class="accordion" id="respuestas-clasifica-el-punto-critico-de-x-y-y-x">
+<summary>17. Clasifica el punto crítico de \(x'=y,\ y'=-x\)</summary>
+<div class="accordion-content">
+<p>La matriz es</p>
+<div class="formula-block">\[
+A=
+\begin{pmatrix}
+0&1\\
+-1&0
+\end{pmatrix}.
+\]</div>
+<p>Ecuación característica:</p>
+<div class="formula-block">\[
+\lambda^2+1=0.
+\]</div>
+<p>Autovalores:</p>
+<div class="formula-block">\[
+\lambda=\pm i.
+\]</div>
+<p>Son imaginarios puros. El origen es un centro en el sistema lineal.</p>
+</div></details>
+<details class="accordion" id="respuestas-explica-el-metodo-de-eliminacion-en-un-sistema-2-times2">
+<summary>18. Explica el método de eliminación en un sistema \(2\times2\)</summary>
+<div class="accordion-content">
+<p>Consiste en despejar una variable o una derivada y sustituir hasta obtener una EDO escalar de orden superior para una sola incógnita. Después se resuelve esa EDO y se recupera la otra variable usando una de las ecuaciones originales.</p>
+</div></details>
+<details class="accordion" id="respuestas-explica-como-se-usa-laplace-en-un-sistema-con-coeficientes-constantes">
+<summary>19. Explica cómo se usa Laplace en un sistema con coeficientes constantes</summary>
+<div class="accordion-content">
+<p>Para</p>
+<div class="formula-block">\[
+X'=AX+F(t),\qquad X(0)=X_0,
+\]</div>
+<p>se aplica Laplace:</p>
+<div class="formula-block">\[
+s\widehat X-X_0=A\widehat X+\widehat F.
+\]</div>
+<p>Se despeja:</p>
+<div class="formula-block">\[
+\widehat X=(sI-A)^{-1}(X_0+\widehat F).
+\]</div>
+<p>Luego se calcula la transformada inversa.</p>
+</div></details>
+<details class="accordion" id="respuestas-por-que-x-h-x-p-resuelve-un-sistema-no-homogeneo">
+<summary>20. ¿Por qué \(X_h+X_p\) resuelve un sistema no homogéneo"</summary>
+<div class="accordion-content">
+<p>Si</p>
+<div class="formula-block">\[
+X_h'=AX_h
+\]</div>
+<p>y</p>
+<div class="formula-block">\[
+X_p'=AX_p+F,
+\]</div>
+<p>entonces</p>
+<div class="formula-block">\[
+(X_h+X_p)'=AX_h+AX_p+F=A(X_h+X_p)+F.
+\]</div>
+<p>Por tanto, la suma resuelve el sistema completo.</p>
+</div></details>
+<details class="accordion" id="respuestas-autovalor-doble-con-un-solo-autovector">
+<summary>21. Autovalor doble con un solo autovector</summary>
+<div class="accordion-content">
+<p>Si \(\lambda\) es doble pero solo hay un autovector \(v\), se busca un vector generalizado \(w\) tal que</p>
+<div class="formula-block">\[
+(A-\lambda I)w=v.
+\]</div>
+<p>Las soluciones son</p>
+<div class="formula-block">\[
+X_1=ve^{\lambda t},
+\]</div>
+<div class="formula-block">\[
+X_2=e^{\lambda t}(tv+w).
+\]</div>
+</div></details>
+<details class="accordion" id="respuestas-deriva-variacion-de-constantes">
+<summary>22. Deriva variación de constantes</summary>
+<div class="accordion-content">
+<p>Para</p>
+<div class="formula-block">\[
+X'=A(t)X+F(t),
+\]</div>
+<p>sea (M\(t\)) matriz fundamental del homogéneo. Se propone</p>
+<div class="formula-block">\[
+X=M(t)C(t).
+\]</div>
+<p>Derivando:</p>
+<div class="formula-block">\[
+X'=M'C+MC'.
+\]</div>
+<p>Como</p>
+<div class="formula-block">\[
+M'=AM,
+\]</div>
+<p>queda</p>
+<div class="formula-block">\[
+AM C+MC'=AM C+F.
+\]</div>
+<p>Entonces</p>
+<div class="formula-block">\[
+MC'=F,
+\]</div>
+<div class="formula-block">\[
+C'=M^{-1}F.
+\]</div>
+<p>Integrando:</p>
+<div class="formula-block">\[
+X=M(t)\left(C_0+\int M^{-1}(t)F(t),dt\right).
+\]</div>
+</div></details>
+<details class="accordion" id="respuestas-autovalores-complejos">
+<summary>23. Autovalores complejos</summary>
+<div class="accordion-content">
+<p>Si</p>
+<div class="formula-block">\[
+\lambda=\alpha+i\beta,\qquad v=a+ib,
+\]</div>
+<p>una solución compleja es</p>
+<div class="formula-block">\[
+ve^{\lambda t}.
+\]</div>
+<p>Las dos soluciones reales son</p>
+<div class="formula-block">\[
+X_1=e^{\alpha t}(a\cos\beta t-b\sin\beta t),
+\]</div>
+<div class="formula-block">\[
+X_2=e^{\alpha t}(a\sin\beta t+b\cos\beta t).
+\]</div>
+</div></details>
+<details class="accordion" id="respuestas-solucion-de-x-x-y-y-x-y">
+<summary>24. Solución de \(x'=x-y,\ y'=x+y\)</summary>
+<div class="accordion-content">
+<p>La matriz es</p>
+<div class="formula-block">\[
+A=
+\begin{pmatrix}
+1&-1\\
+1&1
+\end{pmatrix}.
+\]</div>
+<p>Ecuación característica:</p>
+<div class="formula-block">\[
+\det
+\begin{pmatrix}
+1-\lambda&-1\\
+1&1-\lambda
+\end{pmatrix}
+=(1-\lambda)^2+1=0.
+\]</div>
+<p>Luego</p>
+<div class="formula-block">\[
+\lambda=1\pm i.
+\]</div>
+<p>El sistema tiene foco inestable. La solución real puede escribirse como</p>
+<div class="formula-block">\[
+x=e^t(C_1\cos t-C_2\sin t),
+\]</div>
+<div class="formula-block">\[
+y=e^t(C_1\sin t+C_2\cos t).
+\]</div>
+</div></details>
+<details class="accordion" id="respuestas-clasificacion-por-traza-y-determinante">
+<summary>25. Clasificación por traza y determinante</summary>
+<div class="accordion-content">
+<p>Para</p>
+<div class="formula-block">\[
+A=
+\begin{pmatrix}
+a&b\\
+c&d
+\end{pmatrix},
+\]</div>
+<p>se define</p>
+<div class="formula-block">\[
+\tau=\operatorname{tr}A=a+d,\qquad \Delta=\det A.
+\]</div>
+<p>El polinomio característico es</p>
+<div class="formula-block">\[
+\lambda^2-\tau\lambda+\Delta=0.
+\]</div>
+<p>Si \(\Delta&lt;0\), hay silla. Si \(\Delta&gt;0\) y \(\tau&lt;0\), estabilidad. Si \(\Delta&gt;0\) y \(\tau&gt;0\), inestabilidad. Si \(\tau^2-4\Delta&gt;0\), autovalores reales: nodo. Si \(\tau^2-4\Delta&lt;0\), autovalores complejos: foco. Si \(\tau=0\) y \(\Delta&gt;0\), centro lineal.</p>
+</div></details>
+<details class="accordion" id="respuestas-teoria-de-matriz-fundamental">
+<summary>26. Teoría de matriz fundamental</summary>
+<div class="accordion-content">
+<p>En un sistema homogéneo lineal</p>
+<div class="formula-block">\[
+X'=A(t)X,
+\]</div>
+<p>el conjunto de soluciones forma un espacio vectorial. En dimensión \(n\), cualquier solución se expresa como combinación lineal de \(n\) soluciones independientes. Si esas soluciones son \(X_1,\dots,X_n\), se construye</p>
+<div class="formula-block">\[
+M(t)=\bigl(X_1(t)\ \cdots\ X_n(t)\bigr).
+\]</div>
+<p>Entonces</p>
+<div class="formula-block">\[
+X(t)=M(t)C.
+\]</div>
+<p>La matriz debe cumplir</p>
+<div class="formula-block">\[
+M'=AM
+\]</div>
+<p>y</p>
+<div class="formula-block">\[
+\det M(t_0)\neq0
+\]</div>
+<p>en algún punto. Con dato inicial,</p>
+<div class="formula-block">\[
+X(t)=M(t)M^{-1}(t_0)X_0.
+\]</div>
+</div></details>
+<details class="accordion" id="respuestas-resolucion-de-x-ax-mediante-autovalores">
+<summary>27. Resolución de \(X'=AX\) mediante autovalores</summary>
+<div class="accordion-content">
+<p>Se propone</p>
+<div class="formula-block">\[
+X=ve^{\lambda t}.
+\]</div>
+<p>Al sustituir:</p>
+<div class="formula-block">\[
+Av=\lambda v.
+\]</div>
+<p>Por tanto, \(\lambda\) se obtiene de</p>
+<div class="formula-block">\[
+\det(A-\lambda I)=0.
+\]</div>
+<p>Para cada autovalor se calcula un autovector. Si hay \(n\) autovectores independientes, la solución general es</p>
+<div class="formula-block">\[
+X=\sum_{j=1}^n C_jv_je^{\lambda_jt}.
+\]</div>
+<p>Si hay autovalores complejos, se toman partes real e imaginaria. Si hay autovalores repetidos defectivos, se usan vectores generalizados.</p>
+</div></details>
+<details class="accordion" id="respuestas-resolucion-de-no-homogeneos-por-variacion-de-constantes">
+<summary>28. Resolución de no homogéneos por variación de constantes</summary>
+<div class="accordion-content">
+<p>Primero se resuelve el homogéneo</p>
+<div class="formula-block">\[
+X'=A(t)X
+\]</div>
+<p>y se obtiene una matriz fundamental (M\(t\)). Después se busca una solución del completo como</p>
+<div class="formula-block">\[
+X=M(t)C(t).
+\]</div>
+<p>La función (C\(t\)) satisface</p>
+<div class="formula-block">\[
+C'=M^{-1}F.
+\]</div>
+<p>Por tanto,</p>
+<div class="formula-block">\[
+X=M(t)\left(C_0+\int M^{-1}F,dt\right).
+\]</div>
+<p>Con datos iniciales se usa integral definida desde \(t_0\).</p>
+</div></details>
+<details class="accordion" id="respuestas-sistemas-lineales-autovalores-y-fase">
+<summary>29. Sistemas lineales, autovalores y fase</summary>
+<div class="accordion-content">
+<p>En</p>
+<div class="formula-block">\[
+X'=AX,
+\]</div>
+<p>los autovalores indican la evolución temporal. Si son reales, las trayectorias se alinean con autovectores. Si tienen signos opuestos, hay silla. Si son ambos negativos, las trayectorias entran al origen. Si son ambos positivos, salen.</p>
+<p>Si los autovalores son complejos, las trayectorias giran. La parte real decide si entran, salen o permanecen en órbitas cerradas lineales.</p>
+<p>Así, el álgebra de \(A\) determina la geometría del plano de fases.</p>
+</div></details>
+<details class="accordion" id="respuestas-comparacion-de-metodos">
+<summary>30. Comparación de métodos</summary>
+<div class="accordion-content">
+<p>Eliminación: útil en sistemas pequeños; reduce a una EDO escalar. Matriz fundamental: método estructural general; organiza la teoría y los PVI. Laplace: útil con coeficientes constantes, condiciones iniciales y términos forzantes manejables.</p>
+<p>En examen, para \(X'=AX\) homogéneo, lo más rápido suele ser autovalores. Para PVI con escalones o convoluciones, Laplace. Para sistemas simples tipo \(x'=y\), eliminación.</p>
+</div></details>
+<details class="accordion" id="respuestas-homogeneo-espacio-vectorial-y-superposicion">
+<summary>31. Homogéneo, espacio vectorial y superposición</summary>
+<div class="accordion-content">
+<p>En un sistema homogéneo lineal, la suma de soluciones vuelve a ser solución y el múltiplo de una solución también. Por eso las soluciones forman un espacio vectorial. La solución general se obtiene como combinación lineal de una base.</p>
+</div></details>
+<details class="accordion" id="respuestas-autovalores-reales-y-geometria">
+<summary>32. Autovalores reales y geometría</summary>
+<div class="accordion-content">
+<p>Autovalores reales producen direcciones propias. Si ambos son negativos, las trayectorias entran al punto crítico. Si ambos son positivos, salen. Si tienen signos opuestos, aparece una dirección estable y una inestable: silla.</p>
+</div></details>
+<details class="accordion" id="respuestas-autovalores-complejos-y-oscilaciones">
+<summary>33. Autovalores complejos y oscilaciones</summary>
+<div class="accordion-content">
+<p>Un par</p>
+<div class="formula-block">\[
+\alpha\pm i\beta
+\]</div>
+<p>produce términos</p>
+<div class="formula-block">\[
+e^{\alpha t}\cos\beta t,\qquad e^{\alpha t}\sin\beta t.
+\]</div>
+<p>La parte imaginaria genera giro; la parte real genera amortiguamiento o crecimiento. Por eso los autovalores complejos describen centros o focos.</p>
+</div></details>
+<details class="accordion" id="respuestas-matriz-fundamental-y-problema-de-cauchy">
+<summary>34. Matriz fundamental y problema de Cauchy</summary>
+<div class="accordion-content">
+<p>La matriz fundamental contiene todas las soluciones independientes del homogéneo. Para imponer un dato inicial se usa</p>
+<div class="formula-block">\[
+X(t)=M(t)M^{-1}(t_0)X_0.
+\]</div>
+<p>Así, el problema de Cauchy queda resuelto sin recalcular constantes manualmente una a una.</p>
+</div></details>
+<details class="accordion" id="respuestas-sistemas-de-edo-y-modos-normales">
+<summary>35. Sistemas de EDO y modos normales</summary>
+<div class="accordion-content">
+<p>En vibraciones acopladas, las ecuaciones del movimiento forman sistemas lineales. Resolverlos implica diagonalizar matrices y encontrar combinaciones independientes que evolucionan como osciladores simples. Esos autovectores son modos normales y los autovalores determinan frecuencias.</p>
+</div></details>
+</section>
+<section class="page" id="resumen">
+<header class="section-header">
+<p class="eyebrow">Sección 9</p>
+<h2>9. Resumen final de repaso</h2>
+</header>
+<div class="reading-block">
+<p>Ideas principales:</p>
+<ul><li>Un sistema de EDO describe varias incógnitas acopladas.</li><li>La forma clave es</li></ul>
+<div class="formula-block">\[
+X'=A(t)X+F(t).
+\]</div>
+<ul><li>Si \(F=0\), el sistema es homogéneo.</li><li>El homogéneo tiene estructura de espacio vectorial.</li><li>La solución general se construye con un sistema fundamental.</li><li>La matriz fundamental (M\(t\)) permite escribir</li></ul>
+<div class="formula-block">\[
+X=M(t)C.
+\]</div>
+<ul><li>Para un PVI homogéneo:</li></ul>
+<div class="formula-block">\[
+X(t)=M(t)M^{-1}(t_0)X_0.
+\]</div>
+<ul><li>Si \(A\) es constante, se buscan soluciones</li></ul>
+<div class="formula-block">\[
+X=ve^{\lambda t}.
+\]</div>
+<ul><li>Los autovalores salen de</li></ul>
+<div class="formula-block">\[
+\det(A-\lambda I)=0.
+\]</div>
+<ul><li>El no homogéneo se resuelve como</li></ul>
+<div class="formula-block">\[
+X=X_h+X_p.
+\]</div>
+<ul><li>Variación de constantes:</li></ul>
+<div class="formula-block">\[
+X=M(t)\left(C_0+\int M^{-1}F,dt\right).
+\]</div>
+<p>Conceptos imprescindibles:</p>
+<ul><li>sistema lineal,</li><li>homogéneo/no homogéneo,</li><li>sistema fundamental,</li><li>matriz fundamental,</li><li>autovalor,</li><li>autovector,</li><li>matriz exponencial,</li><li>punto crítico,</li><li>plano de fases.</li></ul>
+<p>Relaciones clave:</p>
+<div class="formula-block">\[
+\text{autovalores} \to \text{tipo temporal},
+\]</div>
+<div class="formula-block">\[
+\text{autovectores} \to \text{direcciones geométricas},
+\]</div>
+<div class="formula-block">\[
+\text{matriz fundamental} \to \text{solución general},
+\]</div>
+<div class="formula-block">\[
+\text{homogéneo}+\text{particular} \to \text{no homogéneo}.
+\]</div>
+<p>Errores que evitar:</p>
+<ul><li>resolver componentes desacopladas cuando están acopladas,</li><li>olvidar el autovector,</li><li>olvidar la solución particular,</li><li>llamar fundamental a una matriz con determinante cero,</li><li>clasificar fase sin mirar signos o parte real,</li><li>aplicar Laplace sin condiciones iniciales.</li></ul>
+</div>
+</section>
+<section class="page" id="checklist">
+<header class="section-header">
+<p class="eyebrow">Sección 10</p>
+<h2>10. Checklist de dominio</h2>
+</header>
+<div class="reading-block">
+<ul class="checklist-list"><li>Si no puedes pasar de sistema desarrollado a forma \(X'=AX+F\), falta repasar notación matricial.</li><li>Si no puedes distinguir homogéneo de no homogéneo, falta repasar estructura lineal.</li><li>Si no puedes explicar por qué el homogéneo admite superposición, falta repasar linealidad.</li><li>Si confundes solución particular con solución general, revisar \(X=X_h+X_p\).</li><li>Si no puedes construir (M\(t\)), falta repasar sistema fundamental.</li><li>Si no compruebas \(\det M\neq0\), falta repasar independencia lineal.</li><li>Si calculas autovalores pero no autovectores, falta repasar \(Av=\lambda v\).</li><li>Si escribes soluciones escalares en vez de vectoriales, falta repasar \(X=ve^{\lambda t}\).</li><li>Si los autovalores complejos no salen en forma real, revisar Euler y partes real/imaginaria.</li><li>Si no sabes clasificar silla/nodo/foco/centro, falta repasar traza, determinante y signo de autovalores.</li><li>Si usas Laplace sin restar (X\(0\)), revisar transformada de derivadas.</li><li>Si puedes resolver un sistema \(2\times2\) homogéneo con autovalores reales, complejos y con dato inicial, el núcleo del capítulo está asentado.</li><li>Si puedes resolver un no homogéneo por variación de constantes o Laplace, el capítulo está suficientemente dominado para examen.</li></ul>
+</div>
+</section>
+  </main>
+  </div>
+</body>
+</html>
+

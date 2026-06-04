@@ -1,0 +1,1053 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="light dark" />
+  <title>MM1 — Formulario completo</title>
+  <meta name="description" content="Formulario compacto de Métodos Matemáticos I: prerrequisitos, EDO, series, sistemas, estabilidad y Laplace." />
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/icon-32.png" />
+  <link rel="icon" type="image/png" sizes="50x50" href="assets/icons/icon-50.png" />
+  <link rel="apple-touch-icon" sizes="100x100" href="assets/icons/icon-100.png" />
+  <meta name="theme-color" content="#3f4f75" />
+  <link rel="stylesheet" href="assets/styles.css" />
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['\\(', '\\)'], ['$', '$']],
+        displayMath: [['\\[', '\\]']],
+        processEscapes: true
+      },
+      svg: { fontCache: 'global' },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+    function printReady() {
+      if (window.MathJax && MathJax.typesetPromise) {
+        MathJax.typesetPromise().then(() => window.print());
+      } else {
+        window.print();
+      }
+    }
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+  <script defer src="assets/app.js"></script>
+</head>
+<body class="subject-mm1">
+<div class="wrap">
+  <header class="cover">
+    <div class="top-actions">
+      <a class="back-link" href="index.html#mm1">← Volver a MM1</a>
+      <a class="back-link secondary" href="index.html">Índice general</a>
+    </div>
+    <p class="eyebrow">Métodos Matemáticos I</p>
+    <h1>Formulario completo de MM1</h1>
+    <p class="subtitle">Prerrequisitos + fórmulas y métodos compactados por tema oficial.</p>
+    <div class="chips">
+      <span class="chip">Asignatura: MM1</span>
+      <span class="chip">Fuente base: Sanz/Torres + apuntes equipo docente</span>
+      <span class="chip">Uso: repaso y examen</span>
+      <span class="chip">Formato: HTML de repositorio</span>
+    </div>
+  </header>
+
+  <div class="toolbar no-print">
+    <nav aria-label="Navegación del formulario">
+      <a href="#prerrequisitos">Prerrequisitos</a>
+      <a href="#t0">T0 Complejos</a>
+      <a href="#t1">T1 Conceptos</a>
+      <a href="#t2">T2 Primer orden</a>
+      <a href="#t3">T3 Orden superior</a>
+      <a href="#t4">T4 Series</a>
+      <a href="#t5">T5 Series de potencias</a>
+      <a href="#t6">T6 Sistemas</a>
+      <a href="#t7">T7 Fase</a>
+      <a href="#t8">T8 Laplace</a>
+      <a href="#checklist">Checklist</a>
+    </nav>
+    <div class="toolbar-actions">
+      <button class="btn" onclick="printReady()">Imprimir / PDF</button>
+    </div>
+  </div>
+
+  <main>
+    <section id="mapa" class="page map-page">
+      <div class="page-head">
+        <h2>Mapa operativo</h2>
+        <p class="page-no">00</p>
+      </div>
+      <div class="concept-map">
+        <a class="map-card" href="#prerrequisitos"><span>Prerrequisitos</span><small>cálculo, álgebra lineal, complejos, series</small></a>
+        <a class="map-card" href="#t1"><span>EDO: conceptos</span><small>orden, grado, Cauchy, isoclinas</small></a>
+        <a class="map-card" href="#t2"><span>EDO 1º orden</span><small>clasificar antes de integrar</small></a>
+        <a class="map-card" href="#t3"><span>Orden superior</span><small>lineales, Wronskiano, característica</small></a>
+        <a class="map-card" href="#t4"><span>Series</span><small>potencias, Frobenius, Bessel</small></a>
+        <a class="map-card" href="#t5"><span>Series de potencias</span><small>ordinario, Frobenius, Bessel</small></a>
+        <a class="map-card" href="#t6"><span>Sistemas</span><small>matriz fundamental, autovalores</small></a>
+        <a class="map-card" href="#t7"><span>Plano fase</span><small>puntos críticos, estabilidad</small></a>
+        <a class="map-card" href="#t8"><span>Laplace</span><small>PVI, convolución, escalón</small></a>
+      </div>
+      <div class="reading-block source-block">
+        <p>Uso correcto: este formulario no sustituye problemas. Sirve para reconocer forma, elegir método, escribir el primer paso y evitar errores de examen.</p>
+      </div>
+    </section>
+
+    <section id="prerrequisitos" class="page">
+      <div class="page-head">
+        <h2>Prerrequisitos mínimos</h2>
+        <p class="page-no">01</p>
+      </div>
+
+      <div class="card-grid">
+        <article class="definition-card">
+          <h3>Derivadas e integrales</h3>
+          <div class="formula-block">\[
+          (fg)'=f'g+fg',\qquad \left(\frac fg\right)'=\frac{f'g-fg'}{g^2},\qquad (f\circ g)'=(f'\circ g)g'
+          \]</div>
+          <div class="formula-block">\[
+          \int u\,dv=uv-\int v\,du,\qquad u=g(x),\ du=g'(x)\,dx
+          \]</div>
+          <p>Deuda típica: perder constantes o signos en integrales logarítmicas.</p>
+        </article>
+
+        <article class="definition-card">
+          <h3>Derivadas parciales y diferencial</h3>
+          <div class="formula-block">\[
+          df=f_x\,dx+f_y\,dy,\qquad \frac{d}{dt}f(x(t),y(t))=f_xx'+f_yy'
+          \]</div>
+          <div class="formula-block">\[
+          \nabla f=(f_x,f_y),\qquad J=
+          \begin{pmatrix}
+          f_x & f_y\\
+          g_x & g_y
+          \end{pmatrix}
+          \]</div>
+          <p>Necesario para exactas, linealización y estabilidad.</p>
+        </article>
+
+        <article class="definition-card">
+          <h3>Complejos</h3>
+          <div class="formula-block">\[
+          z=x+iy=re^{i\theta},\qquad e^{i\theta}=\cos\theta+i\sin\theta
+          \]</div>
+          <div class="formula-block">\[
+          e^{(\alpha+i\beta)t}=e^{\alpha t}(\cos\beta t+i\sin\beta t)
+          \]</div>
+          <p>Necesario para raíces características complejas y sistemas con giro.</p>
+        </article>
+
+        <article class="definition-card">
+          <h3>Álgebra lineal</h3>
+          <div class="formula-block">\[
+          Av=\lambda v,\qquad \det(A-\lambda I)=0,\qquad (A-\lambda I)v=0
+          \]</div>
+          <div class="formula-block">\[
+          A=PDP^{-1}\Rightarrow e^{At}=Pe^{Dt}P^{-1}
+          \]</div>
+          <p>Necesario para sistemas lineales, fase y estabilidad.</p>
+        </article>
+
+        <article class="definition-card">
+          <h3>Series</h3>
+          <div class="formula-block">\[
+          \sum_{n=0}^{\infty}a_n(x-x_0)^n,\qquad
+          R^{-1}=\limsup_{n\to\infty}\sqrt[n]{|a_n|}
+          \]</div>
+          <div class="formula-block">\[
+          e^x=\sum_{n=0}^{\infty}\frac{x^n}{n!},\quad
+          \sin x=\sum_{n=0}^{\infty}(-1)^n\frac{x^{2n+1}}{(2n+1)!},\quad
+          \cos x=\sum_{n=0}^{\infty}(-1)^n\frac{x^{2n}}{(2n)!}
+          \]</div>
+        </article>
+
+        <article class="definition-card">
+          <h3>Fracciones simples</h3>
+          <div class="formula-block">\[
+          \frac{P(s)}{Q(s)}=\sum_k\frac{A_k}{s-a_k}+\sum_j\frac{B_j}{(s-b_j)^j}+\sum_l\frac{C_ls+D_l}{s^2+\alpha_ls+\beta_l}
+          \]</div>
+          <p>Necesario para transformada inversa de Laplace.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="t0" class="page">
+      <div class="page-head">
+        <h2>Números complejos</h2>
+        <p class="page-no">T0</p>
+      </div>
+
+      <div class="card-grid">
+        <article class="definition-card">
+          <h3>Forma binómica, polar y exponencial</h3>
+          <div class="formula-block">\[
+          z=x+iy,\qquad \bar z=x-iy,\qquad |z|=\sqrt{x^2+y^2},\qquad z\bar z=|z|^2
+          \]</div>
+          <div class="formula-block">\[
+          z=r(\cos\theta+i\sin\theta)=re^{i\theta},\qquad
+          \arg z=\theta+2k\pi
+          \]</div>
+          <p>Usar \(\operatorname{atan2}(y,x)\); \(\arctan(y/x)\) sin cuadrante falla.</p>
+        </article>
+
+        <article class="definition-card">
+          <h3>Operaciones</h3>
+          <div class="formula-block">\[
+          z_1z_2=r_1r_2e^{i(\theta_1+\theta_2)},\qquad
+          \frac{z_1}{z_2}=\frac{r_1}{r_2}e^{i(\theta_1-\theta_2)}
+          \]</div>
+          <div class="formula-block">\[
+          \frac{1}{a+ib}=\frac{a-ib}{a^2+b^2}
+          \]</div>
+        </article>
+
+        <article class="definition-card">
+          <h3>Potencias, raíces y logaritmo</h3>
+          <div class="formula-block">\[
+          z^n=r^ne^{in\theta}
+          \]</div>
+          <div class="formula-block">\[
+          w_k=r^{1/n}e^{i(\theta+2k\pi)/n},\qquad k=0,\ldots,n-1
+          \]</div>
+          <div class="formula-block">\[
+          \log z=\ln|z|+i(\theta+2k\pi),\qquad \operatorname{Log}z=\ln|z|+i\operatorname{Arg}z
+          \]</div>
+        </article>
+
+        <article class="definition-card">
+          <h3>Regiones</h3>
+          <table>
+            <thead><tr><th>Condición</th><th>Lectura geométrica</th></tr></thead>
+            <tbody>
+              <tr><td>\(|z-a|<R\)</td><td>disco abierto centro \(a\), radio \(R\)</td></tr>
+              <tr><td>\(|z-a|=R\)</td><td>circunferencia</td></tr>
+              <tr><td>\(\Re z>c\)</td><td>semiplano derecho</td></tr>
+              <tr><td>\(\Im z<c\)</td><td>semiplano inferior</td></tr>
+              <tr><td>\(\alpha<\arg z<\beta\)</td><td>sector angular</td></tr>
+            </tbody>
+          </table>
+        </article>
+      </div>
+    </section>
+
+    <section id="t1" class="page">
+      <div class="page-head">
+        <h2>Conceptos generales de EDO</h2>
+        <p class="page-no">T1</p>
+      </div>
+
+      <div class="card-grid">
+        <article class="definition-card">
+          <h3>Definiciones</h3>
+          <div class="formula-block">\[
+          F(x,y,y',\ldots,y^{(n)})=0
+          \]</div>
+          <table>
+            <thead><tr><th>Concepto</th><th>Lectura</th></tr></thead>
+            <tbody>
+              <tr><td>Orden</td><td>mayor derivada que aparece</td></tr>
+              <tr><td>Grado</td><td>potencia de la mayor derivada si la ecuación es polinómica en derivadas</td></tr>
+              <tr><td>Lineal</td><td>\(y,y',\ldots\) en grado uno, sin productos entre ellas</td></tr>
+              <tr><td>Autónoma</td><td>la variable independiente no aparece explícitamente</td></tr>
+            </tbody>
+          </table>
+        </article>
+
+        <article class="definition-card">
+          <h3>Problema de Cauchy</h3>
+          <div class="formula-block">\[
+          y'=f(x,y),\qquad y(x_0)=y_0
+          \]</div>
+          <div class="formula-block">\[
+          f,\ f_y\ \text{continuas cerca de }(x_0,y_0)
+          \Rightarrow \text{existe solución única local}
+          \]</div>
+          <p>Local no significa global: una solución puede explotar en tiempo finito.</p>
+        </article>
+
+        <article class="definition-card">
+          <h3>Campo de pendientes e isoclinas</h3>
+          <div class="formula-block">\[
+          y'=f(x,y)
+          \]</div>
+          <p>En cada punto \((x,y)\), \(f(x,y)\) da la pendiente de la curva solución.</p>
+          <div class="formula-block">\[
+          f(x,y)=k
+          \]</div>
+          <p>Isoclina: curva donde todas las soluciones tienen pendiente \(k\).</p>
+        </article>
+
+        <article class="definition-card">
+          <h3>Solución general, particular y singular</h3>
+          <div class="formula-block">\[
+          y=\varphi(x,C)
+          \]</div>
+          <p>Solución general: familia con constante.</p>
+          <div class="formula-block">\[
+          y(x_0)=y_0\Rightarrow C=C_0
+          \]</div>
+          <p>Solución singular: no se obtiene asignando valor a \(C\) en la familia general.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="t2" class="page">
+      <div class="page-head">
+        <h2>EDO de primer orden: métodos de integración</h2>
+        <p class="page-no">T2</p>
+      </div>
+
+      <div class="card-grid">
+        <article class="definition-card wide-card">
+          <h3>Árbol de reconocimiento</h3>
+          <table>
+            <thead><tr><th>Forma</th><th>Método</th></tr></thead>
+            <tbody>
+              <tr><td>\(y'=g(x)h(y)\)</td><td>separar variables</td></tr>
+              <tr><td>\(y'=F(y/x)\)</td><td>\(y=vx\)</td></tr>
+              <tr><td>\(y'+P(x)y=Q(x)\)</td><td>factor integrante lineal</td></tr>
+              <tr><td>\(Mdx+Ndy=0,\ M_y=N_x\)</td><td>exacta</td></tr>
+              <tr><td>\(y'+Py=Qy^n\)</td><td>Bernoulli</td></tr>
+              <tr><td>\(y'=a(x)y^2+b(x)y+c(x)\)</td><td>Riccati si dan particular</td></tr>
+              <tr><td>\(y=xy'+f(y')\)</td><td>Clairaut/Lagrange</td></tr>
+            </tbody>
+          </table>
+        </article>
+
+        <article class="definition-card">
+          <h3>Separables y homogéneas</h3>
+          <div class="formula-block">\[
+          y'=g(x)h(y)\Rightarrow \frac{dy}{h(y)}=g(x)\,dx
+          \]</div>
+          <p>Antes de dividir por \(h(y)\), comprobar soluciones \(h(y)=0\).</p>
+          <div class="formula-block">\[
+          y'=F\left(\frac yx\right),\qquad y=vx,\quad y'=v+xv'
+          \]</div>
+          <p>Reducible a homogénea: trasladar el origen al punto de corte de las rectas del numerador y denominador.</p>
+        </article>
+
+        <article class="definition-card">
+          <h3>Lineal de primer orden</h3>
+          <div class="formula-block">\[
+          y'+P(x)y=Q(x)
+          \]</div>
+          <div class="formula-block">\[
+          \mu(x)=e^{\int P(x)\,dx},\qquad (\mu y)'=\mu Q
+          \]</div>
+          <div class="formula-block">\[
+          y=\frac{1}{\mu}\left(\int \mu Q\,dx+C\right)
+          \]</div>
+        </article>
+
+        <article class="definition-card">
+          <h3>Exactas y factor integrante</h3>
+          <div class="formula-block">\[
+          M(x,y)\,dx+N(x,y)\,dy=0
+          \]</div>
+          <div class="formula-block">\[
+          M_y=N_x\Rightarrow \exists F:\ F_x=M,\ F_y=N,\quad F(x,y)=C
+          \]</div>
+          <div class="formula-block">\[
+          \frac{M_y-N_x}{N}=f(x)\Rightarrow \mu(x)=e^{\int f(x)\,dx}
+          \]</div>
+          <div class="formula-block">\[
+          \frac{N_x-M_y}{M}=g(y)\Rightarrow \mu(y)=e^{\int g(y)\,dy}
+          \]</div>
+        </article>
+
+        <article class="definition-card">
+          <h3>Bernoulli y Riccati</h3>
+          <div class="formula-block">\[
+          y'+P(x)y=Q(x)y^n,\qquad n\ne0,1
+          \]</div>
+          <div class="formula-block">\[
+          z=y^{1-n}\Rightarrow z'+(1-n)Pz=(1-n)Q
+          \]</div>
+          <div class="formula-block">\[
+          y'=a(x)y^2+b(x)y+c(x),\quad y=y_p+\frac1z
+          \]</div>
+          <p>Riccati sin solución particular conocida no tiene método elemental general en este curso.</p>
+        </article>
+
+        <article class="definition-card">
+          <h3>Clairaut, Lagrange y trayectorias</h3>
+          <div class="formula-block">\[
+          \text{Clairaut: } y=xy'+f(y')
+          \]</div>
+          <p>Poner \(p=y'\), derivar y separar las ramas: \(p'=0\) o envolvente.</p>
+          <div class="formula-block">\[
+          \text{Lagrange: } y=x\phi(p)+\psi(p),\qquad p=y'
+          \]</div>
+          <p>Derivar para obtener EDO en \(x(p)\) o \(y(p)\).</p>
+          <div class="formula-block">\[
+          \text{Trayectorias ortogonales: } y'=f(x,y)\Rightarrow y'_{\perp}=-\frac{1}{f(x,y)}
+          \]</div>
+        </article>
+      </div>
+    </section>
+
+    <section id="t3" class="page">
+      <div class="page-head">
+        <h2>EDO de orden superior</h2>
+        <p class="page-no">T3</p>
+      </div>
+
+      <div class="card-grid">
+        <article class="definition-card">
+          <h3>Problema de Cauchy y linealidad</h3>
+          <div class="formula-block">\[
+          y^{(n)}=f(x,y,y',\ldots,y^{(n-1)})
+          \]</div>
+          <div class="formula-block">\[
+          y(x_0)=y_0,\ y'(x_0)=y_1,\ldots,\ y^{(n-1)}(x_0)=y_{n-1}
+          \]</div>
+          <div class="formula-block">\[
+          L[y]=y^{(n)}+a_1(x)y^{(n-1)}+\cdots+a_n(x)y
+          \]</div>
+        </article>
+
+        <article class="definition-card">
+          <h3>Homogénea lineal</h3>
+          <div class="formula-block">\[
+          L[y]=0,\qquad y_h=C_1y_1+\cdots+C_ny_n
+          \]</div>
+          <div class="formula-block">\[
+          W(y_1,\ldots,y_n)=
+          \begin{vmatrix}
+          y_1 & \cdots & y_n\\
+          y_1' & \cdots & y_n'\\
+          \vdots & & \vdots\\
+          y_1^{(n-1)} & \cdots & y_n^{(n-1)}
+          \end{vmatrix}
+          \]</div>
+          <p>Si \(W\ne0\) en un punto del intervalo, hay sistema fundamental.</p>
+        </article>
+
+        <article class="definition-card">
+          <h3>Métodos elementales de reducción</h3>
+          <table>
+            <thead><tr><th>Caso</th><th>Cambio</th></tr></thead>
+            <tbody>
+              <tr><td>\(y^{(n)}=f(x)\)</td><td>integrar \(n\) veces</td></tr>
+              <tr><td>no aparece \(y\)</td><td>\(p=y'\)</td></tr>
+              <tr><td>no aparece \(x\)</td><td>\(p(y)=y'\), \(y''=p\,dp/dy\)</td></tr>
+              <tr><td>conocida \(y_1\)</td><td>\(y=y_1v\)</td></tr>
+            </tbody>
+          </table>
+          <div class="formula-block">\[
+          y_2=y_1\int\frac{e^{-\int P(x)\,dx}}{y_1^2}\,dx
+          \quad \text{para } y''+Py'+Qy=0
+          \]</div>
+        </article>
+
+        <article class="definition-card">
+          <h3>Coeficientes constantes homogénea</h3>
+          <div class="formula-block">\[
+          a_ny^{(n)}+\cdots+a_1y'+a_0y=0
+          \Rightarrow a_nr^n+\cdots+a_1r+a_0=0
+          \]</div>
+          <table>
+            <thead><tr><th>Raíz</th><th>Aporta</th></tr></thead>
+            <tbody>
+              <tr><td>\(r=a\)</td><td>\(e^{ax}\)</td></tr>
+              <tr><td>\((r-a)^m\)</td><td>\(e^{ax},xe^{ax},\ldots,x^{m-1}e^{ax}\)</td></tr>
+              <tr><td>\(\alpha\pm i\beta\)</td><td>\(e^{\alpha x}(C_1\cos\beta x+C_2\sin\beta x)\)</td></tr>
+            </tbody>
+          </table>
+        </article>
+
+        <article class="definition-card">
+          <h3>No homogénea</h3>
+          <div class="formula-block">\[
+          L[y]=f(x),\qquad y=y_h+y_p
+          \]</div>
+          <table>
+            <thead><tr><th>\(f(x)\)</th><th>Probar</th></tr></thead>
+            <tbody>
+              <tr><td>\(P_n(x)\)</td><td>\(Q_n(x)\)</td></tr>
+              <tr><td>\(e^{ax}P_n(x)\)</td><td>\(e^{ax}Q_n(x)\)</td></tr>
+              <tr><td>\(A\cos bx+B\sin bx\)</td><td>\(M\cos bx+N\sin bx\)</td></tr>
+              <tr><td>\(e^{ax}(P\cos bx+Q\sin bx)\)</td><td>\(e^{ax}(R\cos bx+S\sin bx)\)</td></tr>
+            </tbody>
+          </table>
+          <div class="formula-block">\[
+          \text{resonancia}\Rightarrow y_p=x^s(\text{ansatz}),\quad s=\text{multiplicidad}
+          \]</div>
+        </article>
+
+        <article class="definition-card">
+          <h3>Euler-Cauchy y variación de constantes</h3>
+          <div class="formula-block">\[
+          a_nx^ny^{(n)}+\cdots+a_1xy'+a_0y=f(x)
+          \]</div>
+          <div class="formula-block">\[
+          \text{homogénea: probar }y=x^r,\qquad
+          y'=rx^{r-1},\quad y''=r(r-1)x^{r-2}
+          \]</div>
+          <div class="formula-block">\[
+          y_p=u_1y_1+u_2y_2,\qquad
+          u_1'=-\frac{y_2R}{W},\quad u_2'=\frac{y_1R}{W}
+          \]</div>
+        </article>
+      </div>
+    </section>
+
+    <section id="t4" class="page">
+      <div class="page-head">
+        <h2>Soluciones por series, Frobenius y Bessel</h2>
+        <p class="page-no">T4</p>
+      </div>
+
+      <div class="card-grid">
+        <article class="definition-card">
+          <h3>Idea base</h3>
+          <div class="formula-block">\[
+          y=\sum_{n=0}^{\infty}a_n(x-x_0)^n
+          \]</div>
+          <div class="formula-block">\[
+          y'=\sum_{n=1}^{\infty}na_n(x-x_0)^{n-1},\qquad
+          y''=\sum_{n=2}^{\infty}n(n-1)a_n(x-x_0)^{n-2}
+          \]</div>
+          <p>Procedimiento: sustituir, reindexar, igualar coeficientes y obtener recurrencia.</p>
+        </article>
+
+        <article class="definition-card">
+          <h3>Punto ordinario</h3>
+          <div class="formula-block">\[
+          y''+P(x)y'+Q(x)y=0
+          \]</div>
+          <p>\(x_0\) es ordinario si \(P,Q\) son analíticas en \(x_0\).</p>
+          <div class="formula-block">\[
+          a_{n+k}=R(n)a_n+\cdots
+          \]</div>
+          <p>Normalmente quedan libres \(a_0,a_1\) en segundo orden.</p>
+        </article>
+
+        <article class="definition-card">
+          <h3>Punto singular regular</h3>
+          <div class="formula-block">\[
+          y''+P(x)y'+Q(x)y=0
+          \]</div>
+          <p>\(x_0\) singular regular si:</p>
+          <div class="formula-block">\[
+          (x-x_0)P(x),\qquad (x-x_0)^2Q(x)
+          \]</div>
+          <p>son analíticas en \(x_0\).</p>
+        </article>
+
+        <article class="definition-card">
+          <h3>Frobenius</h3>
+          <div class="formula-block">\[
+          y=(x-x_0)^r\sum_{n=0}^{\infty}a_n(x-x_0)^n,\qquad a_0\ne0
+          \]</div>
+          <p>El menor exponente produce la ecuación indicial.</p>
+          <div class="formula-block">\[
+          F(r)=0
+          \]</div>
+          <p>Después se obtiene recurrencia para \(a_n\).</p>
+        </article>
+
+        <article class="definition-card">
+          <h3>Casos de raíces indiciales</h3>
+          <table>
+            <thead><tr><th>Raíces</th><th>Comportamiento</th></tr></thead>
+            <tbody>
+              <tr><td>\(r_1-r_2\notin\mathbb Z\)</td><td>dos series de Frobenius independientes</td></tr>
+              <tr><td>\(r_1=r_2\)</td><td>puede aparecer término logarítmico</td></tr>
+              <tr><td>\(r_1-r_2\in\mathbb Z\)</td><td>segundo desarrollo puede fallar o incluir \(\ln(x-x_0)\)</td></tr>
+            </tbody>
+          </table>
+        </article>
+
+        <article class="definition-card">
+          <h3>Bessel</h3>
+          <div class="formula-block">\[
+          x^2y''+xy'+(x^2-\nu^2)y=0
+          \]</div>
+          <div class="formula-block">\[
+          J_\nu(x)=\sum_{k=0}^{\infty}\frac{(-1)^k}{k!\,\Gamma(k+\nu+1)}
+          \left(\frac{x}{2}\right)^{2k+\nu}
+          \]</div>
+          <p>Operativo en MM1: reconocer forma, punto singular regular y tipo de solución.</p>
+        </article>
+      </div>
+    </section>
+
+
+    <section id="t5" class="page">
+      <div class="page-head">
+        <h2>Series de potencias: punto ordinario, Frobenius y Bessel</h2>
+        <p class="page-no">T5</p>
+      </div>
+
+      <div class="card-grid">
+        <article class="definition-card">
+          <h3>Serie de potencias</h3>
+          <div class="formula-block">\[
+          y=\sum_{n=0}^{\infty}a_n(x-x_0)^n
+          \]</div>
+          <div class="formula-block">\[
+          R^{-1}=\limsup_{n\to\infty}\sqrt[n]{|a_n|},\qquad
+          R=\lim_{n\to\infty}\left|\frac{a_n}{a_{n+1}}\right|\ \text{si existe}
+          \]</div>
+          <p>La solución por serie es local: vale dentro de su intervalo de convergencia.</p>
+        </article>
+
+        <article class="definition-card">
+          <h3>Derivar y reindexar</h3>
+          <div class="formula-block">\[
+          y'=\sum_{n=1}^{\infty}na_n(x-x_0)^{n-1},\qquad
+          y''=\sum_{n=2}^{\infty}n(n-1)a_n(x-x_0)^{n-2}
+          \]</div>
+          <div class="formula-block">\[
+          \sum_{n=2}^{\infty}n(n-1)a_nx^{n-2}
+          =
+          \sum_{n=0}^{\infty}(n+2)(n+1)a_{n+2}x^n
+          \]</div>
+          <p>Regla de examen: misma potencia de \(x\) antes de igualar coeficientes.</p>
+        </article>
+
+        <article class="definition-card">
+          <h3>Punto ordinario</h3>
+          <div class="formula-block">\[
+          P(x)y''+Q(x)y'+R(x)y=0
+          \]</div>
+          <div class="formula-block">\[
+          P(x_0)\ne0\Rightarrow
+          y''+\frac{Q(x)}{P(x)}y'+\frac{R(x)}{P(x)}y=0
+          \]</div>
+          <p>\(x_0\) es ordinario si \(Q/P\) y \(R/P\) son analíticas en \(x_0\). Entonces se usa serie ordinaria.</p>
+        </article>
+
+        <article class="definition-card">
+          <h3>Procedimiento en punto ordinario</h3>
+          <ol class="numbered-list">
+            <li>Proponer \(y=\sum a_n(x-x_0)^n\).</li>
+            <li>Calcular \(y'\) e \(y''\).</li>
+            <li>Sustituir en la EDO.</li>
+            <li>Reindexar todos los sumatorios.</li>
+            <li>Igualar coeficientes de cada potencia.</li>
+            <li>Obtener recurrencia y aplicar condiciones iniciales.</li>
+          </ol>
+          <p>En segundo orden deben quedar dos constantes libres: normalmente \(a_0\) y \(a_1\).</p>
+        </article>
+
+        <article class="definition-card">
+          <h3>Puntos singulares</h3>
+          <div class="formula-block">\[
+          y''+p(x)y'+q(x)y=0
+          \]</div>
+          <table>
+            <thead><tr><th>Tipo</th><th>Criterio en \(x_0\)</th></tr></thead>
+            <tbody>
+              <tr><td>ordinario</td><td>\(p,q\) analíticas</td></tr>
+              <tr><td>singular regular</td><td>\((x-x_0)p,\ (x-x_0)^2q\) analíticas</td></tr>
+              <tr><td>singular irregular</td><td>falla alguna condición anterior</td></tr>
+            </tbody>
+          </table>
+        </article>
+
+        <article class="definition-card">
+          <h3>Frobenius</h3>
+          <div class="formula-block">\[
+          y=\sum_{n=0}^{\infty}a_n(x-x_0)^{n+r},\qquad a_0\ne0
+          \]</div>
+          <div class="formula-block">\[
+          y'=\sum_{n=0}^{\infty}(n+r)a_n(x-x_0)^{n+r-1}
+          \]</div>
+          <div class="formula-block">\[
+          y''=\sum_{n=0}^{\infty}(n+r)(n+r-1)a_n(x-x_0)^{n+r-2}
+          \]</div>
+          <p>El coeficiente de la menor potencia da la ecuación indicial \(F(r)=0\).</p>
+        </article>
+
+        <article class="definition-card">
+          <h3>Raíces indiciales</h3>
+          <table>
+            <thead><tr><th>Caso</th><th>Lectura operativa</th></tr></thead>
+            <tbody>
+              <tr><td>\(r_1-r_2\notin\mathbb Z\)</td><td>dos soluciones de Frobenius independientes</td></tr>
+              <tr><td>\(r_1=r_2\)</td><td>puede aparecer segunda solución con \(\ln(x-x_0)\)</td></tr>
+              <tr><td>\(r_1-r_2\in\mathbb Z\)</td><td>la segunda serie puede fallar o llevar logaritmo</td></tr>
+            </tbody>
+          </table>
+        </article>
+
+        <article class="definition-card">
+          <h3>Bessel</h3>
+          <div class="formula-block">\[
+          x^2y''+xy'+(x^2-\nu^2)y=0
+          \]</div>
+          <div class="formula-block">\[
+          r^2-\nu^2=0,\qquad r=\pm\nu
+          \]</div>
+          <div class="formula-block">\[
+          a_n=-\frac{a_{n-2}}{(n+r)^2-\nu^2}
+          \]</div>
+          <p>Operativo OCR: reconocer forma, justificar singular regular en \(x=0\), sacar indicial y recurrencia básica.</p>
+        </article>
+
+        <article class="definition-card wide-card">
+          <h3>Errores típicos</h3>
+          <ul>
+            <li>No dividir por \(P(x)\) antes de clasificar el punto.</li>
+            <li>Usar serie ordinaria en singular regular: ahí toca Frobenius.</li>
+            <li>Reindexar la potencia pero no el coeficiente.</li>
+            <li>Perder \(a_0,a_1\) o no aplicar \(y(0),y'(0)\).</li>
+            <li>Intentar cerrar una serie que solo pide recurrencia o primeros términos.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section id="t6" class="page">
+      <div class="page-head">
+        <h2>Sistemas de ecuaciones diferenciales</h2>
+        <p class="page-no">T6</p>
+      </div>
+
+      <div class="card-grid">
+        <article class="definition-card">
+          <h3>Forma vectorial</h3>
+          <div class="formula-block">\[
+          X'=F(t,X),\qquad X=
+          \begin{pmatrix}x_1\\ \vdots\\ x_n\end{pmatrix}
+          \]</div>
+          <div class="formula-block">\[
+          X'=A(t)X+B(t)
+          \]</div>
+          <p>Homogéneo: \(B=0\). Completo: \(B\ne0\).</p>
+        </article>
+
+        <article class="definition-card">
+          <h3>Matriz fundamental</h3>
+          <div class="formula-block">\[
+          M(t)=\bigl(X_1(t)\ \cdots\ X_n(t)\bigr),\qquad M'=AM
+          \]</div>
+          <div class="formula-block">\[
+          \det M(t_0)\ne0\Rightarrow M\text{ fundamental}
+          \]</div>
+          <div class="formula-block">\[
+          X(t)=M(t)C,\qquad X(t)=M(t)M^{-1}(t_0)X_0
+          \]</div>
+        </article>
+
+        <article class="definition-card">
+          <h3>Coeficientes constantes</h3>
+          <div class="formula-block">\[
+          X'=AX,\qquad X=ve^{\lambda t}
+          \]</div>
+          <div class="formula-block">\[
+          Av=\lambda v,\qquad \det(A-\lambda I)=0
+          \]</div>
+          <div class="formula-block">\[
+          X(t)=\sum_i C_i v_ie^{\lambda_i t}
+          \]</div>
+        </article>
+
+        <article class="definition-card">
+          <h3>Autovalores complejos</h3>
+          <div class="formula-block">\[
+          \lambda=\alpha+i\beta,\qquad v=a+ib
+          \]</div>
+          <div class="formula-block">\[
+          X_1=e^{\alpha t}(a\cos\beta t-b\sin\beta t)
+          \]</div>
+          <div class="formula-block">\[
+          X_2=e^{\alpha t}(a\sin\beta t+b\cos\beta t)
+          \]</div>
+        </article>
+
+        <article class="definition-card">
+          <h3>Autovalor repetido defectivo</h3>
+          <div class="formula-block">\[
+          (A-\lambda I)v=0,\qquad (A-\lambda I)w=v
+          \]</div>
+          <div class="formula-block">\[
+          X_1=ve^{\lambda t},\qquad X_2=e^{\lambda t}(tv+w)
+          \]</div>
+        </article>
+
+        <article class="definition-card">
+          <h3>No homogéneo</h3>
+          <div class="formula-block">\[
+          X'=A(t)X+F(t),\qquad X=M(t)C(t)
+          \]</div>
+          <div class="formula-block">\[
+          C'=M^{-1}F
+          \]</div>
+          <div class="formula-block">\[
+          X=M(t)\left(C_0+\int M^{-1}(t)F(t)\,dt\right)
+          \]</div>
+          <p>También: eliminación, operador \(D\) o Laplace si el sistema es pequeño.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="t7" class="page">
+      <div class="page-head">
+        <h2>Plano fase, puntos críticos y estabilidad</h2>
+        <p class="page-no">T7</p>
+      </div>
+
+      <div class="card-grid">
+        <article class="definition-card">
+          <h3>Sistema autónomo y punto crítico</h3>
+          <div class="formula-block">\[
+          x'=f(x,y),\qquad y'=g(x,y)
+          \]</div>
+          <div class="formula-block">\[
+          f(x_0,y_0)=0,\qquad g(x_0,y_0)=0
+          \]</div>
+          <p>El punto crítico es equilibrio. El plano fase representa trayectorias \((x(t),y(t))\), no gráficas temporales.</p>
+        </article>
+
+        <article class="definition-card">
+          <h3>Sistema lineal plano</h3>
+          <div class="formula-block">\[
+          X'=AX,\qquad A=
+          \begin{pmatrix}a&b\\c&d\end{pmatrix}
+          \]</div>
+          <div class="formula-block">\[
+          \tau=\operatorname{tr}A=a+d,\qquad \Delta=\det A=ad-bc
+          \]</div>
+          <div class="formula-block">\[
+          \lambda^2-\tau\lambda+\Delta=0,\qquad D=\tau^2-4\Delta
+          \]</div>
+        </article>
+
+        <article class="definition-card">
+          <h3>Clasificación por autovalores</h3>
+          <table>
+            <thead><tr><th>Autovalores</th><th>Tipo</th><th>Estabilidad</th></tr></thead>
+            <tbody>
+              <tr><td>\(\lambda_1,\lambda_2<0\)</td><td>nodo estable</td><td>asintótica</td></tr>
+              <tr><td>\(\lambda_1,\lambda_2>0\)</td><td>nodo inestable</td><td>inestable</td></tr>
+              <tr><td>\(\lambda_1<0<\lambda_2\)</td><td>silla</td><td>inestable</td></tr>
+              <tr><td>\(\alpha\pm i\beta,\ \alpha<0\)</td><td>espiral/foco estable</td><td>asintótica</td></tr>
+              <tr><td>\(\alpha\pm i\beta,\ \alpha>0\)</td><td>espiral/foco inestable</td><td>inestable</td></tr>
+              <tr><td>\(\pm i\beta\)</td><td>centro</td><td>estable no asintótica</td></tr>
+            </tbody>
+          </table>
+        </article>
+
+        <article class="definition-card">
+          <h3>Clasificación por traza-determinante</h3>
+          <table>
+            <thead><tr><th>Condición</th><th>Resultado</th></tr></thead>
+            <tbody>
+              <tr><td>\(\Delta<0\)</td><td>silla</td></tr>
+              <tr><td>\(\Delta>0,\ D>0,\ \tau<0\)</td><td>nodo estable</td></tr>
+              <tr><td>\(\Delta>0,\ D>0,\ \tau>0\)</td><td>nodo inestable</td></tr>
+              <tr><td>\(\Delta>0,\ D<0,\ \tau<0\)</td><td>espiral estable</td></tr>
+              <tr><td>\(\Delta>0,\ D<0,\ \tau>0\)</td><td>espiral inestable</td></tr>
+              <tr><td>\(\Delta>0,\ \tau=0,\ D<0\)</td><td>centro lineal</td></tr>
+            </tbody>
+          </table>
+        </article>
+
+        <article class="definition-card">
+          <h3>Sistemas afines y no lineales</h3>
+          <div class="formula-block">\[
+          X'=AX+B,\qquad AX_*+B=0,\qquad U=X-X_*
+          \]</div>
+          <div class="formula-block">\[
+          U'=AU
+          \]</div>
+          <div class="formula-block">\[
+          J(x_0,y_0)=
+          \begin{pmatrix}
+          f_x & f_y\\
+          g_x & g_y
+          \end{pmatrix}_{(x_0,y_0)}
+          \]</div>
+          <p>Linealizado: \(U'=J(x_0,y_0)U\).</p>
+        </article>
+
+        <article class="definition-card">
+          <h3>Hurwitz y casos no concluyentes</h3>
+          <div class="formula-block">\[
+          \lambda^2+a_1\lambda+a_2=0
+          \Rightarrow \operatorname{Re}\lambda_i<0 \iff a_1>0,\ a_2>0
+          \]</div>
+          <div class="formula-block">\[
+          \lambda^2-\tau\lambda+\Delta=0
+          \Rightarrow \tau<0,\ \Delta>0
+          \]</div>
+          <p>Linealización no concluyente: autovalores imaginarios puros o casos degenerados.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="t8" class="page">
+      <div class="page-head">
+        <h2>Transformada de Laplace</h2>
+        <p class="page-no">T8</p>
+      </div>
+
+      <div class="card-grid">
+        <article class="definition-card">
+          <h3>Definición y existencia</h3>
+          <div class="formula-block">\[
+          \mathcal L\{f(t)\}=F(s)=\int_0^\infty e^{-st}f(t)\,dt
+          \]</div>
+          <p>Existe si \(f\) es continua a trozos y de orden exponencial.</p>
+          <div class="formula-block">\[
+          |f(t)|\le Me^{ct}\Rightarrow F(s)\text{ converge para }s>c
+          \]</div>
+        </article>
+
+        <article class="definition-card">
+          <h3>Tabla mínima</h3>
+          <table>
+            <thead><tr><th>\(f(t)\)</th><th>\(F(s)\)</th></tr></thead>
+            <tbody>
+              <tr><td>\(1\)</td><td>\(1/s\)</td></tr>
+              <tr><td>\(t^n\)</td><td>\(n!/s^{n+1}\)</td></tr>
+              <tr><td>\(e^{at}\)</td><td>\(1/(s-a)\)</td></tr>
+              <tr><td>\(\sin bt\)</td><td>\(b/(s^2+b^2)\)</td></tr>
+              <tr><td>\(\cos bt\)</td><td>\(s/(s^2+b^2)\)</td></tr>
+              <tr><td>\(\delta(t-a)\)</td><td>\(e^{-as}\)</td></tr>
+            </tbody>
+          </table>
+        </article>
+
+        <article class="definition-card">
+          <h3>Propiedades</h3>
+          <div class="formula-block">\[
+          \mathcal L\{\alpha f+\beta g\}=\alpha F+\beta G
+          \]</div>
+          <div class="formula-block">\[
+          \mathcal L\{e^{at}f(t)\}=F(s-a)
+          \]</div>
+          <div class="formula-block">\[
+          \mathcal L\{t^nf(t)\}=(-1)^nF^{(n)}(s)
+          \]</div>
+          <div class="formula-block">\[
+          \mathcal L\left\{\int_0^t f(u)\,du\right\}=\frac{F(s)}{s}
+          \]</div>
+        </article>
+
+        <article class="definition-card">
+          <h3>Derivadas</h3>
+          <div class="formula-block">\[
+          \mathcal L\{y'\}=sY-y(0)
+          \]</div>
+          <div class="formula-block">\[
+          \mathcal L\{y''\}=s^2Y-sy(0)-y'(0)
+          \]</div>
+          <div class="formula-block">\[
+          \mathcal L\{y^{(n)}\}=s^nY-s^{n-1}y(0)-s^{n-2}y'(0)-\cdots-y^{(n-1)}(0)
+          \]</div>
+        </article>
+
+        <article class="definition-card">
+          <h3>Convolución</h3>
+          <div class="formula-block">\[
+          (f*g)(t)=\int_0^t f(\tau)g(t-\tau)\,d\tau
+          \]</div>
+          <div class="formula-block">\[
+          \mathcal L\{f*g\}=F(s)G(s)
+          \]</div>
+          <div class="formula-block">\[
+          \mathcal L^{-1}\{F(s)G(s)\}=f*g
+          \]</div>
+          <p>Error prohibido: invertir un producto como producto temporal.</p>
+        </article>
+
+        <article class="definition-card">
+          <h3>Escalón y traslación temporal</h3>
+          <div class="formula-block">\[
+          u(t-a)=
+          \begin{cases}
+          0,&t<a\\
+          1,&t\ge a
+          \end{cases}
+          \]</div>
+          <div class="formula-block">\[
+          \mathcal L\{u(t-a)f(t-a)\}=e^{-as}F(s)
+          \]</div>
+          <div class="formula-block">\[
+          \mathcal L^{-1}\{e^{-as}F(s)\}=u(t-a)f(t-a)
+          \]</div>
+        </article>
+
+        <article class="definition-card">
+          <h3>Procedimiento PVI</h3>
+          <ol class="numbered-list">
+            <li>Aplicar \(\mathcal L\) a toda la ecuación.</li>
+            <li>Sustituir condiciones iniciales.</li>
+            <li>Despejar \(Y(s)\).</li>
+            <li>Descomponer con tabla/fracciones simples/convolución.</li>
+            <li>Aplicar \(\mathcal L^{-1}\).</li>
+            <li>Comprobar \(y(0),y'(0)\).</li>
+          </ol>
+        </article>
+
+        <article class="definition-card">
+          <h3>Oscilador forzado</h3>
+          <div class="formula-block">\[
+          x''+\omega^2x=f(t),\qquad x(0)=x_0,\quad x'(0)=v_0
+          \]</div>
+          <div class="formula-block">\[
+          X(s)=\frac{sx_0+v_0}{s^2+\omega^2}+\frac{F(s)}{s^2+\omega^2}
+          \]</div>
+          <div class="formula-block">\[
+          x(t)=x_0\cos\omega t+\frac{v_0}{\omega}\sin\omega t+
+          \frac1\omega\int_0^t f(\tau)\sin\omega(t-\tau)\,d\tau
+          \]</div>
+        </article>
+      </div>
+    </section>
+
+    <section id="checklist" class="page">
+      <div class="page-head">
+        <h2>Checklist de examen</h2>
+        <p class="page-no">99</p>
+      </div>
+
+      <div class="card-grid">
+        <article class="definition-card">
+          <h3>Antes de resolver</h3>
+          <ul>
+            <li>Clasificar: orden, linealidad, homogénea/no homogénea.</li>
+            <li>Buscar singularidades del dominio.</li>
+            <li>En PVI: comprobar condiciones suficientes de existencia/unicidad si lo piden.</li>
+            <li>En sistemas: escribir \(X'=AX+B\).</li>
+          </ul>
+        </article>
+
+        <article class="definition-card">
+          <h3>Durante la resolución</h3>
+          <ul>
+            <li>No dividir por una función sin mirar soluciones perdidas.</li>
+            <li>No usar característica con coeficientes variables.</li>
+            <li>En raíces múltiples: multiplicar por \(x\), \(x^2\), etc.</li>
+            <li>En Laplace: incluir siempre \(y(0),y'(0)\).</li>
+          </ul>
+        </article>
+
+        <article class="definition-card">
+          <h3>Al cerrar</h3>
+          <ul>
+            <li>Añadir \(+C\) o constantes necesarias según el orden.</li>
+            <li>Aplicar condiciones iniciales a la solución completa.</li>
+            <li>En sistemas/fase: punto crítico, autovalores, tipo, estabilidad y flechas.</li>
+            <li>Comprobar dimensiones, signos y condiciones iniciales.</li>
+          </ul>
+        </article>
+
+        <article class="definition-card">
+          <h3>Deudas rojas</h3>
+          <ul>
+            <li>Confundir centro con espiral estable.</li>
+            <li>Confundir producto en \(s\) con producto en \(t\).</li>
+            <li>Perder el autovector en \(X'=AX\).</li>
+            <li>Clasificar una exacta sin comprobar \(M_y=N_x\).</li>
+            <li>Olvidar el \(1/\omega\) en convolución del oscilador.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+  </main>
+</div>
+</body>
+</html>

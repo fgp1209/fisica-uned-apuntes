@@ -11,26 +11,30 @@
   <link rel="apple-touch-icon" sizes="100x100" href="assets/icons/icon-100.png" />
   <link rel="stylesheet" href="assets/styles.css" />
   <script>
-    window.MathJax = {
-      tex: {
-        inlineMath: [['\\(', '\\)']],
-        displayMath: [['\\[', '\\]']],
-        processEscapes: true
-      },
-      svg: { fontCache: 'global' }
-    };
-  </script>
+window.MathJax = {
+  tex: {
+    inlineMath: [['\\(', '\\)'], ['$', '$']],
+    displayMath: [['\\[', '\\]']],
+    processEscapes: true
+  },
+  svg: { fontCache: 'global' },
+  options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+};
+</script>
   <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
   <script defer src="assets/app.js"></script>
+
+
 </head>
 <body class="subject-mm1">
-  <header class="site-header">
+  <div class="wrap">
+  <header class="cover">
     <a class="back-link" href="index.html">← Índice</a>
-    <div class="header-content">
-      <p class="subject-label">Métodos Matemáticos I</p>
+    <div class="cover-content">
+      <p class="eyebrow">Métodos Matemáticos I</p>
       <h1>EDO lineales de coeficientes constantes</h1>
-      <p class="lead">Ecuación homogénea, solución particular, coeficientes indeterminados, resonancia algebraica y problemas de valor inicial.</p>
-      <div class="chip-row">
+      <p class="subtitle">Ecuación homogénea, solución particular, coeficientes indeterminados, resonancia algebraica y problemas de valor inicial.</p>
+      <div class="chips">
         <span class="chip">Tema: EDO completas</span>
         <span class="chip">Método: coeficientes indeterminados</span>
         <span class="chip">Estado: completo</span>
@@ -50,7 +54,7 @@
 <a href="#checklist">Checklist</a>
   </nav>
 
-  <main class="lesson-layout">
+  <main>
     <section class="page hero-page" id="mapa">
       <header class="section-header">
         <p class="eyebrow">Mapa conceptual</p>
@@ -129,7 +133,7 @@ L(y)=0.
 <div class="formula-block">\[
 p(r)=0.
 \]</div>
-<p>Las raíces de (p\(r\)) determinan la forma de la solución homogénea.</p>
+<p>Las raíces de \(p(r)\) determinan la forma de la solución homogénea.</p>
 </article>
 <article class="definition-card" id="pre-derivadas-de-exponenciales-y-trigonometricas">
 <h3>Derivadas de exponenciales y trigonométricas</h3>
@@ -167,13 +171,13 @@ y(0)=y_0,\qquad y'(0)=v_0.
 <div class="formula-block">\[
 a_n y^{(n)}+a_{n-1}y^{(n-1)}+\cdots+a_1y'+a_0y=F(x),
 \]</div>
-<p>donde los coeficientes \(a_i\) son constantes y (F\(x\)) representa una acción externa, una fuente, una fuerza aplicada o un término impuesto.</p>
+<p>donde los coeficientes \(a_i\) son constantes y \(F(x)\) representa una acción externa, una fuente, una fuerza aplicada o un término impuesto.</p>
 <p>La idea decisiva es que la solución no se busca de golpe. Se descompone en dos partes:</p>
 <div class="formula-block">\[
 y(x)=y_h(x)+y_p(x).
 \]</div>
 <p>La parte \(y_h\) resuelve la ecuación homogénea asociada. La parte \(y_p\) es una solución concreta de la ecuación completa. Sanz/Torres lo expresa como regla estructural del capítulo: la solución general de la completa se obtiene sumando una solución particular a la solución general de la homogénea.</p>
-<p>El método central de este tema es el de coeficientes indeterminados, también llamado método de selección. Consiste en mirar la forma de (F\(x\)) y proponer una solución particular de la misma familia: polinomio si \(F\) es polinomio, exponencial por polinomio si \(F\) es exponencial por polinomio, y combinación exponencial-trigonométrica si aparecen senos y cosenos. El método no es universal, pero cuando se puede usar es rápido, mecánico y muy rentable en examen.</p>
+<p>El método central de este tema es el de coeficientes indeterminados, también llamado método de selección. Consiste en mirar la forma de \(F(x)\) y proponer una solución particular de la misma familia: polinomio si \(F\) es polinomio, exponencial por polinomio si \(F\) es exponencial por polinomio, y combinación exponencial-trigonométrica si aparecen senos y cosenos. El método no es universal, pero cuando se puede usar es rápido, mecánico y muy rentable en examen.</p>
 <p>La dificultad real no está en sustituir y resolver coeficientes. Está en elegir bien el ansatz. El caso peligroso aparece cuando la forma propuesta para \(y_p\) ya pertenece a la solución homogénea. Entonces hay resonancia algebraica: el operador diferencial anula parte del intento, y hay que multiplicar por una potencia de \(x\). Boas formula esta regla para ecuaciones de segundo orden: si el exponente \(c\) coincide con una raíz de la característica, se multiplica por \(x\); si coincide con una raíz doble, por \(x^2\).</p>
 <p>Este capítulo es tácticamente central para Física porque aparece detrás de osciladores forzados, circuitos lineales, respuestas transitorias, modelos de relajación y sistemas con excitación externa. Boas introduce las ecuaciones no homogéneas justamente como el caso en que un sistema que antes vibraba libremente pasa a estar sometido a una fuerza externa o una fem aplicada.</p>
 </div>
@@ -255,8 +259,8 @@ L(y_h+y_p)=L(y_h)+L(y_p)=0+F(x)=F(x).
 </article>
 <article class="reading-block" id="desarrollo-3-3-metodo-de-coeficientes-indeterminados">
 <h3>3.3. Método de coeficientes indeterminados</h3>
-<p>El método de coeficientes indeterminados parte de una observación simple: ciertos tipos de funciones mantienen su forma bajo derivación. Si (F\(x\)) pertenece a una de esas familias, se propone \(y_p\) en la misma familia con coeficientes desconocidos.</p>
-<p>Sanz/Torres lo define como búsqueda de soluciones con características iguales a las del término (F\(x\)).</p>
+<p>El método de coeficientes indeterminados parte de una observación simple: ciertos tipos de funciones mantienen su forma bajo derivación. Si \(F(x)\) pertenece a una de esas familias, se propone \(y_p\) en la misma familia con coeficientes desconocidos.</p>
+<p>Sanz/Torres lo define como búsqueda de soluciones con características iguales a las del término \(F(x)\).</p>
 <p>La forma general depende del segundo miembro.</p>
 </article>
 <article class="reading-block" id="desarrollo-3-4-segundo-miembro-polinomico">
@@ -448,6 +452,54 @@ y_p=Axe^x.
 \]</div>
 <p>Se sustituye, se calcula \(A\), y solo después se imponen (y\(0\),y'\(0\)). El error típico es imponer las condiciones antes de tener la solución completa.</p>
 </article>
+
+<article class="reading-block" id="desarrollo-3-10-cuando-no-usar-coeficientes-indeterminados">
+<h3>3.10. Cuándo no usar coeficientes indeterminados</h3>
+<p>El método de coeficientes indeterminados no es universal. Solo funciona de forma directa cuando el segundo miembro pertenece a familias cerradas por derivación: polinomios, exponenciales, senos, cosenos y productos de estos.</p>
+<p>Si aparece \(\ln x\), \(\tan x\), \(\sec x\), funciones racionales generales o coeficientes variables, el método natural suele ser variación de constantes, cambio de variable, series o un método específico.</p>
+<p>Regla operativa de examen: si no se puede escribir un ansatz finito estable bajo derivación, no forzar coeficientes indeterminados.</p>
+</article>
+
+<article class="reading-block" id="desarrollo-3-11-resonancia-doble">
+<h3>3.11. Resonancia doble</h3>
+<p>Si el número asociado al segundo miembro es raíz doble de la característica, se multiplica por \(x^2\), no solo por \(x\).</p>
+<div class="formula-block">\[
+(D-a)^2y=e^{ax}
+\]</div>
+<p>no admite una particular del tipo \(Ae^{ax}\) ni \(Axe^{ax}\). La forma correcta es</p>
+<div class="formula-block">\[
+y_p=Ax^2e^{ax}.
+\]</div>
+<p>En general, si la raíz tiene multiplicidad \(s\), el ansatz se multiplica por \(x^s\).</p>
+</article>
+
+<article class="reading-block" id="desarrollo-3-12-euler-cauchy">
+<h3>3.12. Ecuaciones de Euler-Cauchy</h3>
+<p>La forma homogénea de segundo orden es</p>
+<div class="formula-block">\[
+ax^2y''+bxy'+cy=0.
+\]</div>
+<p>Se prueba una solución de la forma</p>
+<div class="formula-block">\[
+y=x^r,
+\]</div>
+<p>para \(x&gt;0\) o en intervalos que no crucen \(x=0\). Como</p>
+<div class="formula-block">\[
+y'=rx^{r-1},\qquad y''=r(r-1)x^{r-2},
+\]</div>
+<p>al sustituir queda la ecuación indicial</p>
+<div class="formula-block">\[
+a r(r-1)+br+c=0.
+\]</div>
+<p>Según las raíces, se construyen soluciones análogas al caso de coeficientes constantes. También puede usarse el cambio \(x=e^t\) para convertirla en una ecuación de coeficientes constantes.</p>
+</article>
+
+<article class="reading-block" id="desarrollo-3-13-legendre">
+<h3>3.13. Ecuaciones de Legendre</h3>
+<p>En el bloque oficial, las ecuaciones de Legendre aparecen como caso reducible relacionado con Euler-Cauchy. En primera vuelta debe quedar claro el reconocimiento: los coeficientes tienen estructura algebraica especial y el método consiste en aplicar el cambio indicado por el texto para llevar la ecuación a coeficientes constantes o a una forma de Euler.</p>
+<p>No debe mezclarse con los polinomios de Legendre del tema de series: aquí “Legendre” se refiere a un tipo de EDO de orden superior dentro del capítulo de coeficientes constantes y ecuaciones reducibles.</p>
+</article>
+
 </section>
 <section class="page" id="conceptos">
 <header class="section-header">
@@ -478,7 +530,7 @@ L=a_nD^n+a_{n-1}D^{n-1}+\cdots+a_1D+a_0.
 <div class="formula-block">\[
 L(y)=F(x).
 \]</div>
-<p><strong>Explicación:</strong> convierte la EDO en una acción algebraica sobre funciones. Es útil porque (D\(e^{rx}\)=re^{rx}).</p>
+<p><strong>Explicación:</strong> convierte la EDO en una acción algebraica sobre funciones. Es útil porque \(D(e^{rx})=re^{rx}\).</p>
 <p><strong>Ejemplo:</strong></p>
 <div class="formula-block">\[
 (D^2+3D+2)y=e^x.
@@ -544,7 +596,7 @@ y''+y=x
 </article>
 <article class="definition-card" id="conceptos-metodo-de-coeficientes-indeterminados">
 <h3>Método de coeficientes indeterminados</h3>
-<p><strong>Definición:</strong> método para hallar \(y_p\) proponiendo una forma semejante a (F\(x\)) con coeficientes desconocidos.</p>
+<p><strong>Definición:</strong> método para hallar \(y_p\) proponiendo una forma semejante a \(F(x)\) con coeficientes desconocidos.</p>
 <p><strong>Ejemplo:</strong></p>
 <div class="formula-block">\[
 F(x)=3x^2-1
@@ -867,7 +919,7 @@ y=y_h+y_p,
 <details class="accordion" id="respuestas-8-cuando-se-puede-usar-coeficientes-indeterminados">
 <summary>8. ¿Cuándo se puede usar coeficientes indeterminados?</summary>
 <div class="accordion-content">
-<p>Cuando (F\(x\)) es combinación de polinomios, exponenciales, senos, cosenos o productos de ellos.</p>
+<p>Cuando \(F(x)\) es combinación de polinomios, exponenciales, senos, cosenos o productos de ellos.</p>
 </div>
 </details>
 <details class="accordion" id="respuestas-9-que-ansatz-se-usa-si-fx-x-2-1-y-no-hay-resonancia">
@@ -1214,13 +1266,13 @@ y=C_1e^{-x}+C_2e^{-2x}+\frac12x-\frac34+xe^{-x}.
 <details class="accordion" id="respuestas-26-metodo-de-coeficientes-indeterminados-y-limites">
 <summary>26. Método de coeficientes indeterminados y límites</summary>
 <div class="accordion-content">
-<p>El método consiste en proponer una solución particular con la misma estructura funcional que (F\(x\)). Funciona cuando (F\(x\)) pertenece a familias cerradas bajo derivación: polinomios, exponenciales, senos, cosenos y productos entre ellos. No es adecuado para segundos miembros arbitrarios como \(\ln x\), \(\tan x\), \(1/x\) o funciones no elementales. En esos casos se emplean otros métodos, como variación de constantes o transformada de Laplace.</p>
+<p>El método consiste en proponer una solución particular con la misma estructura funcional que \(F(x)\). Funciona cuando \(F(x)\) pertenece a familias cerradas bajo derivación: polinomios, exponenciales, senos, cosenos y productos entre ellos. No es adecuado para segundos miembros arbitrarios como \(\ln x\), \(\tan x\), \(1/x\) o funciones no elementales. En esos casos se emplean otros métodos, como variación de constantes o transformada de Laplace.</p>
 </div>
 </details>
 <details class="accordion" id="respuestas-27-regla-de-resonancia-algebraica">
 <summary>27. Regla de resonancia algebraica</summary>
 <div class="accordion-content">
-<p>Si el ansatz propuesto pertenece a la solución homogénea, el operador diferencial lo anula y no puede producir (F\(x\)). Para corregirlo, se multiplica por \(x^s\), donde \(s\) es la multiplicidad de la raíz asociada al segundo miembro. Si (F=e^{ax}P\(x\)), se mira si \(a\) es raíz. Si \(F=e^{px}\cos qx\) o \(e^{px}\sin qx\), se mira si \(p\pm qi\) son raíces.</p>
+<p>Si el ansatz propuesto pertenece a la solución homogénea, el operador diferencial lo anula y no puede producir \(F(x)\). Para corregirlo, se multiplica por \(x^s\), donde \(s\) es la multiplicidad de la raíz asociada al segundo miembro. Si (F=e^{ax}P\(x\)), se mira si \(a\) es raíz. Si \(F=e^{px}\cos qx\) o \(e^{px}\sin qx\), se mira si \(p\pm qi\) son raíces.</p>
 </div>
 </details>
 <details class="accordion" id="respuestas-28-raices-reales-multiples-y-complejas">
@@ -1238,7 +1290,7 @@ y=C_1e^{-x}+C_2e^{-2x}+\frac12x-\frac34+xe^{-x}.
 <details class="accordion" id="respuestas-30-respuesta-libre-y-respuesta-forzada">
 <summary>30. Respuesta libre y respuesta forzada</summary>
 <div class="accordion-content">
-<p>En modelos físicos, \(y_h\) representa la respuesta libre del sistema: depende de las condiciones iniciales y de la dinámica interna. \(y_p\) representa la respuesta forzada: depende del término externo (F\(x\)). En un oscilador amortiguado, la parte homogénea suele ser transitoria y la particular describe el régimen impuesto por la fuerza externa.</p>
+<p>En modelos físicos, \(y_h\) representa la respuesta libre del sistema: depende de las condiciones iniciales y de la dinámica interna. \(y_p\) representa la respuesta forzada: depende del término externo \(F(x)\). En un oscilador amortiguado, la parte homogénea suele ser transitoria y la particular describe el régimen impuesto por la fuerza externa.</p>
 </div>
 </details>
 <details class="accordion" id="respuestas-31-linealidad-y-superposicion">
@@ -1266,7 +1318,7 @@ L(y_1+y_2)=L(y_1)+L(y_2).
 <details class="accordion" id="respuestas-34-solucion-homogenea-y-condiciones-iniciales">
 <summary>34. Solución homogénea y condiciones iniciales</summary>
 <div class="accordion-content">
-<p>Las constantes de \(y_h\) permiten ajustar las condiciones iniciales. La particular no se escoge para cumplir esas condiciones; se escoge para producir el segundo miembro (F\(x\)). Las condiciones se aplican al total \(y_h+y_p\).</p>
+<p>Las constantes de \(y_h\) permiten ajustar las condiciones iniciales. La particular no se escoge para cumplir esas condiciones; se escoge para producir el segundo miembro \(F(x)\). Las condiciones se aplican al total \(y_h+y_p\).</p>
 </div>
 </details>
 <details class="accordion" id="respuestas-35-coeficientes-indeterminados-y-familias-cerradas">
@@ -1330,10 +1382,10 @@ y_p=e^{px}(R\cos qx+S\sin qx).
 <h2>10. Checklist de dominio</h2>
 </header>
 <div class="reading-block">
-<ul class="checklist-list"><li>Si no puedes construir (p\(r\)), falta repasar ecuación característica.</li>
+<ul class="checklist-list"><li>Si no puedes construir \(p(r)\), falta repasar ecuación característica.</li>
 <li>Si no puedes pasar de raíces a \(y_h\), falta repasar raíces reales, múltiples y complejas.</li>
 <li>Si confundes \(y_h\) con \(y_p\), revisar superposición lineal.</li>
-<li>Si pruebas siempre el mismo ansatz, falta repasar clasificación de (F\(x\)).</li>
+<li>Si pruebas siempre el mismo ansatz, falta repasar clasificación de \(F(x)\).</li>
 <li>Si no detectas resonancia, revisar multiplicidad de raíces.</li>
 <li>Si multiplicas por \(x\) sin comprobar multiplicidad, revisar resonancia algebraica.</li>
 <li>Si aplicas (y\(0\),y'\(0\)) antes de hallar \(y_p\), revisar PVI.</li>
@@ -1346,5 +1398,6 @@ y_p=e^{px}(R\cos qx+S\sin qx).
 </div>
 </section>
   </main>
+  </div>
 </body>
 </html>

@@ -1,0 +1,911 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="light dark" />
+  <title>MM1 &middot; Tema 5 &middot; EDO: series de potencias</title>
+  <meta name="description" content="Guia de estudio de Metodos Matematicos I sobre soluciones de EDO por series de potencias, metodo de Frobenius y ecuaciones de Bessel." />
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/icon-32.png" />
+  <link rel="icon" type="image/png" sizes="50x50" href="assets/icons/icon-50.png" />
+  <link rel="apple-touch-icon" sizes="100x100" href="assets/icons/icon-100.png" />
+  <link rel="stylesheet" href="assets/styles.css" />
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']], processEscapes: true },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+  <script defer src="assets/app.js"></script>
+</head>
+<body class="subject-mm1">
+<div class="wrap">
+<header class="cover">
+  <div class="top-actions"><a class="back-link" href="index.html">&larr; Volver al &iacute;ndice</a></div>
+  <p class="eyebrow">UNED F&iacute;sica &middot; M&eacute;todos Matem&aacute;ticos I &middot; Tema 5</p>
+  <h1>Gu&iacute;a de estudio &mdash; T5 EDO: series de potencias</h1>
+  <p class="subtitle">Soluciones anal&iacute;ticas, radio de convergencia, puntos ordinarios y singulares, m&eacute;todo de Frobenius y ecuaci&oacute;n de Bessel.</p>
+  <div class="chips"><span class="chip">MM1</span><span class="chip">Tema 5</span><span class="chip">Sanz/Torres</span><span class="chip">Frobenius</span><span class="chip">estado: listo</span></div>
+</header>
+
+<div class="toolbar no-print">
+  <nav>
+    <a href="#mapa">Mapa</a><a href="#prerrequisitos">Prerrequisitos</a><a href="#idea-central">Idea</a><a href="#desarrollo">Desarrollo</a><a href="#conceptos">Conceptos</a><a href="#relaciones">Relaciones</a><a href="#errores">Errores</a><a href="#preguntas">Preguntas</a><a href="#respuestas">Respuestas</a><a href="#resumen">Resumen</a><a href="#checklist">Checklist</a>
+  </nav>
+  <div class="toolbar-actions"><button class="btn" onclick="printReady()">Imprimir / guardar PDF</button><button class="btn secondary" onclick="openAllDetails()">Abrir todo</button><button class="btn secondary" onclick="closeAllDetails()">Cerrar acordeones</button></div>
+</div>
+
+  <main>
+    <section class="page hero-page" id="mapa">
+      <header class="section-header"><p class="eyebrow">Mapa conceptual</p><h2>De la EDO a la recurrencia</h2></header>
+      <div class="concept-map">
+        <a class="map-card" href="#prerrequisitos"><span>Series</span><p>La soluci&oacute;n se representa localmente mediante coeficientes.</p></a>
+        <a class="map-card" href="#desarrollo"><span>Punto ordinario</span><p>Si los coeficientes son anal&iacute;ticos, procede la serie ordinaria.</p></a>
+        <a class="map-card" href="#desarrollo-3-4-reindexacion"><span>Reindexaci&oacute;n</span><p>La igualdad de potencias produce la recurrencia.</p></a>
+        <a class="map-card" href="#desarrollo-3-6-metodo-de-frobenius"><span>Frobenius</span><p>En singular regular aparece el exponente indicial.</p></a>
+        <a class="map-card" href="#desarrollo-3-7-bessel"><span>Bessel</span><p>Ejemplo can&oacute;nico de soluci&oacute;n especial definida por serie.</p></a>
+      </div>
+      <div class="reading-block source-block">
+<p>Fuente principal: Sanz/Torres, capítulo 6, dedicado a “soluciones definidas por series”, con objetivos explícitos: soluciones analíticas en torno a un punto, método de Frobenius en puntos singulares regulares y ecuaciones de Bessel.</p>
+<p>Contraste de examen: en MM1 aparecen problemas de desarrollo en serie de potencias en torno a \(x=0\), con PVI, primeros términos, polinomios truncados y justificación de punto ordinario.</p>
+        <p class="eyebrow">Confianza: Alta</p>
+      </div>
+    </section>
+    <section class="page" id="prerrequisitos">
+      <header class="section-header"><p class="eyebrow">Secci&oacute;n 01</p><h2>1. Prerrequisitos mínimos</h2></header>
+      <div class="reading-block">
+<h3 id="prerrequisitos-serie-de-potencias">Serie de potencias</h3>
+<p>Una serie de potencias centrada en \(x_0\) tiene la forma</p>
+<div class="formula-block">\[
+\sum_{n=0}^{\infty} a_n (x-x_0)^n.
+\]</div>
+<p>Sirve para representar funciones analíticas localmente. Es necesaria porque el método sustituye la solución desconocida \(y(x)\) por una serie cuyos coeficientes se calculan algebraicamente. Ejemplo mínimo:</p>
+<div class="formula-block">\[
+y(x)=a_0+a_1x+a_2x^2+\cdots
+\]</div>
+<h3 id="prerrequisitos-radio-de-convergencia">Radio de convergencia</h3>
+<p>Es el número \(R\) tal que la serie converge para \(|x-x_0|&lt;R\). Importa porque una solución en serie no es automáticamente válida en todo \(\mathbb{R}\), sino en el intervalo donde converge. Si existe,</p>
+<div class="formula-block">\[
+R=\lim_{n\to\infty}\left|\frac{a_n}{a_{n+1}}\right|.
+\]</div>
+<h3 id="prerrequisitos-derivacion-termino-a-termino">Derivación término a término</h3>
+<p>Dentro del intervalo de convergencia se puede derivar la serie término a término:</p>
+<div class="formula-block">\[
+y=\sum_{n=0}^{\infty}a_nx^n,\qquad
+y'=\sum_{n=1}^{\infty}na_nx^{n-1},\qquad
+y''=\sum_{n=2}^{\infty}n(n-1)a_nx^{n-2}.
+\]</div>
+<p>Es imprescindible porque una EDO contiene derivadas de \(y\). El método no empieza resolviendo la EDO, sino traduciendo la EDO en relaciones entre coeficientes.</p>
+<h3 id="prerrequisitos-reindexacion-de-sumatorios">Reindexación de sumatorios</h3>
+<p>Consiste en cambiar índices para que todos los sumatorios estén escritos con la misma potencia de \(x\). Es el punto donde más errores aparecen. Ejemplo:</p>
+<div class="formula-block">\[
+\sum_{n=2}^{\infty}n(n-1)a_nx^{n-2}
+\Longrightarrow
+
+\sum_{k=0}^{\infty}(k+2)(k+1)a_{k+2}x^k.
+\]</div>
+<p>Sin reindexar no se pueden igualar coeficientes de la misma potencia.</p>
+<h3 id="prerrequisitos-edo-lineal-de-segundo-orden">EDO lineal de segundo orden</h3>
+<p>La forma relevante es</p>
+<div class="formula-block">\[
+P(x)y''+Q(x)y'+R(x)y=0.
+\]</div>
+<p>O, si \(P(x)\neq 0\),</p>
+<div class="formula-block">\[
+y''+p(x)y'+q(x)y=0.
+\]</div>
+<p>El capítulo se centra sobre todo en este tipo de ecuaciones, aunque puede ilustrarse antes con ecuaciones de primer orden. Sanz/Torres indica que el núcleo del capítulo son las ecuaciones lineales de segundo orden, tras introducir el método con ejemplos más simples.</p>
+<h3 id="prerrequisitos-analiticidad">Analiticidad</h3>
+<p>Una función es analítica en torno a \(x_0\) si puede representarse por su serie de potencias en un entorno de \(x_0\). Es necesaria porque el método ordinario supone directamente que la solución tiene esa forma.</p>
+      </div>
+    </section>
+    <section class="page" id="idea-central">
+      <header class="section-header"><p class="eyebrow">Secci&oacute;n 02</p><h2>2. Idea central del capítulo</h2></header>
+      <div class="reading-block">
+<p>El capítulo responde a una situación muy concreta: hay ecuaciones diferenciales que no se resuelven de forma cómoda mediante métodos elementales, coeficientes constantes, variación de parámetros, Laplace o cambios de variable. En esos casos se cambia la pregunta. Ya no se busca necesariamente una fórmula cerrada; se busca una solución local expresada como serie de potencias.</p>
+<p>El procedimiento es convertir una EDO en un problema algebraico sobre coeficientes. Se propone una forma</p>
+<div class="formula-block">\[
+y=\sum_{n=0}^{\infty}a_n(x-x_0)^n,
+\]</div>
+<p>se calculan \(y'\) e \(y''\), se sustituyen en la ecuación y se igualan coeficientes. De ahí sale una recurrencia. Esa recurrencia permite calcular \(a_2,a_3,a_4,\ldots\) en función de \(a_0,a_1\), que son las dos constantes libres propias de una EDO lineal de segundo orden.</p>
+<p>El capítulo también introduce una frontera conceptual: no todos los puntos son iguales. Si los coeficientes de la EDO son regulares en \(x_0\), se usa una serie ordinaria. Si el punto es singular pero no demasiado malo, se usa Frobenius:</p>
+<div class="formula-block">\[
+y=\sum_{n=0}^{\infty}a_n(x-x_0)^{n+r}.
+\]</div>
+<p>Ese exponente \(r\) no se elige: aparece al sustituir y resolver la ecuación indicial.</p>
+<p>Bessel entra como ejemplo importante de ecuación especial resoluble por Frobenius. No debe convertirse en tema largo en esta fase. Para examen interesa reconocer la forma, saber que \(x=0\) es singular regular, plantear Frobenius, sacar la indicial y entender que las funciones de Bessel son soluciones definidas por series.</p>
+      </div>
+    </section>
+    <section class="page" id="desarrollo">
+      <header class="section-header"><p class="eyebrow">Secci&oacute;n 03</p><h2>3. Desarrollo completo del capítulo</h2></header>
+      <div class="reading-block">
+<h3 id="desarrollo-3-1-series-de-potencias-como-solucion-local">3.1. Series de potencias como solución local</h3>
+<p>La idea inicial es que una función suficientemente regular puede escribirse cerca de un punto como una serie. En vez de buscar \(y(x)\) directamente, se buscan sus coeficientes. Esto cambia un problema diferencial por un problema algebraico infinito.</p>
+<p>Para una ecuación centrada en \(x_0=0\), se toma</p>
+<div class="formula-block">\[
+y=a_0+a_1x+a_2x^2+\cdots.
+\]</div>
+<p>Entonces</p>
+<div class="formula-block">\[
+y'=a_1+2a_2x+3a_3x^2+\cdots,
+\]</div>
+<div class="formula-block">\[
+y''=2a_2+6a_3x+12a_4x^2+\cdots.
+\]</div>
+<p>Al sustituir en la EDO, se agrupan potencias iguales de \(x\). Como una serie de potencias es cero si todos sus coeficientes son cero, cada potencia genera una ecuación. El resultado es una recurrencia.</p>
+<p>Sanz/Torres presenta exactamente esta estrategia: suponer la solución analítica, derivar término a término, introducir en la ecuación e igualar términos del mismo grado para obtener los coeficientes.</p>
+<p>Ejemplo tipo:</p>
+<div class="formula-block">\[
+y''-xy'+2y=0.
+\]</div>
+<p>Se propone</p>
+<div class="formula-block">\[
+y=\sum_{n=0}^{\infty}a_nx^n.
+\]</div>
+<p>Entonces</p>
+<div class="formula-block">\[
+y''=\sum_{n=0}^{\infty}(n+2)(n+1)a_{n+2}x^n,
+\]</div>
+<div class="formula-block">\[
+xy'=\sum_{n=1}^{\infty}na_nx^n.
+\]</div>
+<p>Sustituyendo:</p>
+<div class="formula-block">\[
+\sum_{n=0}^{\infty}(n+2)(n+1)a_{n+2}x^n
+-\sum_{n=1}^{\infty}na_nx^n
++2\sum_{n=0}^{\infty}a_nx^n=0.
+\]</div>
+<p>Coeficiente de \(x^0\):</p>
+<div class="formula-block">\[
+2a_2+2a_0=0 \Rightarrow a_2=-a_0.
+\]</div>
+<p>Para \(n\geq 1\):</p>
+<div class="formula-block">\[
+(n+2)(n+1)a_{n+2}+(2-n)a_n=0,
+\]</div>
+<div class="formula-block">\[
+a_{n+2}=\frac{n-2}{(n+2)(n+1)}a_n.
+\]</div>
+<p>Ahí ya está resuelto el problema en forma de serie. Si piden primeros términos, se calculan. Si piden solución general, se separan los términos generados por \(a_0\) y por \(a_1\).</p>
+<h3 id="desarrollo-3-2-radio-de-convergencia-y-validez-local">3.2. Radio de convergencia y validez local</h3>
+<p>El método no termina estrictamente con la recurrencia. Una solución en serie solo tiene sentido donde converge. En muchos ejercicios de examen no piden demostrar el radio exacto, pero sí justificar que se puede usar el método.</p>
+<p>Si los coeficientes de la EDO son analíticos en torno a \(x_0\), la solución también será analítica cerca de \(x_0\). En examen basta identificar que \(x_0\) es punto ordinario. Si la ecuación está en forma</p>
+<div class="formula-block">\[
+P(x)y''+Q(x)y'+R(x)y=0,
+\]</div>
+<p>y \(P(x_0)\neq 0\), normalmente \(x_0\) es ordinario siempre que \(P,Q,R\) sean analíticas.</p>
+<p>Ejemplo:</p>
+<div class="formula-block">\[
+(1+x^2)y''-y'+y=0.
+\]</div>
+<p>En \(x=0\),</p>
+<div class="formula-block">\[
+P(0)=1\neq 0.
+\]</div>
+<p>Por tanto \(x=0\) es punto ordinario. La serie ordinaria procede. Este tipo de problema aparece literalmente en exámenes de MM1.</p>
+<h3 id="desarrollo-3-3-soluciones-alrededor-de-un-punto-ordinario">3.3. Soluciones alrededor de un punto ordinario</h3>
+<p>Un punto ordinario es un punto donde la ecuación no se rompe. En forma normal,</p>
+<div class="formula-block">\[
+y''+p(x)y'+q(x)y=0,
+\]</div>
+<p>el punto \(x_0\) es ordinario si \(p(x)\) y \(q(x)\) son analíticas en \(x_0\).</p>
+<p>La consecuencia práctica es clara: se usa</p>
+<div class="formula-block">\[
+y=\sum_{n=0}^{\infty}a_n(x-x_0)^n.
+\]</div>
+<p>Si se centra en \(0\), las derivadas son más limpias. Si se centra en otro punto, conviene cambiar variable:</p>
+<div class="formula-block">\[
+t=x-x_0.
+\]</div>
+<p>El patrón operativo es siempre el mismo:</p>
+<ol class="exam-list">
+<li>Poner la EDO en forma reconocible.</li>
+<li>Confirmar punto ordinario.</li>
+<li>Proponer serie.</li>
+<li>Derivar.</li>
+<li>Sustituir.</li>
+<li>Reindexar.</li>
+<li>Igualar coeficientes.</li>
+<li>Sacar recurrencia.</li>
+<li>Calcular términos.</li>
+<li>Aplicar condiciones iniciales si las hay.</li>
+</ol>
+<p>En una EDO de segundo orden deben quedar dos constantes libres. Si solo queda una, se ha perdido una familia de soluciones.</p>
+<h3 id="desarrollo-3-4-reindexacion">3.4. Reindexación</h3>
+<p>La reindexación es el cuello de botella técnico. El objetivo es que todos los sumatorios estén escritos como</p>
+<div class="formula-block">\[
+\sum_{n=0}^{\infty}(\cdots)x^n.
+\]</div>
+<p>Ejemplo:</p>
+<div class="formula-block">\[
+y''=\sum_{n=2}^{\infty}n(n-1)a_nx^{n-2}.
+\]</div>
+<p>Poniendo \(k=n-2\), queda</p>
+<div class="formula-block">\[
+y''=\sum_{k=0}^{\infty}(k+2)(k+1)a_{k+2}x^k.
+\]</div>
+<p>Después se renombra \(k\) como \(n\). El nombre del índice no importa; importa la potencia.</p>
+<p>Error típico: reindexar la potencia pero no el coeficiente. Por ejemplo, escribir mal</p>
+<div class="formula-block">\[
+n(n-1)a_nx^{n-2}
+\]</div>
+<p>como</p>
+<div class="formula-block">\[
+n(n-1)a_{n+2}x^n.
+\]</div>
+<p>La forma correcta es</p>
+<div class="formula-block">\[
+(n+2)(n+1)a_{n+2}x^n.
+\]</div>
+<h3 id="desarrollo-3-5-puntos-singulares">3.5. Puntos singulares</h3>
+<p>Si \(P(x_0)=0\), la forma normal</p>
+<div class="formula-block">\[
+y''+\frac{Q(x)}{P(x)}y'+\frac{R(x)}{P(x)}y=0
+\]</div>
+<p>puede tener coeficientes no analíticos. Entonces \(x_0\) es punto singular.</p>
+<p>Los puntos singulares se dividen en:</p>
+<h3 id="desarrollo-singular-regular">Singular regular</h3>
+<p>Aunque \(p(x)\) o \(q(x)\) tengan singularidad, esta no es demasiado fuerte. Se exige que</p>
+<div class="formula-block">\[
+(x-x_0)p(x),\qquad (x-x_0)^2q(x)
+\]</div>
+<p>sean analíticas en \(x_0\).</p>
+<h3 id="desarrollo-singular-irregular">Singular irregular</h3>
+<p>Si esas condiciones fallan, el punto es singular irregular. En ese caso Frobenius puede no funcionar de forma estándar.</p>
+<p>Boas formula esta misma condición como condiciones fuchsianas: para</p>
+<div class="formula-block">\[
+y''+f(x)y'+g(x)y=0,
+\]</div>
+<p>si \(xf(x)\) y \(x^2g(x)\) son desarrollables en series convergentes en el origen, el punto es regular; bajo esas condiciones la solución general tiene forma de series de Frobenius o una combinación con término logarítmico.</p>
+<h3 id="desarrollo-3-6-metodo-de-frobenius">3.6. Método de Frobenius</h3>
+<p>Cuando el punto es singular regular, se sustituye la serie ordinaria por</p>
+<div class="formula-block">\[
+y=\sum_{n=0}^{\infty}a_n(x-x_0)^{n+r},
+\qquad a_0\neq 0.
+\]</div>
+<p>El exponente \(r\) permite soluciones como \(x^{1/2}\), \(x^{-1}\), etc., que no caben en una serie ordinaria.</p>
+<p>Para \(x_0=0\):</p>
+<div class="formula-block">\[
+y=\sum_{n=0}^{\infty}a_nx^{n+r},
+\]</div>
+<div class="formula-block">\[
+y'=\sum_{n=0}^{\infty}(n+r)a_nx^{n+r-1},
+\]</div>
+<div class="formula-block">\[
+y''=\sum_{n=0}^{\infty}(n+r)(n+r-1)a_nx^{n+r-2}.
+\]</div>
+<p>Al sustituir, se mira la menor potencia de \(x\). Su coeficiente da la ecuación indicial. Esa ecuación determina los posibles valores de \(r\).</p>
+<p>Después se igualan los demás coeficientes y se obtiene una recurrencia. Cada raíz indicial puede generar una solución. Si las raíces son distintas y no difieren en un entero, normalmente salen dos soluciones independientes. Si son iguales o difieren en un entero, puede aparecer una segunda solución con \(\ln x\), o puede ser necesario reducción de orden.</p>
+<p>Sanz/Torres advierte que cuando las raíces indiciales tienen diferencia entera, Frobenius puede conducir a la misma solución o a soluciones dependientes, por lo que no siempre da directamente el sistema fundamental completo.</p>
+<h3 id="desarrollo-3-7-bessel">3.7. Bessel</h3>
+<p>La ecuación de Bessel estándar es</p>
+<div class="formula-block">\[
+x^2y''+xy'+(x^2-p^2)y=0.
+\]</div>
+<p>Es una ecuación lineal de segundo orden con \(x=0\) singular regular. Se resuelve por Frobenius. La sustitución</p>
+<div class="formula-block">\[
+y=\sum_{n=0}^{\infty}a_nx^{n+r}
+\]</div>
+<p>lleva a la ecuación indicial</p>
+<div class="formula-block">\[
+r^2-p^2=0,
+\]</div>
+<p>por tanto</p>
+<div class="formula-block">\[
+r=\pm p.
+\]</div>
+<p>La recurrencia conecta \(a_n\) con \(a_{n-2}\), por eso desaparecen los términos impares si \(a_1=0\). Sanz/Torres presenta la ecuación de Bessel como ecuación de orden \(p\), con \(p\geq 0\), y obtiene mediante Frobenius las funciones de Bessel de primera especie.</p>
+<p>Boas recalca que las funciones de Bessel son soluciones de una ecuación diferencial, representables por series, con tablas, gráficos y muchas aplicaciones físicas, especialmente en problemas con simetría cilíndrica.</p>
+<p>Para examen de MM1, Bessel debe quedar así: reconocer forma, identificar singular regular, plantear Frobenius, sacar indicial y recurrencia básica. No memorizar un tratado de funciones especiales.</p>
+      </div>
+    </section>
+    <section class="page" id="conceptos">
+      <header class="section-header"><p class="eyebrow">Secci&oacute;n 04</p><h2>4. Conceptos clave</h2></header>
+      <div class="reading-block">
+<h3 id="conceptos-serie-de-potencias">Serie de potencias</h3>
+<p>Definición: expresión infinita</p>
+<div class="formula-block">\[
+\sum_{n=0}^{\infty}a_n(x-x_0)^n.
+\]</div>
+<p>Explicación: representa una función localmente, si converge. En EDO sirve para codificar \(y,y',y''\) mediante coeficientes. Ejemplo:</p>
+<div class="formula-block">\[
+e^x=\sum_{n=0}^{\infty}\frac{x^n}{n!}.
+\]</div>
+<p>Relación: base del método ordinario y de Frobenius. Examen: “Hallar la solución en serie de potencias centrada en \(0\)”.</p>
+<h3 id="conceptos-radio-de-convergencia">Radio de convergencia</h3>
+<p>Definición: distancia desde el centro hasta donde la serie deja de converger. Explicación: limita la validez de la solución. Ejemplo: la serie de \(\frac{1}{1-x}\) converge para \(|x|&lt;1\). Relación: depende de singularidades y de la recurrencia. Examen: “Justificar en qué intervalo converge la solución”.</p>
+<h3 id="conceptos-punto-ordinario">Punto ordinario</h3>
+<p>Definición: \(x_0\) es ordinario si, en forma normal, \(p(x)\) y \(q(x)\) son analíticas en \(x_0\). Explicación: permite usar serie ordinaria. Ejemplo:</p>
+<div class="formula-block">\[
+(1+x^2)y''-y'+y=0
+\]</div>
+<p>tiene \(x=0\) ordinario. Relación: se opone a punto singular. Examen: “Estudiar si \(x=0\) es ordinario o singular”.</p>
+<h3 id="conceptos-punto-singular-regular">Punto singular regular</h3>
+<p>Definición: \(x_0\) es singular, pero (\(x-x_0\)\(p(x)\)) y (\(x-x_0\)^2q(x)) son analíticas. Explicación: permite Frobenius. Ejemplo:</p>
+<div class="formula-block">\[
+x^2y''+xy'+(x^2-p^2)y=0
+\]</div>
+<p>tiene \(x=0\) singular regular. Relación: está entre punto ordinario e irregular. Examen: “Determinar si el punto singular es regular”.</p>
+<h3 id="conceptos-punto-singular-irregular">Punto singular irregular</h3>
+<p>Definición: punto singular que no cumple las condiciones anteriores. Explicación: Frobenius estándar no está garantizado. Ejemplo:</p>
+<div class="formula-block">\[
+y''+\frac{1}{x^3}y=0
+\]</div>
+<p>en \(x=0\), porque \(x^2q(x)=1/x\) no es analítica. Relación: caso peligroso. Examen: “Explicar por qué no procede Frobenius”.</p>
+<h3 id="conceptos-recurrencia">Recurrencia</h3>
+<p>Definición: relación que permite calcular coeficientes posteriores a partir de anteriores. Explicación: es el resultado principal del método. Ejemplo:</p>
+<div class="formula-block">\[
+a_{n+2}=\frac{n-2}{(n+2)(n+1)}a_n.
+\]</div>
+<p>Relación: separa soluciones par e impar. Examen: “Obtener la ley de recurrencia”.</p>
+<h3 id="conceptos-ecuacion-indicial">Ecuación indicial</h3>
+<p>Definición: ecuación algebraica para \(r\) obtenida de la menor potencia en Frobenius. Explicación: decide el comportamiento dominante de la solución cerca del singular. Ejemplo en Bessel:</p>
+<div class="formula-block">\[
+r^2-p^2=0.
+\]</div>
+<p>Relación: precede a la recurrencia. Examen: “Obtener las raíces de la ecuación indicial”.</p>
+<h3 id="conceptos-raices-indiciales">Raíces indiciales</h3>
+<p>Definición: valores de \(r\) que resuelven la ecuación indicial. Explicación: cada raíz puede generar una solución. Ejemplo: \(r_1=p\), \(r_2=-p\). Relación: si difieren en entero puede aparecer logaritmo. Examen: “Discutir los casos según las raíces”.</p>
+<h3 id="conceptos-funcion-de-bessel">Función de Bessel</h3>
+<p>Definición: solución especial de la ecuación de Bessel. Explicación: aparece en problemas con simetría cilíndrica. Ejemplo: \(J_p(x)\). Relación: surge de Frobenius. Examen: “Reconocer la ecuación de Bessel y plantear su solución”.</p>
+      </div>
+    </section>
+    <section class="page" id="relaciones">
+      <header class="section-header"><p class="eyebrow">Secci&oacute;n 05</p><h2>5. Relaciones entre ideas</h2></header>
+      <div class="reading-block">
+<p>El capítulo tiene una jerarquía clara:</p>
+<div class="formula-block">\[
+\text{serie de potencias}
+\rightarrow
+\text{solución analítica}
+\rightarrow
+\text{punto ordinario}
+\rightarrow
+\text{recurrencia}.
+\]</div>
+<p>Si el punto es ordinario, no hay que complicar. Se propone una serie normal y se calculan coeficientes.</p>
+<p>Cuando el punto no es ordinario, la clasificación manda:</p>
+<div class="formula-block">\[
+\text{singular}
+\rightarrow
+\begin{cases}
+\text{regular} \rightarrow \text{Frobenius},\\
+\text{irregular} \rightarrow \text{método no garantizado}.
+\end{cases}
+\]</div>
+<p>Frobenius generaliza la serie ordinaria añadiendo el exponente \(r\). La ecuación indicial aparece porque en un punto singular el comportamiento dominante de la solución no tiene por qué empezar en \(x^0\), sino en \(x^r\).</p>
+<p>Bessel es una consecuencia, no un bloque independiente. Es el ejemplo canónico donde Frobenius produce funciones nuevas. Igual que seno y coseno pueden definirse como soluciones de</p>
+<div class="formula-block">\[
+y''+y=0,
+\]</div>
+<p>las funciones de Bessel se definen como soluciones de su propia EDO.</p>
+<p>La evolución conceptual es: primero se resuelven EDO con fórmulas cerradas; después se acepta que muchas soluciones importantes no tienen forma elemental; finalmente se tratan las series como solución legítima.</p>
+      </div>
+    </section>
+    <section class="page" id="errores">
+      <header class="section-header"><p class="eyebrow">Secci&oacute;n 06</p><h2>6. Errores habituales</h2></header>
+      <div class="reading-block">
+<h3 id="errores-error-1-usar-serie-ordinaria-en-un-punto-singular">Error 1: usar serie ordinaria en un punto singular</h3>
+<p>Por qué está mal: si \(p(x)\) o \(q(x)\) no son analíticas, la hipótesis de solución ordinaria puede fallar. Corrección: clasificar primero el punto. Incorrecto: “Como piden serie, pongo \(y=\sum a_nx^n\)”. Correcto: “Como \(x=0\) es singular regular, uso Frobenius”.</p>
+<h3 id="errores-error-2-no-dividir-por-el-coeficiente-de-y">Error 2: no dividir por el coeficiente de \(y''\)</h3>
+<p>Por qué está mal: la clasificación ordinario/singular se hace en forma normal. Corrección: escribir</p>
+<div class="formula-block">\[
+y''+p(x)y'+q(x)y=0.
+\]</div>
+<p>Incorrecto: “\(x^2y''+xy'+y=0\), los coeficientes son polinomios, luego todo regular”. Correcto: “Al dividir por \(x^2\), aparecen \(1/x\) y \(1/x^2\); \(x=0\) es singular”.</p>
+<h3 id="errores-error-3-reindexar-mal">Error 3: reindexar mal</h3>
+<p>Por qué está mal: destruye la recurrencia. Corrección: cambiar potencia y coeficiente a la vez. Incorrecto:</p>
+<div class="formula-block">\[
+\sum n(n-1)a_nx^{n-2}
+\Longrightarrow
+
+\sum n(n-1)a_{n+2}x^n.
+\]</div>
+<p>Correcto:</p>
+<div class="formula-block">\[
+\sum_{n=0}^{\infty}(n+2)(n+1)a_{n+2}x^n.
+\]</div>
+<h3 id="errores-error-4-olvidar-terminos-iniciales-separados">Error 4: olvidar términos iniciales separados</h3>
+<p>Por qué está mal: algunos sumatorios empiezan en \(n=0\), otros en \(n=1\). Corrección: tratar \(x^0\) aparte si hace falta. Incorrecto: aplicar una recurrencia para todo \(n\geq 0\) sin comprobar. Correcto: sacar coeficiente de \(x^0\) y luego recurrencia para \(n\geq 1\).</p>
+<h3 id="errores-error-5-perder-una-constante-libre">Error 5: perder una constante libre</h3>
+<p>Por qué está mal: una EDO lineal homogénea de segundo orden debe tener dos constantes. Corrección: identificar las familias generadas por \(a_0\) y \(a_1\), o por dos raíces indiciales. Incorrecto: entregar una única serie. Correcto:</p>
+<div class="formula-block">\[
+y=C_1y_1+C_2y_2.
+\]</div>
+<h3 id="errores-error-6-intentar-cerrar-la-serie-a-toda-costa">Error 6: intentar cerrar la serie a toda costa</h3>
+<p>Por qué está mal: muchas soluciones por series no son funciones elementales. Corrección: dejar la solución como serie o primeros términos. Incorrecto: forzar una identificación falsa. Correcto: “La solución queda definida por la recurrencia y los coeficientes iniciales”.</p>
+<h3 id="errores-error-7-confundir-singular-regular-con-ordinario">Error 7: confundir singular regular con ordinario</h3>
+<p>Por qué está mal: ambos permiten método, pero no el mismo. Corrección: ordinario usa \(x^n\); singular regular usa \(x^{n+r}\). Incorrecto: “Como Frobenius funciona, el punto es ordinario”. Correcto: “Frobenius funciona porque el singular es regular”.</p>
+<h3 id="errores-error-8-no-aplicar-condiciones-iniciales">Error 8: no aplicar condiciones iniciales</h3>
+<p>Por qué está mal: la serie general no responde al PVI. Corrección: usar \(\(y(0)\)=a_0\), (y'\(0\)=a_1). Incorrecto: dejar \(a_0,a_1\) libres en un PVI. Correcto: sustituir las condiciones y fijar constantes.</p>
+<h3 id="errores-error-9-tratar-bessel-como-memorizacion">Error 9: tratar Bessel como memorización</h3>
+<p>Por qué está mal: en MM1 interesa el mecanismo, no una tabla de funciones especiales. Corrección: reconocer la forma y derivar indicial/recurrencia básica. Incorrecto: estudiar propiedades avanzadas de \(J_p,Y_p\) antes de dominar Frobenius. Correcto: “Bessel es Frobenius aplicado a una EDO singular regular”.</p>
+<h3 id="errores-error-10-no-justificar-el-metodo">Error 10: no justificar el método</h3>
+<p>Por qué está mal: los exámenes piden justificar resultados y condiciones. Corrección: antes de calcular, decir si el punto es ordinario o singular regular. Incorrecto: empezar directamente por la serie. Correcto: “Como \(\(P(0)\)\neq0\), \(0\) es ordinario; procede serie de potencias”.</p>
+      </div>
+    </section>
+    <section class="page" id="preguntas">
+      <header class="section-header"><p class="eyebrow">Secci&oacute;n 07</p><h2>7. Preguntas orientadas a examen</h2></header>
+      <div class="reading-block">
+<h3 id="preguntas-10-preguntas-faciles">10 preguntas fáciles</h3>
+<ol class="exam-list">
+<li>Define serie de potencias centrada en \(x_0\).</li>
+<li>Qué significa radio de convergencia.</li>
+<li>Deriva \(y=\sum_{n=0}^{\infty}a_nx^n\).</li>
+<li>Calcula \(y''\) para \(y=\sum a_nx^n\).</li>
+<li>Qué es un punto ordinario.</li>
+<li>Qué es un punto singular.</li>
+<li>Qué condiciones definen un singular regular.</li>
+<li>Escribe la forma de Frobenius.</li>
+<li>Qué es la ecuación indicial.</li>
+<li>Escribe la ecuación de Bessel estándar.</li>
+</ol>
+<h3 id="preguntas-10-preguntas-medias">10 preguntas medias</h3>
+<ol class="exam-list">
+<li>Reindexa \(\sum_{n=2}^{\infty}\(n(n-1)\)a_nx^{n-2}\).</li>
+<li>Determina si \(x=0\) es ordinario en (\(1+x^2\)y''-y'+y=0).</li>
+<li>Determina si \(x=0\) es singular regular en (x^2y''+xy'+\(x^2-4\)y=0).</li>
+<li>Obtén la recurrencia de \(y''-xy'+2y=0\).</li>
+<li>Halla los cuatro primeros términos de la solución con \(\(y(0)\)=1\), (y'\(0\)=0) para \(y''-xy'+2y=0\).</li>
+<li>Explica por qué \(a_0,a_1\) son constantes libres en un punto ordinario.</li>
+<li>En Frobenius, calcula \(y'\) e \(y''\) para \(y=\sum a_nx^{n+r}\).</li>
+<li>Obtén la ecuación indicial de \(x^2y''+xy'-p^2y=0\).</li>
+<li>Explica qué ocurre si las raíces indiciales difieren en un entero.</li>
+<li>Reconoce si (x^2y''+xy'+\(x^2-p^2\)y=0) es Bessel.</li>
+</ol>
+<h3 id="preguntas-5-preguntas-dificiles">5 preguntas difíciles</h3>
+<ol class="exam-list">
+<li>Resolver por serie ordinaria en torno a \(0\):</li>
+</ol>
+<div class="formula-block">\[
+(1+x^2)y''-y'+y=0.
+\]</div>
+<ol class="exam-list">
+<li>Resolver hasta tres términos no nulos el PVI:</li>
+</ol>
+<div class="formula-block">\[
+y''-2xy=0,\qquad y(0)=0,\quad y'(0)=1.
+\]</div>
+<ol class="exam-list">
+<li>Aplicar Frobenius a</li>
+</ol>
+<div class="formula-block">\[
+x^2y''+xy'-\nu^2y=0.
+\]</div>
+<ol class="exam-list">
+<li>Clasificar \(x=0\) en</li>
+</ol>
+<div class="formula-block">\[
+y''+\frac{2}{x}y'+\frac{1}{x^3}y=0.
+\]</div>
+<ol class="exam-list">
+<li>Obtener la indicial y la recurrencia básica de Bessel.</li>
+</ol>
+<h3 id="preguntas-5-preguntas-de-desarrollo-largo">5 preguntas de desarrollo largo</h3>
+<ol class="exam-list">
+<li>Expón el método general de resolución por series de potencias en un punto ordinario.</li>
+<li>Expón la clasificación de puntos ordinarios, singulares regulares e irregulares.</li>
+<li>Expón el método de Frobenius y el papel de la ecuación indicial.</li>
+<li>Explica la ecuación de Bessel como ejemplo de Frobenius.</li>
+<li>Compara solución cerrada, solución en serie y aproximación polinómica.</li>
+</ol>
+<h3 id="preguntas-5-preguntas-de-relacion-entre-conceptos">5 preguntas de relación entre conceptos</h3>
+<ol class="exam-list">
+<li>Relaciona analiticidad y punto ordinario.</li>
+<li>Relaciona radio de convergencia y singularidades de los coeficientes.</li>
+<li>Relaciona recurrencia y número de soluciones independientes.</li>
+<li>Relaciona Frobenius y Bessel.</li>
+<li>Relaciona examen UNED y estrategia práctica de este tema.</li>
+</ol>
+      </div>
+    </section>
+    <section class="page" id="respuestas">
+      <header class="section-header"><p class="eyebrow">Secci&oacute;n 08</p><h2>8. Respuestas modelo</h2></header>
+      <div class="reading-block">
+<ol class="exam-list">
+<li>Una serie de potencias centrada en \(x_0\) es</li>
+</ol>
+<div class="formula-block">\[
+\sum_{n=0}^{\infty}a_n(x-x_0)^n.
+\]</div>
+<p>Representa localmente una función mediante potencias crecientes de \(x-x_0\).</p>
+<ol class="exam-list">
+<li>El radio de convergencia \(R\) determina el intervalo donde la serie converge:</li>
+</ol>
+<div class="formula-block">\[
+|x-x_0|&lt;R.
+\]</div>
+<p>Fuera de ese intervalo puede divergir.</p>
+<p>3.</p>
+<div class="formula-block">\[
+y'=\sum_{n=1}^{\infty}na_nx^{n-1}.
+\]</div>
+<p>4.</p>
+<div class="formula-block">\[
+y''=\sum_{n=2}^{\infty}n(n-1)a_nx^{n-2}.
+\]</div>
+<ol class="exam-list">
+<li>Un punto \(x_0\) es ordinario si, al poner la ecuación en forma normal, los coeficientes de \(y'\) e \(y\) son analíticos en \(x_0\).</li>
+</ol>
+<ol class="exam-list">
+<li>Un punto singular es un punto donde la forma normal de la EDO tiene coeficientes no analíticos, normalmente porque el coeficiente de \(y''\) se anula.</li>
+</ol>
+<ol class="exam-list">
+<li>Es singular regular si</li>
+</ol>
+<div class="formula-block">\[
+(x-x_0)p(x),\qquad (x-x_0)^2q(x)
+\]</div>
+<p>son analíticas en \(x_0\).</p>
+<p>8.</p>
+<div class="formula-block">\[
+y=\sum_{n=0}^{\infty}a_n(x-x_0)^{n+r},\qquad a_0\neq0.
+\]</div>
+<ol class="exam-list">
+<li>La ecuación indicial es la ecuación algebraica para \(r\) obtenida al igualar a cero el coeficiente de la menor potencia en Frobenius.</li>
+</ol>
+<p>10.</p>
+<div class="formula-block">\[
+x^2y''+xy'+(x^2-p^2)y=0.
+\]</div>
+<p>11.</p>
+<div class="formula-block">\[
+\sum_{n=2}^{\infty}n(n-1)a_nx^{n-2}
+\Longrightarrow
+
+\sum_{n=0}^{\infty}(n+2)(n+1)a_{n+2}x^n.
+\]</div>
+<ol class="exam-list">
+<li>En</li>
+</ol>
+<div class="formula-block">\[
+(1+x^2)y''-y'+y=0,
+\]</div>
+<p>el coeficiente de \(y''\) vale \(1+x^2\). En \(x=0\), vale \(1\neq0\). Por tanto \(x=0\) es ordinario.</p>
+<ol class="exam-list">
+<li>Dividiendo por \(x^2\):</li>
+</ol>
+<div class="formula-block">\[
+y''+\frac1x y'+\left(1-\frac4{x^2}\right)y=0.
+\]</div>
+<p>Aquí</p>
+<div class="formula-block">\[
+xp(x)=1,\qquad x^2q(x)=x^2-4.
+\]</div>
+<p>Ambas son analíticas en \(0\). Luego \(x=0\) es singular regular.</p>
+<ol class="exam-list">
+<li>Para</li>
+</ol>
+<div class="formula-block">\[
+y''-xy'+2y=0
+\]</div>
+<p>se obtiene</p>
+<div class="formula-block">\[
+a_2=-a_0,
+\]</div>
+<div class="formula-block">\[
+a_{n+2}=\frac{n-2}{(n+2)(n+1)}a_n,\qquad n\geq1.
+\]</div>
+<ol class="exam-list">
+<li>Con \(a_0=1\), \(a_1=0\):</li>
+</ol>
+<div class="formula-block">\[
+a_2=-1.
+\]</div>
+<p>Para \(n=2\),</p>
+<div class="formula-block">\[
+a_4=0.
+\]</div>
+<p>La solución empieza</p>
+<div class="formula-block">\[
+y=1-x^2+\cdots.
+\]</div>
+<p>De hecho la rama par se corta ahí.</p>
+<ol class="exam-list">
+<li>En una EDO lineal homogénea de segundo orden hacen falta dos constantes libres. En una serie ordinaria centrada en \(0\), esas constantes son</li>
+</ol>
+<div class="formula-block">\[
+a_0=y(0),\qquad a_1=y'(0).
+\]</div>
+<p>17.</p>
+<div class="formula-block">\[
+y'=\sum_{n=0}^{\infty}(n+r)a_nx^{n+r-1},
+\]</div>
+<div class="formula-block">\[
+y''=\sum_{n=0}^{\infty}(n+r)(n+r-1)a_nx^{n+r-2}.
+\]</div>
+<ol class="exam-list">
+<li>Sustituyendo en</li>
+</ol>
+<div class="formula-block">\[
+x^2y''+xy'-p^2y=0
+\]</div>
+<p>queda, para la menor potencia,</p>
+<div class="formula-block">\[
+[r(r-1)+r-p^2]a_0=0.
+\]</div>
+<p>Como \(a_0\neq0\),</p>
+<div class="formula-block">\[
+r^2-p^2=0.
+\]</div>
+<ol class="exam-list">
+<li>Si las raíces indiciales difieren en un entero, Frobenius puede no dar dos soluciones independientes. La segunda puede contener un término logarítmico o requerir reducción de orden.</li>
+</ol>
+<ol class="exam-list">
+<li>Sí. Es la ecuación de Bessel estándar de orden \(p\).</li>
+</ol>
+<ol class="exam-list">
+<li>Se toma</li>
+</ol>
+<div class="formula-block">\[
+y=\sum_{n=0}^{\infty}a_nx^n.
+\]</div>
+<p>Entonces</p>
+<div class="formula-block">\[
+(1+x^2)y''-y'+y=0.
+\]</div>
+<p>Usando</p>
+<div class="formula-block">\[
+y''=\sum_{n=0}^{\infty}(n+2)(n+1)a_{n+2}x^n,
+\]</div>
+<div class="formula-block">\[
+x^2y''=\sum_{n=2}^{\infty}n(n-1)a_nx^n,
+\]</div>
+<div class="formula-block">\[
+-y'=-\sum_{n=0}^{\infty}(n+1)a_{n+1}x^n,
+\]</div>
+<div class="formula-block">\[
+y=\sum_{n=0}^{\infty}a_nx^n.
+\]</div>
+<p>Coeficiente de \(x^0\):</p>
+<div class="formula-block">\[
+2a_2-a_1+a_0=0.
+\]</div>
+<p>Coeficiente de \(x^1\):</p>
+<div class="formula-block">\[
+6a_3-2a_2+a_1=0.
+\]</div>
+<p>Para \(n\geq2\):</p>
+<div class="formula-block">\[
+(n+2)(n+1)a_{n+2}+n(n-1)a_n-(n+1)a_{n+1}+a_n=0.
+\]</div>
+<p>Por tanto</p>
+<div class="formula-block">\[
+a_{n+2}=\frac{(n+1)a_{n+1}-(n^2-n+1)a_n}{(n+2)(n+1)}.
+\]</div>
+<p>La solución general queda determinada por \(a_0,a_1\).</p>
+<ol class="exam-list">
+<li>Para</li>
+</ol>
+<div class="formula-block">\[
+y''-2xy=0,
+\]</div>
+<div class="formula-block">\[
+y=\sum a_nx^n,\qquad y''=\sum_{n=0}^{\infty}(n+2)(n+1)a_{n+2}x^n,
+\]</div>
+<div class="formula-block">\[
+2xy=2\sum_{n=1}^{\infty}a_{n-1}x^n.
+\]</div>
+<p>Coeficiente de \(x^0\):</p>
+<div class="formula-block">\[
+2a_2=0\Rightarrow a_2=0.
+\]</div>
+<p>Para \(n\geq1\):</p>
+<div class="formula-block">\[
+(n+2)(n+1)a_{n+2}=2a_{n-1}.
+\]</div>
+<p>Condiciones:</p>
+<div class="formula-block">\[
+a_0=0,\qquad a_1=1.
+\]</div>
+<p>Entonces</p>
+<div class="formula-block">\[
+a_2=0,\quad a_3=0,\quad a_4=\frac{2a_1}{4\cdot3}=\frac16.
+\]</div>
+<p>Siguiente:</p>
+<div class="formula-block">\[
+a_5=0,\quad a_6=0,\quad a_7=\frac{2a_4}{7\cdot6}=\frac{1}{126}.
+\]</div>
+<p>Luego</p>
+<div class="formula-block">\[
+y=x+\frac{x^4}{6}+\frac{x^7}{126}+\cdots.
+\]</div>
+<ol class="exam-list">
+<li>En</li>
+</ol>
+<div class="formula-block">\[
+x^2y''+xy'-\nu^2y=0
+\]</div>
+<p>se propone</p>
+<div class="formula-block">\[
+y=\sum a_nx^{n+r}.
+\]</div>
+<p>Al sustituir:</p>
+<div class="formula-block">\[
+\sum [(n+r)(n+r-1)+(n+r)-\nu^2]a_nx^{n+r}=0.
+\]</div>
+<p>Para \(n=0\):</p>
+<div class="formula-block">\[
+(r^2-\nu^2)a_0=0.
+\]</div>
+<p>La indicial es</p>
+<div class="formula-block">\[
+r^2-\nu^2=0,
+\]</div>
+<div class="formula-block">\[
+r=\pm \nu.
+\]</div>
+<p>Es una ecuación de Euler-Cauchy; las soluciones básicas son del tipo</p>
+<div class="formula-block">\[
+x^\nu,\qquad x^{-\nu}
+\]</div>
+<p>si \(\nu\neq0\).</p>
+<ol class="exam-list">
+<li>En</li>
+</ol>
+<div class="formula-block">\[
+y''+\frac2x y'+\frac1{x^3}y=0,
+\]</div>
+<div class="formula-block">\[
+p(x)=\frac2x,\qquad q(x)=\frac1{x^3}.
+\]</div>
+<p>Entonces</p>
+<div class="formula-block">\[
+xp(x)=2
+\]</div>
+<p>es analítica, pero</p>
+<div class="formula-block">\[
+x^2q(x)=\frac1x
+\]</div>
+<p>no es analítica. Por tanto \(x=0\) es singular irregular.</p>
+<ol class="exam-list">
+<li>Para Bessel:</li>
+</ol>
+<div class="formula-block">\[
+x^2y''+xy'+(x^2-p^2)y=0.
+\]</div>
+<p>Con Frobenius:</p>
+<div class="formula-block">\[
+y=\sum a_nx^{n+r}.
+\]</div>
+<p>La indicial es</p>
+<div class="formula-block">\[
+r^2-p^2=0.
+\]</div>
+<p>La recurrencia básica queda</p>
+<div class="formula-block">\[
+a_n=-\frac{a_{n-2}}{(n+r)^2-p^2}.
+\]</div>
+<p>Además \(a_1=0\), de modo que aparecen solo potencias separadas por dos unidades.</p>
+<ol class="exam-list">
+<li>En un punto ordinario se supone que la solución es analítica. Se escribe</li>
+</ol>
+<div class="formula-block">\[
+y=\sum a_n(x-x_0)^n,
+\]</div>
+<p>se derivan \(y'\) e \(y''\), se sustituyen en la EDO, se reindexan los sumatorios y se igualan coeficientes. El resultado es una recurrencia. En una ecuación de segundo orden, \(a_0\) y \(a_1\) quedan libres o se fijan mediante condiciones iniciales.</p>
+<ol class="exam-list">
+<li>Primero se pone la ecuación en forma normal. Si los coeficientes son analíticos en \(x_0\), el punto es ordinario. Si no lo son, es singular. Si al multiplicar por (\(x-x_0\)) y (\(x-x_0\)^2) los coeficientes quedan analíticos, el singular es regular. Si no, es irregular.</li>
+</ol>
+<ol class="exam-list">
+<li>Frobenius se usa en puntos singulares regulares. En vez de una serie ordinaria, se toma</li>
+</ol>
+<div class="formula-block">\[
+y=\sum a_n(x-x_0)^{n+r}.
+\]</div>
+<p>El exponente \(r\) se obtiene de la ecuación indicial. Después se calcula una recurrencia para los coeficientes. Según las raíces indiciales, pueden salir dos series independientes o una segunda solución con logaritmo.</p>
+<ol class="exam-list">
+<li>Bessel es el ejemplo clásico de Frobenius. La ecuación</li>
+</ol>
+<div class="formula-block">\[
+x^2y''+xy'+(x^2-p^2)y=0
+\]</div>
+<p>tiene un singular regular en \(x=0\). La indicial da \(r=\pm p\). La solución correspondiente a \(r=p\) genera \(J_p(x)\), función de Bessel de primera especie.</p>
+<ol class="exam-list">
+<li>Una solución cerrada expresa \(y\) mediante funciones elementales o conocidas. Una solución en serie expresa \(y\) mediante infinitos coeficientes calculados por recurrencia. Una aproximación polinómica toma solo los primeros términos de la serie. En problemas aplicados, una serie truncada puede ser suficiente si el error queda controlado.</li>
+</ol>
+<ol class="exam-list">
+<li>Si los coeficientes de la EDO son analíticos en \(x_0\), el punto es ordinario y cabe esperar soluciones analíticas. Por eso procede la serie ordinaria.</li>
+</ol>
+<ol class="exam-list">
+<li>El radio de convergencia suele estar limitado por el punto singular más cercano. La solución en serie es local, no global.</li>
+</ol>
+<ol class="exam-list">
+<li>La recurrencia determina todos los coeficientes a partir de unos coeficientes libres. En segundo orden deben quedar dos grados de libertad, que corresponden a dos soluciones independientes.</li>
+</ol>
+<ol class="exam-list">
+<li>Bessel se obtiene aplicando Frobenius a una ecuación con singular regular. Por eso no se estudia como objeto aislado, sino como ejemplo de solución especial definida por serie.</li>
+</ol>
+<ol class="exam-list">
+<li>En examen UNED interesa identificar el tipo de punto, justificar el método, reindexar limpiamente, obtener recurrencia y calcular términos. No interesa perder tiempo buscando una fórmula cerrada si la serie no colapsa.</li>
+</ol>
+      </div>
+    </section>
+    <section class="page" id="resumen">
+      <header class="section-header"><p class="eyebrow">Secci&oacute;n 09</p><h2>9. Resumen final de repaso</h2></header>
+      <div class="reading-block">
+<p>Ideas principales:</p>
+<div class="formula-block">\[
+\text{EDO difícil} \Rightarrow \text{buscar solución como serie}.
+\]</div>
+<div class="formula-block">\[
+\text{punto ordinario} \Rightarrow y=\sum a_n(x-x_0)^n.
+\]</div>
+<div class="formula-block">\[
+\text{singular regular} \Rightarrow y=\sum a_n(x-x_0)^{n+r}.
+\]</div>
+<div class="formula-block">\[
+\text{Frobenius} \Rightarrow \text{indicial}+\text{recurrencia}.
+\]</div>
+<p>Conceptos imprescindibles: serie de potencias, radio de convergencia, punto ordinario, singular regular, singular irregular, recurrencia, ecuación indicial, raíces indiciales, Bessel.</p>
+<p>Relaciones clave:</p>
+<div class="formula-block">\[
+P(x_0)\neq0 \Rightarrow \text{ordinario}.
+\]</div>
+<div class="formula-block">\[
+P(x_0)=0 \Rightarrow \text{mirar singular regular}.
+\]</div>
+<div class="formula-block">\[
+r_1-r_2\notin\mathbb{Z} \Rightarrow \text{normalmente dos Frobenius independientes}.
+\]</div>
+<div class="formula-block">\[
+r_1-r_2\in\mathbb{Z} \Rightarrow \text{posible logaritmo o reducción de orden}.
+\]</div>
+<p>Errores que evitar: reindexar mal, no separar términos iniciales, usar serie ordinaria en singular, perder una constante, no justificar el método, intentar cerrar series innecesariamente.</p>
+      </div>
+    </section>
+    <section class="page" id="checklist">
+      <header class="section-header"><p class="eyebrow">Secci&oacute;n 10</p><h2>10. Checklist de dominio</h2></header>
+      <div class="reading-block">
+<ul class="check-list">
+<li>Si no puedes derivar y reindexar</li>
+</ul>
+<div class="formula-block">\[
+\sum a_nx^n,
+\]</div>
+<p>falta repasar manipulación de sumatorios.</p>
+<ul class="check-list">
+<li>Si no puedes distinguir punto ordinario y singular, falta repasar forma normal de la EDO.</li>
+</ul>
+<ul class="check-list">
+<li>Si confundes singular regular con ordinario, revisar las condiciones</li>
+</ul>
+<div class="formula-block">\[
+(x-x_0)p(x),\qquad (x-x_0)^2q(x).
+\]</div>
+<ul class="check-list">
+<li>Si no sabes sacar la recurrencia, falta practicar igualdad de coeficientes.</li>
+</ul>
+<ul class="check-list">
+<li>Si pierdes \(a_0,a_1\), falta repasar estructura de soluciones de EDO lineales de segundo orden.</li>
+</ul>
+<ul class="check-list">
+<li>Si no puedes aplicar condiciones iniciales a una serie, falta conectar</li>
+</ul>
+<div class="formula-block">\[
+a_0=y(0),\qquad a_1=y'(0).
+\]</div>
+<ul class="check-list">
+<li>Si no puedes plantear Frobenius, falta repasar</li>
+</ul>
+<div class="formula-block">\[
+y=\sum a_nx^{n+r}.
+\]</div>
+<ul class="check-list">
+<li>Si no sabes qué hacer con \(r\), falta repasar ecuación indicial.</li>
+</ul>
+<ul class="check-list">
+<li>Si al ver Bessel intentas memorizar tablas, falta reducirlo a Frobenius.</li>
+</ul>
+<ul class="check-list">
+<li>Si puedes clasificar el punto, plantear la serie, derivar, sustituir, reindexar, obtener recurrencia y calcular términos, el capítulo está suficientemente asentado.</li>
+</ul>
+
+      </div>
+    </section>
+  </main>
+</div>
+</body>
+</html>

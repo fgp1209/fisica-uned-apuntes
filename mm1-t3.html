@@ -11,26 +11,28 @@
   <link rel="apple-touch-icon" sizes="100x100" href="assets/icons/icon-100.png" />
   <link rel="stylesheet" href="assets/styles.css" />
   <script>
-    window.MathJax = {
-      tex: {
-        inlineMath: [['\\(', '\\)']],
-        displayMath: [['\\[', '\\]']],
-        processEscapes: true
-      },
-      options: {
-        skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-      }
-    };
-  </script>
+window.MathJax = {
+  tex: {
+    inlineMath: [['\\(', '\\)'], ['$', '$']],
+    displayMath: [['\\[', '\\]']],
+    processEscapes: true
+  },
+  svg: { fontCache: 'global' },
+  options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+};
+</script>
   <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
   <script defer src="assets/app.js"></script>
+
+
 </head>
 <body class="subject-mm1">
-  <header class="lesson-hero">
+  <div class="wrap">
+  <header class="cover">
     <nav class="breadcrumb" aria-label="Navegación">
       <a href="index.html">← Volver al índice</a>
     </nav>
-    <div class="hero-content">
+    <div class="cover-content">
       <p class="eyebrow">Métodos Matemáticos I · Sanz y Torres · Capítulos 3–4</p>
       <h1>Ecuaciones diferenciales lineales de orden superior</h1>
       <div class="hero-summary">
@@ -58,9 +60,9 @@
 <a href="#checklist">Checklist</a>
   </nav>
 
-  <main class="lesson-layout">
+  <main>
     <section id="mapa" class="page">
-      <div class="section-heading">
+      <div class="page-head">
         <p class="section-kicker">Vista rápida</p>
         <h2>Mapa conceptual</h2>
       </div>
@@ -79,7 +81,7 @@
     </section>
 
     <section id="prerrequisitos" class="page">
-<div class="section-heading"><p class="section-kicker">Tema MM1</p><h2>Prerrequisitos mínimos</h2></div>
+<div class="page-head"><p class="section-kicker">Tema MM1</p><h2>Prerrequisitos mínimos</h2></div>
 <div class="card-grid">
 <article class="definition-card">
 <h3>1. Derivadas sucesivas</h3>
@@ -187,7 +189,7 @@ y=C_1\cos x+C_2\sin x.
 </section>
 
 <section id="idea" class="page">
-<div class="section-heading"><p class="section-kicker">Tema MM1</p><h2>Idea central del capítulo</h2></div>
+<div class="page-head"><p class="section-kicker">Tema MM1</p><h2>Idea central del capítulo</h2></div>
 <div class="reading-block"><p>El capítulo responde a una pregunta estructural: cómo resolver ecuaciones diferenciales donde la incógnita no solo aparece con su primera derivada, sino con derivadas de orden superior. En física, esto aparece de forma inmediata: la segunda ley de Newton suele producir ecuaciones de segundo orden porque la aceleración es una segunda derivada. En matemáticas, el salto importante es que una ecuación de orden \(n\) no tiene una sola constante arbitraria, sino \(n\).</p>
 <p>La idea central es que las ecuaciones lineales homogéneas poseen una estructura algebraica. Sus soluciones pueden sumarse y multiplicarse por constantes sin dejar de ser soluciones. Por eso el conjunto de soluciones forma un espacio vectorial. En una ecuación homogénea de orden \(n\), ese espacio tiene dimensión \(n\). La solución general no es una fórmula aislada, sino una combinación lineal de \(n\) soluciones independientes.</p>
 <p>El wronskiano aparece como herramienta de control. Sirve para comprobar si las soluciones halladas son suficientes para construir la solución general. No resuelve por sí solo la ecuación, pero valida que el conjunto de soluciones encontradas tiene el rango correcto.</p>
@@ -204,7 +206,7 @@ y=e^{rx}
 </section>
 
 <section id="desarrollo" class="page">
-<div class="section-heading"><p class="section-kicker">Tema MM1</p><h2>Desarrollo completo del capítulo</h2></div>
+<div class="page-head"><p class="section-kicker">Tema MM1</p><h2>Desarrollo completo del capítulo</h2></div>
 <div class="lesson-stack">
 <article class="reading-block">
 <h3>3.1. Ecuaciones de orden superior y problema de Cauchy</h3>
@@ -228,6 +230,32 @@ y=C_1\cos x+C_2\sin x.
 \]</div>
 <p>Las dos constantes aparecen porque la ecuación es de segundo orden.</p>
 </article>
+
+<article class="reading-block">
+<h3>3.1b. Métodos elementales de integración en ecuaciones de orden superior</h3>
+<p>Antes de entrar en la teoría lineal conviene dominar los casos en los que el orden puede bajarse por inspección. El libro oficial los coloca como bloque propio dentro del capítulo de ecuaciones de orden superior.</p>
+<h4>Caso 1: \(y^{(n)}=f(x)\)</h4>
+<p>Se integra sucesivamente \(n\) veces y aparecen \(n\) constantes.</p>
+<div class="formula-block">\[
+y''=f(x) \Rightarrow y'=\int f(x)\,dx+C_1,
+\qquad y=\int\left(\int f(x)\,dx\right)dx+C_1x+C_2.
+\]</div>
+<h4>Caso 2: no aparece \(y\)</h4>
+<p>Si la ecuación contiene \(x,y',y'',\ldots\) pero no \(y\), se hace</p>
+<div class="formula-block">\[
+p=y'.
+\]</div>
+<p>Así \(y''=p'\) y se reduce el orden.</p>
+<h4>Caso 3: no aparece \(x\)</h4>
+<p>Si la ecuación contiene \(y,y',y''\) pero no \(x\), se toma</p>
+<div class="formula-block">\[
+p(y)=y',\qquad y''=p\frac{dp}{dy}.
+\]</div>
+<p>Esto transforma una ecuación de segundo orden en una de primer orden para \(p(y)\).</p>
+<h4>Caso 4: falta alguna derivada intermedia</h4>
+<p>Si la ecuación depende solo de derivadas de cierto orden, se introduce como nueva incógnita la derivada más baja que aparezca y se reduce el orden total.</p>
+</article>
+
 <article class="reading-block">
 <h3>3.2. La ecuación lineal y el operador diferencial lineal</h3>
 <p>La ecuación lineal de orden \(n\) tiene la forma</p>
@@ -496,7 +524,7 @@ u_1'y_1'+u_2'y_2'=g(x).
 </section>
 
 <section id="conceptos" class="page">
-<div class="section-heading"><p class="section-kicker">Tema MM1</p><h2>Conceptos clave</h2></div>
+<div class="page-head"><p class="section-kicker">Tema MM1</p><h2>Conceptos clave</h2></div>
 <div class="card-grid">
 <article class="definition-card">
 <h3>1. Ecuación diferencial ordinaria de orden superior</h3>
@@ -694,7 +722,7 @@ y_p=u_1y_1+u_2y_2.
 </section>
 
 <section id="relaciones" class="page">
-<div class="section-heading"><p class="section-kicker">Tema MM1</p><h2>Relaciones entre ideas</h2></div>
+<div class="page-head"><p class="section-kicker">Tema MM1</p><h2>Relaciones entre ideas</h2></div>
 <div class="reading-block"><p>El capítulo se organiza jerárquicamente.</p>
 <p>Primero aparece la noción de ecuación de orden superior. De ahí se deduce que una solución general debe contener tantas constantes como el orden de la ecuación. Esto lleva al problema de Cauchy: cada condición inicial fija una constante.</p>
 <p>Después entra la linealidad. Sin linealidad no hay espacio vectorial de soluciones. Con linealidad homogénea sí hay superposición: si \(y_1\) e \(y_2\) son soluciones, también lo es \(C_1y_1+C_2y_2\). Esta propiedad convierte el problema de resolver la ecuación en el problema de encontrar una base del espacio de soluciones.</p>
@@ -712,7 +740,7 @@ y_p=u_1y_1+u_2y_2.
 </section>
 
 <section id="errores" class="page">
-<div class="section-heading"><p class="section-kicker">Tema MM1</p><h2>Errores habituales</h2></div>
+<div class="page-head"><p class="section-kicker">Tema MM1</p><h2>Errores habituales</h2></div>
 <div class="accordion-list">
 <details class="accordion" open>
 <summary>Error 1. Confundir orden con grado</summary>
@@ -836,7 +864,7 @@ y=y_h+y_p.
 </section>
 
 <section id="preguntas" class="page">
-<div class="section-heading"><p class="section-kicker">Tema MM1</p><h2>Preguntas orientadas a examen</h2></div>
+<div class="page-head"><p class="section-kicker">Tema MM1</p><h2>Preguntas orientadas a examen</h2></div>
 <div class="question-grid">
 <article class="reading-block question-block">
 <h3>10 preguntas fáciles</h3>
@@ -907,7 +935,7 @@ y=C_1+C_2e^x+C_3xe^x+C_4e^{-x}\cos x+C_5e^{-x}\sin x.
 </section>
 
 <section id="respuestas" class="page">
-<div class="section-heading"><p class="section-kicker">Tema MM1</p><h2>Respuestas modelo</h2></div>
+<div class="page-head"><p class="section-kicker">Tema MM1</p><h2>Respuestas modelo</h2></div>
 <div class="accordion-list">
 <details class="accordion">
 <summary>1. ¿Qué significa que una ecuación diferencial sea de orden \(n\)?</summary>
@@ -1185,7 +1213,7 @@ u_2'=y_1g=\cos x\sec x\tan x=\tan x.
 \]</div>
 <p>Entonces</p>
 <div class="formula-block">\[
-u_2=\int \tan x,dx=-\ln|\cos x|.
+u_2=\int \tan x\,dx=-\ln|\cos x|.
 \]</div>
 <p>Además,</p>
 <div class="formula-block">\[
@@ -1198,7 +1226,7 @@ u_1'=-\sin x\frac{1}{\cos x}\frac{\sin x}{\cos x}
 \tan^2x=\sec^2x-1,
 \]</div>
 <div class="formula-block">\[
-u_1=\int -\tan^2x,dx= -\tan x+x.
+u_1=\int -\tan^2x\,dx= -\tan x+x.
 \]</div>
 <p>Una particular es</p>
 <div class="formula-block">\[
@@ -1333,7 +1361,7 @@ L(y_p+y_h)=F(x).
 <div class="formula-block">\[
 L(D)=a_nD^n+\cdots+a_1D+a_0.
 \]</div>
-<p>Al aplicar (L\(D\)) a \(e^{rx}\), cada \(D\) actúa como multiplicación por \(r\). Por eso aparece el polinomio característico (L\(r\)).</p></div>
+<p>Al aplicar \(L(D)\) a \(e^{rx}\), cada \(D\) actúa como multiplicación por \(r\). Por eso aparece el polinomio característico \(L(r)\).</p></div>
 </details>
 <details class="accordion">
 <summary>34. Relación entre raíces complejas y movimiento oscilatorio</summary>
@@ -1359,7 +1387,7 @@ y_p=C_1(x)y_1+\cdots+C_n(x)y_n
 </section>
 
 <section id="resumen" class="page">
-<div class="section-heading"><p class="section-kicker">Tema MM1</p><h2>Resumen final de repaso</h2></div>
+<div class="page-head"><p class="section-kicker">Tema MM1</p><h2>Resumen final de repaso</h2></div>
 <div class="reading-block"><p>Ideas principales:</p>
 <ul>
 <li>Una ecuación de orden \(n\) necesita \(n\) condiciones iniciales.</li>
@@ -1404,7 +1432,7 @@ p(r)=0.
 </section>
 
 <section id="checklist" class="page">
-<div class="section-heading"><p class="section-kicker">Tema MM1</p><h2>Checklist de dominio</h2></div>
+<div class="page-head"><p class="section-kicker">Tema MM1</p><h2>Checklist de dominio</h2></div>
 <div class="reading-block checklist-block">
 <ul>
 <li>Si no puedes distinguir orden, grado, linealidad y homogeneidad, falta repasar clasificación básica de EDO.</li>
@@ -1430,5 +1458,6 @@ p(r)=0.
 </div>
 </section>
   </main>
+  </div>
 </body>
 </html>

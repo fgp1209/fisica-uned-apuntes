@@ -1,0 +1,183 @@
+﻿<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="light dark" />
+  <title>Métodos Matemáticos I — Transformada de Laplace</title>
+  <meta name="description" content="Guía de estudio de Métodos Matemáticos I sobre transformada de Laplace: definición, existencia, propiedades, inversa, convolución y PVI." />
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/icon-32.png" />
+  <link rel="icon" type="image/png" sizes="50x50" href="assets/icons/icon-50.png" />
+  <link rel="apple-touch-icon" sizes="100x100" href="assets/icons/icon-100.png" />
+  <link rel="stylesheet" href="assets/styles.css" />
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['\\(', '\\)']],
+        displayMath: [['\\[', '\\]']],
+        processEscapes: true
+      },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+  <script defer src="assets/app.js"></script>
+</head>
+<body class="subject-mm1">
+  <div class="wrap">
+  <header class="cover">
+    <div class="top-actions"><a class="back-link" href="index.html">← Índice</a></div>
+    <div class="cover-content">
+      <p class="eyebrow">Métodos Matemáticos I</p>
+      <h1>Transformada de Laplace</h1>
+      <p class="subtitle">Definición, condiciones de existencia, propiedades, transformada inversa, convolución y resolución de problemas de valores iniciales.</p>
+      <div class="chips">
+        <span class="chip">Tema: 8</span>
+        <span class="chip">Dominio \(s\)</span>
+        <span class="chip">Estado: completo</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="toolbar no-print" aria-label="Navegación de la lección">
+    <nav>
+      <a href="#mapa">Mapa</a>
+      <a href="#prerrequisitos">Prerrequisitos</a>
+      <a href="#desarrollo">Desarrollo</a>
+      <a href="#conceptos">Conceptos</a>
+      <a href="#errores">Errores</a>
+      <a href="#preguntas">Preguntas</a>
+      <a href="#respuestas">Respuestas</a>
+      <a href="#resumen">Resumen</a>
+      <a href="#checklist">Checklist</a>
+    </nav>
+  </div>
+
+  <main>
+    <section class="page hero-page" id="mapa">
+      <header class="section-header">
+        <p class="eyebrow">Mapa conceptual</p>
+        <h2>De una EDO a una ecuación algebraica</h2>
+      </header>
+      <div class="concept-map">
+        <a class="map-card" href="#definicion"><span>Definición</span><p>Una integral impropia transforma \(f(t)\) en \(F(s)\).</p></a>
+        <a class="map-card" href="#existencia"><span>Existencia</span><p>Continuidad a trozos y orden exponencial justifican el operador.</p></a>
+        <a class="map-card" href="#derivadas"><span>Derivadas</span><p>Los datos iniciales entran en \(sY(s)-y(0)\).</p></a>
+        <a class="map-card" href="#convolucion"><span>Convolución</span><p>Producto en \(s\), integral en \(t\).</p></a>
+        <a class="map-card" href="#pvi"><span>PVI</span><p>Transformar, despejar, invertir y comprobar.</p></a>
+      </div>
+      <div class="formula-block">\[
+      \mathcal L\{f(t)\}=F(s)=\int_0^\infty e^{-st}f(t)\,dt
+      \]</div>
+    </section>
+
+    <section class="page" id="prerrequisitos">
+      <header class="section-header"><p class="eyebrow">Sección 1</p><h2>1. Prerrequisitos mínimos</h2></header>
+      <div class="card-grid">
+        <article class="definition-card"><h3>EDO lineales con coeficientes constantes</h3><p>Una ecuación del tipo</p><div class="formula-block">\[ay''+by'+cy=f(t)\]</div><p>es lineal si \(y,y',y''\) aparecen en primer grado y sin productos entre ellas. Es el caso natural para Laplace porque las derivadas se transforman en expresiones algebraicas en \(s\). Por ejemplo, \(y''+3y'+2y=e^t\) se convierte por Laplace en una ecuación para \(Y(s)\).</p></article>
+        <article class="definition-card"><h3>Problema de valores iniciales</h3><p>Un PVI fija la ecuación y los datos en \(t=0\):</p><div class="formula-block">\[y(0)=y_0,\qquad y'(0)=v_0.\]</div><p>Laplace incorpora esos datos directamente en la transformada de las derivadas.</p></article>
+        <article class="definition-card"><h3>Integrales impropias</h3><p>La transformada se define mediante</p><div class="formula-block">\[\mathcal L\{f(t)\}=F(s)=\int_0^\infty e^{-st}f(t)\,dt.\]</div><p>No basta con integrar formalmente: hay que saber cuándo converge.</p></article>
+        <article class="definition-card"><h3>Función continua a trozos</h3><p>Puede tener un número finito de discontinuidades de salto en intervalos cerrados. Es la clase básica para manejar fuerzas a trozos, escalones e impulsos idealizados.</p></article>
+        <article class="definition-card"><h3>Orden exponencial</h3><p>Una función \(f(t)\) es de orden exponencial si, a partir de cierto \(t_0\),</p><div class="formula-block">\[|f(t)|<Me^{ct}.\]</div><p>Si \(f\) es continua a trozos y de orden exponencial, existe su transformada para \(s\) suficientemente grande.</p></article>
+        <article class="definition-card"><h3>Fracciones simples</h3><p>La transformada inversa de expresiones racionales exige descomponer:</p><div class="formula-block">\[\frac{P(s)}{Q(s)}=\frac{A}{s-a}+\frac{B}{s-b}+\cdots\]</div><p>Sin fracciones simples no se recupera \(y(t)\) desde \(Y(s)\).</p></article>
+        <article class="definition-card"><h3>Tabla mínima</h3><div class="formula-block">\[\mathcal L\{1\}=\frac1s,\qquad \mathcal L\{t^n\}=\frac{n!}{s^{n+1}}\]</div><div class="formula-block">\[\mathcal L\{e^{at}\}=\frac1{s-a},\qquad \mathcal L\{\sin at\}=\frac{a}{s^2+a^2},\qquad \mathcal L\{\cos at\}=\frac{s}{s^2+a^2}.\]</div></article>
+      </div>
+    </section>
+
+    <section class="page" id="idea-central">
+      <header class="section-header"><p class="eyebrow">Sección 2</p><h2>2. Idea central del capítulo</h2></header>
+      <div class="reading-block">
+        <p>La transformada de Laplace convierte funciones de una variable real \(t\) en funciones de una variable auxiliar \(s\). No es solo una tabla de equivalencias: es un cambio de dominio. En el dominio temporal aparecen derivadas, integrales y convoluciones; en el dominio \(s\) aparecen productos, cocientes y expresiones algebraicas.</p>
+        <p>El problema central del capítulo es resolver PVI lineales sin tener que construir primero la solución general. En una EDO con coeficientes constantes, las derivadas de \(y\) se convierten en polinomios en \(s\) multiplicando a \(Y(s)\), más términos conocidos procedentes de \(y(0),y'(0),\ldots\).</p>
+        <p>El capítulo progresa así: definición del operador, existencia, transformadas elementales, propiedades de cálculo, inversa, convolución y resolución de ecuaciones diferenciales. En examen, el núcleo es reconocer que un problema pide Laplace, transformar limpiamente, despejar \(Y(s)\), invertir mediante tabla, fracciones simples o convolución, y comprobar las condiciones iniciales.</p>
+      </div>
+    </section>
+
+    <section class="page" id="desarrollo">
+      <header class="section-header"><p class="eyebrow">Sección 3</p><h2>3. Desarrollo completo del capítulo</h2></header>
+      <article class="reading-block" id="definicion"><h3>3.1. Definición de transformada de Laplace</h3><p>La transformada de Laplace de \(f(t)\), definida para \(t>0\), es</p><div class="formula-block">\[\mathcal L\{f(t)\}=F(s)=\int_0^\infty e^{-st}f(t)\,dt.\]</div><p>La idea es amortiguar \(f(t)\) mediante \(e^{-st}\). Si \(s\) es suficientemente grande, ese factor hace converger integrales que sin él podrían no converger. Ejemplo:</p><div class="formula-block">\[\mathcal L\{1\}=\int_0^\infty e^{-st}\,dt=\frac1s,\qquad s>0.\]</div></article>
+      <article class="reading-block" id="existencia"><h3>3.2. Existencia de la transformada</h3><p>No toda función tiene transformada. Dos condiciones suficientes son</p><div class="formula-block">\[f(t)\text{ continua a trozos},\qquad f(t)\text{ de orden exponencial}.\]</div><p>La primera controla discontinuidades finitas. La segunda impide crecimientos más rápidos que una exponencial. Si \(f(t)\) crece como \(e^{ct}\), entonces \(e^{-st}f(t)\) se comporta como \(e^{-(s-c)t}\), y la integral converge para \(s>c\).</p></article>
+      <article class="reading-block"><h3>3.3. Transformadas elementales</h3><div class="formula-block">\[\mathcal L\{1\}=\frac1s,\quad \mathcal L\{t^n\}=\frac{n!}{s^{n+1}},\quad \mathcal L\{e^{at}\}=\frac1{s-a}\]</div><div class="formula-block">\[\mathcal L\{\sin bt\}=\frac{b}{s^2+b^2},\qquad \mathcal L\{\cos bt\}=\frac{s}{s^2+b^2}.\]</div><p>Por ejemplo, \(\frac{s}{s^2+4}\leftrightarrow \cos 2t\) y \(\frac{2}{s^2+4}\leftrightarrow \sin 2t\). El error típico es mirar solo el denominador y olvidar el numerador.</p></article>
+      <article class="reading-block"><h3>3.4. Linealidad</h3><div class="formula-block">\[\mathcal L\{\alpha f+\beta g\}=\alpha\mathcal L\{f\}+\beta\mathcal L\{g\}.\]</div><p>Permite transformar término a término:</p><div class="formula-block">\[\mathcal L\{3t^2-5e^{2t}+\sin t\}=3\frac{2}{s^3}-5\frac1{s-2}+\frac1{s^2+1}.\]</div></article>
+      <article class="reading-block"><h3>3.5. Traslación exponencial</h3><p>Si \(\mathcal L\{f(t)\}=F(s)\), entonces</p><div class="formula-block">\[\mathcal L\{e^{at}f(t)\}=F(s-a).\]</div><p>Ejemplo:</p><div class="formula-block">\[\mathcal L\{e^{3t}\cos 5t\}=\frac{s-3}{(s-3)^2+25}.\]</div><p>La inversa se lee al revés:</p><div class="formula-block">\[\mathcal L^{-1}\left\{\frac{s-3}{(s-3)^2+25}\right\}=e^{3t}\cos 5t.\]</div></article>
+      <article class="reading-block"><h3>3.6. Multiplicación por potencias de \(t\)</h3><p>Si \(\mathcal L\{f(t)\}=F(s)\), entonces</p><div class="formula-block">\[\mathcal L\{t^n f(t)\}=(-1)^n\frac{d^n}{ds^n}F(s).\]</div><p>Es útil para \(t\sin t\), \(te^{at}\) o \(t^2\cos t\).</p></article>
+      <article class="reading-block" id="derivadas"><h3>3.7. Transformada de derivadas</h3><div class="formula-block">\[\mathcal L\{y'\}=sY(s)-y(0),\qquad \mathcal L\{y''\}=s^2Y(s)-sy(0)-y'(0).\]</div><p>La derivada \(n\)-ésima produce un polinomio en \(s\) multiplicando a \(Y(s)\) y una cadena de datos iniciales. Ejemplo:</p><div class="formula-block">\[y''+3y'+2y=f(t),\qquad y(0)=1,\quad y'(0)=0.\]</div><div class="formula-block">\[(s^2Y-s)+(3sY-3)+2Y=F(s),\qquad (s^2+3s+2)Y=F(s)+s+3.\]</div><p>Ya no hay ecuación diferencial: hay despeje algebraico.</p></article>
+      <article class="reading-block"><h3>3.8. Transformada de integrales</h3><p>Si \(g(t)=\int_0^t f(u)\,du\), entonces</p><div class="formula-block">\[\mathcal L\{g(t)\}=\frac{F(s)}s.\]</div><p>La integración en \(t\) se convierte en división por \(s\).</p></article>
+      <article class="reading-block"><h3>3.9. Transformada inversa</h3><p>La transformada inversa recupera \(f(t)\) desde \(F(s)\):</p><div class="formula-block">\[\mathcal L^{-1}\{F(s)\}=f(t).\]</div><p>Los métodos prácticos son reconocimiento en tabla, linealidad, traslación, fracciones simples y convolución. Ejemplo:</p><div class="formula-block">\[\frac{1}{(s-1)(s-2)}=-\frac1{s-1}+\frac1{s-2},\qquad \mathcal L^{-1}\left\{\frac{1}{(s-1)(s-2)}\right\}=-e^t+e^{2t}.\]</div></article>
+      <article class="reading-block" id="convolucion"><h3>3.10. Convolución</h3><div class="formula-block">\[(f*g)(t)=\int_0^t f(u)g(t-u)\,du=\int_0^t f(t-u)g(u)\,du.\]</div><div class="formula-block">\[f*g=g*f,\qquad f*(g+h)=f*g+f*h,\qquad (f*g)*h=f*(g*h).\]</div><p>El teorema fundamental dice</p><div class="formula-block">\[\mathcal L\{f*g\}=F(s)G(s),\qquad \mathcal L^{-1}\{F(s)G(s)\}=f*g.\]</div><p>Ejemplo:</p><div class="formula-block">\[\mathcal L^{-1}\left\{\frac{1}{s(s^2+a^2)}\right\}=1*\frac1a\sin at=\frac1a\int_0^t\sin a(t-u)\,du=\frac{1-\cos at}{a^2}.\]</div></article>
+      <article class="reading-block" id="pvi"><h3>3.11. Resolución de PVI por Laplace</h3><ol><li>Transformar toda la ecuación.</li><li>Sustituir datos iniciales.</li><li>Despejar \(Y(s)\).</li><li>Descomponer \(Y(s)\).</li><li>Aplicar transformada inversa.</li><li>Comprobar \(y(0),y'(0)\).</li></ol><p>Ejemplo:</p><div class="formula-block">\[y'-2y=-2e^t,\qquad y(0)=1.\]</div><div class="formula-block">\[sY-1-2Y=-\frac{2}{s-1},\qquad (s-2)Y=1-\frac{2}{s-1}=\frac{s-3}{s-1}.\]</div><div class="formula-block">\[Y(s)=\frac{s-3}{(s-1)(s-2)}=\frac{2}{s-1}-\frac1{s-2},\qquad y(t)=2e^t-e^{2t}.\]</div></article>
+      <article class="reading-block"><h3>3.12. PVI con convolución</h3><p>Para</p><div class="formula-block">\[x''+\omega^2x=f(t),\qquad x(0)=x_0,\qquad x'(0)=v_0,\]</div><p>Laplace da</p><div class="formula-block">\[(s^2X-sx_0-v_0)+\omega^2X=F(s),\qquad X(s)=\frac{sx_0+v_0}{s^2+\omega^2}+\frac{F(s)}{s^2+\omega^2}.\]</div><p>Invirtiendo:</p><div class="formula-block">\[x(t)=x_0\cos\omega t+\frac{v_0}{\omega}\sin\omega t+\frac1\omega\int_0^t f(\tau)\sin\omega(t-\tau)\,d\tau.\]</div><p>Esta fórmula resume el oscilador armónico forzado como respuesta libre más respuesta forzada por convolución.</p></article>
+    </section>
+
+    <section class="page" id="conceptos">
+      <header class="section-header"><p class="eyebrow">Sección 4</p><h2>4. Conceptos clave</h2></header>
+      <div class="card-grid">
+        <article class="definition-card"><h3>Transformada de Laplace</h3><div class="formula-block">\[\mathcal L\{f(t)\}=F(s)=\int_0^\infty e^{-st}f(t)\,dt.\]</div><p>Convierte una función temporal en una función algebraica de \(s\).</p></article>
+        <article class="definition-card"><h3>Condiciones de existencia</h3><p>Continuidad a trozos y orden exponencial son condiciones suficientes para que exista la transformada.</p></article>
+        <article class="definition-card"><h3>Linealidad</h3><div class="formula-block">\[\mathcal L\{\alpha f+\beta g\}=\alpha F+\beta G.\]</div></article>
+        <article class="definition-card"><h3>Transformada de derivadas</h3><div class="formula-block">\[\mathcal L\{y'\}=sY-y(0),\qquad \mathcal L\{y''\}=s^2Y-sy(0)-y'(0).\]</div></article>
+        <article class="definition-card"><h3>Transformada inversa</h3><div class="formula-block">\[\mathcal L^{-1}\{F(s)\}=f(t).\]</div><p>Requiere tabla, traslaciones y fracciones simples.</p></article>
+        <article class="definition-card"><h3>Convolución</h3><div class="formula-block">\[(f*g)(t)=\int_0^t f(u)g(t-u)\,du.\]</div><p>Traduce productos en \(s\) a integrales en \(t\).</p></article>
+        <article class="definition-card"><h3>Función escalón</h3><div class="formula-block">\[u(t-a)=\begin{cases}0,&t<a,\\1,&t>a.\end{cases}\]</div><p>Modela fuerzas que se activan a partir de un instante.</p></article>
+      </div>
+    </section>
+
+    <section class="page" id="relaciones">
+      <header class="section-header"><p class="eyebrow">Sección 5</p><h2>5. Relaciones entre ideas</h2></header>
+      <div class="reading-block">
+        <div class="formula-block">\[\text{existencia}\Rightarrow\text{definición}\Rightarrow\text{tabla}\Rightarrow\text{propiedades}\Rightarrow\text{inversa}\Rightarrow\text{PVI}.\]</div>
+        <p>La condición de existencia garantiza que el operador tiene sentido. La tabla evita recalcular integrales impropias. Las propiedades permiten transformar funciones más complejas. La transformada de derivadas convierte EDO en álgebra. La transformada inversa devuelve la solución. La convolución permite escribir soluciones cuando \(F(s)\) queda multiplicada por una función de transferencia.</p>
+        <div class="formula-block">\[\text{métodos clásicos de EDO}\quad\text{vs.}\quad\text{método de Laplace}\]</div>
+        <p>Los métodos clásicos buscan primero la solución general y después imponen condiciones iniciales. Laplace introduce las condiciones iniciales desde el primer paso.</p>
+        <div class="formula-block">\[\text{producto en }s\quad\Longleftrightarrow\quad\text{convolución en }t.\]</div>
+        <p>En física, esto conecta con osciladores forzados: el sistema responde a cada trozo de fuerza \(f(\tau)\) con una respuesta retardada \(\sin\omega(t-\tau)\).</p>
+      </div>
+    </section>
+
+    <section class="page" id="errores">
+      <header class="section-header"><p class="eyebrow">Sección 6</p><h2>6. Errores habituales</h2></header>
+      <details class="accordion accordion-error" open><summary>Error 1: olvidar el dominio \(t>0\)</summary><div class="accordion-content"><p>Laplace unilateral no integra en todo \(\mathbb R\):</p><div class="formula-block">\[\mathcal L\{f(t)\}=\int_0^\infty e^{-st}f(t)\,dt.\]</div></div></details>
+      <details class="accordion accordion-error"><summary>Error 2: olvidar condiciones iniciales en derivadas</summary><div class="accordion-content"><p>Incorrecto: \(\mathcal L\{y'\}=sY\). Correcto:</p><div class="formula-block">\[\mathcal L\{y'\}=sY-y(0).\]</div></div></details>
+      <details class="accordion accordion-error"><summary>Error 3: confundir seno y coseno</summary><div class="accordion-content"><div class="formula-block">\[\mathcal L\{\sin at\}=\frac{a}{s^2+a^2},\qquad \mathcal L\{\cos at\}=\frac{s}{s^2+a^2}.\]</div></div></details>
+      <details class="accordion accordion-error"><summary>Error 4: desplazar mal \(s\)</summary><div class="accordion-content"><div class="formula-block">\[\mathcal L\{e^{at}f(t)\}=F(s-a).\]</div></div></details>
+      <details class="accordion accordion-error"><summary>Error 5: invertir sin descomponer</summary><div class="accordion-content"><div class="formula-block">\[\frac{1}{(s-1)(s-2)}=-\frac1{s-1}+\frac1{s-2},\qquad \mathcal L^{-1}=-e^t+e^{2t}.\]</div></div></details>
+      <details class="accordion accordion-error"><summary>Error 6: confundir producto con convolución</summary><div class="accordion-content"><p>Correcto:</p><div class="formula-block">\[\mathcal L^{-1}\{F(s)G(s)\}=(f*g)(t).\]</div></div></details>
+      <details class="accordion accordion-error"><summary>Error 7: perder el factor \(1/\omega\)</summary><div class="accordion-content"><div class="formula-block">\[x_f(t)=\frac1\omega\int_0^t f(\tau)\sin\omega(t-\tau)\,d\tau.\]</div></div></details>
+      <details class="accordion accordion-error"><summary>Error 8: no comprobar condiciones iniciales</summary><div class="accordion-content"><p>Sustituir \(t=0\) detecta signos mal puestos en \(Y(s)\).</p></div></details>
+    </section>
+
+    <section class="page" id="preguntas">
+      <header class="section-header"><p class="eyebrow">Sección 7</p><h2>7. Preguntas orientadas a examen</h2></header>
+      <details class="accordion" open><summary>10 preguntas fáciles</summary><div class="accordion-content"><ol><li>Definir la transformada de Laplace.</li><li>Calcular \(\mathcal L\{1\}\).</li><li>Calcular \(\mathcal L\{e^{at}\}\).</li><li>Calcular \(\mathcal L\{\sin at\}\).</li><li>Calcular \(\mathcal L\{\cos at\}\).</li><li>Enunciar la linealidad de Laplace.</li><li>Escribir \(\mathcal L\{y'\}\).</li><li>Escribir \(\mathcal L\{y''\}\).</li><li>Definir transformada inversa.</li><li>Definir convolución.</li></ol></div></details>
+      <details class="accordion" open><summary>10 preguntas medias</summary><div class="accordion-content"><ol><li>Calcular \(\mathcal L\{3t^2-4e^{2t}\}\).</li><li>Calcular \(\mathcal L\{e^{3t}\cos 2t\}\).</li><li>Hallar \(\mathcal L^{-1}\{\frac{1}{s-5}\}\).</li><li>Hallar \(\mathcal L^{-1}\{\frac{s}{s^2+16}\}\).</li><li>Hallar \(\mathcal L^{-1}\{\frac{4}{s^2+16}\}\).</li><li>Resolver \(y'-2y=0,\ y(0)=3\) por Laplace.</li><li>Resolver \(y'+y=1,\ y(0)=0\) por Laplace.</li><li>Descomponer \(\frac{1}{(s+1)(s+2)}\).</li><li>Usar convolución para invertir \(\frac{1}{s(s^2+1)}\).</li><li>Explicar por qué Laplace es natural para PVI.</li></ol></div></details>
+      <details class="accordion" open><summary>5 preguntas difíciles</summary><div class="accordion-content"><ol><li>Resolver \(y''+y=f(t),\ y(0)=0,\ y'(0)=0\) en forma de convolución.</li><li>Resolver \(x''+\omega^2x=f(t),\ x(0)=x_0,\ x'(0)=v_0\).</li><li>Resolver \(y''+2y'+y=0,\ y(0)=1,\ y'(0)=0\).</li><li>Hallar \(\mathcal L^{-1}\{\frac{1}{(s^2+a^2)(s^2+b^2)}\}\), con \(a\ne b\).</li><li>Resolver \(y(t)+\int_0^t (t-\tau)y(\tau)\,d\tau=t\).</li></ol></div></details>
+      <details class="accordion" open><summary>5 preguntas de desarrollo largo</summary><div class="accordion-content"><ol><li>Explicar el método general de resolución de PVI lineales con coeficientes constantes mediante Laplace.</li><li>Desarrollar la relación entre transformada de derivadas y aparición de condiciones iniciales.</li><li>Explicar el teorema de convolución y su utilidad para transformadas inversas.</li><li>Comparar método clásico de EDO y método de Laplace.</li><li>Explicar la interpretación de la solución de un oscilador forzado como respuesta libre más convolución.</li></ol></div></details>
+      <details class="accordion" open><summary>5 preguntas de relación entre conceptos</summary><div class="accordion-content"><ol><li>Relacionar continuidad a trozos, orden exponencial y existencia de transformada.</li><li>Relacionar tabla de transformadas, fracciones simples e inversa.</li><li>Relacionar producto en \(s\) y convolución en \(t\).</li><li>Relacionar PVI, transformada de derivadas y datos iniciales.</li><li>Relacionar oscilador armónico, función de transferencia y convolución.</li></ol></div></details>
+    </section>
+
+    <section class="page" id="respuestas">
+      <header class="section-header"><p class="eyebrow">Sección 8</p><h2>8. Respuestas modelo</h2></header>
+      <details class="accordion accordion-answer" open><summary>F1-F10. Respuestas fáciles</summary><div class="accordion-content"><p><strong>F1.</strong> \(\mathcal L\{f(t)\}=F(s)=\int_0^\infty e^{-st}f(t)\,dt\), si la integral impropia converge.</p><p><strong>F2.</strong> \(\mathcal L\{1\}=\frac1s,\ s>0\).</p><p><strong>F3.</strong> \(\mathcal L\{e^{at}\}=\frac1{s-a},\ s>a\).</p><p><strong>F4.</strong> \(\mathcal L\{\sin at\}=\frac{a}{s^2+a^2}\).</p><p><strong>F5.</strong> \(\mathcal L\{\cos at\}=\frac{s}{s^2+a^2}\).</p><p><strong>F6.</strong> \(\mathcal L\{\alpha f+\beta g\}=\alpha\mathcal L\{f\}+\beta\mathcal L\{g\}\).</p><p><strong>F7.</strong> \(\mathcal L\{y'\}=sY(s)-y(0)\).</p><p><strong>F8.</strong> \(\mathcal L\{y''\}=s^2Y(s)-sy(0)-y'(0)\).</p><p><strong>F9.</strong> \(\mathcal L^{-1}\{F(s)\}=f(t)\).</p><p><strong>F10.</strong> \((f*g)(t)=\int_0^t f(\tau)g(t-\tau)\,d\tau\).</p></div></details>
+      <details class="accordion accordion-answer"><summary>M1-M10. Respuestas medias</summary><div class="accordion-content"><div class="formula-block">\[\mathcal L\{3t^2-4e^{2t}\}=\frac6{s^3}-\frac4{s-2}\]</div><div class="formula-block">\[\mathcal L\{e^{3t}\cos2t\}=\frac{s-3}{(s-3)^2+4}\]</div><p>\(\mathcal L^{-1}\{\frac1{s-5}\}=e^{5t}\), \(\mathcal L^{-1}\{\frac{s}{s^2+16}\}=\cos4t\), \(\mathcal L^{-1}\{\frac4{s^2+16}\}=\sin4t\).</p><div class="formula-block">\[y'-2y=0,\ y(0)=3\Rightarrow sY-3-2Y=0\Rightarrow y(t)=3e^{2t}.\]</div><div class="formula-block">\[y'+y=1,\ y(0)=0\Rightarrow Y=\frac1{s(s+1)}=\frac1s-\frac1{s+1}\Rightarrow y(t)=1-e^{-t}.\]</div><div class="formula-block">\[\frac1{(s+1)(s+2)}=\frac1{s+1}-\frac1{s+2}.\]</div><div class="formula-block">\[\mathcal L^{-1}\left\{\frac1{s(s^2+1)}\right\}=1*\sin t=\int_0^t\sin(t-\tau)\,d\tau=1-\cos t.\]</div><p>Laplace es natural para PVI porque transforma derivadas en expresiones algebraicas que ya contienen los datos iniciales.</p></div></details>
+      <details class="accordion accordion-answer"><summary>D1-D5. Respuestas difíciles</summary><div class="accordion-content"><div class="formula-block">\[y''+y=f(t),\ y(0)=y'(0)=0\Rightarrow Y=\frac{F(s)}{s^2+1}\Rightarrow y(t)=\int_0^t f(\tau)\sin(t-\tau)\,d\tau.\]</div><div class="formula-block">\[x''+\omega^2x=f(t)\Rightarrow x(t)=x_0\cos\omega t+\frac{v_0}{\omega}\sin\omega t+\frac1\omega\int_0^t f(\tau)\sin\omega(t-\tau)\,d\tau.\]</div><div class="formula-block">\[y''+2y'+y=0,\ y(0)=1,\ y'(0)=0\Rightarrow Y=\frac{s+2}{(s+1)^2}=\frac1{s+1}+\frac1{(s+1)^2}\Rightarrow y=(1+t)e^{-t}.\]</div><div class="formula-block">\[\mathcal L^{-1}\left\{\frac1{(s^2+a^2)(s^2+b^2)}\right\}=\frac{1}{b^2-a^2}\left(\frac1a\sin at-\frac1b\sin bt\right).\]</div><div class="formula-block">\[y(t)+\int_0^t(t-\tau)y(\tau)\,d\tau=t\Rightarrow Y+\frac1{s^2}Y=\frac1{s^2}\Rightarrow Y=\frac1{s^2+1}\Rightarrow y=\sin t.\]</div></div></details>
+      <details class="accordion accordion-answer"><summary>Desarrollo largo y relaciones</summary><div class="accordion-content"><p>El método general aplica \(\mathcal L\) a ambos lados de la EDO, sustituye derivadas por fórmulas con datos iniciales, despeja \(Y(s)\), descompone si hace falta y aplica \(\mathcal L^{-1}\).</p><p>Las condiciones iniciales aparecen por integración por partes: el término de borde en \(t=0\) produce \(y(0)\), y en la segunda derivada también \(y'(0)\).</p><p>El teorema de convolución afirma que \(\mathcal L\{f*g\}=FG\). Es útil para invertir productos y para escribir respuestas forzadas con una fuerza arbitraria \(f(t)\).</p><p>El método clásico de EDO busca homogénea, particular y constantes. Laplace transforma todo desde el inicio e incorpora los datos iniciales durante el despeje algebraico.</p><p>La continuidad a trozos controla el comportamiento local; el orden exponencial controla el crecimiento en infinito. La tabla y las fracciones simples conectan \(Y(s)\) con \(y(t)\). El producto en \(s\) corresponde a convolución en \(t\).</p></div></details>
+    </section>
+
+    <section class="page" id="resumen">
+      <header class="section-header"><p class="eyebrow">Sección 9</p><h2>9. Resumen final de repaso</h2></header>
+      <div class="reading-block">
+        <ul><li>Laplace transforma \(f(t)\) en \(F(s)\) mediante una integral impropia.</li><li>La existencia se garantiza con continuidad a trozos y orden exponencial.</li><li>Las derivadas se convierten en polinomios en \(s\) más datos iniciales.</li><li>Los PVI lineales con coeficientes constantes pasan a ecuaciones algebraicas.</li><li>La inversa exige tabla, fracciones simples, traslación o convolución.</li><li>El producto en \(s\) corresponde a convolución en \(t\).</li></ul>
+        <div class="formula-block">\[\mathcal L\{f(t)\}=\int_0^\infty e^{-st}f(t)\,dt,\qquad \mathcal L\{y'\}=sY-y(0),\qquad \mathcal L\{y''\}=s^2Y-sy(0)-y'(0),\qquad \mathcal L\{f*g\}=FG.\]</div>
+        <p>Errores que evitar: olvidar datos iniciales, confundir seno y coseno, desplazar \(s\) con el signo contrario, invertir productos como productos, perder factores \(1/a\) o \(1/\omega\), y no comprobar \(y(0),y'(0)\).</p>
+      </div>
+    </section>
+
+    <section class="page" id="checklist">
+      <header class="section-header"><p class="eyebrow">Sección 10</p><h2>10. Checklist de dominio</h2></header>
+      <div class="reading-block"><ul class="checklist-list"><li>Si no puedes definir \(\mathcal L\{f(t)\}\), falta repasar definición e integral impropia.</li><li>Si no sabes cuándo existe la transformada, falta repasar continuidad a trozos y orden exponencial.</li><li>Si confundes \(\frac{s}{s^2+a^2}\) con \(\frac{a}{s^2+a^2}\), falta repasar tabla básica.</li><li>Si escribes \(\mathcal L\{y'\}=sY\), falta repasar transformada de derivadas.</li><li>Si en \(y''\) olvidas \(y'(0)\), falta repasar derivadas de orden superior.</li><li>Si no puedes despejar \(Y(s)\), falta repasar álgebra de fracciones racionales.</li><li>Si no puedes invertir \(\frac1{(s-a)(s-b)}\), falta repasar fracciones simples.</li><li>Si confundes producto con convolución, falta repasar el teorema de convolución.</li><li>Si no puedes obtener la fórmula del oscilador forzado por convolución, falta repasar PVI de oscilador por Laplace.</li><li>Si puedes resolver un PVI de segundo orden con coeficientes constantes, invertir \(Y(s)\), y comprobar condiciones iniciales, el tema está suficientemente asentado para examen.</li></ul></div>
+    </section>
+  </main>
+  </div>
+</body>
+</html>
+
