@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="light dark" />
+  <title>Mecánica Teórica — T4 — Liouville</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/icon-32.png" />
+  <link rel="icon" type="image/png" sizes="50x50" href="assets/icons/icon-50.png" />
+  <link rel="apple-touch-icon" sizes="100x100" href="assets/icons/icon-100.png" />
+  <meta name="theme-color" content="#6f42c1" />
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+  <link rel="stylesheet" href="assets/styles.css" />
+  <script defer src="assets/app.js"></script>
+</head>
+<body class="subject-mecanica-teorica">
+<div class="wrap">
+  <header class="cover">
+    <div class="top-actions"><a class="back-link" href="index.html">← Volver al índice</a></div>
+    <p class="eyebrow">UNED Física · Mecánica Teórica · Tema 4</p>
+    <h1>Guía de estudio — T4 Liouville y conservación del volumen de fase</h1>
+    <p class="subtitle">Espacio de fases · flujo hamiltoniano · divergencia nula · densidades de estados · equilibrio estadístico.</p>
+    <div class="chips"><span class="chip">UNED Física</span><span class="chip">Mecánica Teórica</span><span class="chip">MT4</span><span class="chip">MathJax</span><span class="chip">estado: maquetado</span></div>
+  </header>
+
+  <div class="toolbar no-print">
+    <nav><a href="#mapa">Mapa</a><a href="#prerrequisitos-minimos">Prerrequisitos</a><a href="#idea-central-del-capitulo">Idea central</a><a href="#desarrollo-completo-del-capitulo">Desarrollo</a><a href="#conceptos-clave">Conceptos</a><a href="#relaciones-entre-ideas">Relaciones</a><a href="#errores-habituales">Errores</a><a href="#preguntas-orientadas-a-examen">Preguntas</a><a href="#respuestas-modelo">Respuestas</a><a href="#resumen-final-de-repaso">Resumen</a><a href="#checklist-de-dominio">Checklist</a></nav>
+    <div class="toolbar-actions"><button class="btn" onclick="printReady()">Imprimir / guardar PDF</button><button class="btn secondary" onclick="openAllDetails()">Abrir todo</button><button class="btn secondary" onclick="closeAllDetails()">Cerrar acordeones</button></div>
+  </div>
+
+  <main>
+    <section class="page map-page" id="mapa">
+      <div class="page-head"><h2>Mapa clicable</h2><p class="section-lead">Ruta conceptual del tema.</p></div>
+      <div class="concept-map">
+        <a class="map-node" href="#prerrequisitos-minimos"><span>Prerrequisitos</span><small>espacio de fases · Hamilton · divergencia · ensemble</small></a>
+        <a class="map-node" href="#idea-central-del-capitulo"><span>Idea central</span><small>flujo incompresible · volumen de fase conservado</small></a>
+        <a class="map-node" href="#desarrollo-completo-del-capitulo"><span>Desarrollo</span><small>nube de trayectorias · densidad · Poisson · ejemplos</small></a>
+        <a class="map-node" href="#conceptos-clave"><span>Conceptos clave</span><small>Liouville · densidad · derivada total · canónicas</small></a>
+        <a class="map-node" href="#relaciones-entre-ideas"><span>Relaciones</span><small>Hamilton → flujo → divergencia nula → volumen</small></a>
+        <a class="map-node" href="#errores-habituales"><span>Errores</span><small>forma ≠ volumen · energía ≠ demostración · q,p</small></a>
+        <a class="map-node" href="#preguntas-orientadas-a-examen"><span>Examen</span><small>fáciles · medias · difíciles · desarrollo</small></a>
+        <a class="map-node" href="#checklist-de-dominio"><span>Checklist</span><small>criterios para dominar Liouville</small></a>
+      </div>
+    </section>
+    <section class="page" id="prerrequisitos-minimos">
+      <div class="page-head"><h2>1. Prerrequisitos mínimos</h2><span class="page-no">p.1</span></div>
+      <article class="definition-card">
+        <h3>Espacio de fases</h3>
+        <p><strong>Definición breve:</strong> Espacio cuyas coordenadas son \((q_i,p_i)\), no \((q_i,\dot q_i)\).</p>
+        <p><strong>Por qué es necesario:</strong> Liouville no habla del espacio ordinario ni del espacio lagrangiano, sino del espacio canónico.</p>
+        <p><strong>Ejemplo mínimo:</strong> Una partícula 1D se representa por un punto \((q,p)\).</p>
+      </article>
+      <article class="definition-card">
+        <h3>Ecuaciones de Hamilton</h3>
+        <p><strong>Definición breve:</strong> \(\dot q_i=\partial H/\partial p_i,\quad \dot p_i=-\partial H/\partial q_i\).</p>
+        <p><strong>Por qué es necesario:</strong> Generan el flujo que mueve los puntos en el espacio de fases.</p>
+        <p><strong>Ejemplo mínimo:</strong> Si \(H=p^2/2m+V(q)\), entonces \(\dot q=p/m,\ \dot p=-V'(q)\).</p>
+      </article>
+      <article class="definition-card">
+        <h3>Campo de velocidades en fase</h3>
+        <p><strong>Definición breve:</strong> Vector \(X_H=(\dot q_1,\dots,\dot q_n,\dot p_1,\dots,\dot p_n)\).</p>
+        <p><strong>Por qué es necesario:</strong> Liouville afirma que este flujo es incompresible.</p>
+        <p><strong>Ejemplo mínimo:</strong> En 1D: \(X_H=(\dot q,\dot p)\).</p>
+      </article>
+      <article class="definition-card">
+        <h3>Divergencia</h3>
+        <p><strong>Definición breve:</strong> Mide expansión o compresión local de un campo vectorial.</p>
+        <p><strong>Por qué es necesario:</strong> La demostración corta de Liouville es \(\nabla_\Gamma\cdot X_H=0\).</p>
+        <p><strong>Ejemplo mínimo:</strong> Si \(\nabla\cdot v=0\), el flujo no cambia volúmenes.</p>
+      </article>
+      <article class="definition-card">
+        <h3>Derivadas parciales cruzadas</h3>
+        <p><strong>Definición breve:</strong> Para funciones regulares, \(\partial_q\partial_p H=\partial_p\partial_q H\).</p>
+        <p><strong>Por qué es necesario:</strong> Es la cancelación matemática que da divergencia nula.</p>
+        <p><strong>Ejemplo mínimo:</strong> \(\partial_q(\partial_p H)-\partial_p(\partial_q H)=0\).</p>
+      </article>
+      <article class="definition-card">
+        <h3>Corchete de Poisson</h3>
+        <p><strong>Definición breve:</strong> \(\{f,g\}=\sum_i(\partial_{q_i}f\,\partial_{p_i}g-\partial_{p_i}f\,\partial_{q_i}g)\).</p>
+        <p><strong>Por qué es necesario:</strong> Permite escribir evolución temporal y equilibrio estadístico.</p>
+        <p><strong>Ejemplo mínimo:</strong> \(\dot f=\partial_t f+\{f,H\}\).</p>
+      </article>
+      <article class="definition-card">
+        <h3>Ensemble</h3>
+        <p><strong>Definición breve:</strong> Conjunto ideal de muchos sistemas idénticos con condiciones iniciales distintas.</p>
+        <p><strong>Por qué es necesario:</strong> Goldstein presenta Liouville como conservación de densidad de sistemas en un ensemble.</p>
+        <p><strong>Ejemplo mínimo:</strong> Muchas moléculas idénticas representadas por muchos puntos en fase.</p>
+      </article>
+      <article class="definition-card">
+        <h3>Densidad de estados</h3>
+        <p><strong>Definición breve:</strong> Función \(D(q,p,t)\) que mide cuántos puntos del ensemble hay por volumen de fase.</p>
+        <p><strong>Por qué es necesario:</strong> El teorema también se formula como \(dD/dt=0\).</p>
+        <p><strong>Ejemplo mínimo:</strong> Si el volumen y el número de puntos se conservan, \(D=N/V\) se conserva.</p>
+      </article>
+      <div class="reading-block"><p>Taylor introduce Liouville siguiendo una nube de puntos en el espacio de fases, tratada como un fluido de densidad \(\rho\), y afirma que el volumen ocupado por esa nube no cambia bajo la evolución hamiltoniana.  Goldstein lo formula desde ensembles y densidades \(D\), con evolución mediante corchetes de Poisson.</p></div>
+    </section>
+    <section class="page" id="idea-central-del-capitulo">
+      <div class="page-head"><h2>2. Idea central del capítulo</h2><span class="page-no">p.2</span></div>
+      <div class="reading-block"><p>El capítulo aborda una propiedad estructural de la mecánica hamiltoniana: aunque las trayectorias en el espacio de fases pueden deformar una región, estirarla, inclinarla o plegarla, no pueden cambiar su volumen total. En un sistema con un grado de libertad, “volumen” significa área en el plano \((q,p)\). En un sistema con \(n\) grados de libertad, significa volumen \(2n\)-dimensional.</p></div>
+      <div class="reading-block"><p>La idea física es que la evolución hamiltoniana no destruye ni concentra información en el espacio de fases. Dos condiciones iniciales distintas no pueden fusionarse en una sola trayectoria, y una región de condiciones iniciales no puede comprimirse globalmente si el movimiento obedece ecuaciones de Hamilton. Taylor lo expresa diciendo que la nube de puntos puede cambiar de forma y orientación, pero no de volumen.</p></div>
+      <div class="reading-block"><p>La idea matemática es que el campo hamiltoniano tiene divergencia nula:</p></div>
+      <div class="formula-block">\[\nabla_\Gamma\cdot X_H
+=
+
+\sum_i\left(
+\frac{\partial \dot q_i}{\partial q_i}
++
+\frac{\partial \dot p_i}{\partial p_i}
+\right)
+=
+
+\sum_i\left(
+\frac{\partial^2H}{\partial q_i\partial p_i}
+-
+
+\frac{\partial^2H}{\partial p_i\partial q_i}
+\right)
+=0.\]</div>
+      <div class="reading-block"><p>La consecuencia es directa: si la divergencia del flujo es cero, el flujo es incompresible. No significa que la región conserve su forma. Significa que conserva la medida de volumen en el espacio de fases.</p></div>
+      <div class="reading-block"><p>Dentro de Mecánica Teórica, Liouville conecta Hamilton, Poisson, transformaciones canónicas, mecánica estadística y, después, invariantes adiabáticos. En examen UNED aparece exactamente como bloque propio: “Espacio de fases. Teorema de Liouville”, con ejercicios donde se pide demostrar conservación de área mediante una transformación explícita y por cálculo directo.  También aparece como pregunta conceptual: si una densidad inicial depende solo del Hamiltoniano, demostrar que es estacionaria.</p></div>
+    </section>
+    <section class="page" id="desarrollo-completo-del-capitulo">
+      <div class="page-head"><h2>3. Desarrollo completo del capítulo</h2><span class="page-no">p.3</span></div>
+      <h3 id="3-1-de-una-trayectoria-aislada-a-una-nube-de-trayectorias">3.1. De una trayectoria aislada a una nube de trayectorias</h3>
+      <div class="reading-block"><p>En mecánica newtoniana suele estudiarse una trayectoria concreta: dada una posición y una velocidad inicial, se calcula \(q(t)\). En mecánica hamiltoniana el estado completo se representa como un punto \((q,p)\). Si se conocen muchos estados iniciales, se obtiene una nube de puntos en el espacio de fases.</p></div>
+      <div class="reading-block"><p>Esta nube no representa muchas partículas necesariamente. Puede representar muchos sistemas idénticos preparados con condiciones iniciales diferentes. Esta distinción importa: el espacio de fases no es el espacio físico ordinario. Un gas con \(10^{23}\) moléculas no se dibuja en el espacio tridimensional, sino como puntos de un espacio de fases de dimensión mayor. Goldstein usa esta idea para justificar por qué la mecánica estadística trabaja con ensembles y promedios en lugar de resolver todas las trayectorias microscópicas.</p></div>
+      <div class="reading-block"><p>Ejemplo mínimo: un oscilador armónico 1D tiene estados \((q,p)\). Si se preparan cien osciladores con energías parecidas, aparecen cien puntos próximos en el plano de fases. Al evolucionar, los puntos se mueven, pero la región que ocupan no cambia de área.</p></div>
+      <h3 id="3-2-el-flujo-hamiltoniano">3.2. El flujo hamiltoniano</h3>
+      <div class="reading-block"><p>Las ecuaciones de Hamilton convierten el Hamiltoniano en un campo de velocidades sobre el espacio de fases:</p></div>
+      <div class="formula-block">\[X_H(q,p)=
+(\dot q,\dot p)
+=
+
+\left(
+\frac{\partial H}{\partial p},
+-\frac{\partial H}{\partial q}
+\right).\]</div>
+      <div class="reading-block"><p>Cada punto de fase tiene asignada una velocidad. Por eso se puede hablar de “flujo” en el espacio de fases. Taylor presenta esta velocidad de fase como el objeto que transporta la nube de puntos.</p></div>
+      <div class="reading-block"><p>Lo importante es que el movimiento no es arbitrario. No cualquier campo vectorial en \((q,p)\) es hamiltoniano. Para ser hamiltoniano debe venir de una función \(H\) mediante la estructura anterior. Esa estructura obliga a que las expansiones en unas direcciones se compensen con contracciones en otras.</p></div>
+      <h3 id="3-3-no-cruce-de-trayectorias">3.3. No cruce de trayectorias</h3>
+      <div class="reading-block"><p>Si las ecuaciones diferenciales tienen solución única, por un punto de fase y en un instante dado solo pasa una trayectoria. Si dos trayectorias distintas se cruzaran en el mismo punto y al mismo tiempo, desde ese instante tendrían el mismo futuro; eso violaría la unicidad hacia atrás o haría indistinguibles dos estados antes distintos.</p></div>
+      <div class="reading-block"><p>Este hecho justifica que una frontera material en el espacio de fases siga siendo frontera. Los puntos que estaban dentro no pueden salir atravesando la frontera móvil, y los que estaban fuera no pueden entrar. Taylor usa este argumento para afirmar que el número de puntos dentro de una superficie cerrada móvil permanece constante.</p></div>
+      <div class="reading-block"><p>El no cruce conserva el número de sistemas dentro de la región. Liouville añade algo más fuerte: también se conserva el volumen de esa región.</p></div>
+      <h3 id="3-4-demostracion-por-divergencia-nula">3.4. Demostración por divergencia nula</h3>
+      <div class="reading-block"><p>Para un grado de libertad:</p></div>
+      <div class="formula-block">\[X_H=(\dot q,\dot p)
+=
+
+\left(
+\frac{\partial H}{\partial p},
+-\frac{\partial H}{\partial q}
+\right).\]</div>
+      <div class="reading-block"><p>La divergencia en el plano \((q,p)\) es</p></div>
+      <div class="formula-block">\[\nabla_\Gamma\cdot X_H
+=
+
+\frac{\partial \dot q}{\partial q}
++
+\frac{\partial \dot p}{\partial p}.\]</div>
+      <div class="reading-block"><p>Sustituyendo Hamilton:</p></div>
+      <div class="formula-block">\[\nabla_\Gamma\cdot X_H
+=
+\frac{\partial}{\partial q}
+\left(
+\frac{\partial H}{\partial p}
+\right)
++
+\frac{\partial}{\partial p}
+\left(
+-\frac{\partial H}{\partial q}
+\right)
+=
+\frac{\partial^2H}{\partial q\partial p}
+-
+\frac{\partial^2H}{\partial p\partial q}
+=0.\]</div>
+      <div class="reading-block"><p>Taylor da precisamente esta demostración: la divergencia se anula porque el orden de las derivadas cruzadas no importa, y de ahí concluye que \(dV/dt=0\).</p></div>
+      <div class="reading-block"><p>Para \(n\) grados de libertad se repite la misma cancelación para cada par canónico \((q_i,p_i)\):</p></div>
+      <div class="formula-block">\[\nabla_\Gamma\cdot X_H
+=
+
+\sum_{i=1}^n
+\left[
+\frac{\partial}{\partial q_i}
+\left(\frac{\partial H}{\partial p_i}\right)
++
+\frac{\partial}{\partial p_i}
+\left(-\frac{\partial H}{\partial q_i}\right)
+\right]
+=0.\]</div>
+      <div class="reading-block"><p>La conclusión no depende de que el sistema sea 1D. El caso 1D solo permite verlo como conservación de área.</p></div>
+      <h3 id="3-5-enunciado-geometrico-del-teorema">3.5. Enunciado geométrico del teorema</h3>
+      <div class="reading-block"><p>El teorema de Liouville afirma que el flujo hamiltoniano conserva el volumen en el espacio de fases. Si una región inicial \(R_0\) evoluciona hasta \(R_t\), entonces</p></div>
+      <div class="formula-block">\[\operatorname{Vol}(R_t)=\operatorname{Vol}(R_0).\]</div>
+      <div class="reading-block"><p>En un grado de libertad:</p></div>
+      <div class="formula-block">\[A(t)=A(0).\]</div>
+      <div class="reading-block"><p>Esta igualdad no dice que \(R_t\) tenga la misma forma. Una región circular puede volverse elíptica, alargarse, inclinarse o plegarse. Lo que no cambia es el área total. Taylor subraya esta diferencia: la nube puede cambiar de forma, pero no de volumen.</p></div>
+      <h3 id="3-6-enunciado-en-terminos-de-densidad">3.6. Enunciado en términos de densidad</h3>
+      <div class="reading-block"><p>Si el número de puntos \(N\) dentro de una región móvil se conserva, y el volumen \(V\) de esa región también se conserva, entonces la densidad</p></div>
+      <div class="formula-block">\[D=\frac{N}{V}\]</div>
+      <div class="reading-block"><p>permanece constante siguiendo el movimiento:</p></div>
+      <div class="formula-block">\[\frac{dD}{dt}=0.\]</div>
+      <div class="reading-block"><p>Goldstein formula Liouville exactamente así: la densidad de sistemas en el entorno de un sistema dado en el espacio de fases permanece constante en el tiempo.</p></div>
+      <div class="reading-block"><p>Hay que distinguir dos derivadas:</p></div>
+      <div class="formula-block">\[\frac{dD}{dt}
+\quad\text{y}\quad
+\frac{\partial D}{\partial t}.\]</div>
+      <div class="reading-block"><p>La primera sigue al punto del ensemble: es derivada material. La segunda mide el cambio de densidad en un punto fijo del espacio de fases. Goldstein distingue explícitamente ambas dependencias: una implícita por el movimiento de \((q_i,p_i)\), y otra explícita con el tiempo.</p></div>
+      <h3 id="3-7-forma-con-corchetes-de-poisson">3.7. Forma con corchetes de Poisson</h3>
+      <div class="reading-block"><p>Para una función \(D(q,p,t)\),</p></div>
+      <div class="formula-block">\[\frac{dD}{dt}
+=
+
+\frac{\partial D}{\partial t}
++
+\{D,H\}.\]</div>
+      <div class="reading-block"><p>Liouville exige</p></div>
+      <div class="formula-block">\[\frac{dD}{dt}=0,\]</div>
+      <div class="reading-block"><p>por tanto</p></div>
+      <div class="formula-block">\[\frac{\partial D}{\partial t}
+=
+
+-\{D,H\}.\]</div>
+      <div class="reading-block"><p>Goldstein escribe esta forma como ecuación alternativa del teorema y la conecta con el equilibrio estadístico.</p></div>
+      <div class="reading-block"><p>Si \(D\) no depende explícitamente del tiempo y además \(D=f(H)\), entonces</p></div>
+      <div class="formula-block">\[\{D,H\}
+=
+
+# \{f(H),H\}
+
+f'(H)\{H,H\}
+=0.\]</div>
+      <div class="reading-block"><p>Luego</p></div>
+      <div class="formula-block">\[\frac{\partial D}{\partial t}=0.\]</div>
+      <div class="reading-block"><p>Esta es una pregunta típica UNED: demostrar que una densidad inicial que depende solo del Hamiltoniano resulta estacionaria e interpretarlo físicamente.</p></div>
+      <h3 id="3-8-ejemplo-oscilador-armonico">3.8. Ejemplo: oscilador armónico</h3>
+      <div class="reading-block"><p>Para</p></div>
+      <div class="formula-block">\[H=\frac{p^2}{2m}+\frac12m\omega^2q^2,\]</div>
+      <div class="reading-block"><p>las trayectorias de fase son elipses:</p></div>
+      <div class="formula-block">\[\frac{p^2}{2m}+\frac12m\omega^2q^2=E.\]</div>
+      <div class="reading-block"><p>Cada punto gira alrededor del origen. Una pequeña región del espacio de fases gira y se deforma, pero su área se conserva. Taylor usa el oscilador armónico como ejemplo central de órbitas elípticas en el espacio de fases.  Goldstein señala que el área encerrada por la elipse de energía del oscilador es proporcional a \(E/\omega\), conexión que prepara variables acción-ángulo e invariantes adiabáticos.</p></div>
+      <h3 id="3-9-ejemplo-uned-hamiltoniano-armonico-inverso">3.9. Ejemplo UNED: Hamiltoniano armónico inverso</h3>
+      <div class="reading-block"><p>El examen UNED propone un conjunto inicial de partículas en el rectángulo</p></div>
+      <div class="formula-block">\[-a&lt;q_0&lt;a,\qquad -b&lt;p_0&lt;b,\]</div>
+      <div class="reading-block"><p>evolucionando con el Hamiltoniano</p></div>
+      <div class="formula-block">\[H(q,p)=\frac12(p^2-q^2).\]</div>
+      <div class="reading-block"><p>Las ecuaciones de Hamilton son</p></div>
+      <div class="formula-block">\[\dot q=p,\qquad \dot p=q.\]</div>
+      <div class="reading-block"><p>La solución es</p></div>
+      <div class="formula-block">\[q(t)=q_0\cosh t+p_0\sinh t,\]</div>
+      <div class="formula-block">\[p(t)=q_0\sinh t+p_0\cosh t.\]</div>
+      <div class="reading-block"><p>La matriz de transformación es</p></div>
+      <div class="formula-block">\[M(t)=
+\begin{pmatrix}
+\cosh t &amp; \sinh t\
+\sinh t &amp; \cosh t
+\end{pmatrix}.\]</div>
+      <div class="reading-block"><p>Su determinante vale</p></div>
+      <div class="formula-block">\[\det M=\cosh^2t-\sinh^2t=1.\]</div>
+      <div class="reading-block"><p>Por tanto, el área se conserva. El rectángulo inicial puede convertirse en un paralelogramo inclinado, pero su área sigue siendo</p></div>
+      <div class="formula-block">\[A_0=4ab.\]</div>
+      <div class="reading-block"><p>Esta es la estructura exacta de la pregunta UNED: demostrar conservación de área de dos formas, mediante la transformación de \((q_0,p_0)\) a \((q,p)\) y por cálculo directo del área final.</p></div>
+      <h3 id="3-10-rozamiento-por-que-romperia-liouville">3.10. Rozamiento: por qué rompería Liouville</h3>
+      <div class="reading-block"><p>Si se añade rozamiento, el sistema deja de ser hamiltoniano ordinario en el espacio \((q,p)\). Por ejemplo,</p></div>
+      <div class="formula-block">\[\dot q=\frac{p}{m},\qquad \dot p=-\gamma p.\]</div>
+      <div class="reading-block"><p>La divergencia sería</p></div>
+      <div class="formula-block">\[\nabla_\Gamma\cdot X
+=
+
+\frac{\partial}{\partial q}\left(\frac{p}{m}\right)
++
+\frac{\partial}{\partial p}(-\gamma p)
+=
+
+-\gamma.\]</div>
+      <div class="reading-block"><p>No es cero. El flujo comprime área en el espacio de fases. Por eso una nube de condiciones iniciales se contrae hacia atractores o estados de menor energía. El propio examen UNED incluye como cuestión avanzada discutir qué pasaría al añadir rozamiento al movimiento de partículas.</p></div>
+    </section>
+    <section class="page" id="conceptos-clave">
+      <div class="page-head"><h2>4. Conceptos clave</h2><span class="page-no">p.4</span></div>
+      <article class="definition-card">
+        <h3>1. Espacio de fases</h3>
+      <div class="reading-block"><p>Definición precisa: espacio de dimensión \(2n\) formado por coordenadas generalizadas y momentos canónicos:</p></div>
+      <div class="formula-block">\[\Gamma=(q_1,\dots,q_n,p_1,\dots,p_n).\]</div>
+      <div class="reading-block"><p>Explicación: es el espacio natural de la mecánica hamiltoniana. Un punto de fase no da solo la posición, sino el estado dinámico completo. Sin momento no hay evolución determinada.</p></div>
+      <div class="reading-block"><p>Ejemplo: para una partícula 1D, el espacio de fases es el plano \((q,p)\).</p></div>
+      <div class="reading-block"><p>Relación: el teorema de Liouville se formula en este espacio, no en el espacio ordinario ni en el espacio \((q,\dot q)\).</p></div>
+      <div class="reading-block"><p>Pregunta de examen: “Explique qué es el espacio de fases y por qué el teorema de Liouville se formula en él.”</p></div>
+      </article>
+      <article class="definition-card">
+        <h3>2. Flujo hamiltoniano</h3>
+      <div class="reading-block"><p>Definición precisa:</p></div>
+      <div class="formula-block">\[X_H=
+\left(
+\frac{\partial H}{\partial p_i},
+-\frac{\partial H}{\partial q_i}
+\right)_{i=1}^n.\]</div>
+      <div class="reading-block"><p>Explicación: es el campo vectorial que indica cómo se mueve cada punto de fase. El Hamiltoniano no solo da la energía; genera el movimiento.</p></div>
+      <div class="reading-block"><p>Ejemplo: si \(H=p^2/2m+V(q)\), entonces \(X_H=(p/m,-V'(q))\).</p></div>
+      <div class="reading-block"><p>Relación: Liouville nace de la divergencia nula de este flujo.</p></div>
+      <div class="reading-block"><p>Pregunta de examen: “A partir de las ecuaciones de Hamilton, construya el campo de velocidades en el espacio de fases y calcule su divergencia.”</p></div>
+      </article>
+      <article class="definition-card">
+        <h3>3. Divergencia en espacio de fases</h3>
+      <div class="reading-block"><p>Definición precisa:</p></div>
+      <div class="formula-block">\[\nabla_\Gamma\cdot X_H
+=
+
+\sum_i
+\left(
+\frac{\partial \dot q_i}{\partial q_i}
++
+\frac{\partial \dot p_i}{\partial p_i}
+\right).\]</div>
+      <div class="reading-block"><p>Explicación: mide si un volumen infinitesimal de condiciones iniciales se expande o contrae.</p></div>
+      <div class="reading-block"><p>Ejemplo:</p></div>
+      <div class="formula-block">\[\dot q=p,\quad \dot p=-q
+\Rightarrow
+\nabla_\Gamma\cdot X_H=0+0=0.\]</div>
+      <div class="reading-block"><p>Relación: si la divergencia es cero, hay conservación de volumen.</p></div>
+      <div class="reading-block"><p>Pregunta de examen: “Demuestre que el flujo hamiltoniano es incompresible.”</p></div>
+      </article>
+      <article class="definition-card">
+        <h3>4. Teorema de Liouville</h3>
+      <div class="reading-block"><p>Definición precisa: bajo evolución hamiltoniana, el volumen de cualquier región del espacio de fases se conserva:</p></div>
+      <div class="formula-block">\[\frac{dV_\Gamma}{dt}=0.\]</div>
+      <div class="reading-block"><p>Explicación: una nube de estados puede deformarse, pero no comprimirse ni expandirse globalmente.</p></div>
+      <div class="reading-block"><p>Ejemplo: el rectángulo inicial de condiciones \((q_0,p_0)\) puede transformarse en un paralelogramo con la misma área.</p></div>
+      <div class="reading-block"><p>Relación: se apoya en Hamilton, divergencia nula, unicidad de trayectorias y transformaciones canónicas.</p></div>
+      <div class="reading-block"><p>Pregunta de examen: “Demuestre el teorema de Liouville para un sistema hamiltoniano de un grado de libertad.”</p></div>
+      </article>
+      <article class="definition-card">
+        <h3>5. Densidad de estados</h3>
+      <div class="reading-block"><p>Definición precisa: función \(D(q,p,t)\) que mide número de representantes del ensemble por unidad de volumen en fase.</p></div>
+      <div class="reading-block"><p>Explicación: permite pasar de trayectorias individuales a descripción estadística.</p></div>
+      <div class="reading-block"><p>Ejemplo: si una región contiene \(N\) puntos y tiene volumen \(V\), entonces \(D=N/V\).</p></div>
+      <div class="reading-block"><p>Relación: Liouville implica \(dD/dt=0\) siguiendo el flujo.</p></div>
+      <div class="reading-block"><p>Pregunta de examen: “Interprete físicamente la ecuación \(dD/dt=0\).”</p></div>
+      </article>
+      <article class="definition-card">
+        <h3>6. Derivada total frente a derivada parcial</h3>
+      <div class="reading-block"><p>Definición precisa:</p></div>
+      <div class="formula-block">\[\frac{dD}{dt}
+=
+
+\frac{\partial D}{\partial t}
++
+\{D,H\}.\]</div>
+      <div class="reading-block"><p>Explicación: la derivada total sigue a un punto del ensemble; la parcial observa un punto fijo de fase.</p></div>
+      <div class="reading-block"><p>Ejemplo: una densidad puede no cambiar siguiendo cada partícula, pero sí cambiar en un punto fijo si la nube pasa por allí.</p></div>
+      <div class="reading-block"><p>Relación: Goldstein usa esta distinción para formular equilibrio estadístico.</p></div>
+      <div class="reading-block"><p>Pregunta de examen: “Diferencie \(\partial D/\partial t\) y \(dD/dt\) en el contexto de Liouville.”</p></div>
+      </article>
+      <article class="definition-card">
+        <h3>7. Densidad estacionaria \(D=f(H)\)</h3>
+      <div class="reading-block"><p>Definición precisa: distribución que depende solo del Hamiltoniano.</p></div>
+      <div class="reading-block"><p>Explicación: si \(H\) es constante del movimiento y \(D\) solo depende de \(H\), la densidad no cambia con el tiempo.</p></div>
+      <div class="reading-block"><p>Ejemplo:</p></div>
+      <div class="formula-block">\[D(q,p)=Ce^\{-\beta H(q,p)\}.\]</div>
+      <div class="reading-block"><p>Relación:</p></div>
+      <div class="formula-block">\[\{D,H\}=f'(H)\{H,H\}=0.\]</div>
+      <div class="reading-block"><p>Pregunta de examen: “Demuestre que si \(D=f(H)\), entonces la densidad es estacionaria.”</p></div>
+      </article>
+      <article class="definition-card">
+        <h3>8. Transformación canónica</h3>
+      <div class="reading-block"><p>Definición precisa: transformación de variables que preserva la estructura hamiltoniana.</p></div>
+      <div class="reading-block"><p>Explicación: conserva la forma de las ecuaciones de Hamilton y preserva volúmenes de fase.</p></div>
+      <div class="reading-block"><p>Ejemplo: la evolución temporal hamiltoniana puede verse como una transformación canónica entre \((q(0),p(0))\) y \((q(t),p(t))\).</p></div>
+      <div class="reading-block"><p>Relación: Goldstein conecta Liouville con la invariancia del volumen bajo transformaciones canónicas.</p></div>
+      <div class="reading-block"><p>Pregunta de examen: “Explique por qué la evolución temporal hamiltoniana conserva el volumen de fase.”</p></div>
+      </article>
+      <article class="definition-card">
+        <h3>9. Incompresibilidad</h3>
+      <div class="reading-block"><p>Definición precisa: propiedad de un flujo con divergencia nula.</p></div>
+      <div class="reading-block"><p>Explicación: no hay creación ni destrucción local de volumen en fase.</p></div>
+      <div class="reading-block"><p>Ejemplo: un fluido incompresible puede deformarse, pero un volumen material mantiene su volumen.</p></div>
+      <div class="reading-block"><p>Relación: Taylor describe la nube de puntos como un fluido incompresible en el espacio de fases.</p></div>
+      <div class="reading-block"><p>Pregunta de examen: “¿En qué sentido el ensemble hamiltoniano se comporta como un fluido incompresible?”</p></div>
+      </article>
+      <article class="definition-card">
+        <h3>10. Ruptura por disipación</h3>
+      <div class="reading-block"><p>Definición precisa: los sistemas con rozamiento no son hamiltonianos estándar en \((q,p)\) y pueden tener divergencia no nula.</p></div>
+      <div class="reading-block"><p>Explicación: la disipación contrae regiones de fase; hay pérdida efectiva de información macroscópica.</p></div>
+      <div class="reading-block"><p>Ejemplo:</p></div>
+      <div class="formula-block">\[\dot p=-\gamma p
+\Rightarrow
+\nabla\cdot X=-\gamma.\]</div>
+      <div class="reading-block"><p>Relación: contrasta con Liouville y suele preguntarse como extensión conceptual.</p></div>
+      <div class="reading-block"><p>Pregunta de examen: “Discuta qué ocurre con Liouville si se añade una fuerza de rozamiento.”</p></div>
+      </article>
+    </section>
+    <section class="page" id="relaciones-entre-ideas">
+      <div class="page-head"><h2>5. Relaciones entre ideas</h2><span class="page-no">p.5</span></div>
+      <div class="reading-block"><p>La cadena conceptual es:</p></div>
+      <div class="formula-block">\[H(q,p)
+\Rightarrow
+\text{ecuaciones de Hamilton}
+\Rightarrow
+X_H
+\Rightarrow
+\nabla_\Gamma\cdot X_H=0
+\Rightarrow
+V_\Gamma=\text{cte}
+\Rightarrow
+D=\text{cte siguiendo el flujo}.\]</div>
+      <div class="reading-block"><p>La dependencia principal es clara: sin formulación hamiltoniana no hay teorema de Liouville en su forma estándar. La conservación de volumen no viene de la conservación de energía, sino de la estructura simpléctica de las ecuaciones de Hamilton. Energía conservada y volumen conservado son resultados distintos.</p></div>
+      <div class="reading-block"><p>La oposición importante es:</p></div>
+      <div class="formula-block">\[\text{Hamiltoniano conservativo o no conservativo en sentido energético}
+\neq
+\text{Liouville válido o no válido}.\]</div>
+      <div class="reading-block"><p>Liouville no exige necesariamente que \(H\) sea independiente del tiempo; exige que la evolución obedezca ecuaciones de Hamilton. Taylor señala que el teorema depende de la validez de Hamilton, no de que \(H=T+U\) ni de que no haya dependencia temporal explícita.</p></div>
+      <div class="reading-block"><p>Otra oposición clave:</p></div>
+      <div class="formula-block">\[\text{conservar forma}
+\neq
+\text{conservar volumen}.\]</div>
+      <div class="reading-block"><p>Una región puede deformarse violentamente. En dinámica caótica puede estirarse y plegarse, pero el volumen total permanece constante. Taylor conecta esta idea con caos: si la región se alarga en una dirección, debe contraerse en otra.</p></div>
+      <div class="reading-block"><p>Jerárquicamente, Liouville está por encima de ejemplos concretos. El oscilador, la caída libre en fase o el Hamiltoniano armónico inverso no demuestran casos aislados: son manifestaciones de una propiedad general.</p></div>
+      <div class="reading-block"><p>Históricamente, Liouville sirve de puente entre mecánica analítica y mecánica estadística. Goldstein lo presenta como un teorema fundamental de mecánica estadística y lo introduce tras corchetes de Poisson y transformaciones canónicas.</p></div>
+    </section>
+    <section class="page" id="errores-habituales">
+      <div class="page-head"><h2>6. Errores habituales</h2><span class="page-no">p.6</span></div>
+      <details class="accordion">
+        <summary>Error 1. “Liouville conserva trayectorias”</summary>
+      <div class="reading-block"><p>Por qué está mal: las trayectorias no “se conservan”; lo que se conserva es el volumen de una región transportada por el flujo.</p></div>
+      <div class="reading-block"><p>Corrección: Liouville afirma conservación de volumen en espacio de fases.</p></div>
+      <div class="reading-block"><p>Respuesta incorrecta: “El teorema dice que cada partícula mantiene la misma trayectoria.”</p></div>
+      <div class="reading-block"><p>Respuesta correcta: “El teorema dice que una región de condiciones iniciales evoluciona conservando su volumen en el espacio de fases.”</p></div>
+      </details>
+      <details class="accordion">
+        <summary>Error 2. “El área se conserva porque se conserva la energía”</summary>
+      <div class="reading-block"><p>Por qué está mal: la conservación de energía restringe trayectorias a superficies \(H=E\), pero Liouville viene de \(\nabla_\Gamma\cdot X_H=0\).</p></div>
+      <div class="reading-block"><p>Corrección: usar divergencia nula o jacobiano de la transformación.</p></div>
+      <div class="reading-block"><p>Respuesta incorrecta: “Como \(H\) es constante, el área es constante.”</p></div>
+      <div class="reading-block"><p>Respuesta correcta: “Como la transformación hamiltoniana tiene jacobiano uno, el área de fase se conserva.”</p></div>
+      </details>
+      <details class="accordion">
+        <summary>Error 3. “La nube no cambia”</summary>
+      <div class="reading-block"><p>Por qué está mal: puede cambiar de forma, orientación y distribución espacial.</p></div>
+      <div class="reading-block"><p>Corrección: cambia la forma, no el volumen.</p></div>
+      <div class="reading-block"><p>Respuesta incorrecta: “La región inicial permanece igual.”</p></div>
+      <div class="reading-block"><p>Respuesta correcta: “La región puede estirarse y plegarse, pero su volumen total permanece constante.”</p></div>
+      </details>
+      <details class="accordion">
+        <summary>Error 4. “Liouville se aplica en \((q,\dot q)\)”</summary>
+      <div class="reading-block"><p>Por qué está mal: el teorema se formula en coordenadas canónicas \((q,p)\). Taylor remarca que no hay teorema equivalente general en el espacio lagrangiano \((q,\dot q)\).</p></div>
+      <div class="reading-block"><p>Corrección: trabajar siempre con momentos canónicos.</p></div>
+      <div class="reading-block"><p>Respuesta incorrecta: “En el plano posición-velocidad siempre se conserva el área.”</p></div>
+      <div class="reading-block"><p>Respuesta correcta: “La conservación se garantiza en el espacio hamiltoniano \((q,p)\).”</p></div>
+      </details>
+      <details class="accordion">
+        <summary>Error 5. “Si \(D\) es estacionaria, entonces \(D\) es constante en todo el espacio”</summary>
+      <div class="reading-block"><p>Por qué está mal: estacionaria significa que no cambia con el tiempo en un punto fijo; puede variar de un punto a otro.</p></div>
+      <div class="reading-block"><p>Corrección: \(D=f(H)\) puede tomar distintos valores según la energía.</p></div>
+      <div class="reading-block"><p>Respuesta incorrecta: “Como \(D\) es estacionaria, \(D=C\).”</p></div>
+      <div class="reading-block"><p>Respuesta correcta: “\(D\) puede ser \(f(H)\); no depende del tiempo, pero sí de \((q,p)\).”</p></div>
+      </details>
+      <details class="accordion">
+        <summary>Error 6. “\(dD/dt=0\) y \(\partial D/\partial t=0\) son lo mismo”</summary>
+      <div class="reading-block"><p>Por qué está mal: la derivada total sigue el flujo; la parcial observa un punto fijo.</p></div>
+      <div class="reading-block"><p>Corrección:</p></div>
+      <div class="formula-block">\[\frac{dD}{dt}=\frac{\partial D}{\partial t}+\{D,H\}.\]</div>
+      <div class="reading-block"><p>Respuesta incorrecta: “Liouville dice simplemente que \(\partial D/\partial t=0\).”</p></div>
+      <div class="reading-block"><p>Respuesta correcta: “Liouville dice \(dD/dt=0\); la estacionariedad exige además \(\partial D/\partial t=0\).”</p></div>
+      </details>
+      <details class="accordion">
+        <summary>Error 7. “Con rozamiento también se conserva el área”</summary>
+      <div class="reading-block"><p>Por qué está mal: el rozamiento genera contracción en fase.</p></div>
+      <div class="reading-block"><p>Corrección: verificar si la dinámica sigue siendo hamiltoniana; si no, calcular divergencia.</p></div>
+      <div class="reading-block"><p>Respuesta incorrecta: “Aunque haya rozamiento, Liouville sigue valiendo.”</p></div>
+      <div class="reading-block"><p>Respuesta correcta: “Con rozamiento ordinario el flujo suele tener divergencia negativa y el volumen de fase se contrae.”</p></div>
+      </details>
+      <details class="accordion">
+        <summary>Error 8. “El jacobiano debe calcularse siempre con \(q,p\) finales respecto a \(q,p\) iniciales, pero da igual el orden”</summary>
+      <div class="reading-block"><p>Por qué está mal: un cambio de orden o signo puede dar un determinante incorrecto.</p></div>
+      <div class="reading-block"><p>Corrección:</p></div>
+      <div class="formula-block">\[J=
+\det
+\frac\{\partial(q(t),p(t))\}\{\partial(q_0,p_0)\}.\]</div>
+      <div class="reading-block"><p>Respuesta incorrecta: “El jacobiano es \(\cosh^2t+\sinh^2t\).”</p></div>
+      <div class="reading-block"><p>Respuesta correcta: “Para el armónico inverso, \(J=\cosh^2t-\sinh^2t=1\).”</p></div>
+      </details>
+      <details class="accordion">
+        <summary>Error 9. “El no cruce de trayectorias ya demuestra conservación de volumen”</summary>
+      <div class="reading-block"><p>Por qué está mal: demuestra conservación del número de puntos dentro de una frontera móvil, no del volumen.</p></div>
+      <div class="reading-block"><p>Corrección: añadir divergencia nula o invariancia canónica del volumen.</p></div>
+      <div class="reading-block"><p>Respuesta incorrecta: “Como no se cruzan, el área no cambia.”</p></div>
+      <div class="reading-block"><p>Respuesta correcta: “Como no se cruzan, \(N\) no cambia; como además \(\nabla\cdot X_H=0\), \(V\) no cambia.”</p></div>
+      </details>
+      <details class="accordion">
+        <summary>Error 10. “\(\{H,H\}\) puede no ser cero”</summary>
+      <div class="reading-block"><p>Por qué está mal: todo corchete de Poisson de una función consigo misma es cero por antisimetría.</p></div>
+      <div class="reading-block"><p>Corrección:</p></div>
+      <div class="formula-block">\[\{H,H\}=0.\]</div>
+      <div class="reading-block"><p>Respuesta incorrecta: “Si \(D=f(H)\), hay que calcular \(\{H,H\}\) según el Hamiltoniano.”</p></div>
+      <div class="reading-block"><p>Respuesta correcta: “\(\{H,H\}=0\) siempre, luego \(\{f(H),H\}=0\).”</p></div>
+      </details>
+    </section>
+    <section class="page" id="preguntas-orientadas-a-examen">
+      <div class="page-head"><h2>7. Preguntas orientadas a examen</h2><span class="page-no">p.7</span></div>
+      <h3 id="10-preguntas-faciles">10 preguntas fáciles</h3>
+      <ol class="question-list">
+        <li>¿Qué es el espacio de fases?</li>
+        <li>¿Qué variables forman un par canónico?</li>
+        <li>Escriba las ecuaciones de Hamilton.</li>
+        <li>¿Qué es el flujo hamiltoniano?</li>
+        <li>¿Qué afirma el teorema de Liouville?</li>
+        <li>¿Qué significa que un flujo sea incompresible?</li>
+        <li>¿Qué se conserva en un sistema de un grado de libertad: área o longitud?</li>
+        <li>¿Por qué dos trayectorias de fase no pueden cruzarse?</li>
+        <li>¿Qué representa una densidad \(D(q,p,t)\)?</li>
+        <li>¿Qué diferencia hay entre \(q\) y \(p\)?</li>
+      </ol>
+      <h3 id="10-preguntas-medias">10 preguntas medias</h3>
+      <ol class="question-list">
+        <li>Demuestre que \(\nabla_\Gamma\cdot X_H=0\) para un grado de libertad.</li>
+        <li>Generalice la demostración anterior a \(n\) grados de libertad.</li>
+        <li>Explique por qué una nube de puntos puede deformarse sin cambiar de volumen.</li>
+        <li>Demuestre que si \(D=f(H)\), entonces \(D\) es estacionaria.</li>
+        <li>Interprete físicamente \(dD/dt=0\).</li>
+        <li>Para \(H=p^2/2m+kq^2/2\), describa las órbitas de fase.</li>
+        <li>Para \(H=(p^2-q^2)/2\), obtenga \(q(t)\) y \(p(t)\).</li>
+        <li>Calcule el jacobiano de la transformación del armónico inverso.</li>
+        <li>Explique qué ocurre con Liouville si se añade rozamiento lineal.</li>
+        <li>Diferencie conservación de energía y conservación de volumen de fase.</li>
+      </ol>
+      <h3 id="5-preguntas-dificiles">5 preguntas difíciles</h3>
+      <ol class="question-list">
+        <li>Demuestre por cálculo directo que el rectángulo \(-a&lt;q_0&lt;a,\ -b&lt;p_0&lt;b\) conserva área bajo \(H=(p^2-q^2)/2\).</li>
+        <li>Derive la ecuación de Liouville para \(D(q,p,t)\) usando corchetes de Poisson.</li>
+        <li>Explique por qué la evolución hamiltoniana puede entenderse como transformación canónica.</li>
+        <li>En un sistema caótico hamiltoniano, explique cómo puede haber separación exponencial de trayectorias sin violar Liouville.</li>
+        <li>Compare Liouville en \((q,p)\) con la evolución en \((q,\dot q)\). ¿Por qué no son equivalentes en general?</li>
+      </ol>
+      <h3 id="5-preguntas-de-desarrollo-largo">5 preguntas de desarrollo largo</h3>
+      <ol class="question-list">
+        <li>Desarrolle el teorema de Liouville desde las ecuaciones de Hamilton hasta la conservación de volumen.</li>
+        <li>Explique la interpretación estadística del teorema de Liouville y su relación con ensembles.</li>
+        <li>Resuelva el ejemplo del Hamiltoniano armónico inverso y demuestre conservación de área por dos métodos.</li>
+        <li>Analice la relación entre Liouville, corchetes de Poisson y equilibrio estadístico.</li>
+        <li>Discuta el papel de Liouville como puente entre mecánica hamiltoniana, mecánica estadística e invariantes adiabáticos.</li>
+      </ol>
+      <h3 id="5-preguntas-de-relacion-entre-conceptos">5 preguntas de relación entre conceptos</h3>
+      <ol class="question-list">
+        <li>Relacione flujo hamiltoniano, divergencia nula e incompresibilidad.</li>
+        <li>Relacione no cruce de trayectorias, conservación de número de puntos y conservación de densidad.</li>
+        <li>Relacione transformaciones canónicas y conservación del volumen de fase.</li>
+        <li>Relacione \(D=f(H)\), corchete de Poisson y equilibrio estadístico.</li>
+        <li>Relacione disipación, contracción del espacio de fases y ruptura de Liouville.</li>
+      </ol>
+    </section>
+    <section class="page" id="respuestas-modelo">
+      <div class="page-head"><h2>8. Respuestas modelo</h2><span class="page-no">p.8</span></div>
+      <details class="accordion">
+        <summary>1. ¿Qué es el espacio de fases?</summary>
+      <div class="reading-block"><p>Es el espacio formado por las coordenadas generalizadas y sus momentos canónicos. Para \(n\) grados de libertad tiene dimensión \(2n\):</p></div>
+      <div class="formula-block">\[(q_1,\dots,q_n,p_1,\dots,p_n).\]</div>
+      <div class="reading-block"><p>Un punto del espacio de fases representa el estado dinámico completo del sistema.</p></div>
+      </details>
+      <details class="accordion">
+        <summary>2. ¿Qué variables forman un par canónico?</summary>
+      <div class="reading-block"><p>Un par canónico está formado por una coordenada generalizada \(q_i\) y su momento conjugado \(p_i\). Estas variables obedecen las ecuaciones de Hamilton y cumplen la estructura básica de Poisson:</p></div>
+      <div class="formula-block">\[\{q_i,p_j\}=\delta_{ij}.\]</div>
+      </details>
+      <details class="accordion">
+        <summary>3. Escriba las ecuaciones de Hamilton.</summary>
+      <div class="formula-block">\[\dot q_i=\frac{\partial H}{\partial p_i},
+\qquad
+\dot p_i=-\frac{\partial H}{\partial q_i}.\]</div>
+      <div class="reading-block"><p>Estas ecuaciones sustituyen una ecuación de segundo orden por un sistema de primer orden en el espacio de fases.</p></div>
+      </details>
+      <details class="accordion">
+        <summary>4. ¿Qué es el flujo hamiltoniano?</summary>
+      <div class="reading-block"><p>Es el campo vectorial que mueve los puntos del espacio de fases:</p></div>
+      <div class="formula-block">\[X_H=(\dot q_i,\dot p_i).\]</div>
+      <div class="reading-block"><p>Al sustituir Hamilton:</p></div>
+      <div class="formula-block">\[X_H=
+\left(
+\frac{\partial H}{\partial p_i},
+-\frac{\partial H}{\partial q_i}
+\right).\]</div>
+      </details>
+      <details class="accordion">
+        <summary>5. ¿Qué afirma el teorema de Liouville?</summary>
+      <div class="reading-block"><p>Afirma que la evolución hamiltoniana conserva el volumen en el espacio de fases:</p></div>
+      <div class="formula-block">\[\frac{dV_\Gamma}{dt}=0.\]</div>
+      <div class="reading-block"><p>En un sistema de un grado de libertad, esto significa conservación del área en el plano \((q,p)\).</p></div>
+      </details>
+      <details class="accordion">
+        <summary>6. ¿Qué significa que un flujo sea incompresible?</summary>
+      <div class="reading-block"><p>Significa que una región material transportada por el flujo mantiene su volumen. Matemáticamente:</p></div>
+      <div class="formula-block">\[\nabla\cdot X=0.\]</div>
+      <div class="reading-block"><p>En Liouville, el flujo incompresible es el flujo hamiltoniano en el espacio de fases.</p></div>
+      </details>
+      <details class="accordion">
+        <summary>7. ¿Qué se conserva en un sistema de un grado de libertad: área o longitud?</summary>
+      <div class="reading-block"><p>Se conserva el área de una región del plano \((q,p)\), no la longitud de sus bordes ni la forma de la región.</p></div>
+      </details>
+      <details class="accordion">
+        <summary>8. ¿Por qué dos trayectorias de fase no pueden cruzarse?</summary>
+      <div class="reading-block"><p>Porque por un estado \((q,p)\) en un instante dado la evolución queda determinada de forma única. Si dos trayectorias se cruzaran, tendrían el mismo futuro desde el cruce, contradiciendo que representaban estados distintos.</p></div>
+      </details>
+      <details class="accordion">
+        <summary>9. ¿Qué representa una densidad \(D(q,p,t)\)?</summary>
+      <div class="reading-block"><p>Representa cuántos puntos de un ensemble hay por unidad de volumen de fase en torno al punto \((q,p)\) en el instante \(t\).</p></div>
+      </details>
+      <details class="accordion">
+        <summary>10. ¿Qué diferencia hay entre \(q\) y \(p\)?</summary>
+      <div class="reading-block"><p>\(q\) es coordenada generalizada; \(p\) es momento canónico conjugado. En sistemas simples \(p=m\dot q\), pero en general puede diferir, por ejemplo con potenciales dependientes de velocidad o campos electromagnéticos.</p></div>
+      </details>
+      <details class="accordion">
+        <summary>11. Demuestre que \(\nabla_\Gamma\cdot X_H=0\) para un grado de libertad.</summary>
+      <div class="reading-block"><p>Para un grado de libertad:</p></div>
+      <div class="formula-block">\[X_H=
+\left(
+\frac{\partial H}{\partial p},
+-\frac{\partial H}{\partial q}
+\right).\]</div>
+      <div class="reading-block"><p>Entonces</p></div>
+      <div class="formula-block">\[\nabla_\Gamma\cdot X_H
+=
+
+\frac{\partial}{\partial q}\frac{\partial H}{\partial p}
++
+\frac{\partial}{\partial p}\left(-\frac{\partial H}{\partial q}\right)
+=
+
+-
+\frac{\partial^2H}{\partial q\partial p}
+
+\frac{\partial^2H}{\partial p\partial q}
+=0.\]</div>
+      </details>
+      <details class="accordion">
+        <summary>12. Generalice la demostración anterior a \(n\) grados de libertad.</summary>
+      <div class="reading-block"><p>Para \(n\) pares canónicos:</p></div>
+      <div class="formula-block">\[\nabla_\Gamma\cdot X_H
+=
+
+\sum_i
+\left(
+\frac{\partial \dot q_i}{\partial q_i}
++
+\frac{\partial \dot p_i}{\partial p_i}
+\right).\]</div>
+      <div class="reading-block"><p>Sustituyendo Hamilton:</p></div>
+      <div class="formula-block">\[\sum_i
+\left(
+\frac{\partial^2H}{\partial q_i\partial p_i}
+-
+
+\frac{\partial^2H}{\partial p_i\partial q_i}
+\right)=0.\]</div>
+      <div class="reading-block"><p>Por tanto, el flujo hamiltoniano es incompresible en dimensión \(2n\).</p></div>
+      </details>
+      <details class="accordion">
+        <summary>13. Explique por qué una nube de puntos puede deformarse sin cambiar de volumen.</summary>
+      <div class="reading-block"><p>Cada punto de la nube puede tener una velocidad distinta, así que la nube puede estirarse, rotar o plegarse. Pero como la divergencia del flujo hamiltoniano es cero, cualquier expansión en una dirección queda compensada por contracción en otra. El volumen total se conserva.</p></div>
+      </details>
+      <details class="accordion">
+        <summary>14. Demuestre que si \(D=f(H)\), entonces \(D\) es estacionaria.</summary>
+      <div class="reading-block"><p>Si \(D=f(H)\) y no hay dependencia explícita en \(t\),</p></div>
+      <div class="formula-block">\[\frac{\partial D}{\partial t}=0.\]</div>
+      <div class="reading-block"><p>Además,</p></div>
+      <div class="formula-block">\[\{D,H\}
+=
+
+# \{f(H),H\}
+
+f'(H)\{H,H\}=0.\]</div>
+      <div class="reading-block"><p>Por tanto,</p></div>
+      <div class="formula-block">\[\frac{dD}{dt}=0.\]</div>
+      <div class="reading-block"><p>La densidad es estacionaria porque depende solo de una constante del movimiento.</p></div>
+      </details>
+      <details class="accordion">
+        <summary>15. Interprete físicamente \(dD/dt=0\).</summary>
+      <div class="reading-block"><p>Significa que la densidad de puntos del ensemble no cambia cuando se sigue el movimiento de esos puntos. Es la versión estadística de la incompresibilidad del flujo hamiltoniano.</p></div>
+      </details>
+      <details class="accordion">
+        <summary>16. Para \(H=p^2/2m+kq^2/2\), describa las órbitas de fase.</summary>
+      <div class="reading-block"><p>La energía constante impone</p></div>
+      <div class="formula-block">\[\frac{p^2}{2m}+\frac12kq^2=E.\]</div>
+      <div class="reading-block"><p>Esta ecuación representa elipses en el plano \((q,p)\). Cada elipse corresponde a una energía distinta.</p></div>
+      </details>
+      <details class="accordion">
+        <summary>17. Para \(H=(p^2-q^2)/2\), obtenga \(q(t)\) y \(p(t)\).</summary>
+      <div class="reading-block"><p>Las ecuaciones de Hamilton son</p></div>
+      <div class="formula-block">\[\dot q=p,\qquad \dot p=q.\]</div>
+      <div class="reading-block"><p>Entonces</p></div>
+      <div class="formula-block">\[\ddot q=q.\]</div>
+      <div class="reading-block"><p>La solución con datos iniciales \((q_0,p_0)\) es</p></div>
+      <div class="formula-block">\[q(t)=q_0\cosh t+p_0\sinh t,\]</div>
+      <div class="formula-block">\[p(t)=q_0\sinh t+p_0\cosh t.\]</div>
+      </details>
+      <details class="accordion">
+        <summary>18. Calcule el jacobiano de la transformación del armónico inverso.</summary>
+      <div class="formula-block">\[J=
+\det
+\begin{pmatrix}
+\partial q/\partial q_0 &amp; \partial q/\partial p_0\
+\partial p/\partial q_0 &amp; \partial p/\partial p_0
+\end{pmatrix}
+=
+
+\det
+\begin{pmatrix}
+\cosh t &amp; \sinh t\
+\sinh t &amp; \cosh t
+\end{pmatrix}.\]</div>
+      <div class="formula-block">\[J=\cosh^2t-\sinh^2t=1.\]</div>
+      <div class="reading-block"><p>Luego el área se conserva.</p></div>
+      </details>
+      <details class="accordion">
+        <summary>19. Explique qué ocurre con Liouville si se añade rozamiento lineal.</summary>
+      <div class="reading-block"><p>Con rozamiento, la dinámica típica deja de ser hamiltoniana en \((q,p)\). Para</p></div>
+      <div class="formula-block">\[\dot q=p/m,\qquad \dot p=-\gamma p,\]</div>
+      <div class="reading-block"><p>la divergencia es</p></div>
+      <div class="formula-block">\[\nabla\cdot X=-\gamma.\]</div>
+      <div class="reading-block"><p>La región de fase se contrae. Por tanto, Liouville no se cumple en su forma hamiltoniana ordinaria.</p></div>
+      </details>
+      <details class="accordion">
+        <summary>20. Diferencie conservación de energía y conservación de volumen de fase.</summary>
+      <div class="reading-block"><p>La conservación de energía dice que cada trayectoria permanece en una superficie \(H=E\) si \(H\) no depende explícitamente del tiempo. La conservación de volumen de fase dice que una región de condiciones iniciales conserva su volumen bajo el flujo hamiltoniano. Son propiedades distintas.</p></div>
+      </details>
+      <details class="accordion">
+        <summary>21. Demuestre por cálculo directo que el rectángulo inicial conserva área bajo \(H=(p^2-q^2)/2\).</summary>
+      <div class="reading-block"><p>Los lados iniciales del rectángulo tienen vectores</p></div>
+      <div class="formula-block">\[u_0=(2a,0),\qquad v_0=(0,2b).\]</div>
+      <div class="reading-block"><p>Bajo la transformación:</p></div>
+      <div class="formula-block">\[u(t)=(2a\cosh t,2a\sinh t),\]</div>
+      <div class="formula-block">\[v(t)=(2b\sinh t,2b\cosh t).\]</div>
+      <div class="reading-block"><p>El área final es el valor absoluto del determinante:</p></div>
+      <div class="formula-block">\[A(t)=
+\left|
+\det
+\begin{pmatrix}
+2a\cosh t &amp; 2b\sinh t\
+2a\sinh t &amp; 2b\cosh t
+\end{pmatrix}
+\right|.\]</div>
+      <div class="formula-block">\[A(t)=4ab(\cosh^2t-\sinh^2t)=4ab=A(0).\]</div>
+      </details>
+      <details class="accordion">
+        <summary>22. Derive la ecuación de Liouville para \(D(q,p,t)\) usando corchetes de Poisson.</summary>
+      <div class="reading-block"><p>La evolución total de \(D\) es</p></div>
+      <div class="formula-block">\[\frac{dD}{dt}
+=
+
+\frac{\partial D}{\partial t}
++
+\dot q\frac{\partial D}{\partial q}
++
+\dot p\frac{\partial D}{\partial p}.\]</div>
+      <div class="reading-block"><p>Sustituyendo Hamilton:</p></div>
+      <div class="formula-block">\[\frac{dD}{dt}
+=
+
+\frac{\partial D}{\partial t}
++
+\frac{\partial H}{\partial p}\frac{\partial D}{\partial q}
+-
+
+\frac{\partial H}{\partial q}\frac{\partial D}{\partial p}.\]</div>
+      <div class="reading-block"><p>Esto es</p></div>
+      <div class="formula-block">\[\frac{dD}{dt}
+=
+
+\frac{\partial D}{\partial t}
++
+\{D,H\}.\]</div>
+      <div class="reading-block"><p>Liouville afirma \(dD/dt=0\), luego</p></div>
+      <div class="formula-block">\[\frac{\partial D}{\partial t}
+=
+
+-\{D,H\}.\]</div>
+      </details>
+      <details class="accordion">
+        <summary>23. Explique por qué la evolución hamiltoniana puede entenderse como transformación canónica.</summary>
+      <div class="reading-block"><p>La evolución desde \(t_0\) hasta \(t\) lleva \((q_0,p_0)\) a \((q(t),p(t))\). Esa transformación preserva la estructura de Hamilton y los corchetes canónicos. Por tanto, actúa como transformación canónica. Como las transformaciones canónicas preservan el volumen de fase, se obtiene Liouville.</p></div>
+      </details>
+      <details class="accordion">
+        <summary>24. En un sistema caótico hamiltoniano, explique cómo puede haber separación exponencial sin violar Liouville.</summary>
+      <div class="reading-block"><p>La separación exponencial alarga la región en ciertas direcciones del espacio de fases. Para conservar el volumen total, la región debe contraerse en otras direcciones. En sistemas acotados, esto produce estiramiento y plegamiento. No hay contradicción: Liouville prohíbe el cambio de volumen, no el aumento de distancias entre algunos puntos.</p></div>
+      </details>
+      <details class="accordion">
+        <summary>25. Compare Liouville en \((q,p)\) con la evolución en \((q,\dot q)\).</summary>
+      <div class="reading-block"><p>Liouville se garantiza en variables canónicas \((q,p)\). En coordenadas \((q,\dot q)\) no siempre se preserva el volumen porque \(\dot q\) no es necesariamente momento canónico. Solo en casos simples \(p=m\dot q\) la relación es lineal y la conservación de área puede parecer equivalente.</p></div>
+      </details>
+      <details class="accordion">
+        <summary>26. Desarrollo completo del teorema de Liouville</summary>
+      <div class="reading-block"><p>Se parte de un sistema hamiltoniano con coordenadas canónicas \((q_i,p_i)\). Las ecuaciones de Hamilton definen el flujo:</p></div>
+      <div class="formula-block">\[X_H=
+\left(
+\frac{\partial H}{\partial p_i},
+-\frac{\partial H}{\partial q_i}
+\right).\]</div>
+      <div class="reading-block"><p>La divergencia de este flujo en el espacio de fases es</p></div>
+      <div class="formula-block">\[\nabla_\Gamma\cdot X_H
+=
+
+\sum_i
+\left(
+\frac{\partial^2H}{\partial q_i\partial p_i}
+-
+
+\frac{\partial^2H}{\partial p_i\partial q_i}
+\right)=0.\]</div>
+      <div class="reading-block"><p>Por el teorema de transporte de volúmenes, si la divergencia del campo es cero, el volumen encerrado por una superficie que se mueve con el flujo permanece constante. Por tanto,</p></div>
+      <div class="formula-block">\[\frac{dV_\Gamma}{dt}=0.\]</div>
+      <div class="reading-block"><p>Esto es el teorema de Liouville.</p></div>
+      </details>
+      <details class="accordion">
+        <summary>27. Interpretación estadística</summary>
+      <div class="reading-block"><p>En mecánica estadística no se calcula la trayectoria exacta de cada partícula. Se considera un ensemble de sistemas compatibles con la información disponible. Cada sistema se representa por un punto en el espacio de fases. Si el número de puntos dentro de una región móvil se conserva y el volumen de esa región también, entonces la densidad \(D=N/V\) se conserva siguiendo el flujo.</p></div>
+      <div class="reading-block"><p>Por eso Liouville permite formular equilibrio estadístico. Si \(D\) no cambia en el tiempo, el ensemble está en equilibrio. Si además \(D=f(H)\), entonces el equilibrio se garantiza porque \(H\) es constante del movimiento y \(\{H,H\}=0\).</p></div>
+      </details>
+      <details class="accordion">
+        <summary>28. Ejemplo del armónico inverso por dos métodos</summary>
+      <div class="reading-block"><p>Primer método: transformación explícita.</p></div>
+      <div class="formula-block">\[q(t)=q_0\cosh t+p_0\sinh t,\qquad
+p(t)=q_0\sinh t+p_0\cosh t.\]</div>
+      <div class="reading-block"><p>El jacobiano es</p></div>
+      <div class="formula-block">\[J=
+\det
+\begin{pmatrix}
+\cosh t &amp; \sinh t\
+\sinh t &amp; \cosh t
+\end{pmatrix}
+=1.\]</div>
+      <div class="reading-block"><p>Luego cualquier área se conserva.</p></div>
+      <div class="reading-block"><p>Segundo método: cálculo de área del rectángulo.</p></div>
+      <div class="reading-block"><p>Los lados iniciales \((2a,0)\) y \((0,2b)\) evolucionan a</p></div>
+      <div class="formula-block">\[(2a\cosh t,2a\sinh t),
+\qquad
+(2b\sinh t,2b\cosh t).\]</div>
+      <div class="reading-block"><p>El área final es</p></div>
+      <div class="formula-block">\[4ab(\cosh^2t-\sinh^2t)=4ab.\]</div>
+      <div class="reading-block"><p>Coincide con el área inicial.</p></div>
+      </details>
+      <details class="accordion">
+        <summary>29. Liouville, Poisson y equilibrio estadístico</summary>
+      <div class="reading-block"><p>La evolución de cualquier función \(f(q,p,t)\) se escribe como</p></div>
+      <div class="formula-block">\[\frac{df}{dt}
+=
+
+\frac{\partial f}{\partial t}
++
+\{f,H\}.\]</div>
+      <div class="reading-block"><p>Aplicado a la densidad \(D\), Liouville impone</p></div>
+      <div class="formula-block">\[\frac{dD}{dt}=0.\]</div>
+      <div class="reading-block"><p>Por tanto,</p></div>
+      <div class="formula-block">\[\frac{\partial D}{\partial t}
+=
+
+-\{D,H\}.\]</div>
+      <div class="reading-block"><p>En equilibrio estadístico, \(\partial D/\partial t=0\), luego</p></div>
+      <div class="formula-block">\[\{D,H\}=0.\]</div>
+      <div class="reading-block"><p>Una forma natural de cumplirlo es \(D=f(H)\). Así, las distribuciones que dependen solo de constantes del movimiento son estacionarias.</p></div>
+      </details>
+      <details class="accordion">
+        <summary>30. Papel de Liouville como puente conceptual</summary>
+      <div class="reading-block"><p>Liouville conecta la mecánica hamiltoniana con la mecánica estadística porque permite tratar ensembles como fluidos incompresibles en espacio de fases. También prepara invariantes adiabáticos, porque en sistemas periódicos el área encerrada por una órbita de fase adquiere significado dinámico. En el oscilador armónico, el área de la elipse de fase es proporcional a \(E/\omega\), lo que anticipa la variable de acción.</p></div>
+      </details>
+      <details class="accordion">
+        <summary>31. Relacione flujo hamiltoniano, divergencia nula e incompresibilidad.</summary>
+      <div class="reading-block"><p>El Hamiltoniano genera un campo de velocidades \(X_H\). Su estructura canónica hace que la divergencia sea cero. Un campo con divergencia cero es incompresible. Por tanto, el flujo hamiltoniano conserva volúmenes en el espacio de fases.</p></div>
+      </details>
+      <details class="accordion">
+        <summary>32. Relacione no cruce, conservación de número de puntos y conservación de densidad.</summary>
+      <div class="reading-block"><p>El no cruce impide que puntos inicialmente dentro de una región móvil salgan o que puntos externos entren. Por tanto, el número \(N\) se conserva. Liouville añade que el volumen \(V\) también se conserva. Entonces la densidad \(D=N/V\) permanece constante siguiendo el flujo.</p></div>
+      </details>
+      <details class="accordion">
+        <summary>33. Relacione transformaciones canónicas y conservación del volumen de fase.</summary>
+      <div class="reading-block"><p>La evolución temporal hamiltoniana puede verse como una transformación canónica entre variables iniciales y finales. Las transformaciones canónicas preservan la estructura simpléctica y tienen jacobiano de módulo uno. Por eso conservan el volumen de fase.</p></div>
+      </details>
+      <details class="accordion">
+        <summary>34. Relacione \(D=f(H)\), Poisson y equilibrio estadístico.</summary>
+      <div class="reading-block"><p>Si \(D=f(H)\), entonces</p></div>
+      <div class="formula-block">\[\{D,H\}=f'(H)\{H,H\}=0.\]</div>
+      <div class="reading-block"><p>Si además \(D\) no depende explícitamente del tiempo, se cumple</p></div>
+      <div class="formula-block">\[\partial D/\partial t=0.\]</div>
+      <div class="reading-block"><p>La distribución es estacionaria y representa equilibrio estadístico.</p></div>
+      </details>
+      <details class="accordion">
+        <summary>35. Relacione disipación, contracción y ruptura de Liouville.</summary>
+      <div class="reading-block"><p>La disipación, como el rozamiento, suele introducir términos no hamiltonianos. Estos términos pueden dar divergencia negativa en el espacio de fases, lo que contrae volúmenes. Por tanto, una región de condiciones iniciales puede perder área o volumen de fase, rompiendo la conclusión de Liouville.</p></div>
+      </details>
+    </section>
+    <section class="page" id="resumen-final-de-repaso">
+      <div class="page-head"><h2>9. Resumen final de repaso</h2><span class="page-no">p.9</span></div>
+      <div class="reading-block"><p>Ideas principales:</p></div>
+      <ul class="check-list">
+        <li>El estado hamiltoniano vive en \((q,p)\).</li>
+        <li>Las ecuaciones de Hamilton generan un flujo en el espacio de fases.</li>
+        <li>Ese flujo tiene divergencia nula.</li>
+        <li>Divergencia nula implica conservación de volumen.</li>
+        <li>En 1D, volumen de fase significa área.</li>
+        <li>Una nube puede deformarse, pero no comprimirse.</li>
+        <li>La densidad del ensemble se conserva siguiendo el flujo.</li>
+        <li>Si \(D=f(H)\), la densidad es estacionaria.</li>
+        <li>El rozamiento rompe la estructura hamiltoniana ordinaria y puede contraer volumen.</li>
+      </ul>
+      <div class="reading-block"><p>Conceptos imprescindibles:</p></div>
+      <div class="formula-block">\[X_H=
+\left(
+\frac{\partial H}{\partial p_i},
+-\frac{\partial H}{\partial q_i}
+\right)\]</div>
+      <div class="formula-block">\[\nabla_\Gamma\cdot X_H=0\]</div>
+      <div class="formula-block">\[\frac{dV_\Gamma}{dt}=0\]</div>
+      <div class="formula-block">\[\frac{dD}{dt}
+=
+
+\frac{\partial D}{\partial t}
++
+\{D,H\}
+=0\]</div>
+      <div class="formula-block">\[D=f(H)\Rightarrow \{D,H\}=0\]</div>
+      <div class="reading-block"><p>Relaciones clave:</p></div>
+      <div class="formula-block">\[H\to X_H\to \nabla\cdot X_H=0\to V_\Gamma=\text{cte}\]</div>
+      <div class="formula-block">\[N=\text{cte},\quad V=\text{cte}\Rightarrow D=N/V=\text{cte}\]</div>
+      <div class="formula-block">\[\text{transformación canónica}\Rightarrow J=1\Rightarrow \text{volumen conservado}\]</div>
+      <div class="reading-block"><p>Errores que evitar:</p></div>
+      <ul class="check-list">
+        <li>Confundir espacio de fases con espacio físico.</li>
+        <li>Usar \((q,\dot q)\) en lugar de \((q,p)\).</li>
+        <li>Decir que se conserva la forma de la región.</li>
+        <li>Justificar Liouville solo por conservación de energía.</li>
+        <li>Confundir \(dD/dt\) con \(\partial D/\partial t\).</li>
+        <li>Aplicar Liouville sin comprobar estructura hamiltoniana.</li>
+      </ul>
+    </section>
+    <section class="page" id="checklist-de-dominio">
+      <div class="page-head"><h2>10. Checklist de dominio</h2><span class="page-no">p.10</span></div>
+      <ul class="check-list">
+        <li>Si no puedes definir espacio de fases, falta repasar variables canónicas.</li>
+        <li>Si no puedes escribir \(\dot q_i\) y \(\dot p_i\), falta repasar Hamilton.</li>
+        <li>Si no puedes construir \(X_H\), falta repasar flujo hamiltoniano.</li>
+        <li>Si no puedes calcular \(\nabla_\Gamma\cdot X_H\), falta repasar derivadas parciales.</li>
+        <li>Si no ves por qué las derivadas cruzadas se cancelan, falta repasar regularidad de \(H\).</li>
+        <li>Si confundes conservación de área con conservación de forma, revisar interpretación geométrica.</li>
+        <li>Si justificas Liouville por energía, revisar la demostración por divergencia.</li>
+        <li>Si confundes \((q,p)\) con \((q,\dot q)\), revisar momento canónico.</li>
+        <li>Si no puedes explicar \(D=N/V\), falta repasar ensemble.</li>
+        <li>Si confundes \(dD/dt\) y \(\partial D/\partial t\), revisar derivada material.</li>
+        <li>Si no puedes demostrar \(D=f(H)\Rightarrow\) estacionaria, revisar corchetes de Poisson.</li>
+        <li>Si no puedes resolver \(H=(p^2-q^2)/2\), falta practicar Hamiltonianos lineales.</li>
+        <li>Si no puedes calcular el jacobiano del armónico inverso, falta repasar determinantes \(2\times2\).</li>
+        <li>Si dices que con rozamiento se conserva el área, revisar sistemas disipativos.</li>
+        <li>Si puedes demostrar Liouville por divergencia y resolver el ejemplo UNED del rectángulo, el capítulo está suficientemente asentado.</li>
+      </ul>
+      <div class="reading-block"><p>[Confianza: Alta]</p></div>
+    </section>
+  </main>
+</div>
+</body>
+</html>

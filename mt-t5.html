@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="light dark" />
+  <title>Mecánica Teórica — T5 — Invariantes integrales y adiabáticos</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/icon-32.png" />
+  <link rel="icon" type="image/png" sizes="50x50" href="assets/icons/icon-50.png" />
+  <link rel="apple-touch-icon" sizes="100x100" href="assets/icons/icon-100.png" />
+  <meta name="theme-color" content="#6f42c1" />
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+  <link rel="stylesheet" href="assets/styles.css" />
+  <script defer src="assets/app.js"></script>
+</head>
+<body class="subject-mecanica-teorica">
+<div class="wrap">
+  <header class="cover">
+    <div class="top-actions"><a class="back-link" href="index.html">← Volver al índice</a></div>
+    <p class="eyebrow">UNED Física · Mecánica Teórica · Tema 5</p>
+    <h1>Guía de estudio — T5 Invariantes integrales e invariantes adiabáticos</h1>
+    <p class="subtitle">Liouville · invariantes integrales de Poincaré · acción · variables acción-ángulo · invariantes adiabáticos.</p>
+    <div class="chips"><span class="chip">UNED Física</span><span class="chip">Mecánica Teórica</span><span class="chip">MT5</span><span class="chip">MathJax</span><span class="chip">estado: maquetado</span></div>
+  </header>
+  <div class="toolbar no-print">
+    <nav><a href="#mapa">Mapa</a><a href="#prerrequisitos-minimos">Prerrequisitos</a><a href="#idea-central-del-capitulo">Idea central</a><a href="#desarrollo-completo-del-capitulo">Desarrollo</a><a href="#conceptos-clave">Conceptos</a><a href="#relaciones-entre-ideas">Relaciones</a><a href="#errores-habituales">Errores</a><a href="#preguntas-orientadas-a-examen">Preguntas</a><a href="#respuestas-modelo">Respuestas</a><a href="#resumen-final-de-repaso">Resumen</a><a href="#checklist-de-dominio">Checklist</a></nav>
+    <div class="toolbar-actions"><button class="btn" onclick="printReady()">Imprimir / guardar PDF</button><button class="btn secondary" onclick="openAllDetails()">Abrir todo</button><button class="btn secondary" onclick="closeAllDetails()">Cerrar acordeones</button></div>
+  </div>
+  <main>
+    <section class="page map-page" id="mapa">
+      <div class="page-head"><h2>Mapa clicable</h2><p class="section-lead">Ruta conceptual del tema.</p></div>
+      <div class="concept-map">
+        <a class="map-node" href="#prerrequisitos-minimos"><span>Prerrequisitos</span><small>fase · Hamilton · Poisson · canónicas · acción</small></a>
+        <a class="map-node" href="#idea-central-del-capitulo"><span>Idea central</span><small>estructuras geométricas que permanecen invariantes</small></a>
+        <a class="map-node" href="#desarrollo-completo-del-capitulo"><span>Desarrollo</span><small>Liouville · Poincaré · acción-ángulo · adiabáticos</small></a>
+        <a class="map-node" href="#conceptos-clave"><span>Conceptos clave</span><small>flujo · divergencia · acción · separatriz</small></a>
+        <a class="map-node" href="#relaciones-entre-ideas"><span>Relaciones</span><small>Hamilton → Liouville → Poincaré → acción → adiabático</small></a>
+        <a class="map-node" href="#errores-habituales"><span>Errores</span><small>energía ≠ volumen · rozamiento · factor 2π</small></a>
+        <a class="map-node" href="#preguntas-orientadas-a-examen"><span>Examen</span><small>fáciles · medias · difíciles · desarrollo</small></a>
+        <a class="map-node" href="#checklist-de-dominio"><span>Checklist</span><small>caja móvil · oscilador · densidades · acción</small></a>
+      </div>
+    </section>
+    <section class="page" id="prerrequisitos-minimos">
+      <div class="page-head"><h2>1. Prerrequisitos mínimos</h2><span class="page-no">p.1</span></div>
+      <article class="definition-card">
+        <h3>Espacio de fases.</h3>
+      <div class="reading-block"><p>Es el espacio formado por coordenadas generalizadas y momentos conjugados:</p></div>
+      <div class="formula-block">\[(q_1,\dots,q_n,p_1,\dots,p_n)\]</div>
+      <div class="reading-block"><p>Es necesario porque Liouville, los invariantes integrales y los invariantes adiabáticos no describen trayectorias solo en el espacio ordinario, sino regiones, curvas y volúmenes en el espacio de fases. En un sistema unidimensional, un punto de fase es \((q,p)\).</p></div>
+      </article>
+      <article class="definition-card">
+        <h3>Ecuaciones de Hamilton.</h3>
+      <div class="reading-block"><p>Son</p></div>
+      <div class="formula-block">\[\dot q_i=\frac{\partial H}{\partial p_i},\qquad
+\dot p_i=-\frac{\partial H}{\partial q_i}.\]</div>
+      <div class="reading-block"><p>Hacen que el movimiento sea un flujo en el espacio de fases. Son necesarias porque el teorema de Liouville se demuestra calculando la divergencia de ese flujo. Taylor presenta precisamente esta lectura: los puntos de fase se mueven según Hamilton y el volumen ocupado por una nube de puntos se conserva.</p></div>
+      </article>
+      <article class="definition-card">
+        <h3>Corchete de Poisson.</h3>
+      <div class="reading-block"><p>Para dos funciones \(A(q,p,t)\) y \(B(q,p,t)\),</p></div>
+      <div class="formula-block">\[\{A,B\}=\sum_i\left(
+\frac{\partial A}{\partial q_i}\frac{\partial B}{\partial p_i}
+-
+
+\frac{\partial A}{\partial p_i}\frac{\partial B}{\partial q_i}
+\right).\]</div>
+      <div class="reading-block"><p>Es necesario porque permite escribir la evolución como</p></div>
+      <div class="formula-block">\[\frac{dA}{dt}=\frac{\partial A}{\partial t}+\{A,H\}.\]</div>
+      <div class="reading-block"><p>En examen suele usarse para justificar si una densidad de estados es estacionaria o si una cantidad es constante del movimiento.</p></div>
+      </article>
+      <article class="definition-card">
+        <h3>Transformación canónica.</h3>
+      <div class="reading-block"><p>Es un cambio de variables \((q,p)\mapsto(Q,P)\) que conserva la forma de las ecuaciones de Hamilton. Es necesaria porque los invariantes integrales de Poincaré son cantidades que no cambian bajo transformaciones canónicas. Goldstein sitúa este contenido en el bloque de transformaciones canónicas, corchetes de Poisson e invariantes canónicos.</p></div>
+      </article>
+      <article class="definition-card">
+        <h3>Jacobiano.</h3>
+      <div class="reading-block"><p>Mide cómo cambia un elemento de área o volumen bajo un cambio de variables. En mecánica hamiltoniana, una transformación canónica tiene jacobiano de módulo uno en el espacio de fases; por eso conserva volumen. Goldstein presenta el volumen elemental de fase como invariante canónico.</p></div>
+      </article>
+      <article class="definition-card">
+        <h3>Movimiento periódico.</h3>
+      <div class="reading-block"><p>Es un movimiento que vuelve a la misma curva cerrada en el espacio de fases tras un periodo \(T\). Es necesario porque el invariante adiabático básico es la acción sobre una órbita cerrada:</p></div>
+      <div class="formula-block">\[J=\oint p,dq.\]</div>
+      </article>
+      <article class="definition-card">
+        <h3>Variables acción-ángulo.</h3>
+      <div class="reading-block"><p>Son variables canónicas \((J,w)\) adaptadas a sistemas periódicos. \(J\) mide el área encerrada por la órbita en fase; \(w\) parametriza la fase del movimiento. Son necesarias porque el teorema adiabático dice que \(J\) permanece casi constante cuando un parámetro externo cambia lentamente.</p></div>
+      </article>
+      <article class="definition-card">
+        <h3>Separación de escalas.</h3>
+      <div class="reading-block"><p>Significa que hay un tiempo rápido, el periodo de oscilación, y un tiempo lento, el tiempo en que cambia el parámetro externo. Es la condición física de los invariantes adiabáticos:</p></div>
+      <div class="formula-block">\[T\ll \Delta t \ll \frac{\lambda}{|\dot\lambda|}.\]</div>
+      <div class="reading-block"><p>En los exámenes UNED aparece en forma de intervalo de observación para un oscilador con frecuencia variable.</p></div>
+      </article>
+    </section>
+    <section class="page" id="idea-central-del-capitulo">
+      <div class="page-head"><h2>2. Idea central del capítulo</h2><span class="page-no">p.2</span></div>
+      <div class="reading-block"><p>El capítulo estudia qué permanece invariable cuando un sistema hamiltoniano evoluciona. No se limita a conservar energía, momento o momento angular. El foco pasa a estructuras geométricas del espacio de fases: áreas, volúmenes, integrales cerradas y acciones.</p></div>
+      <div class="reading-block"><p>La idea física es que la dinámica hamiltoniana no comprime ni expande el espacio de fases. Una nube de estados puede deformarse, estirarse o plegarse, pero no cambia su volumen. Esta es la lectura geométrica del teorema de Liouville: el flujo hamiltoniano se comporta como un fluido incompresible en el espacio de fases. Taylor lo formula así: el volumen encerrado por una superficie que se mueve con el flujo de Hamilton permanece constante.</p></div>
+      <div class="reading-block"><p>Después, el capítulo refina esa idea. No solo se conserva el volumen total de una región: ciertas integrales construidas con \(p,dq\) también son invariantes bajo transformaciones canónicas. Ahí entran los invariantes integrales de Poincaré. En una dimensión, el caso más importante es el área encerrada por una curva cerrada en el plano \((q,p)\).</p></div>
+      <div class="reading-block"><p>La segunda mitad del bloque introduce los invariantes adiabáticos. Si un sistema periódico cambia porque un parámetro externo varía lentamente, la energía normalmente no se conserva. Por ejemplo, un péndulo cuya longitud cambia lentamente recibe o cede trabajo. Sin embargo, la acción \(J\) sí permanece aproximadamente constante. Goldstein presenta este punto a partir del problema histórico del péndulo en la Conferencia Solvay de 1911 y señala que, para cambios suficientemente lentos, \(E/\nu\) permanece constante, es decir, la variable de acción.</p></div>
+      <div class="reading-block"><p>Dentro de Mecánica Teórica, este capítulo une Hamilton, Liouville, transformaciones canónicas, acción-ángulo y perturbaciones lentas. En examen aparece como bloque operativo: demostrar estacionariedad de densidades \(\rho(H)\), explicar la conservación de área en fase, aplicar \(J=\oint p,dq\) a una partícula entre paredes móviles y razonar el caso de un oscilador con frecuencia variable.</p></div>
+    </section>
+    <section class="page" id="desarrollo-completo-del-capitulo">
+      <div class="page-head"><h2>3. Desarrollo completo del capítulo</h2><span class="page-no">p.3</span></div>
+      <h3 id="3-1-el-flujo-hamiltoniano-como-movimiento-en-espacio-de-fases">3.1. El flujo hamiltoniano como movimiento en espacio de fases</h3>
+      <div class="reading-block"><p>Un sistema hamiltoniano no solo produce una trayectoria \(q(t)\). Produce una curva en el espacio de fases:</p></div>
+      <div class="formula-block">\[(q(t),p(t)).\]</div>
+      <div class="reading-block"><p>Si se toma un conjunto de condiciones iniciales, no se obtiene una sola curva, sino una nube de puntos. Cada punto evoluciona siguiendo las ecuaciones de Hamilton. La pregunta central es: ¿qué ocurre con el volumen ocupado por esa nube?</p></div>
+      <div class="reading-block"><p>La velocidad del flujo de fase es</p></div>
+      <div class="formula-block">\[\mathbf v_\Gamma=(\dot q_1,\dots,\dot q_n,\dot p_1,\dots,\dot p_n).\]</div>
+      <div class="reading-block"><p>Su divergencia es</p></div>
+      <div class="formula-block">\[\nabla_\Gamma\cdot \mathbf v_\Gamma
+=
+
+\sum_i
+\left(
+\frac{\partial \dot q_i}{\partial q_i}
++
+\frac{\partial \dot p_i}{\partial p_i}
+\right).\]</div>
+      <div class="reading-block"><p>Sustituyendo Hamilton:</p></div>
+      <div class="formula-block">\[\nabla_\Gamma\cdot \mathbf v_\Gamma
+=
+
+\sum_i
+\left(
+\frac{\partial^2 H}{\partial q_i\partial p_i}
+-
+
+\frac{\partial^2 H}{\partial p_i\partial q_i}
+\right)=0.\]</div>
+      <div class="reading-block"><p>La consecuencia es fuerte: el flujo hamiltoniano es incompresible. Puede deformar una región, pero no cambiar su volumen. Esta es la forma diferencial del teorema de Liouville.</p></div>
+      <div class="reading-block"><p>Ejemplo mínimo: en el oscilador armónico, una elipse en el plano \((q,p)\) rota alrededor del origen. La forma puede entenderse como movimiento de fase, pero el área encerrada no cambia.</p></div>
+      <h3 id="3-2-teorema-de-liouville">3.2. Teorema de Liouville</h3>
+      <div class="reading-block"><p>El teorema de Liouville afirma que el volumen de una región del espacio de fases se conserva bajo la evolución hamiltoniana:</p></div>
+      <div class="formula-block">\[d\Gamma=dq_1\cdots dq_n,dp_1\cdots dp_n,\]</div>
+      <div class="formula-block">\[\frac{d}{dt}\int_{\Omega(t)}d\Gamma=0.\]</div>
+      <div class="reading-block"><p>Esto no significa que cada coordenada \(q_i\) o cada momento \(p_i\) se conserve. Significa que la medida de la región ocupada por un conjunto de estados no cambia. La nube puede estirarse en una dirección y contraerse en otra.</p></div>
+      <div class="reading-block"><p>La interpretación estadística es inmediata. Si el número de sistemas dentro de un volumen elemental \(d\Gamma\) se conserva y el volumen también se conserva, entonces la densidad transportada con el flujo permanece constante:</p></div>
+      <div class="formula-block">\[\frac{d\rho}{dt}=0.\]</div>
+      <div class="reading-block"><p>En forma local:</p></div>
+      <div class="formula-block">\[\frac{\partial \rho}{\partial t}+\{\rho,H\}=0.\]</div>
+      <div class="reading-block"><p>Goldstein expone esta equivalencia entre conservación del volumen, conservación de la densidad transportada y condición de equilibrio \(\{\rho,H\}=0\). En particular, para sistemas conservativos, cualquier densidad que dependa solo de la energía es estacionaria.</p></div>
+      <div class="reading-block"><p>Ejemplo de examen: si</p></div>
+      <div class="formula-block">\[\rho(q,p,0)=f(H(q,p)),\]</div>
+      <div class="reading-block"><p>entonces</p></div>
+      <div class="formula-block">\[\frac{\partial \rho}{\partial t}=0,\qquad
+\{\rho,H\}=f'(H)\{H,H\}=0.\]</div>
+      <div class="reading-block"><p>Por tanto, \(\rho\) es estacionaria.</p></div>
+      <h3 id="3-3-invariantes-integrales-de-poincare">3.3. Invariantes integrales de Poincaré</h3>
+      <div class="reading-block"><p>Los invariantes integrales de Poincaré son integrales construidas en el espacio de fases que permanecen invariantes bajo transformaciones canónicas. El caso más útil para examen en un grado de libertad es</p></div>
+      <div class="formula-block">\[J=\oint p,dq.\]</div>
+      <div class="reading-block"><p>Geométricamente, esta integral es el área encerrada por una curva cerrada en el plano \((q,p)\), con signo según la orientación. Si el sistema evoluciona hamiltonianamente, esa área se conserva.</p></div>
+      <div class="reading-block"><p>Goldstein presenta el volumen de fase como miembro de una familia de invariantes integrales de Poincaré. El volumen elemental de fase se conserva porque el jacobiano de una transformación canónica tiene módulo uno.</p></div>
+      <div class="reading-block"><p>Para un grado de libertad:</p></div>
+      <div class="formula-block">\[\oint p,dq\]</div>
+      <div class="reading-block"><p>mide el área encerrada por la órbita. Para varios grados de libertad aparecen integrales de dimensión superior, pero el núcleo operativo para este bloque es reconocer que el formalismo hamiltoniano conserva estructuras geométricas, no solo valores escalares de energía.</p></div>
+      <div class="reading-block"><p>Ejemplo: si una partícula rebota entre dos paredes fijas, su órbita en fase está formada por dos ramas con \(p=+\sqrt{2mE}\) y \(p=-\sqrt{2mE}\). La integral cerrada vale</p></div>
+      <div class="formula-block">\[J=\oint p,dq=2pL.\]</div>
+      <h3 id="3-4-accion-como-area-de-fase">3.4. Acción como área de fase</h3>
+      <div class="reading-block"><p>En un sistema periódico de un grado de libertad, la acción es</p></div>
+      <div class="formula-block">\[J=\oint p,dq.\]</div>
+      <div class="reading-block"><p>Algunos textos usan la convención normalizada</p></div>
+      <div class="formula-block">\[I=\frac{1}{2\pi}\oint p,dq.\]</div>
+      <div class="reading-block"><p>Ambas expresan la misma información. La diferencia es solo un factor \(2\pi\). Para el oscilador armónico:</p></div>
+      <div class="formula-block">\[H=\frac{p^2}{2m}+\frac12m\omega^2q^2.\]</div>
+      <div class="reading-block"><p>La órbita de energía constante es una elipse en \((q,p)\). Su área es</p></div>
+      <div class="formula-block">\[J=\frac{2\pi E}{\omega},\]</div>
+      <div class="reading-block"><p>o bien</p></div>
+      <div class="formula-block">\[I=\frac{E}{\omega}.\]</div>
+      <div class="reading-block"><p>Esto conecta energía y frecuencia. Si \(\omega\) cambia lentamente, \(E\) no tiene por qué conservarse, pero \(E/\omega\) sí se conserva aproximadamente.</p></div>
+      <h3 id="3-5-variables-accion-angulo">3.5. Variables acción-ángulo</h3>
+      <div class="reading-block"><p>Las variables acción-ángulo sustituyen \((q,p)\) por \((J,w)\), donde \(J\) fija la órbita y \(w\) indica en qué punto de la órbita está el sistema. En un sistema autónomo integrable de un grado de libertad:</p></div>
+      <div class="formula-block">\[H=H(J),\]</div>
+      <div class="formula-block">\[\dot J=0,\qquad \dot w=\frac{\partial H}{\partial J}.\]</div>
+      <div class="reading-block"><p>La dinámica queda separada: \(J\) es constante y \(w\) avanza uniformemente. Esta es la forma más limpia de describir movimientos periódicos.</p></div>
+      <div class="reading-block"><p>Goldstein sitúa las variables acción-ángulo después de Hamilton-Jacobi y antes de los invariantes adiabáticos, porque la demostración adiabática usa precisamente que el sistema puede describirse mediante \(J\) y un ángulo rápido.</p></div>
+      <h3 id="3-6-invariantes-adiabaticos">3.6. Invariantes adiabáticos</h3>
+      <div class="reading-block"><p>Un invariante adiabático es una cantidad que permanece aproximadamente constante cuando un parámetro externo cambia lentamente. La palabra “adiabático” aquí no significa necesariamente termodinámico. Significa “lento respecto al periodo interno del sistema”.</p></div>
+      <div class="reading-block"><p>Sea</p></div>
+      <div class="formula-block">\[H(q,p;\lambda(t)),\]</div>
+      <div class="reading-block"><p>con \(\lambda(t)\) variando lentamente. Si para cada valor fijo de \(\lambda\) el movimiento es periódico, entonces</p></div>
+      <div class="formula-block">\[J=\oint p,dq\]</div>
+      <div class="reading-block"><p>permanece aproximadamente constante.</p></div>
+      <div class="reading-block"><p>La condición física es</p></div>
+      <div class="formula-block">\[T\ll T_\lambda,\]</div>
+      <div class="reading-block"><p>donde \(T\) es el periodo del movimiento y</p></div>
+      <div class="formula-block">\[T_\lambda\sim \frac{\lambda}{|\dot\lambda|}\]</div>
+      <div class="reading-block"><p>es el tiempo característico de cambio del parámetro.</p></div>
+      <div class="reading-block"><p>Goldstein demuestra que, al introducir la dependencia temporal lenta, la variación secular de \(J\) no aparece a primer orden en \(\dot\lambda\):</p></div>
+      <div class="formula-block">\[\dot J=O(\dot\lambda^2,\ddot\lambda).\]</div>
+      <div class="reading-block"><p>Por eso \(J\) es adiabáticamente invariante.</p></div>
+      <h3 id="3-7-oscilador-con-frecuencia-variable">3.7. Oscilador con frecuencia variable</h3>
+      <div class="reading-block"><p>Para</p></div>
+      <div class="formula-block">\[H=\frac{p^2}{2m}+\frac12m\omega(t)^2q^2,\]</div>
+      <div class="reading-block"><p>la acción normalizada es</p></div>
+      <div class="formula-block">\[I=\frac{E}{\omega}.\]</div>
+      <div class="reading-block"><p>Si \(\omega(t)\) varía lentamente,</p></div>
+      <div class="formula-block">\[\frac{E(t)}{\omega(t)}\approx \text{cte}.\]</div>
+      <div class="reading-block"><p>Por tanto, si la frecuencia aumenta lentamente, la energía también aumenta proporcionalmente. Si la frecuencia disminuye lentamente, la energía disminuye.</p></div>
+      <div class="reading-block"><p>La condición de intervalo usada en examen es:</p></div>
+      <div class="formula-block">\[\frac{2\pi}{\omega}\ll \Delta t\ll \frac{\omega}{|\dot\omega|}.\]</div>
+      <div class="reading-block"><p>La primera desigualdad dice que \(\Delta t\) contiene muchas oscilaciones. La segunda dice que durante ese intervalo la frecuencia apenas cambia. Así se puede promediar sobre el movimiento rápido sin perder la evolución lenta del parámetro.</p></div>
+      <h3 id="3-8-particula-entre-paredes-moviles">3.8. Partícula entre paredes móviles</h3>
+      <div class="reading-block"><p>Una partícula de masa \(m\) se mueve entre dos paredes separadas una distancia \(L(t)\). Para paredes fijas,</p></div>
+      <div class="formula-block">\[p=\sqrt{2mE},\]</div>
+      <div class="reading-block"><p>y la acción es</p></div>
+      <div class="formula-block">\[J=\oint p,dx=2pL.\]</div>
+      <div class="reading-block"><p>Si las paredes se mueven lentamente y no hay rozamiento, \(J\) es aproximadamente constante:</p></div>
+      <div class="formula-block">\[2L\sqrt{2mE}=\text{cte}.\]</div>
+      <div class="reading-block"><p>Entonces</p></div>
+      <div class="formula-block">\[L\sqrt{E}=\text{cte},\]</div>
+      <div class="formula-block">\[E\propto \frac{1}{L^2}.\]</div>
+      <div class="reading-block"><p>Si las paredes se acercan, \(L\) disminuye y \(E\) aumenta. Esa es la respuesta conceptual que suele pedir la UNED.</p></div>
+      <div class="reading-block"><p>El periodo entre choques es</p></div>
+      <div class="formula-block">\[T=\frac{2L}{v}
+=
+
+2L\sqrt{\frac{m}{2E}}.\]</div>
+      <div class="reading-block"><p>Como \(E\propto L^{-2}\), resulta</p></div>
+      <div class="formula-block">\[T\propto L^2.\]</div>
+      <h3 id="3-9-diferencia-entre-conservacion-exacta-y-conservacion-adiabatica">3.9. Diferencia entre conservación exacta y conservación adiabática</h3>
+      <div class="reading-block"><p>La energía se conserva si el Hamiltoniano no depende explícitamente del tiempo:</p></div>
+      <div class="formula-block">\[\frac{\partial H}{\partial t}=0.\]</div>
+      <div class="reading-block"><p>Pero si un parámetro externo cambia con el tiempo, entonces</p></div>
+      <div class="formula-block">\[H(q,p;\lambda(t))\]</div>
+      <div class="reading-block"><p>sí depende explícitamente del tiempo, y la energía puede variar. El invariante adiabático no dice que la energía sea constante. Dice que la acción \(J\) cambia mucho más lentamente que la energía y no tiene deriva secular a primer orden.</p></div>
+      <div class="reading-block"><p>Ejemplo: en una caja que se comprime lentamente, la energía cinética aumenta, pero \(2pL\) permanece aproximadamente constante.</p></div>
+    </section>
+    <section class="page" id="conceptos-clave">
+      <div class="page-head"><h2>4. Conceptos clave</h2><span class="page-no">p.4</span></div>
+      <article class="definition-card">
+        <h3>Flujo hamiltoniano.</h3>
+      <div class="reading-block"><p>Definición: campo de velocidades en el espacio de fases generado por las ecuaciones de Hamilton. Explicación: cada punto \((q,p)\) se mueve según \((\dot q,\dot p)\). Ejemplo: para \(H=p^2/2m+V(q)\), \(\dot q=p/m\), \(\dot p=-V'(q)\). Relación: base del teorema de Liouville. Examen: “Demuestre que el flujo hamiltoniano es incompresible”.</p></div>
+      </article>
+      <article class="definition-card">
+        <h3>Divergencia en espacio de fases.</h3>
+      <div class="reading-block"><p>Definición:</p></div>
+      <div class="formula-block">\[\nabla_\Gamma\cdot\mathbf v_\Gamma
+=
+
+\sum_i
+\left(
+\frac{\partial \dot q_i}{\partial q_i}
++
+\frac{\partial \dot p_i}{\partial p_i}
+\right).\]</div>
+      <div class="reading-block"><p>Explicación: mide si un volumen de fase se expande o contrae localmente. Ejemplo: en sistemas hamiltonianos vale cero. Relación: divergencia cero implica Liouville. Examen: “Calcule la divergencia del campo de fase y deduzca la conservación de volumen”.</p></div>
+      </article>
+      <article class="definition-card">
+        <h3>Teorema de Liouville.</h3>
+      <div class="reading-block"><p>Definición: el volumen de una región del espacio de fases se conserva bajo evolución hamiltoniana. Explicación: el sistema puede deformar una nube de estados, pero no comprimirla. Ejemplo: un rectángulo en \((q,p)\) puede convertirse en una región inclinada, pero conserva área. Relación: caso dinámico de los invariantes canónicos. Examen: “Demuestre que se conserva el área en fase para un Hamiltoniano dado”.</p></div>
+      </article>
+      <article class="definition-card">
+        <h3>Densidad de estados.</h3>
+      <div class="reading-block"><p>Definición: función \(\rho(q,p,t)\) que mide cuántos sistemas hay por unidad de volumen de fase. Explicación: Liouville implica que la densidad transportada con el flujo se conserva. Ejemplo: \(\rho=f(H)\) es estacionaria si \(H\) es autónomo. Relación: conecta mecánica hamiltoniana y mecánica estadística. Examen: “Demuestre que una densidad que depende solo del Hamiltoniano es estacionaria”.</p></div>
+      </article>
+      <article class="definition-card">
+        <h3>Invariante integral de Poincaré.</h3>
+      <div class="reading-block"><p>Definición: integral en el espacio de fases que permanece invariante bajo transformaciones canónicas. Explicación: expresa que la geometría simpléctica se conserva. Ejemplo:</p></div>
+      <div class="formula-block">\[\oint p,dq.\]</div>
+      <div class="reading-block"><p>Relación: la acción \(J\) es el caso más operativo en un grado de libertad. Examen: “Explique por qué el área encerrada por una órbita periódica en fase es invariante”.</p></div>
+      </article>
+      <article class="definition-card">
+        <h3>Acción.</h3>
+      <div class="reading-block"><p>Definición:</p></div>
+      <div class="formula-block">\[J=\oint p,dq.\]</div>
+      <div class="reading-block"><p>Explicación: mide el área de una órbita cerrada en el espacio de fases. Ejemplo: para el oscilador armónico, \(J=2\pi E/\omega\). Relación: es el invariante adiabático fundamental. Examen: “Calcule la acción de una partícula entre paredes”.</p></div>
+      </article>
+      <article class="definition-card">
+        <h3>Variable angular.</h3>
+      <div class="reading-block"><p>Definición: coordenada periódica que indica la fase del movimiento sobre una órbita. Explicación: en variables acción-ángulo, el sistema se reduce a \(J=\text{cte}\), \(w=\omega t+\alpha\). Ejemplo: fase del oscilador armónico. Relación: separa movimiento rápido y evolución lenta. Examen: “Explique por qué las variables acción-ángulo son útiles para invariantes adiabáticos”.</p></div>
+      </article>
+      <article class="definition-card">
+        <h3>Invariante adiabático.</h3>
+      <div class="reading-block"><p>Definición: cantidad aproximadamente constante bajo variación lenta de un parámetro externo. Explicación: no se conserva exactamente, pero no presenta variación secular a primer orden. Ejemplo:</p></div>
+      <div class="formula-block">\[\frac{E}{\omega}\approx \text{cte}\]</div>
+      <div class="reading-block"><p>en un oscilador de frecuencia variable. Relación: requiere movimiento periódico e integrabilidad. Examen: “Determine cómo cambia la energía si \(\omega(t)\) aumenta lentamente”.</p></div>
+      </article>
+      <article class="definition-card">
+        <h3>Condición adiabática.</h3>
+      <div class="reading-block"><p>Definición:</p></div>
+      <div class="formula-block">\[T\ll T_\lambda.\]</div>
+      <div class="reading-block"><p>Explicación: el sistema realiza muchas oscilaciones antes de que el parámetro cambie apreciablemente. Ejemplo:</p></div>
+      <div class="formula-block">\[\frac{2\pi}{\omega}\ll \Delta t\ll \frac{\omega}{|\dot\omega|}.\]</div>
+      <div class="reading-block"><p>Relación: permite promediar sobre el ángulo rápido. Examen: “Interprete físicamente las dos desigualdades del intervalo \(\Delta t\)”.</p></div>
+      </article>
+      <article class="definition-card">
+        <h3>Separatriz.</h3>
+      <div class="reading-block"><p>Definición: curva que separa regiones cualitativamente distintas del movimiento en fase. Explicación: cerca de una separatriz el periodo puede hacerse muy grande y falla la separación de escalas. Ejemplo: péndulo cerca de la energía de inversión. Relación: limita la validez del invariante adiabático. Examen: “Indique una situación donde la invariancia adiabática deje de ser válida”.</p></div>
+      </article>
+    </section>
+    <section class="page" id="relaciones-entre-ideas">
+      <div class="page-head"><h2>5. Relaciones entre ideas</h2><span class="page-no">p.5</span></div>
+      <div class="reading-block"><p>La cadena conceptual es:</p></div>
+      <div class="formula-block">\[\text{Hamilton} \rightarrow \text{flujo de fase} \rightarrow \text{divergencia cero} \rightarrow \text{Liouville}.\]</div>
+      <div class="reading-block"><p>Liouville dice que el volumen se conserva. Los invariantes de Poincaré afinan esa idea: no solo se conserva el volumen total, sino ciertas integrales geométricas ligadas a la estructura canónica.</p></div>
+      <div class="reading-block"><p>Después aparece la acción:</p></div>
+      <div class="formula-block">\[J=\oint p,dq.\]</div>
+      <div class="reading-block"><p>La acción es simultáneamente un invariante integral y la variable lenta relevante en sistemas periódicos. Por eso conecta Poincaré con invariancia adiabática.</p></div>
+      <div class="reading-block"><p>La energía y la acción no cumplen el mismo papel. La energía depende del Hamiltoniano y puede cambiar si el Hamiltoniano depende explícitamente del tiempo. La acción depende de la geometría de la órbita en fase y puede conservarse aproximadamente aunque haya intercambio de energía.</p></div>
+      <div class="reading-block"><p>Jerarquía:</p></div>
+      <div class="formula-block">\[\text{estructura hamiltoniana}
+\supset
+\text{transformaciones canónicas}
+\supset
+\text{invariantes de Poincaré}
+\supset
+\text{acción}
+\supset
+\text{invariante adiabático}.\]</div>
+      <div class="reading-block"><p>Oposición importante:</p></div>
+      <div class="formula-block">\[\text{conservación exacta}
+\neq
+\text{invariancia adiabática}.\]</div>
+      <div class="reading-block"><p>La conservación exacta requiere simetría exacta o ausencia de dependencia temporal. La invariancia adiabática requiere cambio lento y periodicidad.</p></div>
+      <div class="reading-block"><p>Históricamente, los invariantes adiabáticos fueron importantes en la antigua teoría cuántica porque las reglas de cuantización se formulaban sobre acciones. Goldstein destaca explícitamente esta relación con el desarrollo inicial de la mecánica cuántica.</p></div>
+    </section>
+    <section class="page" id="errores-habituales">
+      <div class="page-head"><h2>6. Errores habituales</h2><span class="page-no">p.6</span></div>
+      <details class="accordion">
+        <summary>Error 1: creer que Liouville conserva la forma de la región.</summary>
+      <div class="reading-block"><p>Está mal porque Liouville conserva volumen, no geometría. Corrección: una región puede estirarse y deformarse. Incorrecto: “El rectángulo de fase sigue siendo rectángulo”. Correcto: “El área se conserva aunque la figura se deforme”.</p></div>
+      </details>
+      <details class="accordion">
+        <summary>Error 2: confundir conservación de volumen con conservación de energía.</summary>
+      <div class="reading-block"><p>Está mal porque Liouville vale para el volumen de fase; la energía es una función concreta. Corrección: si \(H\) no depende explícitamente del tiempo, entonces \(H\) se conserva; Liouville es otra propiedad. Incorrecto: “Como se conserva el volumen, se conserva la energía”. Correcto: “El volumen se conserva por estructura hamiltoniana; la energía se conserva si \(\partial H/\partial t=0\)”.</p></div>
+      </details>
+      <details class="accordion">
+        <summary>Error 3: aplicar invariantes adiabáticos con rozamiento.</summary>
+      <div class="reading-block"><p>Está mal porque el rozamiento no es dinámica hamiltoniana conservativa. Corrección: con disipación, \(J\) no tiene por qué conservarse. Incorrecto: “Con \(F=-kv\), \(J=2pL\) constante”. Correcto: “Con rozamiento, \(p\) disminuye; para paredes fijas, el periodo aumenta”.</p></div>
+      </details>
+      <details class="accordion">
+        <summary>Error 4: olvidar que el cambio debe ser lento.</summary>
+      <div class="reading-block"><p>Está mal porque si el parámetro cambia bruscamente no hay invariancia adiabática. Corrección: debe cumplirse \(T\ll T_\lambda\). Incorrecto: “Si la pared se mueve, \(J\) siempre se conserva”. Correcto: “\(J\) se conserva aproximadamente si la pared se mueve lentamente respecto al tiempo entre choques”.</p></div>
+      </details>
+      <details class="accordion">
+        <summary>Error 5: usar \(E=\text{cte}\) en una caja con paredes móviles.</summary>
+      <div class="reading-block"><p>Está mal porque las paredes hacen trabajo sobre la partícula. Corrección: usar \(J=2L\sqrt{2mE}\). Incorrecto: “Al acercarse las paredes, \(E\) sigue constante”. Correcto: “Al acercarse las paredes, \(E\propto L^{-2}\)”.</p></div>
+      </details>
+      <details class="accordion">
+        <summary>Error 6: perder el factor \(2\pi\) en la acción.</summary>
+      <div class="reading-block"><p>Está mal si se mezclan convenciones. Corrección: declarar convención. Incorrecto: “\(J=E/\omega\)” sin especificar. Correcto: “Si \(I=(1/2\pi)\oint p,dq\), entonces \(I=E/\omega\); si \(J=\oint p,dq\), entonces \(J=2\pi E/\omega\)”.</p></div>
+      </details>
+      <details class="accordion">
+        <summary>Error 7: confundir \(\nu\) con \(\omega\).</summary>
+      <div class="reading-block"><p>Está mal porque \(\omega=2\pi\nu\). Corrección: ajustar el factor \(2\pi\). Incorrecto: “\(E/\nu=E/\omega\)”. Correcto: “\(E/\nu=2\pi E/\omega\)”.</p></div>
+      </details>
+      <details class="accordion">
+        <summary>Error 8: interpretar \(\rho=f(H)\) como estacionaria aunque \(H\) dependa explícitamente de \(t\).</summary>
+      <div class="reading-block"><p>Está mal porque si \(H=H(q,p,t)\), la dependencia temporal puede romper la estacionariedad. Corrección: el argumento básico exige Hamiltoniano autónomo o tratar explícitamente \(\partial\rho/\partial t\). Incorrecto: “Toda \(\rho=f(H)\) es estacionaria siempre”. Correcto: “Para \(H\) autónomo, \(\{\rho,H\}=0\), luego \(\rho\) es estacionaria”.</p></div>
+      </details>
+      <details class="accordion">
+        <summary>Error 9: creer que una trayectoria individual ocupa volumen.</summary>
+      <div class="reading-block"><p>Está mal porque una trayectoria es una curva; el volumen se refiere a un conjunto de condiciones iniciales. Corrección: Liouville se aplica a nubes de puntos de fase. Incorrecto: “La partícula conserva su volumen de fase”. Correcto: “Un conjunto de estados próximos conserva volumen de fase”.</p></div>
+      </details>
+      <details class="accordion">
+        <summary>Error 10: aplicar acción adiabática a movimiento no periódico.</summary>
+      <div class="reading-block"><p>Está mal porque \(\oint p,dq\) exige una órbita cerrada o movimiento integrable. Corrección: comprobar periodicidad antes. Incorrecto: “Cualquier sistema lento tiene \(J\) constante”. Correcto: “El invariante adiabático básico se aplica a sistemas periódicos o integrables”.</p></div>
+      </details>
+    </section>
+    <section class="page" id="preguntas-orientadas-a-examen">
+      <div class="page-head"><h2>7. Preguntas orientadas a examen</h2><span class="page-no">p.7</span></div>
+      <h3 id="10-preguntas-faciles">10 preguntas fáciles</h3>
+      <ol class="question-list">
+        <li>Define espacio de fases.</li>
+        <li>Escribe las ecuaciones de Hamilton.</li>
+        <li>¿Qué afirma el teorema de Liouville?</li>
+        <li>¿Qué significa que el flujo hamiltoniano sea incompresible?</li>
+        <li>Define el corchete de Poisson.</li>
+        <li>¿Qué es una transformación canónica?</li>
+        <li>Define la acción \(J\) para un sistema periódico.</li>
+        <li>¿Qué es un invariante adiabático?</li>
+        <li>¿Qué condición temporal debe cumplirse para hablar de variación adiabática?</li>
+        <li>¿Por qué la energía puede no conservarse si cambia un parámetro externo?</li>
+      </ol>
+      <h3 id="10-preguntas-medias">10 preguntas medias</h3>
+      <ol class="question-list">
+        <li>Demuestra que la divergencia del flujo hamiltoniano es cero.</li>
+        <li>Explica por qué una densidad \(\rho=f(H)\) es estacionaria si \(H\) es autónomo.</li>
+        <li>Calcula \(J\) para una partícula entre paredes separadas una distancia \(L\).</li>
+        <li>Deduce cómo varía \(E\) con \(L\) para paredes móviles lentas.</li>
+        <li>Deduce cómo varía el periodo \(T\) con \(L\) en la caja unidimensional adiabática.</li>
+        <li>Calcula la acción del oscilador armónico en función de \(E\) y \(\omega\).</li>
+        <li>Interpreta físicamente \(2\pi/\omega\ll \Delta t\ll \omega/|\dot\omega|\).</li>
+        <li>Explica por qué el área en \((q,p)\) es un invariante canónico.</li>
+        <li>Distingue entre conservación exacta e invariancia adiabática.</li>
+        <li>Explica qué falla si hay rozamiento.</li>
+      </ol>
+      <h3 id="5-preguntas-dificiles">5 preguntas difíciles</h3>
+      <ol class="question-list">
+        <li>Demuestra la ecuación de Liouville para \(\rho(q,p,t)\).</li>
+        <li>Relaciona el invariante de Poincaré \(\oint p,dq\) con la variable acción.</li>
+        <li>Para un oscilador con \(\omega(t)\) lentamente variable, deduce la ley \(E/\omega\simeq\text{cte}\).</li>
+        <li>Si en una caja unidimensional \(E(t)=E_0e^{\alpha t}\), deduce \(L(t)\) compatible con invariancia adiabática.</li>
+        <li>Explica por qué cerca de una separatriz puede fallar la invariancia adiabática.</li>
+      </ol>
+      <h3 id="5-preguntas-de-desarrollo-largo">5 preguntas de desarrollo largo</h3>
+      <ol class="question-list">
+        <li>Expón el teorema de Liouville, su demostración y su interpretación física.</li>
+        <li>Desarrolla la relación entre transformaciones canónicas, invariantes de Poincaré y conservación de volumen de fase.</li>
+        <li>Explica el concepto de variable acción-ángulo y su papel en los invariantes adiabáticos.</li>
+        <li>Estudia la partícula entre paredes móviles como ejemplo de invariante adiabático.</li>
+        <li>Estudia el oscilador armónico de frecuencia lentamente variable.</li>
+      </ol>
+      <h3 id="5-preguntas-de-relacion-entre-conceptos">5 preguntas de relación entre conceptos</h3>
+      <ol class="question-list">
+        <li>Relaciona Liouville con mecánica estadística.</li>
+        <li>Relaciona acción adiabática y antigua cuantización.</li>
+        <li>Relaciona simetría, conservación e invariancia canónica.</li>
+        <li>Relaciona energía, frecuencia y acción en el oscilador armónico.</li>
+        <li>Relaciona el movimiento de paredes en una caja con el trabajo externo y el aumento de energía.</li>
+      </ol>
+    </section>
+    <section class="page" id="respuestas-modelo">
+      <div class="page-head"><h2>8. Respuestas modelo</h2><span class="page-no">p.8</span></div>
+      <details class="accordion">
+        <summary>Respuesta 1</summary>
+      <div class="reading-block"><p>El espacio de fases es el espacio de estados \((q_i,p_i)\). Cada punto representa una configuración completa instantánea del sistema.</p></div>
+      </details>
+      <details class="accordion">
+        <summary>Respuesta 2</summary>
+      <div class="reading-block"><p>Las ecuaciones de Hamilton son</p></div>
+      <div class="formula-block">\[\dot q_i=\frac{\partial H}{\partial p_i},\qquad
+\dot p_i=-\frac{\partial H}{\partial q_i}.\]</div>
+      </details>
+      <details class="accordion">
+        <summary>Respuesta 3</summary>
+      <div class="reading-block"><p>El teorema de Liouville afirma que el volumen de una región del espacio de fases se conserva bajo evolución hamiltoniana.</p></div>
+      </details>
+      <details class="accordion">
+        <summary>Respuesta 4</summary>
+      <div class="reading-block"><p>Significa que una nube de puntos de fase no se comprime ni se expande; puede deformarse, pero conserva volumen.</p></div>
+      </details>
+      <details class="accordion">
+        <summary>Respuesta 5</summary>
+      <div class="reading-block"><p>El corchete de Poisson es</p></div>
+      <div class="formula-block">\[\{A,B\}=\sum_i\left(
+\frac{\partial A}{\partial q_i}\frac{\partial B}{\partial p_i}
+-
+
+\frac{\partial A}{\partial p_i}\frac{\partial B}{\partial q_i}
+\right).\]</div>
+      </details>
+      <details class="accordion">
+        <summary>Respuesta 6</summary>
+      <div class="reading-block"><p>Una transformación canónica es un cambio de variables que conserva la forma hamiltoniana de las ecuaciones de movimiento.</p></div>
+      </details>
+      <details class="accordion">
+        <summary>Respuesta 7</summary>
+      <div class="reading-block"><p>La acción de un sistema periódico es</p></div>
+      <div class="formula-block">\[J=\oint p,dq.\]</div>
+      <div class="reading-block"><p>Mide el área encerrada por la órbita en el plano de fase.</p></div>
+      </details>
+      <details class="accordion">
+        <summary>Respuesta 8</summary>
+      <div class="reading-block"><p>Un invariante adiabático es una cantidad que permanece aproximadamente constante cuando un parámetro externo cambia lentamente respecto al periodo del movimiento.</p></div>
+      </details>
+      <details class="accordion">
+        <summary>Respuesta 9</summary>
+      <div class="reading-block"><p>Debe cumplirse que el periodo rápido sea mucho menor que el tiempo característico de cambio del parámetro:</p></div>
+      <div class="formula-block">\[T\ll \frac{\lambda}{|\dot\lambda|}.\]</div>
+      </details>
+      <details class="accordion">
+        <summary>Respuesta 10</summary>
+      <div class="reading-block"><p>Porque si \(H=H(q,p;\lambda(t))\), entonces el Hamiltoniano depende explícitamente del tiempo y puede haber trabajo externo.</p></div>
+      </details>
+      <details class="accordion">
+        <summary>Respuesta 11</summary>
+      <div class="reading-block"><p>Se calcula</p></div>
+      <div class="formula-block">\[\nabla_\Gamma\cdot\mathbf v_\Gamma
+=
+
+\sum_i
+\left(
+\frac{\partial \dot q_i}{\partial q_i}
++
+\frac{\partial \dot p_i}{\partial p_i}
+\right).\]</div>
+      <div class="reading-block"><p>Con Hamilton,</p></div>
+      <div class="formula-block">\[\frac{\partial \dot q_i}{\partial q_i}
+=
+
+\frac{\partial^2H}{\partial q_i\partial p_i},
+\qquad
+\frac{\partial \dot p_i}{\partial p_i}
+=
+
+-\frac{\partial^2H}{\partial p_i\partial q_i}.\]</div>
+      <div class="reading-block"><p>La suma se anula por igualdad de derivadas cruzadas. Por tanto, el flujo es incompresible.</p></div>
+      </details>
+      <details class="accordion">
+        <summary>Respuesta 12</summary>
+      <div class="reading-block"><p>Si \(\rho=f(H)\) y \(H\) no depende explícitamente del tiempo,</p></div>
+      <div class="formula-block">\[\frac{\partial\rho}{\partial t}=0,\]</div>
+      <div class="reading-block"><p>y</p></div>
+      <div class="formula-block">\[\{\rho,H\}=f'(H)\{H,H\}=0.\]</div>
+      <div class="reading-block"><p>Luego</p></div>
+      <div class="formula-block">\[\frac{\partial\rho}{\partial t}+\{\rho,H\}=0.\]</div>
+      <div class="reading-block"><p>La densidad es estacionaria.</p></div>
+      </details>
+      <details class="accordion">
+        <summary>Respuesta 13</summary>
+      <div class="reading-block"><p>En una caja unidimensional, durante ida y vuelta:</p></div>
+      <div class="formula-block">\[J=\oint p,dx=pL+(-p)(-L)=2pL.\]</div>
+      <div class="reading-block"><p>Como \(p=\sqrt{2mE}\),</p></div>
+      <div class="formula-block">\[J=2L\sqrt{2mE}.\]</div>
+      </details>
+      <details class="accordion">
+        <summary>Respuesta 14</summary>
+      <div class="reading-block"><p>Si \(J\) es constante:</p></div>
+      <div class="formula-block">\[2L\sqrt{2mE}=\text{cte}.\]</div>
+      <div class="reading-block"><p>Por tanto,</p></div>
+      <div class="formula-block">\[L\sqrt E=\text{cte},
+\qquad
+E\propto L^{-2}.\]</div>
+      </details>
+      <details class="accordion">
+        <summary>Respuesta 15</summary>
+      <div class="reading-block"><p>El periodo es</p></div>
+      <div class="formula-block">\[T=\frac{2L}{v}=2L\sqrt{\frac{m}{2E}}.\]</div>
+      <div class="reading-block"><p>Como \(E\propto L^{-2}\),</p></div>
+      <div class="formula-block">\[T\propto L^2.\]</div>
+      </details>
+      <details class="accordion">
+        <summary>Respuesta 16</summary>
+      <div class="reading-block"><p>Para el oscilador armónico, la órbita de energía constante es una elipse de área</p></div>
+      <div class="formula-block">\[J=\oint p,dq=\frac{2\pi E}{\omega}.\]</div>
+      <div class="reading-block"><p>Con acción normalizada,</p></div>
+      <div class="formula-block">\[I=\frac{J}{2\pi}=\frac{E}{\omega}.\]</div>
+      </details>
+      <details class="accordion">
+        <summary>Respuesta 17</summary>
+      <div class="reading-block"><p>La desigualdad</p></div>
+      <div class="formula-block">\[\frac{2\pi}{\omega}\ll \Delta t\]</div>
+      <div class="reading-block"><p>dice que el intervalo contiene muchas oscilaciones. La desigualdad</p></div>
+      <div class="formula-block">\[\Delta t\ll \frac{\omega}{|\dot\omega|}\]</div>
+      <div class="reading-block"><p>dice que la frecuencia apenas cambia durante ese intervalo. Permite promediar el movimiento rápido.</p></div>
+      </details>
+      <details class="accordion">
+        <summary>Respuesta 18</summary>
+      <div class="reading-block"><p>Porque las transformaciones canónicas conservan la estructura simpléctica y tienen jacobiano de módulo uno en el espacio de fases. En un grado de libertad, eso implica conservación del área \(dq,dp\).</p></div>
+      </details>
+      <details class="accordion">
+        <summary>Respuesta 19</summary>
+      <div class="reading-block"><p>Una conservación exacta se cumple de forma estricta por una simetría o por ausencia de dependencia temporal. Una invariancia adiabática se cumple aproximadamente bajo variación lenta y puede tener correcciones de orden superior.</p></div>
+      </details>
+      <details class="accordion">
+        <summary>Respuesta 20</summary>
+      <div class="reading-block"><p>El rozamiento rompe la estructura hamiltoniana conservativa. El volumen de fase puede contraerse y \(J\) deja de ser necesariamente constante.</p></div>
+      </details>
+      <details class="accordion">
+        <summary>Respuesta 21</summary>
+      <div class="reading-block"><p>La densidad satisface una ecuación de continuidad en fase:</p></div>
+      <div class="formula-block">\[\frac{\partial \rho}{\partial t}
++
+\nabla_\Gamma\cdot(\rho\mathbf v_\Gamma)=0.\]</div>
+      <div class="reading-block"><p>Como</p></div>
+      <div class="formula-block">\[\nabla_\Gamma\cdot\mathbf v_\Gamma=0,\]</div>
+      <div class="reading-block"><p>queda</p></div>
+      <div class="formula-block">\[\frac{\partial \rho}{\partial t}
++
+\mathbf v_\Gamma\cdot\nabla_\Gamma\rho=0.\]</div>
+      <div class="reading-block"><p>Esto equivale a</p></div>
+      <div class="formula-block">\[\frac{d\rho}{dt}=0\]</div>
+      <div class="reading-block"><p>o</p></div>
+      <div class="formula-block">\[\frac{\partial\rho}{\partial t}+\{\rho,H\}=0.\]</div>
+      </details>
+      <details class="accordion">
+        <summary>Respuesta 22</summary>
+      <div class="reading-block"><p>El invariante</p></div>
+      <div class="formula-block">\[\oint p,dq\]</div>
+      <div class="reading-block"><p>es precisamente la acción de una órbita periódica. En variables acción-ángulo, esa cantidad se convierte en una coordenada canónica \(J\) que etiqueta la órbita. Por eso la conservación geométrica de Poincaré se transforma en una herramienta dinámica.</p></div>
+      </details>
+      <details class="accordion">
+        <summary>Respuesta 23</summary>
+      <div class="reading-block"><p>Para el oscilador,</p></div>
+      <div class="formula-block">\[I=\frac{E}{\omega}.\]</div>
+      <div class="reading-block"><p>Si \(\omega(t)\) cambia lentamente, \(I\) es adiabáticamente invariante:</p></div>
+      <div class="formula-block">\[\frac{E(t)}{\omega(t)}\simeq \text{cte}.\]</div>
+      <div class="reading-block"><p>Luego</p></div>
+      <div class="formula-block">\[E(t)\simeq E_0\frac{\omega(t)}{\omega_0}.\]</div>
+      </details>
+      <details class="accordion">
+        <summary>Respuesta 24</summary>
+      <div class="reading-block"><p>En la caja,</p></div>
+      <div class="formula-block">\[L\sqrt{E}=\text{cte}.\]</div>
+      <div class="reading-block"><p>Si</p></div>
+      <div class="formula-block">\[E(t)=E_0e^{\alpha t},\]</div>
+      <div class="reading-block"><p>entonces</p></div>
+      <div class="formula-block">\[L(t)\sqrt{E_0e^{\alpha t}}=L_0\sqrt{E_0}.\]</div>
+      <div class="reading-block"><p>Por tanto,</p></div>
+      <div class="formula-block">\[L(t)=L_0e^{-\alpha t/2}.\]</div>
+      </details>
+      <details class="accordion">
+        <summary>Respuesta 25</summary>
+      <div class="reading-block"><p>Cerca de una separatriz, el periodo del movimiento puede crecer mucho o divergir. Entonces deja de existir una separación clara entre tiempo rápido y tiempo lento. Sin esa separación, el promedio adiabático deja de ser fiable.</p></div>
+      </details>
+      <details class="accordion">
+        <summary>Respuesta 26</summary>
+      <div class="reading-block"><p>Liouville afirma que la evolución hamiltoniana conserva el volumen de fase. Se demuestra calculando la divergencia del flujo \((\dot q,\dot p)\). Las ecuaciones de Hamilton hacen que las derivadas cruzadas se cancelen, por lo que la divergencia es cero. Físicamente, una nube de estados se comporta como un fluido incompresible: puede deformarse, pero no cambiar su volumen. En estadística, esto implica que la densidad transportada con el flujo permanece constante.</p></div>
+      </details>
+      <details class="accordion">
+        <summary>Respuesta 27</summary>
+      <div class="reading-block"><p>Una transformación canónica conserva la forma de Hamilton. Esa conservación equivale a preservar la estructura simpléctica. Como consecuencia, el jacobiano en el espacio de fases tiene módulo uno y el volumen \(dq,dp\) se conserva. Los invariantes de Poincaré generalizan esta idea a integrales sobre curvas y subvariedades. En un grado de libertad, el invariante más importante es \(\oint p,dq\).</p></div>
+      </details>
+      <details class="accordion">
+        <summary>Respuesta 28</summary>
+      <div class="reading-block"><p>En sistemas periódicos, las variables acción-ángulo sustituyen la descripción \((q,p)\) por \((J,w)\). La acción \(J\) fija la órbita; el ángulo \(w\) indica la posición sobre ella. Si el sistema es autónomo, \(J\) es constante y \(w\) avanza uniformemente. Si un parámetro cambia lentamente, \(J\) deja de ser exactamente constante, pero su variación secular de primer orden se anula. Por eso \(J\) es el invariante adiabático natural.</p></div>
+      </details>
+      <details class="accordion">
+        <summary>Respuesta 29</summary>
+      <div class="reading-block"><p>Una partícula entre paredes separadas por \(L\) tiene acción</p></div>
+      <div class="formula-block">\[J=2pL.\]</div>
+      <div class="reading-block"><p>Si las paredes se mueven lentamente y no hay disipación,</p></div>
+      <div class="formula-block">\[J=2L\sqrt{2mE}\simeq \text{cte}.\]</div>
+      <div class="reading-block"><p>De ahí:</p></div>
+      <div class="formula-block">\[E\propto L^{-2}.\]</div>
+      <div class="reading-block"><p>Si las paredes se acercan, la energía aumenta. La energía no se conserva porque las paredes hacen trabajo, pero la acción permanece aproximadamente constante.</p></div>
+      </details>
+      <details class="accordion">
+        <summary>Respuesta 30</summary>
+      <div class="reading-block"><p>Para el oscilador armónico,</p></div>
+      <div class="formula-block">\[I=\frac{E}{\omega}.\]</div>
+      <div class="reading-block"><p>Si \(\omega(t)\) varía lentamente,</p></div>
+      <div class="formula-block">\[I\simeq\text{cte}.\]</div>
+      <div class="reading-block"><p>Por tanto, la energía sigue la frecuencia:</p></div>
+      <div class="formula-block">\[E(t)\simeq E_0\frac{\omega(t)}{\omega_0}.\]</div>
+      <div class="reading-block"><p>La condición de validez es que haya muchas oscilaciones antes de que \(\omega\) cambie apreciablemente.</p></div>
+      </details>
+      <details class="accordion">
+        <summary>Respuesta 31</summary>
+      <div class="reading-block"><p>Liouville permite interpretar una colección de sistemas como una densidad en espacio de fases. Si el flujo es incomprensible, la densidad transportada se conserva. Esto fundamenta la idea de distribuciones estacionarias como \(\rho=f(H)\).</p></div>
+      </details>
+      <details class="accordion">
+        <summary>Respuesta 32</summary>
+      <div class="reading-block"><p>En la antigua teoría cuántica, las acciones se cuantizaban. Que \(J\) fuese adiabáticamente invariante hacía plausible que los números cuánticos no cambiasen bajo deformaciones lentas del sistema.</p></div>
+      </details>
+      <details class="accordion">
+        <summary>Respuesta 33</summary>
+      <div class="reading-block"><p>Las simetrías producen magnitudes conservadas; las transformaciones canónicas conservan la estructura hamiltoniana. Ambas ideas son formas de invariancia, pero a niveles distintos: una conserva funciones dinámicas; la otra conserva geometría de fase.</p></div>
+      </details>
+      <details class="accordion">
+        <summary>Respuesta 34</summary>
+      <div class="reading-block"><p>En el oscilador,</p></div>
+      <div class="formula-block">\[J=\frac{2\pi E}{\omega}.\]</div>
+      <div class="reading-block"><p>Por eso, si \(J\) es constante, energía y frecuencia varían proporcionalmente. Esta relación permite resolver problemas de frecuencia lentamente variable.</p></div>
+      </details>
+      <details class="accordion">
+        <summary>Respuesta 35</summary>
+      <div class="reading-block"><p>Las paredes móviles hacen trabajo sobre la partícula, por eso la energía cambia. Pero si el movimiento de las paredes es lento, la acción \(J=2pL\) se conserva aproximadamente. Al disminuir \(L\), aumenta \(p\), y por tanto aumenta \(E\).</p></div>
+      </details>
+    </section>
+    <section class="page" id="resumen-final-de-repaso">
+      <div class="page-head"><h2>9. Resumen final de repaso</h2><span class="page-no">p.9</span></div>
+      <div class="reading-block"><p>Ideas principales:</p></div>
+      <div class="formula-block">\[\text{Hamilton} \Rightarrow \text{flujo en fase}.\]</div>
+      <div class="formula-block">\[\nabla_\Gamma\cdot \mathbf v_\Gamma=0
+\Rightarrow
+\text{Liouville}.\]</div>
+      <div class="formula-block">\[\text{Liouville}
+\Rightarrow
+\text{volumen de fase constante}.\]</div>
+      <div class="formula-block">\[\text{Poincaré}
+\Rightarrow
+\oint p,dq \text{ invariante canónico}.\]</div>
+      <div class="formula-block">\[\text{Movimiento periódico}
+\Rightarrow
+J=\oint p,dq.\]</div>
+      <div class="formula-block">\[\text{Cambio lento}
+\Rightarrow
+J\simeq\text{cte}.\]</div>
+      <div class="reading-block"><p>Conceptos imprescindibles:</p></div>
+      <div class="formula-block">\[\dot q_i=\frac{\partial H}{\partial p_i},\qquad
+\dot p_i=-\frac{\partial H}{\partial q_i}.\]</div>
+      <div class="formula-block">\[\frac{\partial\rho}{\partial t}+\{\rho,H\}=0.\]</div>
+      <div class="formula-block">\[J=\oint p,dq.\]</div>
+      <div class="formula-block">\[I=\frac{1}{2\pi}\oint p,dq.\]</div>
+      <div class="formula-block">\[I_{\text{osc}}=\frac{E}{\omega}.\]</div>
+      <div class="formula-block">\[J_{\text{caja}}=2L\sqrt{2mE}.\]</div>
+      <div class="reading-block"><p>Relaciones clave:</p></div>
+      <div class="formula-block">\[\rho=f(H)\Rightarrow \rho \text{ estacionaria si } H \text{ autónomo}.\]</div>
+      <div class="formula-block">\[J_{\text{caja}}=\text{cte}
+\Rightarrow
+E\propto L^{-2}.\]</div>
+      <div class="formula-block">\[I_{\text{osc}}=\text{cte}
+\Rightarrow
+E\propto \omega.\]</div>
+      <div class="reading-block"><p>Errores que evitar:</p></div>
+      <ul class="check-list">
+        <li>Confundir Liouville con conservación de energía.</li>
+        <li>Aplicar invariancia adiabática con rozamiento.</li>
+        <li>Usar \(E=\text{cte}\) cuando hay paredes móviles.</li>
+        <li>Mezclar \(J=\oint p,dq\) con \(I=J/2\pi\).</li>
+        <li>Aplicar \(J\) a movimientos no periódicos.</li>
+        <li>Olvidar la condición \(T\ll T_\lambda\).</li>
+      </ul>
+    </section>
+    <section class="page" id="checklist-de-dominio">
+      <div class="page-head"><h2>10. Checklist de dominio</h2><span class="page-no">p.10</span></div>
+      <ul class="check-list">
+        <li>Si no puedes explicar por qué \(\nabla_\Gamma\cdot\mathbf v_\Gamma=0\), falta repasar ecuaciones de Hamilton.</li>
+      </ul>
+      <ul class="check-list">
+        <li>Si confundes volumen de fase con energía, revisar teorema de Liouville.</li>
+      </ul>
+      <ul class="check-list">
+        <li>Si no puedes demostrar que \(\rho=f(H)\) es estacionaria, revisar corchetes de Poisson.</li>
+      </ul>
+      <ul class="check-list">
+        <li>Si no sabes qué mide \(\oint p,dq\), falta repasar área en el plano \((q,p)\).</li>
+      </ul>
+      <ul class="check-list">
+        <li>Si confundes \(J\) con \(I=J/2\pi\), revisar convenciones de acción.</li>
+      </ul>
+      <ul class="check-list">
+        <li>Si aplicas invariancia adiabática sin comprobar periodicidad, revisar condiciones del teorema adiabático.</li>
+      </ul>
+      <ul class="check-list">
+        <li>Si usas conservación de energía en una caja con paredes móviles, revisar trabajo externo.</li>
+      </ul>
+      <ul class="check-list">
+        <li>Si no puedes deducir \(E\propto L^{-2}\), falta dominar la partícula entre paredes.</li>
+      </ul>
+      <ul class="check-list">
+        <li>Si no puedes deducir \(E/\omega\simeq\text{cte}\), falta dominar el oscilador de frecuencia variable.</li>
+      </ul>
+      <ul class="check-list">
+        <li>Si puedes resolver caja móvil, oscilador \(\omega(t)\), densidad \(\rho(H)\) y conservación de área en fase, el capítulo está suficientemente asentado.</li>
+      </ul>
+    </section>
+  </main>
+</div>
+</body>
+</html>
