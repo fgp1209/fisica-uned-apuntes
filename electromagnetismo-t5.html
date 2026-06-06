@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="color-scheme" content="light dark" />
+  <title>Electromagnetismo I &mdash; T5 Dipolos y desarrollo multipolar</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/icon-32.png" />
+  <link rel="icon" type="image/png" sizes="50x50" href="assets/icons/icon-50.png" />
+  <link rel="apple-touch-icon" sizes="100x100" href="assets/icons/icon-100.png" />
+  <meta name="theme-color" content="#7c2d12" />
+  <link rel="stylesheet" href="assets/styles.css" />
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['\\(','\\)']],
+        displayMath: [['\\[','\\]']]
+      },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+  <script defer src="assets/app.js"></script>
+</head>
+<body class="subject-electromagnetismo">
+  <div class="wrap">
+    <header class="cover">
+      <div class="top-actions">
+        <a class="back-link" href="index.html">&larr; Volver al &iacute;ndice</a>
+        <a class="back-link secondary" href="#preguntas">Preguntas</a>
+        <a class="back-link secondary" href="#checklist">Checklist</a>
+      </div>
+      <p class="eyebrow">Electromagnetismo I &middot; Tema 5</p>
+      <h1>Dipolos y desarrollo multipolar</h1>
+      <p class="subtitle">Gu&iacute;a de estudio sobre el dipolo el&eacute;ctrico, su potencial, campo, energ&iacute;a y par, y la expansi&oacute;n multipolar de distribuciones localizadas de carga.</p>
+      <div class="chips">
+        <span class="chip">apuntes completos</span>
+        <span class="chip">MathJax</span>
+        <span class="chip">mapa clicable</span>
+        <span class="chip">orientado a examen</span>
+        <span class="chip">estado: listo</span>
+      </div>
+    </header>
+
+    <div class="toolbar no-print">
+      <nav>
+        <a href="#mapa">Mapa</a>
+        <a href="#prerrequisitos">Prerrequisitos</a>
+        <a href="#idea-central">Idea central</a>
+        <a href="#desarrollo">Desarrollo</a>
+        <a href="#conceptos">Conceptos</a>
+        <a href="#errores">Errores</a>
+        <a href="#preguntas">Preguntas</a>
+        <a href="#respuestas">Respuestas</a>
+        <a href="#resumen">Resumen</a>
+        <a href="#checklist">Checklist</a>
+      </nav>
+      <div class="toolbar-actions">
+        <button class="btn" onclick="printReady()">Imprimir / guardar PDF</button>
+      </div>
+    </div>
+
+    <main>
+      <section class="page" id="mapa">
+        <div class="page-head"><h2>Mapa conceptual clicable</h2><span class="page-no">T5 &middot; mapa</span></div>
+        <div class="concept-map">
+          <a class="map-node" href="#prerrequisitos"><span>Prerrequisitos</span><small>Superposici&oacute;n, potencial, gradiente, productos vectoriales, coordenadas esf&eacute;ricas, series e integrales.</small></a>
+          <a class="map-node" href="#idea-central"><span>Idea central</span><small>Describir desde lejos una distribuci&oacute;n mediante carga total, dipolo y cuadripolo.</small></a>
+          <a class="map-node" href="#desarrollo"><span>Desarrollo</span><small>Dipolo, potencial, campo, energ&iacute;a, par y expansi&oacute;n multipolar.</small></a>
+          <a class="map-node" href="#conceptos"><span>Conceptos clave</span><small>Momentos monopolar, dipolar y cuadripolar; validez y cambio de origen.</small></a>
+          <a class="map-node" href="#relaciones"><span>Relaciones</span><small>Jerarqu&iacute;a con la distancia, simetr&iacute;a, potencial-campo y energ&iacute;a-par.</small></a>
+          <a class="map-node" href="#errores"><span>Errores habituales</span><small>Neutralidad, direcci&oacute;n de p, aproximaci&oacute;n lejana, tensor y estabilidad.</small></a>
+          <a class="map-node" href="#preguntas"><span>Preguntas</span><small>Banco completo por dificultad, desarrollo largo y relaci&oacute;n de conceptos.</small></a>
+          <a class="map-node" href="#respuestas"><span>Respuestas modelo</span><small>Soluciones razonadas y demostraciones para preparar el examen.</small></a>
+          <a class="map-node" href="#resumen"><span>Resumen</span><small>F&oacute;rmulas madre, jerarqu&iacute;a multipolar y errores que evitar.</small></a>
+          <a class="map-node" href="#checklist"><span>Checklist</span><small>Autodiagn&oacute;stico del dominio conceptual y operativo del tema.</small></a>
+        </div>
+      </section>
+      <section class="page" id="prerrequisitos">
+        <div class="page-head"><h2>1. Prerrequisitos m&#237;nimos</h2><span class="page-no">1</span></div>
+        <h3>Carga el&#233;ctrica y principio de superposici&#243;n.</h3>
+        <p>La carga el&#233;ctrica es la magnitud fuente del campo electrost&#225;tico. Para estudiar dipolos y multipolos hay que saber sumar contribuciones de varias cargas, porque todo el cap&#237;tulo parte de sistemas de cargas discretas o continuas. Ejemplo m&#237;nimo: si hay dos cargas, el potencial total es la suma de los potenciales creados por cada una.</p>
+        <h3>Potencial electrost&#225;tico.</h3>
+        <p>El potencial \(V(\mathbf r)\) permite describir el campo el&#233;ctrico mediante una funci&#243;n escalar. Es necesario porque el desarrollo multipolar se hace primero sobre el potencial, no directamente sobre el campo. Ejemplo:</p>
+        <div class="formula-block">\[V(\mathbf r)=\frac{1}{4\pi\varepsilon_0}\sum_i \frac{q_i}{|\mathbf r-\mathbf r_i|}\]</div>
+        <h3>Relaci&#243;n entre campo y potencial.</h3>
+        <p>El campo el&#233;ctrico se obtiene como</p>
+        <div class="formula-block">\[\mathbf E=-\nabla V.\]</div>
+        <p>Es imprescindible porque el cap&#237;tulo deduce primero \(V\) para un dipolo y luego obtiene \(\mathbf E\) aplicando el gradiente.</p>
+        <h3>Producto escalar y producto vectorial.</h3>
+        <p>El producto escalar aparece en expresiones como \(\mathbf p\cdot \mathbf r\) y \(\mathbf p\cdot \mathbf E_0\). El producto vectorial aparece en el par de fuerzas:</p>
+        <div class="formula-block">\[\mathbf T=\mathbf p\times \mathbf E_0.\]</div>
+        <p>Sin estos productos no se interpreta ni la orientaci&#243;n del dipolo ni su energ&#237;a.</p>
+        <h3>Coordenadas esf&#233;ricas.</h3>
+        <p>El dipolo se estudia de forma natural usando \(r,\theta,\varphi\), porque presenta simetr&#237;a axial alrededor del eje del momento dipolar. Hay que manejar \(u_r\), \(u_\theta\) y el gradiente en coordenadas esf&#233;ricas.</p>
+        <h3>Desarrollo en serie.</h3>
+        <p>El desarrollo multipolar se basa en aproximar</p>
+        <div class="formula-block">\[\frac{1}{|\mathbf r-\mathbf r'|}\]</div>
+        <p>cuando el punto de observaci&#243;n est&#225; lejos de la distribuci&#243;n de carga. La hip&#243;tesis clave es</p>
+        <div class="formula-block">\[r'\ll r.\]</div>
+        <h3>Integrales y sumatorios de distribuciones de carga.</h3>
+        <p>El cap&#237;tulo pasa constantemente de cargas puntuales a distribuciones continuas. Hay que saber cambiar</p>
+        <div class="formula-block">\[\sum_i q_i\]</div>
+        <p>por</p>
+        <div class="formula-block">\[\int \rho(\mathbf r'),dv'.\]</div>
+        <h3>Idea b&#225;sica de tensor.</h3>
+        <p>El momento cuadripolar no es un n&#250;mero ni un vector, sino un tensor con componentes \(Q_{jk}\). Basta entenderlo como una matriz sim&#233;trica de componentes asociadas a pares de coordenadas.</p>
+      </section>
+      <section class="page" id="idea-central">
+        <div class="page-head"><h2>2. Idea central del cap&#237;tulo</h2><span class="page-no">2</span></div>
+        <p class="reading-block">El cap&#237;tulo estudia c&#243;mo describir el potencial y el campo creados por agrupaciones de cargas cuando no interesa calcular cada contribuci&#243;n exacta o cuando el punto de observaci&#243;n est&#225; suficientemente lejos. La idea de fondo es que una distribuci&#243;n de carga puede verse, desde lejos, mediante unos pocos “rasgos globales”: carga total, momento dipolar, momento cuadripolar, etc. El libro presenta expl&#237;citamente como objetivo estudiar los potenciales debidos a grupos de cargas y expresarlos mediante momentos multipolares.</p>
+        <p class="reading-block">El primer paso es el dipolo el&#233;ctrico. Un dipolo es el sistema elemental formado por dos cargas opuestas muy pr&#243;ximas. Aunque su carga neta sea cero, no es el&#233;ctricamente irrelevante: posee momento dipolar \(\mathbf p\), y ese momento determina su potencial, su campo, su energ&#237;a en un campo externo y el par de fuerzas que tiende a orientarlo.</p>
+        <p class="reading-block">El segundo paso es generalizar. Una distribuci&#243;n arbitraria de carga localizada en una regi&#243;n finita puede producir un potencial complicado si se calcula de forma exacta. Pero si el punto donde se mide est&#225; lejos, se puede desarrollar el potencial en serie. El primer t&#233;rmino depende de la carga total \(Q\), el segundo del momento dipolar \(\mathbf p\), el tercero del momento cuadripolar \(Q_{jk}\). Cada t&#233;rmino decrece m&#225;s r&#225;pido con la distancia que el anterior, lo que permite decidir qu&#233; conservar y qu&#233; despreciar.</p>
+        <p class="reading-block">Dentro de la asignatura, este cap&#237;tulo cierra la electrost&#225;tica de cargas en el vac&#237;o antes de pasar a diel&#233;ctricos. No es un tema aislado: el concepto de dipolo ser&#225; la base para entender la polarizaci&#243;n el&#233;ctrica de los materiales en el cap&#237;tulo siguiente.</p>
+      </section>
+      <section class="page" id="desarrollo">
+        <div class="page-head"><h2>3. Desarrollo completo del cap&#237;tulo</h2><span class="page-no">3</span></div>
+        <article class="reading-block" id="3-1-el-dipolo-electrico-como-sistema-elemental">
+          <h3>3.1. El dipolo el&#233;ctrico como sistema elemental</h3>
+        <p>El cap&#237;tulo empieza con una distribuci&#243;n muy simple: dos cargas (+q) y (-q), separadas por una distancia peque&#241;a \(d\). El momento dipolar el&#233;ctrico se define como</p>
+        <div class="formula-block">\[\mathbf p=q\mathbf d,\]</div>
+        <p>donde \(\mathbf d\) es el vector dirigido desde la carga negativa hacia la carga positiva. Esta direcci&#243;n no es un detalle decorativo: fija el signo de los productos escalares y vectoriales que aparecer&#225;n despu&#233;s.</p>
+        <p>El dipolo tiene carga neta nula:</p>
+        <div class="formula-block">\[Q=q-q=0.\]</div>
+        <p>Sin embargo, no equivale a “no tener efecto el&#233;ctrico”. A distancias grandes comparadas con \(d\), el potencial no se anula, sino que queda gobernado por \(\mathbf p\). Esta es una de las primeras ideas fuertes del cap&#237;tulo: una distribuci&#243;n puede no tener carga neta y aun as&#237; producir campo.</p>
+        <p>El libro introduce el dipolo precisamente como el sistema m&#225;s simple antes de pasar al desarrollo multipolar general.</p>
+        </article>
+        <article class="reading-block" id="3-2-potencial-debido-a-un-dipolo">
+          <h3>3.2. Potencial debido a un dipolo</h3>
+        <p>Para un dipolo situado en el origen, el potencial se obtiene sumando los potenciales de (+q) y (-q). Si el punto de observaci&#243;n est&#225; a una distancia \(r\) mucho mayor que la separaci&#243;n \(d\), se aproxima la diferencia entre las distancias a ambas cargas. El resultado es</p>
+        <div class="formula-block">\[V(\mathbf r)\simeq \frac{1}{4\pi\varepsilon_0}\frac{\mathbf p\cdot \mathbf r}{r^3}
+=
+\frac{1}{4\pi\varepsilon_0}\frac{\mathbf p\cdot \mathbf u_r}{r^2}.\]</div>
+        <p>Si \(\theta\) es el &#225;ngulo entre \(\mathbf p\) y \(\mathbf r\),</p>
+        <div class="formula-block">\[V(r,\theta)=\frac{1}{4\pi\varepsilon_0}\frac{p\cos\theta}{r^2}.\]</div>
+        <p>Este resultado tiene dos consecuencias. Primera: el potencial depende de la orientaci&#243;n, no solo de la distancia. Segunda: decrece como \(1/r^2\), m&#225;s r&#225;pido que el potencial de una carga puntual, que decrece como \(1/r\).</p>
+        <p>Si el dipolo no est&#225; en el origen sino en \(\mathbf r_0\), se sustituye \(\mathbf r\) por \(\mathbf r-\mathbf r_0\):</p>
+        <div class="formula-block">\[V(\mathbf r)\simeq \frac{1}{4\pi\varepsilon_0}
+\frac{\mathbf p\cdot(\mathbf r-\mathbf r_0)}
+{|\mathbf r-\mathbf r_0|^3}.\]</div>
+        </article>
+        <article class="reading-block" id="3-3-campo-electrico-del-dipolo">
+          <h3>3.3. Campo el&#233;ctrico del dipolo</h3>
+        <p>El campo se obtiene mediante</p>
+        <div class="formula-block">\[\mathbf E=-\nabla V.\]</div>
+        <p>Para un dipolo orientado seg&#250;n el eje (z), el potencial no depende de \(\varphi\), por simetr&#237;a axial. En coordenadas esf&#233;ricas, las componentes son</p>
+        <div class="formula-block">\[E_r=\frac{1}{4\pi\varepsilon_0}\frac{2p\cos\theta}{r^3},\]</div>
+        <div class="formula-block">\[E_\theta=\frac{1}{4\pi\varepsilon_0}\frac{p\sin\theta}{r^3}.\]</div>
+        <p>Por tanto, con la convenci&#243;n usual de \(u_\theta\),</p>
+        <div class="formula-block">\[\mathbf E=
+\frac{p}{4\pi\varepsilon_0 r^3}
+\left(2\cos\theta\,\mathbf u_r+\sin\theta\,\mathbf u_\theta\right).\]</div>
+        <p>De forma vectorial general, para un dipolo en el origen,</p>
+        <div class="formula-block">\[\mathbf E(\mathbf r)=
+\frac{1}{4\pi\varepsilon_0}
+\frac{1}{r^3}
+\left(
+3\frac{(\mathbf r\cdot \mathbf p)}{r^2}\mathbf r-\mathbf p
+\right).\]</div>
+        <p>Esta expresi&#243;n muestra por qu&#233; el campo dipolar decae como \(1/r^3\). No basta con recordar la f&#243;rmula: hay que interpretar que el dipolo es una distribuci&#243;n neutra, por lo que su efecto lejano es m&#225;s d&#233;bil que el de una carga neta.</p>
+        </article>
+        <article class="reading-block" id="3-4-lineas-equipotenciales-y-lineas-de-campo">
+          <h3>3.4. L&#237;neas equipotenciales y l&#237;neas de campo</h3>
+        <p>Las equipotenciales del dipolo se obtienen imponiendo \(V=\text{cte}\). Como</p>
+        <div class="formula-block">\[V\propto \frac{\cos\theta}{r^2},\]</div>
+        <p>se obtiene una relaci&#243;n del tipo</p>
+        <div class="formula-block">\[r=k\sqrt{\cos\theta}.\]</div>
+        <p>Las l&#237;neas de campo son tangentes a \(\mathbf E\). El cap&#237;tulo deduce que cumplen</p>
+        <div class="formula-block">\[r=k_e\sin^2\theta.\]</div>
+        <p>Esto sirve para visualizar algo importante: las l&#237;neas de campo y las equipotenciales son perpendiculares. Adem&#225;s, en el plano ecuatorial \(\theta=\pi/2\), la componente radial se anula; sobre el eje del dipolo, \(\theta=0\) o \(\theta=\pi\), se anula la componente angular.</p>
+        </article>
+        <article class="reading-block" id="3-5-energia-de-un-dipolo-en-un-campo-externo">
+          <h3>3.5. Energ&#237;a de un dipolo en un campo externo</h3>
+        <p>El cap&#237;tulo distingue entre la energ&#237;a interna del sistema de dos cargas y la energ&#237;a de un dipolo ya formado dentro de un campo externo \(\mathbf E_0\). La que se estudia aqu&#237; es la segunda. Partiendo de la energ&#237;a potencial de las dos cargas en el potencial externo, se llega a</p>
+        <div class="formula-block">\[W_D=-\mathbf p\cdot \mathbf E_0.\]</div>
+        <p>Si \(\theta\) es el &#225;ngulo entre \(\mathbf p\) y \(\mathbf E_0\),</p>
+        <div class="formula-block">\[W_D=-pE_0\cos\theta.\]</div>
+        <p>La energ&#237;a es m&#237;nima cuando \(\theta=0\), es decir, cuando el dipolo est&#225; alineado con el campo en el mismo sentido. Es m&#225;xima cuando \(\theta=\pi\), cuando est&#225; en sentido opuesto. Se anula para \(\theta=\pi/2\). Esta relaci&#243;n aparece desarrollada en el cap&#237;tulo a partir del gradiente del potencial externo.</p>
+        </article>
+        <article class="reading-block" id="3-6-par-de-fuerzas-sobre-un-dipolo">
+          <h3>3.6. Par de fuerzas sobre un dipolo</h3>
+        <p>En un campo uniforme, las fuerzas sobre (+q) y (-q) tienen el mismo m&#243;dulo y sentidos opuestos. La fuerza neta es nula, pero forman un par que tiende a girar el dipolo.</p>
+        <p>El m&#243;dulo del par es</p>
+        <div class="formula-block">\[T=qE_0d\sin\theta=pE_0\sin\theta.\]</div>
+        <p>Vectorialmente,</p>
+        <div class="formula-block">\[\mathbf T=\mathbf p\times \mathbf E_0.\]</div>
+        <p>El par es nulo para \(\theta=0\) y \(\theta=\pi\), pero esos dos casos no son equivalentes: \(\theta=0\) es equilibrio estable y \(\theta=\pi\) es equilibrio inestable. El cap&#237;tulo tambi&#233;n indica que si el campo no fuera uniforme, adem&#225;s del par aparecer&#237;a un efecto de arrastre del dipolo hacia regiones de mayor campo.</p>
+        </article>
+        <article class="reading-block" id="3-7-potencial-de-una-distribucion-arbitraria-de-carga">
+          <h3>3.7. Potencial de una distribuci&#243;n arbitraria de carga</h3>
+        <p>Despu&#233;s del dipolo, el cap&#237;tulo pasa a una distribuci&#243;n general de carga localizada en un volumen finito. Para una distribuci&#243;n continua,</p>
+        <div class="formula-block">\[V(\mathbf r)=\frac{1}{4\pi\varepsilon_0}
+\int_V \frac{\rho(\mathbf r')}{|\mathbf r-\mathbf r'|},dv'.\]</div>
+        <p>La clave es suponer que el punto de observaci&#243;n est&#225; lejos de la distribuci&#243;n:</p>
+        <div class="formula-block">\[r'\ll r.\]</div>
+        <p>Entonces se desarrolla</p>
+        <div class="formula-block">\[\frac{1}{|\mathbf r-\mathbf r'|}\]</div>
+        <p>en serie y se conservan los primeros t&#233;rminos. El resultado reorganiza el potencial en contribuciones separadas: monopolar, dipolar y cuadripolar. El libro subraya que esta separaci&#243;n permite distinguir lo que depende de la geometr&#237;a interna de la distribuci&#243;n y lo que depende del punto donde se mide el potencial.</p>
+        </article>
+        <article class="reading-block" id="3-8-termino-monopolar">
+          <h3>3.8. T&#233;rmino monopolar</h3>
+        <p>El primer t&#233;rmino es</p>
+        <div class="formula-block">\[V_M(\mathbf r)=\frac{1}{4\pi\varepsilon_0}\frac{Q}{r},\]</div>
+        <p>donde</p>
+        <div class="formula-block">\[Q=\int_V \rho(\mathbf r'),dv'.\]</div>
+        <p>Para cargas puntuales,</p>
+        <div class="formula-block">\[Q=\sum_{i=1}^N q_i.\]</div>
+        <p>Este t&#233;rmino representa el efecto de toda la distribuci&#243;n como si su carga total estuviera concentrada en el origen. A grandes distancias, si \(Q\neq 0\), domina sobre los dem&#225;s.</p>
+        </article>
+        <article class="reading-block" id="3-9-termino-dipolar">
+          <h3>3.9. T&#233;rmino dipolar</h3>
+        <p>El segundo t&#233;rmino es</p>
+        <div class="formula-block">\[V_D(\mathbf r)=
+\frac{1}{4\pi\varepsilon_0}
+\frac{\mathbf r\cdot \mathbf p}{r^3},\]</div>
+        <p>con</p>
+        <div class="formula-block">\[\mathbf p=\int_V \mathbf r'\rho(\mathbf r'),dv'.\]</div>
+        <p>Para cargas puntuales,</p>
+        <div class="formula-block">\[\mathbf p=\sum_{i=1}^N q_i\mathbf r_i.\]</div>
+        <p>Si \(Q=0\), el t&#233;rmino monopolar desaparece y el t&#233;rmino dipolar suele ser el dominante. Esto explica por qu&#233; las distribuciones neutras pueden tener efecto el&#233;ctrico apreciable si poseen momento dipolar.</p>
+        </article>
+        <article class="reading-block" id="3-10-termino-cuadripolar">
+          <h3>3.10. T&#233;rmino cuadripolar</h3>
+        <p>El tercer t&#233;rmino utiliza el tensor cuadripolar:</p>
+        <div class="formula-block">\[Q_{jk}=\int_V
+\left(3j'k'-\delta_{jk}r'^2\right)\rho(\mathbf r'),dv',\]</div>
+        <p>donde (j,k) representan (x,y,z). Para cargas puntuales,</p>
+        <div class="formula-block">\[Q_{jk}=\sum_{i=1}^N q_i
+\left(3j_i k_i-r_i^2\delta_{jk}\right).\]</div>
+        <p>El potencial cuadripolar es</p>
+        <div class="formula-block">\[V_Q(\mathbf r)=
+\frac{1}{4\pi\varepsilon_0}
+\frac{1}{2}
+\sum_j\sum_k
+\frac{jk}{r^5}Q_{jk}.\]</div>
+        <p>El tensor cuadripolar es sim&#233;trico:</p>
+        <div class="formula-block">\[Q_{jk}=Q_{kj},\]</div>
+        <p>y su traza es nula:</p>
+        <div class="formula-block">\[Q_{xx}+Q_{yy}+Q_{zz}=0.\]</div>
+        <p>Por tanto, aunque formalmente tenga nueve componentes, no todas son independientes. Esta parte del cap&#237;tulo es especialmente importante en problemas donde \(Q=0\) y \(\mathbf p=0\): entonces el primer t&#233;rmino no nulo puede ser el cuadripolar.</p>
+        </article>
+        <article class="reading-block" id="3-11-jerarquia-de-terminos-y-validez-de-la-aproximacion">
+          <h3>3.11. Jerarqu&#237;a de t&#233;rminos y validez de la aproximaci&#243;n</h3>
+        <p>Los t&#233;rminos decrecen con la distancia como</p>
+        <div class="formula-block">\[V_M\sim \frac{1}{r},\qquad
+V_D\sim \frac{1}{r^2},\qquad
+V_Q\sim \frac{1}{r^3}.\]</div>
+        <p>Por eso, cuanto m&#225;s lejos se observa la distribuci&#243;n, menos t&#233;rminos hacen falta. Si \(Q\neq 0\), domina el monopolo. Si \(Q=0\) pero \(\mathbf p\neq 0\), domina el dipolo. Si \(Q=0\) y \(\mathbf p=0\), puede dominar el cuadripolo.</p>
+        <p>La aproximaci&#243;n no debe usarse sin comprobar la escala. Si el punto est&#225; cerca de la distribuci&#243;n, los t&#233;rminos superiores ya no son despreciables.</p>
+        </article>
+        <article class="reading-block" id="3-12-dependencia-con-el-origen">
+          <h3>3.12. Dependencia con el origen</h3>
+        <p>Los momentos multipolares se calculan respecto a un origen. Si se cambia el origen por una traslaci&#243;n \(\mathbf a\), el momento dipolar cambia como</p>
+        <div class="formula-block">\[\mathbf p^{\,o}=\mathbf p-Q\mathbf a.\]</div>
+        <p>Por tanto, si \(Q\neq 0\), el momento dipolar depende del origen. Si \(Q=0\), no depende del origen.</p>
+        <p>El momento cuadripolar tambi&#233;n cambia con el origen. Para una componente cruzada,</p>
+        <div class="formula-block">\[Q^{o}_{xy}
+=
+Q_{xy}
+-3p_xa_y
+-3p_ya_x
++3Qa_xa_y.\]</div>
+        <p>Si \(Q=0\) y \(\mathbf p=0\), el momento cuadripolar no cambia con una traslaci&#243;n del origen. Esta dependencia con el origen es una de las trampas t&#237;picas del tema.</p>
+        </article>
+      </section>
+      <section class="page" id="conceptos">
+        <div class="page-head"><h2>4. Conceptos clave</h2><span class="page-no">4</span></div>
+        <article class="definition-card">
+          <h3>Dipolo el&#233;ctrico</h3>
+        <p>Un dipolo el&#233;ctrico es un sistema formado por dos cargas (+q) y (-q) separadas por una distancia peque&#241;a. Su magnitud caracter&#237;stica es el momento dipolar \(\mathbf p=q\mathbf d\). Lo importante no es solo que la carga neta sea cero, sino que existe una separaci&#243;n entre centros de carga positiva y negativa. En examen pueden pedir definirlo, deducir su potencial o explicar por qu&#233; una distribuci&#243;n neutra puede crear campo.</p>
+        </article>
+        <article class="definition-card">
+          <h3>Momento dipolar el&#233;ctrico</h3>
+        <p>Es el vector</p>
+        <div class="formula-block">\[\mathbf p=q\mathbf d,\]</div>
+        <p>dirigido desde (-q) hacia (+q). Para una distribuci&#243;n de cargas puntuales,</p>
+        <div class="formula-block">\[\mathbf p=\sum_i q_i\mathbf r_i.\]</div>
+        <p>Para una distribuci&#243;n continua,</p>
+        <div class="formula-block">\[\mathbf p=\int \mathbf r'\rho(\mathbf r'),dv'.\]</div>
+        <p>Se relaciona con el t&#233;rmino dipolar del potencial y con la energ&#237;a \(W_D=-\mathbf p\cdot \mathbf E_0\). En examen pueden pedir calcularlo para una distribuci&#243;n sim&#233;trica.</p>
+        </article>
+        <article class="definition-card">
+          <h3>Potencial dipolar</h3>
+        <p>Para un dipolo en el origen,</p>
+        <div class="formula-block">\[V(\mathbf r)=
+\frac{1}{4\pi\varepsilon_0}
+\frac{\mathbf p\cdot \mathbf r}{r^3}.\]</div>
+        <p>Depende del &#225;ngulo entre \(\mathbf p\) y \(\mathbf r\). Es m&#225;ximo sobre el eje positivo del dipolo, cambia de signo al otro lado y se anula en el plano ecuatorial. En examen pueden pedir deducirlo desde las dos cargas.</p>
+        </article>
+        <article class="definition-card">
+          <h3>Campo dipolar</h3>
+        <p>El campo se obtiene de \(\mathbf E=-\nabla V\). Para un dipolo orientado seg&#250;n (z),</p>
+        <div class="formula-block">\[E_r=\frac{1}{4\pi\varepsilon_0}\frac{2p\cos\theta}{r^3},
+\qquad
+E_\theta=\frac{1}{4\pi\varepsilon_0}\frac{p\sin\theta}{r^3}.\]</div>
+        <p>Se relaciona con el potencial, pero decae m&#225;s r&#225;pido: \(1/r^3\). En examen pueden pedir comparar su dependencia con la del campo de una carga puntual.</p>
+        </article>
+        <article class="definition-card">
+          <h3>Energ&#237;a de un dipolo en un campo externo</h3>
+        <p>La energ&#237;a es</p>
+        <div class="formula-block">\[W_D=-\mathbf p\cdot \mathbf E_0.\]</div>
+        <p>Mide la tendencia del dipolo a orientarse con el campo. Es m&#237;nima cuando \(\mathbf p\) y \(\mathbf E_0\) son paralelos y del mismo sentido. En examen pueden pedir representar \(W_D(\theta)\).</p>
+        </article>
+        <article class="definition-card">
+          <h3>Par de fuerzas sobre un dipolo</h3>
+        <p>En campo uniforme,</p>
+        <div class="formula-block">\[\mathbf T=\mathbf p\times \mathbf E_0.\]</div>
+        <p>No hay fuerza neta si el campo es uniforme, pero s&#237; hay giro. Este concepto se relaciona directamente con la estabilidad energ&#233;tica. En examen pueden pedir justificar cu&#225;l orientaci&#243;n es estable.</p>
+        </article>
+        <article class="definition-card">
+          <h3>Desarrollo multipolar</h3>
+        <p>Es la expansi&#243;n aproximada del potencial de una distribuci&#243;n localizada de carga en potencias decrecientes de \(1/r\). Permite sustituir una distribuci&#243;n complicada por sus momentos principales. En examen pueden pedir escribir el desarrollo hasta orden cuadripolar.</p>
+        </article>
+        <article class="definition-card">
+          <h3>Momento monopolar</h3>
+        <p>Es la carga total:</p>
+        <div class="formula-block">\[Q=\int \rho(\mathbf r'),dv'
+\quad \text{o} \quad
+Q=\sum_i q_i.\]</div>
+        <p>Produce el t&#233;rmino dominante si \(Q\neq 0\). En examen pueden pedir identificar cu&#225;ndo una distribuci&#243;n se comporta desde lejos como una carga puntual.</p>
+        </article>
+        <article class="definition-card">
+          <h3>Momento cuadripolar</h3>
+        <p>Es el tensor</p>
+        <div class="formula-block">\[Q_{jk}=
+\int
+(3j'k'-\delta_{jk}r'^2)\rho(\mathbf r'),dv'.\]</div>
+        <p>Aparece cuando se necesita el siguiente t&#233;rmino tras el dipolar. Es sim&#233;trico y de traza nula. En examen pueden pedir calcular componentes para una distribuci&#243;n con simetr&#237;a.</p>
+        </article>
+        <article class="definition-card">
+          <h3>Dependencia con el origen</h3>
+        <p>Los momentos se definen respecto a un origen. El momento dipolar cambia si \(Q\neq 0\), pero no cambia si la carga total es nula. El cuadripolar solo queda invariante bajo traslaciones si \(Q=0\) y \(\mathbf p=0\). En examen pueden preguntar directamente si un momento depende o no del origen.</p>
+        </article>
+      </section>
+      <section class="page" id="relaciones">
+        <div class="page-head"><h2>5. Relaciones entre ideas</h2><span class="page-no">5</span></div>
+        <p class="reading-block">El cap&#237;tulo tiene una estructura jer&#225;rquica. Primero se estudia el dipolo como caso particular; despu&#233;s se muestra que ese caso aparece de forma natural como segundo t&#233;rmino del desarrollo multipolar. Esto significa que el dipolo no es solo “dos cargas opuestas”: es tambi&#233;n el primer rasgo relevante de una distribuci&#243;n neutra observada desde lejos.</p>
+        <p class="reading-block">La relaci&#243;n entre potencial y campo organiza todo el tema. Se calcula antes el potencial porque es escalar y m&#225;s manejable; despu&#233;s se obtiene el campo mediante el gradiente. Por eso, un error en el potencial se arrastra al campo.</p>
+        <p class="reading-block">La distancia al punto de observaci&#243;n determina la importancia de cada t&#233;rmino. El monopolo domina si existe carga neta. Si no hay carga neta, domina el dipolo. Si tampoco hay dipolo, domina el cuadripolo. La jerarqu&#237;a es:</p>
+        <div class="formula-block">\[\frac{1}{r},\quad \frac{1}{r^2},\quad \frac{1}{r^3}.\]</div>
+        <p class="reading-block">La simetr&#237;a reduce el trabajo. Muchas distribuciones tienen componentes de \(\mathbf p\) nulas por cancelaci&#243;n. En el cuadripolo, las simetr&#237;as tambi&#233;n anulan componentes cruzadas o relacionan componentes diagonales.</p>
+        <p class="reading-block">La energ&#237;a y el par de fuerzas son dos formas de describir la misma tendencia f&#237;sica: el dipolo busca alinearse con el campo. La energ&#237;a muestra cu&#225;l orientaci&#243;n es estable; el par muestra c&#243;mo se produce el giro.</p>
+        <p class="reading-block">La dependencia con el origen es una relaci&#243;n conceptual delicada. No se puede hablar del “momento dipolar” de cualquier distribuci&#243;n sin decir respecto a qu&#233; origen, salvo que \(Q=0\). Tampoco se puede hablar del cuadripolo como invariante salvo que desaparezcan los momentos inferiores.</p>
+      </section>
+      <section class="page" id="errores">
+        <div class="page-head"><h2>6. Errores habituales</h2><span class="page-no">6</span></div>
+        <details class="accordion" open>
+          <summary>Error 1: pensar que una distribuci&#243;n neutra no produce campo.</summary>
+        <p>Est&#225; mal porque \(Q=0\) solo elimina el t&#233;rmino monopolar. Puede quedar un t&#233;rmino dipolar o cuadripolar.</p>
+        <p>Correcci&#243;n: comprobar \(Q\), luego \(\mathbf p\), luego \(Q_{jk}\).</p>
+        <p>Respuesta incorrecta: “Como la carga total es cero, el potencial es cero.”</p>
+        <p>Respuesta correcta: “Como \(Q=0\), desaparece \(V_M\); hay que calcular \(\mathbf p\) para saber si queda t&#233;rmino dipolar.”</p>
+        </details>
+        <details class="accordion" open>
+          <summary>Error 2: invertir la direcci&#243;n de \(\mathbf p\).</summary>
+        <p>Est&#225; mal porque \(\mathbf p\) va de la carga negativa a la positiva. Cambiarlo cambia signos en \(V\), \(W_D\) y \(\mathbf T\).</p>
+        <p>Correcci&#243;n: dibujar siempre \(-q\rightarrow +q\).</p>
+        <p>Respuesta incorrecta: “El momento dipolar va de (+q) a (-q).”</p>
+        <p>Respuesta correcta: “\(\mathbf p=q\mathbf d\), con \(\mathbf d\) dirigido de (-q) a (+q).”</p>
+        </details>
+        <details class="accordion" open>
+          <summary>Error 3: aplicar la f&#243;rmula dipolar cerca de las cargas.</summary>
+        <p>Est&#225; mal porque la deducci&#243;n supone \(r\gg d\).</p>
+        <p>Correcci&#243;n: si el punto est&#225; cerca, sumar los potenciales exactos de las dos cargas.</p>
+        <p>Respuesta incorrecta: “Uso siempre (V=\(4\pi\varepsilon_0\)^{-1}\mathbf p\cdot\mathbf r/r^3).”</p>
+        <p>Respuesta correcta: “Uso esa f&#243;rmula solo si la distancia al dipolo es mucho mayor que la separaci&#243;n entre cargas.”</p>
+        </details>
+        <details class="accordion" open>
+          <summary>Error 4: confundir la ca&#237;da del potencial y la del campo.</summary>
+        <p>Est&#225; mal porque para el dipolo \(V\sim 1/r^2\), pero \(\mathbf E\sim 1/r^3\).</p>
+        <p>Correcci&#243;n: recordar que derivar respecto a \(r\) a&#241;ade una potencia de \(1/r\).</p>
+        <p>Respuesta incorrecta: “El campo dipolar cae como \(1/r^2\).”</p>
+        <p>Respuesta correcta: “El potencial dipolar cae como \(1/r^2\) y el campo como \(1/r^3\).”</p>
+        </details>
+        <details class="accordion" open>
+          <summary>Error 5: olvidar que el cuadripolo es tensorial.</summary>
+        <p>Est&#225; mal porque \(Q_{jk}\) no es un escalar ni un vector.</p>
+        <p>Correcci&#243;n: organizar sus componentes como una matriz sim&#233;trica.</p>
+        <p>Respuesta incorrecta: “El momento cuadripolar vale \(Q\).”</p>
+        <p>Respuesta correcta: “El momento cuadripolar est&#225; formado por componentes \(Q_{jk}\).”</p>
+        </details>
+        <details class="accordion" open>
+          <summary>Error 6: no usar simetr&#237;a.</summary>
+        <p>Est&#225; mal porque multipolos sin simetr&#237;a se vuelven c&#225;lculos largos e innecesarios.</p>
+        <p>Correcci&#243;n: antes de integrar o sumar, decidir qu&#233; componentes se anulan.</p>
+        <p>Respuesta incorrecta: “Calculo las nueve componentes aunque la distribuci&#243;n est&#233; en un eje.”</p>
+        <p>Respuesta correcta: “Si la carga est&#225; sobre el eje (y), muchas componentes cruzadas se anulan.”</p>
+        </details>
+        <details class="accordion" open>
+          <summary>Error 7: creer que \(\mathbf p\) siempre es independiente del origen.</summary>
+        <p>Est&#225; mal porque</p>
+        <div class="formula-block">\[\mathbf p^{\,o}=\mathbf p-Q\mathbf a.\]</div>
+        <p>Correcci&#243;n: solo si \(Q=0\), \(\mathbf p\) no cambia con el origen.</p>
+        <p>Respuesta incorrecta: “El momento dipolar es siempre una propiedad absoluta.”</p>
+        <p>Respuesta correcta: “Si \(Q\neq 0\), depende del origen; si \(Q=0\), no.”</p>
+        </details>
+        <details class="accordion" open>
+          <summary>Error 8: no comprobar la traza del cuadripolo.</summary>
+        <p>Est&#225; mal porque debe cumplirse</p>
+        <div class="formula-block">\[Q_{xx}+Q_{yy}+Q_{zz}=0.\]</div>
+        <p>Correcci&#243;n: usar esta relaci&#243;n como control de c&#225;lculo.</p>
+        <p>Respuesta incorrecta: “He obtenido \(Q_{xx}=q\), \(Q_{yy}=q\), \(Q_{zz}=q\).”</p>
+        <p>Respuesta correcta: “Ese resultado no puede estar bien porque la suma diagonal no es cero.”</p>
+        </details>
+        <details class="accordion" open>
+          <summary>Error 9: confundir fuerza neta con par en campo uniforme.</summary>
+        <p>Est&#225; mal porque en un campo uniforme las fuerzas sobre las cargas del dipolo se compensan como fuerza neta, pero producen giro.</p>
+        <p>Correcci&#243;n: distinguir traslaci&#243;n y rotaci&#243;n.</p>
+        <p>Respuesta incorrecta: “No pasa nada porque la fuerza total es cero.”</p>
+        <p>Respuesta correcta: “La fuerza neta es cero, pero hay par \(\mathbf T=\mathbf p\times\mathbf E_0\).”</p>
+        </details>
+        <details class="accordion" open>
+          <summary>Error 10: equivocarse en la estabilidad del dipolo.</summary>
+        <p>Est&#225; mal porque la estabilidad se decide con la energ&#237;a.</p>
+        <p>Correcci&#243;n: usar</p>
+        <div class="formula-block">\[W_D=-pE_0\cos\theta.\]</div>
+        <p>Respuesta incorrecta: “\(\theta=\pi\) es estable porque el par es cero.”</p>
+        <p>Respuesta correcta: “\(\theta=\pi\) es equilibrio inestable; \(\theta=0\) es estable.”</p>
+        </details>
+      </section>
+      <section class="page" id="preguntas">
+        <div class="page-head"><h2>7. Preguntas orientadas a examen</h2><span class="page-no">7</span></div>
+        <article class="question-card">
+          <h3>10 preguntas f&#225;ciles</h3>
+          <p><strong>F1.</strong> Define dipolo el&#233;ctrico.</p>
+          <p><strong>F2.</strong> &#191;Cu&#225;l es la direcci&#243;n del momento dipolar el&#233;ctrico?</p>
+          <p><strong>F3.</strong> &#191;Cu&#225;l es la carga neta de un dipolo ideal?</p>
+          <p><strong>F4.</strong> Escribe el potencial de un dipolo situado en el origen.</p>
+          <p><strong>F5.</strong> &#191;C&#243;mo decrece con la distancia el potencial dipolar?</p>
+          <p><strong>F6.</strong> &#191;C&#243;mo decrece con la distancia el campo dipolar?</p>
+          <p><strong>F7.</strong> Escribe la energ&#237;a de un dipolo en un campo externo uniforme.</p>
+          <p><strong>F8.</strong> Escribe el par de fuerzas sobre un dipolo en un campo uniforme.</p>
+          <p><strong>F9.</strong> Define momento monopolar.</p>
+          <p><strong>F10.</strong> &#191;Cu&#225;ndo es independiente del origen el momento dipolar?</p>
+        </article>
+        <article class="question-card">
+          <h3>10 preguntas medias</h3>
+          <p><strong>M1.</strong> Deduce el potencial de un dipolo a partir de las dos cargas (+q) y (-q).</p>
+          <p><strong>M2.</strong> Explica por qu&#233; el campo dipolar decrece m&#225;s r&#225;pido que el campo de una carga puntual.</p>
+          <p><strong>M3.</strong> Determina las posiciones de equilibrio estable e inestable de un dipolo en un campo uniforme.</p>
+          <p><strong>M4.</strong> Escribe los momentos monopolar, dipolar y cuadripolar para cargas puntuales.</p>
+          <p><strong>M5.</strong> Escribe el desarrollo multipolar del potencial hasta el t&#233;rmino cuadripolar.</p>
+          <p><strong>M6.</strong> Si \(Q=0\) y \(\mathbf p\neq 0\), &#191;cu&#225;l es el t&#233;rmino dominante del potencial lejano?</p>
+          <p><strong>M7.</strong> Si \(Q=0\) y \(\mathbf p=0\), &#191;qu&#233; t&#233;rmino puede dominar?</p>
+          <p><strong>M8.</strong> Demuestra c&#243;mo cambia \(\mathbf p\) al trasladar el origen.</p>
+          <p><strong>M9.</strong> Explica qu&#233; propiedades tiene el tensor cuadripolar.</p>
+          <p><strong>M10.</strong> Explica c&#243;mo usar&#237;as la simetr&#237;a para simplificar el c&#225;lculo de momentos multipolares.</p>
+        </article>
+        <article class="question-card">
+          <h3>5 preguntas dif&#237;ciles</h3>
+          <p><strong>D1.</strong> Demuestra que la traza del tensor cuadripolar es nula.</p>
+          <p><strong>D2.</strong> Deriva la expresi&#243;n de \(Q^{o}_{xy}\) al cambiar el origen.</p>
+          <p><strong>D3.</strong> Una distribuci&#243;n tiene \(Q=0\), \(\mathbf p=0\), pero \(Q_{jk}\neq 0\). Explica qu&#233; forma tendr&#225; su potencial dominante.</p>
+          <p><strong>D4.</strong> Discute la validez del desarrollo multipolar cuando \(r\) no es mucho mayor que el tama&#241;o de la distribuci&#243;n.</p>
+          <p><strong>D5.</strong> Explica por qu&#233; el momento cuadripolar solo es invariante ante traslaciones si \(Q=0\) y \(\mathbf p=0\).</p>
+        </article>
+        <article class="question-card">
+          <h3>5 preguntas de desarrollo largo</h3>
+          <p><strong>L1.</strong> Desarrolla el estudio completo del dipolo el&#233;ctrico: definici&#243;n, potencial, campo, energ&#237;a y par.</p>
+          <p><strong>L2.</strong> Explica el desarrollo multipolar del potencial de una distribuci&#243;n continua localizada.</p>
+          <p><strong>L3.</strong> Compara los t&#233;rminos monopolar, dipolar y cuadripolar atendiendo a su significado f&#237;sico y dependencia con la distancia.</p>
+          <p><strong>L4.</strong> Explica el papel del cambio de origen en los momentos multipolares.</p>
+          <p><strong>L5.</strong> Describe un m&#233;todo ordenado para resolver un problema de c&#225;lculo de momentos multipolares.</p>
+        </article>
+        <article class="question-card">
+          <h3>5 preguntas de relaci&#243;n entre conceptos</h3>
+          <p><strong>R1.</strong> Relaciona el dipolo el&#233;ctrico con el concepto de polarizaci&#243;n en diel&#233;ctricos.</p>
+          <p><strong>R2.</strong> Relaciona potencial, campo y l&#237;neas de campo en el caso del dipolo.</p>
+          <p><strong>R3.</strong> Relaciona simetr&#237;a, componentes nulas y reducci&#243;n del tensor cuadripolar.</p>
+          <p><strong>R4.</strong> Relaciona energ&#237;a potencial, par de fuerzas y estabilidad del dipolo.</p>
+          <p><strong>R5.</strong> Relaciona carga neta, momento dipolar y momento cuadripolar como jerarqu&#237;a de aproximaci&#243;n.</p>
+        </article>
+      </section>
+      <section class="page" id="respuestas">
+        <div class="page-head"><h2>8. Respuestas modelo</h2><span class="page-no">8</span></div>
+        <h3>Respuestas f&#225;ciles</h3>
+        <details class="accordion accordion-answer">
+          <summary>F1.</summary>
+          <p>Un dipolo el&#233;ctrico es un sistema formado por dos cargas iguales y opuestas, (+q) y (-q), separadas por una distancia peque&#241;a. Su caracter&#237;stica principal es el momento dipolar \(\mathbf p=q\mathbf d\).</p>
+        </details>
+        <details class="accordion accordion-answer">
+          <summary>F2.</summary>
+          <p>El momento dipolar se dirige desde la carga negativa hacia la carga positiva. Esta direcci&#243;n fija el signo de \(\mathbf p\cdot \mathbf r\), \(\mathbf p\cdot \mathbf E_0\) y \(\mathbf p\times \mathbf E_0\).</p>
+        </details>
+        <details class="accordion accordion-answer">
+          <summary>F3.</summary>
+          <p>La carga neta de un dipolo ideal es cero:</p>
+        <div class="formula-block">\[Q=q-q=0.\]</div>
+        </details>
+        <details class="accordion accordion-answer">
+          <summary>F4.</summary>
+          <p>Para un dipolo en el origen,</p>
+        <div class="formula-block">\[V(\mathbf r)=\frac{1}{4\pi\varepsilon_0}\frac{\mathbf p\cdot \mathbf r}{r^3}.\]</div>
+        </details>
+        <details class="accordion accordion-answer">
+          <summary>F5.</summary>
+          <p>El potencial dipolar decrece como \(1/r^2\).</p>
+        </details>
+        <details class="accordion accordion-answer">
+          <summary>F6.</summary>
+          <p>El campo dipolar decrece como \(1/r^3\).</p>
+        </details>
+        <details class="accordion accordion-answer">
+          <summary>F7.</summary>
+          <p>La energ&#237;a de un dipolo en un campo externo es</p>
+        <div class="formula-block">\[W_D=-\mathbf p\cdot \mathbf E_0.\]</div>
+        </details>
+        <details class="accordion accordion-answer">
+          <summary>F8.</summary>
+          <p>El par de fuerzas es</p>
+        <div class="formula-block">\[\mathbf T=\mathbf p\times \mathbf E_0.\]</div>
+        </details>
+        <details class="accordion accordion-answer">
+          <summary>F9.</summary>
+          <p>El momento monopolar es la carga total:</p>
+        <div class="formula-block">\[Q=\sum_i q_i
+\quad \text{o} \quad
+Q=\int \rho(\mathbf r'),dv'.\]</div>
+        </details>
+        <details class="accordion accordion-answer">
+          <summary>F10.</summary>
+          <p>El momento dipolar es independiente del origen si la carga neta de la distribuci&#243;n es nula, es decir, si \(Q=0\).</p>
+        </details>
+        <h3>Respuestas medias</h3>
+        <details class="accordion accordion-answer">
+          <summary>M1.</summary>
+          <p>Se parte de</p>
+        <div class="formula-block">\[V=\frac{q}{4\pi\varepsilon_0}\left(\frac{1}{r_1}-\frac{1}{r_2}\right).\]</div>
+        <p>Si \(r\gg d\), se aproximan las distancias a las cargas y queda</p>
+        <div class="formula-block">\[V(r,\theta)\simeq
+\frac{qd}{4\pi\varepsilon_0}\frac{\cos\theta}{r^2}.\]</div>
+        <p>Como \(p=qd\),</p>
+        <div class="formula-block">\[V(\mathbf r)=
+\frac{1}{4\pi\varepsilon_0}
+\frac{\mathbf p\cdot \mathbf r}{r^3}.\]</div>
+        </details>
+        <details class="accordion accordion-answer">
+          <summary>M2.</summary>
+          <p>Una carga puntual tiene potencial \(V\sim 1/r\) y campo \(E\sim 1/r^2\). Un dipolo tiene carga neta nula, por lo que desaparece el t&#233;rmino monopolar. Su primer t&#233;rmino es dipolar, con \(V\sim 1/r^2\), y al aplicar \(\mathbf E=-\nabla V\) se obtiene \(E\sim 1/r^3\).</p>
+        </details>
+        <details class="accordion accordion-answer">
+          <summary>M3.</summary>
+          <p>La energ&#237;a es</p>
+        <div class="formula-block">\[W_D=-pE_0\cos\theta.\]</div>
+        <p>Para \(\theta=0\),</p>
+        <div class="formula-block">\[W_D=-pE_0,\]</div>
+        <p>m&#237;nima: equilibrio estable. Para \(\theta=\pi\),</p>
+        <div class="formula-block">\[W_D=pE_0,\]</div>
+        <p>m&#225;xima: equilibrio inestable.</p>
+        </details>
+        <details class="accordion accordion-answer">
+          <summary>M4.</summary>
+          <p>Para cargas puntuales:</p>
+        <div class="formula-block">\[Q=\sum_i q_i,\]</div>
+        <div class="formula-block">\[\mathbf p=\sum_i q_i\mathbf r_i,\]</div>
+        <div class="formula-block">\[Q_{jk}=\sum_i q_i(3j_i k_i-r_i^2\delta_{jk}).\]</div>
+        </details>
+        <details class="accordion accordion-answer">
+          <summary>M5.</summary>
+          <p>Hasta el t&#233;rmino cuadripolar,</p>
+        <div class="formula-block">\[V(\mathbf r)\simeq
+\frac{1}{4\pi\varepsilon_0}
+\left[
+\frac{Q}{r}
++
+\frac{\mathbf r\cdot \mathbf p}{r^3}
++
+\frac{1}{2}\sum_j\sum_k
+\frac{jk}{r^5}Q_{jk}
+\right].\]</div>
+        </details>
+        <details class="accordion accordion-answer">
+          <summary>M6.</summary>
+          <p>Si \(Q=0\) y \(\mathbf p\neq 0\), el t&#233;rmino dominante es el dipolar:</p>
+        <div class="formula-block">\[V_D=
+\frac{1}{4\pi\varepsilon_0}
+\frac{\mathbf r\cdot \mathbf p}{r^3}.\]</div>
+        </details>
+        <details class="accordion accordion-answer">
+          <summary>M7.</summary>
+          <p>Si \(Q=0\) y \(\mathbf p=0\), el primer t&#233;rmino no nulo puede ser el cuadripolar:</p>
+        <div class="formula-block">\[V_Q=
+\frac{1}{4\pi\varepsilon_0}
+\frac{1}{2}
+\sum_j\sum_k
+\frac{jk}{r^5}Q_{jk}.\]</div>
+        </details>
+        <details class="accordion accordion-answer">
+          <summary>M8.</summary>
+          <p>Si el nuevo origen se obtiene trasladando el antiguo mediante \(\mathbf a\), entonces</p>
+        <div class="formula-block">\[\mathbf r_i^{\,o}=\mathbf r_i-\mathbf a.\]</div>
+        <p>Por tanto,</p>
+        <div class="formula-block">\[\mathbf p^{\,o}
+=
+\sum_i q_i(\mathbf r_i-\mathbf a)
+
+\sum_i q_i\mathbf r_i
+-\mathbf a\sum_i q_i
+=
+\mathbf p-Q\mathbf a.\]</div>
+        </details>
+        <details class="accordion accordion-answer">
+          <summary>M9.</summary>
+          <p>El tensor cuadripolar es sim&#233;trico:</p>
+        <div class="formula-block">\[Q_{jk}=Q_{kj},\]</div>
+        <p>y su traza es nula:</p>
+        <div class="formula-block">\[Q_{xx}+Q_{yy}+Q_{zz}=0.\]</div>
+        <p>Por ello tiene menos componentes independientes que una matriz general.</p>
+        </details>
+        <details class="accordion accordion-answer">
+          <summary>M10.</summary>
+          <p>La simetr&#237;a permite detectar cancelaciones antes de calcular. Si una distribuci&#243;n es sim&#233;trica respecto a un plano, las componentes impares respecto a ese plano se anulan. Si la carga est&#225; distribuida sobre un eje, muchas componentes cruzadas del tensor cuadripolar son cero.</p>
+        </details>
+        <h3>Respuestas dif&#237;ciles</h3>
+        <details class="accordion accordion-answer">
+          <summary>D1.</summary>
+          <p>Para cargas puntuales,</p>
+        <div class="formula-block">\[Q_{xx}+Q_{yy}+Q_{zz}
+=
+\sum_i q_i
+[
+(3x_i^2-r_i^2)
++
+(3y_i^2-r_i^2)
++
+(3z_i^2-r_i^2)
+].\]</div>
+        <p>Agrupando,</p>
+        <p>\sum_i q_i</p>
+        <div class="formula-block">\[3(x_i^2+y_i^2+z_i^2)-3r_i^2
+].\]</div>
+        <p>Como</p>
+        <div class="formula-block">\[r_i^2=x_i^2+y_i^2+z_i^2,\]</div>
+        <p>queda</p>
+        <div class="formula-block">\[Q_{xx}+Q_{yy}+Q_{zz}=0.\]</div>
+        </details>
+        <details class="accordion accordion-answer">
+          <summary>D2.</summary>
+          <p>Para la componente (xy),</p>
+        <div class="formula-block">\[Q^{o}_{xy}
+=
+3\sum_i q_i x_i^{o}y_i^{o}.\]</div>
+        <p>Con</p>
+        <div class="formula-block">\[x_i^{o}=x_i-a_x,\qquad y_i^{o}=y_i-a_y,\]</div>
+        <p>se tiene</p>
+        <div class="formula-block">\[Q^{o}_{xy}
+=
+3\sum_i q_i(x_i-a_x)(y_i-a_y).\]</div>
+        <p>Desarrollando,</p>
+        <div class="formula-block">\[Q^{o}_{xy}
+=
+Q_{xy}
+-3a_y\sum_i q_i x_i
+-3a_x\sum_i q_i y_i
++3a_xa_y\sum_i q_i.\]</div>
+        <p>Como</p>
+        <div class="formula-block">\[\sum_i q_i x_i=p_x,\qquad
+\sum_i q_i y_i=p_y,\qquad
+\sum_i q_i=Q,\]</div>
+        <p>resulta</p>
+        <div class="formula-block">\[Q^{o}_{xy}
+=
+Q_{xy}
+-3p_xa_y
+-3p_ya_x
++3Qa_xa_y.\]</div>
+        </details>
+        <details class="accordion accordion-answer">
+          <summary>D3.</summary>
+          <p>Si \(Q=0\) y \(\mathbf p=0\), desaparecen los t&#233;rminos monopolar y dipolar. El potencial lejano dominante ser&#225; cuadripolar:</p>
+        <div class="formula-block">\[V(\mathbf r)\simeq V_Q(\mathbf r)
+=
+\frac{1}{4\pi\varepsilon_0}
+\frac{1}{2}
+\sum_j\sum_k
+\frac{jk}{r^5}Q_{jk}.\]</div>
+        <p>F&#237;sicamente, la distribuci&#243;n es neutra y no tiene separaci&#243;n dipolar neta, pero conserva una estructura angular de orden superior.</p>
+        </details>
+        <details class="accordion accordion-answer">
+          <summary>D4.</summary>
+          <p>El desarrollo multipolar se basa en \(r&#39;\ll r\). Si el punto de observaci&#243;n est&#225; cerca de la distribuci&#243;n, la raz&#243;n \(r&#39;/r\) deja de ser peque&#241;a. Entonces los t&#233;rminos omitidos pueden ser comparables a los conservados, y la aproximaci&#243;n monopolo-dipolo-cuadripolo deja de ser fiable. En ese caso conviene volver al potencial exacto o conservar m&#225;s t&#233;rminos.</p>
+        </details>
+        <details class="accordion accordion-answer">
+          <summary>D5.</summary>
+          <p>El cuadripolo cambia al trasladar el origen mediante t&#233;rminos que dependen de \(Q\) y de \(\mathbf p\). En la componente (xy),</p>
+        <div class="formula-block">\[Q^{o}_{xy}
+=
+Q_{xy}
+-3p_xa_y
+-3p_ya_x
++3Qa_xa_y.\]</div>
+        <p>Si \(Q=0\) y \(\mathbf p=0\), todos los t&#233;rminos a&#241;adidos desaparecen. Por eso el cuadripolo solo queda invariante, en general, cuando los momentos inferiores se anulan.</p>
+        </details>
+        <h3>Respuestas de desarrollo largo</h3>
+        <details class="accordion accordion-answer">
+          <summary>L1.</summary>
+          <p>Un dipolo el&#233;ctrico est&#225; formado por dos cargas (+q) y (-q) separadas por una distancia peque&#241;a. Su momento dipolar es \(\mathbf p=q\mathbf d\), dirigido de la carga negativa a la positiva. Para puntos alejados, su potencial es</p>
+        <div class="formula-block">\[V(\mathbf r)=
+\frac{1}{4\pi\varepsilon_0}
+\frac{\mathbf p\cdot \mathbf r}{r^3}.\]</div>
+        <p>El campo se obtiene mediante \(\mathbf E=-\nabla V\). Si el dipolo est&#225; orientado seg&#250;n (z),</p>
+        <div class="formula-block">\[E_r=
+\frac{1}{4\pi\varepsilon_0}
+\frac{2p\cos\theta}{r^3},
+\qquad
+E_\theta=
+\frac{1}{4\pi\varepsilon_0}
+\frac{p\sin\theta}{r^3}.\]</div>
+        <p>En un campo externo uniforme, su energ&#237;a es</p>
+        <div class="formula-block">\[W_D=-\mathbf p\cdot \mathbf E_0,\]</div>
+        <p>y el par de fuerzas es</p>
+        <div class="formula-block">\[\mathbf T=\mathbf p\times \mathbf E_0.\]</div>
+        <p>La orientaci&#243;n estable es la alineada con el campo.</p>
+        </details>
+        <details class="accordion accordion-answer">
+          <summary>L2.</summary>
+          <p>El potencial de una distribuci&#243;n continua localizada es</p>
+        <div class="formula-block">\[V(\mathbf r)=
+\frac{1}{4\pi\varepsilon_0}
+\int
+\frac{\rho(\mathbf r')}{|\mathbf r-\mathbf r'|}
+,dv'.\]</div>
+        <p>Si el punto de observaci&#243;n est&#225; lejos, \(r&#39;\ll r\), se desarrolla el factor \(1/|\mathbf r-\mathbf r&#39;|\) en serie. Los tres primeros t&#233;rminos se agrupan en monopolo, dipolo y cuadripolo:</p>
+        <div class="formula-block">\[V\simeq
+\frac{1}{4\pi\varepsilon_0}
+\left[
+\frac{Q}{r}
++
+\frac{\mathbf r\cdot \mathbf p}{r^3}
++
+\frac{1}{2}
+\sum_j\sum_k
+\frac{jk}{r^5}Q_{jk}
+\right].\]</div>
+        <p>As&#237;, el potencial lejano queda descrito por momentos globales de la distribuci&#243;n.</p>
+        </details>
+        <details class="accordion accordion-answer">
+          <summary>L3.</summary>
+          <p>El t&#233;rmino monopolar depende de la carga total \(Q\) y decrece como \(1/r\). Es el dominante si la distribuci&#243;n no es neutra. El t&#233;rmino dipolar depende de \(\mathbf p\), mide la separaci&#243;n efectiva entre carga positiva y negativa, y decrece como \(1/r^2\). El t&#233;rmino cuadripolar depende de \(Q_{jk}\), describe una estructura m&#225;s fina de la distribuci&#243;n, y decrece como \(1/r^3\). La jerarqu&#237;a permite decidir qu&#233; t&#233;rmino conserva la informaci&#243;n f&#237;sica relevante seg&#250;n la distancia.</p>
+        </details>
+        <details class="accordion accordion-answer">
+          <summary>L4.</summary>
+          <p>Los momentos multipolares se calculan respecto a un origen. Al trasladar el origen una cantidad \(\mathbf a\), el momento dipolar cambia seg&#250;n</p>
+        <div class="formula-block">\[\mathbf p^{\,o}=\mathbf p-Q\mathbf a.\]</div>
+        <p>Por tanto, si \(Q\neq 0\), el momento dipolar depende del origen. Si \(Q=0\), no cambia. El cuadripolo tambi&#233;n cambia bajo traslaciones, salvo cuando se anulan los momentos inferiores \(Q\) y \(\mathbf p\). Por eso, en problemas, hay que fijar el origen antes de calcular y aprovechar simetr&#237;as.</p>
+        </details>
+        <details class="accordion accordion-answer">
+          <summary>L5.</summary>
+          <p>Para resolver un problema de momentos multipolares, primero se fija el origen y se dibuja la distribuci&#243;n. Despu&#233;s se calcula la carga total \(Q\). Si \(Q\neq 0\), el t&#233;rmino monopolar ya domina a grandes distancias. Si \(Q=0\), se calcula \(\mathbf p\). Si \(\mathbf p=0\), se pasa al tensor cuadripolar. Antes de sumar o integrar, se usan simetr&#237;as para eliminar componentes. Al final se comprueba la traza del cuadripolo y se escribe el potencial conservando solo los t&#233;rminos no nulos.</p>
+        </details>
+        <h3>Respuestas de relaci&#243;n entre conceptos</h3>
+        <details class="accordion accordion-answer">
+          <summary>R1.</summary>
+          <p>El dipolo el&#233;ctrico es la base microsc&#243;pica del estudio de diel&#233;ctricos. Un diel&#233;ctrico polarizado puede entenderse como un conjunto de muchos dipolos. Por eso, antes de definir polarizaci&#243;n, es necesario dominar \(\mathbf p\), su potencial y su interacci&#243;n con campos externos.</p>
+        </details>
+        <details class="accordion accordion-answer">
+          <summary>R2.</summary>
+          <p>En el dipolo, el potencial se obtiene primero:</p>
+        <div class="formula-block">\[V=
+\frac{1}{4\pi\varepsilon_0}
+\frac{\mathbf p\cdot \mathbf r}{r^3}.\]</div>
+        <p>El campo se calcula despu&#233;s con</p>
+        <div class="formula-block">\[\mathbf E=-\nabla V.\]</div>
+        <p>Las l&#237;neas de campo son tangentes a \(\mathbf E\), mientras que las equipotenciales son superficies de \(V=\text{cte}\). Ambas familias son perpendiculares.</p>
+        </details>
+        <details class="accordion accordion-answer">
+          <summary>R3.</summary>
+          <p>La simetr&#237;a permite anular componentes del momento dipolar y del tensor cuadripolar. Adem&#225;s, el tensor cuadripolar es sim&#233;trico y de traza nula, as&#237; que no todas sus componentes son independientes. Cuanta m&#225;s simetr&#237;a tenga la distribuci&#243;n, menos componentes habr&#225; que calcular.</p>
+        </details>
+        <details class="accordion accordion-answer">
+          <summary>R4.</summary>
+          <p>La energ&#237;a</p>
+        <div class="formula-block">\[W_D=-\mathbf p\cdot \mathbf E_0\]</div>
+        <p>indica qu&#233; orientaci&#243;n es estable. El par</p>
+        <div class="formula-block">\[\mathbf T=\mathbf p\times \mathbf E_0\]</div>
+        <p>indica c&#243;mo gira el dipolo hacia esa orientaci&#243;n. Ambos describen el mismo fen&#243;meno: la tendencia del dipolo a alinearse con el campo.</p>
+        </details>
+        <details class="accordion accordion-answer">
+          <summary>R5.</summary>
+          <p>La jerarqu&#237;a multipolar ordena la informaci&#243;n de una distribuci&#243;n de carga. Primero est&#225; la carga neta \(Q\). Si desaparece, importa el momento dipolar \(\mathbf p\). Si tambi&#233;n desaparece, importa el cuadripolo \(Q_{jk}\). Cada nivel aporta una descripci&#243;n m&#225;s fina y decrece m&#225;s r&#225;pidamente con la distancia.</p>
+        </details>
+      </section>
+      <section class="page" id="resumen">
+        <div class="page-head"><h2>9. Resumen final de repaso</h2><span class="page-no">9</span></div>
+        <h3>Ideas principales</h3>
+        <ul>
+          <li>Un dipolo tiene carga neta nula, pero momento dipolar no nulo.</li>
+          <li>El momento dipolar se dirige de (-q) a (+q).</li>
+          <li>El potencial dipolar decrece como \(1/r^2\).</li>
+          <li>El campo dipolar decrece como \(1/r^3\).</li>
+          <li>En un campo externo, el dipolo tiende a alinearse con el campo.</li>
+          <li>El desarrollo multipolar aproxima el potencial lejano de una distribuci&#243;n localizada.</li>
+          <li>Los t&#233;rminos principales son monopolo, dipolo y cuadripolo.</li>
+          <li>La validez exige \(r&#39;\ll r\).</li>
+        </ul>
+        <h3>Conceptos imprescindibles</h3>
+        <div class="formula-block">\[\mathbf p=q\mathbf d\]</div>
+        <div class="formula-block">\[V_D=
+\frac{1}{4\pi\varepsilon_0}
+\frac{\mathbf p\cdot \mathbf r}{r^3}\]</div>
+        <div class="formula-block">\[W_D=-\mathbf p\cdot \mathbf E_0\]</div>
+        <div class="formula-block">\[\mathbf T=\mathbf p\times \mathbf E_0\]</div>
+        <div class="formula-block">\[Q=\int \rho,dv'\]</div>
+        <div class="formula-block">\[\mathbf p=\int \mathbf r'\rho,dv'\]</div>
+        <div class="formula-block">\[Q_{jk}=
+\int(3j'k'-\delta_{jk}r'^2)\rho,dv'\]</div>
+        <h3>Relaciones clave</h3>
+        <ul>
+          <li>\(Q\neq 0\): domina el monopolo.</li>
+          <li>\(Q=0\), \(\mathbf p\neq 0\): domina el dipolo.</li>
+          <li>\(Q=0\), \(\mathbf p=0\): puede dominar el cuadripolo.</li>
+          <li>\(\mathbf p\) depende del origen si \(Q\neq 0\).</li>
+          <li>\(Q_{jk}\) es sim&#233;trico y cumple \(Q_{xx}+Q_{yy}+Q_{zz}=0\).</li>
+        </ul>
+        <h3>Errores que evitar</h3>
+        <ul>
+          <li>Confundir distribuci&#243;n neutra con campo nulo.</li>
+          <li>Invertir la direcci&#243;n de \(\mathbf p\).</li>
+          <li>Usar la aproximaci&#243;n multipolar cerca de la distribuci&#243;n.</li>
+          <li>Confundir \(V\sim 1/r^2\) con \(E\sim 1/r^3\).</li>
+          <li>Tratar el cuadripolo como escalar.</li>
+          <li>Olvidar la dependencia con el origen.</li>
+        </ul>
+      </section>
+      <section class="page" id="checklist">
+        <div class="page-head"><h2>10. Checklist de dominio</h2><span class="page-no">10</span></div>
+        <ul>
+          <li>Si no puedes explicar por qu&#233; un dipolo tiene carga neta cero pero campo no nulo, falta repasar el concepto de momento dipolar.</li>
+          <li>Si confundes la direcci&#243;n de \(\mathbf p\), revisar la definici&#243;n \( \mathbf p=q\mathbf d \) desde (-q) hacia (+q).</li>
+          <li>Si no puedes deducir el potencial dipolar desde las dos cargas, falta repasar aproximaciones para \(r\gg d\).</li>
+          <li>Si confundes el decrecimiento de \(V\) y \(\mathbf E\), revisar la relaci&#243;n \(\mathbf E=-\nabla V\).</li>
+          <li>Si no sabes decidir la orientaci&#243;n estable del dipolo, revisar \(W_D=-\mathbf p\cdot \mathbf E_0\).</li>
+          <li>Si escribes \(\mathbf T\) sin producto vectorial, revisar el par de fuerzas sobre el dipolo.</li>
+          <li>Si no sabes calcular \(Q\), \(\mathbf p\) y \(Q_{jk}\), falta practicar problemas de distribuciones discretas.</li>
+          <li>Si no aprovechas simetr&#237;as antes de calcular, falta trabajar m&#233;todo.</li>
+          <li>Si el cuadripolo que obtienes no cumple \(Q_{xx}+Q_{yy}+Q_{zz}=0\), hay error de c&#225;lculo.</li>
+          <li>Si no compruebas si \(Q=0\) antes de hablar de independencia del origen, revisar cambio de origen.</li>
+          <li>Si puedes calcular los t&#233;rminos no nulos del potencial lejano de una distribuci&#243;n con \(Q=0\), \(\mathbf p=0\), el cap&#237;tulo est&#225; bastante asentado.</li>
+          <li>Si puedes justificar qu&#233; t&#233;rmino domina seg&#250;n la distancia y la simetr&#237;a, el cap&#237;tulo est&#225; suficientemente dominado para examen.</li>
+        </ul>
+      </section>
+
+    </main>
+  </div>
+</body>
+</html>

@@ -1,0 +1,1737 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="robots" content="noindex, nofollow" />
+<meta name="color-scheme" content="light dark" />
+<title>Astronomía — Formulario completo</title>
+<meta name="description" content="Formulario compacto UNED de Introducción a la Astronomía y Astrofísica General: definiciones, fórmulas y recetas de examen." />
+<link rel="icon" type="image/png" sizes="32x32" href="assets/icons/icon-32.png" />
+<link rel="icon" type="image/png" sizes="50x50" href="assets/icons/icon-50.png" />
+<link rel="apple-touch-icon" sizes="100x100" href="assets/icons/icon-100.png" />
+<meta name="theme-color" content="#172554" />
+<link rel="stylesheet" href="assets/styles.css" />
+<script>
+window.MathJax = {
+  tex: {
+    inlineMath: [['\\(','\\)'], ['$', '$']],
+    displayMath: [['\\[','\\]']],
+    processEscapes: true
+  },
+  svg: { fontCache: 'global' },
+  options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+};
+function printReady() {
+  if (window.MathJax && MathJax.typesetPromise) {
+    MathJax.typesetPromise().then(() => window.print());
+  } else {
+    window.print();
+  }
+}
+function openAllDetails() {
+  document.querySelectorAll('details').forEach(d => d.open = true);
+}
+function closeAllDetails() {
+  document.querySelectorAll('details').forEach(d => d.open = false);
+}
+</script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+<script defer src="assets/app.js"></script>
+<style>
+/* Ajustes locales: mantienen el theme del repositorio y densifican el formulario. */
+:root { --astro-accent: #172554; }
+.formula-index { display:grid; grid-template-columns: repeat(auto-fit,minmax(190px,1fr)); gap:.75rem; }
+.formula-index a { text-decoration:none; }
+.compact-table td, .compact-table th { vertical-align:top; }
+.tag-ia, .tag-ag, .tag-proam { font-size:.78rem; border-radius:999px; padding:.1rem .45rem; white-space:nowrap; }
+.tag-ia { background:#e0ecff; color:#173b7a; }
+.tag-ag { background:#e9f8ee; color:#14532d; }
+.tag-proam { background:#fff0d8; color:#7c2d12; }
+.blacklist li strong { color:#991b1b; }
+.quick-note { font-size:.95rem; opacity:.92; }
+@media print {
+  .definition-card { break-inside: avoid; }
+  .toolbar, .no-print { display:none !important; }
+}
+</style>
+</head>
+
+<body class="subject-astronomia">
+<div class="wrap">
+
+<header class="cover">
+  <div class="top-actions">
+    <a class="back-link" href="index.html#astronomia">← Volver a Astronomía</a>
+    <a class="back-link secondary" href="index.html">Índice general</a>
+  </div>
+  <p class="eyebrow">UNED Física · 61024084 Introducción a la Astronomía · 61044112 Astrofísica General</p>
+  <h1>Formulario completo de Astronomía y Astrofísica</h1>
+  <p class="subtitle">Chuleta técnica de examen: definiciones mínimas, fórmulas madre, fórmulas secundarias, recetas y errores graves. Separación explícita entre examen UNED y aplicación PRO-AM en ocultaciones.</p>
+  <div class="chips">
+    <span class="chip">Astronomía</span>
+    <span class="chip">Astrofísica General</span>
+    <span class="chip">Formulario</span>
+    <span class="chip">MathJax</span>
+    <span class="chip">PRO-AM separado</span>
+    <span class="chip">estado: completo</span>
+  </div>
+</header>
+
+<div class="toolbar no-print">
+  <nav aria-label="Navegación del formulario">
+    <a href="#constantes">Constantes</a>
+    <a href="#coordenadas">Coordenadas</a>
+    <a href="#tiempo">Tiempo</a>
+    <a href="#kepler">Kepler</a>
+    <a href="#geocentrico">Geocéntrico</a>
+    <a href="#correcciones">Correcciones</a>
+    <a href="#eclipses">Eclipses/ocultaciones</a>
+    <a href="#fotometria">Fotometría</a>
+    <a href="#espectros">Espectros</a>
+    <a href="#estrellas">Estrellas</a>
+    <a href="#binarias">Binarias</a>
+    <a href="#galaxias">Galaxias</a>
+    <a href="#cosmologia">Cosmología</a>
+    <a href="#examen">Examen</a>
+  </nav>
+  <div class="toolbar-actions">
+    <button class="btn" onclick="printReady()">Imprimir / PDF</button>
+    <button class="btn secondary" onclick="openAllDetails()">Abrir todo</button>
+    <button class="btn secondary" onclick="closeAllDetails()">Cerrar acordeones</button>
+  </div>
+</div>
+
+<main>
+
+<section class="page map-page" id="mapa">
+  <div class="page-head">
+    <h2>Mapa operativo</h2>
+    <p class="section-lead">Usar de izquierda a derecha: identificar bloque, fijar unidades y signo, escribir la fórmula madre, sustituir al final.</p>
+  </div>
+  <div class="concept-map">
+    <a class="map-card" href="#constantes"><span>Constantes</span><small>unidades · logaritmos · magnitudes</small></a>
+    <a class="map-card" href="#coordenadas"><span>Coordenadas</span><small>Alt/Az · RA/Dec · eclípticas</small></a>
+    <a class="map-card" href="#tiempo"><span>Tiempo</span><small>TS · UTC · visibilidad</small></a>
+    <a class="map-card" href="#kepler"><span>Órbitas</span><small>cónicas · Kepler · velocidades</small></a>
+    <a class="map-card" href="#geocentrico"><span>Geocéntrico</span><small>elongación · fase · sinódico</small></a>
+    <a class="map-card" href="#correcciones"><span>Correcciones</span><small>refracción · paralaje · aberración</small></a>
+    <a class="map-card" href="#eclipses"><span>Eclipses</span><small>sombras · Bessel · ocultaciones</small></a>
+    <a class="map-card" href="#fotometria"><span>Fotometría</span><small>flujo · magnitudes · color</small></a>
+    <a class="map-card" href="#espectros"><span>Espectros</span><small>Doppler · OBAFGKM · HR</small></a>
+    <a class="map-card" href="#estrellas"><span>Estrellas</span><small>estructura · Sol · evolución</small></a>
+    <a class="map-card" href="#binarias"><span>Binarias</span><small>visual · espectroscópica · eclipsante</small></a>
+    <a class="map-card" href="#galaxias"><span>Distancias</span><small>cefeidas · galaxias · medio interestelar</small></a>
+    <a class="map-card" href="#cosmologia"><span>Cosmología</span><small>redshift · Hubble · CMB</small></a>
+    <a class="map-card" href="#examen"><span>Plantillas</span><small>recetas · lista negra</small></a>
+  </div>
+  <div class="reading-block source-block">
+    <p><strong>Regla de uso:</strong> este formulario no sustituye problemas. Sirve para no perder la estructura en examen: dibujo, convenio, unidades, fórmula, dominio físico y resultado con unidades.</p>
+  </div>
+</section>
+
+<section class="page" id="constantes">
+  <div class="page-head">
+    <h2>1. Constantes, unidades y cambios rápidos</h2>
+    <p class="section-lead"><span class="tag-ia">IA</span> <span class="tag-ag">AG</span> Antes de calcular: grados, horas, radianes, parsecs y magnitudes.</p>
+  </div>
+
+  <div class="grid cards-grid">
+    <article class="definition-card">
+      <h3>Conversión angular y temporal</h3>
+      <div class="formula-block">\[
+      360^\circ=24^{\rm h},\qquad 15^\circ=1^{\rm h},\qquad
+      1^{\rm h}=15^\circ,\qquad 1^{\rm m}=15',\qquad 1^{\rm s}=15''
+      \]</div>
+      <div class="formula-block">\[
+      1^\circ=60'=3600'',\qquad 1\,{\rm rad}=57{,}2958^\circ=206265''
+      \]</div>
+      <div class="formula-block">\[
+      \theta_{\rm rad}=\theta_{^\circ}\frac{\pi}{180},\qquad
+      \theta_{^\circ}=15\,\theta_{\rm h}
+      \]</div>
+      <p>En trigonometría usar grados o radianes de forma coherente. En tiempo astronómico, reducir a \(0\)-\(24^{\rm h}\); en ángulos, a \(0^\circ\)-\(360^\circ\) o \(-180^\circ\)-\(180^\circ\).</p>
+    </article>
+
+    <article class="definition-card">
+      <h3>Distancias astronómicas</h3>
+      <div class="formula-block">\[
+      1\,{\rm UA}=1{,}495978707\times10^{11}\ {\rm m}
+      \]</div>
+      <div class="formula-block">\[
+      1\,{\rm pc}=206265\,{\rm UA}=3{,}0857\times10^{16}\ {\rm m}=3{,}2616\,{\rm ly}
+      \]</div>
+      <div class="formula-block">\[
+      d({\rm pc})=\frac{1}{\pi('')},\qquad s({\rm UA})=\theta('')\,d({\rm pc})
+      \]</div>
+      <div class="formula-block">\[
+      s=D\,\theta_{\rm rad}\quad\text{si } \theta\ll1
+      \]</div>
+      <p>El semieje angular de una binaria visual solo se convierte en semieje físico tras aplicar la distancia.</p>
+    </article>
+
+    <article class="definition-card">
+      <h3>Constantes físicas y solares</h3>
+      <table class="compact-table">
+        <tbody>
+          <tr><td>\(G\)</td><td>\(6{,}674\times10^{-11}\ {\rm m^3\,kg^{-1}\,s^{-2}}\)</td></tr>
+          <tr><td>\(c\)</td><td>\(2{,}998\times10^8\ {\rm m\,s^{-1}}\)</td></tr>
+          <tr><td>\(h\)</td><td>\(6{,}626\times10^{-34}\ {\rm J\,s}\)</td></tr>
+          <tr><td>\(k\)</td><td>\(1{,}381\times10^{-23}\ {\rm J\,K^{-1}}\)</td></tr>
+          <tr><td>\(\sigma\)</td><td>\(5{,}670\times10^{-8}\ {\rm W\,m^{-2}\,K^{-4}}\)</td></tr>
+          <tr><td>\(M_\odot\)</td><td>\(1{,}989\times10^{30}\ {\rm kg}\)</td></tr>
+          <tr><td>\(R_\odot\)</td><td>\(6{,}96\times10^8\ {\rm m}\)</td></tr>
+          <tr><td>\(L_\odot\)</td><td>\(3{,}83\text{–}3{,}85\times10^{26}\ {\rm W}\)</td></tr>
+          <tr><td>\(M_{{\rm bol},\odot}\)</td><td>\(\simeq4{,}74\)</td></tr>
+          <tr><td>\(M_{V,\odot}\)</td><td>\(\simeq4{,}83\text{–}4{,}87\)</td></tr>
+        </tbody>
+      </table>
+    </article>
+
+    <article class="definition-card">
+      <h3>Unidades orbitales cómodas</h3>
+      <div class="formula-block">\[
+      P^2=\frac{4\pi^2a^3}{G(M+m)}
+      \]</div>
+      <div class="formula-block">\[
+      \frac{P^2}{\rm yr^2}=\frac{a^3}{\rm UA^3}\frac{M_\odot}{M+m}
+      \]</div>
+      <div class="formula-block">\[
+      \frac{M+m}{M_\odot}=\frac{a^3({\rm UA})}{P^2({\rm yr})}
+      \]</div>
+      <p>En el Sistema Solar con masa central solar: \(P^2=a^3\), si \(P\) está en años y \(a\) en UA.</p>
+    </article>
+
+    <article class="definition-card">
+      <h3>Logaritmos y magnitudes</h3>
+      <div class="formula-block">\[
+      \log(ab)=\log a+\log b,\qquad
+      \log\left(\frac{a}{b}\right)=\log a-\log b,\qquad
+      \log(a^n)=n\log a
+      \]</div>
+      <div class="formula-block">\[
+      \Delta m=-2{,}5\log_{10}\left(\frac{F_1}{F_2}\right),\qquad
+      \frac{F_1}{F_2}=10^{-0{,}4\Delta m}
+      \]</div>
+      <div class="formula-block">\[
+      5\ {\rm mag}\Rightarrow 100\ \text{en flujo},\qquad
+      1\ {\rm mag}\Rightarrow 2{,}512\ \text{en flujo}
+      \]</div>
+      <p>Magnitud mayor significa objeto menos brillante. Luminosidad \(L\) no es brillo aparente \(F\).</p>
+    </article>
+
+    <article class="definition-card">
+      <h3>Chequeo de unidades</h3>
+      <ul>
+        <li>\(H,\alpha,{\rm TS}\): normalmente en horas; para seno/coseno, convertir a grados.</li>
+        <li>\(a,r,\rho\): en la misma unidad antes de aplicar Kepler o triángulos.</li>
+        <li>\(\pi\) de paralaje estelar: en segundos de arco si se usa \(d=1/\pi\).</li>
+        <li>\(\mu\) de movimiento propio: usar segundos de arco por año en \(v_t=4{,}74047\mu d\).</li>
+        <li>Constante de aberración \(k\): segundos de arco.</li>
+      </ul>
+    </article>
+  </div>
+
+  <details class="accordion accordion-error">
+    <summary>Errores graves de esta página</summary>
+    <p>Mezclar grados y horas en \(H=TS-\alpha\); usar \(\pi\) en milisegundos de arco como si fueran segundos; aplicar una fórmula en UA/años con \(G\) en SI; olvidar unidades en el resultado final.</p>
+  </details>
+</section>
+
+<section class="page" id="coordenadas">
+  <div class="page-head">
+    <h2>2. Coordenadas astronómicas</h2>
+    <p class="section-lead"><span class="tag-ia">IA</span> Esfera celeste, sistemas de referencia y transformación Alt/Az ↔ ecuatorial ↔ eclíptico.</p>
+  </div>
+
+  <div class="grid cards-grid">
+    <article class="definition-card wide-card">
+      <h3>Sistemas mínimos</h3>
+      <table>
+        <thead><tr><th>Sistema</th><th>Coordenadas</th><th>Plano fundamental</th><th>Origen</th><th>Uso</th></tr></thead>
+        <tbody>
+          <tr><td>Horizontal</td><td>\(A,h\) o \(A,z\)</td><td>Horizonte</td><td>Sur/Norte según convenio</td><td>observación local</td></tr>
+          <tr><td>Ecuatorial horario</td><td>\(H,\delta\)</td><td>Ecuador celeste</td><td>meridiano local</td><td>cálculo local</td></tr>
+          <tr><td>Ecuatorial absoluto</td><td>\(\alpha,\delta\)</td><td>Ecuador celeste</td><td>punto vernal \(\gamma\)</td><td>catálogos</td></tr>
+          <tr><td>Eclíptico</td><td>\(\lambda,\beta\)</td><td>Eclíptica</td><td>punto vernal \(\gamma\)</td><td>Sol, planetas, aberración</td></tr>
+          <tr><td>Galáctico</td><td>\(l,b\)</td><td>plano galáctico</td><td>centro galáctico</td><td>Vía Láctea</td></tr>
+        </tbody>
+      </table>
+    </article>
+
+    <article class="definition-card">
+      <h3>Variables y signos</h3>
+      <table class="compact-table">
+        <tbody>
+          <tr><td>\(\varphi\)</td><td>latitud del observador; Norte positiva.</td></tr>
+          <tr><td>\(\lambda_{\rm geo}\)</td><td>longitud geográfica; aquí Este positiva salvo aviso.</td></tr>
+          <tr><td>\(h\)</td><td>altura sobre el horizonte.</td></tr>
+          <tr><td>\(z\)</td><td>distancia cenital; \(h=90^\circ-z\).</td></tr>
+          <tr><td>\(H\)</td><td>ángulo horario; positivo hacia el Oeste.</td></tr>
+          <tr><td>\(\alpha\)</td><td>ascensión recta, medida desde \(\gamma\) hacia el Este.</td></tr>
+          <tr><td>\(\delta\)</td><td>declinación, positiva al Norte del ecuador celeste.</td></tr>
+        </tbody>
+      </table>
+      <p>Las fórmulas de esta sección usan acimut \(A_S\) contado desde el Sur, positivo hacia el Oeste. Si se usa acimut desde el Norte hacia el Este: \(A_N=A_S+180^\circ\) módulo \(360^\circ\).</p>
+    </article>
+
+    <article class="definition-card">
+      <h3>Relación fundamental de tiempo y ángulo horario</h3>
+      <div class="formula-block">\[
+      H=TS-\alpha
+      \]</div>
+      <p>\(TS\) y \(\alpha\) deben estar en la misma unidad. Si \(H>0\), el astro está al Oeste del meridiano; si \(H<0\), está al Este.</p>
+    </article>
+
+    <article class="definition-card">
+      <h3>Triángulo astronómico</h3>
+      <div class="formula-block">\[
+      \sin h=\sin\varphi\sin\delta+\cos\varphi\cos\delta\cos H
+      \]</div>
+      <div class="formula-block">\[
+      \cos h\sin A_S=\cos\delta\sin H
+      \]</div>
+      <div class="formula-block">\[
+      \cos h\cos A_S=\cos\delta\cos H\sin\varphi-\sin\delta\cos\varphi
+      \]</div>
+      <p>Usar \(\operatorname{atan2}(\cos h\sin A_S,\cos h\cos A_S)\) para no perder cuadrante.</p>
+    </article>
+
+    <article class="definition-card">
+      <h3>Forma con distancia cenital</h3>
+      <div class="formula-block">\[
+      \sin z\sin A_S=\cos\delta\sin H
+      \]</div>
+      <div class="formula-block">\[
+      \sin z\cos A_S=\cos\delta\cos H\sin\varphi-\sin\delta\cos\varphi
+      \]</div>
+      <div class="formula-block">\[
+      \cos z=\cos\delta\cos H\cos\varphi+\sin\delta\sin\varphi
+      \]</div>
+      <p>Es la forma típica del libro. Recordar \(h=90^\circ-z\).</p>
+    </article>
+
+    <article class="definition-card">
+      <h3>Culminación, orto y ocaso</h3>
+      <div class="formula-block">\[
+      H=0\quad\Rightarrow\quad h_{\rm sup}=90^\circ-|\varphi-\delta|
+      \]</div>
+      <div class="formula-block">\[
+      H=180^\circ\quad\Rightarrow\quad
+      \sin h_{\rm inf}=\sin\varphi\sin\delta-\cos\varphi\cos\delta
+      \]</div>
+      <div class="formula-block">\[
+      h=0\quad\Rightarrow\quad \cos H_0=-\tan\varphi\tan\delta
+      \]</div>
+      <div class="formula-block">\[
+      \text{duración sobre horizonte}= \frac{2H_0}{15^\circ/{\rm h}}
+      \]</div>
+      <p>Circumpolar en hemisferio Norte si \(\delta>90^\circ-\varphi\). Nunca sale si \(\delta<-(90^\circ-\varphi)\).</p>
+    </article>
+
+    <article class="definition-card">
+      <h3>Primer vertical</h3>
+      <p>Primer vertical: círculo vertical Este-Oeste; con \(A_S=\pm90^\circ\), luego \(\cos A_S=0\).</p>
+      <div class="formula-block">\[
+      \cos H=\frac{\tan\delta}{\tan\varphi}
+      \]</div>
+      <div class="formula-block">\[
+      \sin h=\frac{\sin\delta}{\sin\varphi}
+      \]</div>
+      <div class="formula-block">\[
+      H_{\rm Este}<0,\qquad H_{\rm Oeste}>0,\qquad
+      H({\rm h})=\frac{H(^\circ)}{15}
+      \]</div>
+      <p>Solo hay cruce si el valor de \(\cos H\) está entre \(-1\) y \(1\).</p>
+    </article>
+
+    <article class="definition-card">
+      <h3>Ecuatorial ↔ eclíptico</h3>
+      <p>Oblicuidad de la eclíptica: \(\varepsilon\simeq23^\circ26'\). De eclípticas \((\lambda,\beta)\) a ecuatoriales \((\alpha,\delta)\):</p>
+      <div class="formula-block">\[
+      \sin\delta=\sin\beta\cos\varepsilon+\cos\beta\sin\varepsilon\sin\lambda
+      \]</div>
+      <div class="formula-block">\[
+      \cos\delta\sin\alpha=\cos\beta\cos\varepsilon\sin\lambda-\sin\beta\sin\varepsilon
+      \]</div>
+      <div class="formula-block">\[
+      \cos\delta\cos\alpha=\cos\beta\cos\lambda
+      \]</div>
+      <p>Usar \(\alpha=\operatorname{atan2}(\cos\delta\sin\alpha,\cos\delta\cos\alpha)\).</p>
+    </article>
+
+    <article class="definition-card">
+      <h3>Inversa eclíptica</h3>
+      <div class="formula-block">\[
+      \sin\beta=\sin\delta\cos\varepsilon-\cos\delta\sin\varepsilon\sin\alpha
+      \]</div>
+      <div class="formula-block">\[
+      \cos\beta\sin\lambda=\sin\delta\sin\varepsilon+\cos\delta\cos\varepsilon\sin\alpha
+      \]</div>
+      <div class="formula-block">\[
+      \cos\beta\cos\lambda=\cos\delta\cos\alpha
+      \]</div>
+      <p>El cuadrante de \(\lambda\) se decide con las dos componentes de \(\operatorname{atan2}\), no con una tangente simple.</p>
+    </article>
+
+    <article class="definition-card">
+      <h3>Coordenadas del polo eclíptico</h3>
+      <p>Polo Norte de la eclíptica: \(\beta=+90^\circ\). En ecuatoriales:</p>
+      <div class="formula-block">\[
+      \alpha=18^{\rm h},\qquad \delta=90^\circ-\varepsilon
+      \]</div>
+      <p>Este resultado sale de rotar el eje eclíptico respecto al ecuador por la oblicuidad.</p>
+    </article>
+  </div>
+
+  <details class="accordion accordion-error">
+    <summary>Errores típicos de coordenadas</summary>
+    <p>No declarar convenio de acimut; olvidar que \(H\) crece hacia el Oeste; usar \(\arctan(y/x)\) sin cuadrante; no comprobar si el astro sale, culmina bajo el horizonte o es circumpolar; mezclar \(\lambda\) eclíptica con longitud geográfica.</p>
+  </details>
+</section>
+
+<section class="page" id="tiempo">
+  <div class="page-head">
+    <h2>3. Tiempo astronómico y visibilidad</h2>
+    <p class="section-lead"><span class="tag-ia">IA</span> <span class="tag-proam">PRO-AM</span> Hora sidérea, UTC, escalas de tiempo, fecha juliana y ventana de observación.</p>
+  </div>
+
+  <div class="grid cards-grid">
+    <article class="definition-card">
+      <h3>Tiempo sidéreo</h3>
+      <div class="formula-block">\[
+      H=TS-\alpha
+      \]</div>
+      <div class="formula-block">\[
+      \text{culminación superior}\quad\Longleftrightarrow\quad H=0\quad\Longleftrightarrow\quad TS=\alpha
+      \]</div>
+      <div class="formula-block">\[
+      1\ {\rm día\ sidéreo}=23^{\rm h}56^{\rm m}4{,}0905^{\rm s}
+      \]</div>
+      <div class="formula-block">\[
+      1\ {\rm día\ medio}=1{,}0027379\ {\rm días\ sidéreos}
+      \]</div>
+    </article>
+
+    <article class="definition-card">
+      <h3>TS local desde Greenwich</h3>
+      <div class="formula-block">\[
+      TS_{\rm local}=TS_G+\lambda_{\rm geo}
+      \]</div>
+      <p>Aquí \(\lambda_{\rm geo}>0\) al Este y \(\lambda_{\rm geo}<0\) al Oeste. Si el enunciado usa Oeste positivo, cambiar el signo.</p>
+      <div class="formula-block">\[
+      TS_{\rm local}=TS_{G0}+1{,}0027379\,TU+\lambda_{\rm geo}
+      \]</div>
+      <p>\(TU\) es el intervalo de tiempo universal transcurrido desde \(0^{\rm h}\) UT, expresado en horas solares medias.</p>
+    </article>
+
+    <article class="definition-card">
+      <h3>Tiempo solar y civil</h3>
+      <div class="formula-block">\[
+      {\rm Ec.T.}=H_\odot-H_{\rm medio}
+      \]</div>
+      <div class="formula-block">\[
+      T_{\rm civil}=H_{\rm medio}+12^{\rm h}
+      \]</div>
+      <p>El día solar verdadero no es uniforme. El tiempo solar medio usa un Sol ficticio uniforme. El tiempo civil añade zonas horarias y correcciones legales.</p>
+    </article>
+
+    <article class="definition-card">
+      <h3>Escalas de tiempo</h3>
+      <table>
+        <thead><tr><th>Escala</th><th>Uso</th></tr></thead>
+        <tbody>
+          <tr><td>UTC</td><td>registro operativo; ocultaciones, vídeos, observatorio.</td></tr>
+          <tr><td>UT1</td><td>rotación real de la Tierra.</td></tr>
+          <tr><td>TAI</td><td>tiempo atómico internacional.</td></tr>
+          <tr><td>TT</td><td>tiempo terrestre; efemérides geocéntricas.</td></tr>
+          <tr><td>TDB</td><td>tiempo dinámico baricéntrico; efemérides de alta precisión.</td></tr>
+        </tbody>
+      </table>
+      <div class="formula-block">\[
+      TT=TAI+32{,}184\ {\rm s}
+      \]</div>
+    </article>
+
+    <article class="definition-card">
+      <h3>Fecha juliana</h3>
+      <div class="formula-block">\[
+      MJD=JD-2\,400\,000{,}5
+      \]</div>
+      <p>El día juliano cambia a mediodía UT; el día juliano modificado cambia a medianoche UT. En problemas de calendario, verificar si la fecha es juliana o gregoriana.</p>
+    </article>
+
+    <article class="definition-card">
+      <h3>Ventana de observación</h3>
+      <div class="formula-block">\[
+      \sin h=\sin\varphi\sin\delta+\cos\varphi\cos\delta\cos H
+      \]</div>
+      <div class="formula-block">\[
+      \cos H_h=\frac{\sin h_{\min}-\sin\varphi\sin\delta}{\cos\varphi\cos\delta}
+      \]</div>
+      <div class="formula-block">\[
+      \Delta t_{\rm visible}=\frac{2H_h}{15^\circ/{\rm h}}\quad\text{en horas sidéreas}
+      \]</div>
+      <p>Visible no significa observable: comprobar Sol, Luna, altura mínima, campo, SNR y horizonte local.</p>
+    </article>
+
+    <article class="definition-card">
+      <h3>Procedimiento UNED: tiempo sidéreo local</h3>
+      <ol>
+        <li>Fijar la época de referencia dada en el enunciado.</li>
+        <li>Calcular el intervalo \(TU\) en horas solares medias.</li>
+        <li>Convertir intervalo solar medio a sidéreo con \(1{,}0027379\).</li>
+        <li>Sumar \(TS_{G0}\) y longitud geográfica con el signo correcto.</li>
+        <li>Reducir a \(0\)-\(24^{\rm h}\).</li>
+        <li>Aplicar \(H=TS-\alpha\); convertir a grados para trigonometría.</li>
+      </ol>
+    </article>
+
+    <article class="definition-card">
+      <h3>PRO-AM: timing de ocultaciones</h3>
+      <ul>
+        <li>Registrar en UTC, no en hora local.</li>
+        <li>Indicar sincronización: GPS, NTP, video time inserter u otro sistema.</li>
+        <li>Documentar exposición, cadencia, dead time y si el timestamp corresponde a inicio, centro o fin de integración.</li>
+        <li>Conservar vídeo/FITS, curva de luz, logs y calibraciones.</li>
+      </ul>
+      <p>Un positivo sin trazabilidad temporal puede perder valor científico.</p>
+    </article>
+  </div>
+
+  <details class="accordion accordion-error">
+    <summary>Errores graves de tiempo</summary>
+    <p>Mezclar TSL, TSG, UTC y hora local; olvidar el factor \(1{,}0027379\); sumar longitud con signo contrario; informar una ocultación en hora civil; no distinguir inicio y centro de exposición.</p>
+  </details>
+</section>
+
+<section class="page" id="kepler">
+  <div class="page-head">
+    <h2>4. Órbitas keplerianas y velocidades</h2>
+    <p class="section-lead"><span class="tag-ia">IA</span> Problema de dos cuerpos, cónicas, anomalías, energía, periodo y velocidades orbitales.</p>
+  </div>
+
+  <div class="grid cards-grid">
+    <article class="definition-card">
+      <h3>Parámetros de la elipse</h3>
+      <div class="formula-block">\[
+      b=a\sqrt{1-e^2},\qquad p=a(1-e^2)
+      \]</div>
+      <div class="formula-block">\[
+      q=a(1-e),\qquad Q=a(1+e)
+      \]</div>
+      <div class="formula-block">\[
+      e=\frac{Q-q}{Q+q},\qquad a=\frac{Q+q}{2}
+      \]</div>
+      <p>\(q\): perihelio o periastro. \(Q\): afelio o apoastro.</p>
+    </article>
+
+    <article class="definition-card">
+      <h3>Ecuación polar de la cónica</h3>
+      <div class="formula-block">\[
+      r=\frac{p}{1+e\cos f}
+      \]</div>
+      <table>
+        <tbody>
+          <tr><td>\(0\le e<1\)</td><td>elipse</td></tr>
+          <tr><td>\(e=1\)</td><td>parábola</td></tr>
+          <tr><td>\(e>1\)</td><td>hipérbola</td></tr>
+        </tbody>
+      </table>
+      <p>\(f\) es la anomalía verdadera: ángulo desde el periastro.</p>
+    </article>
+
+    <article class="definition-card">
+      <h3>Anomalía excéntrica y ley horaria</h3>
+      <div class="formula-block">\[
+      r=a(1-e\cos E)
+      \]</div>
+      <div class="formula-block">\[
+      x=a(\cos E-e),\qquad y=a\sqrt{1-e^2}\sin E
+      \]</div>
+      <div class="formula-block">\[
+      \tan\frac{f}{2}=\sqrt{\frac{1+e}{1-e}}\tan\frac{E}{2}
+      \]</div>
+      <div class="formula-block">\[
+      M=n(t-T)=E-e\sin E,\qquad n=\frac{2\pi}{P}
+      \]</div>
+    </article>
+
+    <article class="definition-card">
+      <h3>Tercera ley y masa</h3>
+      <div class="formula-block">\[
+      \mu=G(m_1+m_2)
+      \]</div>
+      <div class="formula-block">\[
+      P^2=\frac{4\pi^2a^3}{G(m_1+m_2)}
+      \]</div>
+      <div class="formula-block">\[
+      m_1+m_2=\frac{4\pi^2a^3}{GP^2}
+      \]</div>
+      <p>Si \(a\) está en UA, \(P\) en años y la masa en masas solares: \(M_{\rm tot}=a^3/P^2\).</p>
+    </article>
+
+    <article class="definition-card">
+      <h3>Energía y vis-viva</h3>
+      <div class="formula-block">\[
+      \varepsilon=\frac{v^2}{2}-\frac{\mu}{r}
+      \]</div>
+      <div class="formula-block">\[
+      \varepsilon=-\frac{\mu}{2a}\quad\text{(elipse)}
+      \]</div>
+      <div class="formula-block">\[
+      v^2=\mu\left(\frac{2}{r}-\frac{1}{a}\right)
+      \]</div>
+      <p>La velocidad es máxima en periastro y mínima en apoastro.</p>
+    </article>
+
+    <article class="definition-card">
+      <h3>Velocidad radial y transversal</h3>
+      <div class="formula-block">\[
+      h_{\rm orb}=|\mathbf r\times\mathbf v|=\sqrt{\mu p}
+      \]</div>
+      <div class="formula-block">\[
+      v_r=\dot r=\frac{\mu}{h_{\rm orb}}\,e\sin f
+      \]</div>
+      <div class="formula-block">\[
+      v_\theta=r\dot f=\frac{\mu}{h_{\rm orb}}(1+e\cos f)
+      \]</div>
+      <div class="formula-block">\[
+      v^2=v_r^2+v_\theta^2
+      \]</div>
+      <p>En periastro y apoastro \(v_r=0\); la velocidad es solo transversal.</p>
+    </article>
+
+    <article class="definition-card">
+      <h3>Segunda ley de Kepler</h3>
+      <div class="formula-block">\[
+      \frac{dA}{dt}=\frac{h_{\rm orb}}{2}=\text{constante}
+      \]</div>
+      <div class="formula-block">\[
+      \mathbf h=\mathbf r\times\mathbf v=\text{constante}
+      \]</div>
+      <p>Equivale a conservación del momento angular específico en una fuerza central.</p>
+    </article>
+
+    <article class="definition-card">
+      <h3>Hipérbola y escape</h3>
+      <div class="formula-block">\[
+      e>1,\qquad r=\frac{p}{1+e\cos f}
+      \]</div>
+      <div class="formula-block">\[
+      \varepsilon>0,\qquad v_\infty=\sqrt{2\varepsilon}
+      \]</div>
+      <div class="formula-block">\[
+      v_{\rm esc}=\sqrt{\frac{2\mu}{r}}
+      \]</div>
+      <p>Si se usa \(a_h>0\) como semieje real de la hipérbola: \(\varepsilon=\mu/(2a_h)\) y \(v_\infty=\sqrt{\mu/a_h}\).</p>
+    </article>
+
+    <article class="definition-card">
+      <h3>Elementos orbitales</h3>
+      <table>
+        <thead><tr><th>Elemento</th><th>Significado</th></tr></thead>
+        <tbody>
+          <tr><td>\(a\)</td><td>semieje mayor</td></tr>
+          <tr><td>\(e\)</td><td>excentricidad</td></tr>
+          <tr><td>\(i\)</td><td>inclinación orbital</td></tr>
+          <tr><td>\(\Omega\)</td><td>longitud del nodo ascendente</td></tr>
+          <tr><td>\(\omega\)</td><td>argumento del periastro</td></tr>
+          <tr><td>\(T\)</td><td>época de paso por periastro</td></tr>
+          <tr><td>\(M_0\)</td><td>anomalía media en época</td></tr>
+        </tbody>
+      </table>
+    </article>
+
+    <article class="definition-card">
+      <h3>Receta para hallar \(a,e\)</h3>
+      <ol>
+        <li>Si dan \(r\) y \(E\): usar \(r=a(1-e\cos E)\).</li>
+        <li>Si dan \(r\) y \(f\): usar \(r=p/(1+e\cos f)=a(1-e^2)/(1+e\cos f)\).</li>
+        <li>Montar dos ecuaciones en \(a,e\).</li>
+        <li>Comprobar \(0\le e<1\) si el enunciado dice órbita elíptica.</li>
+        <li>Calcular \(q,Q,b,p,P\) solo después.</li>
+      </ol>
+    </article>
+  </div>
+
+  <details class="accordion accordion-error">
+    <summary>Errores típicos de órbitas</summary>
+    <p>Confundir anomalía verdadera \(f\) con excéntrica \(E\); aplicar \(P^2=a^3\) fuera de UA/años/masa solar; olvidar masa total en el problema de dos cuerpos; usar vis-viva con unidades mezcladas; no comprobar si la cónica es elipse o hipérbola.</p>
+  </details>
+</section>
+
+<section class="page" id="geocentrico">
+  <div class="page-head">
+    <h2>5. Movimiento geocéntrico: elongación, fase y sinódico</h2>
+    <p class="section-lead"><span class="tag-ia">IA</span> Geometría Sol-Tierra-planeta, configuraciones, retrogradación, fase y magnitud aparente.</p>
+  </div>
+
+  <div class="grid cards-grid">
+    <article class="definition-card">
+      <h3>Triángulo Sol-Tierra-objeto</h3>
+      <table>
+        <tbody>
+          <tr><td>\(R\)</td><td>distancia Sol-Tierra</td></tr>
+          <tr><td>\(r\)</td><td>distancia Sol-objeto</td></tr>
+          <tr><td>\(\rho\) o \(\Delta\)</td><td>distancia Tierra-objeto</td></tr>
+          <tr><td>\(E\)</td><td>elongación: ángulo Sol-Tierra-objeto</td></tr>
+          <tr><td>\(\phi\)</td><td>ángulo de fase: Sol-objeto-Tierra</td></tr>
+        </tbody>
+      </table>
+      <div class="formula-block">\[
+      \frac{\sin E}{r}=\frac{\sin\phi}{R}=\frac{\sin L}{\rho}
+      \]</div>
+    </article>
+
+    <article class="definition-card">
+      <h3>Relaciones de cosenos</h3>
+      <div class="formula-block">\[
+      r^2=R^2+\rho^2-2R\rho\cos E
+      \]</div>
+      <div class="formula-block">\[
+      R^2=r^2+\rho^2-2r\rho\cos\phi
+      \]</div>
+      <div class="formula-block">\[
+      \rho^2=R^2+r^2-2Rr\cos L
+      \]</div>
+      <p>Dibujar el triángulo antes de decidir qué ángulo aparece en cada fórmula.</p>
+    </article>
+
+    <article class="definition-card">
+      <h3>Periodo sinódico</h3>
+      <div class="formula-block">\[
+      n=\frac{2\pi}{P},\qquad n_s=|n_1-n_2|
+      \]</div>
+      <div class="formula-block">\[
+      S=\frac{2\pi}{|n_1-n_2|}
+      \]</div>
+      <div class="formula-block">\[
+      \frac{1}{S}=\left|\frac{1}{P_1}-\frac{1}{P_2}\right|
+      \]</div>
+      <p>Entre oposiciones consecutivas de un planeta exterior transcurre el periodo sinódico.</p>
+    </article>
+
+    <article class="definition-card">
+      <h3>Configuraciones</h3>
+      <table>
+        <thead><tr><th>Configuración</th><th>Interior</th><th>Exterior</th></tr></thead>
+        <tbody>
+          <tr><td>Conjunción</td><td>inferior/superior</td><td>conjunción con el Sol</td></tr>
+          <tr><td>Oposición</td><td>no existe</td><td>\(E=180^\circ\)</td></tr>
+          <tr><td>Cuadratura</td><td>no siempre posible</td><td>\(E=90^\circ\)</td></tr>
+          <tr><td>Elongación máxima</td><td>sí</td><td>no tiene máximo menor que \(180^\circ\)</td></tr>
+        </tbody>
+      </table>
+    </article>
+
+    <article class="definition-card">
+      <h3>Planeta interior: elongación máxima</h3>
+      <div class="formula-block">\[
+      \sin E_{\max}=\frac{r}{R}\quad\text{(órbitas circulares coplanarias)}
+      \]</div>
+      <p>En elongación máxima, la visual Tierra-planeta es tangente a la órbita del planeta.</p>
+    </article>
+
+    <article class="definition-card">
+      <h3>Fase iluminada</h3>
+      <div class="formula-block">\[
+      F=\frac{1+\cos\phi}{2}=\cos^2\left(\frac{\phi}{2}\right)
+      \]</div>
+      <p>\(\phi=0^\circ\): fase llena. \(\phi=180^\circ\): fase nueva. No confundir fase \(\phi\) con elongación \(E\).</p>
+    </article>
+
+    <article class="definition-card">
+      <h3>Semidiámetro aparente</h3>
+      <div class="formula-block">\[
+      \sin s=\frac{R_{\rm obj}}{\rho}
+      \]</div>
+      <div class="formula-block">\[
+      s\simeq \frac{R_{\rm obj}}{\rho}\quad(\text{radianes, ángulo pequeño})
+      \]</div>
+      <p>Diámetro angular \(\simeq2s\).</p>
+    </article>
+
+    <article class="definition-card">
+      <h3>Magnitud planetaria</h3>
+      <div class="formula-block">\[
+      m=m_0+5\log_{10}(r\rho)+\Delta m(\phi)
+      \]</div>
+      <p>\(r\) y \(\rho\) suelen tomarse en UA. \(\Delta m(\phi)\) corrige por fase.</p>
+    </article>
+
+    <article class="definition-card">
+      <h3>Movimiento retrógrado</h3>
+      <p>Aparece por proyección geocéntrica de movimientos heliocéntricos. En planetas exteriores se produce alrededor de la oposición; en interiores, alrededor de la conjunción inferior.</p>
+      <div class="formula-block">\[
+      \text{punto estacionario}\quad\Longleftrightarrow\quad
+      \dot{\theta}_{\rm aparente}=0
+      \]</div>
+    </article>
+  </div>
+
+  <details class="accordion accordion-error">
+    <summary>Errores típicos de movimiento geocéntrico</summary>
+    <p>Aplicar elongación máxima a un planeta exterior; confundir \(\phi\) con \(E\); no decidir si el planeta es interior o exterior; usar periodo sidéreo cuando piden intervalo entre oposiciones.</p>
+  </details>
+</section>
+
+<section class="page" id="correcciones">
+  <div class="page-head">
+    <h2>6. Correcciones de coordenadas</h2>
+    <p class="section-lead"><span class="tag-ia">IA</span> Refracción, aberración, paralaje, movimiento propio, precesión, nutación y posición observada.</p>
+  </div>
+
+  <div class="grid cards-grid">
+    <article class="definition-card">
+      <h3>Refracción astronómica</h3>
+      <p>La atmósfera eleva la posición aparente: la altura observada es mayor que la verdadera.</p>
+      <div class="formula-block">\[
+      h_{\rm obs}=h_{\rm true}+R,\qquad z_{\rm obs}=z_{\rm true}-R
+      \]</div>
+      <div class="formula-block">\[
+      R\simeq k_R\tan z\quad(z\ \text{no muy grande})
+      \]</div>
+      <p>Para corregir una altura observada a verdadera: restar \(R\). Cerca del horizonte la aproximación simple falla.</p>
+    </article>
+
+    <article class="definition-card">
+      <h3>Paralaje</h3>
+      <div class="formula-block">\[
+      \pi_{\rm h}=\arcsin\left(\frac{R_\oplus}{\Delta}\right)\simeq \frac{R_\oplus}{\Delta}
+      \]</div>
+      <p>La paralaje topocéntrica es máxima cerca del horizonte y nula aproximadamente en el cenit.</p>
+      <div class="formula-block">\[
+      d({\rm pc})=\frac{1}{\pi('')}
+      \]</div>
+      <p>La paralaje anual estelar usa como base la UA; la horizontal planetaria usa como base el radio terrestre.</p>
+    </article>
+
+    <article class="definition-card">
+      <h3>Movimiento propio</h3>
+      <div class="formula-block">\[
+      \alpha(t)=\alpha_0+\mu_\alpha(t-t_0),\qquad
+      \delta(t)=\delta_0+\mu_\delta(t-t_0)
+      \]</div>
+      <div class="formula-block">\[
+      \mu=\sqrt{(\mu_\alpha\cos\delta)^2+\mu_\delta^2}
+      \]</div>
+      <div class="formula-block">\[
+      v_t({\rm km\,s^{-1}})=4{,}74047\,\mu(''{\rm yr}^{-1})\,d({\rm pc})
+      \]</div>
+      <p>Algunos catálogos ya dan \(\mu_{\alpha *}=\mu_\alpha\cos\delta\). No multiplicar dos veces.</p>
+    </article>
+
+    <article class="definition-card">
+      <h3>Aberración anual</h3>
+      <div class="formula-block">\[
+      k=\frac{v_\oplus}{c}\,206265''\simeq20{,}49552''
+      \]</div>
+      <p>La posición aparente describe una elipse de aberración anual. En coordenadas eclípticas de la estrella:</p>
+      <div class="formula-block">\[
+      a_{\rm ab}=k,\qquad b_{\rm ab}=k|\sin\beta|,\qquad
+      e_{\rm ab}=|\cos\beta|
+      \]</div>
+      <p>Para problemas en \((\alpha,\delta)\), convertir primero a latitud eclíptica \(\beta\).</p>
+    </article>
+
+    <article class="definition-card">
+      <h3>Precesión</h3>
+      <p>Cambio lento de orientación del ecuador celeste y del punto vernal. Afecta a la época de catálogo.</p>
+      <div class="formula-block">\[
+      \Delta\alpha=(m+n\sin\alpha\tan\delta)\,\Delta t
+      \]</div>
+      <div class="formula-block">\[
+      \Delta\delta=n\cos\alpha\,\Delta t
+      \]</div>
+      <p>Usar los valores de \(m,n\) dados por el enunciado o anuario. La precesión no es movimiento propio de la estrella.</p>
+    </article>
+
+    <article class="definition-card">
+      <h3>Nutación y movimiento del polo</h3>
+      <p>Nutación: oscilación periódica pequeña superpuesta a la precesión. Movimiento del polo: desplazamiento del eje instantáneo de rotación respecto al eje convencional terrestre.</p>
+      <div class="formula-block">\[
+      \mathbf r_{\rm aparente}=N(t)\,P(t)\,\mathbf r_{\rm media}
+      \]</div>
+      <p>\(P(t)\) representa precesión y \(N(t)\) nutación. En cálculo preciso se trabaja con matrices de rotación.</p>
+    </article>
+
+    <article class="definition-card wide-card">
+      <h3>Tipos de posición</h3>
+      <table>
+        <thead><tr><th>Nombre</th><th>Incluye</th><th>Uso</th></tr></thead>
+        <tbody>
+          <tr><td>Media</td><td>precesión; sin efectos periódicos instantáneos</td><td>catálogo / época</td></tr>
+          <tr><td>Aparente</td><td>precesión + nutación + aberración</td><td>efemérides</td></tr>
+          <tr><td>Topocéntrica</td><td>aparente + paralaje diurna</td><td>observador concreto</td></tr>
+          <tr><td>Observada</td><td>topocéntrica + refracción instrumental/atmosférica</td><td>telescopio / cámara</td></tr>
+        </tbody>
+      </table>
+    </article>
+
+    <article class="definition-card">
+      <h3>Checklist de corrección</h3>
+      <ul>
+        <li>¿El enunciado dice “sin correcciones”?</li>
+        <li>¿Altura observada o verdadera?</li>
+        <li>¿Paralaje anual o paralaje horizontal?</li>
+        <li>¿Coordenadas medias, aparentes, topocéntricas u observadas?</li>
+        <li>¿Movimiento propio anual en \(\alpha\) o en \(\alpha*\)?</li>
+        <li>¿La aberración pide latitud eclíptica \(\beta\)?</li>
+      </ul>
+    </article>
+  </div>
+
+  <details class="accordion accordion-error">
+    <summary>Errores típicos de correcciones</summary>
+    <p>Corregir refracción con signo contrario; confundir paralaje anual y horizontal; sumar movimiento propio sin intervalo temporal; calcular la elipse de aberración con declinación \(\delta\) en vez de latitud eclíptica \(\beta\); mezclar época y equinoccio.</p>
+  </details>
+</section>
+
+<section class="page" id="eclipses">
+  <div class="page-head">
+    <h2>7. Eclipses, ocultaciones y aplicación PRO-AM</h2>
+    <p class="section-lead"><span class="tag-ia">IA</span> <span class="tag-proam">PRO-AM</span> Geometría de sombras, nodos, contactos, magnitud y cuerda de ocultación.</p>
+  </div>
+
+  <div class="grid cards-grid">
+    <article class="definition-card">
+      <h3>Condición geométrica de eclipse</h3>
+      <p>Un eclipse requiere fase adecuada y proximidad a un nodo lunar. No hay eclipse cada lunación porque la órbita lunar está inclinada respecto a la eclíptica.</p>
+      <div class="formula-block">\[
+      d_{\min}\simeq \beta\cos I
+      \]</div>
+      <p>La distancia mínima al eje de sombra se compara con semidiámetros y paralajes para decidir si hay eclipse y de qué tipo.</p>
+    </article>
+
+    <article class="definition-card">
+      <h3>Sombras</h3>
+      <table>
+        <tbody>
+          <tr><td>Umbra</td><td>región donde el Sol queda totalmente oculto.</td></tr>
+          <tr><td>Penumbra</td><td>región donde solo se oculta parte del Sol.</td></tr>
+          <tr><td>Antumbra</td><td>región de eclipse anular: el disco ocultante no cubre todo el Sol.</td></tr>
+        </tbody>
+      </table>
+    </article>
+
+    <article class="definition-card">
+      <h3>Magnitud de eclipse solar</h3>
+      <div class="formula-block">\[
+      \mathcal M\simeq\frac{s_\odot+s_{\rm L}-d}{2s_\odot}
+      \]</div>
+      <p>\(s_\odot\): semidiámetro solar aparente; \(s_{\rm L}\): semidiámetro lunar aparente; \(d\): separación aparente de centros. Esta magnitud no es una magnitud fotométrica.</p>
+    </article>
+
+    <article class="definition-card">
+      <h3>Saros</h3>
+      <div class="formula-block">\[
+      {\rm Saros}\simeq18\ {\rm años}+11\ {\rm días}+8\ {\rm h}
+      \]</div>
+      <p>Repite geometría parecida porque combina meses sinódico, draconítico y anomalístico, pero la fracción de 8 horas desplaza la zona observable en longitud.</p>
+    </article>
+
+    <article class="definition-card">
+      <h3>Sistema de Bessel</h3>
+      <p>El método besseliano proyecta la sombra sobre un plano fundamental perpendicular al eje de sombra. Los elementos besselianos describen posición, velocidad y tamaño de la sombra en ese plano.</p>
+      <div class="formula-block">\[
+      \text{contactos}\quad\Longleftrightarrow\quad
+      \text{distancia al eje de sombra}=\text{radio aparente de contacto}
+      \]</div>
+    </article>
+
+    <article class="definition-card">
+      <h3>Ocultación: qué se mide</h3>
+      <p>Una ocultación mide desaparición y reaparición de una estrella por un cuerpo del Sistema Solar.</p>
+      <div class="formula-block">\[
+      t_c\simeq\frac{t_D+t_R}{2},\qquad
+      \Delta t=t_R-t_D
+      \]</div>
+      <div class="formula-block">\[
+      L_{\rm cuerda}=v_{\rm sombra}\,\Delta t
+      \]</div>
+      <div class="formula-block">\[
+      \Delta t_{\rm central}\simeq\frac{2R_{\rm obj}}{v_{\rm sombra}}
+      \]</div>
+      <p>\(D\): desaparición. \(R\): reaparición. La velocidad debe ser la velocidad relativa proyectada de la sombra sobre el observador.</p>
+    </article>
+
+    <article class="definition-card">
+      <h3>Cuerda positiva, negativa y dudosa</h3>
+      <table>
+        <thead><tr><th>Dato</th><th>Significado</th><th>Valor científico</th></tr></thead>
+        <tbody>
+          <tr><td>Positivo</td><td>hay D/R</td><td>cuerda del perfil; tamaño/forma</td></tr>
+          <tr><td>Negativo</td><td>no hay caída con cobertura suficiente</td><td>limita borde o incertidumbre</td></tr>
+          <tr><td>Parcial/dudoso</td><td>SNR, cielo o timing insuficiente</td><td>usar con cautela o descartar</td></tr>
+        </tbody>
+      </table>
+    </article>
+
+    <article class="definition-card">
+      <h3>Fotometría de ocultación</h3>
+      <div class="formula-block">\[
+      \Delta F=F_{\rm out}-F_{\rm in}
+      \]</div>
+      <div class="formula-block">\[
+      \Delta m=-2{,}5\log_{10}\left(\frac{F_{\rm in}}{F_{\rm out}}\right)
+      \]</div>
+      <p>Si desaparece solo la estrella objetivo, el flujo residual puede incluir objeto, fondo y otras estrellas. Una binaria no catalogada puede producir caída escalonada o doble.</p>
+    </article>
+
+    <article class="definition-card">
+      <h3>Briefing técnico obligatorio</h3>
+      <ul>
+        <li>dentro/fuera de sombra;</li>
+        <li>distancia a línea central;</li>
+        <li>duración local prevista;</li>
+        <li>probabilidad local;</li>
+        <li>altura y acimut;</li>
+        <li>zona: central, borde, incertidumbre o fuera;</li>
+        <li>magnitud de estrella y caída esperada;</li>
+        <li>cadencia necesaria;</li>
+        <li>margen antes/después.</li>
+      </ul>
+      <p>Si falta geometría local: “Geometría local pendiente de validación en mapa interactivo Lucky Star / OccultWatcher Cloud”.</p>
+    </article>
+  </div>
+
+  <details class="accordion accordion-error">
+    <summary>Errores PRO-AM que invalidan o debilitan</summary>
+    <p>Hora de PC no sincronizada; timestamp sin indicar si es inicio/centro/fin; no guardar dato bruto; saturar estrella; no informar negativo con cobertura suficiente; asumir que toda caída es central; mezclar análisis UNED con informe técnico observacional.</p>
+  </details>
+</section>
+
+<section class="page" id="fotometria">
+  <div class="page-head">
+    <h2>8. Fotometría, flujo, luminosidad y magnitudes</h2>
+    <p class="section-lead"><span class="tag-ag">AG</span> <span class="tag-proam">PRO-AM</span> Radiación, cuerpo negro, magnitudes, color, extinción y caída de luz.</p>
+  </div>
+
+  <div class="grid cards-grid">
+    <article class="definition-card">
+      <h3>Flujo y luminosidad</h3>
+      <div class="formula-block">\[
+      F=\frac{L}{4\pi d^2}
+      \]</div>
+      <div class="formula-block">\[
+      L=4\pi R^2\sigma T_{\rm eff}^4
+      \]</div>
+      <div class="formula-block">\[
+      \frac{L}{L_\odot}=\left(\frac{R}{R_\odot}\right)^2
+      \left(\frac{T}{T_\odot}\right)^4
+      \]</div>
+      <p>El flujo es lo recibido por unidad de superficie en el observador. La luminosidad es potencia total emitida.</p>
+    </article>
+
+    <article class="definition-card">
+      <h3>Magnitud aparente y absoluta</h3>
+      <div class="formula-block">\[
+      m_1-m_2=-2{,}5\log_{10}\left(\frac{F_1}{F_2}\right)
+      \]</div>
+      <div class="formula-block">\[
+      m-M=5\log_{10}d-5+A
+      \]</div>
+      <div class="formula-block">\[
+      M=m+5+5\log_{10}\pi('')-A
+      \]</div>
+      <p>Sin extinción: \(A=0\). La distancia \(d\) se expresa en parsecs.</p>
+    </article>
+
+    <article class="definition-card">
+      <h3>Magnitud bolométrica y luminosidad</h3>
+      <div class="formula-block">\[
+      M_{{\rm bol},1}-M_{{\rm bol},2}
+      =-2{,}5\log_{10}\left(\frac{L_1}{L_2}\right)
+      \]</div>
+      <div class="formula-block">\[
+      \frac{L}{L_\odot}=10^{-0{,}4(M_{\rm bol}-M_{{\rm bol},\odot})}
+      \]</div>
+      <div class="formula-block">\[
+      BC=M_{\rm bol}-M_V
+      \]</div>
+      <p>Si el enunciado define “corrección bolométrica” con otro signo, seguir el signo del enunciado.</p>
+    </article>
+
+    <article class="definition-card">
+      <h3>Índice de color</h3>
+      <div class="formula-block">\[
+      B-V=m_B-m_V
+      \]</div>
+      <div class="formula-block">\[
+      E(B-V)=(B-V)-(B-V)_0
+      \]</div>
+      <div class="formula-block">\[
+      A_V=R_VE(B-V),\qquad R_V\simeq3{,}1\ \text{en medio difuso típico}
+      \]</div>
+      <p>Estrella caliente: \(B-V\) pequeño o negativo. Estrella fría: \(B-V\) grande y positivo.</p>
+    </article>
+
+    <article class="definition-card">
+      <h3>Cuerpo negro: Planck, Wien y Stefan</h3>
+      <div class="formula-block">\[
+      B_\lambda(T)=\frac{2hc^2}{\lambda^5}\frac{1}{e^{hc/(\lambda kT)}-1}
+      \]</div>
+      <div class="formula-block">\[
+      \lambda_{\max}T=2{,}898\times10^{-3}\ {\rm m\,K}=0{,}290\ {\rm cm\,K}
+      \]</div>
+      <div class="formula-block">\[
+      F_{\rm superficie}=\sigma T^4
+      \]</div>
+      <p>Wien da temperatura aproximada del máximo espectral; Stefan-Boltzmann conecta temperatura, radio y luminosidad.</p>
+    </article>
+
+    <article class="definition-card">
+      <h3>Fotón y frecuencia</h3>
+      <div class="formula-block">\[
+      \nu=\frac{c}{\lambda},\qquad E=h\nu=\frac{hc}{\lambda}
+      \]</div>
+      <p>Longitud de onda mayor implica frecuencia y energía de fotón menores.</p>
+    </article>
+
+    <article class="definition-card">
+      <h3>Extinción y absorción</h3>
+      <div class="formula-block">\[
+      F_{\rm obs}=F_0\,10^{-0{,}4A}
+      \]</div>
+      <div class="formula-block">\[
+      A=-2{,}5\log_{10}\left(\frac{F_{\rm obs}}{F_0}\right)
+      \]</div>
+      <p>La extinción aumenta la magnitud observada y hace que el objeto parezca más débil.</p>
+    </article>
+
+    <article class="definition-card">
+      <h3>Recetas típicas</h3>
+      <ul>
+        <li>Paralaje \(\rightarrow d\rightarrow M\rightarrow L\).</li>
+        <li>\(m-M\rightarrow d\), corrigiendo \(A\) si hay extinción.</li>
+        <li>\(L,T\rightarrow R\) con Stefan-Boltzmann.</li>
+        <li>Dos Cefeidas de igual periodo \(\rightarrow\) misma \(M\); comparar módulos.</li>
+        <li>Ocultación: caída de flujo \(\rightarrow\) \(\Delta m\), SNR y posible binariedad.</li>
+      </ul>
+    </article>
+  </div>
+
+  <details class="accordion accordion-error">
+    <summary>Errores típicos de fotometría</summary>
+    <p>Confundir magnitud aparente y absoluta; olvidar extinción; usar \(B-V\) al revés; interpretar magnitud mayor como más brillo; aplicar Stefan-Boltzmann sin cocientes o unidades coherentes.</p>
+  </details>
+</section>
+
+<section class="page" id="espectros">
+  <div class="page-head">
+    <h2>9. Espectros, Doppler, clasificación y diagrama H-R</h2>
+    <p class="section-lead"><span class="tag-ag">AG</span> Líneas espectrales, desplazamiento Doppler, tipos OBAFGKM y lectura del diagrama H-R.</p>
+  </div>
+
+  <div class="grid cards-grid">
+    <article class="definition-card">
+      <h3>Doppler y redshift</h3>
+      <div class="formula-block">\[
+      z=\frac{\lambda_{\rm obs}-\lambda_0}{\lambda_0}
+      \]</div>
+      <div class="formula-block">\[
+      v_r\simeq cz\quad(|v|\ll c)
+      \]</div>
+      <div class="formula-block">\[
+      1+z=\sqrt{\frac{1+\beta}{1-\beta}},\qquad \beta=\frac{v_r}{c}
+      \]</div>
+      <p>Azul: \(z<0\), acercamiento. Rojo: \(z>0\), alejamiento o expansión cosmológica.</p>
+    </article>
+
+    <article class="definition-card">
+      <h3>Resolución espectral y anchura</h3>
+      <div class="formula-block">\[
+      R=\frac{\lambda}{\Delta\lambda}
+      \]</div>
+      <div class="formula-block">\[
+      \frac{\Delta\lambda}{\lambda}\simeq\frac{v}{c}
+      \]</div>
+      <div class="formula-block">\[
+      v_{\rm térmica}\sim\sqrt{\frac{2kT}{m}}
+      \]</div>
+      <p>Mayor \(R\) permite separar líneas más próximas. Anchura de línea puede deberse a temperatura, rotación, presión o turbulencia.</p>
+    </article>
+
+    <article class="definition-card wide-card">
+      <h3>Secuencia espectral</h3>
+      <table>
+        <thead><tr><th>Tipo</th><th>Temperatura aprox.</th><th>Rasgos</th></tr></thead>
+        <tbody>
+          <tr><td>O</td><td>\(>30000\ {\rm K}\)</td><td>He II, átomos muy ionizados</td></tr>
+          <tr><td>B</td><td>\(10000\text{–}30000\ {\rm K}\)</td><td>He I, H</td></tr>
+          <tr><td>A</td><td>\(7500\text{–}10000\ {\rm K}\)</td><td>Balmer máximo</td></tr>
+          <tr><td>F</td><td>\(6000\text{–}7500\ {\rm K}\)</td><td>H más débil, metales</td></tr>
+          <tr><td>G</td><td>\(5200\text{–}6000\ {\rm K}\)</td><td>Ca II H/K, metales; Sol G2V</td></tr>
+          <tr><td>K</td><td>\(3700\text{–}5200\ {\rm K}\)</td><td>metales, moléculas débiles</td></tr>
+          <tr><td>M</td><td>\(<3700\ {\rm K}\)</td><td>TiO y bandas moleculares</td></tr>
+        </tbody>
+      </table>
+      <p>Orden de caliente a frío: O-B-A-F-G-K-M.</p>
+    </article>
+
+    <article class="definition-card">
+      <h3>Clases de luminosidad</h3>
+      <table>
+        <tbody>
+          <tr><td>I</td><td>supergigantes</td></tr>
+          <tr><td>III</td><td>gigantes</td></tr>
+          <tr><td>V</td><td>secuencia principal / enanas</td></tr>
+        </tbody>
+      </table>
+      <p>Un tipo espectral da temperatura; la clase de luminosidad da tamaño/luminosidad aproximados.</p>
+    </article>
+
+    <article class="definition-card">
+      <h3>Diagrama H-R</h3>
+      <ul>
+        <li>Eje vertical: luminosidad o magnitud absoluta. Arriba: más luminoso.</li>
+        <li>Eje horizontal: temperatura; suele decrecer hacia la derecha.</li>
+        <li>Secuencia principal: diagonal desde calientes luminosas a frías débiles.</li>
+        <li>Gigantes y supergigantes: arriba derecha.</li>
+        <li>Enanas blancas: abajo izquierda.</li>
+      </ul>
+    </article>
+
+    <article class="definition-card">
+      <h3>Preguntas test típicas</h3>
+      <ul>
+        <li>Más fría entre G, A, M y O: M.</li>
+        <li>Tipo O: líneas de átomos muy ionizados.</li>
+        <li>Tipo M: bandas moleculares.</li>
+        <li>Mayor \(B-V\): estrella más fría.</li>
+        <li>Mayor magnitud absoluta: menor luminosidad, si se comparan magnitudes en la misma banda.</li>
+      </ul>
+    </article>
+  </div>
+
+  <details class="accordion accordion-error">
+    <summary>Errores típicos de espectros</summary>
+    <p>Confundir redshift cosmológico con Doppler local sin justificar; poner la temperatura del H-R creciendo hacia la derecha; olvidar que OBAFGKM va de caliente a frío; interpretar una clase V como “quinta estrella” y no como secuencia principal.</p>
+  </details>
+</section>
+
+<section class="page" id="estrellas">
+  <div class="page-head">
+    <h2>10. Estructura, Sol y evolución estelar</h2>
+    <p class="section-lead"><span class="tag-ag">AG</span> Equilibrio hidrostático, producción de energía, Sol, actividad y finales evolutivos.</p>
+  </div>
+
+  <div class="grid cards-grid">
+    <article class="definition-card">
+      <h3>Ecuaciones de estructura estelar</h3>
+      <div class="formula-block">\[
+      \frac{dP}{dr}=-\frac{G M_r\rho}{r^2}
+      \]</div>
+      <div class="formula-block">\[
+      \frac{dM_r}{dr}=4\pi r^2\rho
+      \]</div>
+      <div class="formula-block">\[
+      \frac{dL_r}{dr}=4\pi r^2\rho\varepsilon
+      \]</div>
+      <div class="formula-block">\[
+      \frac{dT}{dr}=-\frac{3\kappa\rho L_r}{16\pi a_{\rm rad}c\,r^2T^3}\quad\text{(transporte radiativo)}
+      \]</div>
+      <p>Presión, gravedad, generación de energía y transporte determinan la estructura.</p>
+    </article>
+
+    <article class="definition-card">
+      <h3>Virial y escalas</h3>
+      <div class="formula-block">\[
+      2K+U=0
+      \]</div>
+      <div class="formula-block">\[
+      E=K+U=\frac{U}{2}=-K
+      \]</div>
+      <p>En un sistema gravitatorio ligado, perder energía puede aumentar la temperatura interna.</p>
+    </article>
+
+    <article class="definition-card">
+      <h3>Secuencia principal</h3>
+      <p>Estrella que quema hidrógeno en el núcleo. Baja masa: cadena protón-protón dominante. Alta masa: ciclo CNO dominante.</p>
+      <div class="formula-block">\[
+      L\propto M^{3\text{–}4}\quad\text{aprox. en secuencia principal}
+      \]</div>
+      <div class="formula-block">\[
+      t_{\rm SP}\simeq10^{10}\ {\rm yr}\,
+      \frac{M/M_\odot}{L/L_\odot}
+      \]</div>
+      <p>Más masa implica mucha más luminosidad y vida más corta.</p>
+    </article>
+
+    <article class="definition-card wide-card">
+      <h3>Sol: capas</h3>
+      <table>
+        <thead><tr><th>Capa</th><th>Idea</th><th>Pregunta típica</th></tr></thead>
+        <tbody>
+          <tr><td>Núcleo</td><td>fusión de H</td><td>fuente de energía</td></tr>
+          <tr><td>Zona radiativa</td><td>transporte por radiación</td><td>opacidad</td></tr>
+          <tr><td>Zona convectiva</td><td>transporte por convección</td><td>granulación</td></tr>
+          <tr><td>Fotosfera</td><td>\(\sim5800\ {\rm K}\)</td><td>espectro visible</td></tr>
+          <tr><td>Cromosfera</td><td>más caliente</td><td>H\(\alpha\), Ca II</td></tr>
+          <tr><td>Corona</td><td>\(\sim10^6\ {\rm K}\)</td><td>rayos X, viento solar</td></tr>
+        </tbody>
+      </table>
+    </article>
+
+    <article class="definition-card">
+      <h3>Actividad solar</h3>
+      <ul>
+        <li>Origen: campo magnético, rotación diferencial y convección.</li>
+        <li>Manchas: más frías que la fotosfera circundante.</li>
+        <li>Fulguraciones: liberación rápida de energía magnética.</li>
+        <li>Prominencias y CME: plasma guiado o expulsado por campos magnéticos.</li>
+        <li>Heliosfera: región dominada por el viento solar.</li>
+      </ul>
+    </article>
+
+    <article class="definition-card wide-card">
+      <h3>Finales evolutivos</h3>
+      <table>
+        <thead><tr><th>Objeto</th><th>Soporte / rasgo</th><th>Clave de examen</th></tr></thead>
+        <tbody>
+          <tr><td>Enana blanca</td><td>degeneración electrónica</td><td>límite de Chandrasekhar \(\sim1{,}4M_\odot\)</td></tr>
+          <tr><td>Estrella de neutrones</td><td>degeneración nuclear/neutrones</td><td>púlsar si rota y emite haz</td></tr>
+          <tr><td>Agujero negro</td><td>sin superficie material</td><td>horizonte de sucesos</td></tr>
+          <tr><td>Nebulosa planetaria</td><td>envoltura expulsada</td><td>estrella baja/intermedia masa</td></tr>
+          <tr><td>Remanente de SN</td><td>onda de choque</td><td>explosión de supernova</td></tr>
+        </tbody>
+      </table>
+    </article>
+
+    <article class="definition-card">
+      <h3>Acreción</h3>
+      <div class="formula-block">\[
+      L_{\rm acc}\simeq\frac{GM\dot M}{R}
+      \]</div>
+      <div class="formula-block">\[
+      E_{\rm grav}\simeq-\frac{GMm}{R}
+      \]</div>
+      <p>La acreción sobre objetos compactos puede ser muy luminosa. Nova enana: transferencia a enana blanca; no confundir con supernova.</p>
+    </article>
+
+    <article class="definition-card">
+      <h3>Pre-secuencia principal</h3>
+      <p>Fase de contracción gravitatoria previa a la ignición estable del hidrógeno. La fuente principal de luminosidad es gravitatoria, no nuclear estable.</p>
+      <div class="formula-block">\[
+      t_{\rm KH}\sim\frac{GM^2}{RL}
+      \]</div>
+    </article>
+  </div>
+
+  <details class="accordion accordion-error">
+    <summary>Errores típicos de evolución</summary>
+    <p>Decir que una nebulosa planetaria forma planetas; confundir nova, nova enana y supernova; olvidar que un púlsar es una estrella de neutrones rotante; creer que toda estrella masiva vive más por tener más combustible.</p>
+  </details>
+</section>
+
+<section class="page" id="binarias">
+  <div class="page-head">
+    <h2>11. Binarias, masas y curvas de luz</h2>
+    <p class="section-lead"><span class="tag-ia">IA</span> <span class="tag-ag">AG</span> <span class="tag-proam">PRO-AM</span> Binarias visuales, espectroscópicas, eclipsantes, tránsitos y anomalías por doble no catalogada.</p>
+  </div>
+
+  <div class="grid cards-grid">
+    <article class="definition-card">
+      <h3>Binaria visual</h3>
+      <div class="formula-block">\[
+      a({\rm UA})=a('')\,d({\rm pc})=\frac{a('')}{\pi('')}
+      \]</div>
+      <div class="formula-block">\[
+      M_1+M_2=\frac{a^3({\rm UA})}{P^2({\rm yr})}\,M_\odot
+      \]</div>
+      <p>La órbita observada debe corregirse por inclinación para obtener el semieje real si el problema lo exige.</p>
+    </article>
+
+    <article class="definition-card">
+      <h3>Centro de masas</h3>
+      <div class="formula-block">\[
+      M_1a_1=M_2a_2
+      \]</div>
+      <div class="formula-block">\[
+      a=a_1+a_2
+      \]</div>
+      <div class="formula-block">\[
+      \frac{M_1}{M_2}=\frac{a_2}{a_1}
+      \]</div>
+      <p>La estrella más masiva describe la órbita más pequeña alrededor del baricentro.</p>
+    </article>
+
+    <article class="definition-card">
+      <h3>Binaria espectroscópica</h3>
+      <p>Se detecta por desplazamientos periódicos de líneas. \(K\) es semiamplitud de velocidad radial.</p>
+      <div class="formula-block">\[
+      a_1\sin i=\frac{K_1P}{2\pi}\sqrt{1-e^2}
+      \]</div>
+      <div class="formula-block">\[
+      f(M)=\frac{(M_2\sin i)^3}{(M_1+M_2)^2}
+      =\frac{PK_1^3}{2\pi G}(1-e^2)^{3/2}
+      \]</div>
+      <div class="formula-block">\[
+      \frac{M_1}{M_2}=\frac{K_2}{K_1}\quad\text{(doble línea)}
+      \]</div>
+    </article>
+
+    <article class="definition-card">
+      <h3>Binaria eclipsante</h3>
+      <ul>
+        <li>La curva de luz da radios relativos, inclinación y razón de temperaturas.</li>
+        <li>El mínimo primario ocurre cuando se eclipsa la estrella más caliente o luminosa.</li>
+        <li>Duraciones + velocidades orbitales \(\rightarrow\) tamaños.</li>
+        <li>Con espectroscopia + eclipses \(\rightarrow\) masas y radios absolutos.</li>
+      </ul>
+    </article>
+
+    <article class="definition-card">
+      <h3>Tránsitos y exoplanetas</h3>
+      <div class="formula-block">\[
+      \delta_{\rm tr}\simeq\left(\frac{R_p}{R_*}\right)^2
+      \]</div>
+      <div class="formula-block">\[
+      a^3=\frac{G(M_*+M_p)P^2}{4\pi^2}
+      \]</div>
+      <p>La velocidad radial mide el movimiento reflejo de la estrella; el tránsito mide caída de luz.</p>
+    </article>
+
+    <article class="definition-card">
+      <h3>Problema tipo Alfa Centauri</h3>
+      <ol>
+        <li>Pasar separación angular a UA: \(a({\rm UA})=a('')d({\rm pc})\).</li>
+        <li>Si dan órbitas respecto al baricentro, usar \(a=a_1+a_2\).</li>
+        <li>Masa total: \(M_{\rm tot}=a^3/P^2\).</li>
+        <li>Razón de masas: \(M_1/M_2=a_2/a_1\).</li>
+        <li>Resolver \(M_1+M_2=M_{\rm tot}\) y la razón.</li>
+      </ol>
+    </article>
+
+    <article class="definition-card">
+      <h3>PRO-AM: doble no catalogada</h3>
+      <ul>
+        <li>Caída doble o escalonada.</li>
+        <li>Duraciones distintas para componentes.</li>
+        <li>Profundidad menor de la esperada.</li>
+        <li>D/R desplazados frente a predicción.</li>
+        <li>Reportar como anomalía, no forzar una cuerda simple.</li>
+      </ul>
+    </article>
+  </div>
+
+  <details class="accordion accordion-error">
+    <summary>Errores típicos de binarias</summary>
+    <p>Usar semieje angular como físico; olvidar la inclinación en espectroscópicas; invertir la razón de masas; confundir profundidad de eclipse con magnitud absoluta; interpretar una ocultación escalonada como ruido sin comprobar binariedad.</p>
+  </details>
+</section>
+
+<section class="page" id="galaxias">
+  <div class="page-head">
+    <h2>12. Medio interestelar, galaxias y escalera de distancias</h2>
+    <p class="section-lead"><span class="tag-ag">AG</span> Cefeidas, RR Lyrae, nebulosas, tipos galácticos, Vía Láctea y AGN.</p>
+  </div>
+
+  <div class="grid cards-grid">
+    <article class="definition-card wide-card">
+      <h3>Escalera de distancias</h3>
+      <table>
+        <thead><tr><th>Método</th><th>Magnitud clave</th><th>Uso</th></tr></thead>
+        <tbody>
+          <tr><td>Paralaje</td><td>\(d=1/\pi\)</td><td>estrellas cercanas</td></tr>
+          <tr><td>Ajuste de secuencia principal</td><td>diagrama H-R</td><td>cúmulos</td></tr>
+          <tr><td>RR Lyrae</td><td>luminosidad estándar aproximada</td><td>halo, cúmulos globulares</td></tr>
+          <tr><td>Cefeidas</td><td>periodo-luminosidad</td><td>galaxias cercanas</td></tr>
+          <tr><td>SN Ia</td><td>candela estándar corregida</td><td>cosmología</td></tr>
+          <tr><td>Hubble</td><td>\(v=H_0d\)</td><td>galaxias lejanas</td></tr>
+        </tbody>
+      </table>
+    </article>
+
+    <article class="definition-card">
+      <h3>Cefeidas</h3>
+      <div class="formula-block">\[
+      M=a\log_{10}P+b
+      \]</div>
+      <p>A igual tipo y periodo, misma luminosidad media. Cefeidas clásicas y W Virginis no usan la misma calibración.</p>
+      <div class="formula-block">\[
+      m-M=5\log_{10}d-5+A
+      \]</div>
+    </article>
+
+    <article class="definition-card wide-card">
+      <h3>Regiones y nebulosas</h3>
+      <table>
+        <thead><tr><th>Objeto</th><th>Origen</th><th>Rasgo</th></tr></thead>
+        <tbody>
+          <tr><td>Región HII</td><td>gas ionizado por estrellas O/B jóvenes</td><td>formación estelar</td></tr>
+          <tr><td>Nebulosa planetaria</td><td>envoltura expulsada por gigante roja</td><td>núcleo: futura enana blanca</td></tr>
+          <tr><td>Remanente de supernova</td><td>explosión de supernova</td><td>choque, elementos pesados, radio/X</td></tr>
+          <tr><td>Nube molecular</td><td>gas frío y polvo</td><td>formación estelar, moléculas</td></tr>
+        </tbody>
+      </table>
+    </article>
+
+    <article class="definition-card">
+      <h3>Tipos de galaxias</h3>
+      <ul>
+        <li>Elípticas: viejas, poco gas, E0–E7.</li>
+        <li>Espirales: disco, brazos y bulbo; Sa–Sc.</li>
+        <li>Lenticulares: S0, disco sin brazos marcados.</li>
+        <li>Irregulares: sin estructura regular.</li>
+        <li>Vía Láctea: espiral barrada.</li>
+      </ul>
+    </article>
+
+    <article class="definition-card">
+      <h3>Vía Láctea y poblaciones</h3>
+      <ul>
+        <li>Disco: gas, polvo, estrellas jóvenes y brazos espirales.</li>
+        <li>Bulbo/barra: población más vieja, centro galáctico.</li>
+        <li>Halo: cúmulos globulares, baja metalicidad.</li>
+        <li>Materia oscura: inferida por curvas de rotación y masa dinámica.</li>
+      </ul>
+    </article>
+
+    <article class="definition-card">
+      <h3>Galaxias activas</h3>
+      <ul>
+        <li>AGN: emisión por acreción en agujero negro supermasivo.</li>
+        <li>Seyfert: núcleo activo en galaxia visible.</li>
+        <li>Radiogalaxia: lóbulos y chorros en radio.</li>
+        <li>Quásar: AGN muy luminoso y lejano.</li>
+        <li>Starburst/IR: formación estelar intensa; polvo reemite en infrarrojo.</li>
+      </ul>
+    </article>
+
+    <article class="definition-card">
+      <h3>Rotación y masa dinámica</h3>
+      <div class="formula-block">\[
+      M(<r)=\frac{v^2r}{G}
+      \]</div>
+      <p>Curvas de rotación planas implican masa creciente con el radio y motivan materia oscura.</p>
+    </article>
+  </div>
+
+  <details class="accordion accordion-error">
+    <summary>Errores típicos de galaxias y distancias</summary>
+    <p>Usar una calibración de Cefeidas para otra población; confundir región HII con nebulosa planetaria; decir que la Vía Láctea es elíptica; olvidar extinción en el módulo de distancia; interpretar materia oscura como polvo.</p>
+  </details>
+</section>
+
+<section class="page" id="cosmologia">
+  <div class="page-head">
+    <h2>13. Cosmología básica</h2>
+    <p class="section-lead"><span class="tag-ag">AG</span> Redshift, factor de escala, ley de Hubble, fondo cósmico y modelo material plano simplificado.</p>
+  </div>
+
+  <div class="grid cards-grid">
+    <article class="definition-card">
+      <h3>Redshift y escala cósmica</h3>
+      <div class="formula-block">\[
+      1+z=\frac{\lambda_{\rm obs}}{\lambda_{\rm em}}=\frac{a_0}{a_{\rm em}}
+      \]</div>
+      <div class="formula-block">\[
+      a_{\rm em}=\frac{1}{1+z}\quad(a_0=1)
+      \]</div>
+      <p>Las longitudes de onda se estiran con la expansión del Universo.</p>
+    </article>
+
+    <article class="definition-card">
+      <h3>Ley de Hubble</h3>
+      <div class="formula-block">\[
+      v\simeq cz\quad(z\ll1)
+      \]</div>
+      <div class="formula-block">\[
+      v=H_0d
+      \]</div>
+      <div class="formula-block">\[
+      t_H=\frac{1}{H_0}
+      \]</div>
+      <p>Si a igual velocidad las distancias fueran el doble, \(H_0\) sería la mitad y \(t_H\) el doble.</p>
+    </article>
+
+    <article class="definition-card">
+      <h3>Densidad crítica</h3>
+      <div class="formula-block">\[
+      \rho_c=\frac{3H_0^2}{8\pi G}
+      \]</div>
+      <div class="formula-block">\[
+      \Omega=\frac{\rho}{\rho_c}
+      \]</div>
+      <p>\(\Omega=1\) corresponde a densidad crítica en los modelos de Friedmann.</p>
+    </article>
+
+    <article class="definition-card">
+      <h3>Temperatura y densidad con redshift</h3>
+      <div class="formula-block">\[
+      T(z)=T_0(1+z)
+      \]</div>
+      <div class="formula-block">\[
+      \rho_m(z)=\rho_{m,0}(1+z)^3
+      \]</div>
+      <div class="formula-block">\[
+      \rho_r(z)=\rho_{r,0}(1+z)^4
+      \]</div>
+      <p>El fondo cósmico de microondas actual tiene \(T_0\simeq2{,}73\,{\rm K}\).</p>
+    </article>
+
+    <article class="definition-card">
+      <h3>Universo material plano simplificado</h3>
+      <p>Modelo Einstein-de Sitter: usar solo si el enunciado indica universo material plano o da las hipótesis.</p>
+      <div class="formula-block">\[
+      a(t)\propto t^{2/3}
+      \]</div>
+      <div class="formula-block">\[
+      t_0=\frac{2}{3H_0}
+      \]</div>
+      <div class="formula-block">\[
+      t(z)=\frac{2}{3H_0}(1+z)^{-3/2}
+      \]</div>
+    </article>
+
+    <article class="definition-card">
+      <h3>Problema de líneas en galaxias/quásares</h3>
+      <ol>
+        <li>Probar identificaciones: \(z=\lambda_{\rm obs}/\lambda_0-1\).</li>
+        <li>Las líneas correctas deben dar el mismo \(z\).</li>
+        <li>Si \(z\ll1\), usar \(v\simeq cz\); si \(z\) es grande, no usar aproximación no relativista salvo indicación.</li>
+        <li>Distancia por Hubble si procede: \(d=v/H_0\).</li>
+        <li>CMB en emisión: \(T=T_0(1+z)\).</li>
+      </ol>
+    </article>
+
+    <article class="definition-card">
+      <h3>Fondo cósmico y Big Bang</h3>
+      <ul>
+        <li>CMB: radiación remanente del Universo temprano.</li>
+        <li>Actualmente: microondas, espectro de cuerpo negro casi perfecto.</li>
+        <li>Anisotropías pequeñas: semillas de estructura.</li>
+        <li>Deuterio primordial: origen cosmológico.</li>
+      </ul>
+    </article>
+
+    <article class="definition-card">
+      <h3>Tipos de pregunta</h3>
+      <ul>
+        <li>Factor de escala en emisión: \(a=1/(1+z)\).</li>
+        <li>Temperatura del fondo a un \(z\).</li>
+        <li>Longitud de onda observada de H\(\alpha\), Ly\(\alpha\) o 21 cm.</li>
+        <li>Edad del Universo en modelo \(a\propto t^{2/3}\).</li>
+        <li>Interpretar corrimiento al azul local: no contradice expansión global.</li>
+      </ul>
+    </article>
+  </div>
+
+  <details class="accordion accordion-error">
+    <summary>Errores típicos de cosmología</summary>
+    <p>Usar \(v=cz\) con \(z\) grande sin justificar; confundir redshift con velocidad peculiar; olvidar que \(T\) crece como \(1+z\); invertir \(a=1/(1+z)\); usar \(t_H\) como edad exacta sin modelo.</p>
+  </details>
+</section>
+
+<section class="page" id="examen">
+  <div class="page-head">
+    <h2>14. Plantillas de examen y lista negra</h2>
+    <p class="section-lead"><span class="tag-ia">IA</span> <span class="tag-ag">AG</span> Recetas operativas para resolver sin perder justificación.</p>
+  </div>
+
+  <div class="grid cards-grid">
+    <article class="definition-card">
+      <h3>Introducción a la Astronomía: receta</h3>
+      <ol>
+        <li>Dibujo geométrico: esfera celeste, triángulo astronómico, triángulo Sol-Tierra-objeto u órbita.</li>
+        <li>Definir convenio: signos de \(H,A,\lambda_{\rm geo}\).</li>
+        <li>Pasar unidades antes de sustituir.</li>
+        <li>Usar la fórmula mínima: no encadenar fórmulas sin necesidad.</li>
+        <li>Justificar dominio: circumpolar, interior/exterior, elipse/hipérbola, correcciones incluidas.</li>
+        <li>Resultado con tres decimales y unidades si el enunciado lo permite.</li>
+      </ol>
+    </article>
+
+    <article class="definition-card">
+      <h3>Astrofísica General: receta</h3>
+      <ol>
+        <li>Identificar magnitudes observadas: \(m,F,\lambda,z,P,\pi\).</li>
+        <li>Convertir a magnitudes físicas: \(M,L,d,T,R,M_{\rm masa}\).</li>
+        <li>Usar cocientes solares cuando sea posible.</li>
+        <li>Separar luminosidad, flujo, magnitud aparente y magnitud absoluta.</li>
+        <li>En binarias: angular \(\rightarrow\) físico \(\rightarrow\) masa.</li>
+        <li>En cosmología: primero \(z\), luego \(v\), \(d\), \(a\) o \(T\).</li>
+      </ol>
+    </article>
+
+    <article class="definition-card">
+      <h3>Cuestión teórica corta</h3>
+      <p>Estructura de 8–12 líneas:</p>
+      <div class="formula-block">\[
+      \text{definición}\rightarrow\text{mecanismo físico}\rightarrow
+      \text{observación}\rightarrow\text{ejemplo}\rightarrow
+      \text{diferencia con objeto cercano}
+      \]</div>
+      <ul>
+        <li>Región HII frente a nebulosa planetaria.</li>
+        <li>Atmósfera solar y actividad.</li>
+        <li>Cefeidas como indicadores de distancia.</li>
+        <li>Clasificación de galaxias.</li>
+        <li>Pre-secuencia principal.</li>
+        <li>Enana blanca frente a estrella de neutrones.</li>
+      </ul>
+    </article>
+
+    <article class="definition-card">
+      <h3>Test eliminatorio AG: reflejos</h3>
+      <ul>
+        <li>“Mayor magnitud” = menos brillante.</li>
+        <li>Tipos espectrales de caliente a frío: OBAFGKM.</li>
+        <li>En secuencia principal: más masa \(\rightarrow\) más luminosidad \(\rightarrow\) vida menor.</li>
+        <li>Púlsar = estrella de neutrones rotando.</li>
+        <li>Nebulosa planetaria no es formación planetaria.</li>
+        <li>CMB actual: microondas, \(T\simeq2{,}73\,{\rm K}\).</li>
+      </ul>
+    </article>
+
+    <article class="definition-card wide-card">
+      <h3>Mapa rápido de fórmulas madre</h3>
+      <table>
+        <thead><tr><th>Bloque</th><th>Fórmula madre</th><th>Pregunta típica</th><th>PRO-AM</th></tr></thead>
+        <tbody>
+          <tr><td>Coordenadas</td><td>\(\sin h=\sin\varphi\sin\delta+\cos\varphi\cos\delta\cos H\)</td><td>Alt/Az, culminación, primer vertical</td><td>campo observable</td></tr>
+          <tr><td>Tiempo</td><td>\(H=TS-\alpha\)</td><td>hora sidérea, ventana</td><td>captura UTC</td></tr>
+          <tr><td>Kepler</td><td>\(r=p/(1+e\cos f)\), \(P^2=4\pi^2a^3/\mu\)</td><td>órbita, masa, velocidad</td><td>sombra y velocidad</td></tr>
+          <tr><td>Fotometría</td><td>\(m-M=5\log d-5+A\)</td><td>distancia, luminosidad</td><td>caída de luz</td></tr>
+          <tr><td>Binarias</td><td>\(M_{\rm tot}=a^3/P^2\)</td><td>masas</td><td>anomalía de curva</td></tr>
+          <tr><td>Cosmología</td><td>\(1+z=\lambda_{\rm obs}/\lambda_{\rm em}\), \(v=H_0d\)</td><td>redshift, edad, CMB</td><td>no prioritario</td></tr>
+        </tbody>
+      </table>
+    </article>
+
+    <article class="definition-card blacklist">
+      <h3>Lista negra de errores</h3>
+      <ul>
+        <li><strong>No justificar</strong>: en Introducción a la Astronomía suelen exigirlo explícitamente.</li>
+        <li>Resolver con \(m-M\) y olvidar extinción \(A\).</li>
+        <li>Usar \(v=cz\) a \(z\) grande sin indicar aproximación.</li>
+        <li>Confundir \(a\) angular con \(a\) físico en binarias.</li>
+        <li>Corregir refracción con signo contrario.</li>
+        <li>No reducir ángulos ni comprobar cuadrante.</li>
+        <li>Asumir que toda caída de ocultación es central.</li>
+        <li>Mezclar TSL, TSG, UTC y hora local.</li>
+        <li>No separar examen UNED de informe PRO-AM.</li>
+      </ul>
+    </article>
+
+    <article class="definition-card">
+      <h3>Checklist final antes de entregar</h3>
+      <ul>
+        <li>¿He declarado el convenio de signos?</li>
+        <li>¿Todas las magnitudes están en unidades compatibles?</li>
+        <li>¿El resultado tiene unidades?</li>
+        <li>¿He comprobado cuadrante, dominio o visibilidad?</li>
+        <li>¿He distinguido \(m\), \(M\), \(L\), \(F\) y masa?</li>
+        <li>¿He dicho qué aproximación uso?</li>
+        <li>¿He separado cálculo de examen y aplicación observacional?</li>
+      </ul>
+    </article>
+  </div>
+</section>
+
+</main>
+</div>
+</body>
+</html>

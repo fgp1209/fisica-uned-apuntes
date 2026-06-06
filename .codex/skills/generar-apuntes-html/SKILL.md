@@ -17,6 +17,7 @@ Si tienes dudas de la asignatura o del tema, pregunta al usuario. Si el texto de
 2. Revisar ejemplos existentes (`biologia-t1.html`, `vo-t1.html`), `assets/styles.css`, `assets/app.js`, `templates/tema-template.html` e `index.html`.
 3. Crear o actualizar el HTML del tema usando el patron local:
    - `body` con clase `subject-*`.
+   - meta robots obligatoria en el `<head>`: `<meta name="robots" content="noindex, nofollow" />`.
    - favicon y touch icon en el `<head>` usando los PNG de `assets/icons`.
    - cabecera con volver al indice, asignatura, tema, chips y estado.
    - toolbar con Mapa, Prerrequisitos, Desarrollo, Conceptos, Errores, Preguntas, Respuestas, Resumen y Checklist.
@@ -78,6 +79,7 @@ Los HTML en raiz cargan:
 <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/icon-32.png" />
 <link rel="icon" type="image/png" sizes="50x50" href="assets/icons/icon-50.png" />
 <link rel="apple-touch-icon" sizes="100x100" href="assets/icons/icon-100.png" />
+<meta name="robots" content="noindex, nofollow" />
 <link rel="stylesheet" href="assets/styles.css" />
 <script>
 window.MathJax = {
@@ -126,6 +128,7 @@ Para Astronomia usar `subject-astronomia`.
 - No copiar CSS dentro del HTML.
 - No tocar CSS/JS global por gusto.
 - No dejar paginas huerfanas.
+- No crear ni entregar paginas sin `<meta name="robots" content="noindex, nofollow" />`.
 - No dejar formulas en formatos ambiguos como `(h = 90^\circ - z)` si deben renderizar: convertir a `\(h = 90^\circ - z\)`.
 - No dejar compuestos quimicos claros como `H2O`, `H+`, `NH2` o `COOH` en texto plano cuando funcionen mejor como notacion quimica: usar `\ce{...}` con `mhchem`.
 - No entregar sin comprobar enlaces internos y responsividad basica.
