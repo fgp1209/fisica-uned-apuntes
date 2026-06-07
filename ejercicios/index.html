@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#0f172a" />
+  <title>Ejercicios paso a paso — UNED Física</title>
+  <link rel="stylesheet" href="./app.css" />
+</head>
+<body>
+  <noscript>Esta aplicación necesita JavaScript.</noscript>
+
+  <div class="app-shell">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">UNED Física</p>
+        <h1>Ejercicios paso a paso</h1>
+      </div>
+      <button id="toggleIndex" class="icon-button" type="button" aria-label="Abrir índice">☰</button>
+    </header>
+
+    <main class="layout">
+      <aside id="indexPanel" class="index-panel" aria-label="Índice de problemas">
+        <div class="panel-head">
+          <div>
+            <p class="eyebrow">Índice</p>
+            <h2>Problemas</h2>
+          </div>
+          <button id="closeIndex" class="ghost small-only" type="button">Cerrar</button>
+        </div>
+
+        <label class="search-box">
+          <span>Buscar</span>
+          <input id="searchInput" type="search" placeholder="cinemática, MUA, velocidad…" autocomplete="off" />
+        </label>
+
+        <div class="filters" aria-label="Filtros">
+          <button class="chip active" type="button" data-filter="all">Todos</button>
+          <button class="chip" type="button" data-filter="basico">Básico</button>
+          <button class="chip" type="button" data-filter="medio">Medio</button>
+        </div>
+
+        <div id="problemList" class="problem-list"></div>
+      </aside>
+
+      <section class="workbench" aria-live="polite">
+        <div id="loadingState" class="state-card">Cargando problemas…</div>
+
+        <article id="problemView" class="problem-view hidden">
+          <section class="problem-card">
+            <div class="problem-meta">
+              <span id="subjectTag"></span>
+              <span id="topicTag"></span>
+              <span id="levelTag"></span>
+            </div>
+            <h2 id="problemTitle"></h2>
+            <p id="problemStatement"></p>
+          </section>
+
+          <section class="step-progress" aria-label="Progreso del problema">
+            <div class="step-counter"><span id="stepNumber">1</span>/<span id="stepTotal">1</span></div>
+            <div class="progress-track"><div id="progressBar" class="progress-bar"></div></div>
+          </section>
+
+          <section class="board-card">
+            <div class="board-top">
+              <div>
+                <p class="eyebrow">Pizarra</p>
+                <h3 id="stepTitle"></h3>
+              </div>
+              <span id="stepKind" class="kind-pill"></span>
+            </div>
+
+            <div id="board" class="board">
+              <div id="boardFormula" class="board-formula"></div>
+              <div id="boardText" class="board-text"></div>
+            </div>
+          </section>
+
+          <section class="explanation-card">
+            <div class="card-head">
+              <div>
+                <p class="eyebrow">Explicación</p>
+                <h3>Texto que leerá el móvil</h3>
+              </div>
+              <button id="copyStep" class="ghost" type="button">Copiar step</button>
+            </div>
+            <p id="stepExplanation"></p>
+          </section>
+
+          <nav class="controls" aria-label="Controles del ejercicio">
+            <button id="prevStep" class="control secondary" type="button">Anterior</button>
+            <button id="speakStep" class="control primary" type="button">Escuchar</button>
+            <button id="stopSpeech" class="control secondary" type="button">Parar</button>
+            <button id="nextStep" class="control primary" type="button">Siguiente</button>
+          </nav>
+
+          <section class="utility-row">
+            <button id="restartProblem" class="ghost" type="button">Reiniciar</button>
+            <button id="downloadProblem" class="ghost" type="button">Descargar para ChatGPT</button>
+            <button id="toggleFullScreen" class="ghost" type="button">Pantalla completa</button>
+          </section>
+        </article>
+      </section>
+    </main>
+  </div>
+
+  <script src="./app.js"></script>
+</body>
+</html>
