@@ -146,8 +146,13 @@ h3 { font-size: clamp(1.05rem, 3.6vw, 1.5rem); }
 .ghost:active, .control:active, .chip:active { transform: translateY(1px); }
 
 .problem-list {
-  overflow: auto;
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
   display: grid;
+  align-content: start;
   gap: 10px;
   padding-right: 4px;
 }
@@ -503,4 +508,102 @@ h3 { font-size: clamp(1.05rem, 3.6vw, 1.5rem); }
 .board.empty .board-formula,
 .board.empty .board-text {
   display: none;
+}
+
+/* El índice es la pantalla inicial; el problema solo aparece tras seleccionarlo. */
+.layout.index-mode {
+  grid-template-columns: minmax(0, 760px);
+  justify-content: center;
+}
+
+.layout.index-mode .index-panel {
+  position: sticky;
+  top: 94px;
+  width: 100%;
+}
+
+.layout.index-mode .workbench {
+  display: none;
+}
+
+.custom-upload {
+  display: grid;
+  gap: 10px;
+  padding: 14px;
+  border: 1px dashed rgba(125,211,252,.38);
+  border-radius: 18px;
+  background: rgba(125,211,252,.07);
+}
+
+.custom-upload > p:not(.eyebrow) {
+  color: var(--muted);
+  font-size: .84rem;
+  line-height: 1.45;
+}
+
+.upload-button {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(125,211,252,.35);
+  background: var(--accent);
+  color: #00111d;
+  cursor: pointer;
+  font-weight: 900;
+}
+
+.upload-button:focus-within,
+.upload-button:hover {
+  background: var(--accent-2);
+}
+
+.upload-status {
+  min-height: 0;
+  overflow-wrap: anywhere;
+}
+
+.upload-status:empty {
+  display: none;
+}
+
+.upload-status.success {
+  color: var(--ok) !important;
+}
+
+.upload-status.error {
+  color: var(--warning) !important;
+}
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+@media (max-width: 900px) {
+  .layout.index-mode {
+    display: block;
+  }
+
+  .layout.index-mode .index-panel {
+    position: static;
+    inset: auto;
+    min-height: calc(100dvh - 92px);
+    max-height: calc(100dvh - 92px);
+    transform: none;
+  }
+
+  .layout.index-mode .small-only,
+  .layout.index-mode + * .small-only {
+    display: none;
+  }
 }
