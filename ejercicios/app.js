@@ -477,7 +477,7 @@ function speakCurrentStep() {
 
   const utterance = new SpeechSynthesisUtterance(text);
   utterance.lang = "es-ES";
-  utterance.rate = 0.92;
+  utterance.rate = 1.5;
   utterance.pitch = 1;
 
   const voices = speechSynthesis.getVoices();
