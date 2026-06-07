@@ -11,52 +11,65 @@ ejercicios/
   app.js
   README.md
   problemas/
+    asignaturas.json
     manifest.json
-    mec-cin-mua-001.json
-    mec-cin-mru-001.json
+    mecanica-t1_cinematica_caida-libre-pelota-5s.json
+    mecanica-t1_cinematica_movimiento-rectilineo-uniforme.json
+    mecanica-t1_cinematica_posicion-aceleracion-constante.json
 ```
 
-## Uso
+## Nombre de archivos
 
-Abrir `index.html` desde un servidor estático o GitHub Pages.
-
-En local:
-
-```bash
-cd ejercicios
-python3 -m http.server 8080
-```
-
-Después abrir:
+Formato obligatorio:
 
 ```txt
-http://localhost:8080
+asignatura-tN_subtema_nombre-del-ejercicio.json
 ```
 
-## TTS
+Ejemplo:
 
-Usa `window.speechSynthesis` y `SpeechSynthesisUtterance` con `lang = "es-ES"`.
+```txt
+mecanica-t1_cinematica_caida-libre-pelota-5s.json
+```
 
-El texto hablado está separado de la fórmula:
+El índice se agrupa automáticamente así:
+
+```txt
+Mecánica (3)
+  T1 · Cinemática (3)
+    Caída libre de una pelota durante 5 s
+    Movimiento rectilíneo uniforme
+    Posición con aceleración constante
+```
+
+## Carga de problemas
+
+En GitHub Pages, la app intenta leer en caliente la carpeta `ejercicios/problemas` usando GitHub Contents API. Así aparecen los nuevos `.json` sin rehacer `manifest.json`.
+
+En local o si la API falla, usa `problemas/manifest.json` como fallback.
+
+## Paso 0
+
+Todo problema debe empezar con paso 0:
 
 ```json
 {
-  "formula": "x = x_0 + v_0 t + \\frac{1}{2} a t^2",
-  "voz": "Como la aceleración es constante, usamos la ecuación de posición..."
+  "tipo": "enunciado",
+  "titulo": "Problema",
+  "formula": "",
+  "textoPizarra": "",
+  "voz": "Texto del enunciado leído por el TTS"
 }
 ```
 
-## Añadir problemas
+En el paso 0 la pizarra queda vacía y el botón `Escuchar` lee solo el enunciado.
 
-1. Crear un archivo JSON dentro de `problemas/`.
-2. Añadirlo a `problemas/manifest.json`.
-3. Mantener `formula`, `textoPizarra` y `voz` separados.
+## TTS
 
-## Exportar atasco a ChatGPT
+Usa `window.speechSynthesis` y `SpeechSynthesisUtterance` con:
 
-El botón `Descargar para ChatGPT` genera un `.md` con:
+```js
+utterance.lang = "es-ES";
+```
 
-- enunciado;
-- categoría, tema y subtema;
-- step actual marcado como punto de atasco;
-- pasos previos y posteriores.
+No depende de servicios externos.
