@@ -1,0 +1,1206 @@
+# Guía de estudio — V&O
+
+Tema 7 — Dispersión, velocidad de fase y velocidad de grupo
+Fuente principal: A. P. French, Vibraciones y ondas, capítulo 7, sección “Dispersión; velocidad de fase y de grupo”.
+Orientación a examen: problemas UNED de Vibraciones y Ondas sobre relaciones de dispersión, velocidad de fase, velocidad de grupo, paquetes de ondas y medios dispersivos.
+
+## 1. Prerrequisitos mínimos
+
+Onda progresiva sinusoidal
+
+Una onda progresiva sinusoidal es una perturbación que se desplaza por el medio manteniendo una forma sinusoidal. En la notación más habitual puede escribirse como
+
+    y(x,t) = A sen(kx - omega t + phi)
+
+En la notación usada por French también aparece como
+
+    y(x,t) = A sen 2pi(kx - nu t)
+
+Aquí hay que distinguir las dos convenciones: en notación angular, k = 2pi/lambda y omega = 2pi nu; en la notación de French, k = 1/lambda y nu es la frecuencia ordinaria. Es necesario dominar esta diferencia porque las fórmulas de velocidad de fase y grupo tienen la misma estructura, pero cambian los símbolos.
+
+Ejemplo mínimo: si y = A sen(kx - omega t), una cresta se encuentra donde kx - omega t = constante. Al derivar se obtiene dx/dt = omega/k.
+
+Longitud de onda
+
+La longitud de onda lambda es la distancia espacial entre dos puntos consecutivos que están en la misma fase, por ejemplo dos crestas sucesivas. Es necesaria porque la dispersión se define precisamente como la dependencia de la velocidad con la longitud de onda.
+
+Ejemplo mínimo: si una onda tiene lambda = 0,5 m, dos crestas consecutivas están separadas 0,5 m.
+
+Frecuencia
+
+La frecuencia nu es el número de ciclos por unidad de tiempo. La frecuencia angular omega = 2pi nu mide la rapidez de variación de la fase en radianes por segundo. Es necesaria porque las relaciones de dispersión suelen escribirse como omega(k) o como nu(k).
+
+Ejemplo mínimo: si nu = 10 Hz, el periodo es T = 1/nu = 0,1 s.
+
+Número de onda
+
+El número de onda mide cuánta oscilación espacial hay por unidad de longitud. Hay dos usos:
+
+    k_French = 1/lambda
+    k_angular = 2pi/lambda
+
+Es necesario porque la velocidad de fase y la velocidad de grupo se calculan dividiendo o derivando frecuencias respecto al número de onda.
+
+Ejemplo mínimo: si lambda = 2 m, entonces k_French = 0,5 m^{-1} y k_angular = pi m^{-1}.
+
+Fase
+
+La fase es el argumento de la función sinusoidal. En y = A sen(kx - omega t), la fase es kx - omega t. Es necesaria porque la velocidad de fase se define como la velocidad con la que avanza un punto de fase constante.
+
+Ejemplo mínimo: una cresta, un nodo de fase o cualquier punto con kx - omega t = constante se desplaza con velocidad omega/k.
+
+Superposición
+
+La superposición afirma que, en un sistema lineal, la suma de dos soluciones ondulatorias también es solución. Es necesaria porque el concepto de velocidad de grupo aparece al sumar ondas de frecuencias y longitudes de onda parecidas.
+
+Ejemplo mínimo:
+
+    y1 = A sen(k1 x - omega1 t)
+    y2 = A sen(k2 x - omega2 t)
+
+La suma produce una oscilación rápida modulada por una envolvente lenta.
+
+Identidad trigonométrica de suma de senos
+
+La identidad
+
+    sen a + sen b = 2 sen((a+b)/2) cos((a-b)/2)
+
+permite transformar la suma de dos ondas parecidas en una onda portadora multiplicada por una envolvente. Es necesaria para derivar la velocidad de grupo elemental sin recurrir todavía a Fourier completo.
+
+Ejemplo mínimo: dos ondas casi iguales producen batidos; el seno medio da la oscilación rápida y el coseno diferencia da la envolvente.
+
+Paquete de ondas
+
+Un paquete de ondas es una perturbación localizada formada por la superposición de muchas ondas sinusoidales de números de onda próximos. Es necesario porque French insiste en que las ondas reales no son sinusoidales infinitas: tienen extensión finita y, por tanto, están formadas por un espectro.
+
+Ejemplo mínimo: un pulso corto en una cuerda no tiene una única longitud de onda; contiene componentes de varias longitudes de onda.
+
+Modo normal
+
+Un modo normal es una forma de vibración estacionaria con frecuencia propia. Es necesario porque French conecta la dispersión con el análisis previo de una línea de masas: al discretizar el medio, las frecuencias de los modos ya no son proporcionales al número del modo.
+
+Ejemplo mínimo: en una cuerda continua ideal, los modos tienen frecuencias proporcionales a n; en una cadena discreta de masas acopladas, esa proporcionalidad falla para longitudes de onda cortas.
+
+Medio continuo ideal
+
+Un medio continuo ideal trata la masa como distribuida sin estructura discreta. Es necesario porque, en una cuerda ideal continua bajo tensión fija, todas las ondas sinusoidales viajan con la misma velocidad; esa es la referencia frente a la que se detecta la dispersión.
+
+Ejemplo mínimo: en una cuerda ideal de tensión T y densidad lineal mu,
+
+    v = sqrt(T/mu)
+
+no depende de lambda.
+
+Relación de dispersión
+
+La relación de dispersión es la función que relaciona frecuencia y número de onda:
+
+    omega = omega(k)
+
+O, en la notación de French,
+
+    nu = nu(k)
+
+Es necesaria porque de ella salen directamente la velocidad de fase y la velocidad de grupo.
+
+Ejemplo mínimo: si omega = c k, entonces v_f = omega/k = c y v_g = domega/dk = c; no hay dispersión.
+
+
+## 2. Idea central del capítulo
+
+El capítulo aborda una transición conceptual importante: pasar de pensar una onda como una sinusoide ideal que se desplaza con una única velocidad, a entender una onda real como una combinación de componentes sinusoidales que pueden desplazarse de forma distinta. Esta diferencia es decisiva porque una onda sinusoidal infinita es una idealización matemática, mientras que un pulso físico tiene principio, final, anchura finita y, por tanto, contiene más de una longitud de onda.
+
+La idea central es que la velocidad de una onda no siempre es una propiedad única del medio. En la cuerda ideal continua, bajo tensión fija y densidad lineal constante, todas las longitudes de onda se propagan con la misma velocidad. En ese caso no importa qué componente sinusoidal se mire: todas viajan juntas y la forma del pulso se conserva. Pero en medios reales o estructurados puede ocurrir que cada longitud de onda tenga una velocidad distinta. Ese fenómeno es la dispersión.
+
+La dispersión obliga a distinguir dos velocidades. La velocidad de fase es la velocidad con que se mueve una cresta, un valle o cualquier punto de fase fija de una componente sinusoidal. La velocidad de grupo es la velocidad con que se mueve la envolvente de un grupo de ondas próximas. French subraya que esta segunda velocidad tiene mayor importancia física cuando se observan trenes de ondas finitos, porque los trenes de ondas reales no son infinitos y porque la energía de una perturbación ondulatoria se transporta con la velocidad de grupo.
+
+El papel del tema dentro de Vibraciones y Ondas es conectar tres bloques previos: modos normales, superposición y análisis de Fourier. Los modos normales enseñan que una perturbación puede descomponerse en componentes simples. La superposición permite sumar esas componentes. Fourier permite representar pulsos y formas no sinusoidales como espectros de ondas sinusoidales. La dispersión muestra qué ocurre cuando esas componentes no avanzan al mismo ritmo.
+
+Desde el punto de vista de examen, el tema se traduce en tres tareas operativas: reconocer si un medio es dispersivo a partir de una relación omega(k); calcular v_f = omega/k y v_g = domega/dk; interpretar físicamente si las crestas se mueven más deprisa o más despacio que la envolvente.
+
+
+## 3. Desarrollo completo del capítulo
+
+### 3.1. La onda sinusoidal progresiva como punto de partida
+
+French parte de la onda sinusoidal progresiva porque es la unidad básica de análisis. Una perturbación de la forma
+
+    y(x,t) = A sen 2pi(kx - nu t)
+
+representa una forma sinusoidal que se traslada. En esta notación, k es el inverso de la longitud de onda y nu es la frecuencia. La velocidad asociada a un punto de fase constante es
+
+    v_f = nu/k
+
+En notación angular, la misma idea se escribe como
+
+    y(x,t) = A sen(Kx - omega t)
+    v_f = omega/K
+
+La afirmación importante no es la fórmula aislada, sino el razonamiento: si la fase permanece constante, entonces la cresta se desplaza. La fase fija define una trayectoria x(t). Derivar esa condición da la velocidad de fase.
+
+Este punto importa porque muchas respuestas incorrectas tratan la velocidad de onda como una propiedad única sin mirar si el medio es dispersivo. La fórmula v = lambda nu solo identifica la velocidad de fase de una componente sinusoidal. No dice, por sí sola, que un pulso completo viaje sin deformarse.
+
+Ejemplo: para y = A sen(4x - 20t), la velocidad de fase es 20/4 = 5. Esa es la velocidad de una cresta de esa componente, no necesariamente la velocidad de un paquete formado por muchas componentes.
+
+### 3.2. La cuerda ideal continua: caso no dispersivo
+
+En una cuerda tensa ideal, con tensión T y densidad lineal mu, la velocidad de propagación transversal es
+
+    v = sqrt(T/mu)
+
+Esta velocidad no depende de la longitud de onda. Por tanto, todas las componentes sinusoidales viajan con la misma velocidad. Es el caso no dispersivo básico.
+
+Esto conecta con los capítulos anteriores porque los modos normales de una cuerda continua tienen frecuencias proporcionales al número de modo. Si lambda_n = 2L/n, entonces la frecuencia aumenta proporcionalmente con n. La relación entre frecuencia y número de onda es lineal. Una relación lineal implica que v_f y v_g coinciden.
+
+La consecuencia física es que un pulso puede desplazarse sin cambiar de forma. Sus componentes de Fourier permanecen sincronizadas porque todas tienen la misma velocidad.
+
+Ejemplo: en una cuerda ideal, una señal corta puede avanzar como f(x - vt). La forma f se traslada; no se ensancha por dispersión.
+
+### 3.3. La cuerda real o discreta: origen de la dispersión
+
+French recuerda que la cuerda continua es una idealización. Si el sistema se modela como una línea de masas conectadas, los modos normales ya no tienen frecuencias exactamente proporcionales a n cuando las longitudes de onda son cortas. En el régimen de longitud de onda larga, el sistema se parece a un continuo y la proporcionalidad se recupera aproximadamente. Pero cuando la longitud de onda se aproxima a la separación entre masas, la estructura discreta se vuelve visible.
+
+Esta desviación es el origen físico de la dispersión en el ejemplo del libro. Las ondas de longitud de onda corta tienden a moverse con velocidades diferentes de las ondas largas. French usa este ejemplo no porque toda dispersión proceda de una cadena discreta, sino porque permite ver de forma concreta cómo una relación de frecuencia deja de ser lineal.
+
+La consecuencia es que ya no basta con decir “la velocidad de la onda”. Hay que especificar qué componente se está mirando. En un medio dispersivo, la velocidad depende de lambda o de k.
+
+Ejemplo: si para números de onda pequeños omega ≈ c k, el medio parece no dispersivo. Pero si para k grandes omega crece más lentamente que c k, entonces omega/k cambia con k y las componentes cortas no viajan igual que las largas.
+
+### 3.4. Definición física de dispersión
+
+La dispersión es la variación de la velocidad de propagación con la longitud de onda o, equivalentemente, la no linealidad de la relación entre frecuencia y número de onda.
+
+No basta con que la frecuencia cambie con k. Eso siempre ocurre en una onda. Lo decisivo es si omega/k depende de k y si domega/dk coincide o no con omega/k. Si omega = c k, el medio no es dispersivo. Si omega no es proporcional a k, el medio es dispersivo.
+
+French explica la dispersión como separación de lo que inicialmente estaba unido. Si un pulso está compuesto por componentes sinusoidales de distintas longitudes de onda y cada una viaja a velocidad distinta, el pulso cambia de forma. Se ensancha, se distorsiona o separa sus componentes.
+
+Ejemplo óptico: la luz blanca al atravesar un prisma se separa en colores porque las componentes de distinta longitud de onda se propagan con distinta velocidad en el vidrio. En una dimensión, el análogo es que dos trenes de ondas inicialmente solapados se van separando con el tiempo.
+
+### 3.5. Por qué una onda sinusoidal infinita es un caso especial
+
+French señala un punto de gran importancia: en un medio dispersivo, solo una onda sinusoidal pura, de extensión infinita y con una única frecuencia y longitud de onda, se movería con una velocidad perfectamente definida. Pero las perturbaciones reales no son infinitas. Un pulso localizado exige mezcla de componentes sinusoidales. En cuanto hay mezcla y el medio es dispersivo, cada componente evoluciona con su propia velocidad de fase.
+
+Esto importa porque impide confundir el objeto matemático ideal con la señal física observable. Una sinusoide infinita no transporta una señal localizada; un paquete de ondas sí. Por eso la velocidad relevante en muchos experimentos no es la velocidad de fase, sino la velocidad de grupo.
+
+Ejemplo: una cresta aislada dentro de una sinusoide infinita puede moverse a v_f, pero una señal enviada como “golpe” o “paquete” se localiza por su envolvente y se sigue mediante v_g.
+
+### 3.6. Superposición de dos ondas cercanas
+
+Para concretar el concepto de grupo, French considera dos ondas sinusoidales de igual amplitud y números de onda cercanos:
+
+    y1 = A sen 2pi(k1 x - nu1 t)
+    y2 = A sen 2pi(k2 x - nu2 t)
+
+Al sumarlas y aplicar la identidad trigonométrica de suma de senos, aparece una oscilación rápida multiplicada por una envolvente lenta:
+
+    y = 2A cos 2pi((Delta k x - Delta nu t)/2) · sen 2pi((k x - nu t))
+
+donde
+
+    k = (k1 + k2)/2
+    nu = (nu1 + nu2)/2
+    Delta k = k1 - k2
+    Delta nu = nu1 - nu2
+
+La parte seno representa la onda portadora: la oscilación rápida. La parte coseno representa la envolvente: la modulación de amplitud.
+
+Esto importa porque permite ver dos velocidades diferentes en una sola perturbación. La portadora se mueve con la velocidad de fase. La envolvente se mueve con la velocidad de grupo.
+
+Ejemplo: si dos ondas muy parecidas se suman, no se observa simplemente una onda de amplitud doble. Se observa una onda rápida cuya amplitud crece y decrece lentamente: un batido espacial y temporal.
+
+### 3.7. Velocidad de fase
+
+La velocidad de fase es la velocidad con que avanza una fase constante de la onda portadora. En notación de French:
+
+    v_f = nu/k
+
+En notación angular:
+
+    v_f = omega/K
+
+Esta velocidad describe el movimiento de una cresta concreta de una componente sinusoidal. No describe necesariamente el transporte de información, energía o forma global del pulso.
+
+En un medio no dispersivo, todas las componentes tienen la misma velocidad de fase y el problema se simplifica: v_f = v_g. En un medio dispersivo, v_f depende del número de onda.
+
+Ejemplo: si omega = a k^2, entonces v_f = omega/k = a k. Las componentes de mayor k tienen mayor velocidad de fase.
+
+### 3.8. Velocidad de grupo
+
+La velocidad de grupo es la velocidad con que se desplaza la envolvente de un conjunto de ondas cercanas. Para dos ondas muy próximas, en notación de French,
+
+    v_g = Delta nu / Delta k
+
+En el límite de muchas componentes cercanas,
+
+    v_g = dnu/dk
+
+En notación angular,
+
+    v_g = domega/dK
+
+Esta velocidad es físicamente central porque los trenes reales tienen extensión finita. Lo observable suele ser el grupo, no una cresta individual. Además, en el tratamiento físico habitual, el transporte de energía de una perturbación ondulatoria se asocia a la velocidad de grupo.
+
+Ejemplo: si omega = c k, entonces v_g = c. Si omega = a k^2, entonces v_g = 2a k, que es el doble de la velocidad de fase.
+
+### 3.9. Relación entre v_g y v_f mediante lambda
+
+En muchos problemas de examen se da la velocidad de fase como función de la longitud de onda:
+
+    v_f = v(lambda)
+
+La fórmula útil es
+
+    v_g = v_f - lambda (dv_f/dlambda)
+
+La derivación sale de escribir omega = K v_f y K = 2pi/lambda. Entonces:
+
+    v_g = domega/dK = d(K v_f)/dK
+        = v_f + K dv_f/dK
+
+Como dlambda/dK = -lambda/K,
+
+    dv_f/dK = (dv_f/dlambda)(dlambda/dK) = -(lambda/K) dv_f/dlambda
+
+Por tanto,
+
+    v_g = v_f - lambda dv_f/dlambda
+
+Esta fórmula es crítica en ejercicios donde se pregunta si se propagan más deprisa las ondas largas o cortas. La señal del término derivado indica cómo cambia la velocidad de grupo respecto a la velocidad de fase.
+
+Ejemplo: si v_f = C sqrt(lambda), entonces dv_f/dlambda = C/(2 sqrt(lambda)), y
+
+    v_g = C sqrt(lambda) - lambda C/(2 sqrt(lambda))
+        = (1/2) C sqrt(lambda)
+        = v_f/2
+
+### 3.10. Ondas de gravedad en agua profunda
+
+French usa las ondas en agua profunda como ejemplo claro de diferencia entre velocidad de fase y de grupo. En esas ondas, la velocidad de fase es proporcional a la raíz cuadrada de la longitud de onda:
+
+    v_f ∝ sqrt(lambda)
+
+Como lambda = 1/k en la notación de French, esto equivale a que la velocidad de fase disminuya con k según una potencia negativa. Al aplicar la fórmula anterior se obtiene
+
+    v_g = v_f/2
+
+La consecuencia observable es que las crestas individuales se desplazan a través del grupo. Aparecen por detrás, crecen dentro de la envolvente y desaparecen por delante. El grupo avanza más despacio que las crestas.
+
+Esto importa porque rompe la intuición elemental de que “la onda” se mueve como un objeto rígido. En un medio dispersivo no hay un único objeto: hay crestas, envolvente y energía, y no tienen por qué moverse igual.
+
+### 3.11. Sonido en gases como caso aproximadamente no dispersivo
+
+French contrasta el caso de las ondas de agua profunda con el sonido en gases. En la aproximación elástica habitual, las ondas sonoras en gases son no dispersivas: las distintas frecuencias se propagan prácticamente a la misma velocidad. Esa es una condición física esencial para que el sonido complejo mantenga su estructura temporal.
+
+Si el aire fuera fuertemente dispersivo en el rango audible, las distintas frecuencias de una señal musical llegarían a tiempos distintos. La forma temporal de la onda sonora se alteraría y la percepción sería radicalmente distinta.
+
+Ejemplo: en un medio no dispersivo, un acorde musical conserva la relación temporal entre sus componentes. En un medio dispersivo fuerte, las componentes frecuenciales se separarían durante la propagación.
+
+### 3.12. Fenómeno de corte
+
+French introduce el fenómeno de corte como estrechamente relacionado con la dispersión. El corte aparece cuando un medio no puede transmitir ondas por encima o por debajo de cierta frecuencia crítica. En una línea discreta de masas, la relación entre frecuencia y número de onda puede tener un máximo; eso significa que no cualquier frecuencia puede propagarse.
+
+La idea conceptual es que la estructura del medio impone límites. Cuando una longitud de onda se vuelve comparable a la escala interna del sistema, el comportamiento continuo deja de ser válido. La relación omega(k) deja de ser lineal y puede incluso impedir la propagación de ciertas frecuencias.
+
+Ejemplo: una cadena de masas y muelles tiene una frecuencia máxima de propagación. Intentar excitar una frecuencia superior no produce una onda propagante ordinaria en la cadena.
+
+### 3.13. Lectura operativa de una relación de dispersión
+
+Para resolver problemas, el orden correcto es:
+
+Primero, identificar la relación omega(k) o nu(k). Segundo, calcular la velocidad de fase dividiendo frecuencia entre número de onda. Tercero, calcular la velocidad de grupo derivando. Cuarto, comparar ambas. Quinto, interpretar físicamente.
+
+Si omega(k) es lineal, no hay dispersión:
+
+    omega = c k
+    v_f = c
+    v_g = c
+
+Si omega(k) no es lineal, hay dispersión:
+
+    omega = a k^2
+    v_f = a k
+    v_g = 2a k
+
+Si se da v_f(lambda), no se debe derivar respecto a lambda directamente pensando que eso ya es v_g. Hay que usar
+
+    v_g = v_f - lambda dv_f/dlambda
+
+### 3.14. Conexión con los problemas UNED
+
+Los exámenes suelen convertir esta teoría en preguntas de cálculo corto y justificación conceptual. Aparecen relaciones como omega^2 = 4ak, omega^2 = 4ak^2, velocidades de fase dependientes de lambda o dos ondas concretas del tipo
+
+    A sen(6x - 12t)
+    A sen(5x - 11t)
+
+En esos casos se evalúa si se reconoce la estructura. Para una onda individual A sen(kx - omega t), la velocidad de fase es omega/k. Para dos ondas cercanas, la velocidad de grupo se calcula como
+
+    v_g = Delta omega / Delta k
+
+No hace falta memorizar el enunciado: basta detectar portadora y envolvente.
+
+Ejemplo:
+
+    y1 = A sen(6x - 12t)
+    y2 = A sen(5x - 11t)
+
+Las velocidades de fase son 12/6 = 2 y 11/5 = 2,2. La velocidad de grupo de la superposición es
+
+    v_g = (12 - 11)/(6 - 5) = 1
+
+Como v_f cambia entre las componentes, el medio se interpreta como dispersivo.
+
+
+## 4. Conceptos clave
+
+### Onda progresiva
+
+Definición precisa: perturbación que se desplaza a través de un medio transportando energía e información sin requerir transporte neto del medio material en la misma dirección.
+
+Explicación desarrollada: en una onda progresiva, lo que avanza es el estado de perturbación. Las partículas del medio pueden oscilar localmente, pero no tienen por qué viajar con la onda. French parte de esta distinción con el ejemplo de las olas: el agua no se traslada desde el origen lejano de la ola hasta la costa, aunque la perturbación sí.
+
+Ejemplo: una sacudida transversal en una cuerda avanza a lo largo de la cuerda mientras cada punto de la cuerda sube y baja.
+
+Relación con otros conceptos: es el marco general de la velocidad de fase, velocidad de grupo y transporte de energía.
+
+Posible forma de preguntarlo en examen: “Explique por qué una onda puede transportar energía sin transportar materia de forma neta”.
+
+### Onda sinusoidal pura
+
+Definición precisa: onda de una única frecuencia y una única longitud de onda, extendida idealmente de forma indefinida.
+
+Explicación desarrollada: es la componente elemental del análisis ondulatorio. Permite definir fase, frecuencia, longitud de onda y velocidad de fase. Sin embargo, una onda sinusoidal infinita no representa una señal localizada.
+
+Ejemplo: y = A sen(kx - omega t).
+
+Relación con otros conceptos: los pulsos reales se construyen como superposición de ondas sinusoidales puras.
+
+Posible forma de preguntarlo en examen: “¿Por qué una onda sinusoidal pura tiene una velocidad de fase definida incluso en un medio dispersivo?”.
+
+### Pulso
+
+Definición precisa: perturbación ondulatoria localizada en el espacio y/o en el tiempo.
+
+Explicación desarrollada: un pulso no puede representarse por una sola sinusoide infinita. Requiere una combinación de componentes sinusoidales. Por eso, si el medio es dispersivo, el pulso se deforma: cada componente viaja de forma distinta.
+
+Ejemplo: una deformación breve enviada por una cuerda.
+
+Relación con otros conceptos: conecta Fourier, superposición, dispersión y velocidad de grupo.
+
+Posible forma de preguntarlo en examen: “Explique por qué un pulso se ensancha en un medio dispersivo”.
+
+### Relación de dispersión
+
+Definición precisa: función que relaciona frecuencia y número de onda, omega = omega(k).
+
+Explicación desarrollada: contiene la información dinámica del medio respecto a la propagación de ondas. Si es lineal, las componentes viajan juntas. Si no es lineal, la velocidad depende de k.
+
+Ejemplo: omega = c k es no dispersiva; omega = a k^2 es dispersiva.
+
+Relación con otros conceptos: de ella derivan v_f y v_g.
+
+Posible forma de preguntarlo en examen: “Dada omega^2 = 4ak, determine si el medio es dispersivo”.
+
+### Dispersión
+
+Definición precisa: dependencia de la velocidad de propagación de una componente ondulatoria con la longitud de onda o el número de onda.
+
+Explicación desarrollada: dispersión significa separación progresiva de componentes que inicialmente formaban una perturbación común. En un pulso, esto produce ensanchamiento o distorsión.
+
+Ejemplo: luz blanca separada en colores por un prisma; ondas de gravedad en agua profunda.
+
+Relación con otros conceptos: requiere distinguir velocidad de fase y velocidad de grupo.
+
+Posible forma de preguntarlo en examen: “¿Qué condición sobre omega(k) permite afirmar que un medio no es dispersivo?”.
+
+### Medio no dispersivo
+
+Definición precisa: medio en el que todas las componentes sinusoidales se propagan con la misma velocidad de fase, independientemente de k.
+
+Explicación desarrollada: en estos medios omega es proporcional a k. La velocidad de grupo coincide con la velocidad de fase y un pulso puede conservar su forma durante la propagación.
+
+Ejemplo: cuerda ideal continua; sonido en gases en la aproximación elástica simple.
+
+Relación con otros conceptos: caso límite en que v_f = v_g.
+
+Posible forma de preguntarlo en examen: “Demuestre que omega = c k corresponde a un medio no dispersivo”.
+
+### Medio dispersivo
+
+Definición precisa: medio en el que la velocidad de fase depende de k o lambda.
+
+Explicación desarrollada: la relación omega(k) no es lineal. Las distintas componentes de un paquete de ondas se desplazan de forma distinta, por lo que la forma del paquete cambia.
+
+Ejemplo: ondas en agua profunda; cadena discreta de masas y muelles; luz en vidrio.
+
+Relación con otros conceptos: en él hay que comparar v_f y v_g.
+
+Posible forma de preguntarlo en examen: “Si omega = a k^2, calcule v_f, v_g y determine si hay dispersión”.
+
+### Velocidad de fase
+
+Definición precisa: velocidad de avance de un punto de fase constante de una componente sinusoidal.
+
+Explicación desarrollada: se obtiene imponiendo kx - omega t = constante. Es la velocidad de una cresta individual, no necesariamente la velocidad de transporte de energía de un paquete.
+
+Ejemplo:
+
+    y = A sen(3x - 12t)
+    v_f = 12/3 = 4
+
+Relación con otros conceptos: en medios dispersivos puede diferir de v_g.
+
+Posible forma de preguntarlo en examen: “Calcule la velocidad de fase de A sen(5x - 20t)”.
+
+### Velocidad de grupo
+
+Definición precisa: velocidad de desplazamiento de la envolvente de un paquete de ondas formado por componentes cercanas.
+
+Explicación desarrollada: para dos ondas próximas es Delta omega / Delta k; para un paquete continuo es domega/dk. French la asocia al movimiento observable del grupo y al transporte de energía.
+
+Ejemplo: si omega = 3k^2, entonces v_g = 6k.
+
+Relación con otros conceptos: describe la propagación de paquetes, pulsos y señales.
+
+Posible forma de preguntarlo en examen: “A partir de omega(k), calcule la velocidad de grupo y compárela con la velocidad de fase”.
+
+### Envolvente
+
+Definición precisa: función lenta que modula la amplitud de una oscilación rápida.
+
+Explicación desarrollada: al sumar dos ondas de k y omega parecidos, se obtiene una onda portadora multiplicada por una envolvente. La envolvente define el grupo.
+
+Ejemplo:
+
+    2A cos((Delta k x - Delta omega t)/2) sen(k_m x - omega_m t)
+
+Relación con otros conceptos: su velocidad es la velocidad de grupo.
+
+Posible forma de preguntarlo en examen: “Identifique la portadora y la envolvente en la suma de dos ondas próximas”.
+
+### Portadora
+
+Definición precisa: oscilación rápida dentro de una onda modulada.
+
+Explicación desarrollada: representa la componente media del paquete. Sus crestas se mueven a velocidad de fase.
+
+Ejemplo: en la suma de dos ondas cercanas, el seno con k medio y omega medio es la portadora.
+
+Relación con otros conceptos: la portadora puede atravesar la envolvente si v_f ≠ v_g.
+
+Posible forma de preguntarlo en examen: “Explique por qué las crestas pueden moverse a través del grupo”.
+
+### Batido
+
+Definición precisa: modulación periódica de amplitud producida por la superposición de ondas de frecuencias o números de onda próximos.
+
+Explicación desarrollada: el batido permite ver experimentalmente la separación entre portadora y envolvente. En ondas espaciales, la distancia entre máximos de la envolvente depende de Delta k.
+
+Ejemplo: suma de A sen(6x - 12t) y A sen(5x - 11t).
+
+Relación con otros conceptos: es la forma elemental de un grupo de ondas.
+
+Posible forma de preguntarlo en examen: “Calcule la distancia entre máximos de amplitud en una superposición de dos ondas”.
+
+### Fenómeno de corte
+
+Definición precisa: imposibilidad de un medio para transmitir ondas por encima o por debajo de una frecuencia crítica.
+
+Explicación desarrollada: aparece cuando la relación de dispersión impone límites a las frecuencias propagantes. French lo conecta con líneas discretas de masas.
+
+Ejemplo: en una cadena discreta puede existir una frecuencia máxima permitida.
+
+Relación con otros conceptos: es una consecuencia extrema de la estructura dispersiva del medio.
+
+Posible forma de preguntarlo en examen: “Explique qué significa una frecuencia de corte en un sistema ondulatorio”.
+
+
+## 5. Relaciones entre ideas
+
+La jerarquía conceptual del tema empieza en la onda sinusoidal. Una onda sinusoidal permite definir fase, frecuencia, longitud de onda y velocidad de fase. Esa es la capa cinemática mínima.
+
+Sobre esa capa aparece la superposición. Al sumar ondas sinusoidales ya no se estudia una única cresta, sino una forma compuesta. Si las ondas sumadas tienen números de onda cercanos, la suma genera una portadora y una envolvente. La portadora se mueve con velocidad de fase; la envolvente se mueve con velocidad de grupo.
+
+La relación de dispersión gobierna ambas velocidades. La velocidad de fase sale de dividir omega entre k. La velocidad de grupo sale de derivar omega respecto a k. Así, la relación omega(k) es jerárquicamente anterior a v_f y v_g.
+
+La oposición central es medio no dispersivo frente a medio dispersivo. En un medio no dispersivo, omega(k) es lineal, v_f = v_g y los pulsos conservan la forma. En un medio dispersivo, omega(k) no es lineal, v_f ≠ v_g y los pulsos se deforman.
+
+Los modos normales conectan históricamente y conceptualmente con esta idea. En una cuerda continua ideal, las frecuencias modales son proporcionales al número de modo. En una línea discreta de masas, esa proporcionalidad falla a longitudes de onda cortas. Esta comparación muestra cómo la idealización continua oculta la dispersión.
+
+Fourier es el puente matemático. Un pulso real se representa como combinación de sinusoides. Si todas viajan igual, el pulso se traslada. Si no, el pulso se dispersa. Por eso la dispersión no es un detalle de una fórmula: afecta a la propagación real de señales.
+
+La energía se conecta con la velocidad de grupo. French señala que el transporte de energía en una perturbación ondulatoria tiene lugar a la velocidad de grupo. Esto impide identificar automáticamente una cresta con el avance físico de la señal.
+
+La evolución lógica del capítulo puede resumirse así:
+
+    onda sinusoidal -> fase -> velocidad de fase
+    superposición -> envolvente -> velocidad de grupo
+    relación omega(k) -> comparación v_f/v_g -> dispersión
+    dispersión -> deformación de pulsos -> posible corte
+
+En términos históricos, la idea de analizar perturbaciones mediante sinusoides procede del enfoque de Fourier. French lo usa como fundamento para estudiar ondas reales: una señal física se entiende a partir de sus componentes, y el medio determina cómo evoluciona cada una.
+
+
+## 6. Errores habituales
+
+### Error 1: decir que toda onda tiene una única velocidad
+
+Por qué está mal: en un medio dispersivo, cada componente sinusoidal puede tener distinta velocidad de fase, y el grupo puede moverse con otra velocidad.
+
+Corrección: especificar si se habla de velocidad de fase, velocidad de grupo o velocidad de propagación en un medio no dispersivo.
+
+Respuesta incorrecta: “La onda se mueve con velocidad v = lambda f, así que esa es la velocidad del pulso”.
+
+Respuesta correcta: “lambda f da la velocidad de fase de una componente sinusoidal. Para un paquete debe calcularse v_g = domega/dk”.
+
+### Error 2: creer que v_f = v_g siempre
+
+Por qué está mal: solo coinciden si omega(k) es lineal.
+
+Corrección: calcular ambas velocidades y compararlas.
+
+Respuesta incorrecta: “La velocidad de grupo también es omega/k”.
+
+Respuesta correcta: “La velocidad de fase es omega/k; la velocidad de grupo es domega/dk”.
+
+### Error 3: identificar dispersión con pérdida de energía
+
+Por qué está mal: dispersión significa separación de componentes por dependencia de velocidad con longitud de onda, no disipación.
+
+Corrección: distinguir dispersión de amortiguamiento.
+
+Respuesta incorrecta: “El pulso se dispersa porque pierde energía”.
+
+Respuesta correcta: “El pulso se dispersa porque sus componentes de k distintos viajan a velocidades distintas”.
+
+### Error 4: derivar v_f(lambda) directamente y llamarlo velocidad de grupo
+
+Por qué está mal: v_g no es dv_f/dlambda. La variable natural es k o K.
+
+Corrección: usar
+
+    v_g = v_f - lambda dv_f/dlambda
+
+Respuesta incorrecta: “Si v_f = C sqrt(lambda), entonces v_g = C/(2sqrt(lambda))”.
+
+Respuesta correcta: “Si v_f = C sqrt(lambda), entonces v_g = v_f - lambda dv_f/dlambda = v_f/2”.
+
+### Error 5: no distinguir frecuencia angular y frecuencia ordinaria
+
+Por qué está mal: mezclar omega y nu introduce factores 2pi y errores dimensionales.
+
+Corrección: usar una sola convención durante todo el ejercicio.
+
+Respuesta incorrecta: “En y = A sen 2pi(kx - nu t), omega = nu”.
+
+Respuesta correcta: “En esa forma, nu es frecuencia ordinaria. La frecuencia angular sería omega = 2pi nu”.
+
+### Error 6: confundir número de onda angular con 1/lambda
+
+Por qué está mal: en notación angular K = 2pi/lambda; en la notación de French k = 1/lambda.
+
+Corrección: identificar la fase. Si la fase es kx - omega t, k es angular. Si la fase es 2pi(kx - nu t), k es ciclos por unidad de longitud.
+
+Respuesta incorrecta: “k siempre es 2pi/lambda”.
+
+Respuesta correcta: “Depende de la convención de fase usada”.
+
+### Error 7: decir que una onda no sinusoidal tiene una sola longitud de onda
+
+Por qué está mal: una forma localizada o no sinusoidal requiere varias componentes sinusoidales.
+
+Corrección: tratarla como paquete o superposición.
+
+Respuesta incorrecta: “El pulso rectangular tiene longitud de onda igual a su anchura”.
+
+Respuesta correcta: “Un pulso localizado contiene un espectro de longitudes de onda”.
+
+### Error 8: afirmar que las crestas transportan necesariamente la energía
+
+Por qué está mal: en un medio dispersivo las crestas pueden atravesar el paquete; el transporte energético se asocia a la velocidad de grupo.
+
+Corrección: distinguir avance de fase y avance de la envolvente.
+
+Respuesta incorrecta: “La energía viaja con v_f porque las crestas viajan con v_f”.
+
+Respuesta correcta: “En un paquete, la energía viaja con la envolvente, a v_g”.
+
+### Error 9: decidir si hay dispersión mirando solo si omega cambia con k
+
+Por qué está mal: omega debe cambiar con k para que haya propagación. Lo relevante es si la relación es lineal.
+
+Corrección: comprobar si omega/k es constante o si d omega/dk coincide con omega/k.
+
+Respuesta incorrecta: “Como omega depende de k, hay dispersión”.
+
+Respuesta correcta: “Si omega = c k, depende de k pero no hay dispersión porque v_f = v_g = c”.
+
+### Error 10: olvidar la interpretación física tras calcular
+
+Por qué está mal: el examen suele pedir “razone” o “interprete”. No basta con fórmulas.
+
+Corrección: después del cálculo, decir qué se mueve más rápido y qué le ocurre al pulso.
+
+Respuesta incorrecta: “v_f = 3, v_g = 6”.
+
+Respuesta correcta: “v_g > v_f; la envolvente avanza más rápido que las crestas de la portadora para ese k”.
+
+
+## 7. Preguntas orientadas a examen
+
+### 10 preguntas fáciles
+
+1. Defina velocidad de fase.
+2. Defina velocidad de grupo.
+3. ¿Qué significa que un medio sea dispersivo?
+4. ¿Qué relación omega(k) corresponde a un medio no dispersivo?
+5. Calcule la velocidad de fase de y = A sen(5x - 20t).
+6. ¿Qué representa físicamente la envolvente de un paquete de ondas?
+7. ¿Por qué un pulso real no es una onda sinusoidal pura?
+8. ¿Qué diferencia hay entre omega y nu?
+9. ¿Qué diferencia hay entre k = 1/lambda y K = 2pi/lambda?
+10. ¿Qué ocurre con un pulso localizado en un medio dispersivo?
+
+### 10 preguntas medias
+
+11. Dada omega = c k, calcule v_f y v_g e indique si hay dispersión.
+12. Dada omega = a k^2, calcule v_f y v_g e interprete el resultado.
+13. Dada omega^2 = 4ak, determine v_f, v_g y si el medio es dispersivo.
+14. Dada omega^2 = 4ak^2, determine v_f, v_g y si el medio es dispersivo.
+15. Demuestre que v_g = v_f - lambda dv_f/dlambda.
+16. Si v_f = C sqrt(lambda), calcule v_g y compare ambas velocidades.
+17. Si v_f = C/sqrt(lambda), calcule v_g y compare ambas velocidades.
+18. Para y1 = A sen(6x - 12t) e y2 = A sen(5x - 11t), calcule la velocidad de grupo.
+19. En la superposición anterior, calcule las velocidades de fase de cada componente y razone si hay dispersión.
+20. Explique por qué en una cuerda ideal continua no hay dispersión, pero en una cadena discreta puede aparecer.
+
+### 5 preguntas difíciles
+
+21. Una perturbación está formada por componentes centradas en k0 y cumple omega = a sqrt(k). Calcule v_f(k0), v_g(k0) y explique cómo evolucionará el paquete.
+22. Una relación de dispersión tiene la forma omega^2 = gk + (sigma/rho) k^3. Determine la condición para que v_f = v_g.
+23. Para dos ondas próximas con k1, k2, omega1, omega2, derive la forma portadora por envolvente y extraiga v_g.
+24. En un medio donde v_g > v_f, razone si se propagan más deprisa las componentes de longitud de onda corta o larga usando v_g = v_f - lambda dv_f/dlambda.
+25. Explique por qué una frecuencia de corte puede aparecer en una línea discreta de masas y no en la cuerda continua ideal.
+
+### 5 preguntas de desarrollo largo
+
+26. Desarrolle la diferencia entre onda sinusoidal pura, tren de ondas y pulso localizado, y explique por qué esto obliga a introducir la velocidad de grupo.
+27. Explique el concepto de dispersión siguiendo el hilo: cuerda ideal continua, línea discreta de masas, relación omega(k), deformación de pulsos.
+28. Desarrolle la derivación de la velocidad de fase y de la velocidad de grupo a partir de la superposición de dos ondas próximas.
+29. Compare ondas sonoras en gases y ondas de gravedad en agua profunda desde el punto de vista de la dispersión.
+30. Explique por qué la energía de una perturbación ondulatoria se asocia a la velocidad de grupo y no simplemente a la velocidad de fase.
+
+### 5 preguntas de relación entre conceptos
+
+31. Relacione modos normales, Fourier y dispersión.
+32. Relacione fase, cresta, velocidad de fase y relación de dispersión.
+33. Relacione envolvente, paquete de ondas, velocidad de grupo y transporte de energía.
+34. Relacione medio continuo, medio discreto y frecuencia de corte.
+35. Relacione dispersión, refracción y separación de colores en un prisma.
+
+
+## 8. Respuestas modelo
+
+### 1. Defina velocidad de fase.
+
+La velocidad de fase es la velocidad con la que se desplaza un punto de fase constante de una onda sinusoidal. Si la onda se escribe como y = A sen(kx - omega t), una fase constante cumple kx - omega t = constante. Derivando respecto al tiempo se obtiene k dx/dt - omega = 0, luego
+
+    v_f = dx/dt = omega/k
+
+Describe la velocidad de una cresta, un valle o cualquier punto equivalente de una componente sinusoidal.
+
+### 2. Defina velocidad de grupo.
+
+La velocidad de grupo es la velocidad con la que se desplaza la envolvente de un paquete de ondas. Para dos ondas muy próximas es aproximadamente
+
+    v_g = Delta omega / Delta k
+
+En el límite continuo se escribe
+
+    v_g = domega/dk
+
+Tiene importancia física porque los pulsos reales son grupos de ondas y el transporte de energía se asocia a la propagación de la envolvente.
+
+### 3. ¿Qué significa que un medio sea dispersivo?
+
+Un medio es dispersivo cuando la velocidad de propagación depende de la longitud de onda o del número de onda. Equivalentemente, la relación omega(k) no es lineal. En ese caso, las distintas componentes sinusoidales de un pulso viajan de forma distinta y el pulso se deforma o se ensancha.
+
+### 4. ¿Qué relación omega(k) corresponde a un medio no dispersivo?
+
+Un medio no dispersivo tiene una relación lineal
+
+    omega = c k
+
+Entonces
+
+    v_f = omega/k = c
+    v_g = domega/dk = c
+
+Como ambas velocidades coinciden y no dependen de k, todas las componentes viajan juntas.
+
+### 5. Calcule la velocidad de fase de y = A sen(5x - 20t).
+
+La onda tiene k = 5 y omega = 20. Por tanto,
+
+    v_f = omega/k = 20/5 = 4
+
+La cresta de esa componente se desplaza con velocidad 4 en el sentido positivo de x.
+
+### 6. ¿Qué representa físicamente la envolvente de un paquete de ondas?
+
+La envolvente representa la modulación lenta de amplitud que contiene al grupo de ondas. En una superposición de ondas próximas, la oscilación rápida corresponde a la portadora y la envolvente indica dónde está localizado el paquete. La velocidad de esa envolvente es la velocidad de grupo.
+
+### 7. ¿Por qué un pulso real no es una onda sinusoidal pura?
+
+Una onda sinusoidal pura tiene extensión infinita y una sola frecuencia. Un pulso real está localizado: tiene principio, final y anchura finita. Para representar una perturbación localizada se necesita una superposición de muchas componentes sinusoidales. Por eso un pulso tiene espectro de números de onda.
+
+### 8. ¿Qué diferencia hay entre omega y nu?
+
+nu es la frecuencia ordinaria, medida en ciclos por segundo. omega es la frecuencia angular, medida en radianes por segundo. Se relacionan por
+
+    omega = 2pi nu
+
+La forma A sen 2pi(kx - nu t) usa frecuencia ordinaria; la forma A sen(Kx - omega t) usa frecuencia angular.
+
+### 9. ¿Qué diferencia hay entre k = 1/lambda y K = 2pi/lambda?
+
+k = 1/lambda mide ciclos por unidad de longitud. K = 2pi/lambda mide radianes por unidad de longitud. French usa a menudo la primera convención al escribir la fase como 2pi(kx - nu t). La notación moderna habitual usa K en la fase Kx - omega t.
+
+### 10. ¿Qué ocurre con un pulso localizado en un medio dispersivo?
+
+Se deforma. Como el pulso está formado por varias componentes sinusoidales y cada componente puede viajar con una velocidad distinta, la forma inicial no se conserva. Normalmente el pulso se ensancha y sus componentes se separan progresivamente.
+
+### 11. Dada omega = c k, calcule v_f y v_g e indique si hay dispersión.
+
+La velocidad de fase es
+
+    v_f = omega/k = c k/k = c
+
+La velocidad de grupo es
+
+    v_g = domega/dk = c
+
+Como ambas son iguales y constantes, el medio no es dispersivo.
+
+### 12. Dada omega = a k^2, calcule v_f y v_g e interprete el resultado.
+
+La velocidad de fase es
+
+    v_f = omega/k = a k
+
+La velocidad de grupo es
+
+    v_g = domega/dk = 2a k
+
+Como dependen de k y además v_g = 2 v_f, el medio es dispersivo. La envolvente del paquete se mueve al doble de la velocidad de fase correspondiente al k central.
+
+### 13. Dada omega^2 = 4ak, determine v_f, v_g y si el medio es dispersivo.
+
+Tomando omega positiva,
+
+    omega = 2 sqrt(a k)
+
+La velocidad de fase es
+
+    v_f = omega/k = 2 sqrt(a k)/k = 2 sqrt(a) / sqrt(k)
+
+La velocidad de grupo es
+
+    v_g = domega/dk = sqrt(a) / sqrt(k)
+
+Por tanto,
+
+    v_g = v_f/2
+
+El medio es dispersivo porque la velocidad depende de k y porque v_f no coincide con v_g.
+
+### 14. Dada omega^2 = 4ak^2, determine v_f, v_g y si el medio es dispersivo.
+
+Tomando omega positiva,
+
+    omega = 2 sqrt(a) k
+
+La velocidad de fase es
+
+    v_f = omega/k = 2 sqrt(a)
+
+La velocidad de grupo es
+
+    v_g = domega/dk = 2 sqrt(a)
+
+Como ambas son iguales y constantes, el medio no es dispersivo.
+
+### 15. Demuestre que v_g = v_f - lambda dv_f/dlambda.
+
+Se parte de
+
+    v_f = omega/K
+
+Luego
+
+    omega = K v_f
+
+La velocidad de grupo es
+
+    v_g = domega/dK = d(K v_f)/dK = v_f + K dv_f/dK
+
+Como K = 2pi/lambda, se tiene
+
+    dlambda/dK = -lambda/K
+
+Por tanto,
+
+    dv_f/dK = (dv_f/dlambda)(dlambda/dK) = -lambda/K · dv_f/dlambda
+
+Sustituyendo:
+
+    v_g = v_f - lambda dv_f/dlambda
+
+### 16. Si v_f = C sqrt(lambda), calcule v_g y compare ambas velocidades.
+
+Se usa
+
+    v_g = v_f - lambda dv_f/dlambda
+
+Como
+
+    dv_f/dlambda = C/(2 sqrt(lambda))
+
+Entonces
+
+    v_g = C sqrt(lambda) - lambda C/(2 sqrt(lambda))
+        = C sqrt(lambda) - C sqrt(lambda)/2
+        = C sqrt(lambda)/2
+
+Por tanto,
+
+    v_g = v_f/2
+
+La envolvente se mueve a la mitad de la velocidad de las crestas.
+
+### 17. Si v_f = C/sqrt(lambda), calcule v_g y compare ambas velocidades.
+
+Se tiene
+
+    v_f = C lambda^{-1/2}
+    dv_f/dlambda = -(1/2) C lambda^{-3/2}
+
+Por tanto,
+
+    v_g = v_f - lambda dv_f/dlambda
+        = C lambda^{-1/2} + (1/2) C lambda^{-1/2}
+        = (3/2) v_f
+
+La velocidad de grupo es mayor que la velocidad de fase.
+
+### 18. Para y1 = A sen(6x - 12t) e y2 = A sen(5x - 11t), calcule la velocidad de grupo.
+
+Para dos ondas próximas,
+
+    v_g = Delta omega / Delta k
+
+Con omega1 = 12, omega2 = 11, k1 = 6, k2 = 5:
+
+    v_g = (12 - 11)/(6 - 5) = 1
+
+La envolvente se mueve con velocidad 1.
+
+### 19. En la superposición anterior, calcule las velocidades de fase de cada componente y razone si hay dispersión.
+
+La primera componente tiene
+
+    v_f1 = 12/6 = 2
+
+La segunda tiene
+
+    v_f2 = 11/5 = 2,2
+
+Como las velocidades de fase no son iguales para los dos números de onda, el medio no se comporta como no dispersivo para esas componentes. La superposición tendrá una envolvente con velocidad distinta de las crestas.
+
+### 20. Explique por qué en una cuerda ideal continua no hay dispersión, pero en una cadena discreta puede aparecer.
+
+En una cuerda ideal continua bajo tensión T y densidad lineal mu, la velocidad v = sqrt(T/mu) no depende de la longitud de onda. Por eso omega es proporcional a k y no hay dispersión. En una cadena discreta, cuando la longitud de onda se hace comparable con la separación entre masas, la estructura interna del medio afecta a la propagación. La frecuencia deja de crecer linealmente con k y aparece dispersión.
+
+### 21. Una perturbación está formada por componentes centradas en k0 y cumple omega = a sqrt(k). Calcule v_f(k0), v_g(k0) y explique cómo evolucionará el paquete.
+
+La velocidad de fase es
+
+    v_f(k0) = omega(k0)/k0 = a sqrt(k0)/k0 = a/sqrt(k0)
+
+La velocidad de grupo es
+
+    v_g(k0) = domega/dk |_{k0} = a/(2 sqrt(k0))
+
+Por tanto,
+
+    v_g = v_f/2
+
+El paquete es dispersivo: la envolvente se desplaza a la mitad de la velocidad de las crestas asociadas al k central. Las crestas atraviesan el grupo y el paquete puede ensancharse porque componentes cercanas tienen velocidades distintas.
+
+### 22. Una relación de dispersión tiene la forma omega^2 = gk + (sigma/rho) k^3. Determine la condición para que v_f = v_g.
+
+Sea A = sigma/rho. Entonces
+
+    omega = sqrt(gk + A k^3)
+
+La velocidad de fase es
+
+    v_f = omega/k
+
+La velocidad de grupo es
+
+    v_g = domega/dk = (g + 3A k^2)/(2 omega)
+
+La condición v_f = v_g exige
+
+    omega/k = (g + 3A k^2)/(2 omega)
+
+Multiplicando:
+
+    2 omega^2 = k(g + 3A k^2)
+
+Como omega^2 = gk + A k^3:
+
+    2(gk + A k^3) = gk + 3A k^3
+
+    2gk + 2A k^3 = gk + 3A k^3
+
+    gk = A k^3
+
+Para k ≠ 0:
+
+    k^2 = g/A = rho g / sigma
+
+Por tanto, la igualdad se da para
+
+    k = sqrt(rho g / sigma)
+
+### 23. Para dos ondas próximas con k1, k2, omega1, omega2, derive la forma portadora por envolvente y extraiga v_g.
+
+Se parte de
+
+    y1 = A sen(k1 x - omega1 t)
+    y2 = A sen(k2 x - omega2 t)
+
+La suma es
+
+    y = A[sen(k1 x - omega1 t) + sen(k2 x - omega2 t)]
+
+Usando sen a + sen b = 2 sen((a+b)/2) cos((a-b)/2):
+
+    y = 2A sen(k_m x - omega_m t) cos((Delta k x - Delta omega t)/2)
+
+con
+
+    k_m = (k1+k2)/2
+    omega_m = (omega1+omega2)/2
+    Delta k = k1-k2
+    Delta omega = omega1-omega2
+
+El seno es la portadora. El coseno es la envolvente. La envolvente tiene fase constante cuando
+
+    Delta k x - Delta omega t = constante
+
+Por tanto,
+
+    v_g = Delta omega / Delta k
+
+En el límite de ondas infinitamente próximas,
+
+    v_g = domega/dk
+
+### 24. En un medio donde v_g > v_f, razone si se propagan más deprisa las componentes de longitud de onda corta o larga usando v_g = v_f - lambda dv_f/dlambda.
+
+Si v_g > v_f, entonces
+
+    v_f - lambda dv_f/dlambda > v_f
+
+Luego
+
+    -lambda dv_f/dlambda > 0
+
+Como lambda > 0,
+
+    dv_f/dlambda < 0
+
+La velocidad de fase disminuye al aumentar lambda. Por tanto, las ondas de longitud de onda corta tienen mayor velocidad de fase que las largas.
+
+### 25. Explique por qué una frecuencia de corte puede aparecer en una línea discreta de masas y no en la cuerda continua ideal.
+
+En la cuerda continua ideal no existe una escala mínima interna: el modelo permite longitudes de onda arbitrariamente pequeñas y mantiene una relación lineal omega = c k. En una línea discreta de masas sí existe una escala interna, la separación entre masas. Cuando la longitud de onda se aproxima a esa escala, la relación de dispersión deja de ser lineal y puede alcanzar un máximo de frecuencia. Por encima de esa frecuencia no hay onda propagante ordinaria: aparece el corte.
+
+### 26. Desarrolle la diferencia entre onda sinusoidal pura, tren de ondas y pulso localizado, y explique por qué esto obliga a introducir la velocidad de grupo.
+
+Una onda sinusoidal pura tiene una sola frecuencia y una sola longitud de onda. Matemáticamente se extiende de forma indefinida. Por eso se le puede asignar una velocidad de fase perfectamente definida. Sin embargo, no representa una señal localizada.
+
+Un tren de ondas tiene extensión finita: contiene muchas oscilaciones, pero no infinitas. Al estar limitado en el espacio o en el tiempo, ya no puede describirse por una única componente sinusoidal exacta. Necesita un conjunto de componentes próximas.
+
+Un pulso localizado es todavía más claramente una superposición. Tiene una región espacial donde la perturbación es apreciable y fuera de ella prácticamente desaparece. Esa localización exige un espectro de números de onda.
+
+La velocidad de grupo aparece porque lo observable en un tren o pulso no es una cresta aislada de una sinusoide infinita, sino la envolvente que localiza la perturbación. Esa envolvente se mueve con v_g = domega/dk. En un medio dispersivo, v_g puede diferir de v_f, de modo que una cresta no representa la velocidad de la señal completa.
+
+### 27. Explique el concepto de dispersión siguiendo el hilo: cuerda ideal continua, línea discreta de masas, relación omega(k), deformación de pulsos.
+
+En una cuerda ideal continua, la velocidad de propagación transversal es sqrt(T/mu). Como no depende de la longitud de onda, la relación de dispersión es lineal: omega = c k. En ese caso todas las componentes sinusoidales viajan igual y un pulso puede conservar su forma.
+
+Una línea discreta de masas conectadas por muelles se parece a una cuerda continua solo para longitudes de onda largas. Para longitudes de onda cortas, la separación entre masas se vuelve relevante. Entonces la frecuencia de los modos ya no es proporcional al número de onda.
+
+Esa desviación se expresa mediante una relación omega(k) no lineal. Cuando omega/k depende de k, las componentes sinusoidales de un paquete tienen velocidades de fase distintas y la velocidad de grupo también puede ser distinta.
+
+La consecuencia física es la deformación del pulso. Lo que al inicio estaba localizado se separa progresivamente porque sus componentes viajan a ritmos distintos. Eso es la dispersión en sentido físico: separación de componentes inicialmente solapadas.
+
+### 28. Desarrolle la derivación de la velocidad de fase y de la velocidad de grupo a partir de la superposición de dos ondas próximas.
+
+Se consideran dos ondas de igual amplitud:
+
+    y1 = A sen(k1 x - omega1 t)
+    y2 = A sen(k2 x - omega2 t)
+
+La suma es
+
+    y = A[sen(k1 x - omega1 t) + sen(k2 x - omega2 t)]
+
+Aplicando la identidad trigonométrica:
+
+    y = 2A sen(k_m x - omega_m t) cos((Delta k x - Delta omega t)/2)
+
+El término sen(k_m x - omega_m t) es la oscilación rápida o portadora. Sus puntos de fase constante cumplen
+
+    k_m x - omega_m t = constante
+
+Por tanto, su velocidad es
+
+    v_f = omega_m/k_m
+
+El término cos((Delta k x - Delta omega t)/2) es la envolvente. Sus máximos se desplazan manteniendo
+
+    Delta k x - Delta omega t = constante
+
+Por tanto, la velocidad de la envolvente es
+
+    v_g = Delta omega/Delta k
+
+Si las dos ondas son infinitamente próximas en k, el cociente incremental se convierte en derivada:
+
+    v_g = domega/dk
+
+### 29. Compare ondas sonoras en gases y ondas de gravedad en agua profunda desde el punto de vista de la dispersión.
+
+Las ondas sonoras en gases, dentro de la aproximación elástica ordinaria, son prácticamente no dispersivas. Las distintas frecuencias audibles se propagan con la misma velocidad. Por eso una señal sonora compleja, como una voz o un acorde, puede mantener su estructura temporal durante la propagación.
+
+Las ondas de gravedad en agua profunda son dispersivas. Su velocidad de fase depende de la longitud de onda y, en el caso tratado por French, es proporcional a sqrt(lambda). Al aplicar la relación v_g = v_f - lambda dv_f/dlambda se obtiene v_g = v_f/2. Por tanto, las crestas avanzan más rápido que el grupo.
+
+La diferencia física es clara: en el sonido ordinario el paquete conserva aproximadamente su forma; en agua profunda las crestas pueden atravesar la envolvente y el grupo no avanza con la misma velocidad que las crestas.
+
+### 30. Explique por qué la energía de una perturbación ondulatoria se asocia a la velocidad de grupo y no simplemente a la velocidad de fase.
+
+La velocidad de fase describe el avance de una fase constante de una componente sinusoidal ideal. Pero una componente sinusoidal infinita no localiza una señal ni un paquete de energía en una región concreta. Una perturbación física real tiene extensión finita y se representa mediante un grupo de ondas.
+
+La energía de esa perturbación está localizada donde la amplitud del grupo es apreciable, es decir, bajo la envolvente. Por eso el avance físico del paquete energético se asocia a la velocidad de la envolvente, v_g. En un medio no dispersivo no hay conflicto porque v_f = v_g. En un medio dispersivo, las crestas pueden atravesar el grupo, de modo que seguir una cresta no equivale a seguir el transporte de energía.
+
+### 31. Relacione modos normales, Fourier y dispersión.
+
+Los modos normales proporcionan las formas elementales de vibración de un sistema. Fourier generaliza esta idea: una perturbación puede descomponerse en componentes sinusoidales. La dispersión aparece cuando esas componentes no tienen velocidades proporcionales de forma uniforme, es decir, cuando omega(k) no es lineal. Así, los modos o componentes permiten construir la perturbación, y la relación de dispersión determina cómo evolucionan conjuntamente.
+
+### 32. Relacione fase, cresta, velocidad de fase y relación de dispersión.
+
+La fase es el argumento de la onda sinusoidal. Una cresta corresponde a un valor fijo de esa fase. Al imponer fase constante y derivar, se obtiene la velocidad de fase. Esta velocidad depende de la relación de dispersión porque v_f = omega(k)/k. Si omega(k) es lineal, v_f es constante; si no, depende de k.
+
+### 33. Relacione envolvente, paquete de ondas, velocidad de grupo y transporte de energía.
+
+Un paquete de ondas está formado por componentes sinusoidales próximas. Su amplitud global queda descrita por una envolvente. La envolvente se desplaza con velocidad de grupo, v_g = domega/dk. Como la perturbación física y su energía están localizadas en la región de amplitud significativa, el transporte de energía se asocia a la velocidad de grupo.
+
+### 34. Relacione medio continuo, medio discreto y frecuencia de corte.
+
+Un medio continuo ideal no tiene escala interna mínima y puede admitir, dentro del modelo, ondas de cualquier longitud de onda. Un medio discreto sí tiene una separación característica entre elementos. Cuando la longitud de onda se aproxima a esa separación, la relación omega(k) se altera y puede aparecer una frecuencia máxima o mínima de propagación. Ese límite es una frecuencia de corte.
+
+### 35. Relacione dispersión, refracción y separación de colores en un prisma.
+
+La refracción depende de la velocidad de propagación de la onda en el medio. Si el vidrio es dispersivo, distintas longitudes de onda de la luz tienen velocidades distintas y, por tanto, índices de refracción distintos. Al entrar en el prisma, cada componente se desvía con un ángulo diferente. La luz blanca se separa en colores porque sus componentes espectrales se propagan de forma distinta en el material.
+
+
+## 9. Resumen final de repaso
+
+Ideas principales:
+
+- Una onda sinusoidal pura tiene velocidad de fase definida.
+- Un pulso real necesita superposición de muchas sinusoides.
+- La dispersión aparece cuando la velocidad depende de la longitud de onda.
+- La relación omega(k) contiene la información esencial del medio.
+- Si omega(k) es lineal, no hay dispersión.
+- Si omega(k) no es lineal, el paquete se deforma.
+- La velocidad de fase sigue crestas o puntos de fase constante.
+- La velocidad de grupo sigue la envolvente del paquete.
+- En un medio no dispersivo, v_f = v_g.
+- En un medio dispersivo, v_f y v_g pueden diferir.
+- La energía de un paquete se asocia a la velocidad de grupo.
+- El fenómeno de corte aparece cuando la relación de dispersión impide ciertas frecuencias propagantes.
+
+Conceptos imprescindibles:
+
+- Fase: kx - omega t.
+- Velocidad de fase: v_f = omega/k.
+- Velocidad de grupo: v_g = domega/dk.
+- Relación con lambda: v_g = v_f - lambda dv_f/dlambda.
+- Medio no dispersivo: omega = c k.
+- Medio dispersivo: omega(k) no lineal.
+- Envolvente: modulación lenta de amplitud.
+- Portadora: oscilación rápida dentro del grupo.
+- Pulso: perturbación localizada con espectro de k.
+
+Relaciones clave:
+
+- Fase constante -> velocidad de fase.
+- Envolvente constante -> velocidad de grupo.
+- Fourier -> pulso como suma de sinusoides.
+- Dispersión -> separación de componentes.
+- Estructura discreta -> omega(k) no lineal -> posible corte.
+- v_g > v_f -> v_f decrece con lambda.
+- v_g < v_f -> v_f crece con lambda.
+
+Errores que evitar:
+
+- No llamar v_g a omega/k.
+- No llamar v_f a domega/dk.
+- No confundir omega con nu.
+- No confundir k angular con 1/lambda.
+- No decidir dispersión solo porque omega depende de k.
+- No interpretar dispersión como amortiguamiento.
+- No olvidar la interpretación física después del cálculo.
+
+
+## 10. Checklist de dominio
+
+- Si no puedes explicar qué es una onda progresiva, falta repasar la diferencia entre propagación de perturbación y transporte de materia.
+
+- Si no puedes derivar v_f = omega/k, falta repasar fase constante.
+
+- Si confundes velocidad de fase con velocidad de grupo, revisar la superposición de dos ondas próximas.
+
+- Si no puedes identificar la envolvente en una suma de dos senos, falta repasar la identidad sen a + sen b.
+
+- Si no puedes calcular v_g = domega/dk, falta repasar derivadas y relación de dispersión.
+
+- Si usas v_g = omega/k, falta repasar la definición de velocidad de grupo.
+
+- Si decides que omega = c k es dispersiva porque omega depende de k, falta repasar la condición de linealidad.
+
+- Si no puedes pasar de v_f(lambda) a v_g, falta repasar la demostración de v_g = v_f - lambda dv_f/dlambda.
+
+- Si mezclas factores 2pi, falta fijar una convención: angular o French.
+
+- Si no puedes explicar por qué un pulso se ensancha, falta repasar Fourier y superposición.
+
+- Si no puedes explicar por qué la cuerda continua ideal no dispersa, falta repasar v = sqrt(T/mu).
+
+- Si no puedes explicar por qué una cadena discreta puede dispersar, falta repasar modos normales de N osciladores.
+
+- Si no puedes interpretar v_g < v_f en ondas de agua profunda, falta repasar la diferencia entre crestas y grupo.
+
+- Si confundes dispersión con disipación, revisar amortiguamiento frente a dependencia de velocidad con lambda.
+
+- Si puedes resolver relaciones omega^2 = 4ak, omega^2 = 4ak^2 y v_f = C sqrt(lambda), el núcleo de examen está asentado.
+
+- Si puedes explicar con palabras por qué la energía viaja con el grupo, el concepto físico está asentado.
+
+- Si puedes derivar la portadora y la envolvente desde dos ondas próximas, el capítulo está suficientemente dominado.
