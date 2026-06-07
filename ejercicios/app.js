@@ -10,29 +10,6 @@ const APP_CONFIG = {
 
 const NORMALIZED_PROBLEM_RE = /^([a-z0-9-]+)-t(\d+)_([a-z0-9-]+)_(.+)\.json$/i;
 
-const fallbackProblems = [
-  {
-    id: "mecanica-t1_cinematica_caida-libre-pelota-5s",
-    archivo: "mecanica-t1_cinematica_caida-libre-pelota-5s.json",
-    asignatura: "mecanica",
-    categoria: "Mecánica",
-    tema: "T1",
-    subtema: "Cinemática",
-    nivel: "basico",
-    titulo: "Caída libre de una pelota durante 5 s",
-    enunciado: "Una pelota se suelta desde el reposo y cae libremente durante 5 segundos. Tomando hacia arriba como sentido positivo y g = -9,8 m/s², calcula su posición y su velocidad en ese instante.",
-    steps: [
-      {
-        tipo: "enunciado",
-        titulo: "Problema",
-        formula: "",
-        textoPizarra: "",
-        voz: "Una pelota se suelta desde el reposo y cae libremente durante cinco segundos. Tomando hacia arriba como sentido positivo y g igual a menos nueve coma ocho metros por segundo al cuadrado, calcula su posición y su velocidad en ese instante."
-      }
-    ]
-  }
-];
-
 const state = {
   problems: [],
   filtered: [],
@@ -47,6 +24,7 @@ const state = {
 const $ = (selector) => document.querySelector(selector);
 
 const els = {
+  appLayout: $("#appLayout"),
   indexPanel: $("#indexPanel"),
   toggleIndex: $("#toggleIndex"),
   closeIndex: $("#closeIndex"),
@@ -54,6 +32,8 @@ const els = {
   problemView: $("#problemView"),
   problemList: $("#problemList"),
   searchInput: $("#searchInput"),
+  customProblemFile: $("#customProblemFile"),
+  customUploadStatus: $("#customUploadStatus"),
   subjectTag: $("#subjectTag"),
   topicTag: $("#topicTag"),
   levelTag: $("#levelTag"),
@@ -88,14 +68,13 @@ async function init() {
     state.subjects = await loadSubjectCatalog();
     state.problems = await loadProblems();
   } catch (error) {
-    console.warn("No se pudieron cargar los problemas. Usando fallback.", error);
-    state.problems = fallbackProblems.map((problem) => enrichProblem(problem, problem.archivo));
+    console.warn("No se pudieron cargar los problemas publicados.", error);
+    state.problems = [];
   }
 
   applyFilters();
-  selectProblemById(state.filtered[0]?.id || state.problems[0]?.id);
+  showProblemIndex();
   els.loadingState.classList.add("hidden");
-  els.problemView.classList.remove("hidden");
 }
 
 async function loadSubjectCatalog() {
@@ -247,6 +226,7 @@ function parseProblemFileName(file) {
 function bindEvents() {
   els.toggleIndex.addEventListener("click", () => els.indexPanel.classList.add("open"));
   els.closeIndex.addEventListener("click", () => els.indexPanel.classList.remove("open"));
+  els.customProblemFile.addEventListener("change", loadCustomProblem);
 
   els.searchInput.addEventListener("input", (event) => {
     state.query = event.target.value.trim().toLowerCase();
@@ -275,10 +255,87 @@ function bindEvents() {
   els.toggleFullScreen.addEventListener("click", toggleFullScreen);
 
   document.addEventListener("keydown", (event) => {
+    if (event.target.matches("input, textarea, select")) return;
     if (event.key === "ArrowRight") goStep(1);
     if (event.key === "ArrowLeft") goStep(-1);
     if (event.key.toLowerCase() === "s") speakCurrentStep();
     if (event.key === "Escape") stopSpeech();
+  });
+}
+
+async function loadCustomProblem(event) {
+  const [file] = event.target.files;
+  if (!file) return;
+
+  els.customUploadStatus.className = "upload-status";
+  els.customUploadStatus.textContent = "Cargando ejercicio…";
+
+  try {
+    const problem = JSON.parse(await file.text());
+    validateCustomProblem(problem);
+    const customFileName = getCustomProblemFileName(problem, file.name);
+    const enriched = {
+      ...enrichProblem(problem, customFileName),
+      custom: true
+    };
+
+    state.problems = state.problems
+      .filter((item) => item.id !== enriched.id)
+      .concat(enriched)
+      .sort(compareProblems);
+    resetFilters();
+    applyFilters();
+    selectProblemById(enriched.id);
+    els.customUploadStatus.className = "upload-status success";
+    els.customUploadStatus.textContent = `“${enriched.titulo}” se ha cargado solo para esta sesión.`;
+  } catch (error) {
+    els.customUploadStatus.className = "upload-status error";
+    els.customUploadStatus.textContent = `No se pudo cargar: ${error.message}`;
+  } finally {
+    event.target.value = "";
+  }
+}
+
+function validateCustomProblem(problem) {
+  if (!problem || typeof problem !== "object" || Array.isArray(problem)) {
+    throw new Error("el archivo debe contener un objeto JSON.");
+  }
+
+  const requiredText = ["id", "asignatura", "categoria", "tema", "subtema", "nivel", "titulo", "enunciado"];
+  const missing = requiredText.filter((field) => typeof problem[field] !== "string" || !problem[field].trim());
+  if (missing.length) throw new Error(`faltan campos obligatorios: ${missing.join(", ")}.`);
+  if (!Array.isArray(problem.steps) || !problem.steps.length) {
+    throw new Error("steps debe ser una lista con al menos un paso.");
+  }
+
+  problem.steps.forEach((step, index) => {
+    if (!step || typeof step !== "object" || Array.isArray(step)) {
+      throw new Error(`el step ${index} no es un objeto válido.`);
+    }
+    const missingStepFields = ["tipo", "titulo", "formula", "textoPizarra", "voz"]
+      .filter((field) => !(field in step));
+    if (missingStepFields.length) {
+      throw new Error(`al step ${index} le faltan: ${missingStepFields.join(", ")}.`);
+    }
+  });
+}
+
+function getCustomProblemFileName(problem, originalName) {
+  if (isNormalizedProblemFile(originalName)) return originalName;
+  const idFile = `${String(problem.id).replace(/\.json$/i, "")}.json`;
+  if (isNormalizedProblemFile(idFile)) return idFile;
+
+  const temaMatch = String(problem.tema).match(/\d+/);
+  const temaNumero = temaMatch ? temaMatch[0] : "0";
+  return `${slugify(problem.asignatura)}-t${temaNumero}_${slugify(problem.subtema)}_${slugify(problem.titulo)}.json`;
+}
+
+function resetFilters() {
+  state.query = "";
+  state.filter = "all";
+  els.searchInput.value = "";
+  document.querySelectorAll(".chip").forEach((chip) => {
+    chip.classList.toggle("active", chip.dataset.filter === "all");
   });
 }
 
@@ -312,16 +369,17 @@ function applyFilters() {
     return matchesQuery && matchesLevel;
   });
 
-  if (!state.filtered.some((problem) => problem.id === state.currentProblemId)) {
-    state.currentProblemId = state.filtered[0]?.id || null;
+  if (state.currentProblemId && !state.filtered.some((problem) => problem.id === state.currentProblemId)) {
+    state.currentProblemId = null;
     state.currentStepIndex = 0;
+    showProblemIndex();
   }
 
   renderProblemList();
   if (state.currentProblemId) renderCurrentProblem();
 
   if (!state.filtered.length) {
-    els.problemList.innerHTML = `<div class="state-card compact">Sin resultados.</div>`;
+    els.problemList.innerHTML = `<div class="state-card compact">No hay problemas publicados con estos filtros. Puedes cargar un JSON temporal arriba.</div>`;
   }
 }
 
@@ -336,7 +394,7 @@ function renderProblemList() {
       const leaves = topic.problems.map((problem) => `
         <button class="problem-leaf ${problem.id === state.currentProblemId ? "active" : ""}" type="button" data-id="${escapeHtml(problem.id)}">
           <strong>${escapeHtml(problem.titulo)}</strong>
-          <span>${escapeHtml(problem.archivo)}</span>
+          <span>${problem.custom ? "Temporal · " : ""}${escapeHtml(problem.archivo)}</span>
         </button>
       `).join("");
 
@@ -416,12 +474,27 @@ function selectProblemById(id) {
   if (!id) return;
   state.currentProblemId = id;
   state.currentStepIndex = 0;
+  els.appLayout.classList.remove("index-mode");
+  els.appLayout.classList.add("problem-mode");
+  els.problemView.classList.remove("hidden");
   renderProblemList();
   renderCurrentProblem();
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function showProblemIndex() {
+  state.currentProblemId = null;
+  state.currentStepIndex = 0;
+  els.appLayout.classList.add("index-mode");
+  els.appLayout.classList.remove("problem-mode");
+  els.indexPanel.classList.remove("open");
+  els.problemView.classList.add("hidden");
+  renderProblemList();
 }
 
 function getCurrentProblem() {
-  return state.filtered.find((problem) => problem.id === state.currentProblemId) || state.filtered[0];
+  if (!state.currentProblemId) return null;
+  return state.filtered.find((problem) => problem.id === state.currentProblemId) || null;
 }
 
 function getCurrentStep() {

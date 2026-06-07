@@ -1,6 +1,6 @@
 # Ejercicios paso a paso — UNED Física
 
-MVP estático para estudiar problemas por pasos con pizarra visual y TTS nativo del móvil.
+Aplicación estática para estudiar problemas por pasos con pizarra visual y TTS nativo del móvil.
 
 ## Estructura
 
@@ -13,36 +13,26 @@ ejercicios/
   problemas/
     asignaturas.json
     manifest.json
-    mecanica-t1_cinematica_caida-libre-pelota-5s.json
-    mecanica-t1_cinematica_movimiento-rectilineo-uniforme.json
-    mecanica-t1_cinematica_posicion-aceleracion-constante.json
+    asignatura-tN_subtema_nombre-del-ejercicio.json
 ```
+
+## Uso
+
+Al entrar en `ejercicios/` se muestra primero el índice desplazable. El visor paso a paso solo se abre cuando se selecciona un problema.
+
+También se puede elegir **Cargar JSON propio** para abrir un ejercicio local al instante. Esa carga es temporal: el archivo se procesa únicamente en el navegador, no se envía, no se almacena y desaparece al recargar la página.
 
 ## Nombre de archivos
 
-Formato obligatorio:
+Formato recomendado:
 
 ```txt
 asignatura-tN_subtema_nombre-del-ejercicio.json
 ```
 
-Ejemplo:
+El índice se agrupa automáticamente por asignatura, tema/subtema y ejercicio.
 
-```txt
-mecanica-t1_cinematica_caida-libre-pelota-5s.json
-```
-
-El índice se agrupa automáticamente así:
-
-```txt
-Mecánica (3)
-  T1 · Cinemática (3)
-    Caída libre de una pelota durante 5 s
-    Movimiento rectilíneo uniforme
-    Posición con aceleración constante
-```
-
-## Carga de problemas
+## Carga de problemas publicados
 
 En GitHub Pages, la app intenta leer en caliente la carpeta `ejercicios/problemas` usando GitHub Contents API. Así aparecen los nuevos `.json` sin rehacer `manifest.json`.
 
@@ -66,10 +56,4 @@ En el paso 0 la pizarra queda vacía y el botón `Escuchar` lee solo el enunciad
 
 ## TTS
 
-Usa `window.speechSynthesis` y `SpeechSynthesisUtterance` con:
-
-```js
-utterance.lang = "es-ES";
-```
-
-No depende de servicios externos.
+Usa `window.speechSynthesis` y `SpeechSynthesisUtterance` con español de España. No depende de servicios externos.
