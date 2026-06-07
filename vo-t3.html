@@ -1,0 +1,2341 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="color-scheme" content="light dark" />
+    <title>
+      Vibraciones y Ondas — T3: Oscilador forzado, amortiguamiento y resonancia
+    </title>
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="assets/icons/icon-32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="50x50"
+      href="assets/icons/icon-50.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="100x100"
+      href="assets/icons/icon-100.png"
+    />
+    <meta name="theme-color" content="#5b4a96" />
+    <link rel="stylesheet" href="assets/styles.css" />
+    <script>
+      window.MathJax = {
+        tex: { inlineMath: [["\\(", "\\)"]], displayMath: [["\\[", "\\]"]] },
+        svg: { fontCache: "global" },
+      };
+    </script>
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"
+    ></script>
+    <script defer src="assets/app.js"></script>
+  </head>
+  <body class="subject-vo">
+    <div class="wrap">
+      <header class="cover">
+        <a class="back-link" href="index.html">← Volver al índice</a>
+        <p class="eyebrow">Vibraciones y Ondas · Tema 3</p>
+        <h1>Oscilador forzado, amortiguamiento y resonancia</h1>
+        <p class="subtitle">
+          Fuente principal: A. P. French, <em>Vibraciones y ondas</em>, capítulo
+          4. Guía orientada a problemas y cuestiones UNED sobre respuesta
+          estacionaria, potencia, resonancia y transitorios.
+        </p>
+        <div class="chips">
+          <span class="chip">Tema completo</span
+          ><span class="chip">Orientado a examen</span
+          ><span class="chip">HTML responsive</span
+          ><span class="chip">PDF A4</span>
+        </div>
+      </header>
+      <div class="toolbar no-print">
+        <nav>
+          <a href="#mapa">Mapa</a><a href="#prerrequisitos">Prerrequisitos</a
+          ><a href="#desarrollo">Desarrollo</a
+          ><a href="#conceptos-clave">Conceptos</a><a href="#errores">Errores</a
+          ><a href="#preguntas">Preguntas</a><a href="#respuestas">Respuestas</a
+          ><a href="#resumen">Resumen</a><a href="#checklist">Checklist</a>
+        </nav>
+        <div class="toolbar-actions">
+          <button class="btn" type="button" onclick="printReady()">
+            Imprimir / guardar PDF
+          </button>
+        </div>
+      </div>
+      <section class="page" id="mapa">
+        <div class="page-head">
+          <h2>Mapa conceptual</h2>
+          <span class="page-no">ruta</span>
+        </div>
+        <p class="map-subtitle">
+          Recorrido desde el modelo del oscilador forzado hasta la
+          interpretación energética de la resonancia.
+        </p>
+        <div class="concept-map">
+          <a class="map-node" href="#desarrollo"
+            ><span>Modelo físico</span><small>Ecuación forzada</small></a
+          ><a class="map-node" href="#conceptos-clave"
+            ><span>Respuesta</span><small>Amplitud y desfase</small></a
+          ><a class="map-node" href="#relaciones"
+            ><span>Regímenes</span><small>Transitorio y estacionario</small></a
+          ><a class="map-node" href="#desarrollo"
+            ><span>Energía</span><small>Potencia absorbida</small></a
+          ><a class="map-node" href="#conceptos-clave"
+            ><span>Resonancia</span><small>Máximos y factor Q</small></a
+          ><a class="map-node" href="#errores"
+            ><span>Examen</span><small>Errores y respuestas</small></a
+          >
+        </div>
+      </section>
+      <section class="page" id="prerrequisitos">
+        <div class="page-head">
+          <h2>1. Prerrequisitos mínimos</h2>
+          <span class="page-no">p.1</span>
+        </div>
+        <div class="card-grid">
+          <article class="definition-card">
+            <h3>Movimiento armónico simple</h3>
+            <p>
+              <strong>Definición breve:</strong> movimiento periódico descrito
+              por una función sinusoidal, normalmente \(x(t)=A\cos(\omega_0
+              t+\phi)\) o \(x(t)=A\sen(\omega_0 t+\phi)\).
+            </p>
+            <p>
+              <strong>Por qué es necesario:</strong> el oscilador forzado se
+              entiende como un oscilador que, además de su tendencia natural a
+              oscilar con \(\omega_0\), recibe una fuerza externa periódica de
+              frecuencia \(\omega\).
+            </p>
+            <p>
+              <strong>Ejemplo mínimo:</strong> una masa unida a un muelle sin
+              rozamiento satisface \(m\ddot x+kx=0\), con
+              \(\omega_0=\sqrt{k/m}\).
+            </p>
+          </article>
+          <article class="definition-card">
+            <h3>Frecuencia natural</h3>
+            <p>
+              <strong>Definición breve:</strong> frecuencia angular con la que
+              oscila libremente un sistema cuando no hay fuerza externa ni
+              disipación.
+            </p>
+            <p>
+              <strong>Por qué es necesario:</strong> la resonancia aparece
+              cuando la frecuencia de la fuerza impulsora se acerca a la
+              frecuencia característica del sistema.
+            </p>
+            <p>
+              <strong>Ejemplo mínimo:</strong> para un muelle ideal,
+              \(\omega_0=\sqrt{k/m}\).
+            </p>
+          </article>
+          <article class="definition-card">
+            <h3>Fuerza restauradora</h3>
+            <p>
+              <strong>Definición breve:</strong> fuerza que tiende a devolver el
+              sistema a su posición de equilibrio; en régimen lineal toma la
+              forma \(F=-kx\).
+            </p>
+            <p>
+              <strong>Por qué es necesario:</strong> sin término restaurador no
+              hay oscilador armónico, y sin oscilador armónico no tiene sentido
+              hablar de frecuencia natural, fase ni resonancia.
+            </p>
+            <p>
+              <strong>Ejemplo mínimo:</strong> si se desplaza una masa unida a
+              un muelle una distancia \(x\), el muelle ejerce \(F=-kx\).
+            </p>
+          </article>
+          <article class="definition-card">
+            <h3>Amortiguamiento viscoso</h3>
+            <p>
+              <strong>Definición breve:</strong> fuerza disipativa proporcional
+              a la velocidad y opuesta al movimiento, \(F_r=-b\dot x\).
+            </p>
+            <p>
+              <strong>Por qué es necesario:</strong> el amortiguamiento impide
+              que la amplitud crezca indefinidamente en resonancia y transforma
+              el problema ideal en un problema físico real.
+            </p>
+            <p>
+              <strong>Ejemplo mínimo:</strong> una masa que oscila en un fluido
+              pierde energía mecánica por rozamiento.
+            </p>
+          </article>
+          <article class="definition-card">
+            <h3>Ecuación diferencial lineal de segundo orden</h3>
+            <p>
+              <strong>Definición breve:</strong> ecuación que contiene una
+              función desconocida \(x(t)\), su primera derivada y su segunda
+              derivada, de forma lineal.
+            </p>
+            <p>
+              <strong>Por qué es necesario:</strong> el oscilador forzado
+              amortiguado se describe por
+            </p>
+            <p>\(m\ddot x+b\dot x+kx=F_0\cos(\omega t)\).</p>
+            <p>
+              <strong>Ejemplo mínimo:</strong> la solución total de una ecuación
+              lineal no homogénea es la suma de la solución homogénea y una
+              solución particular.
+            </p>
+          </article>
+          <article class="definition-card">
+            <h3>Estado transitorio y estado estacionario</h3>
+            <p>
+              <strong>Definición breve:</strong> el transitorio depende de las
+              condiciones iniciales y desaparece si hay amortiguamiento; el
+              estacionario queda impuesto por la fuerza externa y persiste en el
+              tiempo.
+            </p>
+            <p>
+              <strong>Por qué es necesario:</strong> la respuesta física de
+              largo plazo de un oscilador forzado amortiguado no depende de cómo
+              se soltó inicialmente, sino de \(F_0\), \(\omega\), \(m\), \(b\) y
+              \(k\).
+            </p>
+            <p>
+              <strong>Ejemplo mínimo:</strong> tras empujar un columpio durante
+              muchos ciclos, el movimiento acaba siguiendo el ritmo de los
+              empujes.
+            </p>
+          </article>
+          <article class="definition-card">
+            <h3>Números complejos aplicados a oscilaciones</h3>
+            <p>
+              <strong>Definición breve:</strong> representación de funciones
+              sinusoidales mediante exponenciales complejas, usando que
+              \(\cos(\omega t)=\Re(e^{i\omega t})\).
+            </p>
+            <p>
+              <strong>Por qué es necesario:</strong> permite resolver con
+              limpieza la amplitud y el desfase del oscilador forzado.
+            </p>
+            <p>
+              <strong>Ejemplo mínimo:</strong> se resuelve \(x_c=Xe^{i\omega
+              t}\) y al final se toma la parte real.
+            </p>
+          </article>
+          <article class="definition-card">
+            <h3>Potencia mecánica</h3>
+            <p>
+              <strong>Definición breve:</strong> ritmo de transferencia de
+              energía, \(P=Fv=F\dot x\).
+            </p>
+            <p>
+              <strong>Por qué es necesario:</strong> en resonancia no basta con
+              saber que la amplitud es grande; hay que saber a qué ritmo se
+              absorbe energía.
+            </p>
+            <p>
+              <strong>Ejemplo mínimo:</strong> si una fuerza está en fase con la
+              velocidad, entrega energía neta al oscilador.
+            </p>
+          </article>
+          <article class="definition-card">
+            <h3>Promedio temporal</h3>
+            <p>
+              <strong>Definición breve:</strong> media de una magnitud periódica
+              sobre un ciclo completo.
+            </p>
+            <p>
+              <strong>Por qué es necesario:</strong> la potencia instantánea
+              puede cambiar de signo, pero la potencia media determina la
+              energía neta absorbida por ciclo.
+            </p>
+            <p>
+              <strong>Ejemplo mínimo:</strong> \(\langle \cos^2(\omega
+              t)\rangle=1/2\) y \(\langle\sen(\omega t)\cos(\omega
+              t)\rangle=0\).
+            </p>
+          </article>
+          <article class="definition-card">
+            <h3>Factor de calidad \(q\)</h3>
+            <p>
+              <strong>Definición breve:</strong> medida adimensional de lo débil
+              que es el amortiguamiento. Para \(m\ddot x+b\dot x+kx=0\), una
+              convención útil es \(Q=m\omega_0/b\).
+            </p>
+            <p>
+              <strong>Por qué es necesario:</strong> controla la anchura y la
+              intensidad de la resonancia. Alto \(Q\) significa pico estrecho y
+              respuesta intensa.
+            </p>
+            <p>
+              <strong>Ejemplo mínimo:</strong> un diapasón tiene alto \(Q\); una
+              puerta con cierre hidráulico tiene bajo \(Q\).
+            </p>
+          </article>
+        </div>
+      </section>
+      <section class="page" id="idea-central">
+        <div class="page-head">
+          <h2>2. Idea central del capítulo</h2>
+          <span class="page-no">p.2</span>
+        </div>
+        <div class="reading-block">
+          <p>
+            El capítulo estudia qué ocurre cuando un oscilador físico no se deja
+            vibrar libremente, sino que se le impone una fuerza externa
+            periódica. La cuestión central no es solo que el sistema oscile,
+            sino cómo responde cuando la frecuencia de la fuerza externa varía.
+            Una misma fuerza de amplitud fija puede producir una respuesta
+            pequeña, moderada o enorme según su frecuencia. Ese comportamiento
+            selectivo es la resonancia.
+          </p>
+        </div>
+        <div class="reading-block">
+          <p>
+            La transición conceptual clave es pasar del oscilador libre al
+            oscilador impulsado. En el oscilador libre, la frecuencia viene
+            determinada por el sistema: masa, rigidez y amortiguamiento. En el
+            oscilador forzado, la frecuencia de largo plazo viene impuesta por
+            el agente externo. El sistema conserva memoria de su frecuencia
+            natural solo en el transitorio y en la forma en que amplifica o
+            reduce la respuesta frente a cada frecuencia de excitación.
+          </p>
+        </div>
+        <div class="reading-block">
+          <p>
+            El capítulo empieza con un caso ideal: oscilador no amortiguado con
+            impulsión armónica. Este modelo muestra la estructura matemática de
+            la resonancia, pero también su irrealidad física: si no hay
+            disipación, la amplitud predicha se hace infinita cuando
+            \(\omega=\omega_0\). La física real exige amortiguamiento. Con
+            amortiguamiento, la resonancia ya no es infinita: aparece un máximo
+            finito, un desfase gradual y una potencia media absorbida que se
+            concentra alrededor de la frecuencia natural.
+          </p>
+        </div>
+        <div class="reading-block">
+          <p>
+            El papel del capítulo dentro de Vibraciones y Ondas es fundamental.
+            El oscilador forzado amortiguado es el prototipo de respuesta
+            lineal. Más adelante, las cuerdas, columnas de aire, circuitos
+            eléctricos, resonadores ópticos y sistemas acoplados se entenderán
+            como generalizaciones de esta misma idea: un sistema tiene modos
+            propios y responde con especial intensidad cuando se excita cerca de
+            uno de ellos.
+          </p>
+        </div>
+        <div class="reading-block">
+          <p>
+            Para examen, el núcleo operativo es claro: escribir la ecuación
+            diferencial, separar transitorio y estacionario, calcular amplitud y
+            fase, interpretar la resonancia y obtener la potencia instantánea y
+            media. En los exámenes UNED aparece de forma directa la petición de
+            calcular la potencia absorbida por un oscilador forzado amortiguado
+            en régimen estacionario y representar su promedio frente a la
+            frecuencia.
+          </p>
+        </div>
+      </section>
+      <section class="page" id="desarrollo">
+        <div class="page-head">
+          <h2>3. Desarrollo completo del capítulo</h2>
+          <span class="page-no">p.3</span>
+        </div>
+        <h3>3.1. De vibraciones libres a vibraciones forzadas</h3>
+        <div class="reading-block">
+          <p>
+            El capítulo anterior se centraba en vibraciones libres: sistemas
+            que, al ser apartados del equilibrio, oscilan según sus propiedades
+            internas. Ahora se añade un agente externo que aplica una fuerza
+            periódica, normalmente escrita como \(F(t)=F_0\cos(\omega t)\). Esta
+            fuerza tiene amplitud \(F_0\) y frecuencia angular \(\omega\), que
+            no tiene por qué coincidir con la frecuencia natural \(\omega_0\).
+          </p>
+        </div>
+        <div class="reading-block">
+          <p>
+            La consecuencia física es decisiva: el oscilador posee una tendencia
+            propia a vibrar con \(\omega_0\), pero el agente externo intenta
+            imponerle \(\omega\). Si hay amortiguamiento, la parte libre
+            desaparece con el tiempo y queda una oscilación estacionaria
+            exactamente a la frecuencia externa. Por eso, en régimen
+            estacionario, el oscilador no vibra a su frecuencia natural: vibra a
+            la frecuencia de la fuerza.
+          </p>
+        </div>
+        <div class="reading-block">
+          <p>
+            La resonancia aparece porque la eficacia de la fuerza externa
+            depende de su frecuencia. Cerca de la frecuencia natural, la fuerza
+            entrega energía de forma muy eficiente. Lejos de ella, parte del
+            trabajo se devuelve al agente externo o queda mal acoplado al
+            movimiento.
+          </p>
+        </div>
+        <div class="reading-block">
+          <p>
+            <strong>Ejemplo:</strong> un columpio. Empujes pequeños, aplicados
+            cerca de su frecuencia natural, aumentan mucho la amplitud. Empujes
+            igual de fuertes pero mal sincronizados tienen poco efecto.
+          </p>
+        </div>
+        <h3>3.2. Oscilador no amortiguado con impulsión armónica</h3>
+        <div class="reading-block"><p>El modelo ideal es</p></div>
+        <div class="formula-block">\[m\ddot x+kx=F_0\cos(\omega t)\]</div>
+        <div class="reading-block"><p>con</p></div>
+        <div class="formula-block">\[\omega_0=\sqrt{k/m}\]</div>
+        <div class="reading-block">
+          <p>Se busca una solución particular de la forma</p>
+        </div>
+        <div class="formula-block">\[x(t)=C\cos(\omega t)\]</div>
+        <div class="reading-block"><p>Al sustituir:</p></div>
+        <div class="formula-block">
+          \[-m\omega^2 C\cos(\omega t)+kC\cos(\omega t)=F_0\cos(\omega t)\]
+        </div>
+        <div class="reading-block"><p>de donde</p></div>
+        <div class="formula-block">
+          \[C=\frac{F_0}{k-m\omega^2}=\frac{F_0/m}{\omega_0^2-\omega^2}\]
+        </div>
+        <div class="reading-block">
+          <p>
+            Esta expresión muestra la resonancia ideal. Si \(\omega\) se
+            aproxima a \(\omega_0\), el denominador tiende a cero y la amplitud
+            formal crece sin límite. Además, el signo de \(C\) cambia al cruzar
+            \(\omega_0\). Ese cambio de signo equivale a un cambio de fase de
+            \(\pi\): por debajo de la resonancia, el desplazamiento está en fase
+            con la fuerza; por encima, está en oposición de fase.
+          </p>
+        </div>
+        <div class="reading-block">
+          <p>
+            La importancia de este caso no está en su realismo, sino en que
+            revela la estructura básica: la respuesta depende del denominador
+            dinámico \(\omega_0^2-\omega^2\). Cuando el término restaurador y el
+            término inercial se compensan, una fuerza pequeña puede producir un
+            gran movimiento.
+          </p>
+        </div>
+        <div class="reading-block">
+          <p>
+            El caso exactamente resonante no se describe con \(C\cos(\omega
+            t)\), porque la forma elegida deja de ser válida. En ausencia de
+            amortiguamiento, la solución resonante contiene un término cuya
+            amplitud crece linealmente con el tiempo. Eso indica que la energía
+            se acumula ciclo tras ciclo sin mecanismo de pérdida.
+          </p>
+        </div>
+        <h3>3.3. Método del exponente complejo</h3>
+        <div class="reading-block">
+          <p>
+            Para manejar amplitud y fase de forma compacta, se sustituye el
+            problema real por uno complejo:
+          </p>
+        </div>
+        <div class="formula-block">
+          \[m\ddot x+b\dot x+kx=F_0\cos(\omega t)\]
+        </div>
+        <div class="reading-block"><p>se representa como</p></div>
+        <div class="formula-block">
+          \[m\ddot z+b\dot z+kz=F_0e^{i\omega t}\]
+        </div>
+        <div class="reading-block">
+          <p>y al final se toma \(x(t)=\Re[z(t)]\).</p>
+        </div>
+        <div class="reading-block"><p>Se propone</p></div>
+        <div class="formula-block">\[z(t)=Xe^{i\omega t}\]</div>
+        <div class="reading-block"><p>Entonces</p></div>
+        <div class="formula-block">
+          \[\dot z=i\omega Xe^{i\omega t}\), \(\ddot z=-\omega^2Xe^{i\omega t}\]
+        </div>
+        <div class="reading-block"><p>Al sustituir:</p></div>
+        <div class="formula-block">\[(k-m\omega^2+i b\omega)X=F_0\]</div>
+        <div class="reading-block"><p>Por tanto,</p></div>
+        <div class="formula-block">\[X=\frac{F_0}{k-m\omega^2+i b\omega}\]</div>
+        <div class="reading-block">
+          <p>
+            El número complejo \(X\) contiene dos datos físicos: su módulo da la
+            amplitud y su argumento da el desfase. El módulo es
+          </p>
+        </div>
+        <div class="formula-block">
+          \[A=|X|=\frac{F_0}{\sqrt{(k-m\omega^2)^2+(b\omega)^2}}\]
+        </div>
+        <div class="reading-block">
+          <p>El desfase \(\delta\), definido por</p>
+        </div>
+        <div class="formula-block">\[x_s(t)=A\cos(\omega t-\delta)\]</div>
+        <div class="reading-block"><p>satisface</p></div>
+        <div class="formula-block">
+          \[\tan\delta=\frac{b\omega}{k-m\omega^2}\]
+        </div>
+        <div class="reading-block">
+          <p>
+            con la precaución de colocar \(\delta\) en el cuadrante correcto.
+            Para \(\omega&lt;\omega_0\), \(\delta\) está entre \(0\) y
+            \(\pi/2\). En \(\omega=\omega_0\), \(\delta=\pi/2\). Para
+            \(\omega&gt;\omega_0\), \(\delta\) se aproxima gradualmente a
+            \(\pi\).
+          </p>
+        </div>
+        <div class="reading-block">
+          <p>
+            La conexión con lo anterior es clara. Si \(b=0\), se recupera el
+            oscilador forzado sin amortiguamiento, con amplitud
+            \(F_0/|k-m\omega^2|\) y salto brusco de fase. Si \(b\neq0\), el
+            máximo se suaviza y la fase cambia de forma continua.
+          </p>
+        </div>
+        <h3>3.4. Oscilaciones forzadas con amortiguamiento</h3>
+        <div class="reading-block"><p>El sistema físico real básico es</p></div>
+        <div class="formula-block">
+          \[m\ddot x+b\dot x+kx=F_0\cos(\omega t)\]
+        </div>
+        <div class="reading-block">
+          <p>La solución completa tiene dos partes:</p>
+        </div>
+        <div class="formula-block">\[x(t)=x_h(t)+x_s(t)\]</div>
+        <div class="reading-block">
+          <p>
+            La parte \(x_h(t)\) es la solución homogénea del oscilador
+            amortiguado:
+          </p>
+        </div>
+        <div class="formula-block">\[m\ddot x+b\dot x+kx=0\]</div>
+        <div class="reading-block">
+          <p>La parte \(x_s(t)\) es la solución estacionaria forzada:</p>
+        </div>
+        <div class="formula-block">\[x_s(t)=A\cos(\omega t-\delta)\]</div>
+        <div class="reading-block">
+          <p>
+            Si el amortiguamiento es subcrítico, la parte homogénea toma la
+            forma de una oscilación amortiguada:
+          </p>
+        </div>
+        <div class="formula-block">
+          \[x_h(t)=Be^{-\beta t}\cos(\omega_d t+\phi)\]
+        </div>
+        <div class="reading-block"><p>donde</p></div>
+        <div class="formula-block">\[\beta=\frac{b}{2m}\]</div>
+        <div class="formula-block">\[\omega_d=\sqrt{\omega_0^2-\beta^2}\]</div>
+        <div class="reading-block">
+          <p>
+            La consecuencia física es que el movimiento inicial puede ser una
+            mezcla compleja de la frecuencia amortiguada propia y la frecuencia
+            externa. Pero, pasado suficiente tiempo, el término \(e^{-\beta t}\)
+            hace desaparecer el transitorio y queda solo la oscilación a
+            frecuencia \(\omega\).
+          </p>
+        </div>
+        <div class="reading-block">
+          <p>
+            El examen suele centrarse en el estado estacionario. Pero para
+            entenderlo bien hay que saber qué se ha eliminado: no se ha
+            eliminado una parte arbitraria, sino la memoria de las condiciones
+            iniciales.
+          </p>
+        </div>
+        <h3>3.5. Amplitud de respuesta</h3>
+        <div class="reading-block"><p>La amplitud estacionaria es</p></div>
+        <div class="formula-block">
+          \[A(\omega)=\frac{F_0}{\sqrt{(k-m\omega^2)^2+(b\omega)^2}}\]
+        </div>
+        <div class="reading-block">
+          <p>
+            Esta fórmula contiene la física entera del oscilador forzado lineal.
+            Para frecuencias bajas, \(\omega\ll\omega_0\), el término inercial y
+            el término disipativo son pequeños frente a \(k\), y
+          </p>
+        </div>
+        <div class="formula-block">\[A\approx F_0/k\]</div>
+        <div class="reading-block">
+          <p>
+            El sistema sigue casi estáticamente a la fuerza. La masa apenas
+            importa.
+          </p>
+        </div>
+        <div class="reading-block">
+          <p>
+            Para frecuencias altas, \(\omega\gg\omega_0\), domina \(m\omega^2\),
+            y
+          </p>
+        </div>
+        <div class="formula-block">\[A\approx F_0/(m\omega^2)\]</div>
+        <div class="reading-block">
+          <p>
+            El sistema no puede seguir la fuerza rápida; la inercia reduce la
+            amplitud.
+          </p>
+        </div>
+        <div class="reading-block">
+          <p>
+            Cerca de la resonancia, el término \(k-m\omega^2\) se hace pequeño y
+            la amplitud queda limitada por \(b\omega\). Si \(b\) es pequeño, la
+            amplitud máxima puede ser muy grande.
+          </p>
+        </div>
+        <div class="reading-block">
+          <p>
+            El máximo exacto de desplazamiento no ocurre necesariamente en
+            \(\omega_0\). Para amortiguamiento débil aparece muy cerca de
+            \(\omega_0\), pero ligeramente por debajo:
+          </p>
+        </div>
+        <div class="formula-block">
+          \[\omega_{\text{max},x}=\sqrt{\omega_0^2-2\beta^2}\]
+        </div>
+        <div class="reading-block">
+          <p>
+            si el amortiguamiento es suficientemente pequeño. Este matiz
+            distingue la resonancia de desplazamiento de la resonancia de
+            velocidad y de potencia.
+          </p>
+        </div>
+        <h3>3.6. Desfase entre fuerza y desplazamiento</h3>
+        <div class="reading-block">
+          <p>
+            El desfase es tan importante como la amplitud. En régimen
+            estacionario:
+          </p>
+        </div>
+        <div class="formula-block">\[F(t)=F_0\cos(\omega t)\]</div>
+        <div class="formula-block">\[x_s(t)=A\cos(\omega t-\delta)\]</div>
+        <div class="reading-block">
+          <p>
+            Para frecuencias bajas, \(\delta\approx0\). El oscilador acompaña a
+            la fuerza: cuando la fuerza es máxima positiva, el desplazamiento
+            también lo es.
+          </p>
+        </div>
+        <div class="reading-block">
+          <p>
+            En resonancia, \(\delta=\pi/2\). El desplazamiento retrasa un cuarto
+            de ciclo respecto a la fuerza. Esto implica que la fuerza está en
+            fase con la velocidad, no con el desplazamiento. Por eso la
+            transferencia de energía es máxima.
+          </p>
+        </div>
+        <div class="reading-block">
+          <p>
+            Para frecuencias altas, \(\delta\to\pi\). El desplazamiento está
+            casi en oposición de fase con la fuerza. La fuerza cambia demasiado
+            deprisa y la masa responde dominada por su inercia.
+          </p>
+        </div>
+        <div class="reading-block">
+          <p>
+            Esta evolución continua de la fase sustituye al salto brusco del
+            caso sin amortiguamiento. El amortiguamiento no solo limita la
+            amplitud; también regulariza la transición de fase.
+          </p>
+        </div>
+        <h3>3.7. Resonancia de velocidad</h3>
+        <div class="reading-block"><p>La velocidad estacionaria es</p></div>
+        <div class="formula-block">
+          \[v(t)=\dot x_s(t)=-A\omega\sen(\omega t-\delta)\]
+        </div>
+        <div class="reading-block"><p>Su amplitud es</p></div>
+        <div class="formula-block">
+          \[v_0(\omega)=\omega A(\omega)=
+          \frac{F_0\omega}{\sqrt{(k-m\omega^2)^2+(b\omega)^2}}\]
+        </div>
+        <div class="reading-block">
+          <p>
+            A diferencia de la amplitud de desplazamiento, la amplitud de
+            velocidad alcanza su máximo exactamente en
+          </p>
+        </div>
+        <div class="formula-block">\[\omega=\omega_0\]</div>
+        <div class="reading-block">
+          <p>
+            Esto tiene una interpretación directa: la disipación viscosa depende
+            de la velocidad, y la potencia disipada media depende de \(\langle
+            v^2\rangle\). Por tanto, la resonancia energética está ligada a la
+            velocidad.
+          </p>
+        </div>
+        <div class="reading-block">
+          <p>
+            Este punto es central para los problemas de potencia. En la
+            frecuencia natural, la fuerza externa está en fase con la velocidad
+            y entrega energía con máxima eficacia.
+          </p>
+        </div>
+        <h3>3.8. Factor de calidad \(Q\)</h3>
+        <div class="reading-block">
+          <p>
+            El factor de calidad mide lo débil que es el amortiguamiento. Con la
+            convención
+          </p>
+        </div>
+        <div class="formula-block">\[Q=\frac{m\omega_0}{b}\]</div>
+        <div class="reading-block">
+          <p>un \(Q\) alto significa amortiguamiento pequeño.</p>
+        </div>
+        <div class="reading-block"><p>En términos cualitativos:</p></div>
+        <div class="reading-block">
+          <p>
+            - \(Q\) alto: resonancia alta y estrecha; el sistema selecciona muy
+            bien la frecuencia.<br />- \(Q\) bajo: resonancia baja y ancha; el
+            sistema responde de forma menos selectiva.<br />- \(Q\to\infty\): se
+            recupera el límite ideal sin amortiguamiento.
+          </p>
+        </div>
+        <div class="reading-block">
+          <p>
+            El capítulo utiliza \(Q\) para comparar curvas de respuesta. Variar
+            el término resistivo cambia la forma de la resonancia: al aumentar
+            la disipación, baja la amplitud máxima y se ensancha la región de
+            frecuencias con respuesta apreciable.
+          </p>
+        </div>
+        <div class="reading-block">
+          <p>
+            En problemas de examen, \(Q\) puede aparecer explícitamente o estar
+            escondido dentro de \(m\), \(b\) y \(k\). Operativamente, hay que
+            poder pasar de una descripción a otra.
+          </p>
+        </div>
+        <h3>3.9. Fenómenos transitorios</h3>
+        <div class="reading-block">
+          <p>
+            Cuando la fuerza externa comienza a actuar, el oscilador no pasa
+            instantáneamente al régimen estacionario. La solución completa
+            contiene una parte libre, determinada por las condiciones iniciales,
+            y una parte forzada, determinada por la fuerza.
+          </p>
+        </div>
+        <div class="reading-block">
+          <p>
+            En ausencia de amortiguamiento, si se arranca desde reposo, pueden
+            aparecer pulsaciones o batidos. La solución puede contener
+            simultáneamente \(\omega_0\) y \(\omega\). Si ambas son próximas, la
+            superposición produce una envolvente lenta: la amplitud crece y
+            decrece periódicamente. No se alcanza un estado estacionario puro.
+          </p>
+        </div>
+        <div class="reading-block">
+          <p>
+            Con amortiguamiento, el transitorio desaparece. Al principio puede
+            observarse una mezcla entre la oscilación propia amortiguada y la
+            oscilación impuesta. Después de varios tiempos característicos,
+            queda solo
+          </p>
+        </div>
+        <div class="formula-block">\[x_s(t)=A\cos(\omega t-\delta)\]</div>
+        <div class="reading-block">
+          <p>
+            La duración del transitorio depende del amortiguamiento. Con
+            amortiguamiento débil, tarda más en desaparecer. Con amortiguamiento
+            fuerte, desaparece rápido, pero la resonancia también se vuelve
+            menos pronunciada.
+          </p>
+        </div>
+        <div class="reading-block">
+          <p>
+            Condición para que no haya transitorio: los datos iniciales deben
+            coincidir exactamente con los del estado estacionario. Si la fuerza
+            es
+          </p>
+        </div>
+        <div class="formula-block">\[F(t)=F_0\cos(\omega t+\phi)\]</div>
+        <div class="reading-block"><p>y</p></div>
+        <div class="formula-block">\[x_s(t)=A\cos(\omega t+\phi-\delta)\]</div>
+        <div class="reading-block">
+          <p>entonces para no tener transitorio en \(t=0\) debe cumplirse:</p>
+        </div>
+        <div class="formula-block">\[x(0)=A\cos(\phi-\delta)\]</div>
+        <div class="formula-block">\[\dot x(0)=-A\omega\sen(\phi-\delta)\]</div>
+        <div class="reading-block">
+          <p>
+            Si no se cumplen, aparece una solución homogénea que corrige el
+            arranque.
+          </p>
+        </div>
+        <h3>3.10. Potencia absorbida por el oscilador</h3>
+        <div class="reading-block">
+          <p>La potencia instantánea entregada por la fuerza externa es</p>
+        </div>
+        <div class="formula-block">\[P_{\text{abs}}(t)=F(t)\dot x(t)\]</div>
+        <div class="reading-block"><p>En estado estacionario:</p></div>
+        <div class="formula-block">\[F(t)=F_0\cos(\omega t)\]</div>
+        <div class="formula-block">\[x(t)=A\cos(\omega t-\delta)\]</div>
+        <div class="formula-block">
+          \[\dot x(t)=-A\omega\sen(\omega t-\delta)\]
+        </div>
+        <div class="reading-block"><p>Por tanto,</p></div>
+        <div class="formula-block">
+          \[P_{\text{abs}}(t)=-F_0A\omega\cos(\omega t)\sen(\omega t-\delta)\]
+        </div>
+        <div class="reading-block">
+          <p>
+            Esta potencia puede ser positiva o negativa en distintos instantes.
+            Positiva significa que la fuerza entrega energía al oscilador.
+            Negativa significa que el oscilador devuelve energía al agente
+            externo. Lo relevante para la disipación neta es el promedio
+            temporal.
+          </p>
+        </div>
+        <div class="reading-block">
+          <p>Usando identidades trigonométricas:</p>
+        </div>
+        <div class="formula-block">
+          \[\langle P_{\text{abs}}\rangle=\frac12 F_0A\omega\sen\delta\]
+        </div>
+        <div class="reading-block">
+          <p>Con las expresiones de \(A\) y \(\delta\), se obtiene</p>
+        </div>
+        <div class="formula-block">
+          \[\langle P_{\text{abs}}\rangle= \frac{F_0^2
+          b\omega^2}{2[(k-m\omega^2)^2+(b\omega)^2]}\]
+        </div>
+        <div class="reading-block">
+          <p>Esta es una de las fórmulas clave del tema. Su máximo ocurre en</p>
+        </div>
+        <div class="formula-block">\[\omega=\omega_0\]</div>
+        <div class="reading-block"><p>y vale</p></div>
+        <div class="formula-block">
+          \[\langle P\rangle_{\max}=\frac{F_0^2}{2b}
+          =\frac{QF_0^2}{2m\omega_0}\]
+        </div>
+        <div class="reading-block">
+          <p>
+            La potencia media tiende a cero a frecuencias muy bajas y muy altas.
+            En frecuencias bajas, la velocidad es pequeña; aunque el
+            desplazamiento exista, apenas hay disipación. En frecuencias altas,
+            el desplazamiento es muy pequeño; la masa no sigue a la fuerza.
+          </p>
+        </div>
+        <div class="reading-block">
+          <p>La potencia instantánea disipada por el rozamiento viscoso es</p>
+        </div>
+        <div class="formula-block">\[P_{\text{dis}}(t)=b\dot x^2(t)\]</div>
+        <div class="reading-block">
+          <p>
+            Esta magnitud nunca es negativa. En estado estacionario, su promedio
+            coincide con la potencia media absorbida:
+          </p>
+        </div>
+        <div class="formula-block">
+          \[\langle P_{\text{dis}}\rangle=\langle P_{\text{abs}}\rangle\]
+        </div>
+        <div class="reading-block">
+          <p>
+            Esta igualdad expresa balance energético: en régimen estacionario,
+            la energía media almacenada en el oscilador no cambia de ciclo en
+            ciclo; toda la energía neta absorbida se disipa.
+          </p>
+        </div>
+        <h3>3.11. Resonancia mecánica y resonancia eléctrica</h3>
+        <div class="reading-block">
+          <p>
+            El capítulo utiliza ejemplos de resonancia para mostrar que el mismo
+            formalismo se repite en sistemas físicos distintos. El caso mecánico
+            masa-muelle-amortiguador se puede comparar con un circuito eléctrico
+            resonante. En ambos casos hay inercia, restauración, disipación e
+            impulsión periódica.
+          </p>
+        </div>
+        <div class="reading-block"><p>Correspondencia típica:</p></div>
+        <div class="reading-block">
+          <p>
+            - masa \(m\): inercia mecánica;<br />- constante \(k\): rigidez
+            restauradora;<br />- coeficiente \(b\): pérdida disipativa;<br />-
+            fuerza \(F(t)\): agente externo;<br />- desplazamiento \(x(t)\):
+            variable de respuesta.
+          </p>
+        </div>
+        <div class="reading-block">
+          <p>
+            En resonancia eléctrica, los elementos del circuito juegan papeles
+            análogos: inductancia, capacidad y resistencia. La idea física no
+            cambia: la respuesta es máxima cuando la frecuencia externa coincide
+            con una frecuencia propia del sistema.
+          </p>
+        </div>
+        <div class="reading-block">
+          <p>
+            La importancia conceptual es que resonancia no es un fenómeno
+            exclusivo de muelles. Es una propiedad general de sistemas capaces
+            de almacenar energía de dos formas y transferirla periódicamente
+            entre ellas, con alguna disipación y una posible excitación externa.
+          </p>
+        </div>
+        <h3>3.12. Resonancia óptica, nuclear y magnética nuclear</h3>
+        <div class="reading-block">
+          <p>
+            El capítulo extiende la idea de resonancia a dominios no
+            estrictamente mecánicos. En óptica, los átomos o moléculas pueden
+            absorber energía con especial eficacia a ciertas frecuencias. En
+            resonancia nuclear y resonancia magnética nuclear, la absorción
+            selectiva de energía depende de frecuencias características
+            asociadas a estados internos y campos aplicados.
+          </p>
+        </div>
+        <div class="reading-block">
+          <p>
+            No es necesario para el primer dominio de examen desarrollar la
+            física cuántica de estos ejemplos. Su función dentro del capítulo es
+            mostrar que la resonancia es una estructura transversal: un sistema
+            con frecuencias propias responde selectivamente cuando se le fuerza
+            cerca de ellas.
+          </p>
+        </div>
+        <div class="reading-block">
+          <p>
+            La lectura correcta es no memorizar una lista de resonancias, sino
+            reconocer el patrón común: frecuencia propia, excitación externa,
+            absorción selectiva y anchura asociada a pérdidas o acoplamientos.
+          </p>
+        </div>
+        <h3>3.13. Osciladores anarmónicos</h3>
+        <div class="reading-block">
+          <p>
+            El capítulo cierra abriendo la puerta a osciladores anarmónicos.
+            Hasta aquí se ha supuesto linealidad: fuerza restauradora
+            proporcional al desplazamiento, rozamiento proporcional a la
+            velocidad y fuerza externa sinusoidal. En ese marco, la respuesta
+            estacionaria tiene la misma frecuencia que la excitación.
+          </p>
+        </div>
+        <div class="reading-block">
+          <p>
+            Un oscilador anarmónico no cumple exactamente esa linealidad. La
+            fuerza restauradora contiene términos no lineales, como \(x^2\),
+            \(x^3\), etc. La respuesta puede incluir armónicos, desplazamiento
+            de la frecuencia de resonancia y fenómenos que no aparecen en el
+            modelo lineal.
+          </p>
+        </div>
+        <div class="reading-block">
+          <p>
+            La consecuencia para este tema es de frontera: dominar primero el
+            oscilador lineal. Solo después tiene sentido estudiar correcciones
+            no lineales. En examen básico, salvo enunciado explícito, se trabaja
+            en aproximación lineal.
+          </p>
+        </div>
+      </section>
+      <section class="page" id="conceptos-clave">
+        <div class="page-head">
+          <h2>4. Conceptos clave</h2>
+          <span class="page-no">p.4</span>
+        </div>
+        <div class="card-grid">
+          <article class="definition-card">
+            <h3>Oscilador forzado</h3>
+            <p>
+              <strong>Definición precisa:</strong> sistema oscilatorio sometido
+              a una fuerza externa periódica.
+            </p>
+            <p>
+              <strong>Explicación desarrollada:</strong> el sistema ya no
+              evoluciona solo según su dinámica libre; recibe energía o la
+              devuelve al agente externo según la fase relativa entre fuerza y
+              velocidad.
+            </p>
+            <p>
+              <strong>Ejemplo:</strong> masa-muelle sometida a \(F_0\cos(\omega
+              t)\).
+            </p>
+            <p>
+              <strong>Relación con otros conceptos:</strong> conecta frecuencia
+              natural, resonancia, desfase, potencia y transitorio.
+            </p>
+            <p>
+              <strong>Posible forma de preguntarlo en examen:</strong> escribir
+              la ecuación diferencial del oscilador forzado amortiguado y
+              describir la solución estacionaria.
+            </p>
+          </article>
+          <article class="definition-card">
+            <h3>Frecuencia impulsora</h3>
+            <p>
+              <strong>Definición precisa:</strong> frecuencia angular \(\omega\)
+              de la fuerza externa aplicada.
+            </p>
+            <p>
+              <strong>Explicación desarrollada:</strong> en régimen
+              estacionario, la respuesta del oscilador forzado amortiguado tiene
+              esta frecuencia, no la frecuencia natural.
+            </p>
+            <p>
+              <strong>Ejemplo:</strong> si \(F(t)=F_0\cos(20t)\), la respuesta
+              estacionaria oscila con \(\omega=20\).
+            </p>
+            <p>
+              <strong>Relación con otros conceptos:</strong> se compara con
+              \(\omega_0\) para determinar proximidad a resonancia.
+            </p>
+            <p>
+              <strong>Posible forma de preguntarlo en examen:</strong> explicar
+              por qué la respuesta estacionaria tiene la frecuencia de la fuerza
+              externa.
+            </p>
+          </article>
+          <article class="definition-card">
+            <h3>Frecuencia natural</h3>
+            <p>
+              <strong>Definición precisa:</strong> frecuencia de oscilación
+              libre del sistema ideal sin amortiguamiento,
+              \(\omega_0=\sqrt{k/m}\).
+            </p>
+            <p>
+              <strong>Explicación desarrollada:</strong> caracteriza la
+              tendencia interna del sistema y actúa como referencia para la
+              resonancia.
+            </p>
+            <p>
+              <strong>Ejemplo:</strong> un muelle más rígido aumenta
+              \(\omega_0\); una masa mayor la reduce.
+            </p>
+            <p>
+              <strong>Relación con otros conceptos:</strong> aparece en
+              amplitud, fase, \(Q\), resonancia de velocidad y potencia.
+            </p>
+            <p>
+              <strong>Posible forma de preguntarlo en examen:</strong> hallar
+              \(\omega_0\) a partir de \(m\) y \(k\).
+            </p>
+          </article>
+          <article class="definition-card">
+            <h3>Resonancia</h3>
+            <p>
+              <strong>Definición precisa:</strong> aumento acusado de la
+              respuesta de un sistema cuando se excita cerca de una frecuencia
+              propia.
+            </p>
+            <p>
+              <strong>Explicación desarrollada:</strong> en un oscilador
+              forzado, la resonancia aparece porque la fuerza externa entrega
+              energía de forma eficiente ciclo tras ciclo.
+            </p>
+            <p>
+              <strong>Ejemplo:</strong> columpio empujado al ritmo adecuado.
+            </p>
+            <p>
+              <strong>Relación con otros conceptos:</strong> depende del
+              amortiguamiento, del desfase y de la potencia media.
+            </p>
+            <p>
+              <strong>Posible forma de preguntarlo en examen:</strong> describir
+              la función \(\langle P\rangle(\omega)\) y explicar el fenómeno
+              físico asociado.
+            </p>
+          </article>
+          <article class="definition-card">
+            <h3>Amplitud estacionaria</h3>
+            <p>
+              <strong>Definición precisa:</strong> amplitud de la solución
+              forzada de largo plazo,
+            </p>
+            <p>\(A=F_0/\sqrt{(k-m\omega^2)^2+(b\omega)^2}\).</p>
+            <p>
+              <strong>Explicación desarrollada:</strong> mide la respuesta en
+              desplazamiento para cada frecuencia impulsora.
+            </p>
+            <p>
+              <strong>Ejemplo:</strong> si \(b\) disminuye, la amplitud cerca de
+              resonancia aumenta.
+            </p>
+            <p>
+              <strong>Relación con otros conceptos:</strong> se combina con el
+              desfase para formar la solución \(x_s=A\cos(\omega t-\delta)\).
+            </p>
+            <p>
+              <strong>Posible forma de preguntarlo en examen:</strong> obtener
+              \(A\) por sustitución o mediante exponenciales complejas.
+            </p>
+          </article>
+          <article class="definition-card">
+            <h3>Desfase</h3>
+            <p>
+              <strong>Definición precisa:</strong> retraso angular \(\delta\)
+              del desplazamiento respecto a la fuerza externa.
+            </p>
+            <p>
+              <strong>Explicación desarrollada:</strong> indica si la respuesta
+              acompaña, se retrasa o se opone a la fuerza.
+            </p>
+            <p><strong>Ejemplo:</strong> en resonancia, \(\delta=\pi/2\).</p>
+            <p>
+              <strong>Relación con otros conceptos:</strong> controla la
+              potencia media porque esta depende de \(\sen\delta\).
+            </p>
+            <p>
+              <strong>Posible forma de preguntarlo en examen:</strong> calcular
+              \(\tan\delta=b\omega/(k-m\omega^2)\) e interpretar límites.
+            </p>
+          </article>
+          <article class="definition-card">
+            <h3>Solución transitoria</h3>
+            <p>
+              <strong>Definición precisa:</strong> parte de la solución completa
+              que depende de las condiciones iniciales y, con amortiguamiento,
+              decae en el tiempo.
+            </p>
+            <p>
+              <strong>Explicación desarrollada:</strong> representa la respuesta
+              propia del sistema antes de que la fuerza externa domine
+              completamente.
+            </p>
+            <p>
+              <strong>Ejemplo:</strong> \(Be^{-\beta t}\cos(\omega_d t+\phi)\).
+            </p>
+            <p>
+              <strong>Relación con otros conceptos:</strong> se suma al estado
+              estacionario; desaparece si \(t\) es suficientemente grande.
+            </p>
+            <p>
+              <strong>Posible forma de preguntarlo en examen:</strong>
+              determinar los datos iniciales para que no exista transitorio.
+            </p>
+          </article>
+          <article class="definition-card">
+            <h3>Estado estacionario</h3>
+            <p>
+              <strong>Definición precisa:</strong> solución particular
+              persistente del oscilador forzado amortiguado, a la frecuencia de
+              la fuerza.
+            </p>
+            <p>
+              <strong>Explicación desarrollada:</strong> no depende de las
+              condiciones iniciales, sino de los parámetros del sistema y de la
+              excitación.
+            </p>
+            <p><strong>Ejemplo:</strong> \(x_s(t)=A\cos(\omega t-\delta)\).</p>
+            <p>
+              <strong>Relación con otros conceptos:</strong> es el régimen usado
+              para calcular potencia media y curvas de resonancia.
+            </p>
+            <p>
+              <strong>Posible forma de preguntarlo en examen:</strong> expresar
+              \(x_s\) como \(A\sen(\omega t)+B\cos(\omega t)\).
+            </p>
+          </article>
+          <article class="definition-card">
+            <h3>Potencia instantánea absorbida</h3>
+            <p>
+              <strong>Definición precisa:</strong> \(P_{\text{abs}}(t)=F(t)\dot
+              x(t)\).
+            </p>
+            <p>
+              <strong>Explicación desarrollada:</strong> mide la energía por
+              unidad de tiempo transferida entre agente externo y oscilador en
+              cada instante.
+            </p>
+            <p>
+              <strong>Ejemplo:</strong> puede ser negativa si el oscilador
+              devuelve energía a la fuente.
+            </p>
+            <p>
+              <strong>Relación con otros conceptos:</strong> su promedio da la
+              energía neta absorbida por ciclo.
+            </p>
+            <p>
+              <strong>Posible forma de preguntarlo en examen:</strong> calcular
+              \(P(t)\) en régimen estacionario.
+            </p>
+          </article>
+          <article class="definition-card">
+            <h3>Potencia media absorbida</h3>
+            <p><strong>Definición precisa:</strong></p>
+            <p>\(\langle P\rangle=</p>
+            <p>F_0^2 b\omega^2/[2((k-m\omega^2)^2+(b\omega)^2)]\).</p>
+            <p>
+              <strong>Explicación desarrollada:</strong> mide la energía neta
+              que entra por unidad de tiempo y que, en estacionario, se disipa.
+            </p>
+            <p><strong>Ejemplo:</strong> máximo en \(\omega=\omega_0\).</p>
+            <p>
+              <strong>Relación con otros conceptos:</strong> coincide con
+              \(\langle b\dot x^2\rangle\).
+            </p>
+            <p>
+              <strong>Posible forma de preguntarlo en examen:</strong> obtener
+              el valor promedio y representar su dependencia con \(\omega\).
+            </p>
+          </article>
+          <article class="definition-card">
+            <h3>Potencia disipada</h3>
+            <p>
+              <strong>Definición precisa:</strong> potencia convertida
+              irreversiblemente en calor por el amortiguamiento,
+              \(P_{\text{dis}}=b\dot x^2\).
+            </p>
+            <p>
+              <strong>Explicación desarrollada:</strong> siempre es positiva o
+              nula, a diferencia de la potencia absorbida instantánea.
+            </p>
+            <p>
+              <strong>Ejemplo:</strong> si \(\dot x=0\), no hay disipación
+              instantánea viscosa.
+            </p>
+            <p>
+              <strong>Relación con otros conceptos:</strong> en estacionario, su
+              promedio iguala la potencia media absorbida.
+            </p>
+            <p>
+              <strong>Posible forma de preguntarlo en examen:</strong>
+              distinguir potencia absorbida de potencia disipada.
+            </p>
+          </article>
+          <article class="definition-card">
+            <h3>Factor de calidad \(q\)</h3>
+            <p>
+              <strong>Definición precisa:</strong> \(Q=m\omega_0/b\), en la
+              convención viscosa usada aquí.
+            </p>
+            <p>
+              <strong>Explicación desarrollada:</strong> cuantifica cuántas
+              oscilaciones efectivas sobreviven antes de perder energía
+              apreciable y cómo de estrecha es la resonancia.
+            </p>
+            <p>
+              <strong>Ejemplo:</strong> alto \(Q\) produce un pico de potencia
+              estrecho.
+            </p>
+            <p>
+              <strong>Relación con otros conceptos:</strong> determina altura y
+              anchura de las curvas de resonancia.
+            </p>
+            <p>
+              <strong>Posible forma de preguntarlo en examen:</strong>
+              relacionar \(Q\) con amortiguamiento y resonancia.
+            </p>
+          </article>
+          <article class="definition-card">
+            <h3>Resonancia de desplazamiento</h3>
+            <p><strong>Definición precisa:</strong> máximo de \(A(\omega)\).</p>
+            <p>
+              <strong>Explicación desarrollada:</strong> para amortiguamiento
+              débil ocurre cerca, pero algo por debajo, de \(\omega_0\).
+            </p>
+            <p>
+              <strong>Ejemplo:</strong>
+              \(\omega_{\text{max},x}=\sqrt{\omega_0^2-2\beta^2}\).
+            </p>
+            <p>
+              <strong>Relación con otros conceptos:</strong> no coincide
+              exactamente con la resonancia de velocidad si el amortiguamiento
+              no es despreciable.
+            </p>
+            <p>
+              <strong>Posible forma de preguntarlo en examen:</strong> comparar
+              máximo de amplitud y máximo de potencia.
+            </p>
+          </article>
+          <article class="definition-card">
+            <h3>Resonancia de velocidad</h3>
+            <p>
+              <strong>Definición precisa:</strong> máximo de
+              \(v_0(\omega)=\omega A(\omega)\).
+            </p>
+            <p>
+              <strong>Explicación desarrollada:</strong> ocurre exactamente en
+              \(\omega_0\) para amortiguamiento viscoso lineal.
+            </p>
+            <p>
+              <strong>Ejemplo:</strong> la velocidad máxima resonante es grande
+              cuando \(b\) es pequeño.
+            </p>
+            <p>
+              <strong>Relación con otros conceptos:</strong> coincide con el
+              máximo de potencia media.
+            </p>
+            <p>
+              <strong>Posible forma de preguntarlo en examen:</strong> demostrar
+              que \(v_0\) es máxima en \(\omega=\omega_0\).
+            </p>
+          </article>
+          <article class="definition-card">
+            <h3>Ancho de resonancia</h3>
+            <p>
+              <strong>Definición precisa:</strong> intervalo de frecuencias
+              alrededor del máximo donde la respuesta sigue siendo
+              significativa, normalmente medido a media potencia.
+            </p>
+            <p>
+              <strong>Explicación desarrollada:</strong> una resonancia estrecha
+              indica bajo amortiguamiento y alto \(Q\).
+            </p>
+            <p>
+              <strong>Ejemplo:</strong> en alto \(Q\),
+              \(\Delta\omega\approx\omega_0/Q\).
+            </p>
+            <p>
+              <strong>Relación con otros conceptos:</strong> relaciona \(Q\),
+              selectividad y disipación.
+            </p>
+            <p>
+              <strong>Posible forma de preguntarlo en examen:</strong> describir
+              cualitativamente cómo cambia la curva al aumentar \(b\).
+            </p>
+          </article>
+        </div>
+      </section>
+      <section class="page" id="relaciones">
+        <div class="page-head">
+          <h2>5. Relaciones entre ideas</h2>
+          <span class="page-no">p.5</span>
+        </div>
+        <div class="reading-block">
+          <p>
+            El punto de partida es el oscilador armónico libre. Su frecuencia
+            natural \(\omega_0\) surge del equilibrio entre inercia y fuerza
+            restauradora. Al añadir una fuerza periódica, aparece una segunda
+            frecuencia: \(\omega\). El problema físico consiste en entender cómo
+            interactúan ambas.
+          </p>
+        </div>
+        <div class="reading-block">
+          <p>
+            La fuerza externa impone la frecuencia de la solución estacionaria.
+            La frecuencia natural no desaparece: aparece en el denominador de la
+            respuesta, en la fase y en el transitorio. La resonancia ocurre
+            porque, cerca de \(\omega_0\), la parte inercial \(m\ddot x\) y la
+            restauradora \(kx\) tienden a compensarse, dejando que la fuerza
+            externa produzca gran respuesta.
+          </p>
+        </div>
+        <div class="reading-block">
+          <p>
+            El amortiguamiento cumple dos funciones. Primero, disipa energía y
+            hace que el transitorio desaparezca. Segundo, limita la amplitud
+            resonante y convierte el infinito matemático del modelo ideal en un
+            máximo físico finito. Sin amortiguamiento, no hay estado
+            estacionario resonante realista; con amortiguamiento, sí.
+          </p>
+        </div>
+        <div class="reading-block">
+          <p>
+            La fase conecta cinemática y energía. El desplazamiento máximo no
+            basta para saber si hay transferencia neta de energía. La potencia
+            depende de la velocidad. En resonancia, la fuerza está en fase con
+            la velocidad, por eso la potencia media es máxima. Esta es la razón
+            profunda por la que la resonancia energética se sitúa en
+            \(\omega_0\).
+          </p>
+        </div>
+        <div class="reading-block">
+          <p>
+            El factor \(Q\) jerarquiza la respuesta. Si \(Q\) es alto, el
+            sistema pierde poca energía por ciclo y puede acumular energía
+            durante muchos ciclos. Por eso la resonancia es intensa y estrecha.
+            Si \(Q\) es bajo, la energía se pierde rápidamente y la resonancia
+            se aplana.
+          </p>
+        </div>
+        <div class="reading-block">
+          <p>
+            Históricamente, el capítulo muestra una evolución desde fenómenos
+            mecánicos cotidianos hacia resonancias eléctricas, ópticas y
+            nucleares. La jerarquía conceptual es: oscilador lineal → respuesta
+            forzada → amortiguamiento → fase → potencia → resonancia
+            generalizada.
+          </p>
+        </div>
+        <div class="reading-block">
+          <p>
+            Oposición importante: amplitud frente a potencia. La amplitud de
+            desplazamiento mide cuánto se mueve el sistema; la potencia media
+            mide cuánta energía absorbe. No son idénticas. A frecuencia muy baja
+            puede haber desplazamiento apreciable, pero poca potencia porque la
+            velocidad es pequeña. En resonancia, la potencia máxima está
+            asociada a velocidad máxima y desfase de \(\pi/2\).
+          </p>
+        </div>
+        <div class="reading-block">
+          <p>
+            Otra oposición importante: transitorio frente a estacionario. El
+            transitorio depende de las condiciones iniciales; el estacionario
+            depende de la fuerza. Resolver problemas de examen exige identificar
+            qué régimen pide el enunciado. Si dice “estado estacionario”, no se
+            arrastra la solución homogénea salvo para justificar que desaparece.
+          </p>
+        </div>
+      </section>
+      <section class="page" id="errores">
+        <div class="page-head">
+          <h2>6. Errores habituales</h2>
+          <span class="page-no">p.6</span>
+        </div>
+        <details class="accordion accordion-error">
+          <summary>
+            Creer que el oscilador forzado vibra siempre a su frecuencia natural
+          </summary>
+          <p>
+            <strong>Por qué está mal:</strong> en estado estacionario, con
+            amortiguamiento, vibra a la frecuencia de la fuerza externa.
+          </p>
+          <p>
+            <strong>Corrección:</strong> la frecuencia natural determina la
+            intensidad de respuesta, no la frecuencia estacionaria.
+          </p>
+          <p>
+            <strong>Respuesta incorrecta:</strong> “Como el sistema tiene
+            frecuencia natural \(\omega_0\), la solución será \(A\cos(\omega_0
+            t)\)”.
+          </p>
+          <p>
+            <strong>Respuesta correcta:</strong> “En régimen estacionario,
+            \(x_s=A\cos(\omega t-\delta)\); \(\omega_0\) aparece en \(A\) y
+            \(\delta\)”.
+          </p>
+        </details>
+        <details class="accordion accordion-error">
+          <summary>Identificar resonancia con amplitud infinita</summary>
+          <p>
+            <strong>Por qué está mal:</strong> la amplitud infinita solo aparece
+            en el modelo ideal sin amortiguamiento.
+          </p>
+          <p>
+            <strong>Corrección:</strong> con amortiguamiento, la resonancia
+            tiene máximo finito.
+          </p>
+          <p>
+            <strong>Respuesta incorrecta:</strong> “En resonancia la amplitud es
+            infinita”.
+          </p>
+          <p>
+            <strong>Respuesta correcta:</strong> “En el modelo sin pérdidas
+            crece sin límite; en un sistema amortiguado el máximo queda limitado
+            por \(b\)”.
+          </p>
+        </details>
+        <details class="accordion accordion-error">
+          <summary>Olvidar el desfase</summary>
+          <p>
+            <strong>Por qué está mal:</strong> la solución estacionaria no queda
+            definida solo por la amplitud.
+          </p>
+          <p>
+            <strong>Corrección:</strong> hay que dar \(A\) y \(\delta\), o bien
+            coeficientes de seno y coseno.
+          </p>
+          <p>
+            <strong>Respuesta incorrecta:</strong> “La solución es
+            \(x=A\cos\omega t\)”.
+          </p>
+          <p>
+            <strong>Respuesta correcta:</strong> “La solución es
+            \(x=A\cos(\omega t-\delta)\), con
+            \(\tan\delta=b\omega/(k-m\omega^2)\)”.
+          </p>
+        </details>
+        <details class="accordion accordion-error">
+          <summary>Usar \(\tan\delta\) sin cuadrante</summary>
+          <p>
+            <strong>Por qué está mal:</strong> para \(\omega&gt;\omega_0\),
+            \(k-m\omega^2&lt;0\), y la fase debe estar entre \(\pi/2\) y
+            \(\pi\), no ser simplemente negativa.
+          </p>
+          <p>
+            <strong>Corrección:</strong> interpretar \(\delta\) físicamente como
+            retraso entre 0 y \(\pi\).
+          </p>
+          <p>
+            <strong>Respuesta incorrecta:</strong> “Si \(\omega&gt;\omega_0\),
+            \(\delta&lt;0\)”.
+          </p>
+          <p>
+            <strong>Respuesta correcta:</strong> “Si \(\omega&gt;\omega_0\), el
+            desplazamiento se aproxima a oposición de fase; \(\delta\to\pi\)”.
+          </p>
+        </details>
+        <details class="accordion accordion-error">
+          <summary>Confundir potencia absorbida con potencia disipada</summary>
+          <p>
+            <strong>Por qué está mal:</strong> \(F\dot x\) puede ser negativa;
+            \(b\dot x^2\) no.
+          </p>
+          <p>
+            <strong>Corrección:</strong> distinguir potencia instantánea
+            absorbida y potencia disipada por rozamiento.
+          </p>
+          <p>
+            <strong>Respuesta incorrecta:</strong> “La potencia absorbida
+            instantánea siempre es positiva”.
+          </p>
+          <p>
+            <strong>Respuesta correcta:</strong> “La potencia absorbida puede
+            cambiar de signo; su promedio estacionario coincide con la potencia
+            media disipada”.
+          </p>
+        </details>
+        <details class="accordion accordion-error">
+          <summary>Calcular potencia media promediando mal</summary>
+          <p>
+            <strong>Por qué está mal:</strong> \(\langle\sen\omega t\cos\omega
+            t\rangle=0\), \(\langle\cos^2\omega t\rangle=1/2\).
+          </p>
+          <p>
+            <strong>Corrección:</strong> usar identidades trigonométricas o
+            fase.
+          </p>
+          <p>
+            <strong>Respuesta incorrecta:</strong> “El promedio de \(\cos^2\) es
+            cero”.
+          </p>
+          <p>
+            <strong>Respuesta correcta:</strong> “El promedio de \(\cos^2\) en
+            un ciclo es \(1/2\)”.
+          </p>
+        </details>
+        <details class="accordion accordion-error">
+          <summary>
+            Afirmar que el máximo de desplazamiento ocurre siempre exactamente
+            en \(\omega_0\)
+          </summary>
+          <p>
+            <strong>Por qué está mal:</strong> con amortiguamiento, el máximo de
+            desplazamiento se desplaza ligeramente por debajo de \(\omega_0\).
+          </p>
+          <p>
+            <strong>Corrección:</strong> distinguir resonancia de
+            desplazamiento, velocidad y potencia.
+          </p>
+          <p>
+            <strong>Respuesta incorrecta:</strong> “Toda resonancia ocurre en
+            \(\omega_0\)”.
+          </p>
+          <p>
+            <strong>Respuesta correcta:</strong> “La potencia y la velocidad son
+            máximas en \(\omega_0\); el desplazamiento máximo puede estar algo
+            por debajo”.
+          </p>
+        </details>
+        <details class="accordion accordion-error">
+          <summary>
+            Conservar el transitorio en un problema que pide estado estacionario
+          </summary>
+          <p>
+            <strong>Por qué está mal:</strong> el estado estacionario excluye la
+            parte homogénea.
+          </p>
+          <p>
+            <strong>Corrección:</strong> usar solo la solución particular
+            forzada.
+          </p>
+          <p>
+            <strong>Respuesta incorrecta:</strong> “\(x=Be^{-\beta
+            t}\cos(\omega_dt+\phi)+A\cos(\omega t-\delta)\)” como respuesta
+            final al estacionario.
+          </p>
+          <p>
+            <strong>Respuesta correcta:</strong> “En estado estacionario,
+            \(x_s=A\cos(\omega t-\delta)\)”.
+          </p>
+        </details>
+        <details class="accordion accordion-error">
+          <summary>No comprobar unidades</summary>
+          <p>
+            <strong>Por qué está mal:</strong> amplitud, potencia y coeficientes
+            tienen dimensiones distintas.
+          </p>
+          <p>
+            <strong>Corrección:</strong> verificar que \(A\) está en metros y
+            \(\langle P\rangle\) en vatios.
+          </p>
+          <p><strong>Respuesta incorrecta:</strong> “\(A=F_0/(k-m\omega)\)”.</p>
+          <p>
+            <strong>Respuesta correcta:</strong>
+            “\(A=F_0/\sqrt{(k-m\omega^2)^2+(b\omega)^2}\)”.
+          </p>
+        </details>
+        <details class="accordion accordion-error">
+          <summary>Creer que alto \(q\) significa mucho rozamiento</summary>
+          <p>
+            <strong>Por qué está mal:</strong> alto \(Q\) significa poca
+            disipación relativa.
+          </p>
+          <p><strong>Corrección:</strong> recordar \(Q=m\omega_0/b\).</p>
+          <p>
+            <strong>Respuesta incorrecta:</strong> “Al aumentar \(b\), aumenta
+            \(Q\)”.
+          </p>
+          <p>
+            <strong>Respuesta correcta:</strong> “Al aumentar \(b\), disminuye
+            \(Q\) y la resonancia se aplana”.
+          </p>
+        </details>
+      </section>
+      <section class="page" id="preguntas">
+        <div class="page-head">
+          <h2>7. Preguntas orientadas a examen</h2>
+          <span class="page-no">p.7</span>
+        </div>
+        <h3>10 preguntas fáciles</h3>
+        <ol class="question-list">
+          <li>¿Qué es un oscilador forzado?</li>
+          <li>
+            Escribe la ecuación diferencial del oscilador forzado amortiguado
+            con rozamiento viscoso.
+          </li>
+          <li>Define la frecuencia natural \(\omega_0\).</li>
+          <li>¿Qué significa resonancia?</li>
+          <li>
+            ¿Qué diferencia hay entre frecuencia natural y frecuencia impulsora?
+          </li>
+          <li>¿Qué es el estado estacionario?</li>
+          <li>¿Qué es el transitorio?</li>
+          <li>¿Qué representa el desfase \(\delta\)?</li>
+          <li>
+            ¿Qué expresión tiene la potencia instantánea entregada por una
+            fuerza?
+          </li>
+          <li>¿Qué mide el factor de calidad \(Q\)?</li>
+        </ol>
+        <h3>10 preguntas medias</h3>
+        <ol class="question-list">
+          <li>
+            Obtén la amplitud estacionaria del oscilador forzado amortiguado.
+          </li>
+          <li>Deduce la expresión de \(\tan\delta\).</li>
+          <li>
+            Explica el comportamiento de la amplitud para \(\omega\ll\omega_0\).
+          </li>
+          <li>
+            Explica el comportamiento de la amplitud para \(\omega\gg\omega_0\).
+          </li>
+          <li>
+            ¿Por qué el amortiguamiento evita la amplitud infinita en
+            resonancia?
+          </li>
+          <li>Calcula la potencia media absorbida en estado estacionario.</li>
+          <li>
+            Demuestra que la potencia media absorbida es máxima en
+            \(\omega=\omega_0\).
+          </li>
+          <li>
+            Distingue potencia absorbida instantánea y potencia disipada
+            instantánea.
+          </li>
+          <li>
+            Determina las condiciones iniciales para que no haya transitorio si
+            \(F=F_0\cos(\omega t+\phi)\).
+          </li>
+          <li>
+            Explica cómo cambia la curva de resonancia al aumentar el
+            amortiguamiento.
+          </li>
+        </ol>
+        <h3>5 preguntas difíciles</h3>
+        <ol class="question-list">
+          <li>
+            Compara la resonancia de desplazamiento, de velocidad y de potencia.
+          </li>
+          <li>
+            Resuelve el oscilador forzado no amortiguado y explica qué ocurre en
+            \(\omega=\omega_0\).
+          </li>
+          <li>
+            Usando notación compleja, obtiene amplitud y fase de la respuesta
+            estacionaria.
+          </li>
+          <li>
+            Explica por qué en resonancia la fuerza está en fase con la
+            velocidad.
+          </li>
+          <li>
+            Relaciona \(Q\), anchura de resonancia y selectividad frecuencial.
+          </li>
+        </ol>
+        <h3>5 preguntas de desarrollo largo</h3>
+        <ol class="question-list">
+          <li>
+            Desarrolla la teoría del oscilador forzado amortiguado desde la
+            ecuación diferencial hasta la solución estacionaria.
+          </li>
+          <li>
+            Explica el fenómeno de resonancia mecánica y el papel del
+            amortiguamiento.
+          </li>
+          <li>
+            Estudia la potencia absorbida por un oscilador impulsado, incluyendo
+            potencia instantánea, potencia media y máximo resonante.
+          </li>
+          <li>
+            Analiza los fenómenos transitorios en osciladores forzados con y sin
+            amortiguamiento.
+          </li>
+          <li>
+            Explica la universalidad del concepto de resonancia a partir de
+            ejemplos mecánicos, eléctricos, ópticos y nucleares.
+          </li>
+        </ol>
+        <h3>5 preguntas de relación entre conceptos</h3>
+        <ol class="question-list">
+          <li>Relaciona desfase y absorción de energía.</li>
+          <li>Relaciona transitorio y condiciones iniciales.</li>
+          <li>Relaciona amortiguamiento y factor \(Q\).</li>
+          <li>Relaciona resonancia mecánica y resonancia eléctrica.</li>
+          <li>
+            Relaciona frecuencia natural, frecuencia impulsora y estado
+            estacionario.
+          </li>
+        </ol>
+      </section>
+      <section class="page" id="respuestas">
+        <div class="page-head">
+          <h2>8. Respuestas modelo</h2>
+          <span class="page-no">p.8</span>
+        </div>
+        <details class="accordion accordion-answer">
+          <summary>1. ¿Qué es un oscilador forzado?</summary>
+          <div class="answer-block">
+            <p>
+              Un oscilador forzado es un sistema capaz de oscilar que está
+              sometido a una fuerza externa periódica. Su movimiento resulta de
+              la combinación entre su dinámica interna y la excitación impuesta.
+              En régimen estacionario amortiguado, oscila a la frecuencia de la
+              fuerza externa.
+            </p>
+          </div>
+        </details>
+        <details class="accordion accordion-answer">
+          <summary>
+            2. Escribe la ecuación diferencial del oscilador forzado amortiguado
+            con rozamiento viscoso.
+          </summary>
+          <div class="answer-block">
+            <p>
+              La ecuación es<br />\(m\ddot x+b\dot x+kx=F_0\cos(\omega t)\).<br />El
+              término \(m\ddot x\) representa inercia, \(b\dot x\) disipación
+              viscosa, \(kx\) restauración elástica y \(F_0\cos(\omega t)\)
+              impulsión externa.
+            </p>
+          </div>
+        </details>
+        <details class="accordion accordion-answer">
+          <summary>3. Define la frecuencia natural \(\omega_0\).</summary>
+          <div class="answer-block">
+            <p>
+              La frecuencia natural es la frecuencia angular de oscilación libre
+              sin amortiguamiento. Para una masa \(m\) unida a un muelle de
+              constante \(k\),<br />\(\omega_0=\sqrt{k/m}\).
+            </p>
+          </div>
+        </details>
+        <details class="accordion accordion-answer">
+          <summary>4. ¿Qué significa resonancia?</summary>
+          <div class="answer-block">
+            <p>
+              Resonancia es el aumento intenso de la respuesta de un sistema
+              cuando la frecuencia externa se aproxima a una frecuencia propia.
+              En un oscilador amortiguado, se manifiesta como un máximo finito
+              de amplitud, velocidad o potencia.
+            </p>
+          </div>
+        </details>
+        <details class="accordion accordion-answer">
+          <summary>
+            5. ¿Qué diferencia hay entre frecuencia natural y frecuencia
+            impulsora?
+          </summary>
+          <div class="answer-block">
+            <p>
+              La frecuencia natural pertenece al sistema y depende de sus
+              parámetros internos. La frecuencia impulsora pertenece a la fuerza
+              externa. En estado estacionario, el oscilador vibra con la
+              frecuencia impulsora, aunque la amplitud depende de la cercanía a
+              la frecuencia natural.
+            </p>
+          </div>
+        </details>
+        <details class="accordion accordion-answer">
+          <summary>6. ¿Qué es el estado estacionario?</summary>
+          <div class="answer-block">
+            <p>
+              El estado estacionario es la parte persistente de la solución
+              forzada amortiguada. Tiene la misma frecuencia que la fuerza
+              externa y no depende de las condiciones iniciales.
+            </p>
+          </div>
+        </details>
+        <details class="accordion accordion-answer">
+          <summary>7. ¿Qué es el transitorio?</summary>
+          <div class="answer-block">
+            <p>
+              El transitorio es la parte de la solución que depende de las
+              condiciones iniciales. En un oscilador amortiguado decae con el
+              tiempo y desaparece del régimen final.
+            </p>
+          </div>
+        </details>
+        <details class="accordion accordion-answer">
+          <summary>8. ¿Qué representa el desfase \(\delta\)?</summary>
+          <div class="answer-block">
+            <p>
+              El desfase \(\delta\) es el retraso del desplazamiento respecto a
+              la fuerza externa en la solución \(x_s=A\cos(\omega t-\delta)\).
+              Determina si la fuerza entrega energía eficazmente al sistema.
+            </p>
+          </div>
+        </details>
+        <details class="accordion accordion-answer">
+          <summary>
+            9. ¿Qué expresión tiene la potencia instantánea entregada por una
+            fuerza?
+          </summary>
+          <div class="answer-block">
+            <p>
+              La potencia instantánea entregada por una fuerza es<br />\(P(t)=F(t)v(t)=F(t)\dot
+              x(t)\).<br />Puede ser positiva o negativa según el sentido
+              relativo de fuerza y velocidad.
+            </p>
+          </div>
+        </details>
+        <details class="accordion accordion-answer">
+          <summary>10. ¿Qué mide el factor de calidad \(Q\)?</summary>
+          <div class="answer-block">
+            <p>
+              El factor \(Q\) mide la calidad resonante del sistema. En el
+              modelo viscoso \(Q=m\omega_0/b\). Alto \(Q\) indica poca
+              disipación, resonancia estrecha y gran respuesta cerca de
+              \(\omega_0\).
+            </p>
+          </div>
+        </details>
+        <details class="accordion accordion-answer">
+          <summary>
+            11. Obtén la amplitud estacionaria del oscilador forzado
+            amortiguado.
+          </summary>
+          <div class="answer-block">
+            <p>
+              Se usa \(x_s=A\cos(\omega t-\delta)\) o \(z=Xe^{i\omega t}\).
+              Sustituyendo en la ecuación compleja se obtiene<br />\(X=F_0/(k-m\omega^2+i
+              b\omega)\).<br />Por tanto,<br />\(A=F_0/\sqrt{(k-m\omega^2)^2+(b\omega)^2}\).
+            </p>
+          </div>
+        </details>
+        <details class="accordion accordion-answer">
+          <summary>12. Deduce la expresión de \(\tan\delta\).</summary>
+          <div class="answer-block">
+            <p>
+              Del número complejo \(k-m\omega^2+i b\omega\), el desfase
+              cumple<br />\(\tan\delta=b\omega/(k-m\omega^2)\),<br />con
+              \(\delta\) entre 0 y \(\pi\). En \(\omega=\omega_0\),
+              \(\delta=\pi/2\).
+            </p>
+          </div>
+        </details>
+        <details class="accordion accordion-answer">
+          <summary>
+            13. Explica el comportamiento de la amplitud para
+            \(\omega\ll\omega_0\).
+          </summary>
+          <div class="answer-block">
+            <p>
+              Para \(\omega\ll\omega_0\), \(k\) domina sobre \(m\omega^2\) y
+              \(b\omega\). Entonces<br />\(A\approx F_0/k\).<br />La respuesta
+              es casi estática: el sistema sigue a la fuerza con pequeño
+              desfase.
+            </p>
+          </div>
+        </details>
+        <details class="accordion accordion-answer">
+          <summary>
+            14. Explica el comportamiento de la amplitud para
+            \(\omega\gg\omega_0\).
+          </summary>
+          <div class="answer-block">
+            <p>
+              Para \(\omega\gg\omega_0\), domina \(m\omega^2\). Entonces<br />\(A\approx
+              F_0/(m\omega^2)\).<br />La masa no puede seguir una excitación tan
+              rápida y el desplazamiento se hace pequeño.
+            </p>
+          </div>
+        </details>
+        <details class="accordion accordion-answer">
+          <summary>
+            15. ¿Por qué el amortiguamiento evita la amplitud infinita en
+            resonancia?
+          </summary>
+          <div class="answer-block">
+            <p>
+              El amortiguamiento introduce el término \(b\omega\) en el
+              denominador de la amplitud. En \(\omega=\omega_0\), el término
+              \(k-m\omega^2\) se anula, pero queda \(b\omega_0\), por lo que
+              \(A=F_0/(b\omega_0)\), finita si \(b\neq0\).
+            </p>
+          </div>
+        </details>
+        <details class="accordion accordion-answer">
+          <summary>
+            16. Calcula la potencia media absorbida en estado estacionario.
+          </summary>
+          <div class="answer-block">
+            <p>
+              En estacionario,<br />\(\langle
+              P\rangle=\frac12F_0A\omega\sen\delta\).<br />Sustituyendo \(A\) y
+              \(\delta\):<br />\(\langle P\rangle=<br />F_0^2b\omega^2/[2((k-m\omega^2)^2+(b\omega)^2)]\).
+            </p>
+          </div>
+        </details>
+        <details class="accordion accordion-answer">
+          <summary>
+            17. Demuestra que la potencia media absorbida es máxima en
+            \(\omega=\omega_0\).
+          </summary>
+          <div class="answer-block">
+            <p>
+              La expresión de \(\langle P\rangle\) tiene máximo cuando la
+              transferencia de energía es más eficaz. Para amortiguamiento
+              viscoso lineal, el máximo ocurre en \(\omega=\omega_0\), donde la
+              fuerza está en fase con la velocidad. Su valor es<br />\(\langle
+              P\rangle_{\max}=F_0^2/(2b)\).
+            </p>
+          </div>
+        </details>
+        <details class="accordion accordion-answer">
+          <summary>
+            18. Distingue potencia absorbida instantánea y potencia disipada
+            instantánea.
+          </summary>
+          <div class="answer-block">
+            <p>
+              La potencia absorbida instantánea es \(F\dot x\) y puede ser
+              negativa si el oscilador devuelve energía a la fuente. La potencia
+              disipada instantánea es \(b\dot x^2\), siempre no negativa. En
+              régimen estacionario sus promedios coinciden.
+            </p>
+          </div>
+        </details>
+        <details class="accordion accordion-answer">
+          <summary>
+            19. Determina las condiciones iniciales para que no haya transitorio
+            si \(F=F_0\cos(\omega t+\phi)\).
+          </summary>
+          <div class="answer-block">
+            <p>
+              Si \(F=F_0\cos(\omega t+\phi)\), el estacionario es<br />\(x_s=A\cos(\omega
+              t+\phi-\delta)\).<br />Para que no haya transitorio:<br />\(x(0)=A\cos(\phi-\delta)\),<br />\(\dot
+              x(0)=-A\omega\sen(\phi-\delta)\).
+            </p>
+          </div>
+        </details>
+        <details class="accordion accordion-answer">
+          <summary>
+            20. Explica cómo cambia la curva de resonancia al aumentar el
+            amortiguamiento.
+          </summary>
+          <div class="answer-block">
+            <p>
+              Al aumentar el amortiguamiento, disminuye \(Q\). La amplitud
+              máxima baja, el pico de potencia se ensancha y la respuesta se
+              vuelve menos selectiva en frecuencia. En el límite de
+              amortiguamiento fuerte, la resonancia puede quedar muy poco
+              marcada.
+            </p>
+          </div>
+        </details>
+        <details class="accordion accordion-answer">
+          <summary>
+            21. Compara la resonancia de desplazamiento, de velocidad y de
+            potencia.
+          </summary>
+          <div class="answer-block">
+            <p>
+              La resonancia de desplazamiento maximiza \(A(\omega)\) y, con
+              amortiguamiento, puede ocurrir algo por debajo de \(\omega_0\). La
+              resonancia de velocidad maximiza \(\omega A\) y ocurre en
+              \(\omega_0\). La resonancia de potencia maximiza la energía
+              absorbida por unidad de tiempo y también ocurre en \(\omega_0\).
+            </p>
+          </div>
+        </details>
+        <details class="accordion accordion-answer">
+          <summary>
+            22. Resuelve el oscilador forzado no amortiguado y explica qué
+            ocurre en \(\omega=\omega_0\).
+          </summary>
+          <div class="answer-block">
+            <p>
+              Sin amortiguamiento:<br />\(m\ddot x+kx=F_0\cos\omega t\).<br />Para
+              \(\omega\neq\omega_0\), una particular es<br />\(x=C\cos\omega
+              t\), con<br />\(C=F_0/[m(\omega_0^2-\omega^2)]\).<br />Si
+              \(\omega=\omega_0\), esta forma falla y aparece crecimiento
+              secular: la amplitud aumenta con el tiempo porque no hay
+              disipación.
+            </p>
+          </div>
+        </details>
+        <details class="accordion accordion-answer">
+          <summary>
+            23. Usando notación compleja, obtiene amplitud y fase de la
+            respuesta estacionaria.
+          </summary>
+          <div class="answer-block">
+            <p>
+              Se toma<br />\(z=Xe^{i\omega t}\).<br />Sustituyendo:<br />\((k-m\omega^2+i
+              b\omega)X=F_0\).<br />Así,<br />\(X=F_0/(k-m\omega^2+i
+              b\omega)\).<br />El módulo de \(X\) da \(A\) y el argumento
+              negativo da el retraso \(\delta\).
+            </p>
+          </div>
+        </details>
+        <details class="accordion accordion-answer">
+          <summary>
+            24. Explica por qué en resonancia la fuerza está en fase con la
+            velocidad.
+          </summary>
+          <div class="answer-block">
+            <p>
+              En resonancia, el desplazamiento retrasa \(\pi/2\) respecto a la
+              fuerza:<br />\(x=A\cos(\omega_0 t-\pi/2)\).<br />La velocidad,
+              derivada de \(x\), queda en fase con la fuerza. Si fuerza y
+              velocidad tienen la misma fase, \(Fv\) tiene máximo promedio
+              positivo.
+            </p>
+          </div>
+        </details>
+        <details class="accordion accordion-answer">
+          <summary>
+            25. Relaciona \(Q\), anchura de resonancia y selectividad
+            frecuencial.
+          </summary>
+          <div class="answer-block">
+            <p>
+              Alto \(Q\) significa poca disipación. Al perder poca energía por
+              ciclo, el sistema acumula energía eficazmente solo en una banda
+              estrecha alrededor de \(\omega_0\). Por eso el ancho de resonancia
+              disminuye aproximadamente como \(\Delta\omega\approx\omega_0/Q\).
+            </p>
+          </div>
+        </details>
+        <details class="accordion accordion-answer">
+          <summary>
+            26. Desarrolla la teoría del oscilador forzado amortiguado desde la
+            ecuación diferencial hasta la solución estacionaria.
+          </summary>
+          <div class="answer-block">
+            <p>
+              El oscilador forzado amortiguado se modela por<br />\(m\ddot
+              x+b\dot x+kx=F_0\cos\omega t\).<br />Por linealidad, la solución
+              es suma de la homogénea y una particular. La homogénea es el
+              transitorio y decae si hay amortiguamiento. La particular
+              estacionaria se obtiene con exponenciales complejas:<br />\(X=F_0/(k-m\omega^2+i
+              b\omega)\).<br />De ahí:<br />\(x_s=A\cos(\omega t-\delta)\),<br />\(A=F_0/\sqrt{(k-m\omega^2)^2+(b\omega)^2}\),<br />\(\tan\delta=b\omega/(k-m\omega^2)\).<br />La
+              respuesta estacionaria oscila a la frecuencia externa y su
+              amplitud depende fuertemente de la proximidad a \(\omega_0\).
+            </p>
+          </div>
+        </details>
+        <details class="accordion accordion-answer">
+          <summary>
+            27. Explica el fenómeno de resonancia mecánica y el papel del
+            amortiguamiento.
+          </summary>
+          <div class="answer-block">
+            <p>
+              La resonancia mecánica aparece cuando una fuerza periódica actúa
+              cerca de la frecuencia natural de un oscilador. En ese caso, la
+              energía se entrega de forma coherente durante muchos ciclos y la
+              amplitud aumenta. Sin amortiguamiento, el modelo predice
+              crecimiento sin límite. Con amortiguamiento, la energía absorbida
+              se equilibra con la disipada y se alcanza una amplitud finita.
+              Cuanto menor es el amortiguamiento, más intenso y estrecho es el
+              pico resonante.
+            </p>
+          </div>
+        </details>
+        <details class="accordion accordion-answer">
+          <summary>
+            28. Estudia la potencia absorbida por un oscilador impulsado,
+            incluyendo potencia instantánea, potencia media y máximo resonante.
+          </summary>
+          <div class="answer-block">
+            <p>
+              En régimen estacionario, la potencia absorbida es<br />\(P(t)=F(t)\dot
+              x(t)\).<br />Con<br />\(F=F_0\cos\omega t\),<br />\(x=A\cos(\omega
+              t-\delta)\),<br />se obtiene una potencia instantánea que alterna
+              intervalos positivos y negativos. Su promedio es<br />\(\langle
+              P\rangle=\frac12F_0A\omega\sen\delta\).<br />Sustituyendo amplitud
+              y fase:<br />\(\langle P\rangle=<br />F_0^2b\omega^2/[2((k-m\omega^2)^2+(b\omega)^2)]\).<br />El
+              máximo está en \(\omega_0\) y vale \(F_0^2/(2b)\). En
+              estacionario, esta potencia media absorbida se disipa por
+              rozamiento.
+            </p>
+          </div>
+        </details>
+        <details class="accordion accordion-answer">
+          <summary>
+            29. Analiza los fenómenos transitorios en osciladores forzados con y
+            sin amortiguamiento.
+          </summary>
+          <div class="answer-block">
+            <p>
+              El transitorio es la parte libre de la solución. Sin
+              amortiguamiento, puede persistir indefinidamente y producir
+              batidos si \(\omega\) y \(\omega_0\) son próximas. Con
+              amortiguamiento, el transitorio tiene un factor decreciente y
+              desaparece. La solución final queda impuesta por la fuerza
+              externa. Si las condiciones iniciales coinciden exactamente con
+              posición y velocidad del estado estacionario en \(t=0\), no
+              aparece transitorio.
+            </p>
+          </div>
+        </details>
+        <details class="accordion accordion-answer">
+          <summary>
+            30. Explica la universalidad del concepto de resonancia a partir de
+            ejemplos mecánicos, eléctricos, ópticos y nucleares.
+          </summary>
+          <div class="answer-block">
+            <p>
+              La resonancia es universal porque muchos sistemas almacenan
+              energía en dos formas y la intercambian periódicamente. En
+              mecánica, la energía pasa entre cinética y potencial elástica. En
+              circuitos eléctricos, entre campo magnético inductivo y campo
+              eléctrico capacitivo. En óptica o resonancia nuclear, la absorción
+              selectiva aparece ligada a frecuencias características internas.
+              En todos los casos hay frecuencia propia, excitación externa,
+              absorción selectiva y anchura determinada por pérdidas o
+              acoplamientos.
+            </p>
+          </div>
+        </details>
+        <details class="accordion accordion-answer">
+          <summary>31. Relaciona desfase y absorción de energía.</summary>
+          <div class="answer-block">
+            <p>
+              La absorción de energía depende del producto \(Fv\), no
+              directamente de \(Fx\). Por eso el desfase clave es el que hace
+              que la fuerza esté en fase con la velocidad. En resonancia, el
+              desplazamiento retrasa \(\pi/2\), lo que coloca la velocidad en
+              fase con la fuerza y maximiza la potencia media.
+            </p>
+          </div>
+        </details>
+        <details class="accordion accordion-answer">
+          <summary>32. Relaciona transitorio y condiciones iniciales.</summary>
+          <div class="answer-block">
+            <p>
+              El transitorio aparece cuando las condiciones iniciales no
+              coinciden con el estado estacionario. La solución homogénea ajusta
+              la diferencia inicial entre el movimiento real y el movimiento
+              estacionario. Si hay amortiguamiento, ese ajuste desaparece con el
+              tiempo.
+            </p>
+          </div>
+        </details>
+        <details class="accordion accordion-answer">
+          <summary>33. Relaciona amortiguamiento y factor \(Q\).</summary>
+          <div class="answer-block">
+            <p>
+              El amortiguamiento \(b\) mide pérdida de energía. El factor
+              \(Q=m\omega_0/b\) mide lo contrario: calidad resonante o debilidad
+              relativa de la disipación. Al aumentar \(b\), baja \(Q\), se
+              reduce el máximo resonante y se ensancha la respuesta.
+            </p>
+          </div>
+        </details>
+        <details class="accordion accordion-answer">
+          <summary>
+            34. Relaciona resonancia mecánica y resonancia eléctrica.
+          </summary>
+          <div class="answer-block">
+            <p>
+              La resonancia mecánica y la eléctrica comparten la misma
+              estructura matemática. En mecánica, masa, muelle y rozamiento
+              corresponden a inercia, restauración y disipación. En
+              electricidad, inductancia, capacidad y resistencia cumplen papeles
+              análogos. En ambos casos hay una frecuencia propia y una absorción
+              máxima cerca de ella.
+            </p>
+          </div>
+        </details>
+        <details class="accordion accordion-answer">
+          <summary>
+            35. Relaciona frecuencia natural, frecuencia impulsora y estado
+            estacionario.
+          </summary>
+          <div class="answer-block">
+            <p>
+              La frecuencia natural \(\omega_0\) pertenece al sistema. La
+              frecuencia impulsora \(\omega\) pertenece a la fuerza externa. En
+              estado estacionario, la oscilación ocurre a \(\omega\), pero la
+              amplitud y la fase están gobernadas por la comparación entre
+              \(\omega\) y \(\omega_0\).
+            </p>
+          </div>
+        </details>
+      </section>
+      <section class="page" id="resumen">
+        <div class="page-head">
+          <h2>9. Resumen final de repaso</h2>
+          <span class="page-no">p.9</span>
+        </div>
+        <h3>Ideas principales</h3>
+        <ul class="summary-list">
+          <li>
+            El oscilador forzado amortiguado responde a una fuerza externa
+            periódica.
+          </li>
+          <li>La solución total es transitorio más estacionario.</li>
+          <li>El estacionario tiene la frecuencia de la fuerza externa.</li>
+          <li>
+            La resonancia es una respuesta máxima cerca de la frecuencia
+            natural.
+          </li>
+          <li>
+            El amortiguamiento limita la amplitud y determina la anchura del
+            pico.
+          </li>
+          <li>La fase decide la eficacia de transferencia de energía.</li>
+          <li>La potencia media absorbida es máxima en \(\omega=\omega_0\).</li>
+        </ul>
+        <h3>Conceptos imprescindibles</h3>
+        <div class="formula-sheet">
+          <div class="formula-block">\[\omega_0=\sqrt{k/m}\]</div>
+          <div class="formula-block">
+            \[m\ddot x+b\dot x+kx=F_0\cos(\omega t)\]
+          </div>
+          <div class="formula-block">\[x_s=A\cos(\omega t-\delta)\]</div>
+          <div class="formula-block">
+            \[A=\frac{F_0}{\sqrt{(k-m\omega^2)^2+(b\omega)^2}}\]
+          </div>
+          <div class="formula-block">
+            \[\tan\delta=\frac{b\omega}{k-m\omega^2}\]
+          </div>
+          <div class="formula-block">\[P(t)=F(t)\dot x(t)\]</div>
+          <div class="formula-block">
+            \[\langle P\rangle=
+            \frac{F_0^2b\omega^2}{2[(k-m\omega^2)^2+(b\omega)^2]}\]
+          </div>
+          <div class="formula-block">\[Q=\frac{m\omega_0}{b}\]</div>
+        </div>
+        <h3>Relaciones clave</h3>
+        <ul class="summary-list">
+          <li>Frecuencia externa fija la frecuencia estacionaria.</li>
+          <li>Frecuencia natural fija la zona de máxima respuesta.</li>
+          <li>
+            Amortiguamiento transforma resonancia infinita en pico finito.
+          </li>
+          <li>
+            Desfase de \(\pi/2\) en desplazamiento implica fuerza en fase con
+            velocidad.
+          </li>
+          <li>Alto \(Q\) significa resonancia intensa y estrecha.</li>
+          <li>
+            La potencia absorbida media iguala la potencia disipada media en
+            estacionario.
+          </li>
+        </ul>
+        <h3>Errores que evitar</h3>
+        <ul class="summary-list">
+          <li>
+            No poner \(\omega_0\) en la solución estacionaria si la fuerza tiene
+            frecuencia \(\omega\).
+          </li>
+          <li>
+            No confundir potencia absorbida instantánea con potencia disipada.
+          </li>
+          <li>No olvidar el desfase.</li>
+          <li>No usar \(\tan\delta\) sin controlar el cuadrante.</li>
+          <li>
+            No decir que toda resonancia ocurre exactamente en el mismo máximo
+            de amplitud.
+          </li>
+          <li>
+            No arrastrar el transitorio cuando el enunciado pide estado
+            estacionario.
+          </li>
+        </ul>
+      </section>
+      <section class="page" id="checklist">
+        <div class="page-head">
+          <h2>10. Checklist de dominio</h2>
+          <span class="page-no">p.10</span>
+        </div>
+        <ul class="checklist">
+          <li>
+            Si no puedes escribir \(m\ddot x+b\dot x+kx=F_0\cos(\omega t)\),
+            falta repasar el modelo físico.
+          </li>
+          <li>
+            Si no puedes identificar \(m\), \(b\), \(k\), \(F_0\), \(\omega\) y
+            \(\omega_0\), falta repasar significado de parámetros.
+          </li>
+          <li>
+            Si confundes \(\omega\) con \(\omega_0\), revisar frecuencia
+            impulsora frente a frecuencia natural.
+          </li>
+          <li>
+            Si no puedes separar solución homogénea y particular, falta repasar
+            EDO lineales no homogéneas.
+          </li>
+          <li>
+            Si no puedes explicar qué es el transitorio, falta repasar solución
+            completa.
+          </li>
+          <li>
+            Si no puedes obtener \(A(\omega)\), falta repasar método complejo o
+            sustitución trigonométrica.
+          </li>
+          <li>
+            Si no puedes obtener \(\tan\delta\), falta repasar números complejos
+            y fase.
+          </li>
+          <li>
+            Si confundes fase negativa con retraso físico, revisar cuadrantes
+            del desfase.
+          </li>
+          <li>
+            Si no puedes explicar por qué la amplitud no se hace infinita con
+            \(b\neq0\), falta repasar amortiguamiento.
+          </li>
+          <li>
+            Si no puedes calcular \(v(t)\) desde \(x(t)\), falta repasar
+            derivación de sinusoidales.
+          </li>
+          <li>
+            Si no puedes escribir \(P=F\dot x\), falta repasar potencia
+            mecánica.
+          </li>
+          <li>
+            Si confundes \(F\dot x\) con \(b\dot x^2\), revisar potencia
+            absorbida frente a potencia disipada.
+          </li>
+          <li>
+            Si no puedes promediar \(\cos^2\) y \(\sen\cos\), falta repasar
+            promedios trigonométricos.
+          </li>
+          <li>
+            Si no puedes demostrar que \(\langle P\rangle\) es máxima en
+            \(\omega_0\), falta repasar resonancia de velocidad.
+          </li>
+          <li>
+            Si afirmas que el máximo de desplazamiento siempre está en
+            \(\omega_0\), revisar resonancia de desplazamiento frente a
+            resonancia de potencia.
+          </li>
+          <li>
+            Si no puedes interpretar \(Q\), falta repasar disipación y anchura
+            de resonancia.
+          </li>
+          <li>
+            Si no puedes explicar cómo cambia la curva al aumentar \(b\), falta
+            repasar respuesta frecuencial.
+          </li>
+          <li>
+            Si puedes resolver un apartado UNED de estado estacionario en forma
+            \(A\sen\omega t+B\cos\omega t\), el núcleo algebraico está asentado.
+          </li>
+          <li>
+            Si puedes calcular potencia instantánea y media sin mirar fórmulas,
+            el capítulo está suficientemente asentado.
+          </li>
+          <li>
+            Si puedes explicar resonancia mecánica, eléctrica y energética con
+            el mismo esquema, el capítulo está dominado.
+          </li>
+        </ul>
+      </section>
+    </div>
+  </body>
+</html>
