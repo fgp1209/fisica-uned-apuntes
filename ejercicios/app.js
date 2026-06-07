@@ -1,42 +1,33 @@
-const PROBLEM_MANIFEST = "./problemas/manifest.json";
+const PROBLEMS_DIR = "./problemas";
+const MANIFEST_URL = `${PROBLEMS_DIR}/manifest.json`;
+const SUBJECTS_URL = `${PROBLEMS_DIR}/asignaturas.json`;
+
+const APP_CONFIG = {
+  githubRepo: "fgp1209/fisica-uned-apuntes",
+  githubBranch: "main",
+  githubProblemsPath: "ejercicios/problemas"
+};
+
+const NORMALIZED_PROBLEM_RE = /^([a-z0-9-]+)-t(\d+)_([a-z0-9-]+)_(.+)\.json$/i;
 
 const fallbackProblems = [
   {
-    id: "mec-cin-001",
+    id: "mecanica-t1_cinematica_caida-libre-pelota-5s",
+    archivo: "mecanica-t1_cinematica_caida-libre-pelota-5s.json",
+    asignatura: "mecanica",
     categoria: "Mecánica",
-    tema: "Tema 1",
-    subtema: "Cinemática — MUA",
+    tema: "T1",
+    subtema: "Cinemática",
     nivel: "basico",
-    titulo: "Posición de una partícula con aceleración constante",
-    enunciado: "Una partícula parte de x₀ = 2 m con velocidad inicial v₀ = 3 m/s y aceleración constante a = 4 m/s². Calcula su posición a los 5 s.",
+    titulo: "Caída libre de una pelota durante 5 s",
+    enunciado: "Una pelota se suelta desde el reposo y cae libremente durante 5 segundos. Tomando hacia arriba como sentido positivo y g = -9,8 m/s², calcula su posición y su velocidad en ese instante.",
     steps: [
       {
         tipo: "enunciado",
-        titulo: "Leer datos del problema",
-        formula: "x_0 = 2 m; v_0 = 3 m/s; a = 4 m/s^2; t = 5 s",
-        textoPizarra: "El dato clave es que la aceleración permanece constante.",
-        voz: "Tenemos posición inicial dos metros, velocidad inicial tres metros por segundo, aceleración cuatro metros por segundo al cuadrado y tiempo cinco segundos. El movimiento es uniformemente acelerado."
-      },
-      {
-        tipo: "fórmula",
-        titulo: "Elegir la ecuación horaria",
-        formula: "x = x_0 + v_0 t + \\frac{1}{2} a t^2",
-        textoPizarra: "Se usa la posición del movimiento uniformemente acelerado.",
-        voz: "Como la aceleración es constante, usamos la ecuación de posición del movimiento uniformemente acelerado: equis igual a equis inicial más velocidad inicial por tiempo más un medio de la aceleración por tiempo al cuadrado."
-      },
-      {
-        tipo: "sustitución",
-        titulo: "Sustituir los valores",
-        formula: "x = 2 + 3·5 + \\frac{1}{2}·4·5^2",
-        textoPizarra: "Primero se sustituyen magnitudes; después se calcula.",
-        voz: "Sustituimos los valores del enunciado. La posición es dos más tres por cinco más un medio por cuatro por cinco al cuadrado."
-      },
-      {
-        tipo: "cálculo",
-        titulo: "Calcular término a término",
-        formula: "x = 2 + 15 + 50 = 67 m",
-        textoPizarra: "El término de aceleración aporta cincuenta metros.",
-        voz: "Tres por cinco son quince. Cinco al cuadrado es veinticinco, y un medio por cuatro por veinticinco son cincuenta. El resultado total es sesenta y siete metros."
+        titulo: "Problema",
+        formula: "",
+        textoPizarra: "",
+        voz: "Una pelota se suelta desde el reposo y cae libremente durante cinco segundos. Tomando hacia arriba como sentido positivo y g igual a menos nueve coma ocho metros por segundo al cuadrado, calcula su posición y su velocidad en ese instante."
       }
     ]
   }
@@ -45,7 +36,8 @@ const fallbackProblems = [
 const state = {
   problems: [],
   filtered: [],
-  currentProblemIndex: 0,
+  subjects: {},
+  currentProblemId: null,
   currentStepIndex: 0,
   filter: "all",
   query: "",
@@ -82,7 +74,8 @@ const els = {
   restartProblem: $("#restartProblem"),
   downloadProblem: $("#downloadProblem"),
   toggleFullScreen: $("#toggleFullScreen"),
-  copyStep: $("#copyStep")
+  copyStep: $("#copyStep"),
+  board: $("#board")
 };
 
 init();
@@ -92,32 +85,163 @@ async function init() {
   setupVoices();
 
   try {
+    state.subjects = await loadSubjectCatalog();
     state.problems = await loadProblems();
   } catch (error) {
-    console.warn("No se pudo cargar manifest.json. Usando problema de fallback.", error);
-    state.problems = fallbackProblems;
+    console.warn("No se pudieron cargar los problemas. Usando fallback.", error);
+    state.problems = fallbackProblems.map((problem) => enrichProblem(problem, problem.archivo));
   }
 
   applyFilters();
-  selectProblem(0);
+  selectProblemById(state.filtered[0]?.id || state.problems[0]?.id);
   els.loadingState.classList.add("hidden");
   els.problemView.classList.remove("hidden");
 }
 
-async function loadProblems() {
-  const manifestResponse = await fetch(PROBLEM_MANIFEST, { cache: "no-store" });
-  if (!manifestResponse.ok) throw new Error("Manifest no encontrado");
-  const manifest = await manifestResponse.json();
+async function loadSubjectCatalog() {
+  try {
+    const response = await fetch(SUBJECTS_URL, { cache: "no-store" });
+    if (!response.ok) throw new Error("asignaturas.json no encontrado");
+    return response.json();
+  } catch {
+    return { orden: [], asignaturas: {} };
+  }
+}
 
+async function loadProblems() {
+  const files = await loadProblemFileNames();
   const problems = await Promise.all(
-    manifest.problemas.map(async (file) => {
-      const response = await fetch(`./problemas/${file}`, { cache: "no-store" });
+    files.map(async (file) => {
+      const response = await fetch(`${PROBLEMS_DIR}/${file}`, { cache: "no-store" });
       if (!response.ok) throw new Error(`Problema no encontrado: ${file}`);
-      return response.json();
+      const problem = await response.json();
+      return enrichProblem(problem, file);
     })
   );
 
-  return problems;
+  return problems.sort(compareProblems);
+}
+
+async function loadProblemFileNames() {
+  const hotFiles = await loadProblemFileNamesFromGitHub();
+  if (hotFiles.length) return hotFiles;
+
+  const response = await fetch(MANIFEST_URL, { cache: "no-store" });
+  if (!response.ok) throw new Error("manifest.json no encontrado");
+  const manifest = await response.json();
+  const files = Array.isArray(manifest) ? manifest : manifest.problemas;
+  return files.filter(isNormalizedProblemFile).sort(compareFileNames);
+}
+
+async function loadProblemFileNamesFromGitHub() {
+  const info = getGitHubFolderInfo();
+  if (!info) return [];
+
+  try {
+    const api = `https://api.github.com/repos/${info.repo}/contents/${info.path}?ref=${encodeURIComponent(info.branch)}`;
+    const response = await fetch(api, {
+      cache: "no-store",
+      headers: { Accept: "application/vnd.github+json" }
+    });
+    if (!response.ok) return [];
+    const entries = await response.json();
+    if (!Array.isArray(entries)) return [];
+    return entries
+      .filter((entry) => entry.type === "file")
+      .map((entry) => entry.name)
+      .filter(isNormalizedProblemFile)
+      .sort(compareFileNames);
+  } catch {
+    return [];
+  }
+}
+
+function getGitHubFolderInfo() {
+  const params = new URLSearchParams(window.location.search);
+  const repo = params.get("repo") || inferGitHubRepoFromLocation() || APP_CONFIG.githubRepo;
+  const branch = params.get("branch") || APP_CONFIG.githubBranch;
+  const path = params.get("problemsPath") || inferProblemsPathFromLocation() || APP_CONFIG.githubProblemsPath;
+
+  if (!repo || !path) return null;
+  return { repo, branch, path };
+}
+
+function inferGitHubRepoFromLocation() {
+  const host = window.location.hostname;
+  if (!host.endsWith(".github.io")) return null;
+  const owner = host.replace(".github.io", "");
+  const repo = window.location.pathname.split("/").filter(Boolean)[0];
+  return owner && repo ? `${owner}/${repo}` : null;
+}
+
+function inferProblemsPathFromLocation() {
+  const host = window.location.hostname;
+  if (!host.endsWith(".github.io")) return null;
+  const parts = window.location.pathname.split("/").filter(Boolean);
+  if (parts.length < 2) return null;
+  const pathParts = parts.slice(1);
+  if (pathParts[pathParts.length - 1]?.endsWith(".html")) pathParts.pop();
+  return `${pathParts.join("/")}/problemas`.replace(/^\//, "");
+}
+
+function isNormalizedProblemFile(file) {
+  return NORMALIZED_PROBLEM_RE.test(file);
+}
+
+function enrichProblem(problem, file) {
+  const parsed = parseProblemFileName(file);
+  const asignatura = problem.asignatura || parsed.asignatura || slugify(problem.categoria || "sin-asignatura");
+  const categoria = problem.categoria || getSubjectLabel(asignatura);
+  const temaNumero = problem.temaNumero || parsed.temaNumero;
+  const tema = normalizeTema(problem.tema, temaNumero);
+  const subtemaSlug = problem.subtemaSlug || parsed.subtemaSlug || slugify(problem.subtema || "sin-subtema");
+  const subtema = problem.subtema || titleFromSlug(subtemaSlug);
+  const ejercicioSlug = parsed.ejercicioSlug || slugify(problem.titulo || file.replace(/\.json$/i, ""));
+  const titulo = problem.titulo || titleFromSlug(ejercicioSlug);
+  const id = problem.id || file.replace(/\.json$/i, "");
+
+  return {
+    ...problem,
+    id,
+    archivo: file,
+    asignatura,
+    categoria,
+    temaNumero,
+    tema,
+    subtemaSlug,
+    subtema,
+    ejercicioSlug,
+    titulo,
+    steps: normalizeSteps(problem)
+  };
+}
+
+function normalizeSteps(problem) {
+  const rawSteps = Array.isArray(problem.steps) ? problem.steps : [];
+  const hasStepZero = rawSteps[0]?.tipo === "enunciado" && !rawSteps[0]?.formula && !rawSteps[0]?.textoPizarra;
+  if (hasStepZero) return rawSteps;
+
+  return [
+    {
+      tipo: "enunciado",
+      titulo: "Problema",
+      formula: "",
+      textoPizarra: "",
+      voz: problem.ttsEnunciado || problem.enunciado || ""
+    },
+    ...rawSteps
+  ];
+}
+
+function parseProblemFileName(file) {
+  const match = file.match(NORMALIZED_PROBLEM_RE);
+  if (!match) return {};
+  return {
+    asignatura: match[1].toLowerCase(),
+    temaNumero: Number(match[2]),
+    subtemaSlug: match[3].toLowerCase(),
+    ejercicioSlug: match[4].replace(/\.json$/i, "").toLowerCase()
+  };
 }
 
 function bindEvents() {
@@ -174,6 +298,7 @@ function setupVoices() {
 function applyFilters() {
   state.filtered = state.problems.filter((problem) => {
     const haystack = [
+      problem.archivo,
       problem.categoria,
       problem.tema,
       problem.subtema,
@@ -187,50 +312,129 @@ function applyFilters() {
     return matchesQuery && matchesLevel;
   });
 
+  if (!state.filtered.some((problem) => problem.id === state.currentProblemId)) {
+    state.currentProblemId = state.filtered[0]?.id || null;
+    state.currentStepIndex = 0;
+  }
+
   renderProblemList();
+  if (state.currentProblemId) renderCurrentProblem();
 
   if (!state.filtered.length) {
-    els.problemList.innerHTML = `<div class="state-card">Sin resultados.</div>`;
+    els.problemList.innerHTML = `<div class="state-card compact">Sin resultados.</div>`;
   }
 }
 
 function renderProblemList() {
-  els.problemList.innerHTML = state.filtered.map((problem, index) => `
-    <button class="problem-item ${index === state.currentProblemIndex ? "active" : ""}" type="button" data-index="${index}">
-      <strong>${escapeHtml(problem.titulo)}</strong>
-      <span>${escapeHtml(problem.categoria)} · ${escapeHtml(problem.subtema)} · ${escapeHtml(problem.nivel)}</span>
-    </button>
-  `).join("");
+  const tree = buildTree(state.filtered);
+  const current = getCurrentProblem();
 
-  els.problemList.querySelectorAll(".problem-item").forEach((button) => {
+  els.problemList.innerHTML = tree.map((subject) => {
+    const subjectOpen = current?.asignatura === subject.slug;
+    const topicsHtml = subject.topics.map((topic) => {
+      const topicOpen = subjectOpen && current?.topicKey === topic.key;
+      const leaves = topic.problems.map((problem) => `
+        <button class="problem-leaf ${problem.id === state.currentProblemId ? "active" : ""}" type="button" data-id="${escapeHtml(problem.id)}">
+          <strong>${escapeHtml(problem.titulo)}</strong>
+          <span>${escapeHtml(problem.archivo)}</span>
+        </button>
+      `).join("");
+
+      return `
+        <details class="tree-node tree-topic" ${topicOpen ? "open" : ""}>
+          <summary><span>${escapeHtml(topic.label)}</span><b>${topic.count}</b></summary>
+          <div class="tree-children">${leaves}</div>
+        </details>
+      `;
+    }).join("");
+
+    return `
+      <details class="tree-node tree-subject" ${subjectOpen ? "open" : ""}>
+        <summary><span>${escapeHtml(subject.label)}</span><b>${subject.count}</b></summary>
+        <div class="tree-children">${topicsHtml}</div>
+      </details>
+    `;
+  }).join("");
+
+  els.problemList.querySelectorAll(".problem-leaf").forEach((button) => {
     button.addEventListener("click", () => {
-      selectProblem(Number(button.dataset.index));
+      selectProblemById(button.dataset.id);
       els.indexPanel.classList.remove("open");
     });
   });
 }
 
-function selectProblem(index) {
-  if (!state.filtered.length) return;
-  state.currentProblemIndex = index;
+function buildTree(problems) {
+  const subjectMap = new Map();
+
+  problems.forEach((problem) => {
+    const subjectKey = problem.asignatura;
+    const topicKey = `${problem.temaNumero || 0}-${problem.subtemaSlug}`;
+    problem.topicKey = topicKey;
+
+    if (!subjectMap.has(subjectKey)) {
+      subjectMap.set(subjectKey, {
+        slug: subjectKey,
+        label: getSubjectLabel(subjectKey, problem.categoria),
+        count: 0,
+        topics: new Map()
+      });
+    }
+
+    const subject = subjectMap.get(subjectKey);
+    subject.count += 1;
+
+    if (!subject.topics.has(topicKey)) {
+      subject.topics.set(topicKey, {
+        key: topicKey,
+        order: problem.temaNumero || 999,
+        label: `${problem.tema} · ${problem.subtema}`,
+        count: 0,
+        problems: []
+      });
+    }
+
+    const topic = subject.topics.get(topicKey);
+    topic.count += 1;
+    topic.problems.push(problem);
+  });
+
+  return Array.from(subjectMap.values())
+    .sort(compareSubjects)
+    .map((subject) => ({
+      ...subject,
+      topics: Array.from(subject.topics.values())
+        .sort((a, b) => a.order - b.order || a.label.localeCompare(b.label, "es"))
+        .map((topic) => ({
+          ...topic,
+          problems: topic.problems.sort(compareProblems)
+        }))
+    }));
+}
+
+function selectProblemById(id) {
+  if (!id) return;
+  state.currentProblemId = id;
   state.currentStepIndex = 0;
   renderProblemList();
   renderCurrentProblem();
 }
 
 function getCurrentProblem() {
-  return state.filtered[state.currentProblemIndex];
+  return state.filtered.find((problem) => problem.id === state.currentProblemId) || state.filtered[0];
 }
 
 function getCurrentStep() {
-  return getCurrentProblem().steps[state.currentStepIndex];
+  const problem = getCurrentProblem();
+  return problem?.steps[state.currentStepIndex];
 }
 
 function renderCurrentProblem() {
   const problem = getCurrentProblem();
+  if (!problem) return;
   const step = getCurrentStep();
-  const total = problem.steps.length;
-  const current = state.currentStepIndex + 1;
+  const lastStepIndex = Math.max(problem.steps.length - 1, 0);
+  const current = state.currentStepIndex;
 
   els.subjectTag.textContent = problem.categoria;
   els.topicTag.textContent = `${problem.tema} · ${problem.subtema}`;
@@ -239,22 +443,24 @@ function renderCurrentProblem() {
   els.problemStatement.textContent = problem.enunciado;
 
   els.stepNumber.textContent = current;
-  els.stepTotal.textContent = total;
-  els.progressBar.style.width = `${(current / total) * 100}%`;
+  els.stepTotal.textContent = lastStepIndex;
+  els.progressBar.style.width = `${lastStepIndex === 0 ? 100 : (current / lastStepIndex) * 100}%`;
 
-  els.stepTitle.textContent = step.titulo;
-  els.stepKind.textContent = step.tipo;
-  els.boardFormula.innerHTML = renderFormula(step.formula || "");
-  els.boardText.textContent = step.textoPizarra || "";
-  els.stepExplanation.textContent = step.voz || "";
+  els.stepTitle.textContent = step?.titulo || "";
+  els.stepKind.textContent = step?.tipo || "";
+  els.boardFormula.innerHTML = renderFormula(step?.formula || "");
+  els.boardText.textContent = step?.textoPizarra || "";
+  els.stepExplanation.textContent = step?.voz || "";
+  els.board.classList.toggle("empty", !(step?.formula || step?.textoPizarra));
 
   els.prevStep.disabled = state.currentStepIndex === 0;
-  els.nextStep.disabled = state.currentStepIndex === total - 1;
+  els.nextStep.disabled = state.currentStepIndex === lastStepIndex;
 }
 
 function goStep(delta) {
   stopSpeech();
   const problem = getCurrentProblem();
+  if (!problem) return;
   const next = state.currentStepIndex + delta;
   if (next < 0 || next >= problem.steps.length) return;
   state.currentStepIndex = next;
@@ -266,7 +472,9 @@ function speakCurrentStep() {
 
   stopSpeech();
   const step = getCurrentStep();
-  const text = step.voz || step.textoPizarra || step.titulo;
+  const text = step?.voz || step?.textoPizarra || step?.titulo || "";
+  if (!text) return;
+
   const utterance = new SpeechSynthesisUtterance(text);
   utterance.lang = "es-ES";
   utterance.rate = 0.92;
@@ -300,10 +508,10 @@ function copyCurrentStep() {
 function buildProblemMarkdown(problem, step, stepIndex) {
   const steps = problem.steps.map((item, index) => {
     const marker = index === stepIndex ? " ← ATASCO AQUÍ" : "";
-    return `## Step ${index + 1}: ${item.titulo}${marker}\n\nTipo: ${item.tipo}\n\nPizarra:\n${item.formula || ""}\n\nExplicación:\n${item.voz || ""}`;
+    return `## Paso ${index}: ${item.titulo}${marker}\n\nTipo: ${item.tipo}\n\nPizarra:\n${item.formula || item.textoPizarra || ""}\n\nTexto/TTS:\n${item.voz || ""}`;
   }).join("\n\n---\n\n");
 
-  return `# ${problem.titulo}\n\nCategoría: ${problem.categoria}\nTema: ${problem.tema}\nSubtema: ${problem.subtema}\nNivel: ${problem.nivel}\n\n## Enunciado\n\n${problem.enunciado}\n\n## Punto de atasco\n\nStep ${stepIndex + 1}: ${step.titulo}\n\n---\n\n${steps}\n`;
+  return `# ${problem.titulo}\n\nArchivo: ${problem.archivo}\nCategoría: ${problem.categoria}\nTema: ${problem.tema}\nSubtema: ${problem.subtema}\nNivel: ${problem.nivel}\n\n## Enunciado\n\n${problem.enunciado}\n\n## Punto de atasco\n\nPaso ${stepIndex}: ${step.titulo}\n\n---\n\n${steps}\n`;
 }
 
 function downloadText(filename, text) {
@@ -338,6 +546,55 @@ function renderFormula(input) {
   output = output.replace(/;/g, "<br>");
 
   return output;
+}
+
+function getSubjectLabel(slug, fallback) {
+  return state.subjects.asignaturas?.[slug] || fallback || titleFromSlug(slug);
+}
+
+function normalizeTema(tema, numero) {
+  if (tema) return String(tema).toUpperCase().startsWith("T") ? tema : `T${tema}`;
+  return numero ? `T${numero}` : "T?";
+}
+
+function compareSubjects(a, b) {
+  const order = state.subjects.orden || [];
+  const ia = order.indexOf(a.slug);
+  const ib = order.indexOf(b.slug);
+  if (ia !== -1 || ib !== -1) return (ia === -1 ? 999 : ia) - (ib === -1 ? 999 : ib);
+  return a.label.localeCompare(b.label, "es");
+}
+
+function compareProblems(a, b) {
+  return (a.temaNumero || 999) - (b.temaNumero || 999)
+    || a.subtema.localeCompare(b.subtema, "es")
+    || a.titulo.localeCompare(b.titulo, "es");
+}
+
+function compareFileNames(a, b) {
+  const pa = parseProblemFileName(a);
+  const pb = parseProblemFileName(b);
+  return (pa.asignatura || "").localeCompare(pb.asignatura || "", "es")
+    || (pa.temaNumero || 999) - (pb.temaNumero || 999)
+    || (pa.subtemaSlug || "").localeCompare(pb.subtemaSlug || "", "es")
+    || a.localeCompare(b, "es");
+}
+
+function titleFromSlug(value) {
+  return String(value || "")
+    .replace(/[-_]+/g, " ")
+    .replace(/\s+/g, " ")
+    .trim()
+    .replace(/\b\p{L}/gu, (char) => char.toUpperCase());
+}
+
+function slugify(value) {
+  return String(value || "")
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "") || "sin-titulo";
 }
 
 function escapeHtml(value) {

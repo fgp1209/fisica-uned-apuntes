@@ -170,6 +170,116 @@ h3 { font-size: clamp(1.05rem, 3.6vw, 1.5rem); }
 .problem-item strong { display: block; margin-bottom: 8px; line-height: 1.2; }
 .problem-item span { color: var(--muted); font-size: .83rem; }
 
+
+.problem-list.tree-mode {
+  gap: 8px;
+}
+
+.tree-node {
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: rgba(255,255,255,.045);
+  overflow: hidden;
+}
+
+.tree-node + .tree-node { margin-top: 10px; }
+
+.tree-node summary {
+  list-style: none;
+  cursor: pointer;
+  padding: 13px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  color: var(--text);
+  font-weight: 900;
+}
+
+.tree-node summary::-webkit-details-marker { display: none; }
+
+.tree-node summary::before {
+  content: "▸";
+  color: var(--accent-2);
+  transition: transform .16s ease;
+  margin-right: 2px;
+}
+
+.tree-node[open] > summary::before { transform: rotate(90deg); }
+
+.tree-node summary span {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.tree-node summary b {
+  min-width: 30px;
+  height: 28px;
+  display: inline-grid;
+  place-items: center;
+  border-radius: 999px;
+  background: rgba(125,211,252,.14);
+  color: var(--accent-2);
+  border: 1px solid rgba(125,211,252,.18);
+  font-size: .78rem;
+}
+
+.tree-subject > summary {
+  background: rgba(255,255,255,.04);
+}
+
+.tree-topic {
+  background: rgba(0,0,0,.12);
+  border-radius: 16px;
+}
+
+.tree-topic > summary {
+  padding: 11px 12px;
+  color: var(--muted);
+  font-size: .92rem;
+}
+
+.tree-children {
+  display: grid;
+  gap: 8px;
+  padding: 0 10px 10px 10px;
+}
+
+.problem-leaf {
+  text-align: left;
+  border: 1px solid var(--line);
+  border-radius: 15px;
+  background: rgba(255,255,255,.055);
+  color: var(--text);
+  padding: 12px;
+  cursor: pointer;
+}
+
+.problem-leaf.active {
+  border-color: rgba(125,211,252,.9);
+  background: rgba(125,211,252,.13);
+}
+
+.problem-leaf strong {
+  display: block;
+  margin-bottom: 6px;
+  line-height: 1.2;
+}
+
+.problem-leaf span {
+  color: var(--muted);
+  font-size: .74rem;
+  overflow-wrap: anywhere;
+}
+
+.state-card.compact {
+  min-height: 120px;
+  padding: 18px;
+}
+
 .workbench {
   min-width: 0;
   display: flex;
@@ -369,4 +479,13 @@ h3 { font-size: clamp(1.05rem, 3.6vw, 1.5rem); }
 
 @media (min-width: 901px) {
   .small-only { display: none; }
+}
+
+.board.empty {
+  align-content: stretch;
+}
+
+.board.empty .board-formula,
+.board.empty .board-text {
+  display: none;
 }
