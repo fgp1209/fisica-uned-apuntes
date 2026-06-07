@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="robots" content="noindex, nofollow" />
+<meta name="color-scheme" content="light dark" />
+<title>V&amp;O — T8 — Límites, reflexión, impedancia e interferencia</title>
+<link rel="icon" type="image/png" sizes="32x32" href="assets/icons/icon-32.png" />
+<link rel="icon" type="image/png" sizes="50x50" href="assets/icons/icon-50.png" />
+<link rel="apple-touch-icon" sizes="100x100" href="assets/icons/icon-100.png" />
+<meta name="theme-color" content="#007c91" />
+<link rel="stylesheet" href="assets/styles.css" />
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+<script defer src="assets/app.js"></script>
+</head>
+<body class="subject-vo">
+<div class="wrap">
+<header class="cover">
+<div class="top-actions"><a class="back-link" href="index.html">← Volver al índice</a></div>
+<p class="eyebrow">UNED Física · Vibraciones y Ondas · Tema 8</p>
+<h1>Guía de estudio — French, Vibraciones y ondas:</h1>
+<p class="subtitle">límites, reflexión, impedancia e interferencia</p>
+<div class="chips"><span class="chip">UNED Física</span><span class="chip">Vibraciones y Ondas</span><span class="chip">T8</span><span class="chip">French cap. 8</span><span class="chip">estado: maquetado</span></div>
+</header>
+<div class="toolbar no-print">
+<nav><a href="#mapa">Mapa</a><a href="#prerrequisitos">Prerrequisitos</a><a href="#desarrollo-completo">Desarrollo</a><a href="#conceptos-clave">Conceptos</a><a href="#errores-habituales">Errores</a><a href="#preguntas-orientadas-a-examen">Preguntas</a><a href="#respuestas-modelo">Respuestas</a><a href="#resumen-final-de-repaso">Resumen</a><a href="#checklist-de-dominio">Checklist</a></nav>
+<div class="toolbar-actions"><button class="btn" onclick="printReady()">Imprimir / guardar PDF</button><button class="btn secondary" onclick="openAllDetails()">Abrir todo</button><button class="btn secondary" onclick="closeAllDetails()">Cerrar acordeones</button></div>
+</div>
+<main>
+<section class="page map-page" id="mapa"><div class="page-head"><h2>Mapa clicable</h2><p class="section-lead">Ruta de lectura y repaso del tema.</p></div><div class="concept-map">
+<a class="map-node" href="#prerrequisitos"><span>Prerrequisitos</span><small>ondas · fase · contornos · energía · campo lejano</small></a>
+<a class="map-node" href="#desarrollo-completo"><span>Límites e impedancia</span><small>extremos · cuerdas · adaptación · transmisión</small></a>
+<a class="map-node" href="#desarrollo-completo"><span>Ondas en 2D</span><small>Huygens · reflexión · Snell · Doppler · Mach</small></a>
+<a class="map-node" href="#conceptos-clave"><span>Interferencia</span><small>doble rendija · redes · rendija única · Fraunhofer</small></a>
+<a class="map-node" href="#preguntas-orientadas-a-examen"><span>Examen</span><small>errores · preguntas · respuestas modelo</small></a>
+<a class="map-node" href="#resumen-final-de-repaso"><span>Cierre</span><small>resumen · relaciones · checklist</small></a>
+</div></section>
+<section class="page" id="prerrequisitos">
+<div class="page-head"><h2>1. Prerrequisitos mínimos</h2><p class="section-lead">Conceptos mínimos necesarios para abordar límites, reflexión, impedancia, refracción e interferencia.</p></div>
+<div class="grid cards-grid">
+<article class="definition-card"><h3>Onda progresiva unidimensional</h3>
+<p><strong>Definición breve:</strong> una onda progresiva es una perturbación que mantiene su forma mientras se desplaza. En una dimensión puede escribirse como</p>
+<div class="formula-block">\[
+y(x,t)=f(x-vt)
+\]</div>
+<p>si viaja hacia valores crecientes de \(x\), o como</p>
+<div class="formula-block">\[
+y(x,t)=g(x+vt)
+\]</div>
+<p>si viaja hacia valores decrecientes de \(x\).</p>
+<p><strong>Es necesario porque</strong> todo el capítulo estudia qué ocurre cuando una onda progresiva deja de propagarse libremente y encuentra una frontera, una unión entre medios, una abertura o un obstáculo. Sin esta forma funcional no se entiende por qué una onda reflejada debe llevar el argumento opuesto ni por qué una onda transmitida cambia de escala espacial.</p>
+<p><strong>Ejemplo mínimo:</strong> un pulso que viaja hacia la derecha en una cuerda se puede escribir como \(f(x-vt)\). Si se refleja y vuelve hacia la izquierda, la forma reflejada tendrá estructura \(g(x+vt)\).</p>
+</article>
+<article class="definition-card"><h3>Velocidad de onda en una cuerda tensa</h3>
+<p><strong>Definición breve:</strong> en una cuerda con tensión \(T\) y densidad lineal \(\mu\), la velocidad de propagación transversal es</p>
+<div class="formula-block">\[
+v=\sqrt{\frac{T}{\mu}}.
+\]</div>
+<p><strong>Es necesario porque</strong> en la unión entre dos cuerdas distintas la velocidad cambia si cambia \(\mu\) o \(T\). Ese cambio de velocidad determina la amplitud reflejada y transmitida.</p>
+<p><strong>Ejemplo mínimo:</strong> si dos cuerdas tienen la misma tensión pero la segunda tiene mayor densidad lineal, entonces la onda viaja más despacio en la segunda. En ese caso aparece reflexión parcial.</p>
+</article>
+<article class="definition-card"><h3>Superposición</h3>
+<p><strong>Definición breve:</strong> en régimen lineal, el desplazamiento total es la suma algebraica de los desplazamientos producidos por cada onda.</p>
+<p><strong>Es necesario porque</strong> la reflexión, la interferencia por doble rendija, las redes de difracción y la difracción por una sola rendija se explican sumando ondas con fases distintas.</p>
+<p><strong>Ejemplo mínimo:</strong></p>
+<div class="formula-block">\[
+A\cos(\omega t-kr_1)+A\cos(\omega t-kr_2)
+\]</div>
+<p>puede dar una amplitud grande, pequeña o nula según la diferencia \(r_2-r_1\).</p>
+</article>
+<article class="definition-card"><h3>Fase y diferencia de camino</h3>
+<p><strong>Definición breve:</strong> una diferencia de camino \(\Delta r\) entre dos ondas de la misma longitud de onda \(\lambda\) produce una diferencia de fase</p>
+<div class="formula-block">\[
+\Delta \phi = \frac{2\pi}{\lambda}\Delta r.
+\]</div>
+<p><strong>Es necesario porque</strong> las condiciones de máximo y mínimo de interferencia dependen de si la diferencia de fase es múltiplo entero de \(2\pi\) o múltiplo impar de \(\pi\).</p>
+<p><strong>Ejemplo mínimo:</strong> si \(\Delta r=\lambda\), las ondas llegan en fase; si \(\Delta r=\lambda/2\), llegan en oposición de fase.</p>
+</article>
+<article class="definition-card"><h3>Condiciones de contorno</h3>
+<p><strong>Definición breve:</strong> son restricciones físicas que debe satisfacer la onda en una frontera: desplazamiento impuesto, fuerza transversal nula, continuidad del desplazamiento o continuidad de la fuerza.</p>
+<p><strong>Es necesario porque</strong> el signo de la onda reflejada no se decide por intuición, sino por la condición de contorno. Un extremo fijo exige desplazamiento nulo; un extremo libre exige fuerza transversal nula.</p>
+<p><strong>Ejemplo mínimo:</strong> en un extremo fijo, la onda incidente y la reflejada deben sumar cero en el punto extremo. Por eso la reflejada está invertida.</p>
+</article>
+<article class="definition-card"><h3>Energía transportada por una onda</h3>
+<p><strong>Definición breve:</strong> una onda mecánica no solo transporta forma; transporta energía. Para una onda armónica en una cuerda, el flujo energético medio es proporcional a \(A^2\), donde \(A\) es la amplitud.</p>
+<p><strong>Es necesario porque</strong> una frontera no solo reparte amplitudes: reparte energía entre onda reflejada y onda transmitida.</p>
+<p><strong>Ejemplo mínimo:</strong> duplicar la amplitud no duplica la intensidad; la multiplica por cuatro.</p>
+</article>
+<article class="definition-card"><h3>Ondas transversales y longitudinales</h3>
+<p><strong>Definición breve:</strong> en una onda transversal el desplazamiento del medio es perpendicular a la dirección de propagación; en una longitudinal es paralelo a ella.</p>
+<p><strong>Es necesario porque</strong> una misma frontera puede comportarse de forma diferente para ambos tipos de onda. Una pared rígida puede ser nodo para una perturbación longitudinal y antinodo para una perturbación transversal superficial.</p>
+<p><strong>Ejemplo mínimo:</strong> una cuerda tensa soporta ondas transversales; el sonido en aire ordinario es longitudinal.</p>
+</article>
+<article class="definition-card"><h3>Frente de onda y rayo</h3>
+<p><strong>Definición breve:</strong> el frente de onda es el lugar geométrico de puntos con igual fase; el rayo es la dirección normal al frente de onda en medios isótropos.</p>
+<p><strong>Es necesario porque</strong> la reflexión y la refracción de ondas planas se explican geométricamente con frentes de onda y construcción de Huygens.</p>
+<p><strong>Ejemplo mínimo:</strong> en una onda plana que incide sobre una frontera recta, los rayos cumplen la ley de reflexión y la ley de Snell.</p>
+</article>
+<article class="definition-card"><h3>Aproximación de campo lejano</h3>
+<p><strong>Definición breve:</strong> aproximación en la que el punto de observación está a distancia mucho mayor que las dimensiones del sistema de rendijas o abertura. Las líneas desde cada rendija al punto se consideran casi paralelas.</p>
+<p><strong>Es necesario porque</strong> las fórmulas simples \(d\sin\theta=n\lambda\) y \(b\sin\theta=m\lambda\) pertenecen a esta aproximación.</p>
+<p><strong>Ejemplo mínimo:</strong> una pantalla muy alejada de una doble rendija permite sustituir \(r_2-r_1\) por \(d\sin\theta\).</p>
+</article>
+<article class="definition-card"><h3>Exponente complejo como herramienta de fase</h3>
+<p><strong>Definición breve:</strong> una onda armónica puede representarse como la parte real de una exponencial compleja:</p>
+<div class="formula-block">\[
+y=A\cos(\omega t-kr)=\Re\{Ae^{i(\omega t-kr)}\}.
+\]</div>
+<p><strong>Es necesario porque</strong> la suma de muchas ondas de igual frecuencia se reduce a sumar vectores de fase. French lo usa de forma conceptual al construir diagramas vectoriales de interferencia.</p>
+<p><strong>Ejemplo mínimo:</strong> dos ondas iguales con diferencia de fase \(\delta\) tienen amplitud resultante \(2A\cos(\delta/2)\).</p>
+</article>
+</div>
+</section><section class="page" id="idea-central">
+<div class="page-head"><h2>2. Idea central del capítulo</h2><p class="section-lead">La frontera transforma la propagación libre en un problema de condiciones de contorno y superposición.</p></div>
+<div class="reading-block"><p>El capítulo estudia qué le ocurre a una onda cuando deja de propagarse en un medio homogéneo e ilimitado. En el capítulo anterior la onda podía imaginarse avanzando sin obstáculos: un pulso sobre una cuerda, una onda viajera, una perturbación sinusoidal, un tren de ondas. Aquí aparece el elemento físico que faltaba: la frontera. Una frontera puede ser un extremo fijo, un extremo libre, una unión entre dos cuerdas, una barrera con rendijas, una interfaz entre dos medios o una fuente en movimiento respecto al medio.</p></div>
+<div class="reading-block"><p>La idea central es que una onda no desaparece al encontrar un límite. La perturbación debe reorganizarse para cumplir las condiciones impuestas por la frontera. Esa reorganización produce reflexión, transmisión, inversión de fase, cambio de longitud de onda, refracción, difracción e interferencia. Todos esos fenómenos son manifestaciones de una misma estructura: continuidad, conservación y superposición.</p></div>
+<div class="reading-block"><p>El capítulo comienza con un caso mecánico muy controlable: un pulso transversal en una cuerda. Si el extremo está fijo, el desplazamiento total en el extremo debe ser cero. La única forma de conseguirlo es que el pulso reflejado tenga signo contrario. Si el extremo está libre, la fuerza transversal debe anularse. Entonces la reflexión ocurre sin inversión. Este contraste fija la lógica de todo el tema: la forma de la onda reflejada no se decide mirando solo la onda incidente, sino mirando qué exige el límite.</p></div>
+<div class="reading-block"><p>Después French generaliza el problema a una unión entre dos cuerdas. Ya no se tiene una reflexión total, sino una reflexión parcial y una transmisión parcial. La onda incidente se reparte. La cantidad reflejada depende de la diferencia entre las propiedades dinámicas de ambos medios. Esa diferencia se formula de forma compacta mediante la impedancia mecánica. Cuando las impedancias coinciden, no hay reflexión; cuando son muy distintas, la reflexión es fuerte.</p></div>
+<div class="reading-block"><p>El capítulo pasa luego de una dimensión a dos y tres dimensiones. En varias dimensiones aparecen frentes de onda, rayos, polarización, reflexión especular, refracción y difracción. El principio de Huygens-Fresnel proporciona la imagen conceptual: cada punto de un frente de onda puede tratarse como fuente secundaria. Al sumar las contribuciones de esas fuentes se reconstruye el frente posterior o aparece un patrón de interferencia.</p></div>
+<div class="reading-block"><p>La interferencia ocupa la parte final del capítulo. Una doble rendija no es solo un experimento óptico: es la expresión limpia de la superposición de ondas coherentes con diferencia de camino. Las zonas de máximo y mínimo no surgen porque una rendija mande más energía que otra, sino porque las fases llegan coordinadas o en oposición. Las redes de difracción agudizan esta misma idea al sumar muchas contribuciones. La rendija única muestra que incluso una sola abertura extensa interfiere consigo misma, porque distintas zonas de la abertura actúan como fuentes secundarias con fases diferentes.</p></div>
+<div class="reading-block"><p>Dentro de la asignatura, este capítulo conecta las ondas progresivas con los fenómenos observables de laboratorio: ecos, adaptación de impedancias, polarización, refracción, efecto Doppler, estampido sónico, difracción e interferencia. Es un capítulo de transición entre la teoría de ondas y la física de los sistemas reales.</p></div>
+</section><section class="page" id="desarrollo-completo">
+<div class="page-head"><h2>3. Desarrollo completo del capítulo</h2><p class="section-lead">Recorrido completo desde la reflexión en cuerdas hasta la difracción de sistemas reales de rendijas.</p></div>
+<h3 id="3-1-del-medio-ilimitado-al-limite-fisico">3.1. Del medio ilimitado al límite físico</h3>
+<div class="reading-block"><p>Una onda progresiva ideal puede viajar indefinidamente si el medio es homogéneo y no hay obstáculos. Esa situación es útil para definir velocidad, longitud de onda, energía y superposición, pero es incompleta. En cualquier sistema real hay extremos, cambios de medio, discontinuidades, paredes, aberturas u obstáculos.</p></div>
+<div class="reading-block"><p>Cuando una onda llega a una frontera, no basta con prolongarla matemáticamente. La frontera impone una condición física. Si la cuerda termina en un soporte fijo, el punto extremo no puede desplazarse. Si termina en un anillo libre, el extremo sí puede moverse pero no puede soportar una fuerza transversal neta. Si una cuerda se une a otra, el punto de unión debe tener un único desplazamiento y las fuerzas transversales deben equilibrarse.</p></div>
+<div class="reading-block"><p>La consecuencia inmediata es la aparición de ondas reflejadas y transmitidas. La onda incidente no se destruye; se combina con nuevas ondas que permiten satisfacer las condiciones en el límite.</p></div>
+<h3 id="3-2-reflexion-en-un-extremo-fijo">3.2. Reflexión en un extremo fijo</h3>
+<div class="reading-block"><p>En un extremo fijo, el desplazamiento total debe ser siempre cero. Si llega un pulso positivo, el extremo no puede subir. Para que la suma sea cero en el punto fijo, debe generarse una perturbación reflejada de signo opuesto.</p></div>
+<div class="reading-block"><p>La interpretación por superposición es limpia. Una onda estacionaria en una cuerda fija por ambos extremos puede verse como suma de dos ondas iguales que viajan en sentidos opuestos. En los extremos fijos, ambas ondas deben cancelarse siempre. La misma condición se aplica localmente a la reflexión de un pulso.</p></div>
+<div class="reading-block"><p>Así, un pulso reflejado en un extremo fijo:</p></div>
+<ul><li>vuelve en sentido contrario,</li><li>conserva su forma ideal si no hay pérdidas,</li><li>aparece invertido respecto al incidente,</li><li>produce un nodo en el extremo.</li></ul>
+<div class="reading-block"><p>El signo negativo no es una convención gráfica. Es la traducción directa de la condición \(y=0\) en el extremo.</p></div>
+<h3 id="3-3-reflexion-en-un-extremo-libre">3.3. Reflexión en un extremo libre</h3>
+<div class="reading-block"><p>En un extremo libre, el desplazamiento del extremo no está impuesto. La condición física no es \(y=0\), sino fuerza transversal nula. En una cuerda tensa, la fuerza transversal está relacionada con la pendiente local. Si el extremo es libre, la pendiente efectiva debe ajustarse para que no haya fuerza transversal externa.</p></div>
+<div class="reading-block"><p>Cuando llega un pulso positivo al extremo libre, la reacción no exige una inversión. La onda reflejada tiene la misma polaridad que la incidente. El extremo actúa como un antinodo, no como un nodo.</p></div>
+<div class="reading-block"><p>El contraste fijo/libre es uno de los puntos nucleares del capítulo:</p></div>
+<ul><li>extremo fijo: desplazamiento nulo, reflexión invertida;</li><li>extremo libre: fuerza transversal nula, reflexión no invertida.</li></ul>
+<div class="reading-block"><p>Este resultado reaparece en acústica y en ondas estacionarias. Un extremo cerrado de un tubo y un extremo abierto no imponen la misma condición a la perturbación longitudinal de presión y desplazamiento.</p></div>
+<h3 id="3-4-union-entre-dos-cuerdas-reflexion-y-transmision-parcial">3.4. Unión entre dos cuerdas: reflexión y transmisión parcial</h3>
+<div class="reading-block"><p>El siguiente nivel es una discontinuidad entre dos cuerdas. La primera cuerda tiene velocidad de onda \(v_1\), la segunda \(v_2\). Una onda incidente llega desde la cuerda 1. En general aparecen dos ondas: una reflejada en la cuerda 1 y una transmitida en la cuerda 2.</p></div>
+<div class="reading-block"><p>Para una unión ideal situada en \(x=0\), se escriben tres contribuciones:</p></div>
+<div class="formula-block">\[
+y_1(x,t)=f(t-x/v_1)+g(t+x/v_1),
+\]</div>
+<div class="formula-block">\[
+y_2(x,t)=h(t-x/v_2).
+\]</div>
+<div class="reading-block"><p>La función \(f\) representa la onda incidente, \(g\) la reflejada y \(h\) la transmitida. En la unión deben cumplirse dos condiciones: continuidad del desplazamiento y equilibrio de la fuerza transversal. Si la tensión es la misma en ambas cuerdas, esto equivale a continuidad del desplazamiento y de la pendiente.</p></div>
+<div class="reading-block"><p>De esas condiciones se obtiene, para las amplitudes en la unión,</p></div>
+<div class="formula-block">\[
+\frac{A_r}{A_i}=\frac{v_2-v_1}{v_2+v_1},
+\]</div>
+<div class="formula-block">\[
+\frac{A_t}{A_i}=\frac{2v_2}{v_1+v_2}.
+\]</div>
+<div class="reading-block"><p>La primera razón dice cuánto se refleja y con qué signo. Si \(v_2&lt;v_1\), el coeficiente reflejado es negativo: la cuerda 2 es más lenta, normalmente más densa si la tensión es igual, y la reflexión aparece invertida. Si \(v_2&gt;v_1\), el coeficiente reflejado es positivo: la reflexión no está invertida.</p></div>
+<div class="reading-block"><p>La onda transmitida no solo cambia de amplitud. También cambia de escala espacial, porque la frecuencia temporal se conserva al cruzar la unión, mientras que la velocidad cambia. Como \(v=f\lambda\), al cambiar \(v\) cambia \(\lambda\).</p></div>
+<h3 id="3-5-casos-extremos-de-reflexion">3.5. Casos extremos de reflexión</h3>
+<div class="reading-block"><p>La unión entre cuerdas contiene como casos límite los dos extremos anteriores.</p></div>
+<div class="reading-block"><p>Si el segundo medio tiene impedancia infinita, equivale a un extremo fijo. Toda la onda se refleja con inversión:</p></div>
+<div class="formula-block">\[
+A_r/A_i=-1.
+\]</div>
+<div class="reading-block"><p>Si el segundo medio tiene impedancia nula, equivale a un extremo libre. Toda la onda se refleja sin inversión:</p></div>
+<div class="formula-block">\[
+A_r/A_i=+1.
+\]</div>
+<div class="reading-block"><p>Entre ambos extremos hay reflexión parcial. La inversión o no inversión depende del signo del coeficiente de reflexión.</p></div>
+<h3 id="3-6-impedancia-mecanica">3.6. Impedancia mecánica</h3>
+<div class="reading-block"><p>French introduce la impedancia mecánica para dar una lectura más general del problema. La impedancia se define como el cociente entre la fuerza impulsora y la velocidad asociada al desplazamiento:</p></div>
+<div class="formula-block">\[
+Z=\frac{F}{v_y}.
+\]</div>
+<div class="reading-block"><p>En una cuerda tensa, para una onda transversal progresiva, esta impedancia característica resulta</p></div>
+<div class="formula-block">\[
+Z=\frac{T}{v}=\sqrt{T\mu}.
+\]</div>
+<div class="reading-block"><p>La impedancia mide la resistencia dinámica que el medio ofrece al paso de la onda. No es una resistencia estática; caracteriza la relación entre fuerza transversal y velocidad de movimiento en la onda.</p></div>
+<div class="reading-block"><p>Con impedancias \(Z_1\) y \(Z_2\), el coeficiente de reflexión para el desplazamiento es</p></div>
+<div class="formula-block">\[
+R=\frac{Z_1-Z_2}{Z_1+Z_2}.
+\]</div>
+<div class="reading-block"><p>El coeficiente de transmisión de desplazamiento en la frontera es</p></div>
+<div class="formula-block">\[
+T_d=\frac{2Z_1}{Z_1+Z_2}.
+\]</div>
+<div class="reading-block"><p>La ventaja de esta formulación es que ya no importa si al otro lado hay otra cuerda, aceite, un amortiguador o una carga mecánica. Lo importante es la impedancia que la frontera presenta a la onda.</p></div>
+<h3 id="3-7-terminaciones-no-reflectoras">3.7. Terminaciones no reflectoras</h3>
+<div class="reading-block"><p>Una terminación no reflectora se consigue cuando la impedancia de la carga coincide con la impedancia característica de la cuerda:</p></div>
+<div class="formula-block">\[
+Z_2=Z_1.
+\]</div>
+<div class="reading-block"><p>Entonces</p></div>
+<div class="formula-block">\[
+R=0.
+\]</div>
+<div class="reading-block"><p>La onda no vuelve. Toda la energía transportada hacia el extremo se absorbe en la carga. French usa como imagen una cuerda cuyo extremo entra en un depósito viscoso ajustado: si la fuerza viscosa es proporcional a la velocidad y el cociente \(F/v_y\) coincide con \(\sqrt{T\mu}\), la cuerda se comporta como si fuese infinitamente larga.</p></div>
+<div class="reading-block"><p>La idea física es central: la reflexión aparece por desajuste de impedancias. No aparece porque haya necesariamente una pared visible. Una frontera suave y adaptada puede absorber sin reflejar; una transición brusca y desajustada refleja.</p></div>
+<h3 id="3-8-transicion-abrupta-y-transicion-gradual">3.8. Transición abrupta y transición gradual</h3>
+<div class="reading-block"><p>El análisis ideal supone una discontinuidad abrupta. En la realidad, toda transición tiene una anchura finita. Si esa anchura es muy pequeña comparada con la longitud de onda, el modelo de frontera abrupta funciona. Si la transición ocurre de forma gradual a lo largo de muchas longitudes de onda, la reflexión puede ser muy pequeña.</p></div>
+<div class="reading-block"><p>Esto explica por qué no toda variación de propiedades produce una reflexión fuerte. Una onda puede adaptar lentamente su longitud de onda y su velocidad si las propiedades del medio cambian de manera suave.</p></div>
+<div class="reading-block"><p>La consecuencia para examen es clara: el criterio relevante no es solo si cambian las propiedades del medio, sino si cambian bruscamente respecto a \(\lambda\).</p></div>
+<h3 id="3-9-ondas-longitudinales-transversales-y-polarizacion">3.9. Ondas longitudinales, transversales y polarización</h3>
+<div class="reading-block"><p>El capítulo recuerda que no todas las ondas mecánicas tienen el mismo tipo de desplazamiento. Una cuerda tensa transporta ondas transversales. Un muelle puede transportar ondas longitudinales y transversales. Un sólido puede transportar ondas de compresión y de cizalladura. Un fluido ordinario no sostiene esfuerzos de cizalla en volumen, por lo que transmite principalmente ondas longitudinales de presión, salvo ondas superficiales gobernadas por gravedad o tensión superficial.</p></div>
+<div class="reading-block"><p>Las ondas transversales tienen una propiedad adicional: la polarización. Si la onda viaja en una dirección, el desplazamiento puede estar orientado en dos direcciones perpendiculares entre sí y perpendiculares a la propagación. En medios anisótropos, esas dos polarizaciones pueden propagarse con velocidades distintas.</p></div>
+<div class="reading-block"><p>La frontera puede responder de forma distinta según el tipo de onda y su polarización. Por tanto, la reflexión y transmisión en dos o tres dimensiones no se reducen siempre a una única fórmula escalar.</p></div>
+<h3 id="3-10-ondas-en-dos-dimensiones">3.10. Ondas en dos dimensiones</h3>
+<div class="reading-block"><p>Al pasar a dos dimensiones, una perturbación puntual genera frentes circulares. Una línea de fase constante ya no es un punto de una cuerda, sino una curva. La descripción requiere distinguir entre frente de onda y dirección de propagación.</p></div>
+<div class="reading-block"><p>En medios homogéneos e isótropos, los rayos son normales a los frentes de onda. Una onda plana tiene frentes rectos paralelos y rayos paralelos entre sí. Una onda circular tiene frentes circulares y rayos radiales.</p></div>
+<div class="reading-block"><p>Este cambio conceptual prepara la reflexión, la refracción y la difracción. Ya no interesa solo cuánto vuelve una onda, sino hacia dónde se dirige.</p></div>
+<h3 id="3-11-principio-de-huygens-fresnel">3.11. Principio de Huygens-Fresnel</h3>
+<div class="reading-block"><p>El principio de Huygens-Fresnel afirma que cada punto de un frente de onda puede considerarse como una fuente secundaria de ondas elementales. El nuevo frente de onda se obtiene como envolvente de esas ondas secundarias, teniendo en cuenta sus fases.</p></div>
+<div class="reading-block"><p>La imagen explica por qué una abertura pequeña actúa como una fuente puntual. Si una onda plana llega a una barrera con una abertura muy estrecha, solo la zona no obstruida puede comunicar la perturbación al otro lado. Esa abertura genera ondas aproximadamente circulares.</p></div>
+<div class="reading-block"><p>Huygens explica cualitativamente la propagación del frente; Fresnel añade el papel de la interferencia entre las ondas secundarias. Para fenómenos como difracción e interferencia, no basta con decir que cada punto emite ondas: hay que sumar sus fases relativas.</p></div>
+<div class="reading-block"><p>Hay una sutileza: una construcción ingenua de Huygens produciría también una onda hacia atrás. Para evitarlo se introduce un factor de oblicuidad, que reduce o elimina la contribución en la dirección inversa. French trata este punto como una advertencia conceptual, no como una derivación matemática completa.</p></div>
+<h3 id="3-12-reflexion-de-ondas-planas">3.12. Reflexión de ondas planas</h3>
+<div class="reading-block"><p>Una onda plana que incide sobre una frontera recta genera una onda reflejada. Mediante la construcción de Huygens se obtiene la ley de reflexión:</p></div>
+<div class="formula-block">\[
+i=i'.
+\]</div>
+<div class="reading-block"><p>El ángulo de incidencia y el ángulo de reflexión se miden respecto a la normal a la frontera. En términos de frentes de onda, el ángulo del frente con la frontera es equivalente al ángulo del rayo con la normal.</p></div>
+<div class="reading-block"><p>La ley no depende de la naturaleza detallada de la onda mientras el medio sea homogéneo e isótropo y la frontera sea plana a la escala de la longitud de onda.</p></div>
+<h3 id="3-13-refraccion-de-ondas-planas">3.13. Refracción de ondas planas</h3>
+<div class="reading-block"><p>Si una onda pasa de un medio con velocidad \(v_1\) a otro con velocidad \(v_2\), la construcción de Huygens da</p></div>
+<div class="formula-block">\[
+\frac{\sin i}{\sin r}=\frac{v_1}{v_2}.
+\]</div>
+<div class="reading-block"><p>Esta es la forma ondulatoria de la ley de Snell. En óptica suele escribirse con índices de refracción porque \(n\propto 1/v\), pero French lo formula directamente en términos de velocidades de onda.</p></div>
+<div class="reading-block"><p>La refracción se produce porque una parte del frente entra antes que otra en el nuevo medio. Si en el nuevo medio la onda avanza más despacio, el frente gira hacia la normal. Si avanza más deprisa, gira alejándose de la normal.</p></div>
+<div class="reading-block"><p>La longitud de onda cambia al pasar de medio porque la frecuencia viene fijada por la fuente y permanece constante:</p></div>
+<div class="formula-block">\[
+\lambda_2=\frac{v_2}{f}.
+\]</div>
+<div class="reading-block"><p>Si \(v_2&lt;v_1\), la longitud de onda disminuye.</p></div>
+<h3 id="3-14-refraccion-por-variacion-continua-de-velocidad">3.14. Refracción por variación continua de velocidad</h3>
+<div class="reading-block"><p>La refracción no exige una frontera abrupta. Puede aparecer si la velocidad de la onda cambia gradualmente con la posición. En gases, la velocidad del sonido depende de la temperatura. Si hay un gradiente térmico, el frente se curva.</p></div>
+<div class="reading-block"><p>Esto permite explicar la desviación de ondas sonoras cerca de la superficie terrestre. Según el signo del gradiente de temperatura o del viento, el sonido puede curvarse hacia arriba o hacia abajo, aumentando o disminuyendo la audibilidad a distancia.</p></div>
+<div class="reading-block"><p>El principio físico es el mismo que en Snell: distintas partes del frente avanzan con velocidades distintas.</p></div>
+<h3 id="3-15-efecto-doppler-para-fuente-movil">3.15. Efecto Doppler para fuente móvil</h3>
+<div class="reading-block"><p>Si la fuente de una perturbación periódica se mueve respecto al medio, los frentes de onda emitidos en instantes sucesivos no tienen centros coincidentes. Delante de la fuente quedan más juntos; detrás quedan más separados.</p></div>
+<div class="reading-block"><p>Para una fuente con velocidad \(u\) menor que la velocidad de onda \(v\), y para un observador lejano que forma un ángulo \(\theta\) con la dirección de movimiento de la fuente, la longitud de onda observada es</p></div>
+<div class="formula-block">\[
+\lambda(\theta)=\lambda_0\left(1-\frac{u}{v}\cos\theta\right),
+\]</div>
+<div class="reading-block"><p>siendo \(\lambda_0=vT\) la longitud de onda que emitiría la fuente en reposo.</p></div>
+<div class="reading-block"><p>La frecuencia observada es</p></div>
+<div class="formula-block">\[
+f(\theta)=\frac{f_0}{1-\frac{u}{v}\cos\theta}.
+\]</div>
+<div class="reading-block"><p>Delante de la fuente, \(\theta=0\), la longitud de onda disminuye y la frecuencia aumenta. Detrás, \(\theta=\pi\), la longitud de onda aumenta y la frecuencia disminuye.</p></div>
+<h3 id="3-16-fuente-supersonica-numero-de-mach-y-onda-de-choque">3.16. Fuente supersónica, número de Mach y onda de choque</h3>
+<div class="reading-block"><p>Si \(u&gt;v\), la fuente se mueve más deprisa que las ondas que emite. Los frentes circulares emitidos en instantes sucesivos quedan contenidos dentro de una envolvente común. Esa envolvente actúa como frente de onda concentrado: una onda de choque.</p></div>
+<div class="reading-block"><p>El número de Mach es</p></div>
+<div class="formula-block">\[
+M=\frac{u}{v}.
+\]</div>
+<div class="reading-block"><p>El ángulo de Mach \(\alpha\) cumple</p></div>
+<div class="formula-block">\[
+\sin\alpha=\frac{v}{u}=\frac{1}{M}.
+\]</div>
+<div class="reading-block"><p>Cuanto mayor es la velocidad de la fuente, menor es el ángulo del cono de Mach. En tres dimensiones, la envolvente es un cono. Al pasar ese cono por un observador, llega de golpe la energía acumulada de muchos frentes: es el estampido sónico.</p></div>
+<h3 id="3-17-interferencia-por-doble-rendija">3.17. Interferencia por doble rendija</h3>
+<div class="reading-block"><p>Una barrera con dos rendijas estrechas convierte una onda incidente en dos fuentes secundarias coherentes. Coherentes significa que mantienen una relación de fase definida porque proceden de la misma onda primaria.</p></div>
+<div class="reading-block"><p>Si las rendijas están en fase y el punto de observación está lejos, las amplitudes que llegan desde ambas rendijas pueden considerarse iguales. La diferencia esencial es la diferencia de camino:</p></div>
+<div class="formula-block">\[
+\Delta r=r_2-r_1.
+\]</div>
+<div class="reading-block"><p>El desplazamiento resultante puede escribirse como</p></div>
+<div class="formula-block">\[
+y_P(t)=A\cos(\omega t-kr_1)+A\cos(\omega t-kr_2).
+\]</div>
+<div class="reading-block"><p>Al sumar,</p></div>
+<div class="formula-block">\[
+y_P(t)=2A\cos\left(\frac{k(r_2-r_1)}{2}\right)
+\cos\left(\omega t-\frac{k(r_1+r_2)}{2}\right).
+\]</div>
+<div class="reading-block"><p>La amplitud efectiva depende del factor</p></div>
+<div class="formula-block">\[
+2A\cos\left(\frac{\pi(r_2-r_1)}{\lambda}\right).
+\]</div>
+<div class="reading-block"><p>Las condiciones son:</p></div>
+<div class="formula-block">\[
+r_2-r_1=n\lambda \quad \text{máximos},
+\]</div>
+<div class="formula-block">\[
+r_2-r_1=\left(n+\frac12\right)\lambda \quad \text{mínimos o líneas nodales}.
+\]</div>
+<div class="reading-block"><p>En campo lejano,</p></div>
+<div class="formula-block">\[
+r_2-r_1\simeq d\sin\theta.
+\]</div>
+<div class="reading-block"><p>Por tanto,</p></div>
+<div class="formula-block">\[
+d\sin\theta=n\lambda \quad \text{máximos},
+\]</div>
+<div class="formula-block">\[
+d\sin\theta=\left(n+\frac12\right)\lambda \quad \text{mínimos}.
+\]</div>
+<div class="reading-block"><p>La doble rendija no crea energía de la nada. Redistribuye la energía: algunas direcciones reciben más intensidad y otras reciben intensidad nula.</p></div>
+<h3 id="3-18-interferencia-por-rendijas-multiples">3.18. Interferencia por rendijas múltiples</h3>
+<div class="reading-block"><p>Si hay \(N\) rendijas igualmente espaciadas una distancia \(d\), la diferencia de fase entre rendijas adyacentes es</p></div>
+<div class="formula-block">\[
+\delta=\frac{2\pi d\sin\theta}{\lambda}.
+\]</div>
+<div class="reading-block"><p>La suma vectorial de \(N\) contribuciones iguales da una amplitud</p></div>
+<div class="formula-block">\[
+A(\theta)=A_0\frac{\sin(N\delta/2)}{\sin(\delta/2)}.
+\]</div>
+<div class="reading-block"><p>Cuando \(\delta=0,2\pi,4\pi,\ldots\), todas las contribuciones están en fase y aparece un máximo principal. La condición es la misma que para doble rendija:</p></div>
+<div class="formula-block">\[
+d\sin\theta=n\lambda.
+\]</div>
+<div class="reading-block"><p>La diferencia es que al aumentar \(N\), los máximos principales se vuelven más estrechos e intensos. Entre ellos aparecen ceros y máximos subsidiarios pequeños. Esta concentración angular explica la utilidad de las redes de difracción: separan longitudes de onda con mucha resolución.</p></div>
+<h3 id="3-19-difraccion-por-una-sola-rendija">3.19. Difracción por una sola rendija</h3>
+<div class="reading-block"><p>Una sola rendija no es una fuente puntual si su anchura \(b\) no es despreciable. Distintas partes de la abertura actúan como fuentes secundarias con diferencias de fase. Por eso una rendija única también produce interferencia consigo misma.</p></div>
+<div class="reading-block"><p>Para una rendija de anchura \(b\), observada en campo lejano en dirección \(\theta\), la diferencia de camino entre los dos bordes es</p></div>
+<div class="formula-block">\[
+b\sin\theta.
+\]</div>
+<div class="reading-block"><p>Definiendo</p></div>
+<div class="formula-block">\[
+\alpha=\frac{\pi b\sin\theta}{\lambda},
+\]</div>
+<div class="reading-block"><p>la amplitud angular tiene la forma</p></div>
+<div class="formula-block">\[
+A(\theta)=A_0\frac{\sin\alpha}{\alpha}.
+\]</div>
+<div class="reading-block"><p>La intensidad es</p></div>
+<div class="formula-block">\[
+I(\theta)=I_0\left(\frac{\sin\alpha}{\alpha}\right)^2.
+\]</div>
+<div class="reading-block"><p>Los ceros aparecen cuando</p></div>
+<div class="formula-block">\[
+b\sin\theta=m\lambda, \qquad m=\pm1,\pm2,\ldots
+\]</div>
+<div class="reading-block"><p>El máximo central es el rasgo dominante. Los máximos laterales son mucho más débiles. La mayor parte de la energía transmitida queda dentro del máximo central.</p></div>
+<h3 id="3-20-difraccion-de-fraunhofer">3.20. Difracción de Fraunhofer</h3>
+<div class="reading-block"><p>Las fórmulas anteriores pertenecen a la difracción de Fraunhofer, que es la difracción de campo lejano. La condición aproximada para que domine la descripción angular es</p></div>
+<div class="formula-block">\[
+D\gg \frac{b^2}{\lambda},
+\]</div>
+<div class="reading-block"><p>donde \(D\) es la distancia desde la rendija al punto de observación.</p></div>
+<div class="reading-block"><p>Si el observador está demasiado cerca, la geometría de la abertura pesa más directamente y no basta con describir el patrón solo mediante ángulos.</p></div>
+<h3 id="3-21-sistemas-reales-de-rendijas">3.21. Sistemas reales de rendijas</h3>
+<div class="reading-block"><p>Una doble rendija real combina dos fenómenos:</p></div>
+<ul><li>la interferencia entre las dos rendijas, gobernada por \(d\),</li><li>la difracción de cada rendija individual, gobernada por \(b\).</li></ul>
+<div class="reading-block"><p>La intensidad de doble rendija real tiene la forma</p></div>
+<div class="formula-block">\[
+I(\theta)=4I_0\left(\frac{\sin\alpha}{\alpha}\right)^2
+\cos^2\left(\frac{\delta}{2}\right),
+\]</div>
+<div class="reading-block"><p>con</p></div>
+<div class="formula-block">\[
+\alpha=\frac{\pi b\sin\theta}{\lambda},
+\qquad
+\delta=\frac{2\pi d\sin\theta}{\lambda}.
+\]</div>
+<div class="reading-block"><p>La primera parte es la envolvente de una rendija; la segunda parte son las franjas de interferencia de doble rendija.</p></div>
+<div class="reading-block"><p>Para una red real de \(N\) rendijas,</p></div>
+<div class="formula-block">\[
+I(\theta)=I_0\left(\frac{\sin\alpha}{\alpha}\right)^2
+\left(\frac{\sin(N\delta/2)}{\sin(\delta/2)}\right)^2.
+\]</div>
+<div class="reading-block"><p>Así se entiende por qué los máximos principales de una red están modulados por la envolvente de difracción de cada rendija. Las rendijas no son puntos ideales.</p></div>
+</section><section class="page" id="conceptos-clave">
+<div class="page-head"><h2>4. Conceptos clave</h2><p class="section-lead">Definiciones, relaciones, ejemplos y formulaciones examinables.</p></div>
+<div class="grid cards-grid">
+<article class="definition-card"><h3>Reflexión invertida</h3>
+<p>Definición precisa: reflexión en la que el desplazamiento reflejado tiene signo contrario al desplazamiento incidente.</p>
+<p><strong>Explicación desarrollada:</strong> aparece cuando la frontera exige desplazamiento nulo, como en un extremo fijo, o cuando la impedancia del segundo medio es mayor que la del primero. La onda reflejada debe cancelar a la incidente en el punto de contorno.</p>
+<p><strong>Ejemplo:</strong> un pulso positivo que llega a una pared fija vuelve como pulso negativo.</p>
+<p><strong>Relación con otros conceptos:</strong> ligada a condición de nodo, extremo fijo, impedancia alta y cambio de fase de \(\pi\).</p>
+<p><strong>Posible forma de preguntarlo en examen:</strong> "Explique por qué un pulso se invierte al reflejarse en un extremo fijo".</p>
+</article>
+<article class="definition-card"><h3>Reflexión no invertida</h3>
+<p>Definición precisa: reflexión en la que la onda reflejada conserva el signo del desplazamiento incidente.</p>
+<p><strong>Explicación desarrollada:</strong> aparece cuando el extremo es libre o cuando la frontera presenta impedancia menor que la del medio inicial. La condición no es anular el desplazamiento, sino anular la fuerza transversal.</p>
+<p><strong>Ejemplo:</strong> un pulso positivo reflejado en un extremo libre vuelve positivo.</p>
+<p><strong>Relación con otros conceptos:</strong> ligada a antinodo, extremo libre e impedancia baja.</p>
+<p><strong>Posible forma de preguntarlo en examen:</strong> "Compare la reflexión en un extremo fijo y en un extremo libre".</p>
+</article>
+<article class="definition-card"><h3>Coeficiente de reflexión</h3>
+<p>Definición precisa: razón entre la amplitud reflejada y la amplitud incidente.</p>
+<p><strong>Explicación desarrollada:</strong> en una unión entre cuerdas, mide cuánto vuelve de la perturbación incidente y con qué signo. En términos de impedancia:</p>
+<div class="formula-block">\[
+R=\frac{Z_1-Z_2}{Z_1+Z_2}.
+\]</div>
+<p><strong>Ejemplo:</strong> si \(Z_1=Z_2\), \(R=0\). No hay reflexión.</p>
+<p><strong>Relación con otros conceptos:</strong> depende del desajuste de impedancias; su signo decide inversión o no inversión.</p>
+<p><strong>Posible forma de preguntarlo en examen:</strong> "Calcule e interprete el coeficiente de reflexión para una onda que pasa de una cuerda a otra".</p>
+</article>
+<article class="definition-card"><h3>Coeficiente de transmisión de desplazamiento</h3>
+<p>Definición precisa: razón entre el desplazamiento transmitido en la frontera y el desplazamiento incidente.</p>
+<p><strong>Explicación desarrollada:</strong> expresa qué amplitud entra en el segundo medio. En términos de impedancias:</p>
+<div class="formula-block">\[
+T_d=\frac{2Z_1}{Z_1+Z_2}.
+\]</div>
+<p><strong>Ejemplo:</strong> si \(Z_1=Z_2\), \(T_d=1\): la onda continúa sin salto de amplitud.</p>
+<p><strong>Relación con otros conceptos:</strong> no debe confundirse con el coeficiente de transmisión energética.</p>
+<p><strong>Posible forma de preguntarlo en examen:</strong> "Diferencie transmisión de amplitud y transmisión de energía".</p>
+</article>
+<article class="definition-card"><h3>Impedancia mecánica</h3>
+<p>Definición precisa: cociente entre fuerza impulsora y velocidad del desplazamiento asociado:</p>
+<div class="formula-block">\[
+Z=F/v_y.
+\]</div>
+<p><strong>Explicación desarrollada:</strong> caracteriza cómo un medio acepta energía ondulatoria. En una cuerda tensa:</p>
+<div class="formula-block">\[
+Z=\sqrt{T\mu}.
+\]</div>
+<p><strong>Ejemplo:</strong> dos cuerdas con igual \(\sqrt{T\mu}\) están adaptadas, aunque tengan tensiones y densidades distintas.</p>
+<p><strong>Relación con otros conceptos:</strong> adaptación, reflexión, absorción, analogía eléctrica.</p>
+<p><strong>Posible forma de preguntarlo en examen:</strong> "¿Por qué una terminación con impedancia igual a la de la cuerda no refleja?".</p>
+</article>
+<article class="definition-card"><h3>Adaptación de impedancias</h3>
+<p>Definición precisa: condición en la que la carga o segundo medio presenta la misma impedancia que el medio incidente.</p>
+<p><strong>Explicación desarrollada:</strong> cuando \(Z_2=Z_1\), el coeficiente de reflexión se anula. La onda no detecta discontinuidad dinámica.</p>
+<p><strong>Ejemplo:</strong> una cuerda terminada en un amortiguador viscoso ajustado puede absorber una onda sin reflejarla.</p>
+<p><strong>Relación con otros conceptos:</strong> terminación no reflectora, transferencia máxima de energía, transición suave.</p>
+<p><strong>Posible forma de preguntarlo en examen:</strong> "Explique el sentido físico de una terminación no reflectora".</p>
+</article>
+<article class="definition-card"><h3>Polarización</h3>
+<p>Definición precisa: orientación del desplazamiento en una onda transversal respecto a la dirección de propagación.</p>
+<p><strong>Explicación desarrollada:</strong> una onda transversal puede oscilar en distintas direcciones perpendiculares a su propagación. En medios anisótropos, cada polarización puede tener velocidad distinta.</p>
+<p><strong>Ejemplo:</strong> una onda transversal que viaja en \(x\) puede desplazar el medio en \(y\) o en \(z\).</p>
+<p><strong>Relación con otros conceptos:</strong> ondas transversales, reflexión dependiente de polarización, anisotropía.</p>
+<p><strong>Posible forma de preguntarlo en examen:</strong> "¿Por qué no se habla de polarización ordinaria en una onda sonora longitudinal en aire?".</p>
+</article>
+<article class="definition-card"><h3>Principio de Huygens-Fresnel</h3>
+<p>Definición precisa: todo punto de un frente de onda actúa como fuente secundaria; el campo posterior se obtiene por superposición de esas contribuciones con sus fases.</p>
+<p><strong>Explicación desarrollada:</strong> permite construir nuevos frentes de onda, explicar aberturas como fuentes secundarias y fundamentar la difracción.</p>
+<p><strong>Ejemplo:</strong> una abertura pequeña en una barrera genera ondas circulares aunque la onda incidente sea plana.</p>
+<p><strong>Relación con otros conceptos:</strong> difracción, interferencia, reflexión, refracción, coherencia.</p>
+<p><strong>Posible forma de preguntarlo en examen:</strong> "Use Huygens para explicar por qué una rendija estrecha difracta".</p>
+</article>
+<article class="definition-card"><h3>Ley de Snell ondulatoria</h3>
+<p>Definición precisa:</p>
+<div class="formula-block">\[
+\frac{\sin i}{\sin r}=\frac{v_1}{v_2}.
+\]</div>
+<p><strong>Explicación desarrollada:</strong> relaciona el cambio de dirección con el cambio de velocidad de propagación al cruzar una frontera.</p>
+<p><strong>Ejemplo:</strong> si la onda entra en un medio donde va más despacio, el rayo se acerca a la normal.</p>
+<p><strong>Relación con otros conceptos:</strong> frentes de onda, rayos, Huygens, refracción.</p>
+<p><strong>Posible forma de preguntarlo en examen:</strong> "Derive la ley de Snell mediante construcción de Huygens".</p>
+</article>
+<article class="definition-card"><h3>Efecto Doppler</h3>
+<p>Definición precisa: cambio de longitud de onda y frecuencia observadas debido al movimiento relativo entre fuente y medio/observador.</p>
+<p><strong>Explicación desarrollada:</strong> para fuente móvil subonda:</p>
+<div class="formula-block">\[
+f(\theta)=\frac{f_0}{1-(u/v)\cos\theta}.
+\]</div>
+<p><strong>Ejemplo:</strong> delante de una fuente sonora móvil, el tono recibido aumenta.</p>
+<p><strong>Relación con otros conceptos:</strong> frentes de onda, longitud de onda, número de Mach.</p>
+<p><strong>Posible forma de preguntarlo en examen:</strong> "Explique por qué delante de la fuente la frecuencia aumenta".</p>
+</article>
+<article class="definition-card"><h3>Número de Mach</h3>
+<p>Definición precisa:</p>
+<div class="formula-block">\[
+M=\frac{u}{v}.
+\]</div>
+<p><strong>Explicación desarrollada:</strong> compara la velocidad de la fuente con la velocidad de la onda. Si \(M&gt;1\), aparece una onda de choque.</p>
+<p><strong>Ejemplo:</strong> un avión supersónico tiene \(M&gt;1\).</p>
+<p><strong>Relación con otros conceptos:</strong> cono de Mach, estampido sónico, envolvente de frentes.</p>
+<p><strong>Posible forma de preguntarlo en examen:</strong> "Obtenga el ángulo de Mach para una fuente supersónica".</p>
+</article>
+<article class="definition-card"><h3>Coherencia</h3>
+<p>Definición precisa: relación de fase estable entre fuentes ondulatorias.</p>
+<p><strong>Explicación desarrollada:</strong> es imprescindible para observar un patrón de interferencia estable. Dos rendijas iluminadas por la misma onda son coherentes entre sí.</p>
+<p><strong>Ejemplo:</strong> las dos rendijas de Young generan ondas secundarias con fase definida.</p>
+<p><strong>Relación con otros conceptos:</strong> interferencia, nodos, máximos, Huygens-Fresnel.</p>
+<p><strong>Posible forma de preguntarlo en examen:</strong> "¿Por qué la doble rendija exige fuentes coherentes?".</p>
+</article>
+<article class="definition-card"><h3>Interferencia constructiva</h3>
+<p>Definición precisa: superposición en la que las ondas llegan en fase y la amplitud resultante aumenta.</p>
+<p><strong>Explicación desarrollada:</strong> ocurre cuando la diferencia de camino es múltiplo entero de la longitud de onda:</p>
+<div class="formula-block">\[
+\Delta r=n\lambda.
+\]</div>
+<p><strong>Ejemplo:</strong> en doble rendija, los máximos lejanos cumplen \(d\sin\theta=n\lambda\).</p>
+<p><strong>Relación con otros conceptos:</strong> fase, diferencia de camino, intensidad.</p>
+<p><strong>Posible forma de preguntarlo en examen:</strong> "Determine las direcciones de máximo en una doble rendija".</p>
+</article>
+<article class="definition-card"><h3>Interferencia destructiva</h3>
+<p>Definición precisa: superposición en la que las ondas llegan en oposición de fase y se cancelan.</p>
+<p><strong>Explicación desarrollada:</strong> ocurre cuando la diferencia de camino es semientera:</p>
+<div class="formula-block">\[
+\Delta r=\left(n+\frac12\right)\lambda.
+\]</div>
+<p><strong>Ejemplo:</strong> líneas nodales en la doble rendija.</p>
+<p><strong>Relación con otros conceptos:</strong> nodos, cancelación, coherencia.</p>
+<p><strong>Posible forma de preguntarlo en examen:</strong> "Explique por qué las líneas nodales de doble rendija son hipérbolas".</p>
+</article>
+<article class="definition-card"><h3>Red de difracción</h3>
+<p>Definición precisa: sistema de muchas rendijas igualmente espaciadas que produce máximos principales estrechos por interferencia múltiple.</p>
+<p><strong>Explicación desarrollada:</strong> la amplitud resultante se obtiene sumando \(N\) vectores de fase. Los máximos principales cumplen \(d\sin\theta=n\lambda\), pero son mucho más estrechos que en doble rendija.</p>
+<p><strong>Ejemplo:</strong> una red separa colores porque cada \(\lambda\) tiene máximos en ángulos distintos.</p>
+<p><strong>Relación con otros conceptos:</strong> suma fasorial, resolución, máximos subsidiarios.</p>
+<p><strong>Posible forma de preguntarlo en examen:</strong> "Compare doble rendija y red de difracción".</p>
+</article>
+<article class="definition-card"><h3>Difracción por una sola rendija</h3>
+<p>Definición precisa: patrón angular producido por la interferencia entre distintas partes de una misma abertura de anchura finita.</p>
+<p><strong>Explicación desarrollada:</strong> la amplitud sigue</p>
+<div class="formula-block">\[
+A=A_0\frac{\sin\alpha}{\alpha},
+\qquad
+\alpha=\frac{\pi b\sin\theta}{\lambda}.
+\]</div>
+<p><strong>Ejemplo:</strong> los mínimos cumplen \(b\sin\theta=m\lambda\).</p>
+<p><strong>Relación con otros conceptos:</strong> Huygens-Fresnel, campo lejano, envolvente de rendija.</p>
+<p><strong>Posible forma de preguntarlo en examen:</strong> "Explique por qué una sola rendija produce mínimos".</p>
+</article>
+<article class="definition-card"><h3>Envolvente de difracción</h3>
+<p>Definición precisa: modulación de intensidad impuesta por la anchura finita de cada rendija sobre el patrón de interferencia.</p>
+<p><strong>Explicación desarrollada:</strong> en una doble rendija real, las franjas de interferencia no tienen todas la misma intensidad; quedan multiplicadas por el factor de rendija única.</p>
+<p><strong>Ejemplo:</strong></p>
+<div class="formula-block">\[
+I=4I_0\left(\frac{\sin\alpha}{\alpha}\right)^2\cos^2(\delta/2).
+\]</div>
+<p><strong>Relación con otros conceptos:</strong> rendija real, difracción de Fraunhofer, redes.</p>
+<p><strong>Posible forma de preguntarlo en examen:</strong> "¿Por qué desaparecen o se debilitan franjas en una doble rendija real?".</p>
+</article>
+</div>
+</section><section class="page" id="relaciones-entre-ideas">
+<div class="page-head"><h2>5. Relaciones entre ideas</h2><p class="section-lead">Cadena conceptual que conecta fronteras, fase, energía, frentes de onda e interferencia.</p></div>
+<div class="reading-block"><p>La estructura conceptual del capítulo puede verse como una cadena:</p></div>
+<div class="formula-block">\[
+\text{frontera} \rightarrow \text{condición de contorno} \rightarrow \text{onda reflejada/transmitida} \rightarrow \text{fase} \rightarrow \text{interferencia}.
+\]</div>
+<div class="reading-block"><p>La reflexión en extremos fijos y libres es la primera manifestación de esta cadena. El límite impone una condición; la onda reflejada aparece para satisfacerla. El signo de la reflexión depende de si hay que cancelar desplazamiento o cancelar fuerza transversal.</p></div>
+<div class="reading-block"><p>La unión entre cuerdas generaliza los extremos. Un extremo fijo es un límite de impedancia infinita; un extremo libre es un límite de impedancia nula. Entre ambos, una frontera real produce reflexión parcial y transmisión parcial. La impedancia resume la información dinámica de la frontera.</p></div>
+<div class="reading-block"><p>La adaptación de impedancias conecta con la conservación de energía. Si no hay reflexión, la energía no vuelve al medio incidente; se transmite o se absorbe. Una frontera no reflectora no es ausencia de interacción, sino interacción perfectamente ajustada.</p></div>
+<div class="reading-block"><p>Al pasar a dos dimensiones, la condición de frontera sigue siendo importante, pero aparece la dirección. La reflexión conserva el ángulo por simetría geométrica; la refracción cambia la dirección porque cambia la velocidad de propagación. Huygens-Fresnel es el puente entre la imagen de frentes de onda y la suma de contribuciones locales.</p></div>
+<div class="reading-block"><p>La difracción es consecuencia de Huygens-Fresnel. Si una barrera bloquea parte del frente, la región no bloqueada se convierte en fuente secundaria. Si hay dos zonas abiertas, aparece interferencia entre dos fuentes. Si hay muchas, aparece una red. Si hay una abertura de anchura finita, aparece interferencia entre las distintas partes de esa misma abertura.</p></div>
+<div class="reading-block"><p>La coherencia es la condición transversal de todo el bloque de interferencia. Sin relación de fase estable, las máximos y mínimos no quedan fijos. Con coherencia, las diferencias de camino se traducen en diferencias de fase observables.</p></div>
+<div class="reading-block"><p>La doble rendija es jerárquicamente anterior a la red de difracción. La red no introduce un fenómeno nuevo; extrema el mismo mecanismo al sumar muchas fuentes coherentes. La rendija única corrige la idealización de rendijas puntuales: una rendija real no emite como un punto, sino como un continuo de fuentes secundarias.</p></div>
+<div class="reading-block"><p>La oposición importante es entre interferencia y difracción como nombres, no como física. En el capítulo ambas son superposición de ondas coherentes. Se suele reservar "interferencia" para pocas fuentes discretas y "difracción" para una abertura extensa u obstáculo, pero el mecanismo matemático común es la suma de fases.</p></div>
+<div class="reading-block"><p>El efecto Doppler se conecta con frentes de onda, no con interferencia entre rendijas. Sin embargo, también depende de una geometría de fases: la separación entre frentes sucesivos cambia porque la fuente se desplaza mientras emite. En régimen supersónico, los frentes se acumulan sobre una envolvente, igual que en Huygens una familia de ondas secundarias genera un frente común.</p></div>
+<div class="reading-block"><p>Históricamente, el capítulo descansa sobre dos ideas centrales: Huygens, que introduce la construcción de frentes a partir de fuentes secundarias, y Fresnel, que convierte esa construcción en una teoría de interferencia con fases. Young aparece como realización experimental de la interferencia luminosa por doble rendija. El lenguaje del capítulo es mecánico, pero la estructura es la misma que en óptica ondulatoria.</p></div>
+</section><section class="page" id="errores-habituales">
+<div class="page-head"><h2>6. Errores habituales</h2><p class="section-lead">Confusiones frecuentes, su corrección y la formulación adecuada.</p></div>
+<details class="accordion accordion-error"><summary>1. Error: "La onda reflejada siempre se invierte".</summary>
+<p><strong>Por qué está mal:</strong> solo se invierte cuando la condición de contorno exige cancelación de desplazamiento o cuando el coeficiente de reflexión es negativo.</p>
+<p><strong>Corrección:</strong> en extremo fijo se invierte; en extremo libre no se invierte.</p>
+<p><strong>Respuesta incorrecta:</strong> "Todo eco de una onda transversal vuelve con signo contrario".</p>
+<p><strong>Respuesta correcta:</strong> "El signo depende de la frontera: extremo fijo implica inversión; extremo libre implica reflexión sin inversión".</p>
+</details>
+<details class="accordion accordion-error"><summary>2. Error: "Si no hay reflexión, no hay interacción con la frontera".</summary>
+<p><strong>Por qué está mal:</strong> una terminación adaptada absorbe o transmite energía, pero no la devuelve.</p>
+<p><strong>Corrección:</strong> no reflexión significa impedancia adaptada, no ausencia de intercambio energético.</p>
+<p><strong>Respuesta incorrecta:</strong> "Si \(R=0\), la onda no nota el extremo".</p>
+<p><strong>Respuesta correcta:</strong> "Si \(R=0\), la onda no genera onda reflejada porque la carga tiene la impedancia correcta".</p>
+</details>
+<details class="accordion accordion-error"><summary>3. Error: confundir velocidad de onda con velocidad de las partículas del medio.</summary>
+<p><strong>Por qué está mal:</strong> la onda se propaga con \(v\); las partículas oscilan con velocidad transversal o longitudinal local.</p>
+<p><strong>Corrección:</strong> en la impedancia de la cuerda, \(v\) es velocidad de propagación y \(v_y\) es velocidad de desplazamiento transversal.</p>
+<p><strong>Respuesta incorrecta:</strong> "\(Z=T/v_y\), donde \(v_y\) es la velocidad de la onda".</p>
+<p><strong>Respuesta correcta:</strong> "\(Z=F/v_y\), y para una cuerda resulta \(Z=T/v=\sqrt{T\mu}\), donde \(v\) es la velocidad de propagación".</p>
+</details>
+<details class="accordion accordion-error"><summary>4. Error: pensar que toda frontera entre medios produce reflexión fuerte.</summary>
+<p><strong>Por qué está mal:</strong> si la transición es gradual respecto a \(\lambda\), la reflexión puede ser pequeña.</p>
+<p><strong>Corrección:</strong> importa el cambio relativo a la longitud de onda.</p>
+<p><strong>Respuesta incorrecta:</strong> "Cualquier cambio de densidad refleja mucho".</p>
+<p><strong>Respuesta correcta:</strong> "Una discontinuidad brusca refleja; una variación suave puede adaptar la onda sin reflexión apreciable".</p>
+</details>
+<details class="accordion accordion-error"><summary>5. Error: aplicar \(d\sin\theta=n\lambda\) a mínimos de doble rendija.</summary>
+<p><strong>Por qué está mal:</strong> esa condición corresponde a máximos.</p>
+<p><strong>Corrección:</strong> los mínimos cumplen \(d\sin\theta=(n+1/2)\lambda\).</p>
+<p><strong>Respuesta incorrecta:</strong> "Los nodos de doble rendija están en \(d\sin\theta=n\lambda\)".</p>
+<p><strong>Respuesta correcta:</strong> "Los máximos están en \(d\sin\theta=n\lambda\); los nodos en \(d\sin\theta=(n+1/2)\lambda\)".</p>
+</details>
+<details class="accordion accordion-error"><summary>6. Error: olvidar que las rendijas reales tienen anchura.</summary>
+<p><strong>Por qué está mal:</strong> una rendija de anchura finita produce su propia envolvente de difracción.</p>
+<p><strong>Corrección:</strong> el patrón real es interferencia multiplicada por envolvente de rendija única.</p>
+<p><strong>Respuesta incorrecta:</strong> "Todas las franjas de doble rendija tienen la misma intensidad".</p>
+<p><strong>Respuesta correcta:</strong> "Las franjas quedan moduladas por \((\sin\alpha/\alpha)^2\)".</p>
+</details>
+<details class="accordion accordion-error"><summary>7. Error: creer que una rendija única no puede interferir porque solo hay una abertura.</summary>
+<p><strong>Por qué está mal:</strong> distintas partes de la abertura actúan como fuentes secundarias coherentes.</p>
+<p><strong>Corrección:</strong> la difracción por rendija única es interferencia interna de una abertura extensa.</p>
+<p><strong>Respuesta incorrecta:</strong> "Una sola rendija solo deja pasar una mancha geométrica".</p>
+<p><strong>Respuesta correcta:</strong> "Una sola rendija produce máximo central y mínimos porque sus distintas zonas llegan con fases distintas".</p>
+</details>
+<details class="accordion accordion-error"><summary>8. Error: confundir \(b\) y \(d\).</summary>
+<p><strong>Por qué está mal:</strong> \(b\) es anchura de rendija; \(d\) es separación entre rendijas. Controlan fenómenos distintos.</p>
+<p><strong>Corrección:</strong> \(b\) controla la envolvente; \(d\) controla la separación de franjas.</p>
+<p><strong>Respuesta incorrecta:</strong> "Los máximos de doble rendija real cumplen \(b\sin\theta=n\lambda\)".</p>
+<p><strong>Respuesta correcta:</strong> "Los máximos de interferencia cumplen \(d\sin\theta=n\lambda\); los ceros de la envolvente cumplen \(b\sin\theta=m\lambda\)".</p>
+</details>
+<details class="accordion accordion-error"><summary>9. Error: usar la ley de Snell con índices ópticos en cualquier onda sin traducir velocidades.</summary>
+<p><strong>Por qué está mal:</strong> French formula la refracción en términos de velocidades de onda.</p>
+<p><strong>Corrección:</strong></p>
+<div class="formula-block">\[
+\frac{\sin i}{\sin r}=\frac{v_1}{v_2}.
+\]</div>
+<p><strong>Respuesta incorrecta:</strong> "Siempre \(\sin i/\sin r=n_2/n_1\), sin más".</p>
+<p><strong>Respuesta correcta:</strong> "Para ondas generales, la razón viene dada por velocidades; en óptica se reescribe con índices porque \(n\propto 1/v\)".</p>
+</details>
+<details class="accordion accordion-error"><summary>10. Error: interpretar el Doppler como cambio de velocidad de la onda.</summary>
+<p><strong>Por qué está mal:</strong> en un medio dado la velocidad de propagación la fija el medio. Cambian \(\lambda\) y \(f\), no \(v\).</p>
+<p><strong>Corrección:</strong> \(v=f\lambda\) se mantiene; si cambia \(\lambda\), cambia \(f\) inversamente.</p>
+<p><strong>Respuesta incorrecta:</strong> "Delante de la fuente el sonido va más rápido".</p>
+<p><strong>Respuesta correcta:</strong> "Delante de la fuente los frentes están más juntos; la velocidad del sonido en el medio sigue siendo \(v\)".</p>
+</details>
+<details class="accordion accordion-error"><summary>11. Error: aplicar fórmula Doppler subsónica a \(u&gt;v\) sin cambiar de régimen.</summary>
+<p><strong>Por qué está mal:</strong> si \(u&gt;v\), aparece una envolvente de frentes y una onda de choque.</p>
+<p><strong>Corrección:</strong> usar número de Mach y ángulo \(\sin\alpha=v/u\).</p>
+<p><strong>Respuesta incorrecta:</strong> "Para un avión supersónico basta con poner \(u&gt;v\) en la fórmula ordinaria".</p>
+<p><strong>Respuesta correcta:</strong> "Para \(u&gt;v\) se forma un cono de Mach; el análisis geométrico cambia".</p>
+</details>
+<details class="accordion accordion-error"><summary>12. Error: pensar que los máximos de una red son más intensos porque cada rendija emite más.</summary>
+<p><strong>Por qué está mal:</strong> cada rendija emite igual; la concentración aumenta por suma coherente en ciertas direcciones.</p>
+<p><strong>Corrección:</strong> en máximos principales, las amplitudes se suman como \(N\), y la intensidad local escala como \(N^2\), compensada por anchura angular menor.</p>
+<p><strong>Respuesta incorrecta:</strong> "Una red amplifica la onda".</p>
+<p><strong>Respuesta correcta:</strong> "Una red redistribuye angularmente la energía y concentra intensidad en máximos estrechos".</p>
+</details>
+</section><section class="page" id="preguntas-orientadas-a-examen">
+<div class="page-head"><h2>7. Preguntas orientadas a examen</h2><p class="section-lead">Banco graduado de cuestiones para preparar el examen.</p></div>
+<article class="exam-box"><h3>7.1. 10 preguntas fáciles</h3><ol class="exam-list"><li><strong>F1.</strong> ¿Qué condición impone un extremo fijo de una cuerda a la onda reflejada?</li><li><strong>F2.</strong> ¿Qué condición impone un extremo libre de una cuerda?</li><li><strong>F3.</strong> ¿Qué significa impedancia mecánica?</li><li><strong>F4.</strong> ¿Cuál es la impedancia característica de una cuerda tensa?</li><li><strong>F5.</strong> ¿Qué condición elimina la reflexión en una unión?</li><li><strong>F6.</strong> ¿Qué es la polarización de una onda transversal?</li><li><strong>F7.</strong> Enuncia el principio de Huygens-Fresnel.</li><li><strong>F8.</strong> ¿Cuál es la ley de Snell en términos de velocidades de onda?</li><li><strong>F9.</strong> ¿Qué condición de diferencia de camino produce máximos en doble rendija?</li><li><strong>F10.</strong> ¿Qué condición produce mínimos en una rendija única?</li></ol></article>
+<article class="exam-box"><h3>7.2. 10 preguntas medias</h3><ol class="exam-list"><li><strong>M1.</strong> Explique por qué un pulso se invierte al reflejarse en un extremo fijo y no se invierte en un extremo libre.</li><li><strong>M2.</strong> Derive cualitativamente el coeficiente de reflexión en una unión usando continuidad de desplazamiento y fuerza transversal.</li><li><strong>M3.</strong> Interprete físicamente el signo de
+
+\[
+R=\frac{Z_1-Z_2}{Z_1+Z_2}.
+\]</li><li><strong>M4.</strong> Explique qué ocurre con la longitud de onda cuando una onda pasa a un medio donde su velocidad es menor.</li><li><strong>M5.</strong> Use Huygens para justificar la ley de reflexión.</li><li><strong>M6.</strong> Use Huygens para justificar la ley de refracción.</li><li><strong>M7.</strong> Explique el efecto Doppler para una fuente móvil con \(u&lt;v\).</li><li><strong>M8.</strong> ¿Qué es una onda de choque y cómo se relaciona con el número de Mach?</li><li><strong>M9.</strong> Obtenga las condiciones de máximos y mínimos para doble rendija en campo lejano.</li><li><strong>M10.</strong> Compare el patrón de doble rendija ideal con el de doble rendija real.</li></ol></article>
+<article class="exam-box"><h3>7.3. 5 preguntas difíciles</h3><ol class="exam-list"><li><strong>D1.</strong> Una cuerda de impedancia \(Z_1\) se une a una carga de impedancia \(Z_2\). Analice los límites \(Z_2\to\infty\), \(Z_2=0\) y \(Z_2=Z_1\).</li><li><strong>D2.</strong> Demuestre que una red de \(N\) rendijas tiene amplitud
+
+\[
+A=A_0\frac{\sin(N\delta/2)}{\sin(\delta/2)}.
+\]</li><li><strong>D3.</strong> Explique por qué la rendija única tiene ceros en \(b\sin\theta=m\lambda\) y por qué el máximo central domina en intensidad.</li><li><strong>D4.</strong> Relacione la fórmula Doppler angular
+
+\[
+f(\theta)=\frac{f_0}{1-(u/v)\cos\theta}
+\]
+
+con la geometría de frentes emitidos por una fuente en movimiento.</li><li><strong>D5.</strong> Una doble rendija real tiene anchura \(b\) y separación \(d\). Explique la estructura completa del patrón de intensidad y el papel de cada parámetro.</li></ol></article>
+<article class="exam-box"><h3>7.4. 5 preguntas de desarrollo largo</h3><ol class="exam-list"><li><strong>L1.</strong> Desarrolle la teoría de reflexión y transmisión de un pulso en una unión entre dos cuerdas y explique sus casos límite.</li><li><strong>L2.</strong> Explique el concepto de impedancia mecánica y su papel en las terminaciones no reflectoras.</li><li><strong>L3.</strong> Exponga el principio de Huygens-Fresnel y aplíquelo a reflexión, refracción y difracción.</li><li><strong>L4.</strong> Desarrolle la interferencia por doble rendija, rendijas múltiples y rendija única como tres niveles de una misma idea de superposición.</li><li><strong>L5.</strong> Explique el efecto Doppler, el régimen supersónico y la formación del cono de Mach.</li></ol></article>
+<article class="exam-box"><h3>7.5. 5 preguntas de relación entre conceptos</h3><ol class="exam-list"><li><strong>R1.</strong> Relacione condición de contorno, impedancia y signo de la reflexión.</li><li><strong>R2.</strong> Relacione Huygens-Fresnel con coherencia e interferencia.</li><li><strong>R3.</strong> Relacione diferencia de camino, diferencia de fase e intensidad.</li><li><strong>R4.</strong> Relacione doble rendija, red de difracción y rendija única.</li><li><strong>R5.</strong> Relacione refracción por frontera abrupta y refracción por gradiente continuo de velocidad.</li></ol></article>
+</section><section class="page" id="respuestas-modelo">
+<div class="page-head"><h2>8. Respuestas modelo</h2><p class="section-lead">Respuestas razonadas para contrastar el estudio activo.</p></div>
+<h3>8.1. Respuestas fáciles</h3>
+<details class="accordion accordion-answer"><summary>F1. Respuesta modelo</summary>
+<p>Un extremo fijo impone que el desplazamiento total de la cuerda sea cero en el extremo. Por eso la onda reflejada debe tener signo contrario a la incidente en ese punto. El extremo fijo es un nodo de desplazamiento.</p>
+</details>
+<details class="accordion accordion-answer"><summary>F2. Respuesta modelo</summary>
+<p>Un extremo libre impone fuerza transversal nula. Como la fuerza transversal está ligada a la pendiente de la cuerda, la reflexión debe producirse sin inversión de desplazamiento. El extremo libre actúa como antinodo.</p>
+</details>
+<details class="accordion accordion-answer"><summary>F3. Respuesta modelo</summary>
+<p>La impedancia mecánica es el cociente entre la fuerza impulsora aplicada a un sistema y la velocidad del desplazamiento producido:</p>
+<div class="formula-block">\[
+Z=F/v_y.
+\]</div>
+<p>Mide la oposición dinámica que presenta el sistema al paso de una onda.</p>
+</details>
+<details class="accordion accordion-answer"><summary>F4. Respuesta modelo</summary>
+<p>Para una cuerda tensa de tensión \(T\), densidad lineal \(\mu\) y velocidad de onda \(v=\sqrt{T/\mu}\), la impedancia característica es</p>
+<div class="formula-block">\[
+Z=\frac{T}{v}=\sqrt{T\mu}.
+\]</div>
+</details>
+<details class="accordion accordion-answer"><summary>F5. Respuesta modelo</summary>
+<p>La reflexión desaparece cuando las impedancias coinciden:</p>
+<div class="formula-block">\[
+Z_2=Z_1.
+\]</div>
+<p>En ese caso el coeficiente de reflexión es cero.</p>
+</details>
+<details class="accordion accordion-answer"><summary>F6. Respuesta modelo</summary>
+<p>La polarización es la dirección del desplazamiento en una onda transversal. Si la onda se propaga en una dirección, el desplazamiento puede orientarse en direcciones perpendiculares a esa propagación.</p>
+</details>
+<details class="accordion accordion-answer"><summary>F7. Respuesta modelo</summary>
+<p>El principio de Huygens-Fresnel dice que cada punto de un frente de onda puede actuar como fuente secundaria, y que la perturbación posterior se obtiene superponiendo esas contribuciones con sus fases relativas.</p>
+</details>
+<details class="accordion accordion-answer"><summary>F8. Respuesta modelo</summary>
+<p>La ley de Snell en términos de velocidades es</p>
+<div class="formula-block">\[
+\frac{\sin i}{\sin r}=\frac{v_1}{v_2}.
+\]</div>
+<p>Relaciona los ángulos de incidencia y refracción con las velocidades de propagación en los dos medios.</p>
+</details>
+<details class="accordion accordion-answer"><summary>F9. Respuesta modelo</summary>
+<p>En doble rendija, los máximos aparecen cuando la diferencia de camino es</p>
+<div class="formula-block">\[
+\Delta r=n\lambda.
+\]</div>
+<p>En campo lejano:</p>
+<div class="formula-block">\[
+d\sin\theta=n\lambda.
+\]</div>
+</details>
+<details class="accordion accordion-answer"><summary>F10. Respuesta modelo</summary>
+<p>En una rendija única de anchura \(b\), los mínimos cumplen</p>
+<div class="formula-block">\[
+b\sin\theta=m\lambda, \qquad m=\pm1,\pm2,\ldots
+\]</div>
+</details>
+<h3>8.2. Respuestas medias</h3>
+<details class="accordion accordion-answer"><summary>M1. Respuesta modelo</summary>
+<p>En un extremo fijo, el punto de la cuerda no puede desplazarse. Cuando llega un pulso incidente, debe aparecer una onda reflejada que lo cancele en el extremo. Por eso el pulso reflejado tiene signo opuesto. En un extremo libre, el punto sí puede desplazarse; lo que debe anularse es la fuerza transversal. Esa condición se cumple con una reflexión de la misma polaridad.</p>
+</details>
+<details class="accordion accordion-answer"><summary>M2. Respuesta modelo</summary>
+<p>En la unión, el desplazamiento debe ser único: la cuerda no puede separarse en dos valores distintos de \(y\). Además, la fuerza transversal debe equilibrarse; en una cuerda tensa esa fuerza depende de la pendiente. Al escribir la onda incidente, reflejada y transmitida y aplicar esas dos condiciones en \(x=0\), se obtiene una relación lineal entre sus amplitudes. Para tensiones iguales, el resultado es</p>
+<div class="formula-block">\[
+\frac{A_r}{A_i}=\frac{v_2-v_1}{v_2+v_1},
+\qquad
+\frac{A_t}{A_i}=\frac{2v_2}{v_1+v_2}.
+\]</div>
+</details>
+<details class="accordion accordion-answer"><summary>M3. Respuesta modelo</summary>
+<p>El signo de \(R\) indica la fase de la onda reflejada. Si \(R&lt;0\), hay inversión de desplazamiento; si \(R&gt;0\), la reflexión conserva la polaridad. Su módulo indica la fracción de amplitud que vuelve. Si \(Z_2=Z_1\), \(R=0\), no hay onda reflejada.</p>
+</details>
+<details class="accordion accordion-answer"><summary>M4. Respuesta modelo</summary>
+<p>La frecuencia temporal permanece fijada por la fuente. Si la onda entra en un medio donde su velocidad es menor, entonces, como \(v=f\lambda\), la longitud de onda disminuye. La onda queda más comprimida espacialmente en el segundo medio.</p>
+</details>
+<details class="accordion accordion-answer"><summary>M5. Respuesta modelo</summary>
+<p>Según Huygens, cada punto alcanzado por el frente incidente en la frontera emite una onda secundaria. La envolvente de las ondas secundarias que vuelven al primer medio forma el frente reflejado. La geometría de los triángulos construidos muestra que el ángulo de incidencia es igual al de reflexión.</p>
+</details>
+<details class="accordion accordion-answer"><summary>M6. Respuesta modelo</summary>
+<p>En la refracción, las ondas secundarias emitidas desde la frontera avanzan en el segundo medio con velocidad \(v_2\), mientras el frente incidente avanzaba con \(v_1\). Como una parte del frente entra antes que otra, el frente transmitido gira. La construcción geométrica da</p>
+<div class="formula-block">\[
+\frac{\sin i}{\sin r}=\frac{v_1}{v_2}.
+\]</div>
+</details>
+<details class="accordion accordion-answer"><summary>M7. Respuesta modelo</summary>
+<p>Si la fuente se mueve con velocidad \(u&lt;v\), los frentes emitidos sucesivamente quedan más juntos delante de la fuente y más separados detrás. Para un observador lejano en dirección \(\theta\), la frecuencia recibida es</p>
+<div class="formula-block">\[
+f(\theta)=\frac{f_0}{1-(u/v)\cos\theta}.
+\]</div>
+<p>El tono aumenta delante de la fuente y disminuye detrás.</p>
+</details>
+<details class="accordion accordion-answer"><summary>M8. Respuesta modelo</summary>
+<p>Una onda de choque aparece cuando la fuente va más deprisa que la onda que genera, \(u&gt;v\). Los frentes emitidos en instantes sucesivos se acumulan sobre una envolvente. En tres dimensiones esa envolvente es un cono de Mach, con</p>
+<div class="formula-block">\[
+\sin\alpha=\frac{v}{u}=\frac{1}{M}.
+\]</div>
+</details>
+<details class="accordion accordion-answer"><summary>M9. Respuesta modelo</summary>
+<p>En doble rendija, la diferencia de camino en campo lejano es \(d\sin\theta\). Los máximos se producen si las ondas llegan en fase:</p>
+<div class="formula-block">\[
+d\sin\theta=n\lambda.
+\]</div>
+<p>Los mínimos se producen si llegan en oposición:</p>
+<div class="formula-block">\[
+d\sin\theta=\left(n+\frac12\right)\lambda.
+\]</div>
+</details>
+<details class="accordion accordion-answer"><summary>M10. Respuesta modelo</summary>
+<p>En una doble rendija ideal, las rendijas se tratan como fuentes puntuales y el patrón depende solo de \(d\). En una doble rendija real, cada rendija tiene anchura \(b\), por lo que el patrón de interferencia queda modulado por la envolvente de difracción de rendija única. La intensidad toma la forma</p>
+<div class="formula-block">\[
+I=4I_0\left(\frac{\sin\alpha}{\alpha}\right)^2\cos^2(\delta/2).
+\]</div>
+</details>
+<h3>8.3. Respuestas difíciles</h3>
+<details class="accordion accordion-answer"><summary>D1. Respuesta modelo</summary>
+<p>El coeficiente de reflexión de desplazamiento es</p>
+<div class="formula-block">\[
+R=\frac{Z_1-Z_2}{Z_1+Z_2}.
+\]</div>
+<p>Si \(Z_2\to\infty\), entonces \(R\to-1\): la reflexión es total e invertida, como en un extremo fijo. Si \(Z_2=0\), entonces \(R=+1\): la reflexión es total sin inversión, como en un extremo libre. Si \(Z_2=Z_1\), entonces \(R=0\): no hay reflexión y la frontera está adaptada.</p>
+</details>
+<details class="accordion accordion-answer"><summary>D2. Respuesta modelo</summary>
+<p>Cada rendija aporta una oscilación de amplitud \(A_0\). La diferencia de fase entre rendijas adyacentes es \(\delta\). La amplitud total es la suma fasorial</p>
+<div class="formula-block">\[
+A_0(1+e^{-i\delta}+e^{-2i\delta}+\cdots+e^{-i(N-1)\delta}).
+\]</div>
+<p>Es una serie geométrica. Su módulo es</p>
+<div class="formula-block">\[
+A=A_0\left|\frac{1-e^{-iN\delta}}{1-e^{-i\delta}}\right|.
+\]</div>
+<p>Usando \(|1-e^{-ix}|=2|\sin(x/2)|\), resulta</p>
+<div class="formula-block">\[
+A=A_0\frac{\sin(N\delta/2)}{\sin(\delta/2)}.
+\]</div>
+</details>
+<details class="accordion accordion-answer"><summary>D3. Respuesta modelo</summary>
+<p>En una rendija única, cada punto de la abertura actúa como fuente secundaria. Para un ángulo \(\theta\), la diferencia de camino entre los bordes es \(b\sin\theta\). Si esa diferencia es \(m\lambda\), la abertura puede dividirse en zonas que se cancelan por parejas; por eso aparecen ceros:</p>
+<div class="formula-block">\[
+b\sin\theta=m\lambda.
+\]</div>
+<p>El máximo central domina porque cerca de \(\theta=0\) todas las partes de la rendija están casi en fase. Los máximos laterales resultan de sumas parciales mucho menos coherentes, y su intensidad es pequeña frente al máximo central.</p>
+</details>
+<details class="accordion accordion-answer"><summary>D4. Respuesta modelo</summary>
+<p>En intervalos de un período \(T\), una fuente móvil avanza una distancia \(uT\). Para un observador lejano situado en una dirección que forma ángulo \(\theta\) con el movimiento, solo cuenta la componente \(u\cos\theta\). La separación efectiva entre frentes es</p>
+<div class="formula-block">\[
+\lambda(\theta)=vT-uT\cos\theta=\lambda_0\left(1-\frac{u}{v}\cos\theta\right).
+\]</div>
+<p>Como la velocidad de propagación en el medio sigue siendo \(v\), la frecuencia observada es</p>
+<div class="formula-block">\[
+f(\theta)=\frac{v}{\lambda(\theta)}=
+rac{f_0}{1-(u/v)\cos\theta}.
+\]</div>
+</details>
+<details class="accordion accordion-answer"><summary>D5. Respuesta modelo</summary>
+<p>En una doble rendija real hay dos escalas geométricas. La separación entre centros \(d\) determina la diferencia de fase entre rendijas:</p>
+<div class="formula-block">\[
+\delta=\frac{2\pi d\sin\theta}{\lambda}.
+\]</div>
+<p>La anchura de cada rendija \(b\) determina la difracción propia de cada abertura:</p>
+<div class="formula-block">\[
+\alpha=\frac{\pi b\sin\theta}{\lambda}.
+\]</div>
+<p>Por tanto, el patrón de intensidad es</p>
+<div class="formula-block">\[
+I(\theta)=4I_0\left(\frac{\sin\alpha}{\alpha}\right)^2\cos^2(\delta/2).
+\]</div>
+<p>El factor con \(d\) produce las franjas finas; el factor con \(b\) produce la envolvente amplia. Si una franja de interferencia cae en un cero de la envolvente, desaparece.</p>
+</details>
+<h3>8.4. Respuestas de desarrollo largo</h3>
+<details class="accordion accordion-answer"><summary>L1. Respuesta modelo</summary>
+<p>Una onda que llega a una unión entre dos cuerdas debe satisfacer condiciones físicas en el punto de contacto. Si la onda incidente se escribe como \(f(t-x/v_1)\), la reflejada como \(g(t+x/v_1)\) y la transmitida como \(h(t-x/v_2)\), la continuidad del desplazamiento exige \(f+g=h\) en \(x=0\). La continuidad de la fuerza transversal exige una relación entre pendientes. Para tensiones iguales, de estas dos condiciones se obtiene</p>
+<div class="formula-block">\[
+\frac{A_r}{A_i}=\frac{v_2-v_1}{v_2+v_1},
+\qquad
+\frac{A_t}{A_i}=\frac{2v_2}{v_1+v_2}.
+\]</div>
+<p>Si el segundo medio es más lento, la onda reflejada se invierte. Si es más rápido, no se invierte. Los límites extremos recuperan la reflexión en un extremo fijo y libre. Si la segunda cuerda equivale a impedancia infinita, la reflexión es total e invertida. Si equivale a impedancia nula, la reflexión es total sin inversión. Si las impedancias coinciden, no hay reflexión. El resultado muestra que las fronteras se entienden mejor por condiciones dinámicas que por imágenes geométricas simples.</p>
+</details>
+<details class="accordion accordion-answer"><summary>L2. Respuesta modelo</summary>
+<p>La impedancia mecánica se define como la razón entre fuerza aplicada y velocidad del desplazamiento asociado. En una cuerda tensa, una onda progresiva transversal cumple que la fuerza transversal necesaria para generarla es proporcional a la velocidad transversal de las partículas. El cociente es</p>
+<div class="formula-block">\[
+Z=\frac{T}{v}=\sqrt{T\mu}.
+\]</div>
+<p>Esta magnitud caracteriza la facilidad con que la cuerda acepta energía ondulatoria. Si una onda llega a una frontera con otra impedancia, se refleja parcialmente. El coeficiente de reflexión es</p>
+<div class="formula-block">\[
+R=\frac{Z_1-Z_2}{Z_1+Z_2}.
+\]</div>
+<p>Por tanto, la reflexión mide desajuste de impedancia. Una terminación no reflectora exige \(Z_2=Z_1\). Entonces la onda no vuelve: la energía se absorbe o transmite. Esta idea es análoga a la adaptación de impedancias en electricidad, acústica y líneas de transmisión.</p>
+</details>
+<details class="accordion accordion-answer"><summary>L3. Respuesta modelo</summary>
+<p>El principio de Huygens-Fresnel afirma que cada punto de un frente de onda actúa como fuente secundaria. El frente posterior se obtiene como envolvente y superposición de esas ondas secundarias, considerando fase y oblicuidad. Esta idea explica por qué una abertura pequeña produce ondas circulares: la abertura se comporta como una fuente puntual secundaria.</p>
+<p>En reflexión, los puntos sucesivos de la frontera generan ondas secundarias que vuelven al primer medio. La envolvente de esas ondas da un frente reflejado cuyo ángulo cumple \(i=i'\). En refracción, las ondas secundarias avanzan en el segundo medio con velocidad distinta. La geometría da</p>
+<div class="formula-block">\[
+\frac{\sin i}{\sin r}=\frac{v_1}{v_2}.
+\]</div>
+<p>En difracción, la barrera bloquea parte del frente y solo las zonas abiertas actúan como fuentes secundarias. La suma de esas contribuciones produce máximos y mínimos. Por eso Huygens-Fresnel conecta propagación, reflexión, refracción e interferencia bajo una misma imagen ondulatoria.</p>
+</details>
+<details class="accordion accordion-answer"><summary>L4. Respuesta modelo</summary>
+<p>La doble rendija es el caso elemental de interferencia entre dos fuentes coherentes. Las dos rendijas proceden de la misma onda primaria y mantienen fase definida. En un punto lejano, la diferencia de camino es \(d\sin\theta\). Los máximos cumplen \(d\sin\theta=n\lambda\) y los mínimos \(d\sin\theta=(n+1/2)\lambda\).</p>
+<p>La red de difracción amplía el caso a \(N\) fuentes coherentes. La diferencia de fase entre rendijas adyacentes es \(\delta=2\pi d\sin\theta/\lambda\), y la amplitud es</p>
+<div class="formula-block">\[
+A=A_0\frac{\sin(N\delta/2)}{\sin(\delta/2)}.
+\]</div>
+<p>Los máximos principales siguen cumpliendo \(d\sin\theta=n\lambda\), pero se vuelven más estrechos e intensos al aumentar \(N\).</p>
+<p>La rendija única muestra que una abertura extensa también interfiere consigo misma. Dividiendo la rendija en elementos de Huygens, la suma continua produce</p>
+<div class="formula-block">\[
+A=A_0\frac{\sin\alpha}{\alpha}.
+\]</div>
+<p>Por tanto, doble rendija, red y rendija única son tres expresiones de una misma operación: sumar contribuciones coherentes con fases distintas.</p>
+</details>
+<details class="accordion accordion-answer"><summary>L5. Respuesta modelo</summary>
+<p>El efecto Doppler aparece cuando una fuente periódica se mueve respecto al medio. Si \(u&lt;v\), los frentes de onda sucesivos se comprimen delante de la fuente y se separan detrás. Para un observador lejano,</p>
+<div class="formula-block">\[
+\lambda(\theta)=\lambda_0\left(1-\frac{u}{v}\cos\theta\right),
+\]</div>
+<div class="formula-block">\[
+f(\theta)=\frac{f_0}{1-(u/v)\cos\theta}.
+\]</div>
+<p>El cambio observado depende de la componente de la velocidad de la fuente en la dirección de observación.</p>
+<p>Si \(u&gt;v\), la fuente adelanta a sus propios frentes de onda. Los frentes emitidos quedan envueltos por una superficie común. En tres dimensiones esa superficie es el cono de Mach. El número de Mach es \(M=u/v\), y el ángulo cumple</p>
+<div class="formula-block">\[
+\sin\alpha=\frac{1}{M}.
+\]</div>
+<p>Cuando la envolvente alcanza a un observador, llega una concentración brusca de perturbación: onda de choque o estampido sónico.</p>
+</details>
+<h3>8.5. Respuestas de relación entre conceptos</h3>
+<details class="accordion accordion-answer"><summary>R1. Respuesta modelo</summary>
+<p>La condición de contorno decide qué debe anularse en la frontera: desplazamiento, fuerza o desajuste dinámico. La impedancia cuantifica ese desajuste. Si la impedancia final es infinita, se reproduce el extremo fijo y la reflexión se invierte. Si es nula, se reproduce el extremo libre y la reflexión no se invierte. Si coincide con la impedancia incidente, no hay reflexión.</p>
+</details>
+<details class="accordion accordion-answer"><summary>R2. Respuesta modelo</summary>
+<p>Huygens-Fresnel convierte cada punto abierto del frente en una fuente secundaria. Si esas fuentes proceden de la misma onda primaria, mantienen coherencia. La interferencia aparece al sumar sus contribuciones con fases distintas. Por eso la difracción en rendijas es una aplicación directa de Huygens-Fresnel.</p>
+</details>
+<details class="accordion accordion-answer"><summary>R3. Respuesta modelo</summary>
+<p>La diferencia de camino \(\Delta r\) produce diferencia de fase \(\Delta\phi=2\pi\Delta r/\lambda\). Si \(\Delta\phi\) es múltiplo de \(2\pi\), las amplitudes se refuerzan y la intensidad crece. Si es múltiplo impar de \(\pi\), las amplitudes se cancelan y aparece intensidad nula.</p>
+</details>
+<details class="accordion accordion-answer"><summary>R4. Respuesta modelo</summary>
+<p>La doble rendija suma dos fuentes; la red suma \(N\) fuentes; la rendija única suma un continuo de fuentes dentro de una abertura. La física común es la superposición coherente. La doble rendija produce franjas; la red produce máximos estrechos; la rendija única produce una envolvente dominante con máximo central.</p>
+</details>
+<details class="accordion accordion-answer"><summary>R5. Respuesta modelo</summary>
+<p>En una frontera abrupta, una parte del frente entra en el segundo medio antes que otra y cambia de velocidad bruscamente; de ahí sale la ley de Snell. En un gradiente continuo, el frente cambia de velocidad de forma gradual punto a punto, curvándose progresivamente. Ambos casos son refracción por variación espacial de velocidad.</p>
+</details>
+</section><section class="page" id="resumen-final-de-repaso">
+<div class="page-head"><h2>9. Resumen final de repaso</h2><p class="section-lead">Síntesis estructurada de ideas, conceptos, relaciones y errores que evitar.</p></div>
+<div class="reading-block"><p>Ideas principales:</p></div>
+<ul><li>Una frontera obliga a la onda a cumplir condiciones de contorno.</li><li>Un extremo fijo produce reflexión invertida.</li><li>Un extremo libre produce reflexión no invertida.</li><li>Una unión entre medios produce reflexión y transmisión parcial.</li><li>La impedancia resume la respuesta dinámica del medio.</li><li>Sin desajuste de impedancia no hay reflexión.</li><li>En dos dimensiones aparecen frentes, rayos, reflexión angular y refracción.</li><li>Huygens-Fresnel explica propagación, aberturas, difracción e interferencia.</li><li>Doppler surge porque la fuente se mueve entre emisiones sucesivas.</li><li>Si \(u&gt;v\), aparece cono de Mach y onda de choque.</li><li>La doble rendija depende de diferencia de camino.</li><li>La red de difracción estrecha los máximos principales.</li><li>La rendija única produce difracción por interferencia interna.</li><li>Las rendijas reales combinan interferencia entre rendijas y envolvente de difracción.</li></ul>
+<div class="reading-block"><p>Conceptos imprescindibles:</p></div>
+<ul><li>Condición de contorno.</li><li>Reflexión invertida/no invertida.</li><li>Impedancia mecánica.</li><li>Adaptación de impedancias.</li><li>Polarización.</li><li>Frente de onda.</li><li>Principio de Huygens-Fresnel.</li><li>Ley de Snell.</li><li>Efecto Doppler.</li><li>Número de Mach.</li><li>Coherencia.</li><li>Interferencia constructiva/destructiva.</li><li>Red de difracción.</li><li>Difracción de rendija única.</li><li>Difracción de Fraunhofer.</li></ul>
+<div class="reading-block"><p>Relaciones clave:</p></div>
+<ul><li>\(Z_2&gt;Z_1\) tiende a reflexión invertida; \(Z_2&lt;Z_1\) tiende a reflexión no invertida.</li><li>\(Z_2=Z_1\) implica \(R=0\).</li><li>\(\Delta r=n\lambda\) implica máximo.</li><li>\(\Delta r=(n+1/2)\lambda\) implica mínimo en doble rendija.</li><li>\(b\sin\theta=m\lambda\) implica mínimo de rendija única.</li><li>\(d\sin\theta=n\lambda\) implica máximo principal de doble rendija o red.</li><li>\(M&gt;1\) implica cono de Mach.</li></ul>
+<div class="reading-block"><p>Errores que evitar:</p></div>
+<ul><li>Decir que toda reflexión invierte.</li><li>Confundir velocidad de onda con velocidad del medio.</li><li>Confundir \(b\) con \(d\).</li><li>Usar condiciones de máximos como si fueran mínimos.</li><li>Olvidar la envolvente de rendija única.</li><li>Aplicar Doppler subsónico al régimen supersónico.</li><li>Pensar que la interferencia crea energía.</li><li>Usar Snell óptico sin traducirlo a velocidades.</li></ul>
+</section><section class="page" id="checklist-de-dominio">
+<div class="page-head"><h2>10. Checklist de dominio</h2><p class="section-lead">Criterios operativos para comprobar el dominio del capítulo.</p></div>
+<div class="checklist-box"><ul class="check-list"><li>Si no puedes explicar por qué un extremo fijo invierte el pulso, falta repasar condiciones de contorno.</li><li>Si no puedes explicar por qué un extremo libre no invierte el pulso, falta repasar fuerza transversal y pendiente.</li><li>Si confundes desplazamiento nulo con fuerza nula, revisar extremos fijo/libre.</li><li>Si no puedes escribir \(R=(Z_1-Z_2)/(Z_1+Z_2)\), falta repasar impedancia.</li><li>Si no puedes interpretar el signo de \(R\), falta repasar inversión de fase.</li><li>Si crees que \(R=0\) significa ausencia de energía absorbida, revisar adaptación de impedancias.</li><li>Si confundes \(v\) de propagación con \(v_y\) de partícula, revisar definición de impedancia.</li><li>Si no puedes explicar por qué una transición gradual refleja poco, falta repasar escala de longitud de onda.</li><li>Si no puedes distinguir onda longitudinal y transversal, falta repasar polarización.</li><li>Si no puedes definir frente de onda y rayo, falta repasar ondas en dos dimensiones.</li><li>Si no puedes derivar cualitativamente \(i=i'\), falta repasar Huygens aplicado a reflexión.</li><li>Si no puedes escribir \(\sin i/\sin r=v_1/v_2\), falta repasar refracción.</li><li>Si inviertes el papel de \(v_1\) y \(v_2\) en Snell, revisar construcción geométrica.</li><li>Si no puedes explicar Doppler sin decir que cambia la velocidad del sonido, falta repasar frentes sucesivos.</li><li>Si no puedes escribir \(f=f_0/[1-(u/v)\cos\theta]\), falta repasar Doppler angular.</li><li>Si aplicas Doppler subsónico a \(u&gt;v\), revisar número de Mach.</li><li>Si no puedes explicar \(\sin\alpha=1/M\), falta repasar cono de Mach.</li><li>Si no puedes derivar máximos de doble rendija, falta repasar diferencia de camino.</li><li>Si confundes máximos y mínimos de doble rendija, revisar fase \(0\) frente a fase \(\pi\).</li><li>Si no puedes explicar por qué las líneas nodales son hipérbolas, falta repasar definición geométrica de diferencia de distancias constante.</li><li>Si no puedes pasar de \(r_2-r_1\) a \(d\sin\theta\), falta repasar campo lejano.</li><li>Si no puedes obtener la suma de \(N\) rendijas, falta repasar suma fasorial o serie geométrica compleja.</li><li>Si no puedes explicar por qué una red mejora la resolución angular, falta repasar estrechamiento de máximos principales.</li><li>Si no puedes explicar por qué una sola rendija difracta, falta repasar Huygens-Fresnel continuo.</li><li>Si no puedes escribir \(A=A_0\sin\alpha/\alpha\), falta repasar rendija única.</li><li>Si confundes \(b\sin\theta=m\lambda\) con máximos, revisar mínimos de rendija única.</li><li>Si no puedes explicar la condición \(D\gg b^2/\lambda\), falta repasar Fraunhofer.</li><li>Si no puedes explicar la intensidad de doble rendija real, falta repasar envolvente de difracción.</li><li>Si puedes resolver un problema de reflexión en una unión, un problema de Snell, un problema de Doppler y un problema de doble rendija real, el capítulo está suficientemente asentado.</li></ul></div>
+</section>
+</main>
+</div>
+</body>
+</html>
