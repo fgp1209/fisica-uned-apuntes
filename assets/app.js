@@ -97,6 +97,41 @@ function printReady(){
   }
 }
 
+function markTopicPending(card){
+  card.classList.add("topic-card-pending");
+  card.dataset.topicState = "pending";
+
+  const status = document.createElement("span");
+  status.className = "topic-status";
+  status.textContent = "Pendiente";
+  card.appendChild(status);
+}
+
+async function topicFileExists(href){
+  let response = await fetch(href, { method: "HEAD", cache: "no-store" });
+  if(response.status === 405){
+    response = await fetch(href, { method: "GET", cache: "no-store" });
+  }
+  return response.ok;
+}
+
+async function updateTopicAvailability(){
+  const cards = document.querySelectorAll("a.topic-card[href]");
+
+  await Promise.all(Array.from(cards, async (card) => {
+    card.querySelector(".topic-status")?.remove();
+    card.classList.remove("topic-card-pending");
+    delete card.dataset.topicState;
+
+    try{
+      const exists = await topicFileExists(card.getAttribute("href"));
+      if(!exists) markTopicPending(card);
+    } catch(_err){
+      // No se cambia el estado si el navegador no puede comprobar la ruta.
+    }
+  }));
+}
+
 applyTheme(getActiveTheme());
 
 if(window.matchMedia){
@@ -114,6 +149,7 @@ if(window.matchMedia){
 document.addEventListener("DOMContentLoaded", () => {
   addThemeToggle();
   applyTheme(getActiveTheme());
+  updateTopicAvailability();
 
   document.querySelectorAll('a[href^="#"]').forEach((a) => {
     a.addEventListener("click", () => {
