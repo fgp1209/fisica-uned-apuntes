@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="robots" content="noindex, nofollow" />
+<meta name="color-scheme" content="light dark" />
+<title>Vibraciones y Ondas — T5: Modos normales de sistemas continuos y Fourier</title>
+<link rel="icon" type="image/png" sizes="32x32" href="assets/icons/icon-32.png" />
+<link rel="icon" type="image/png" sizes="50x50" href="assets/icons/icon-50.png" />
+<link rel="apple-touch-icon" sizes="100x100" href="assets/icons/icon-100.png" />
+<meta name="theme-color" content="#2856a5" />
+<link rel="stylesheet" href="assets/styles.css" />
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+<script defer src="assets/app.js"></script>
+</head>
+<body class="subject-vo">
+<div class="wrap">
+<header class="cover">
+<div class="top-actions"><a class="back-link" href="index.html">← Volver al índice</a></div>
+<p class="eyebrow">Vibraciones y Ondas · Tema 5</p>
+<h1>Modos normales de sistemas continuos y análisis de Fourier</h1>
+<p class="subtitle">Fuente principal: A. P. French, <em>Vibraciones y ondas</em>, cap. 6. Guía desarrollada y orientada a problemas UNED sobre cuerdas, tubos, varillas, membranas, degeneración y Fourier.</p>
+<div class="chips"><span class="chip">V&amp;O — T5</span><span class="chip">Apuntes completos</span><span class="chip">Orientado a examen</span></div>
+</header>
+<div class="toolbar no-print">
+<nav><a href="#mapa">Mapa</a><a href="#prerrequisitos">Prerrequisitos</a><a href="#idea-central">Idea central</a><a href="#desarrollo-completo">Desarrollo</a><a href="#conceptos-clave">Conceptos</a><a href="#errores-habituales">Errores</a><a href="#preguntas-orientadas-a-examen">Preguntas</a><a href="#respuestas-modelo">Respuestas</a><a href="#resumen-final-de-repaso">Resumen</a><a href="#checklist-de-dominio">Checklist</a></nav>
+<div class="toolbar-actions"><button class="btn" type="button" onclick="printReady()">Imprimir / guardar PDF</button><button class="btn secondary" type="button" onclick="openAllDetails()">Abrir todo</button><button class="btn secondary" type="button" onclick="closeAllDetails()">Cerrar acordeones</button></div>
+</div>
+<main>
+<section class="page map-page" id="mapa"><div class="page-head"><h2>Mapa clicable</h2><p class="section-lead">Del continuo y su ecuación de ondas a los modos permitidos, su superposición y la descomposición de Fourier.</p></div>
+<div class="concept-map"><a class="map-node" href="#prerrequisitos"><span>Base matemática</span><small>MAS · ondas · separación · contorno · ortogonalidad</small></a><a class="map-node" href="#cuerda-tensa"><span>Sistemas 1D</span><small>cuerda · varilla · columnas de aire</small></a><a class="map-node" href="#membrana-rectangular"><span>Más dimensiones</span><small>membranas · cavidades · degeneración</small></a><a class="map-node" href="#analisis-de-fourier"><span>Fourier</span><small>forma inicial · coeficientes · energía modal</small></a><a class="map-node" href="#preguntas-orientadas-a-examen"><span>Examen</span><small>errores · preguntas · respuestas · checklist</small></a></div></section>
+<section class="page" id="prerrequisitos"><div class="page-head"><h2>1. Prerrequisitos mínimos</h2><p class="section-lead">Herramientas físicas y matemáticas necesarias para construir los modos normales.</p></div><div class="grid cards-grid">
+<article class="definition-card"><h3>Movimiento armónico simple</h3>
+<p><strong>Definición breve.</strong> movimiento periódico descrito por una función sinusoidal, por ejemplo \(x(t)=A \cos(\omega t + \phi)\), donde A es la amplitud, \(\omega\) la frecuencia angular y \(\phi\) la fase inicial.</p>
+<p><strong>Por qué es necesario.</strong> cada punto de una cuerda, varilla o columna de aire en un modo normal ejecuta un MAS. El sistema continuo no elimina el oscilador: lo convierte en infinitos osciladores coordinados espacialmente.</p>
+<p><strong>Ejemplo mínimo.</strong> en el modo fundamental de una cuerda fija por ambos extremos, el punto central oscila como \(A \cos(\omega_{1} t)\), mientras los extremos permanecen inmóviles.</p>
+</article>
+<article class="definition-card"><h3>Frecuencia angular, frecuencia ordinaria y longitud de onda</h3>
+<p><strong>Definición breve.</strong> \(\omega\) es la frecuencia angular en rad/s; \(\nu\) es la frecuencia en ciclos/s; \(\lambda\) es la distancia espacial asociada a un ciclo completo de la forma sinusoidal. Se relacionan por \(\omega=2 \pi \nu\).</p>
+<p><strong>Por qué es necesario.</strong> el capítulo pasa continuamente entre frecuencia angular, frecuencia ordinaria y longitud de onda para describir modos estacionarios.</p>
+<p><strong>Ejemplo mínimo.</strong> en una cuerda fija por ambos extremos, \(\lambda_{n}=2L/n\) y \(\nu_{n}=v/\lambda_{n}=n v/(2L)\).</p>
+</article>
+<article class="definition-card"><h3>Ecuación de ondas unidimensional</h3>
+<p><strong>Definición breve.</strong> ecuación diferencial parcial lineal que relaciona curvatura espacial y aceleración temporal:</p>
+<div class="formula-block">\[\frac{\partial^2 y}{\partial x^2} = (1/v^2) \frac{\partial^2 y}{\partial t^2}.\]</div>
+<p><strong>Por qué es necesario.</strong> es la ecuación estructural de la cuerda tensa, de la varilla longitudinal y de la columna de aire idealizada, con cambios en el significado físico de la variable dependiente.</p>
+<p><strong>Ejemplo mínimo.</strong> para una cuerda, \(y(x,t)\) es desplazamiento transversal; para una varilla, \(\xi(x,t)\) es desplazamiento longitudinal; para una columna de aire puede usarse desplazamiento del aire o presión acústica.</p>
+</article>
+<article class="definition-card"><h3>Derivadas parciales</h3>
+<p><strong>Definición breve.</strong> derivadas de una función de varias variables manteniendo fijas las demás. En este tema las variables independientes son normalmente x y t.</p>
+<p><strong>Por qué es necesario.</strong> la forma de la cuerda cambia en el espacio y en el tiempo; la curvatura espacial \(\frac{\partial^2 y}{\partial x^2}\) y la aceleración \(\frac{\partial^2 y}{\partial t^2}\) no significan lo mismo.</p>
+<p><strong>Ejemplo mínimo.</strong> si \(y(x,t)=A \sin(\pi x/L) \cos(\omega t)\), entonces la derivada respecto a x mide forma espacial; la derivada respecto a t mide movimiento temporal.</p>
+</article>
+<article class="definition-card"><h3>Separación de variables</h3>
+<p><strong>Definición breve.</strong> método que busca soluciones como producto de una parte espacial y una parte temporal: \(y(x,t)=f(x)g(t)\).</p>
+<p><strong>Por qué es necesario.</strong> los modos normales se obtienen separando la ecuación de ondas. La ecuación espacial impone la forma del modo; la ecuación temporal impone la oscilación armónica.</p>
+<p><strong>Ejemplo mínimo.</strong> para una cuerda fija por ambos extremos se ensaya \(y=f(x)\cos(\omega t)\). De ahí sale \(f''+(\omega^2/v^2)f=0\).</p>
+</article>
+<article class="definition-card"><h3>Condiciones de contorno</h3>
+<p><strong>Definición breve.</strong> restricciones impuestas en los extremos o bordes del sistema.</p>
+<p><strong>Por qué es necesario.</strong> la ecuación diferencial permite muchas soluciones; las condiciones de contorno seleccionan solo algunas frecuencias y formas espaciales.</p>
+<p><strong>Ejemplo mínimo.</strong> una cuerda fija en \(x=0\) y \(x=L\) exige \(y(0,t)=0\) e \(y(L,t)=0\). Esto obliga a \(kL=n \pi\).</p>
+</article>
+<article class="definition-card"><h3>Linealidad y superposición</h3>
+<p><strong>Definición breve.</strong> una ecuación es lineal si la suma de dos soluciones también es solución.</p>
+<p><strong>Por qué es necesario.</strong> la cuerda puede vibrar como suma de modos normales. Fourier funciona físicamente porque la ecuación dinámica es lineal en los desplazamientos.</p>
+<p><strong>Ejemplo mínimo.</strong> si y_1 e y_2 son modos normales de una cuerda, \(y=y_{1}+y_{2}\) también describe una vibración posible, mientras las amplitudes sean pequeñas.</p>
+</article>
+<article class="definition-card"><h3>Modos normales discretos</h3>
+<p><strong>Definición breve.</strong> patrones independientes de oscilación en un sistema con varios grados de libertad acoplados.</p>
+<p><strong>Por qué es necesario.</strong> French construye los sistemas continuos como límite de una cadena de N osciladores acoplados. Cuando N crece mucho, los modos discretos se aproximan a modos continuos.</p>
+<p><strong>Ejemplo mínimo.</strong> una cadena de N masas acopladas tiene N modos normales. Una cuerda ideal continua se trata como si tuviera infinitos modos.</p>
+</article>
+<article class="definition-card"><h3>Ortogonalidad</h3>
+<p><strong>Definición breve.</strong> dos funciones son ortogonales en un intervalo si la integral de su producto en ese intervalo vale cero.</p>
+<p><strong>Por qué es necesario.</strong> permite aislar el coeficiente de cada modo en una serie de Fourier y justifica la independencia energética de los modos.</p>
+<p><strong>Ejemplo mínimo.</strong></p>
+<div class="formula-block">\[\int_{0}^L \sin(n \pi x/L) \sin(m \pi x/L) dx = 0 si n \ne m.\]</div>
+</article>
+<article class="definition-card"><h3>Elasticidad</h3>
+<p><strong>Definición breve.</strong> relación entre fuerza restauradora y deformación. En una varilla interviene el módulo de Young Y; en un gas interviene el módulo de compresibilidad K.</p>
+<p><strong>Por qué es necesario.</strong> la velocidad característica de las vibraciones depende del cociente entre una propiedad restauradora y una propiedad inercial.</p>
+<p><strong>Ejemplo mínimo.</strong> en una varilla, \(v=\sqrt{Y/\rho}\). En una cuerda, \(v=\sqrt{T/\mu}\). En un gas, \(v=\sqrt{\gamma p/\rho}\).</p>
+</article>
+</div></section>
+<section class="page" id="idea-central"><div class="page-head"><h2>2. Idea central del capítulo</h2><p class="section-lead">Una misma estructura matemática conecta sistemas discretos, medios continuos y Fourier.</p></div>
+<div class="reading-block"><p>El capítulo enseña cómo se pasa de los osciladores acoplados discretos a los sistemas continuos. En un sistema discreto, como una cadena de masas unidas por muelles o por una cuerda sin masa, hay un número finito de grados de libertad y, por tanto, un número finito de modos normales. En una cuerda, una varilla, una columna de aire o una membrana ideal, la materia se aproxima como continua. Eso conduce a ecuaciones diferenciales parciales, no a sistemas finitos de ecuaciones ordinarias.</p></div>
+<div class="reading-block"><p>La idea física fundamental es que un sistema continuo con elasticidad e inercia puede vibrar de muchas formas propias. Cada forma propia es un modo normal: una configuración espacial fija multiplicada por una oscilación temporal común. La cuerda no vibra “de cualquier manera” cuando está en un modo normal; todos sus puntos comparten una misma frecuencia, aunque cada punto tiene una amplitud distinta, e incluso algunos puntos pueden permanecer quietos permanentemente.</p></div>
+<div class="reading-block"><p>El capítulo muestra que las condiciones de contorno son tan importantes como la ecuación dinámica. La misma ecuación de ondas produce espectros distintos según si el extremo está fijo, libre, abierto o cerrado. En una cuerda fija por ambos extremos aparecen senos con nodos en los extremos. En una varilla fija por un extremo y libre por otro aparece un nodo de desplazamiento en un extremo y una condición de tensión nula en el otro. En tubos de aire, un extremo abierto no significa lo mismo que un extremo cerrado: en el abierto hay antinodo de desplazamiento y nodo de presión; en el cerrado hay nodo de desplazamiento y antinodo de presión.</p></div>
+<div class="reading-block"><p>La segunda idea central es que, por linealidad, los modos normales pueden superponerse. Una cuerda real golpeada o pulsada no nace normalmente con forma sinusoidal pura. Su forma inicial puede ser triangular, quebrada o irregular. El análisis de Fourier afirma que esa forma puede reconstruirse mediante una suma de modos sinusoidales. Esto transforma un problema de forma arbitraria en una colección de osciladores independientes.</p></div>
+<div class="reading-block"><p>El papel de Fourier no es decorativo. Es el puente entre geometría inicial y dinámica posterior. Dada una forma inicial y(x,0), los coeficientes de Fourier indican cuánto se ha excitado cada modo. Después cada modo evoluciona con su propia frecuencia. Así se entiende por qué un instrumento musical emite un fundamental y armónicos, por qué el timbre depende de la mezcla modal y por qué las condiciones de contorno cambian el espectro.</p></div>
+<div class="reading-block"><p>Dentro de la asignatura, este capítulo es el salto real desde osciladores acoplados hacia ondas. Todavía se trabaja con ondas estacionarias y modos normales, no con ondas progresivas como tema principal. Pero la ecuación obtenida ya es la ecuación de ondas. Por eso este tema prepara directamente el capítulo siguiente: las ondas progresivas se entienden como otra forma de combinar soluciones de la misma ecuación.</p></div>
+</section>
+<section class="page" id="desarrollo-completo"><div class="page-head"><h2>3. Desarrollo completo del capítulo</h2><p class="section-lead">Derivación física, condiciones de contorno, espectros y expansión modal.</p></div>
+<h3 id="3-1-del-sistema-discreto-al-sistema-continuo">3.1. Del sistema discreto al sistema continuo</h3>
+<div class="reading-block"><p>El capítulo parte de una intuición construida en los osciladores acoplados. Una cadena de masas tiene modos normales porque las fuerzas restauradoras acoplan el movimiento de cada masa con sus vecinas. En un sistema de N masas hay N modos normales. Cada modo es una forma colectiva de movimiento en la que todas las partículas oscilan con una misma frecuencia y con relaciones fijas de amplitud y fase.</p></div>
+<div class="reading-block"><p>Cuando el número de partículas aumenta mucho y la separación entre ellas se hace muy pequeña, el sistema puede aproximarse por un continuo. En vez de variables y_1(t), y_2(t), ..., y_N(t), se introduce una función \(y(x,t)\). El índice discreto se convierte en una coordenada espacial. Las diferencias entre desplazamientos vecinos se convierten en derivadas espaciales.</p></div>
+<div class="reading-block"><p>Este paso importa porque cambia el lenguaje matemático. Ya no basta con diagonalizar una matriz finita. Ahora aparece una ecuación diferencial parcial. Sin embargo, la estructura física sigue siendo la misma: inercia más fuerza restauradora más condiciones de contorno.</p></div>
+<div class="reading-block"><p>La consecuencia es fuerte: un sistema continuo ideal tiene una sucesión infinita de modos. Esa infinitud es una idealización. Un sistema real está hecho de átomos y no admite longitudes de onda arbitrariamente pequeñas. Para modos de longitud de onda comparable a la separación microscópica, la descripción continua deja de valer.</p></div>
+<h3 id="cuerda-tensa">3.2. Vibraciones libres de una cuerda tensa</h3>
+<div class="reading-block"><p>El primer sistema estudiado es una cuerda de longitud L, densidad lineal \(\mu\) y tensión T, con extremos fijos en \(x=0\) y \(x=L\). Se supone que los desplazamientos transversales son pequeños, de modo que la pendiente de la cuerda es pequeña y la tensión puede considerarse prácticamente constante.</p></div>
+<div class="reading-block"><p>Se toma un pequeño elemento de cuerda entre x y \(x+\Delta x\). Las tensiones en los extremos tienen componentes verticales ligeramente distintas. Esa diferencia vertical produce la aceleración transversal del elemento. Para ángulos pequeños, \(\sin \theta \approx \theta\), y \(\theta\) se identifica con la pendiente \(\frac{\partial y}{\partial x}\). La diferencia de pendientes entre los extremos está relacionada con la curvatura \(\frac{\partial^2 y}{\partial x^2}\).</p></div>
+<div class="reading-block"><p>La segunda ley de Newton para el elemento da:</p></div>
+<div class="reading-block"><div class="formula-block">\[T \frac{\partial^2 y}{\partial x^2} \Delta x = \mu \Delta x \frac{\partial^2 y}{\partial t^2}.\]</div></div>
+<div class="reading-block"><p>Al simplificar:</p></div>
+<div class="reading-block"><div class="formula-block">\[\frac{\partial^2 y}{\partial x^2} = (\mu/T) \frac{\partial^2 y}{\partial t^2}.\]</div></div>
+<div class="reading-block"><p>Se define:</p></div>
+<div class="reading-block"><div class="formula-block">\[v = \sqrt{T/\mu}\]</div></div>
+<div class="reading-block"><p>por lo que la ecuación queda:</p></div>
+<div class="reading-block"><div class="formula-block">\[\frac{\partial^2 y}{\partial x^2} = (1/v^2) \frac{\partial^2 y}{\partial t^2}.\]</div></div>
+<div class="reading-block"><p>Esta ecuación dice que la aceleración transversal no depende directamente del desplazamiento, sino de la curvatura. Si un tramo de cuerda es recto, aunque esté inclinado, las tensiones se compensan y no aparece aceleración transversal neta. La restauración surge donde hay curvatura.</p></div>
+<div class="reading-block"><p>Para buscar modos normales se prueba:</p></div>
+<div class="reading-block"><div class="formula-block">\[y(x,t)=f(x) \cos(\omega t).\]</div></div>
+<div class="reading-block"><p>Al sustituir en la ecuación de ondas aparece:</p></div>
+<div class="reading-block"><div class="formula-block">\[f''(x)+(\omega^2/v^2) f(x)=0.\]</div></div>
+<div class="reading-block"><p>La solución compatible con \(y(0,t)=0\) es:</p></div>
+<div class="reading-block"><div class="formula-block">\[f(x)=A \sin(kx), con k=\omega/v.\]</div></div>
+<div class="reading-block"><p>La segunda condición de contorno, \(y(L,t)=0\), exige:</p></div>
+<div class="reading-block"><div class="formula-block">\[\sin(kL)=0\]</div></div>
+<div class="reading-block"><p>por tanto:</p></div>
+<div class="reading-block"><div class="formula-block">\[kL=n \pi, n=1,2,3,...\]</div></div>
+<div class="reading-block"><p>De aquí salen las longitudes de onda y frecuencias permitidas:</p></div>
+<div class="reading-block"><div class="formula-block">\[\lambda_{n} = 2L/n\]</div></div>
+<div class="reading-block"><div class="formula-block">\[\nu_{n} = n v/(2L)\]</div></div>
+<div class="reading-block"><div class="formula-block">\[\omega_{n} = n \pi v/L.\]</div></div>
+<div class="reading-block"><p>El modo n se escribe:</p></div>
+<div class="reading-block"><div class="formula-block">\[y_{n}(x,t)=A_{n} \sin(n \pi x/L) \cos(\omega_{n} t + \phi_{n}).\]</div></div>
+<div class="reading-block"><p>El modo fundamental n=1 tiene media onda en la cuerda. El segundo modo tiene una onda completa; el tercero, tres medias ondas. Los nodos son puntos que permanecen inmóviles. Los antinodos son puntos de amplitud máxima.</p></div>
+<div class="reading-block"><p>La consecuencia física es que una cuerda fija por ambos extremos no puede vibrar libremente a cualquier frecuencia. Solo admite el fundamental y sus armónicos enteros. Esta es la base física del tono musical de una cuerda.</p></div>
+<h3 id="3-3-superposicion-de-modos-en-una-cuerda">3.3. Superposición de modos en una cuerda</h3>
+<div class="reading-block"><p>Una cuerda real rara vez se encuentra inicialmente en un modo normal puro. Si se golpea una cuerda de piano o se pulsa una cuerda de guitarra, la forma inicial puede ser angular o localizada. Sin embargo, como la ecuación de ondas es lineal, la suma de soluciones también es solución.</p></div>
+<div class="reading-block"><p>La vibración general puede escribirse como una suma de modos:</p></div>
+<div class="reading-block"><div class="formula-block">\[y(x,t)=\sum_{n=1}^{\infty} A_{n} \sin(n \pi x/L) \cos(\omega_{n} t - delta_{n}).\]</div></div>
+<div class="reading-block"><p>Cada modo conserva su identidad: tiene su propia frecuencia, su propia amplitud y su propia fase. La cuerda puede contener simultáneamente fundamental, segundo armónico, tercer armónico, etc.</p></div>
+<div class="reading-block"><p>Esto importa porque separa el problema en dos partes. Primero se determina cuánto de cada modo hay en la configuración inicial. Después se deja evolucionar cada modo con su frecuencia propia. El resultado total es la suma.</p></div>
+<div class="reading-block"><p>Un ejemplo físico claro es tocar una cuerda en un punto que sea nodo de algunos modos. Si se fuerza la cuerda a permanecer quieta en ese punto, los modos que tienen ahí un nodo pueden sobrevivir, mientras los demás se eliminan. Esto muestra que los modos no son solo herramientas matemáticas: tienen existencia física operativa.</p></div>
+<h3 id="3-4-vibracion-armonica-forzada-de-una-cuerda">3.4. Vibración armónica forzada de una cuerda</h3>
+<div class="reading-block"><p>El capítulo considera después una cuerda con un extremo fijo y otro movido armónicamente. La cuerda sigue gobernada por la misma ecuación diferencial, pero cambian las condiciones de contorno. Por ejemplo:</p></div>
+<div class="reading-block"><div class="formula-block">\[y(0,t)=B \cos(\omega t)\]</div></div>
+<div class="reading-block"><div class="formula-block">\[y(L,t)=0.\]</div></div>
+<div class="reading-block"><p>Se busca una respuesta estacionaria:</p></div>
+<div class="reading-block"><div class="formula-block">\[y(x,t)=f(x) \cos(\omega t).\]</div></div>
+<div class="reading-block"><p>La función espacial sigue siendo sinusoidal, pero ahora la frecuencia \(\omega\) no tiene por qué coincidir exactamente con una frecuencia natural. La amplitud de la respuesta contiene un denominador del tipo sin(\(\omega\) L/v). Cuando \(\omega\) se aproxima a una frecuencia natural, ese denominador se acerca a cero y la respuesta ideal crece mucho.</p></div>
+<div class="reading-block"><p>Este es el fenómeno de resonancia aplicado a un sistema continuo. En el modelo sin amortiguamiento, la amplitud se hace infinita en la frecuencia natural exacta. En un sistema real, el amortiguamiento limita la amplitud.</p></div>
+<div class="reading-block"><p>La consecuencia conceptual es importante: las frecuencias naturales no solo son las frecuencias de vibración libre. También son las frecuencias a las que el sistema responde con máxima eficacia cuando se lo fuerza periódicamente.</p></div>
+<div class="reading-block"><p>También conviene distinguir fuerza periódica e impulso. Una cuerda de piano golpeada por un martillo recibe un impulso breve; no es lo mismo que mover periódicamente un extremo durante muchos ciclos. Por eso excitar cerca de un nodo no tiene el mismo significado en una fuerza sostenida que en una excitación impulsiva.</p></div>
+<h3 id="3-5-vibraciones-longitudinales-de-una-varilla">3.5. Vibraciones longitudinales de una varilla</h3>
+<div class="reading-block"><p>La varilla introduce una diferencia física importante. En la cuerda, el desplazamiento es transversal a la dirección x. En la varilla, el desplazamiento es longitudinal: cada sección se mueve a lo largo de la propia varilla. Se representa por \(\xi(x,t)\).</p></div>
+<div class="reading-block"><p>La fuerza restauradora ya no procede de la tensión geométrica de una cuerda curvada, sino de la elasticidad interna del material. Si una sección se desplaza más que la vecina, aparece deformación. La deformación longitudinal es \(\frac{\partial \xi}{\partial x}\). La tensión interna es proporcional a esa deformación mediante el módulo de Young Y.</p></div>
+<div class="reading-block"><p>La diferencia de tensiones entre dos caras de un elemento produce la aceleración longitudinal. Si A es el área de la sección y \(\rho\) la densidad volumétrica, se obtiene:</p></div>
+<div class="reading-block"><div class="formula-block">\[\rho A \Delta x \frac{\partial^2 \xi}{\partial t^2} = A Y \frac{\partial^2 \xi}{\partial x^2} \Delta x.\]</div></div>
+<div class="reading-block"><p>Por tanto:</p></div>
+<div class="reading-block"><div class="formula-block">\[\frac{\partial^2 \xi}{\partial x^2} = (1/v^2) \frac{\partial^2 \xi}{\partial t^2}\]</div></div>
+<div class="reading-block"><p>con:</p></div>
+<div class="reading-block"><div class="formula-block">\[v=\sqrt{Y/\rho}.\]</div></div>
+<div class="reading-block"><p>La ecuación es formalmente igual a la de la cuerda, pero los símbolos significan otra cosa. Esto es esencial en examen: la misma forma matemática puede representar sistemas físicos distintos.</p></div>
+<div class="reading-block"><p>Para una varilla fija en \(x=0\) y libre en \(x=L\), las condiciones son:</p></div>
+<div class="reading-block"><div class="formula-block">\[\xi(0,t)=0\]</div></div>
+<div class="reading-block"><div class="formula-block">\[\frac{\partial \xi}{\partial x} (L,t)=0.\]</div></div>
+<div class="reading-block"><p>La primera dice que el extremo fijo no se desplaza. La segunda dice que en el extremo libre no hay tensión longitudinal, porque la tensión es proporcional a \(\frac{\partial \xi}{\partial x}\).</p></div>
+<div class="reading-block"><p>Con \(\xi\)=f(x)cos(\(\omega\) t), la condición fija da f(x)=A sin(kx). La condición libre da cos(kL)=0. Por tanto:</p></div>
+<div class="reading-block"><div class="formula-block">\[kL=(2n-1)\pi/2\]</div></div>
+<div class="reading-block"><div class="formula-block">\[\lambda_{n}=4L/(2n-1)\]</div></div>
+<div class="reading-block"><div class="formula-block">\[\nu_{n}=(2n-1)v/(4L), n=1,2,3,...\]</div></div>
+<div class="reading-block"><p>El modo fundamental de una varilla fija-libre corresponde a un cuarto de onda: nodo de desplazamiento en el extremo fijo y antinodo en el extremo libre.</p></div>
+<h3 id="3-6-vibraciones-de-columnas-de-aire">3.6. Vibraciones de columnas de aire</h3>
+<div class="reading-block"><p>Una columna de aire en un tubo se parece a una varilla longitudinal: el movimiento relevante del medio es a lo largo del tubo. Pero las condiciones de contorno se interpretan de modo acústico.</p></div>
+<div class="reading-block"><p>En un extremo abierto, la presión acústica no puede variar mucho respecto a la presión exterior. Por eso un extremo abierto es aproximadamente un nodo de presión y un antinodo de desplazamiento.</p></div>
+<div class="reading-block"><p>En un extremo cerrado, el aire no puede atravesar la pared. Por eso el desplazamiento longitudinal es nulo: nodo de desplazamiento. En cambio, la presión puede variar mucho: antinodo de presión.</p></div>
+<div class="reading-block"><p>Para un tubo abierto por un extremo y cerrado por el otro, la columna debe alojar un cuarto de onda en el fundamental:</p></div>
+<div class="reading-block"><div class="formula-block">\[\lambda_{1}=4L\]</div></div>
+<div class="reading-block"><div class="formula-block">\[\nu_{1}=v/(4L).\]</div></div>
+<div class="reading-block"><p>Solo aparecen armónicos impares:</p></div>
+<div class="reading-block"><div class="formula-block">\[\nu_{n}=(2n-1)v/(4L), n=1,2,3,...\]</div></div>
+<div class="reading-block"><p>Para un tubo abierto por ambos extremos, ambos extremos son antinodos de desplazamiento. El fundamental aloja media onda:</p></div>
+<div class="reading-block"><div class="formula-block">\[\lambda_{1}=2L\]</div></div>
+<div class="reading-block"><div class="formula-block">\[\nu_{1}=v/(2L)\]</div></div>
+<div class="reading-block"><div class="formula-block">\[\nu_{n}=n v/(2L).\]</div></div>
+<div class="reading-block"><p>Un tubo cerrado por ambos extremos tiene la misma serie de frecuencias que un tubo abierto-abierto, aunque intercambia nodos y antinodos de presión y desplazamiento.</p></div>
+<div class="reading-block"><p>La consecuencia de examen es inmediata: dos tubos de igual longitud, uno abierto-abierto y otro abierto-cerrado, no tienen el mismo espectro. El abierto-cerrado carece de armónicos pares.</p></div>
+<h3 id="3-7-elasticidad-de-un-gas-y-velocidad-del-sonido">3.7. Elasticidad de un gas y velocidad del sonido</h3>
+<div class="reading-block"><p>Para calcular frecuencias absolutas en tubos hace falta la velocidad característica del sonido en el gas. Esa velocidad no depende solo de la densidad; depende también de la elasticidad del gas.</p></div>
+<div class="reading-block"><p>El módulo de compresibilidad se define como:</p></div>
+<div class="reading-block"><div class="formula-block">\[K=-V dp/dV.\]</div></div>
+<div class="reading-block"><p>En una oscilación acústica rápida, la compresión y expansión son aproximadamente adiabáticas: no hay tiempo para transferir calor de forma apreciable. Por eso no basta con la ley isotérmica. Para un gas ideal en condiciones acústicas se usa:</p></div>
+<div class="reading-block"><div class="formula-block">\[K=\gamma p\]</div></div>
+<div class="reading-block"><p>por lo que:</p></div>
+<div class="reading-block"><div class="formula-block">\[v=\sqrt{K/\rho}=\sqrt{\gamma p/\rho}.\]</div></div>
+<div class="reading-block"><p>Para gases monoatómicos \(\gamma\)=5/3. Para el aire, \(\gamma\) es aproximadamente 1,4. A temperatura ambiente, esto da una velocidad del sonido del orden de 340 m/s.</p></div>
+<div class="reading-block"><p>El punto físico es que una compresión aumenta la presión porque aumenta la energía traslacional de las moléculas. En gases con moléculas poliatómicas, parte de la energía puede ir a grados internos de rotación o vibración, y eso modifica \(\gamma\).</p></div>
+<h3 id="3-8-espectro-completo-de-modos-normales">3.8. Espectro completo de modos normales</h3>
+<div class="reading-block"><p>Los sistemas tratados tienen rasgos comunes: son sistemas de extensión finita, estructura aproximadamente continua, condiciones de contorno y fuerzas restauradoras lineales. De ahí nace un espectro discreto de modos normales.</p></div>
+<div class="reading-block"><p>En una cuerda ideal, las frecuencias son múltiplos enteros de la fundamental. Pero esa proporcionalidad exacta no es universal. Depende de la geometría, de la uniformidad del medio y de la validez de la aproximación continua.</p></div>
+<div class="reading-block"><p>French subraya que la infinitud de modos es una idealización. Una cadena real de N partículas no tiene infinitos modos, sino N. Una varilla macroscópica contiene muchísimos átomos, por lo que el número de modos accesibles puede ser enorme, pero no infinito físicamente.</p></div>
+<div class="reading-block"><p>Además, para modos muy altos, la relación lineal entre frecuencia y número modal puede fallar. En el límite microscópico, el modelo continuo deja de representar correctamente el sistema.</p></div>
+<div class="reading-block"><p>La consecuencia conceptual es que el continuo es una aproximación eficaz, no una ontología literal. Funciona mientras la longitud de onda sea grande comparada con la escala microscópica del material.</p></div>
+<h3 id="membrana-rectangular">3.9. Modos normales de una membrana rectangular</h3>
+<div class="reading-block"><p>El paso a dos dimensiones introduce una novedad: el modo ya no queda determinado por un solo entero, sino por dos. Una membrana rectangular de lados \(L_{x}\) y \(L_{y}\), densidad superficial \(\sigma\) y tensión superficial S, con bordes fijos, obedece:</p></div>
+<div class="reading-block"><div class="formula-block">\[\frac{\partial^2 z}{\partial t^2} = v^2 (\frac{\partial^2 z}{\partial x^2} + \frac{\partial^2 z}{\partial y^2})\]</div></div>
+<div class="reading-block"><p>con:</p></div>
+<div class="reading-block"><div class="formula-block">\[v=\sqrt{S/\sigma}.\]</div></div>
+<div class="reading-block"><p>Los bordes fijos exigen z=0 en \(x=0\), \(x=L_{x}\), \(y=0\), \(y=L_{y}\). Por tanto, las formas espaciales son:</p></div>
+<div class="reading-block"><div class="formula-block">\[z_{n_{x},n_{y}}(x,y,t)=A \sin(n_{x} \pi x/L_{x}) \sin(n_{y} \pi y/L_{y}) \cos(\omega_{n_{x},n_{y}} t + \phi).\]</div></div>
+<div class="reading-block"><p>Las frecuencias angulares son:</p></div>
+<div class="reading-block"><div class="formula-block">\[\omega_{n_{x},n_{y}}=\pi v \sqrt{(n_{x}/L_{x})^2+(n_{y}/L_{y})^2}.\]</div></div>
+<div class="reading-block"><p>Cada modo tiene líneas nodales, no solo puntos nodales. En una membrana rectangular, esas líneas son paralelas a los lados para los modos separables simples.</p></div>
+<div class="reading-block"><p>El fenómeno nuevo es la degeneración. Dos modos distintos pueden tener la misma frecuencia. En una membrana cuadrada, los modos (\(n_{x}\),\(n_{y}\)) y (\(n_{y}\),\(n_{x}\)) tienen la misma frecuencia si \(n_{x}\) distinto de \(n_{y}\). La frecuencia no identifica de forma única la forma de vibración.</p></div>
+<div class="reading-block"><p>Este punto es muy preguntable en examen: hay que distinguir entre frecuencia normal y modo normal. Puede haber menos frecuencias distintas que modos normales.</p></div>
+<h3 id="3-10-modos-normales-en-tres-dimensiones">3.10. Modos normales en tres dimensiones</h3>
+<div class="reading-block"><p>En un sólido o volumen de fluido, los modos normales dependen de las tres coordenadas espaciales. La ecuación toma la forma:</p></div>
+<div class="reading-block"><div class="formula-block">\[\frac{\partial^2 \phi}{\partial t^2} = v^2 \nabla^2 \phi\]</div></div>
+<div class="reading-block"><p>es decir:</p></div>
+<div class="reading-block"><div class="formula-block">\[\frac{\partial^2 \phi}{\partial t^2} = v^2 (\frac{\partial^2 \phi}{\partial x^2} + \frac{\partial^2 \phi}{\partial y^2} + \frac{\partial^2 \phi}{\partial z^2}).\]</div></div>
+<div class="reading-block"><p>La variable \(\phi\) puede representar, según el sistema, presión, desplazamiento u otra magnitud escalar o vectorial simplificada.</p></div>
+<div class="reading-block"><p>En tres dimensiones, las condiciones de contorno se imponen sobre superficies. Los nodos ya no son puntos ni líneas, sino superficies nodales. Los modos de una caja rectangular se caracterizan por tres enteros.</p></div>
+<div class="reading-block"><p>French no desarrolla exhaustivamente este caso. Lo usa para mostrar que la estructura conceptual se conserva: ecuación de ondas, condiciones de contorno, modos propios y espectro discreto.</p></div>
+<h3 id="analisis-de-fourier">3.11. Análisis de Fourier</h3>
+<div class="reading-block"><p>La parte final del capítulo conecta modos normales y Fourier. Si una cuerda fija por ambos extremos puede vibrar en modos:</p></div>
+<div class="reading-block"><div class="formula-block">\[\sin(n \pi x/L)\]</div></div>
+<div class="reading-block"><p>entonces cualquier perfil inicial compatible con los extremos fijos puede expresarse como una serie:</p></div>
+<div class="reading-block"><div class="formula-block">\[y(x)=\sum_{n=1}^{\infty} B_{n} \sin(n \pi x/L).\]</div></div>
+<div class="reading-block"><p>Los coeficientes se calculan con:</p></div>
+<div class="reading-block"><div class="formula-block">\[B_{n} = (2/L) \int_{0}^L y(x) \sin(n \pi x/L) dx.\]</div></div>
+<div class="reading-block"><p>Esta fórmula no es un truco algebraico. Sale de la ortogonalidad de los senos. Al multiplicar la serie por sin(m pi x/L) e integrar, todos los términos cruzados desaparecen salvo el término n=m.</p></div>
+<div class="reading-block"><p>Físicamente, \(B_{n}\) mide cuánto del modo n está presente en la forma inicial. Si B_1 domina, la cuerda vibra sobre todo en el fundamental. Si aparecen muchos \(B_{n}\) importantes, la forma inicial contiene detalles espaciales más agudos y excita armónicos más altos.</p></div>
+<div class="reading-block"><p>La evolución temporal completa puede escribirse, en forma estándar, como:</p></div>
+<div class="reading-block"><div class="formula-block">\[y(x,t)=\sum_{n=1}^{\infty} [A_{n} \cos(\omega_{n} t)+C_{n} \sin(\omega_{n} t)] \sin(n \pi x/L)\]</div></div>
+<div class="reading-block"><p>con:</p></div>
+<div class="reading-block"><div class="formula-block">\[A_{n}=(2/L) \int_{0}^L y(x,0) \sin(n \pi x/L) dx\]</div></div>
+<div class="reading-block"><div class="formula-block">\[C_{n}=(2/(L \omega_{n})) \int_{0}^L \frac{\partial y}{\partial t} (x,0) \sin(n \pi x/L) dx.\]</div></div>
+<div class="reading-block"><p>Esta última formulación explicita que la forma inicial fija los coeficientes tipo coseno temporal y la velocidad inicial fija los coeficientes tipo seno temporal.</p></div>
+<h3 id="3-12-ejemplo-de-perfil-lineal-y-sintesis-parcial">3.12. Ejemplo de perfil lineal y síntesis parcial</h3>
+<div class="reading-block"><p>French analiza un perfil inicial similar a una rampa triangular idealizada, y(x)=kx en 0&lt;x&lt;L, compatible con el límite derecho solo como aproximación en el extremo. El cálculo de Fourier da coeficientes alternantes:</p></div>
+<div class="reading-block"><div class="formula-block">\[B_{n} = (-1)^{n+1} 2kL/(n \pi).\]</div></div>
+<div class="reading-block"><p>Los coeficientes decrecen como 1/n. Esto significa que los armónicos altos siguen siendo relevantes para reproducir una discontinuidad o cambio brusco de forma, aunque cada vez pesan menos.</p></div>
+<div class="reading-block"><p>La síntesis parcial con pocos términos ya reproduce la tendencia global de la forma, pero no todos los detalles. Al añadir términos mejora la aproximación.</p></div>
+<div class="reading-block"><p>La lección física es que una forma espacial abrupta necesita muchos modos. Una forma suave necesita menos armónicos importantes.</p></div>
+<h3 id="3-13-ortogonalidad-independencia-modal-y-energia">3.13. Ortogonalidad, independencia modal y energía</h3>
+<div class="reading-block"><p>Los senos que representan los modos de una cuerda fija por ambos extremos cumplen:</p></div>
+<div class="reading-block"><div class="formula-block">\[\int_{0}^L \sin(n \pi x/L) \sin(m \pi x/L) dx = 0 si n \ne m\]</div></div>
+<div class="reading-block"><div class="formula-block">\[\int_{0}^L \sin^2(n \pi x/L) dx = L/2.\]</div></div>
+<div class="reading-block"><p>Esta ortogonalidad permite calcular coeficientes de Fourier y también expresa una independencia dinámica. Los modos normales son “normales” porque funcionan como ejes independientes en el espacio de configuraciones del sistema.</p></div>
+<div class="reading-block"><p>La energía total de una cuerda que vibra como superposición de modos es la suma de las energías de los modos individuales. Los términos cruzados desaparecen al integrar sobre toda la cuerda. Esto no significa que localmente no aparezcan productos entre modos, sino que globalmente no contribuyen a la energía total por ortogonalidad.</p></div>
+<div class="reading-block"><p>Esta idea conecta con la diagonalización de matrices en sistemas discretos. En un sistema de masas acopladas, las coordenadas normales separan la energía en osciladores independientes. En el continuo, las funciones ortogonales hacen el mismo papel.</p></div>
+</section>
+<section class="page" id="conceptos-clave"><div class="page-head"><h2>4. Conceptos clave</h2><p class="section-lead">Definiciones precisas, ejemplos y conexión directa con preguntas de examen.</p></div><div class="grid cards-grid">
+<article class="definition-card"><h3>Sistema continuo</h3>
+<p><strong>Definición precisa.</strong> sistema descrito mediante campos dependientes de coordenadas espaciales y tiempo, no mediante un número finito pequeño de coordenadas discretas.</p>
+<p><strong>Explicación desarrollada.</strong> una cuerda, una varilla, una columna de aire o una membrana se tratan como medios continuos cuando su estructura microscópica se ignora. En lugar de \(y_{i}(t)\), se usa \(y(x,t)\) o \(z(x,y,t)\). Esta aproximación es válida cuando las longitudes de onda relevantes son mucho mayores que la escala atómica.</p>
+<p><strong>Ejemplo.</strong> una cuerda de violín se modela con densidad lineal \(\mu\) y desplazamiento \(y(x,t)\), no con millones de coordenadas atómicas.</p>
+<p><strong>Relación con otros conceptos.</strong> conduce a ecuaciones diferenciales parciales y a espectros modales.</p>
+<p><strong>Pregunta de examen.</strong> explicar por qué una cuerda continua ideal tiene infinitos modos y por qué un sistema real no puede tener literalmente infinitos modos físicos.</p>
+</article>
+<article class="definition-card"><h3>Modo normal</h3>
+<p><strong>Definición precisa.</strong> patrón espacial de vibración en el que todos los puntos del sistema oscilan con una misma frecuencia, con amplitudes relativas fijas.</p>
+<p><strong>Explicación desarrollada.</strong> en un modo normal, la dependencia temporal se factoriza. La forma espacial no cambia salvo por un factor temporal común. Los nodos permanecen fijos.</p>
+<p><strong>Ejemplo.</strong> \(y_{2}(x,t)=A \sin(2 \pi x/L) \cos(\omega_{2} t)\) en una cuerda fija por ambos extremos.</p>
+<p><strong>Relación con otros conceptos.</strong> se obtiene por separación de variables y condiciones de contorno; se superpone mediante Fourier.</p>
+<p><strong>Pregunta de examen.</strong> escribir los tres primeros modos normales de una cuerda fija por ambos extremos e identificar sus nodos.</p>
+</article>
+<article class="definition-card"><h3>Nodo</h3>
+<p><strong>Definición precisa.</strong> punto, línea o superficie donde el desplazamiento de un modo es siempre cero.</p>
+<p><strong>Explicación desarrollada.</strong> los nodos son rasgos geométricos del modo. En una cuerda son puntos; en una membrana, líneas; en un volumen, superficies.</p>
+<p><strong>Ejemplo.</strong> en el modo n=2 de una cuerda fija por ambos extremos hay un nodo interno en \(x=L\)/2.</p>
+<p><strong>Relación con otros conceptos.</strong> las condiciones de contorno fijas imponen nodos en los extremos.</p>
+<p><strong>Pregunta de examen.</strong> determinar las líneas nodales de un modo de membrana rectangular dado por sin(\(n_{x}\) pi x/\(L_{x}\)) sin(\(n_{y}\) pi y/\(L_{y}\)).</p>
+</article>
+<article class="definition-card"><h3>Antinodo</h3>
+<p><strong>Definición precisa.</strong> punto, línea o región donde la amplitud de vibración de un modo es máxima.</p>
+<p><strong>Explicación desarrollada.</strong> el antinodo no implica velocidad máxima en todo instante, sino amplitud máxima. En el instante de paso por equilibrio todos los puntos no nodales tienen velocidad, pero el antinodo alcanza la mayor velocidad.</p>
+<p><strong>Ejemplo.</strong> en el modo fundamental de una cuerda fija, el antinodo está en \(x=L\)/2.</p>
+<p><strong>Relación con otros conceptos.</strong> en tubos abiertos, los extremos abiertos son antinodos de desplazamiento.</p>
+<p><strong>Pregunta de examen.</strong> comparar nodos y antinodos de presión y desplazamiento en un tubo abierto-cerrado.</p>
+</article>
+<article class="definition-card"><h3>Condición de contorno fija</h3>
+<p><strong>Definición precisa.</strong> restricción que obliga a desplazamiento nulo en un extremo o borde.</p>
+<p><strong>Explicación desarrollada.</strong> si un extremo está sujeto, la variable de desplazamiento vale cero allí durante todo el tiempo.</p>
+<p><strong>Ejemplo.</strong> cuerda fija en ambos extremos: \(y(0,t)=0\), \(y(L,t)=0\).</p>
+<p><strong>Relación con otros conceptos.</strong> selecciona soluciones sinusoidales con \(kL=n \pi\).</p>
+<p><strong>Pregunta de examen.</strong> derivar las frecuencias normales de una cuerda fija por ambos extremos.</p>
+</article>
+<article class="definition-card"><h3>Condición de extremo libre</h3>
+<p><strong>Definición precisa.</strong> restricción que impone fuerza o tensión nula en el extremo, normalmente equivalente a derivada espacial nula de la variable de desplazamiento.</p>
+<p><strong>Explicación desarrollada.</strong> en una varilla libre, el extremo puede moverse, pero no hay material exterior ejerciendo tensión longitudinal. Por eso \(\frac{\partial \xi}{\partial x}\)=0 en el extremo libre.</p>
+<p><strong>Ejemplo.</strong> varilla fija-libre: \(\xi(0,t)=0\) y \(\frac{\partial \xi}{\partial x}(L,t)=0\).</p>
+<p><strong>Relación con otros conceptos.</strong> produce modos de cuarto de onda y armónicos impares.</p>
+<p><strong>Pregunta de examen.</strong> explicar por qué una condición libre no es \(\xi(L,t)=0\).</p>
+</article>
+<article class="definition-card"><h3>Ecuación de ondas</h3>
+<p><strong>Definición precisa.</strong> ecuación que iguala aceleración temporal y curvatura espacial multiplicada por una velocidad característica.</p>
+<p><strong>Explicación desarrollada.</strong> aparece cuando una fuerza restauradora proporcional a curvatura o deformación acelera un elemento de masa. Es común a sistemas físicamente distintos.</p>
+<p><strong>Ejemplo.</strong> cuerda: \(\frac{\partial^2 y}{\partial t^2}\) = (T/\(\mu\)) \(\frac{\partial^2 y}{\partial x^2}\).</p>
+<p><strong>Relación con otros conceptos.</strong> sus soluciones separables dan modos normales; sus combinaciones dan ondas estacionarias y progresivas.</p>
+<p><strong>Pregunta de examen.</strong> demostrar que una función dada es solución de la ecuación de ondas y calcular la velocidad de propagación.</p>
+</article>
+<article class="definition-card"><h3>Velocidad característica</h3>
+<p><strong>Definición precisa.</strong> velocidad v que aparece en la ecuación de ondas y que depende del cociente entre elasticidad e inercia.</p>
+<p><strong>Explicación desarrollada.</strong> no es inicialmente introducida como velocidad de una onda progresiva en este capítulo, sino como constante que simplifica la ecuación. En el capítulo siguiente se interpreta como velocidad de propagación.</p>
+<p><strong>Ejemplo.</strong> cuerda \(v=\sqrt{T/\mu}\); varilla \(v=\sqrt{Y/\rho}\); gas \(v=\sqrt{\gamma p/\rho}\); membrana \(v=\sqrt{S/\sigma}\).</p>
+<p><strong>Relación con otros conceptos.</strong> determina las frecuencias normales junto con la geometría y las condiciones de contorno.</p>
+<p><strong>Pregunta de examen.</strong> calcular la tensión necesaria para que una cuerda de longitud L y densidad \(\mu\) tenga frecuencia fundamental nu_1.</p>
+</article>
+<article class="definition-card"><h3>Espectro modal</h3>
+<p><strong>Definición precisa.</strong> conjunto de frecuencias naturales permitidas por un sistema.</p>
+<p><strong>Explicación desarrollada.</strong> en sistemas finitos con condiciones de contorno, el espectro suele ser discreto. En una cuerda ideal fija, el espectro es armónico: \(\nu_{n}=n \nu_{1}\).</p>
+<p><strong>Ejemplo.</strong> tubo abierto-cerrado: \(\nu_{n}=(2n-1)v/(4L)\).</p>
+<p><strong>Relación con otros conceptos.</strong> depende de condiciones de contorno y geometría.</p>
+<p><strong>Pregunta de examen.</strong> comparar el espectro de un tubo abierto-abierto y uno abierto-cerrado.</p>
+</article>
+<article class="definition-card"><h3>Armónico</h3>
+<p><strong>Definición precisa.</strong> frecuencia que es múltiplo entero de una fundamental.</p>
+<p><strong>Explicación desarrollada.</strong> en una cuerda ideal fija, todos los modos son armónicos de la frecuencia fundamental. En otros sistemas, como membranas, las frecuencias no tienen por qué ser múltiplos enteros.</p>
+<p><strong>Ejemplo.</strong> cuerda fija: \(\nu_{3}=3nu_{1}\).</p>
+<p><strong>Relación con otros conceptos.</strong> no debe confundirse modo normal con armónico; en membranas puede haber modos normales no armónicos.</p>
+<p><strong>Pregunta de examen.</strong> justificar por qué una membrana rectangular no tiene, en general, espectro armónico simple.</p>
+</article>
+<article class="definition-card"><h3>Resonancia</h3>
+<p><strong>Definición precisa.</strong> respuesta grande de un sistema cuando la frecuencia de excitación se aproxima a una frecuencia natural.</p>
+<p><strong>Explicación desarrollada.</strong> en una cuerda ideal sin amortiguamiento, el cálculo estacionario predice amplitudes divergentes en frecuencias naturales. En sistemas reales, el amortiguamiento hace finitos los máximos.</p>
+<p><strong>Ejemplo.</strong> mover periódicamente un extremo de una cuerda cerca de \(\omega_{n}\).</p>
+<p><strong>Relación con otros conceptos.</strong> conecta modos libres y respuesta forzada.</p>
+<p><strong>Pregunta de examen.</strong> explicar por qué la amplitud forzada de una cuerda crece cerca de sus frecuencias normales.</p>
+</article>
+<article class="definition-card"><h3>Tubo abierto</h3>
+<p><strong>Definición precisa.</strong> extremo de columna de aire donde la presión acústica es aproximadamente igual a la exterior; nodo de presión y antinodo de desplazamiento.</p>
+<p><strong>Explicación desarrollada.</strong> el aire puede moverse en el extremo abierto, pero la presión no puede separarse mucho de la atmosférica.</p>
+<p><strong>Ejemplo.</strong> extremo abierto de una flauta idealizada.</p>
+<p><strong>Relación con otros conceptos.</strong> determina la condición de contorno acústica.</p>
+<p><strong>Pregunta de examen.</strong> dibujar el modo fundamental de un tubo abierto-abierto y de uno abierto-cerrado.</p>
+</article>
+<article class="definition-card"><h3>Tubo cerrado</h3>
+<p><strong>Definición precisa.</strong> extremo donde el desplazamiento longitudinal del aire es nulo; nodo de desplazamiento y antinodo de presión.</p>
+<p><strong>Explicación desarrollada.</strong> la pared impide el movimiento del aire a través del extremo, pero permite acumulación y variación de presión.</p>
+<p><strong>Ejemplo.</strong> extremo cerrado de un tubo de órgano tapado.</p>
+<p><strong>Relación con otros conceptos.</strong> combinado con un extremo abierto produce solo armónicos impares.</p>
+<p><strong>Pregunta de examen.</strong> calcular la razón entre los fundamentales de un tubo abierto-abierto y uno abierto-cerrado de igual longitud.</p>
+</article>
+<article class="definition-card"><h3>Degeneración</h3>
+<p><strong>Definición precisa.</strong> situación en la que dos o más modos distintos tienen la misma frecuencia.</p>
+<p><strong>Explicación desarrollada.</strong> aparece por simetría o por relaciones geométricas especiales. En una membrana cuadrada, los modos (\(n_{x}\),\(n_{y}\)) y (\(n_{y}\),\(n_{x}\)) son degenerados.</p>
+<p><strong>Ejemplo.</strong> en una membrana cuadrada, (1,2) y (2,1) tienen igual frecuencia.</p>
+<p><strong>Relación con otros conceptos.</strong> muestra que frecuencia normal y forma modal no son equivalentes.</p>
+<p><strong>Pregunta de examen.</strong> decidir si dos modos de una membrana rectangular dada son degenerados.</p>
+</article>
+<article class="definition-card"><h3>Serie de Fourier</h3>
+<p><strong>Definición precisa.</strong> representación de una función como suma infinita de funciones sinusoidales ortogonales.</p>
+<p><strong>Explicación desarrollada.</strong> en una cuerda fija por ambos extremos, la base natural es la serie de senos. Cada coeficiente indica la amplitud modal correspondiente.</p>
+<p><strong>Ejemplo.</strong> y(x)=sum \(B_{n}\) sin(n pi x/L), con \(B_{n}\)=(2/L) integral_0^L y(x) sin(n pi x/L) dx.</p>
+<p><strong>Relación con otros conceptos.</strong> traduce una forma inicial arbitraria en amplitudes de modos normales.</p>
+<p><strong>Pregunta de examen.</strong> hallar la serie de Fourier de una cuerda dada una forma inicial o velocidad inicial.</p>
+</article>
+<article class="definition-card"><h3>Ortogonalidad funcional</h3>
+<p><strong>Definición precisa.</strong> propiedad de una familia de funciones por la que la integral del producto de dos funciones distintas se anula.</p>
+<p><strong>Explicación desarrollada.</strong> generaliza la perpendicularidad de vectores a espacios de funciones. Los modos normales funcionan como ejes independientes.</p>
+<p><strong>Ejemplo.</strong> integral_0^L sin(n pi x/L) sin(m pi x/L) dx = 0 si n distinto de m.</p>
+<p><strong>Relación con otros conceptos.</strong> permite calcular coeficientes de Fourier y separar energías.</p>
+<p><strong>Pregunta de examen.</strong> demostrar la fórmula de los coeficientes \(B_{n}\) usando ortogonalidad.</p>
+</article>
+</div></section>
+<section class="page" id="relaciones-entre-ideas"><div class="page-head"><h2>5. Relaciones entre ideas</h2><p class="section-lead">Cadena conceptual que une modelo físico, espectro y evolución temporal.</p></div>
+<div class="reading-block"><p>La cadena conceptual principal es:</p></div>
+<div class="reading-block"><p>osciladores acoplados discretos -&gt; límite continuo -&gt; ecuación de ondas -&gt; separación de variables -&gt; condiciones de contorno -&gt; modos normales -&gt; superposición -&gt; Fourier.</p></div>
+<div class="reading-block"><p>La dependencia fundamental es que no hay Fourier físico sin modos normales, y no hay modos normales definidos sin condiciones de contorno. La ecuación diferencial por sí sola no fija las frecuencias permitidas. Las frecuencias aparecen cuando se exige compatibilidad espacial con los extremos o bordes.</p></div>
+<div class="reading-block"><p>La jerarquía matemática es clara. Primero se obtiene la ecuación de movimiento. Después se busca una solución separable. Luego se impone el contorno. Finalmente se construye la solución general como suma de modos. Si se invierte el orden, se memorizan fórmulas sin entender de dónde salen.</p></div>
+<div class="reading-block"><p>La oposición más importante es extremo fijo frente a extremo libre. Un extremo fijo impone desplazamiento nulo. Un extremo libre impone fuerza o tensión nula. En acústica, abierto y cerrado no se identifican con fijo y libre de forma ingenua: hay que distinguir desplazamiento de aire y presión.</p></div>
+<div class="reading-block"><p>Otra oposición clave es modo normal frente a onda progresiva. En este capítulo predominan ondas estacionarias: patrones espaciales fijos con oscilación temporal. En el capítulo siguiente se reinterpretarán como superposición de ondas viajeras. Confundir ambos lenguajes lleva a errores de fase, velocidad y contorno.</p></div>
+<div class="reading-block"><p>También hay una oposición entre espectro armónico y espectro no armónico. La cuerda ideal fija tiene frecuencias \(\nu_{n}=n \nu_{1}\). La membrana rectangular tiene frecuencias proporcionales a sqrt((\(n_{x}\)/\(L_{x}\))^2+(\(n_{y}\)/\(L_{y}\))^2), que en general no son múltiplos enteros de una fundamental.</p></div>
+<div class="reading-block"><p>La evolución histórica del tema ayuda a entender su estructura. Pitágoras aparece asociado a relaciones simples de longitudes y sonidos. Lagrange formaliza la cuerda vibrante desde el punto de vista mecánico. Fourier generaliza la idea: no solo las formas de una cuerda, sino funciones muy generales pueden descomponerse en senos y cosenos.</p></div>
+<div class="reading-block"><p>La consecuencia física final es que un sistema continuo lineal actúa como un conjunto de osciladores independientes. Cada modo es un canal de energía. La forma inicial decide qué canales se excitan. Las condiciones de contorno deciden qué canales existen.</p></div>
+</section>
+<section class="page" id="errores-habituales"><div class="page-head"><h2>6. Errores habituales</h2><p class="section-lead">Trampas frecuentes, motivo del error y forma correcta de razonar.</p></div>
+<details class="accordion"><summary>Error 1. Pensar que una cuerda puede vibrar libremente a cualquier frecuencia</summary><div class="accordion-body">
+<p>Por qué está mal: la ecuación de ondas admite muchas soluciones, pero los extremos fijos imponen \(kL=n \pi\).</p>
+<p>Corrección: una cuerda fija por ambos extremos solo vibra libremente en frecuencias \(\nu_{n}=n v/(2L)\).</p>
+<p>Respuesta incorrecta: “La cuerda vibra con cualquier frecuencia porque la ecuación de ondas admite cualquier \(\omega\)”.</p>
+<p>Respuesta correcta: “La ecuación admite cualquier \(\omega\) antes del contorno; al imponer y(0,t)=\(y(L,t)=0\) solo quedan \(\omega_{n}=n \pi v/L\)”.</p>
+</div></details>
+<details class="accordion"><summary>Error 2. Confundir nodo con punto de velocidad nula instantánea</summary><div class="accordion-body">
+<p>Por qué está mal: un nodo tiene desplazamiento nulo para todo tiempo. Un punto no nodal puede tener velocidad nula en los instantes de máxima elongación.</p>
+<p>Corrección: nodo es una propiedad espacial permanente de un modo.</p>
+<p>Respuesta incorrecta: “Todos los puntos son nodos cuando la cuerda está en su máxima deformación”.</p>
+<p>Respuesta correcta: “En la máxima deformación, las velocidades son cero, pero los nodos son solo los puntos cuya amplitud es siempre cero”.</p>
+</div></details>
+<details class="accordion"><summary>Error 3. Aplicar \(y(L,t)=0\) a un extremo libre</summary><div class="accordion-body">
+<p>Por qué está mal: un extremo libre puede desplazarse. Lo que se anula allí es la fuerza restauradora o tensión, ligada a la derivada espacial.</p>
+<p>Corrección: en una varilla libre, \(\frac{\partial \xi}{\partial x}\)=0 en el extremo.</p>
+<p>Respuesta incorrecta: “Como el extremo está libre, \(\xi(L,t)=0\)”.</p>
+<p>Respuesta correcta: “Como el extremo está libre, no hay tensión externa; por tanto Y \(\frac{\partial \xi}{\partial x}\)=0 en \(x=L\)”.</p>
+</div></details>
+<details class="accordion"><summary>Error 4. Tratar un tubo abierto como nodo de desplazamiento</summary><div class="accordion-body">
+<p>Por qué está mal: en un extremo abierto el aire puede moverse; lo que se anula aproximadamente es la variación de presión.</p>
+<p>Corrección: extremo abierto = antinodo de desplazamiento y nodo de presión.</p>
+<p>Respuesta incorrecta: “En el extremo abierto el aire no se mueve porque sale al exterior”.</p>
+<p>Respuesta correcta: “En el extremo abierto el desplazamiento es máximo y la presión acústica es aproximadamente nula”.</p>
+</div></details>
+<details class="accordion"><summary>Error 5. Creer que abierto-abierto y abierto-cerrado tienen los mismos armónicos</summary><div class="accordion-body">
+<p>Por qué está mal: el abierto-cerrado aloja un cuarto de onda en el fundamental y solo contiene armónicos impares.</p>
+<p>Corrección: abierto-abierto: \(\nu_{n}=n v/(2L)\). Abierto-cerrado: \(\nu_{n}=(2n-1)v/(4L)\).</p>
+<p>Respuesta incorrecta: “Ambos tienen fundamental v/(2L) porque miden lo mismo”.</p>
+<p>Respuesta correcta: “El tubo abierto-cerrado tiene fundamental v/(4L); el abierto-abierto, v/(2L)”.</p>
+</div></details>
+<details class="accordion"><summary>Error 6. Identificar modo normal con armónico</summary><div class="accordion-body">
+<p>Por qué está mal: en la cuerda ideal los modos son armónicos enteros, pero en membranas no necesariamente.</p>
+<p>Corrección: modo normal es una forma propia; armónico es una frecuencia múltiplo entero de otra.</p>
+<p>Respuesta incorrecta: “Todos los modos normales de cualquier sistema son armónicos”.</p>
+<p>Respuesta correcta: “La cuerda ideal tiene espectro armónico; una membrana rectangular tiene frecuencias dadas por una raíz cuadrática y no suele tener armónicos enteros”.</p>
+</div></details>
+<details class="accordion"><summary>Error 7. Ignorar la degeneración</summary><div class="accordion-body">
+<p>Por qué está mal: dos modos distintos pueden compartir frecuencia.</p>
+<p>Corrección: para comprobar degeneración hay que comparar \(\omega\), no la forma espacial.</p>
+<p>Respuesta incorrecta: “Si dos modos tienen distinta forma, tienen distinta frecuencia”.</p>
+<p>Respuesta correcta: “En una membrana cuadrada, (1,2) y (2,1) son formas distintas pero tienen la misma frecuencia”.</p>
+</div></details>
+<details class="accordion"><summary>Error 8. Usar \(v=\sqrt{T/\mu}\) para varillas o gases</summary><div class="accordion-body">
+<p>Por qué está mal: esa fórmula pertenece a cuerdas tensas. Cada sistema tiene su elasticidad e inercia propias.</p>
+<p>Corrección: cuerda: sqrt(T/\(\mu\)); varilla: sqrt(Y/\(\rho\)); gas: sqrt(\(\gamma\) p/\(\rho\)); membrana: sqrt(S/\(\sigma\)).</p>
+<p>Respuesta incorrecta: “La velocidad en una columna de aire es sqrt(T/\(\mu\))”.</p>
+<p>Respuesta correcta: “En una columna de aire, la velocidad acústica se calcula con el módulo adiabático: \(v=\sqrt{\gamma p/\rho}\)”.</p>
+</div></details>
+<details class="accordion"><summary>Error 9. Creer que Fourier es una aproximación opcional</summary><div class="accordion-body">
+<p>Por qué está mal: Fourier es la forma natural de expresar condiciones iniciales arbitrarias en la base de modos.</p>
+<p>Corrección: cada coeficiente de Fourier es una amplitud modal.</p>
+<p>Respuesta incorrecta: “Fourier solo sirve para ajustar funciones complicadas”.</p>
+<p>Respuesta correcta: “Fourier indica qué modos normales se han excitado y con qué amplitud”.</p>
+</div></details>
+<details class="accordion"><summary>Error 10. Olvidar la velocidad inicial en la solución general</summary><div class="accordion-body">
+<p>Por qué está mal: la forma inicial no basta para determinar el movimiento completo. También hace falta partial y/partial t en t=0.</p>
+<p>Corrección: la solución general necesita coeficientes asociados a cos(\(\omega_{n}\) t) y sin(\(\omega_{n}\) t).</p>
+<p>Respuesta incorrecta: “Con y(x,0) ya se sabe toda la vibración”.</p>
+<p>Respuesta correcta: “y(x,0) determina \(A_{n}\); la velocidad inicial determina \(C_{n}\)”.</p>
+</div></details>
+<details class="accordion"><summary>Error 11. Pensar que la amplitud infinita en resonancia es física</summary><div class="accordion-body">
+<p>Por qué está mal: aparece por modelo ideal sin amortiguamiento. Los sistemas reales tienen disipación y no pueden acumular energía indefinidamente.</p>
+<p>Corrección: la resonancia real produce máximos finitos.</p>
+<p>Respuesta incorrecta: “La cuerda tendrá amplitud infinita si se fuerza a su frecuencia natural”.</p>
+<p>Respuesta correcta: “El modelo ideal predice divergencia; el amortiguamiento real limita la amplitud”.</p>
+</div></details>
+<details class="accordion"><summary>Error 12. Confundir presión y desplazamiento en tubos</summary><div class="accordion-body">
+<p>Por qué está mal: los nodos de presión y desplazamiento están intercambiados.</p>
+<p>Corrección: donde el desplazamiento es nodo, la presión es antinodo; donde la presión es nodo, el desplazamiento es antinodo.</p>
+<p>Respuesta incorrecta: “En un extremo cerrado hay nodo de presión”.</p>
+<p>Respuesta correcta: “En un extremo cerrado hay nodo de desplazamiento y antinodo de presión”.</p>
+</div></details>
+</section>
+<section class="page" id="preguntas-orientadas-a-examen"><div class="page-head"><h2>7. Preguntas orientadas a examen</h2><p class="section-lead">Banco graduado de cuestiones conceptuales, problemas y desarrollos largos.</p></div>
+<article class="question-card"><h3>10 preguntas fáciles</h3><ol>
+<li>¿Qué es un modo normal en una cuerda?</li>
+<li>¿Qué diferencia hay entre nodo y antinodo?</li>
+<li>Escribe la ecuación de ondas de una cuerda tensa y define v.</li>
+<li>¿Qué condiciones de contorno cumple una cuerda fija por ambos extremos?</li>
+<li>¿Cuál es la frecuencia fundamental de una cuerda fija por ambos extremos?</li>
+<li>¿Qué condición cumple un extremo libre de una varilla?</li>
+<li>¿Qué tipo de nodo hay en un extremo abierto de un tubo para la presión?</li>
+<li>¿Qué armónicos aparecen en un tubo abierto-cerrado?</li>
+<li>¿Qué significa que dos funciones sean ortogonales?</li>
+<li>¿Para qué sirven los coeficientes de Fourier en una cuerda?</li>
+</ol></article>
+<article class="question-card"><h3>10 preguntas medias</h3><ol>
+<li>Deriva la ecuación de ondas de una cuerda tensa a partir de un elemento diferencial.</li>
+<li>Obtén las frecuencias normales de una cuerda fija por ambos extremos.</li>
+<li>Explica por qué la superposición de modos es posible.</li>
+<li>Compara las frecuencias de un tubo abierto-abierto y un tubo abierto-cerrado de igual longitud.</li>
+<li>Obtén las frecuencias de una varilla fija por un extremo y libre por el otro.</li>
+<li>Calcula la tensión necesaria para que una cuerda de longitud L, masa total m y fundamental nu_1 tenga esa frecuencia.</li>
+<li>Escribe los modos normales de una membrana rectangular con bordes fijos.</li>
+<li>Decide si los modos (2,3) y (6,1) son degenerados en una membrana con \(L_{x}\)=2L y \(L_{y}\)=L.</li>
+<li>Halla los coeficientes de Fourier de una forma inicial y(x)=kx en 0&lt;x&lt;L.</li>
+<li>Explica por qué la energía total de una cuerda es suma de energías modales.</li>
+</ol></article>
+<article class="question-card"><h3>5 preguntas difíciles</h3><ol>
+<li>Una cuerda fija por ambos extremos parte de y(x,0)=0 y velocidad inicial v_0(x)=B x(L-x). Escribe la forma general de la solución y los coeficientes que habría que calcular.</li>
+<li>Una membrana cuadrada vibra con una combinación de modos degenerados. Explica por qué puede haber una línea nodal que no coincida con las líneas nodales de cada modo separado.</li>
+<li>Discute por qué el modelo continuo predice infinitos modos y por qué un sistema físico real no puede sostener ese resultado hasta n infinito.</li>
+<li>En una cuerda forzada por un extremo, explica por qué la respuesta crece cerca de las frecuencias naturales y qué cambia al introducir amortiguamiento.</li>
+<li>Compara la ortogonalidad de modos en una cuerda con la diagonalización de una matriz de osciladores acoplados.</li>
+</ol></article>
+<article class="question-card"><h3>5 preguntas de desarrollo largo</h3><ol>
+<li>Desarrolla el paso desde una cuerda tensa con desplazamientos pequeños hasta la serie de modos normales.</li>
+<li>Explica las vibraciones longitudinales en varillas y columnas de aire, comparando sus condiciones de contorno.</li>
+<li>Expón el papel de Fourier en la descripción de una cuerda vibrante con forma inicial arbitraria.</li>
+<li>Analiza los modos normales de sistemas bidimensionales, con especial atención a membranas rectangulares y degeneración.</li>
+<li>Explica la unidad conceptual entre osciladores acoplados discretos, sistemas continuos y funciones ortogonales.</li>
+</ol></article>
+<article class="question-card"><h3>5 preguntas de relación entre conceptos</h3><ol>
+<li>Relaciona condiciones de contorno y espectro de frecuencias.</li>
+<li>Relaciona linealidad, superposición y análisis de Fourier.</li>
+<li>Relaciona nodos de presión y nodos de desplazamiento en tubos.</li>
+<li>Relaciona degeneración y simetría geométrica.</li>
+<li>Relaciona la velocidad característica v con elasticidad e inercia en cuerda, varilla, gas y membrana.</li>
+</ol></article>
+</section>
+<section class="page" id="respuestas-modelo"><div class="page-head"><h2>8. Respuestas modelo</h2><p class="section-lead">Soluciones razonadas para autocorrección; conviene responder antes de desplegarlas.</p></div>
+<details class="accordion"><summary>Respuestas a preguntas fáciles</summary><div class="accordion-body answer-list">
+<article class="answer-item"><h4>Respuesta 1</h4><p>Un modo normal en una cuerda es una vibración estacionaria en la que todos los puntos oscilan con la misma frecuencia y una forma espacial fija. Matemáticamente se escribe como y_n(x,t)=\(A_{n}\) sin(n pi x/L) cos(\(\omega_{n}\) t+phi_n) para una cuerda fija por ambos extremos.</p></article>
+<article class="answer-item"><h4>Respuesta 2</h4><p>Un nodo es un punto cuya amplitud es siempre cero. Un antinodo es un punto de amplitud máxima. En una cuerda fija, los extremos son nodos. En el modo fundamental, el centro es antinodo.</p></article>
+<article class="answer-item"><h4>Respuesta 3</h4><p>La ecuación de ondas de una cuerda tensa es \(\frac{\partial^2 y}{\partial t^2}\)=(T/\(\mu\)) \(\frac{\partial^2 y}{\partial x^2}\), o equivalentemente \(\frac{\partial^2 y}{\partial x^2}\)=(1/v^2) \(\frac{\partial^2 y}{\partial t^2}\), con \(v=\sqrt{T/\mu}\).</p></article>
+<article class="answer-item"><h4>Respuesta 4</h4><p>Cumple \(y(0,t)=0\) e \(y(L,t)=0\). Los extremos no pueden desplazarse transversalmente.</p></article>
+<article class="answer-item"><h4>Respuesta 5</h4><p>La frecuencia fundamental es \(\nu_{1}=v/(2L)\)=1/(2L) sqrt(T/\(\mu\)).</p></article>
+<article class="answer-item"><h4>Respuesta 6</h4><p>En un extremo libre de una varilla se anula la tensión, por tanto \(\frac{\partial \xi}{\partial x}\)=0 en ese extremo.</p></article>
+<article class="answer-item"><h4>Respuesta 7</h4><p>En un extremo abierto hay nodo de presión. También hay antinodo de desplazamiento del aire.</p></article>
+<article class="answer-item"><h4>Respuesta 8</h4><p>En un tubo abierto-cerrado aparecen solo armónicos impares: \(\nu_{n}=(2n-1)v/(4L)\).</p></article>
+<article class="answer-item"><h4>Respuesta 9</h4><p>Dos funciones son ortogonales en un intervalo si la integral de su producto en ese intervalo vale cero.</p></article>
+<article class="answer-item"><h4>Respuesta 10</h4><p>Sirven para indicar cuánto de cada modo normal está presente en una forma inicial de la cuerda.</p></article>
+</div></details>
+<details class="accordion"><summary>Respuestas a preguntas medias</summary><div class="accordion-body answer-list">
+<article class="answer-item"><h4>Respuesta 1</h4><p>Se toma un elemento de cuerda de longitud Delta x. Las componentes verticales de la tensión en los extremos no se cancelan si la cuerda está curvada. Para pendientes pequeñas, la diferencia angular equivale a la variación de \(\frac{\partial y}{\partial x}\). La fuerza neta transversal es T \(\frac{\partial^2 y}{\partial x^2}\) Delta x. La masa es \(\mu\) Delta x y su aceleración es \(\frac{\partial^2 y}{\partial t^2}\). Newton da T y_xx Delta x=\(\mu\) Delta x y_tt. Por tanto y_tt=(T/\(\mu\))y_xx.</p></article>
+<article class="answer-item"><h4>Respuesta 2</h4><p>Se ensaya \(y=f(x)\cos(\omega t)\). La ecuación de ondas da \(f''+(\omega^2/v^2)f=0\). Con \(y(0,t)=0\), f=A sin(kx). Con \(y(L,t)=0\), sin(kL)=0, luego \(kL=n \pi\). Como \(\omega\)=vk, \(\omega_{n}=n \pi v/L\) y \(\nu_{n}=n v/(2L)\).</p></article>
+<article class="answer-item"><h4>Respuesta 3</h4><p>La superposición es posible porque la ecuación de ondas es lineal: si y_1 e y_2 satisfacen la ecuación y las mismas condiciones homogéneas de contorno, cualquier combinación a y_1+b y_2 también la satisface. Físicamente, los modos pueden coexistir sin destruir su identidad en el régimen de pequeñas oscilaciones.</p></article>
+<article class="answer-item"><h4>Respuesta 4</h4><p>Un tubo abierto-abierto tiene antinodos de desplazamiento en ambos extremos y fundamental \(\nu_{1}=v/(2L)\). Un tubo abierto-cerrado tiene antinodo de desplazamiento en el extremo abierto y nodo de desplazamiento en el cerrado, con fundamental \(\nu_{1}=v/(4L)\). El abierto-abierto tiene todos los armónicos; el abierto-cerrado solo impares.</p></article>
+<article class="answer-item"><h4>Respuesta 5</h4><p>En una varilla fija-libre se usa \(\xi\)=f(x)cos(\(\omega\) t). El extremo fijo impone f(0)=0, luego f=A sin(kx). El extremo libre impone f&#x27;(L)=0, luego cos(kL)=0. Por tanto kL=(2n-1)pi/2 y \(\nu_{n}=(2n-1)v/(4L)\), con \(v=\sqrt{Y/\rho}\).</p></article>
+<article class="answer-item"><h4>Respuesta 6</h4><p>Para una cuerda de masa total m, \(\mu\)=m/L. La fundamental cumple nu_1=(1/(2L))sqrt(T/\(\mu\)). Despejando, T=4L^2 nu_1^2 \(\mu\)=4mL nu_1^2.</p></article>
+<article class="answer-item"><h4>Respuesta 7</h4><p>Para una membrana rectangular fija:</p></article>
+<p>z_{\(n_{x}\),\(n_{y}\)}=A sin(\(n_{x}\) pi x/\(L_{x}\)) sin(\(n_{y}\) pi y/\(L_{y}\)) cos(omega_{\(n_{x}\),\(n_{y}\)}t+\(\phi\)),</p>
+<p>con omega_{\(n_{x}\),\(n_{y}\)}=pi v sqrt((\(n_{x}\)/\(L_{x}\))^2+(\(n_{y}\)/\(L_{y}\))^2), \(v=\sqrt{S/\sigma}\).</p>
+<article class="answer-item"><h4>Respuesta 8</h4><p>Para \(L_{x}\)=2L y \(L_{y}\)=L:</p></article>
+<p>omega_{2,3}^2 proportional (2/(2L))^2+(3/L)^2 = (1/L)^2+9/L^2=10/L^2.</p>
+<p>omega_{6,1}^2 proportional (6/(2L))^2+(1/L)^2 = 9/L^2+1/L^2=10/L^2.</p>
+<p>Son degenerados porque tienen la misma frecuencia aunque sus formas espaciales sean distintas.</p>
+<article class="answer-item"><h4>Respuesta 9</h4><p>Para y(x)=kx:</p></article>
+<p>\(B_{n}\)=(2/L) integral_0^L kx sin(n pi x/L) dx.</p>
+<p>Integrando por partes:</p>
+<p>\(B_{n}\)=(-1)^{n+1} 2kL/(n pi).</p>
+<p>Por tanto y(x)=sum_{n=1}^infty (-1)^{n+1} 2kL/(n pi) sin(n pi x/L).</p>
+<article class="answer-item"><h4>Respuesta 10</h4><p>Al escribir la energía total aparecen términos propios de cada modo y términos cruzados entre modos distintos. Los cruzados contienen integrales de productos de funciones ortogonales, que se anulan. Por eso la energía total se separa como suma de energías modales.</p></article>
+</div></details>
+<details class="accordion"><summary>Respuestas a preguntas difíciles</summary><div class="accordion-body answer-list">
+<article class="answer-item"><h4>Respuesta 1</h4><p>La solución general para cuerda fija es:</p></article>
+<p>\(y(x,t)\)=sum_{n=1}^infty [\(A_{n}\) cos(\(\omega_{n}\) t)+\(C_{n}\) sin(\(\omega_{n}\) t)] sin(n pi x/L).</p>
+<p>Como y(x,0)=0, todos los \(A_{n}\) son cero. La velocidad inicial es:</p>
+<p>y_t(x,0)=sum \(C_{n}\) \(\omega_{n}\) sin(n pi x/L)=B x(L-x).</p>
+<p>Por ortogonalidad:</p>
+<p>\(C_{n}\) \(\omega_{n}\)=(2/L) integral_0^L B x(L-x) sin(n pi x/L) dx.</p>
+<p>Luego \(C_{n}\) se obtiene dividiendo ese coeficiente entre \(\omega_{n}\). La solución queda determinada por esos \(C_{n}\).</p>
+<article class="answer-item"><h4>Respuesta 2</h4><p>En una membrana cuadrada, dos modos distintos pueden tener la misma frecuencia, por ejemplo (m,n) y (n,m). Cualquier combinación lineal de modos degenerados sigue oscilando con una sola frecuencia. Al combinarse, las líneas nodales de la suma pueden rotar, curvarse o aparecer en lugares que no coinciden con las líneas nodales de cada modo separado. Esto ocurre porque la misma frecuencia permite una superposición estacionaria sin batido entre esos modos.</p></article>
+<article class="answer-item"><h4>Respuesta 3</h4><p>El modelo continuo reemplaza una cadena finita de partículas por una función definida en todos los puntos del intervalo. Matemáticamente, eso permite infinitas funciones sinusoidales con n arbitrariamente grande. Físicamente, la cuerda o varilla contiene un número finito de partículas y deja de ser continua a escalas atómicas. Para longitudes de onda muy pequeñas, comparables con la separación atómica, la ecuación de ondas continua ya no describe correctamente el sistema. Por tanto, los infinitos modos son una idealización útil para modos de longitud de onda macroscópica.</p></article>
+<article class="answer-item"><h4>Respuesta 4</h4><p>Al forzar una cuerda con frecuencia \(\omega\), la solución estacionaria contiene un factor que se hace grande cuando \(\omega\) se aproxima a \(\omega_{n}\). En esas frecuencias, el sistema acepta energía de forma eficaz porque la excitación está en fase adecuada con uno de sus modos naturales. Sin amortiguamiento, el modelo predice amplitud infinita. Con amortiguamiento, la energía suministrada por ciclo se compensa con la energía disipada, y la amplitud máxima es finita.</p></article>
+<article class="answer-item"><h4>Respuesta 5</h4><p>En una cadena discreta, el sistema se diagonaliza encontrando autovectores de la matriz dinámica. Cada autovector es un modo normal y transforma el problema en osciladores independientes. En una cuerda continua, las funciones sin(n pi x/L) hacen el papel de autovectores. La ortogonalidad integral sustituye al producto escalar ordinario de vectores. Fourier es la expansión de una configuración arbitraria en esa base modal.</p></article>
+</div></details>
+<details class="accordion"><summary>Respuestas a preguntas de desarrollo largo</summary><div class="accordion-body answer-list">
+<article class="answer-item"><h4>Respuesta 1</h4><p>Una cuerda tensa se modela como un medio continuo de densidad lineal \(\mu\) y tensión T. Para pequeñas pendientes, la tensión se toma constante y la fuerza transversal sobre un elemento se debe a la diferencia de inclinación entre sus extremos. Esa diferencia se expresa mediante la curvatura y_xx. Aplicando Newton al elemento se obtiene y_tt=(T/\(\mu\))y_xx. Para hallar vibraciones libres estacionarias se separa \(y=f(x)\cos(\omega t)\). La ecuación espacial es f&#x27;&#x27;+k^2 f=0. Los extremos fijos imponen f(0)=f(L)=0, de donde f_n=sin(n pi x/L). Las frecuencias son \(\omega_{n}=n \pi v/L\), con \(v=\sqrt{T/\mu}\). Como la ecuación es lineal, la vibración general es suma de estos modos.</p></article>
+<article class="answer-item"><h4>Respuesta 2</h4><p>En una varilla las vibraciones son longitudinales y la fuerza restauradora procede de la elasticidad interna. La deformación es xi_x y la tensión es proporcional a Y xi_x. Newton conduce a xi_tt=(Y/\(\rho\))xi_xx. Si la varilla está fija por un extremo, \(\xi\)=0 allí. Si el otro extremo está libre, la tensión se anula y xi_\(x=0\). En una columna de aire la ecuación es análoga, pero las condiciones se interpretan mediante presión y desplazamiento. Un extremo abierto es nodo de presión y antinodo de desplazamiento; un extremo cerrado es nodo de desplazamiento y antinodo de presión. Por eso los tubos abierto-cerrados tienen solo armónicos impares, mientras los abierto-abiertos tienen todos los armónicos.</p></article>
+<article class="answer-item"><h4>Respuesta 3</h4><p>Fourier aparece porque una cuerda real puede tener una forma inicial no sinusoidal. Como los modos normales de la cuerda fija son funciones sinusoidales ortogonales, cualquier perfil compatible con los extremos fijos se puede expandir como y(x)=sum \(B_{n}\) sin(n pi x/L). El coeficiente \(B_{n}\) se calcula proyectando la forma inicial sobre el modo n. Dinámicamente, cada modo evoluciona con su frecuencia \(\omega_{n}\). Por tanto, Fourier no solo aproxima una curva: traduce la condición inicial en amplitudes físicas de modos normales.</p></article>
+<article class="answer-item"><h4>Respuesta 4</h4><p>En una membrana rectangular, el desplazamiento depende de x, y y t. La ecuación de ondas contiene el laplaciano bidimensional. Con bordes fijos, la solución separable contiene un producto de senos: sin(\(n_{x}\) pi x/\(L_{x}\))sin(\(n_{y}\) pi y/\(L_{y}\)). La frecuencia depende de dos enteros mediante \(\omega\)=pi v sqrt((\(n_{x}\)/\(L_{x}\))^2+(\(n_{y}\)/\(L_{y}\))^2). Los nodos forman líneas. A diferencia de la cuerda, el espectro no es en general armónico. Además puede haber degeneración: dos pares distintos (\(n_{x}\),\(n_{y}\)) pueden dar la misma frecuencia, especialmente si la geometría tiene simetría como en una membrana cuadrada.</p></article>
+<article class="answer-item"><h4>Respuesta 5</h4><p>Los osciladores acoplados discretos se describen mediante matrices y tienen modos normales como autovectores. Al pasar al continuo, las variables discretas se transforman en funciones y las matrices en operadores diferenciales. Las funciones propias de esos operadores son los modos normales continuos. La ortogonalidad permite proyectar cualquier configuración inicial sobre esos modos. Así, diagonalización matricial y Fourier son versiones del mismo principio: expresar el movimiento en coordenadas independientes donde la dinámica se separa.</p></article>
+</div></details>
+<details class="accordion"><summary>Respuestas a preguntas de relación entre conceptos</summary><div class="accordion-body answer-list">
+<article class="answer-item"><h4>Respuesta 1</h4><p>Las condiciones de contorno seleccionan qué longitudes de onda caben en el sistema. Una cuerda fija exige nodos en ambos extremos, por lo que caben n medias ondas. Un tubo abierto-cerrado exige antinodo de desplazamiento en un extremo y nodo en el otro, por lo que caben cuartos de onda impares. Cambiar el contorno cambia el espectro.</p></article>
+<article class="answer-item"><h4>Respuesta 2</h4><p>La linealidad garantiza que una suma de soluciones sigue siendo solución. La superposición permite que varios modos normales coexistan. Fourier proporciona los coeficientes de esa superposición para representar una forma inicial arbitraria.</p></article>
+<article class="answer-item"><h4>Respuesta 3</h4><p>En tubos, presión y desplazamiento están desfasados espacialmente. Un extremo cerrado impide el movimiento del aire, luego es nodo de desplazamiento y antinodo de presión. Un extremo abierto mantiene la presión cerca de la exterior, luego es nodo de presión y antinodo de desplazamiento.</p></article>
+<article class="answer-item"><h4>Respuesta 4</h4><p>La degeneración aparece cuando la simetría hace equivalentes direcciones o configuraciones distintas. En una membrana cuadrada, intercambiar x e y no cambia la frecuencia, por eso (\(n_{x}\),\(n_{y}\)) y (\(n_{y}\),\(n_{x}\)) son degenerados. La simetría aumenta el número de modos con una misma frecuencia.</p></article>
+<article class="answer-item"><h4>Respuesta 5</h4><p>En todos los casos v mide el equilibrio entre restauración e inercia. En una cuerda, la restauración es la tensión T y la inercia es \(\mu\). En una varilla, la restauración es Y y la inercia \(\rho\). En un gas, la restauración es \(\gamma\) p y la inercia \(\rho\). En una membrana, la restauración es S y la inercia superficial \(\sigma\).</p></article>
+</div></details>
+</section>
+<section class="page" id="resumen-final-de-repaso"><div class="page-head"><h2>9. Resumen final de repaso</h2><p class="section-lead">Fórmulas, relaciones y avisos esenciales para el último repaso.</p></div>
+<h3>Ideas principales</h3>
+<div class="reading-block"><p>• Un sistema continuo se describe con una función de posición y tiempo.</p></div>
+<div class="reading-block"><p>• Las pequeñas vibraciones de cuerdas, varillas, gases y membranas conducen a ecuaciones de ondas.</p></div>
+<div class="reading-block"><p>• Las condiciones de contorno discretizan las frecuencias.</p></div>
+<div class="reading-block"><p>• Un modo normal es una forma espacial fija que oscila con una frecuencia única.</p></div>
+<div class="reading-block"><p>• La cuerda fija tiene espectro armónico: \(\nu_{n}=n v/(2L)\).</p></div>
+<div class="reading-block"><p>• La varilla fija-libre y el tubo abierto-cerrado tienen modos de cuarto de onda y solo armónicos impares.</p></div>
+<div class="reading-block"><p>• La membrana rectangular necesita dos números modales y puede presentar degeneración.</p></div>
+<div class="reading-block"><p>• Fourier descompone una forma inicial en amplitudes modales.</p></div>
+<div class="reading-block"><p>• La ortogonalidad permite calcular coeficientes y separar energías.</p></div>
+<h3>Conceptos imprescindibles</h3>
+<div class="reading-block"><p>• y_tt=v^2 y_xx.</p></div>
+<div class="reading-block"><p>• \(v=\sqrt{T/\mu}\) para cuerda.</p></div>
+<div class="reading-block"><p>• \(v=\sqrt{Y/\rho}\) para varilla.</p></div>
+<div class="reading-block"><p>• \(v=\sqrt{\gamma p/\rho}\) para gas.</p></div>
+<div class="reading-block"><p>• \(v=\sqrt{S/\sigma}\) para membrana.</p></div>
+<div class="reading-block"><p>• Cuerda fija: y_n=A sin(n pi x/L) cos(\(\omega_{n}\) t+\(\phi\)).</p></div>
+<div class="reading-block"><p>• Cuerda fija: \(\omega_{n}=n \pi v/L\).</p></div>
+<div class="reading-block"><p>• Tubo abierto-abierto: \(\nu_{n}=n v/(2L)\).</p></div>
+<div class="reading-block"><p>• Tubo abierto-cerrado: \(\nu_{n}=(2n-1)v/(4L)\).</p></div>
+<div class="reading-block"><p>• Fourier seno: \(B_{n}\)=(2/L) integral_0^L y(x) sin(n pi x/L) dx.</p></div>
+<h3>Relaciones clave</h3>
+<div class="reading-block"><p>• Contorno fijo -&gt; nodo de desplazamiento.</p></div>
+<div class="reading-block"><p>• Extremo libre -&gt; derivada espacial nula.</p></div>
+<div class="reading-block"><p>• Extremo abierto de tubo -&gt; nodo de presión, antinodo de desplazamiento.</p></div>
+<div class="reading-block"><p>• Extremo cerrado de tubo -&gt; antinodo de presión, nodo de desplazamiento.</p></div>
+<div class="reading-block"><p>• Linealidad -&gt; superposición.</p></div>
+<div class="reading-block"><p>• Ortogonalidad -&gt; coeficientes independientes.</p></div>
+<div class="reading-block"><p>• Simetría -&gt; degeneración.</p></div>
+<h3>Errores que evitar</h3>
+<div class="reading-block"><p>• Imponer desplazamiento nulo en un extremo libre.</p></div>
+<div class="reading-block"><p>• Confundir nodo de presión con nodo de desplazamiento.</p></div>
+<div class="reading-block"><p>• Suponer que todo sistema tiene espectro armónico.</p></div>
+<div class="reading-block"><p>• Olvidar que una forma inicial necesita Fourier.</p></div>
+<div class="reading-block"><p>• Olvidar que la velocidad inicial también fija parte de la solución.</p></div>
+<div class="reading-block"><p>• Usar \(v=\sqrt{T/\mu}\) fuera de cuerdas.</p></div>
+<div class="reading-block"><p>• Confundir frecuencia igual con forma modal igual.</p></div>
+</section>
+<section class="page" id="checklist-de-dominio"><div class="page-head"><h2>10. Checklist de dominio</h2><p class="section-lead">Criterios concretos para detectar qué bloque necesita repaso.</p></div><div class="checklist-box"><ul class="check-list">
+<li>Si no puedes derivar y_tt=(T/\(\mu\))y_xx para una cuerda, falta repasar el balance de fuerzas sobre un elemento diferencial.</li>
+<li>Si no puedes obtener \(kL=n \pi\), falta repasar condiciones de contorno fijas y separación de variables.</li>
+<li>Si confundes \(\lambda_{n}=2L/n\) con \(\lambda=4L/(2n-1)\), revisar cuerda fija frente a sistema con nodo-antinode.</li>
+<li>Si no distingues tubo abierto de tubo cerrado, revisar presión y desplazamiento acústico.</li>
+<li>Si impones \(\xi(L,t)=0\) en una varilla libre, revisar el significado físico de tensión nula.</li>
+<li>Si crees que todos los modos normales son armónicos, revisar membranas rectangulares.</li>
+<li>Si no puedes decidir degeneración entre dos modos (\(n_{x}\),\(n_{y}\)), revisar la fórmula de \(\omega\) en membranas.</li>
+<li>Si no puedes calcular \(B_{n}\), falta repasar ortogonalidad de senos.</li>
+<li>Si no sabes qué representa \(B_{n}\) físicamente, falta conectar Fourier con amplitudes modales.</li>
+<li>Si puedes escribir la solución general de una cuerda con y(x,0) y y_t(x,0), el bloque de Fourier está asentado.</li>
+<li>Si puedes explicar por qué la energía total se separa por modos, el concepto de ortogonalidad dinámica está asentado.</li>
+<li>Si puedes resolver tubos, cuerda fija, varilla fija-libre y membrana rectangular sin mirar fórmulas externas, el capítulo está suficientemente dominado para examen.</li>
+</ul></div></section>
+</main>
+</div>
+</body>
+</html>
