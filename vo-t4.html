@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta name="robots" content="noindex, nofollow" />
+<meta name="color-scheme" content="light dark"/>
+<title>V&amp;O — T4 — Osciladores acoplados y modos normales discretos</title>
+<link rel="icon" type="image/png" sizes="32x32" href="assets/icons/icon-32.png"/>
+<link rel="icon" type="image/png" sizes="50x50" href="assets/icons/icon-50.png"/>
+<link rel="apple-touch-icon" sizes="100x100" href="assets/icons/icon-100.png"/>
+<meta content="#007c91" name="theme-color"/>
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+<link href="assets/styles.css" rel="stylesheet"/>
+<script defer src="assets/app.js"></script>
+</head>
+<body class="subject-vo">
+<div class="wrap">
+<header class="cover">
+<div class="top-actions"><a class="back-link" href="index.html">← Volver al índice</a></div>
+<p class="eyebrow">UNED Física · Vibraciones y Ondas · Tema 4</p>
+<h1>Guía de estudio — French, Vibraciones y ondas:</h1>
+<p class="subtitle">osciladores acoplados y modos normales discretos</p>
+<div class="chips">
+<span class="chip">UNED Física</span><span class="chip">Vibraciones y Ondas</span><span class="chip">T4</span><span class="chip">French cap. 5</span><span class="chip">estado: maquetado</span>
+</div>
+</header>
+<div class="toolbar no-print">
+<nav>
+<a href="#mapa">Mapa</a><a href="#prerrequisitos">Prerrequisitos</a><a href="#desarrollo-completo">Desarrollo</a><a href="#conceptos-clave">Conceptos</a><a href="#relaciones-entre-ideas">Relaciones</a><a href="#errores-habituales">Errores</a><a href="#preguntas-orientadas-a-examen">Preguntas</a><a href="#respuestas-modelo">Respuestas</a><a href="#resumen-final-de-repaso">Resumen</a><a href="#checklist-de-dominio">Checklist</a>
+</nav>
+<div class="toolbar-actions"><button class="btn" onclick="printReady()">Imprimir / guardar PDF</button><button class="btn secondary" onclick="openAllDetails()">Abrir todo</button><button class="btn secondary" onclick="closeAllDetails()">Cerrar acordeones</button></div>
+</div>
+<main>
+<section class="page map-page" id="mapa"><div class="page-head"><h2>Mapa clicable</h2><p class="section-lead">Ruta de lectura y repaso del tema.</p></div><div class="concept-map">
+<a class="map-node" href="#prerrequisitos"><span>Prerrequisitos</span><small>MAS · linealidad · autovalores · contorno</small></a>
+<a class="map-node" href="#idea-central"><span>Idea central</span><small>patrones colectivos · frecuencias normales</small></a>
+<a class="map-node" href="#desarrollo-completo"><span>Desarrollo</span><small>dos péndulos · coordenadas normales · cadena discreta</small></a>
+<a class="map-node" href="#preguntas-orientadas-a-examen"><span>Examen</span><small>conceptos · errores · preguntas · respuestas</small></a>
+<a class="map-node" href="#resumen-final-de-repaso"><span>Cierre</span><small>límite continuo · resumen · checklist</small></a>
+</div></section>
+<section class="page" id="prerrequisitos">
+<div class="page-head"><h2>1. Prerrequisitos mínimos</h2><p class="section-lead">Base matemática y física necesaria para abordar los modos normales discretos.</p></div>
+
+<div class="grid cards-grid">
+<article class="definition-card"><h3 id="movimiento-armonico-simple">Movimiento armónico simple</h3><div class="card-copy"><p><strong>Definición breve.</strong> un movimiento armónico simple es una oscilación sinusoidal alrededor de una posición de equilibrio, descrita por una ecuación del tipo</p></div>
+<div class="card-copy"><div class="formula-block">\[\ddot{x} + \omega_0^2 x = 0\]</div></div>
+<div class="card-copy"><p>cuya solución puede escribirse como</p></div>
+<div class="card-copy"><div class="formula-block">\[x(t) = A \cos\left(\omega_0 t + \phi\right)\]</div></div>
+<div class="card-copy"><p><strong>Por qué es necesario.</strong> French construye los osciladores acoplados como una generalización de varios osciladores armónicos simples. Cada modo normal se comporta, matemáticamente, como un oscilador armónico independiente.</p></div>
+<div class="card-copy"><p><strong>Ejemplo mínimo.</strong> una masa unida a un muelle ideal cumple</p></div>
+<div class="card-copy"><div class="formula-block">\[m \ddot{x} + kx = 0 \\ \omega_0 = \sqrt{k/m}\]</div></div></article>
+<article class="definition-card"><h3 id="fuerza-restauradora-lineal">Fuerza restauradora lineal</h3><div class="card-copy"><p><strong>Definición breve.</strong> una fuerza restauradora lineal es proporcional al desplazamiento respecto al equilibrio y apunta hacia dicho equilibrio:</p></div>
+<div class="card-copy"><div class="formula-block">\[F = -kx\]</div></div>
+<div class="card-copy"><p><strong>Por qué es necesario.</strong> el tratamiento de modos normales exige linealidad. Si las fuerzas restauradoras no son lineales, la superposición de modos deja de ser una descripción exacta.</p></div>
+<div class="card-copy"><p><strong>Ejemplo mínimo.</strong> si un muelle se alarga una distancia x, ejerce una fuerza -kx. En pequeñas oscilaciones, muchos sistemas físicos se aproximan por fuerzas de este tipo.</p></div></article>
+<article class="definition-card"><h3 id="pequenas-oscilaciones">Pequeñas oscilaciones</h3><div class="card-copy"><p><strong>Definición breve.</strong> régimen en el que los desplazamientos respecto al equilibrio son suficientemente pequeños como para conservar solo los términos lineales de las fuerzas o del potencial.</p></div>
+<div class="card-copy"><p><strong>Por qué es necesario.</strong> en los péndulos acoplados se usa la aproximación de ángulo pequeño. En la cuerda con masas discretas se supone que los desplazamientos transversales son pequeños frente a la separación entre partículas.</p></div>
+<div class="card-copy"><p><strong>Ejemplo mínimo.</strong> para un péndulo simple,</p></div>
+<div class="card-copy"><div class="formula-block">\[\sin\left(\theta\right) \approx \theta\]</div></div>
+<div class="card-copy"><p>lo que transforma la ecuación no lineal en</p></div>
+<div class="card-copy"><div class="formula-block">\[\ddot{\theta} + (g/l) \theta = 0\]</div></div></article>
+<article class="definition-card"><h3 id="superposicion-lineal">Superposición lineal</h3><div class="card-copy"><p><strong>Definición breve.</strong> si dos soluciones satisfacen un sistema lineal homogéneo, cualquier combinación lineal de ellas también es solución.</p></div>
+<div class="card-copy"><p><strong>Por qué es necesario.</strong> un movimiento general de osciladores acoplados se expresa como suma de modos normales. Esta es la idea central del capítulo.</p></div>
+<div class="card-copy"><p><strong>Ejemplo mínimo.</strong> si q_1(t) y q_2(t) son soluciones independientes, entonces</p></div>
+<div class="card-copy"><div class="formula-block">\[x(t) = C_1 q_1(t) + C_2 q_2(t)\]</div></div>
+<div class="card-copy"><p>también es solución, con constantes fijadas por las condiciones iniciales.</p></div></article>
+<article class="definition-card"><h3 id="sistemas-de-ecuaciones-diferenciales-lineales">Sistemas de ecuaciones diferenciales lineales</h3><div class="card-copy"><p><strong>Definición breve.</strong> conjunto de ecuaciones diferenciales acopladas donde cada ecuación contiene varias coordenadas y sus derivadas de forma lineal.</p></div>
+<div class="card-copy"><p><strong>Por qué es necesario.</strong> los osciladores acoplados no se resuelven como ecuaciones independientes en las coordenadas originales. Hay que desacoplar el sistema.</p></div>
+<div class="card-copy"><p><strong>Ejemplo mínimo.</strong></p></div>
+<div class="card-copy"><div class="formula-block">\[\ddot{x_A} + a x_A + b x_B = 0 \\ \ddot{x_B} + b x_A + a x_B = 0\]</div></div></article>
+<article class="definition-card"><h3 id="autovalores-y-autovectores">Autovalores y autovectores</h3><div class="card-copy"><p><strong>Definición breve.</strong> un autovector de una matriz es una dirección que, al aplicarle la matriz, solo cambia de escala. El factor de escala es el autovalor.</p></div>
+<div class="card-copy"><p><strong>Por qué es necesario.</strong> el cálculo general de modos normales es un problema espectral. Las frecuencias normales salen de los autovalores y las formas modales salen de los autovectores.</p></div>
+<div class="card-copy"><p><strong>Ejemplo mínimo.</strong></p></div>
+<div class="card-copy"><div class="formula-block">\[\mathbf{K} \mathbf{a} = \omega^2 \mathbf{M} \mathbf{a}\]</div></div>
+<div class="card-copy"><p>Aquí a es el patrón de amplitudes del modo normal y omega es su frecuencia angular.</p></div></article>
+<article class="definition-card"><h3 id="condiciones-de-contorno-discretas">Condiciones de contorno discretas</h3><div class="card-copy"><p><strong>Definición breve.</strong> restricciones impuestas a los extremos de un sistema con varias partículas, por ejemplo extremos fijos o libres.</p></div>
+<div class="card-copy"><p><strong>Por qué es necesario.</strong> en una cadena discreta de N osciladores, las frecuencias normales y los patrones espaciales dependen de si los extremos están fijos, libres o conectados a otros elementos.</p></div>
+<div class="card-copy"><p><strong>Ejemplo mínimo.</strong> una cadena de N masas con extremos fijos se modela con</p></div>
+<div class="card-copy"><div class="formula-block">\[y_0 = 0 \\ y_{N+1} = 0\]</div></div></article>
+<article class="definition-card"><h3 id="resonancia">Resonancia</h3><div class="card-copy"><p><strong>Definición breve.</strong> aumento intenso de la respuesta de un sistema cuando la frecuencia de una fuerza externa se aproxima a una frecuencia natural del sistema.</p></div>
+<div class="card-copy"><p><strong>Por qué es necesario.</strong> French usa la vibración forzada de dos osciladores acoplados para mostrar que las resonancias revelan las frecuencias normales.</p></div>
+<div class="card-copy"><p><strong>Ejemplo mínimo.</strong> un sistema con dos modos normales tiene dos resonancias principales, una asociada al modo en fase y otra al modo en oposición de fase.</p></div></article>
+</div>
+</section>
+<section class="page" id="idea-central">
+<div class="page-head"><h2>2. Idea central del capítulo</h2><p class="section-lead">El paso de osciladores individuales a patrones colectivos independientes.</p></div>
+<div class="reading-block"><p>El capítulo aborda el paso desde el oscilador simple, con una única frecuencia natural, a sistemas que pueden vibrar de varias formas independientes. French parte de una observación física elemental: los sistemas reales rara vez tienen una sola manera de oscilar. Una cuerda, una cadena, una estructura mecánica, una molécula o un cristal tienen muchas formas características de vibrar. Cada una de esas formas recibe el nombre de modo normal.</p></div>
+<div class="reading-block"><p>Un modo normal no es simplemente “una oscilación más”. Es una configuración especial en la que todas las partes del sistema oscilan con la misma frecuencia y mantienen entre sí relaciones fijas de amplitud y fase. En un modo normal puro, la forma espacial del sistema no se mezcla con otras formas. Cambia el factor temporal, pero el patrón relativo de movimiento permanece.</p></div>
+<div class="reading-block"><p>La idea física básica aparece ya en dos péndulos acoplados. Si se desplaza solo uno de ellos y se suelta, la energía no permanece en ese péndulo. Pasa gradualmente al otro, vuelve al primero y así sucesivamente. El movimiento parece complicado si se observa péndulo por péndulo. Sin embargo, se entiende de forma simple si se ve como superposición de dos movimientos elementales: uno en el que ambos péndulos oscilan en fase y otro en el que oscilan en oposición de fase.</p></div>
+<div class="reading-block"><p>French usa este ejemplo para construir la arquitectura completa del capítulo. Primero muestra que la simetría permite adivinar modos normales. Después muestra que cualquier movimiento puede expresarse como combinación de esos modos. Luego introduce el método analítico general: se buscan soluciones en las que todas las coordenadas tengan la misma dependencia temporal sinusoidal. Esto convierte un sistema de ecuaciones diferenciales en un problema algebraico para las amplitudes y las frecuencias.</p></div>
+<div class="reading-block"><p>La importancia del capítulo dentro de Vibraciones y Ondas es estructural. Los modos normales discretos son el puente natural entre el oscilador simple y los medios continuos. Una cuerda real puede verse como una cadena de muchísimas partículas acopladas. Cuando el número de partículas crece y la separación disminuye, el sistema discreto se aproxima a un continuo. De ahí se pasa a la ecuación de ondas, a las ondas estacionarias y al análisis de Fourier.</p></div>
+<div class="reading-block"><p>En examen, este capítulo no se domina memorizando dibujos. Se domina sabiendo convertir un sistema físico en ecuaciones lineales, reconocer simetrías, escribir el problema matricial, imponer el determinante nulo, calcular frecuencias normales y describir físicamente cada modo.</p></div>
+</section>
+<section class="page" id="desarrollo-completo">
+<div class="page-head"><h2>3. Desarrollo completo del capítulo</h2><p class="section-lead">Planteamiento físico, desacoplamiento, frecuencias propias y límite continuo.</p></div>
+
+<h3 id="3-1-del-oscilador-simple-al-sistema-con-muchos-modos">3.1 Del oscilador simple al sistema con muchos modos</h3>
+<div class="reading-block"><p>En los capítulos previos se trabaja con sistemas que poseen una única frecuencia natural. Un oscilador masa-muelle ideal o un péndulo simple pequeño tienen un solo grado de libertad y, por tanto, una única forma de vibrar. El capítulo rompe esa limitación. Un sistema extendido o compuesto por varias partes tiene varios grados de libertad. Cada grado de libertad permite almacenar energía cinética y potencial, y el acoplamiento permite que la energía pase de una parte a otra.</p></div>
+<div class="reading-block"><p>French presenta como motivación una cadena flexible. Aunque parezca un objeto continuo, se puede imaginar como muchas partículas conectadas. Cada una puede vibrar, pero no lo hace de forma independiente porque sus vecinas influyen en ella. El objetivo es encontrar patrones colectivos de oscilación.</p></div>
+<div class="reading-block"><p>La consecuencia central es que un sistema con N grados de libertad lineales tiene, en general, N modos normales. Cada modo tiene una frecuencia propia y una distribución espacial de amplitudes. Esta idea reaparece después en cuerdas, tubos, membranas, cristales y sistemas cuánticos.</p></div>
+<h3 id="3-2-dos-pendulos-acoplados-transferencia-de-energia">3.2 Dos péndulos acoplados: transferencia de energía</h3>
+<div class="reading-block"><p>El primer sistema concreto son dos péndulos idénticos unidos por un muelle ligero. En equilibrio, el muelle no está deformado. Si se aparta solo el péndulo A y se sueltan ambos desde el reposo, A empieza oscilando con gran amplitud y B con amplitud nula. Pero el muelle transmite fuerza entre ellos. A empuja y tira de B; B empieza a moverse; la energía pasa gradualmente de A a B. Después el proceso se invierte.</p></div>
+<div class="reading-block"><p>Esta transferencia de energía se parece a las pulsaciones: el movimiento de cada péndulo puede verse como una oscilación rápida cuya amplitud se modula lentamente. La modulación surge porque el movimiento inicial no era un modo normal puro, sino una combinación de dos modos con frecuencias cercanas.</p></div>
+<div class="reading-block"><p>La interpretación correcta no es que el sistema “elija” pasar energía de un péndulo a otro. Lo que ocurre es que la condición inicial excita simultáneamente dos modos normales. Como esos modos tienen frecuencias distintas, sus fases relativas cambian con el tiempo. Al sumarlos, unas veces se refuerzan en A y se cancelan en B; otras veces ocurre lo contrario.</p></div>
+<h3 id="3-3-simetria-los-dos-modos-normales-de-dos-pendulos-identicos">3.3 Simetría: los dos modos normales de dos péndulos idénticos</h3>
+<div class="reading-block"><p>Para dos péndulos idénticos unidos por un muelle, la simetría permite encontrar los modos sin resolver todavía el sistema general.</p></div>
+<div class="reading-block"><p>El primer modo es el modo en fase. Ambos péndulos se desplazan igual:</p></div>
+<div class="reading-block"><div class="formula-block">\[x_A = x_B\]</div></div>
+<div class="reading-block"><p>El muelle mantiene su longitud natural, no ejerce fuerza de acoplamiento y cada péndulo oscila como si estuviera aislado. La frecuencia es</p></div>
+<div class="reading-block"><div class="formula-block">\[\omega_1 = \omega_0 = \sqrt{g/l}\]</div></div>
+<div class="reading-block"><p>Este es el modo inferior.</p></div>
+<div class="reading-block"><p>El segundo modo es el modo en oposición de fase. Ambos péndulos se desplazan igual en módulo y en sentidos contrarios:</p></div>
+<div class="reading-block"><div class="formula-block">\[x_A = -x_B\]</div></div>
+<div class="reading-block"><p>Ahora el muelle se alarga o comprime el doble que el desplazamiento de un péndulo. La fuerza restauradora efectiva aumenta. Por eso la frecuencia normal superior es mayor:</p></div>
+<div class="reading-block"><div class="formula-block">\[\omega_2 = \omega' = \sqrt{\omega_0^2 + 2 \omega_c^2} \\ \omega_c^2 = k/m\]</div></div>
+<div class="reading-block"><p>Este resultado fija una idea importante: el acoplamiento separa las frecuencias. El modo que no deforma el acoplamiento no cambia su frecuencia. El modo que sí deforma el acoplamiento se vuelve más rígido y vibra más rápido.</p></div>
+<h3 id="3-4-ecuaciones-del-movimiento-en-coordenadas-originales">3.4 Ecuaciones del movimiento en coordenadas originales</h3>
+<div class="reading-block"><p>Para una configuración cualquiera, los desplazamientos de A y B se designan por x_A y x_B. El muelle se deforma una cantidad x_A - x_B. Por tanto, la fuerza de acoplamiento sobre A es proporcional a -(x_A - x_B), mientras que sobre B tiene el signo contrario.</p></div>
+<div class="reading-block"><p>Las ecuaciones lineales son</p></div>
+<div class="reading-block"><div class="formula-block">\[\ddot{x_A} + (\omega_0^2 + \omega_c^2)x_A - \omega_c^2 x_B = 0 \\ \ddot{x_B} + (\omega_0^2 + \omega_c^2)x_B - \omega_c^2 x_A = 0\]</div></div>
+<div class="reading-block"><p>Estas ecuaciones muestran el acoplamiento de forma explícita. La aceleración de A depende de x_A y también de x_B; la aceleración de B depende de x_B y también de x_A. No pueden resolverse como dos osciladores independientes en las coordenadas originales.</p></div>
+<div class="reading-block"><p>La solución consiste en cambiar de variables. No se busca “integrar más fuerte”, sino elegir coordenadas más adecuadas.</p></div>
+<h3 id="3-5-coordenadas-normales">3.5 Coordenadas normales</h3>
+<div class="reading-block"><p>French introduce las combinaciones</p></div>
+<div class="reading-block"><div class="formula-block">\[q_1 = x_A + x_B \\ q_2 = x_A - x_B\]</div></div>
+<div class="reading-block"><p>Estas variables tienen significado físico. q_1 mide el movimiento común de ambos péndulos. q_2 mide el movimiento relativo, es decir, cuánto se separan o se acercan.</p></div>
+<div class="reading-block"><p>Al sumar las ecuaciones del movimiento se obtiene</p></div>
+<div class="reading-block"><div class="formula-block">\[\ddot{q_1} + \omega_0^2 q_1 = 0\]</div></div>
+<div class="reading-block"><p>Al restarlas se obtiene</p></div>
+<div class="reading-block"><div class="formula-block">\[\ddot{q_2} + (\omega_0^2 + 2 \omega_c^2) q_2 = 0\]</div></div>
+<div class="reading-block"><p>El sistema queda desacoplado. q_1 y q_2 son coordenadas normales porque cada una evoluciona como un oscilador armónico simple independiente.</p></div>
+<div class="reading-block"><p>Esta es una de las ideas más importantes del capítulo. Las coordenadas originales describen las partes físicas visibles. Las coordenadas normales describen las formas colectivas independientes. El sistema físico no ha cambiado; ha cambiado el lenguaje matemático.</p></div>
+<h3 id="3-6-superposicion-de-modos-normales">3.6 Superposición de modos normales</h3>
+<div class="reading-block"><p>Una vez obtenidos los modos normales, cualquier movimiento libre del sistema lineal puede expresarse como superposición de ellos.</p></div>
+<div class="reading-block"><p>Para dos péndulos idénticos, la solución general puede escribirse como combinación de:</p></div>
+<div class="reading-block"><div class="formula-block">\[\text{modo inferior:}\quad   (x_A, x_B) \propto (1, 1), \text{frecuencia } \omega_0 \\ \text{modo superior:}\quad   (x_A, x_B) \propto (1, -1), \text{frecuencia } \omega'\]</div></div>
+<div class="reading-block"><p>Si inicialmente se desplaza solo A una cantidad A_0 y B queda en equilibrio, con velocidades iniciales nulas,</p></div>
+<div class="reading-block"><div class="formula-block">\[x_A(0) = A_0 \\ x_B(0) = 0 \\ \dot{x_A}(0) = \dot{x_B}(0) = 0\]</div></div>
+<div class="reading-block"><p>entonces se excitan por igual los dos modos:</p></div>
+<div class="reading-block"><div class="formula-block">\[x_A(t) = (A_0/2)\left[\cos\left(\omega_0 t\right) + \cos\left(\omega' t\right)\right] \\ x_B(t) = (A_0/2)\left[\cos\left(\omega_0 t\right) - \cos\left(\omega' t\right)\right]\]</div></div>
+<div class="reading-block"><p>Usando identidades trigonométricas,</p></div>
+<div class="reading-block"><div class="formula-block">\[x_A(t)=A_0\cos\!\left(\frac{(\omega'-\omega_0)t}{2}\right)\cos\!\left(\frac{(\omega'+\omega_0)t}{2}\right) \\ x_B(t)=A_0\sin\!\left(\frac{(\omega'-\omega_0)t}{2}\right)\sin\!\left(\frac{(\omega'+\omega_0)t}{2}\right)\]</div></div>
+<div class="reading-block"><p>salvo elección de signo según la convención de ejes.</p></div>
+<div class="reading-block"><p>Aquí aparece la transferencia periódica de energía. La oscilación rápida tiene frecuencia aproximadamente media, mientras que la envolvente lenta depende de la diferencia entre las dos frecuencias normales.</p></div>
+<div class="reading-block"><p>Si el acoplamiento es débil, omega' está cerca de \(\omega_0\). Entonces la transferencia de energía es lenta. Si el acoplamiento es fuerte, la separación entre frecuencias crece y el intercambio se acelera.</p></div>
+<h3 id="3-7-otros-sistemas-acoplados">3.7 Otros sistemas acoplados</h3>
+<div class="reading-block"><p>French insiste en que no solo los péndulos unidos por un muelle presentan modos normales. El mismo esquema aparece en sistemas muy distintos: péndulos acoplados mediante una masa auxiliar, péndulos unidos por torsión, masas en una lámina elástica, péndulo de Wilberforce y bloque apoyado sobre dos muelles.</p></div>
+<div class="reading-block"><p>En todos los casos, el criterio no es la apariencia del sistema, sino su estructura dinámica. Hay grados de libertad, hay fuerzas restauradoras y hay acoplamiento entre coordenadas.</p></div>
+<div class="reading-block"><p>El péndulo de Wilberforce es especialmente útil conceptualmente. En él se acoplan una oscilación vertical y una oscilación rotacional. La energía pasa de una a otra cuando sus frecuencias están próximas. Esto enseña que el acoplamiento no necesita unir dos objetos iguales; puede unir dos tipos distintos de movimiento dentro del mismo sistema.</p></div>
+<div class="reading-block"><p>El bloque sobre dos muelles muestra otro patrón claro. Un modo corresponde a traslación vertical sin giro. Otro modo corresponde a giro sin desplazamiento vertical del centro de masas. En lenguaje de examen, esto es separar el movimiento en coordenadas colectivas: traslación y rotación.</p></div>
+<h3 id="3-8-metodo-analitico-general-para-frecuencias-normales">3.8 Método analítico general para frecuencias normales</h3>
+<div class="reading-block"><p>Cuando la simetría no basta, se usa un método general. Se buscan soluciones en las que todas las coordenadas oscilen con la misma frecuencia:</p></div>
+<div class="reading-block"><div class="formula-block">\[x_A = C \cos\left(\omega t\right) \\ x_B = C' \cos\left(\omega t\right)\]</div></div>
+<div class="reading-block"><p>Al sustituir en las ecuaciones diferenciales, el problema se convierte en un sistema algebraico homogéneo para C y C'. Para que exista una solución no trivial, el determinante debe anularse.</p></div>
+<div class="reading-block"><p>En forma matricial:</p></div>
+<div class="reading-block"><div class="formula-block">\[(\mathbf{K} - \omega^2 \mathbf{M}) \mathbf{a} = 0\]</div></div>
+<div class="reading-block"><p>con</p></div>
+<div class="reading-block"><div class="formula-block">\[\mathbf{a}=\text{vector de amplitudes modales}\]</div></div>
+<div class="reading-block"><p>La condición de existencia de modo normal es</p></div>
+<div class="reading-block"><div class="formula-block">\[\det\left(\mathbf{K} - \omega^2 \mathbf{M}) = 0\]</div></div>
+<div class="reading-block"><p>Esta ecuación da las frecuencias normales. Una vez obtenida cada frecuencia, se vuelve al sistema algebraico para hallar la relación de amplitudes entre las coordenadas. Esa relación es el modo normal.</p></div>
+<div class="reading-block"><p>Para los dos péndulos idénticos el método reproduce:</p></div>
+<div class="reading-block"><div class="formula-block">\[\omega_1 = \omega_0 \\ a_1 \propto (1, 1) \\ \omega_2 = \sqrt{\omega_0^2 + 2 \omega_c^2} \\ a_2 \propto (1, -1)\]</div></div>
+<div class="reading-block"><p>La consecuencia operativa es clara: calcular modos normales no es resolver directamente x_A(t), x_B(t). Primero se encuentran las direcciones propias del sistema. Después se ajustan las constantes usando las condiciones iniciales.</p></div>
+<h3 id="3-9-vibracion-forzada-y-resonancia-en-dos-osciladores-acoplados">3.9 Vibración forzada y resonancia en dos osciladores acoplados</h3>
+<div class="reading-block"><p>French extiende el análisis al caso forzado. Si una fuerza externa periódica actúa sobre uno de los péndulos,</p></div>
+<div class="reading-block"><div class="formula-block">\[F(t) = F_0 \cos\left(\omega t\right)\]</div></div>
+<div class="reading-block"><p>el sistema responde con la frecuencia de la fuerza en régimen estacionario. Sin amortiguamiento, las amplitudes se hacen muy grandes cuando omega se aproxima a una frecuencia normal.</p></div>
+<div class="reading-block"><p>La clave es que el sistema no tiene una sola resonancia. Tiene tantas resonancias como modos normales relevantes. Para dos osciladores acoplados aparecen dos resonancias: una cerca del modo inferior y otra cerca del modo superior.</p></div>
+<div class="reading-block"><p>En la región dominada por la resonancia inferior, los desplazamientos de ambos osciladores tienen el mismo signo: oscilan en fase. En la región dominada por la resonancia superior, los desplazamientos tienen signos opuestos: oscilan en oposición de fase.</p></div>
+<div class="reading-block"><p>Esto da una interpretación experimental de los modos normales. Si se barre la frecuencia de excitación y se observan los patrones de movimiento en resonancia, se pueden identificar las formas modales del sistema.</p></div>
+<div class="reading-block"><p>French también señala una anomalía del modelo sin amortiguamiento: puede aparecer una frecuencia para la que la amplitud de un oscilador resulta nula mientras el otro responde. En un sistema real esto no se sostiene exactamente, porque siempre hay amortiguamiento y pequeñas imperfecciones. La idealización matemática ayuda a localizar la estructura de resonancias, pero no debe confundirse con el comportamiento exacto de un sistema físico real.</p></div>
+<h3 id="3-10-n-osciladores-acoplados">3.10 N osciladores acoplados</h3>
+<div class="reading-block"><p>El capítulo pasa después al problema de N osciladores. La motivación es física: un cuerpo macroscópico contiene muchas partículas. Una cuerda o un cristal no son dos osciladores, sino un gran número de elementos acoplados.</p></div>
+<div class="reading-block"><p>French estudia una cuerda cargada con N masas igualmente espaciadas, sometida a tensión T y con extremos fijos. Las partículas pueden oscilar transversalmente. Para desplazamientos pequeños, la fuerza transversal sobre la partícula p depende de la diferencia entre su desplazamiento y el de sus vecinas.</p></div>
+<div class="reading-block"><p>La ecuación típica es</p></div>
+<div class="reading-block"><div class="formula-block">\[\ddot{y_p} + 2 \omega_0^2 y_p - \omega_0^2(y_{p+1} + y_{p-1}) = 0\]</div></div>
+<div class="reading-block"><p>donde</p></div>
+<div class="reading-block"><div class="formula-block">\[\omega_0^2 = T/(m l)\]</div></div>
+<div class="reading-block"><p>si l es la separación entre partículas y m la masa de cada partícula.</p></div>
+<div class="reading-block"><p>Las condiciones de extremo fijo son</p></div>
+<div class="reading-block"><div class="formula-block">\[y_0 = 0 \\ y_{N+1} = 0\]</div></div>
+<div class="reading-block"><p>El sistema tiene N ecuaciones acopladas y, en general, N modos normales.</p></div>
+<h3 id="3-11-modos-normales-de-una-cadena-discreta-con-extremos-fijos">3.11 Modos normales de una cadena discreta con extremos fijos</h3>
+<div class="reading-block"><p>Se buscan soluciones de la forma</p></div>
+<div class="reading-block"><div class="formula-block">\[y_p(t) = A_p \cos\left(\omega t\right)\]</div></div>
+<div class="reading-block"><p>donde todas las partículas comparten la misma frecuencia, pero cada una puede tener una amplitud distinta A_p.</p></div>
+<div class="reading-block"><p>El patrón de amplitudes que satisface los extremos fijos es sinusoidal discreto:</p></div>
+<div class="reading-block"><div class="formula-block">\[A_p=C\sin\!\left(\frac{pn\pi}{N+1}\right)\]</div></div>
+<div class="reading-block"><p>con</p></div>
+<div class="reading-block"><div class="formula-block">\[n = 1, 2, ..., N\]</div></div>
+<div class="reading-block"><p>Cada valor de n define un modo normal distinto. Las frecuencias correspondientes son</p></div>
+<div class="reading-block"><div class="formula-block">\[\omega_n=2\omega_0\sin\!\left(\frac{n\pi}{2(N+1)}\right)\]</div></div>
+<div class="reading-block"><p>Esto es uno de los resultados centrales del capítulo.</p></div>
+<div class="reading-block"><p>Interpretación:</p></div>
+<div class="reading-block"><ul><li>n = 1 es el modo fundamental: todas las masas siguen una media sinusoide entre los extremos fijos.</li><li>n = 2 tiene un nodo interno y dos lóbulos.</li><li>modos superiores tienen más cambios de signo entre masas vecinas.</li><li>n = N es el modo más alto: masas vecinas se mueven casi en oposición.</li></ul></div>
+<div class="reading-block"><p>La estructura espacial de los modos no se elige arbitrariamente. Viene impuesta por la linealidad, el acoplamiento entre vecinos y las condiciones de contorno.</p></div>
+<h3 id="3-12-propiedades-de-los-modos-normales-discretos">3.12 Propiedades de los modos normales discretos</h3>
+<div class="reading-block"><p>Los modos normales de una cadena discreta poseen propiedades esenciales.</p></div>
+<div class="reading-block"><p>Primero, cada modo tiene una frecuencia bien definida. Si se excita un modo puro, el sistema conserva la misma forma espacial mientras oscila.</p></div>
+<div class="reading-block"><p>Segundo, los modos forman una base para describir movimientos generales. Una configuración inicial cualquiera puede descomponerse como suma de modos normales. Cada modo evoluciona con su propia frecuencia.</p></div>
+<div class="reading-block"><p>Tercero, los modos inferiores dependen mucho de las condiciones de contorno. Cambiar extremos fijos por libres modifica fuertemente las frecuencias bajas. En cambio, los modos muy altos de una cadena larga dependen menos de los detalles de los extremos porque su comportamiento está dominado por la relación local entre partículas vecinas.</p></div>
+<div class="reading-block"><p>Cuarto, hay una frecuencia máxima. En un sistema discreto no pueden existir modos con longitud de onda arbitrariamente pequeña. El modo más alto corresponde a oscilaciones alternadas entre partículas vecinas. Esto anticipa la física de redes cristalinas: la discreción microscópica impone un corte natural.</p></div>
+<h3 id="3-13-limite-de-n-muy-grande-y-conexion-con-el-continuo">3.13 Límite de N muy grande y conexión con el continuo</h3>
+<div class="reading-block"><p>French considera el caso en que N crece mucho, la separación l disminuye, pero la longitud total L permanece constante. También se mantiene finita la masa total de la cuerda. En ese límite, la variable discreta p se sustituye por una posición continua x.</p></div>
+<div class="reading-block"><p>Para modos bajos, con n pequeño frente a N, se usa</p></div>
+<div class="reading-block"><div class="formula-block">\[\sin\left(\varepsilon\right) \approx \varepsilon\]</div></div>
+<div class="reading-block"><p>La frecuencia queda aproximadamente</p></div>
+<div class="reading-block"><div class="formula-block">\[\omega_n\approx\frac{n\pi}{L}\sqrt{\frac{T}{\mu}}\]</div></div>
+<div class="reading-block"><p>donde mu es la densidad lineal de masa.</p></div>
+<div class="reading-block"><p>El modo espacial se convierte en</p></div>
+<div class="reading-block"><div class="formula-block">\[y_n(x,t)=C_n\sin\!\left(\frac{n\pi x}{L}\right)\cos(\omega_n t)\]</div></div>
+<div class="reading-block"><p>Esto ya es la forma de los modos normales de una cuerda continua fija por ambos extremos. El capítulo enlaza así el sistema discreto con el capítulo siguiente: modos normales de sistemas continuos y análisis de Fourier.</p></div>
+<div class="reading-block"><p>La transición conceptual es importante. El continuo no aparece como una realidad matemática primaria, sino como límite de muchos osciladores acoplados. La cuerda continua es una aproximación de un sistema con muchísimos grados de libertad.</p></div>
+<h3 id="3-14-modos-normales-de-una-red-cristalina">3.14 Modos normales de una red cristalina</h3>
+<div class="reading-block"><p>El capítulo termina conectando la cadena de osciladores con una red cristalina. En un sólido, los átomos vibran alrededor de posiciones de equilibrio. Para pequeños desplazamientos, las fuerzas entre átomos vecinos se comportan aproximadamente como muelles. Por eso una red cristalina puede pensarse como una red tridimensional de osciladores acoplados.</p></div>
+<div class="reading-block"><p>La frecuencia máxima de una red está asociada a oscilaciones en las que átomos vecinos se desplazan en sentidos opuestos. French estima que, para sólidos típicos, estas frecuencias caen en la región infrarroja. En cristales iónicos, una radiación electromagnética puede acoplarse eficazmente a esos modos porque los iones positivos y negativos son impulsados en sentidos opuestos por el campo eléctrico.</p></div>
+<div class="reading-block"><p>La consecuencia física es que la teoría de modos normales no es solo una herramienta matemática para péndulos. Es la base de la descripción vibracional de sólidos, absorción infrarroja, fonones y propagación de ondas en redes.</p></div>
+</section>
+<section class="page" id="conceptos-clave">
+<div class="page-head"><h2>4. Conceptos clave</h2><p class="section-lead">Vocabulario esencial para describir sistemas lineales acoplados.</p></div>
+
+<div class="grid cards-grid">
+<article class="definition-card"><h3 id="oscilador-acoplado">Oscilador acoplado</h3><div class="card-copy"><p>Definición precisa: sistema formado por dos o más osciladores cuyas ecuaciones de movimiento no son independientes porque el movimiento de uno afecta a las fuerzas sobre otro.</p></div>
+<div class="card-copy"><p>Explicación desarrollada: el acoplamiento introduce términos cruzados en las ecuaciones. En vez de una ecuación para cada oscilador aislado, aparece un sistema de ecuaciones. El efecto físico principal es la transferencia de energía y la aparición de modos colectivos.</p></div>
+<div class="card-copy"><p>Ejemplo: dos péndulos unidos por un muelle. Si uno se desplaza, el muelle actúa sobre el otro y le transfiere movimiento.</p></div>
+<div class="card-copy"><p>Relación con otros conceptos: está ligado a modos normales, coordenadas normales, resonancia múltiple y superposición.</p></div>
+<div class="card-copy"><p>Posible forma de preguntarlo en examen: “Explique por qué el movimiento de dos osciladores acoplados no puede resolverse como dos movimientos armónicos simples independientes en las coordenadas originales.”</p></div></article>
+<article class="definition-card"><h3 id="modo-normal">Modo normal</h3><div class="card-copy"><p>Definición precisa: patrón de movimiento de un sistema acoplado en el que todos sus grados de libertad oscilan sinusoidalmente con la misma frecuencia y con relaciones fijas de amplitud y fase.</p></div>
+<div class="card-copy"><p>Explicación desarrollada: en un modo normal puro no hay intercambio de energía entre modos. Las partes del sistema pueden moverse en fase, en oposición o con una relación de fase determinada, pero esa relación se conserva durante toda la oscilación.</p></div>
+<div class="card-copy"><p>Ejemplo: en dos péndulos idénticos acoplados, el modo en fase tiene patrón \((1,1)\) y el modo en oposición tiene patrón \((1,-1)\).</p></div>
+<div class="card-copy"><p>Relación con otros conceptos: cada modo normal tiene una frecuencia normal; las coordenadas normales permiten describir cada modo como un oscilador independiente.</p></div>
+<div class="card-copy"><p>Posible forma de preguntarlo en examen: “Calcule y describa los modos normales de dos masas iguales unidas por tres muelles idénticos.”</p></div></article>
+<article class="definition-card"><h3 id="frecuencia-normal">Frecuencia normal</h3><div class="card-copy"><p>Definición precisa: frecuencia angular propia asociada a un modo normal del sistema.</p></div>
+<div class="card-copy"><p>Explicación desarrollada: no es la frecuencia de una partícula aislada, sino del sistema completo oscilando con un patrón modal concreto. Un sistema con varios grados de libertad tiene varias frecuencias normales.</p></div>
+<div class="card-copy"><p>Ejemplo: dos péndulos idénticos acoplados tienen</p></div>
+<div class="card-copy"><div class="formula-block">\[\omega_1 = \omega_0 \\ \omega_2 = \sqrt{\omega_0^2 + 2 \omega_c^2}\]</div></div>
+<div class="card-copy"><p>Relación con otros conceptos: se obtiene del determinante nulo del problema algebraico de amplitudes.</p></div>
+<div class="card-copy"><p>Posible forma de preguntarlo en examen: “Halle las frecuencias normales y describa el movimiento asociado a cada una.”</p></div></article>
+<article class="definition-card"><h3 id="coordenada-normal">Coordenada normal</h3><div class="card-copy"><p>Definición precisa: variable colectiva que desacopla las ecuaciones de movimiento de un sistema lineal acoplado.</p></div>
+<div class="card-copy"><p>Explicación desarrollada: las coordenadas normales no siempre coinciden con coordenadas físicas directas. Son combinaciones lineales de ellas. Su utilidad es que cada una satisface una ecuación de oscilador armónico independiente.</p></div>
+<div class="card-copy"><p>Ejemplo:</p></div>
+<div class="card-copy"><div class="formula-block">\[q_1 = x_A + x_B \\ q_2 = x_A - x_B\]</div></div>
+<div class="card-copy"><p>Relación con otros conceptos: cada coordenada normal representa la amplitud temporal de un modo normal.</p></div>
+<div class="card-copy"><p>Posible forma de preguntarlo en examen: “Determine las coordenadas normales del sistema y escriba las ecuaciones diferenciales desacopladas.”</p></div></article>
+<article class="definition-card"><h3 id="acoplamiento-debil">Acoplamiento débil</h3><div class="card-copy"><p>Definición precisa: situación en la que la interacción entre osciladores es pequeña comparada con la fuerza restauradora propia de cada oscilador.</p></div>
+<div class="card-copy"><p>Explicación desarrollada: cuando el acoplamiento es débil, las frecuencias normales están próximas. La superposición de modos produce batidos lentos y transferencia lenta de energía.</p></div>
+<div class="card-copy"><p>Ejemplo: dos péndulos unidos por un muelle muy blando.</p></div>
+<div class="card-copy"><p>Relación con otros conceptos: está relacionado con pulsaciones, transferencia de energía y separación pequeña entre frecuencias normales.</p></div>
+<div class="card-copy"><p>Posible forma de preguntarlo en examen: “Explique por qué la transferencia de energía entre dos osciladores acoplados es lenta si el acoplamiento es débil.”</p></div></article>
+<article class="definition-card"><h3 id="degeneracion">Degeneración</h3><div class="card-copy"><p>Definición precisa: situación en la que dos o más modos normales tienen la misma frecuencia.</p></div>
+<div class="card-copy"><p>Explicación desarrollada: si hay degeneración, la frecuencia por sí sola no identifica un modo único. Cualquier combinación lineal de modos degenerados también es un modo con la misma frecuencia.</p></div>
+<div class="card-copy"><p>Ejemplo: en sistemas con alta simetría pueden aparecer modos distintos con igual frecuencia.</p></div>
+<div class="card-copy"><p>Relación con otros conceptos: se relaciona con simetría y con la elección no única de base modal.</p></div>
+<div class="card-copy"><p>Posible forma de preguntarlo en examen: “Discuta si pueden existir frecuencias degeneradas en el sistema dado.”</p></div></article>
+<article class="definition-card"><h3 id="resonancia-en-sistemas-acoplados">Resonancia en sistemas acoplados</h3><div class="card-copy"><p>Definición precisa: respuesta intensa del sistema cuando la frecuencia externa coincide o se aproxima a una frecuencia normal.</p></div>
+<div class="card-copy"><p>Explicación desarrollada: un sistema acoplado tiene varias resonancias, no una sola. En cada resonancia se excita preferentemente el modo correspondiente.</p></div>
+<div class="card-copy"><p>Ejemplo: dos osciladores acoplados presentan una resonancia en fase y otra en oposición de fase.</p></div>
+<div class="card-copy"><p>Relación con otros conceptos: las resonancias permiten identificar experimentalmente las frecuencias normales.</p></div>
+<div class="card-copy"><p>Posible forma de preguntarlo en examen: “Describa la respuesta forzada de dos osciladores acoplados y relacione las resonancias con los modos normales.”</p></div></article>
+<article class="definition-card"><h3 id="patron-modal">Patrón modal</h3><div class="card-copy"><p>Definición precisa: conjunto de amplitudes relativas y fases relativas que define cómo se mueve cada partícula en un modo normal.</p></div>
+<div class="card-copy"><p>Explicación desarrollada: el patrón modal es el autovector del problema de modos normales. No fija la amplitud absoluta, solo las proporciones entre coordenadas.</p></div>
+<div class="card-copy"><p>Ejemplo: en una cadena de N masas con extremos fijos,</p></div>
+<div class="card-copy"><div class="formula-block">\[A_p=C\sin\!\left(\frac{pn\pi}{N+1}\right)\]</div></div>
+<div class="card-copy"><p>Relación con otros conceptos: es la parte espacial del modo; la frecuencia normal es la parte temporal.</p></div>
+<div class="card-copy"><p>Posible forma de preguntarlo en examen: “Describa cuantitativamente las amplitudes y fases de cada masa en un modo normal dado.”</p></div></article>
+<article class="definition-card"><h3 id="cadena-discreta">Cadena discreta</h3><div class="card-copy"><p>Definición precisa: sistema de N masas o partículas conectadas mediante interacciones elásticas entre vecinas.</p></div>
+<div class="card-copy"><p>Explicación desarrollada: representa el paso intermedio entre pocos osciladores y un medio continuo. Conserva la discreción microscópica y permite ver cómo aparecen los modos de una cuerda.</p></div>
+<div class="card-copy"><p>Ejemplo: N masas igualmente espaciadas en una cuerda sometida a tensión, con desplazamientos transversales pequeños.</p></div>
+<div class="card-copy"><p>Relación con otros conceptos: conduce al límite continuo, a la frecuencia máxima discreta y a la analogía con redes cristalinas.</p></div>
+<div class="card-copy"><p>Posible forma de preguntarlo en examen: “Obtenga las frecuencias normales de una cadena de N osciladores con extremos fijos.”</p></div></article>
+<article class="definition-card"><h3 id="limite-continuo">Límite continuo</h3><div class="card-copy"><p>Definición precisa: proceso matemático en el que el número de masas tiende a infinito y la separación entre ellas tiende a cero, manteniendo longitud y masa total finitas.</p></div>
+<div class="card-copy"><p>Explicación desarrollada: convierte la variable discreta p en una coordenada continua x. Los modos sinusoidales discretos pasan a modos sinusoidales continuos.</p></div>
+<div class="card-copy"><p>Ejemplo:</p></div>
+<div class="card-copy"><p>y_p(t) -&gt; y(x,t), A_p = C sin(p n pi/(N+1)) -&gt; C sin(n pi x/L).</p></div>
+<div class="card-copy"><p>Relación con otros conceptos: conecta el capítulo de osciladores acoplados con el de modos normales de sistemas continuos y Fourier.</p></div>
+<div class="card-copy"><p>Posible forma de preguntarlo en examen: “Explique cómo se obtiene la forma de los modos de una cuerda continua a partir de una cadena discreta.”</p></div></article>
+<article class="definition-card"><h3 id="red-cristalina">Red cristalina</h3><div class="card-copy"><p>Definición precisa: estructura periódica de átomos que vibran alrededor de posiciones de equilibrio y se acoplan mediante fuerzas aproximadamente elásticas.</p></div>
+<div class="card-copy"><p>Explicación desarrollada: una red cristalina es un sistema tridimensional de osciladores acoplados. Sus modos normales son vibraciones colectivas del sólido.</p></div>
+<div class="card-copy"><p>Ejemplo: un cristal iónico puede absorber radiación infrarroja si el campo eléctrico excita un modo donde iones vecinos se desplazan en sentidos opuestos.</p></div>
+<div class="card-copy"><p>Relación con otros conceptos: prolonga la cadena discreta hacia sólidos reales y anticipa la física de fonones.</p></div>
+<div class="card-copy"><p>Posible forma de preguntarlo en examen: “Relacione los modos normales de una cadena discreta con las vibraciones de una red cristalina.”</p></div></article>
+</div>
+</section>
+<section class="page" id="relaciones-entre-ideas">
+<div class="page-head"><h2>5. Relaciones entre ideas</h2><p class="section-lead">Conexiones físicas y matemáticas que articulan todo el capítulo.</p></div>
+<div class="reading-block"><p>El capítulo tiene una jerarquía conceptual muy clara. En la base está el oscilador armónico simple. Sobre él se construye el oscilador acoplado. El acoplamiento rompe la independencia de las coordenadas originales, pero la linealidad permite recuperar independencia en otro sistema de coordenadas: las coordenadas normales.</p></div>
+<div class="reading-block"><p>La dependencia principal es:</p></div>
+<div class="reading-block"><p>fuerza restauradora lineal -&gt; ecuaciones lineales -&gt; superposición -&gt; modos normales -&gt; coordenadas normales.</p></div>
+<div class="reading-block"><p>Sin linealidad, la superposición deja de ser válida. Sin superposición, no se puede construir un movimiento general sumando modos. Sin coordenadas normales, el sistema permanece acoplado y difícil de interpretar.</p></div>
+<div class="reading-block"><p>La causa física de los modos normales es el equilibrio entre inercia y fuerzas restauradoras colectivas. Cada modo representa una manera concreta de deformar el sistema. Si la deformación no estira el acoplamiento, la frecuencia puede coincidir con la del oscilador aislado. Si la deformación exige mucho esfuerzo del acoplamiento, la frecuencia aumenta.</p></div>
+<div class="reading-block"><p>Hay una oposición importante entre coordenadas físicas y coordenadas normales. Las coordenadas físicas describen “dónde está cada partícula”. Las coordenadas normales describen “cuánto de cada modo hay en el movimiento”. En examen, confundir ambas lleva a errores: x_A y x_B no están desacopladas; q_1 y q_2 sí.</p></div>
+<div class="reading-block"><p>También hay una oposición entre movimiento general y modo normal puro. En un modo normal puro, todos los puntos oscilan a una sola frecuencia. En un movimiento general, cada punto puede mostrar una señal complicada porque está sumando varias frecuencias normales.</p></div>
+<div class="reading-block"><p>La evolución lógica del capítulo es:</p></div>
+<div class="reading-block"><p>dos osciladores -&gt; simetría -&gt; superposición -&gt; método analítico -&gt; resonancia -&gt; N osciladores -&gt; continuo -&gt; red cristalina.</p></div>
+<div class="reading-block"><p>Históricamente, el enfoque de sistemas discretos acoplados permite entender cómo la mecánica de partículas conduce a la mecánica de medios continuos. French lo usa para evitar saltar directamente desde el oscilador simple a la cuerda continua. La cadena de masas es el puente físico y matemático.</p></div>
+<div class="reading-block"><p>En términos de examen, el bloque conecta con tres zonas: oscilador armónico, álgebra lineal y ondas estacionarias. El alumno debe poder moverse entre las tres: plantear fuerzas, escribir matrices, interpretar nodos y patrones modales.</p></div>
+</section>
+<section class="page" id="errores-habituales">
+<div class="page-head"><h2>6. Errores habituales</h2><p class="section-lead">Trampas frecuentes de planteamiento, cálculo e interpretación.</p></div>
+
+<details class="accordion"><summary>Error 1: creer que cada masa oscila siempre con su frecuencia propia aislada</summary><div class="accordion-body"><div class="reading-block"><p>Por qué está mal: en un sistema acoplado, las frecuencias normales pertenecen al sistema completo, no a cada masa por separado.</p></div>
+<div class="reading-block"><p>Corrección: identificar los modos colectivos y calcular sus frecuencias mediante el sistema acoplado.</p></div>
+<div class="reading-block"><p>Respuesta incorrecta: “Cada péndulo oscila con sqrt(g/l), porque son péndulos iguales.”</p></div>
+<div class="reading-block"><p>Respuesta correcta: “El modo en fase sí oscila con sqrt(g/l), pero el modo en oposición de fase tiene frecuencia mayor porque el muelle de acoplamiento se deforma.”</p></div></div></details>
+<details class="accordion"><summary>Error 2: confundir modo normal con trayectoria individual</summary><div class="accordion-body"><div class="reading-block"><p>Por qué está mal: un modo normal describe el patrón colectivo de todas las coordenadas, no solo el movimiento de una partícula.</p></div>
+<div class="reading-block"><p>Corrección: dar siempre frecuencias y relaciones de amplitud/fase entre coordenadas.</p></div>
+<div class="reading-block"><p>Respuesta incorrecta: “El modo normal es x_A = A cos(omega t).”</p></div>
+<div class="reading-block"><p>Respuesta correcta: “El modo normal inferior es (\(x_A,x_B\))=A\((1,1)\)cos(\(\omega_0\) t); el superior es A\((1,-1)\)cos(omega' t).”</p></div></div></details>
+<details class="accordion"><summary>Error 3: usar x_A y x_B como si estuvieran desacopladas</summary><div class="accordion-body"><div class="reading-block"><p>Por qué está mal: sus ecuaciones contienen términos cruzados. Resolverlas por separado ignora el acoplamiento.</p></div>
+<div class="reading-block"><p>Corrección: pasar a \(q_1=x_A+x_B\) y \(q_2=x_A-x_B\), o resolver el problema matricial.</p></div>
+<div class="reading-block"><p>Respuesta incorrecta: “x_A''+(\(\omega_0\)^2+\(\omega_c\)^2)x_A=0 y lo mismo para B.”</p></div>
+<div class="reading-block"><p>Respuesta correcta: “La ecuación de A contiene -\(\omega_c\)^2 x_B; por tanto, hay que desacoplar mediante coordenadas normales.”</p></div></div></details>
+<details class="accordion"><summary>Error 4: olvidar la condición de determinante nulo</summary><div class="accordion-body"><div class="reading-block"><p>Por qué está mal: un sistema algebraico homogéneo solo tiene solución no trivial si el determinante de coeficientes se anula.</p></div>
+<div class="reading-block"><p>Corrección: después de asumir \(x_i=A_i\cos(\omega t)\), imponer \(\det(\mathbf{K}-\omega^2\mathbf{M})=0\).</p></div>
+<div class="reading-block"><p>Respuesta incorrecta: “Sustituyo y despejo A_1, A_2.”</p></div>
+<div class="reading-block"><p>Respuesta correcta: “Para que no todas las amplitudes sean cero, debe cumplirse \(\det(\mathbf{K}-\omega^2\mathbf{M})=0\); de ahí salen las frecuencias.”</p></div></div></details>
+<details class="accordion"><summary>Error 5: normalizar mal el patrón modal</summary><div class="accordion-body"><div class="reading-block"><p>Por qué está mal: la amplitud absoluta de un modo es arbitraria; lo importante son las proporciones.</p></div>
+<div class="reading-block"><p>Corrección: expresar el modo como vector proporcional.</p></div>
+<div class="reading-block"><p>Respuesta incorrecta: “El modo es exactamente \((1,1)\), no puede ser (2,2).”</p></div>
+<div class="reading-block"><p>Respuesta correcta: “El modo es proporcional a \((1,1)\); cualquier múltiplo no nulo representa el mismo patrón modal.”</p></div></div></details>
+<details class="accordion"><summary>Error 6: creer que toda combinación de movimientos es un modo normal</summary><div class="accordion-body"><div class="reading-block"><p>Por qué está mal: una combinación de modos con frecuencias distintas es solución, pero no un modo normal puro.</p></div>
+<div class="reading-block"><p>Corrección: reservar “modo normal” para una única frecuencia y una relación fija de amplitudes y fases.</p></div>
+<div class="reading-block"><p>Respuesta incorrecta: “Si A empieza desplazado y B quieto, ese movimiento es un modo normal.”</p></div>
+<div class="reading-block"><p>Respuesta correcta: “Esa condición inicial excita una superposición de los dos modos normales.”</p></div></div></details>
+<details class="accordion"><summary>Error 7: no distinguir frecuencia baja y alta por la deformación del acoplamiento</summary><div class="accordion-body"><div class="reading-block"><p>Por qué está mal: se pierde la interpretación física de por qué una frecuencia es mayor que otra.</p></div>
+<div class="reading-block"><p>Corrección: mirar si el acoplamiento se deforma. Más deformación implica mayor energía potencial para igual amplitud y, por tanto, mayor frecuencia.</p></div>
+<div class="reading-block"><p>Respuesta incorrecta: “El modo en oposición es más lento porque los péndulos se frenan entre sí.”</p></div>
+<div class="reading-block"><p>Respuesta correcta: “El modo en oposición es más rápido porque el muelle se estira/comprime más y aumenta la fuerza restauradora.”</p></div></div></details>
+<details class="accordion"><summary>Error 8: olvidar las condiciones de contorno en cadenas discretas</summary><div class="accordion-body"><div class="reading-block"><p>Por qué está mal: las condiciones de extremo determinan los valores permitidos de n y las frecuencias.</p></div>
+<div class="reading-block"><p>Corrección: escribir explícitamente y_0=0, y_{N+1}=0 para extremos fijos.</p></div>
+<div class="reading-block"><p>Respuesta incorrecta: “A_p=C sin(p theta), con cualquier theta.”</p></div>
+<div class="reading-block"><p>Respuesta correcta: “Como y_{N+1}=0, debe cumplirse (N+1)theta=n pi.”</p></div></div></details>
+<details class="accordion"><summary>Error 9: tratar el límite continuo como exacto para cualquier modo</summary><div class="accordion-body"><div class="reading-block"><p>Por qué está mal: la aproximación \(\omega_n\approx\frac{n\pi}{L}\sqrt{\frac{T}{\mu}}\) vale para modos bajos, no para modos cercanos al máximo discreto.</p></div>
+<div class="reading-block"><p>Corrección: distinguir modos bajos de modos altos.</p></div>
+<div class="reading-block"><p>Respuesta incorrecta: “Todas las frecuencias son múltiplos exactos de la fundamental.”</p></div>
+<div class="reading-block"><p>Respuesta correcta: “En el límite continuo y para n pequeño frente a N, las frecuencias se aproximan a múltiplos enteros; en la cadena discreta completa hay dispersión y frecuencia máxima.”</p></div></div></details>
+<details class="accordion"><summary>Error 10: no describir físicamente el modo</summary><div class="accordion-body"><div class="reading-block"><p>Por qué está mal: en UNED suele pedirse “describa el movimiento”; no basta con una raíz algebraica.</p></div>
+<div class="reading-block"><p>Corrección: para cada frecuencia, indicar qué masas se mueven en fase, cuáles en oposición, cuáles quedan fijas si procede y qué patrón espacial aparece.</p></div>
+<div class="reading-block"><p>Respuesta incorrecta: “Las frecuencias son omega_1 y omega_2.”</p></div>
+<div class="reading-block"><p>Respuesta correcta: “Para omega_1 ambas masas se mueven en fase con igual amplitud; para omega_2 se mueven con igual amplitud y fase opuesta.”</p></div></div></details>
+</section>
+<section class="page" id="preguntas-orientadas-a-examen">
+<div class="page-head"><h2>7. Preguntas orientadas a examen</h2><p class="section-lead">Banco graduado de cuestiones para preparar la evaluación.</p></div>
+
+<h3 id="10-preguntas-faciles">10 preguntas fáciles</h3>
+<div class="reading-block"><ol><li>¿Qué es un oscilador acoplado?</li><li>¿Qué es un modo normal?</li><li>¿Qué es una frecuencia normal?</li><li>En dos péndulos idénticos acoplados, ¿qué patrón tiene el modo en fase?</li><li>En dos péndulos idénticos acoplados, ¿qué patrón tiene el modo en oposición de fase?</li><li>¿Por qué el modo en oposición de fase tiene frecuencia mayor que el modo en fase?</li><li>¿Qué son las coordenadas normales?</li><li>¿Qué significa que una condición inicial excite varios modos?</li><li>¿Cuántos modos normales tiene, en general, un sistema lineal con N grados de libertad?</li><li>¿Qué papel tienen las condiciones de contorno en una cadena de osciladores?</li></ol></div>
+<h3 id="10-preguntas-medias">10 preguntas medias</h3>
+<div class="reading-block"><ol><li>Escriba las ecuaciones de movimiento de dos péndulos idénticos acoplados por un muelle.</li><li>Demuestre que \(q_1=x_A+x_B\) y \(q_2=x_A-x_B\) desacoplan las ecuaciones de dos péndulos idénticos acoplados.</li><li>Calcule las frecuencias normales de dos péndulos idénticos acoplados.</li><li>Explique cómo se produce la transferencia de energía cuando inicialmente solo se desplaza un péndulo.</li><li>Dado x_A(0)=A_0, x_B(0)=0 y velocidades iniciales nulas, escriba x_A(t) y x_B(t).</li><li>Formule el método general para hallar frecuencias normales usando una solución \(x_i=A_i\cos(\omega t)\).</li><li>Explique por qué la condición \(\det(\mathbf{K}-\omega^2\mathbf{M})=0\) es necesaria.</li><li>Para una cadena de N masas con extremos fijos, escriba el patrón modal A_p.</li><li>Para una cadena de N masas con extremos fijos, escriba las frecuencias normales.</li><li>Explique qué ocurre con las frecuencias bajas al pasar al límite continuo.</li></ol></div>
+<h3 id="5-preguntas-dificiles">5 preguntas difíciles</h3>
+<div class="reading-block"><ol><li>En un sistema de dos osciladores no idénticos acoplados por un muelle, explique por qué los modos normales ya no tienen por qué ser exactamente en fase y en oposición de fase con igual amplitud.</li><li>Discuta la posibilidad de degeneración de frecuencias normales en un sistema acoplado.</li><li>Explique por qué los modos altos de una cadena discreta dependen menos de las condiciones de contorno que los modos bajos.</li><li>Relacione la frecuencia máxima de una cadena discreta con la existencia de una separación mínima entre partículas.</li><li>Explique cómo la absorción infrarroja en cristales iónicos se conecta con modos normales de una red.</li></ol></div>
+<h3 id="5-preguntas-de-desarrollo-largo">5 preguntas de desarrollo largo</h3>
+<div class="reading-block"><ol><li>Desarrolle el análisis completo de dos péndulos idénticos acoplados: ecuaciones, modos normales, frecuencias, coordenadas normales y transferencia de energía.</li><li>Explique el método general de modos normales para sistemas lineales acoplados y aplíquelo a dos osciladores idénticos.</li><li>Desarrolle el paso de N osciladores acoplados con extremos fijos al límite continuo de una cuerda vibrante.</li><li>Explique la relación entre modos normales, resonancia y observación experimental en sistemas acoplados.</li><li>Desarrolle la interpretación física de los modos normales en sistemas mecánicos, cadenas discretas y redes cristalinas.</li></ol></div>
+<h3 id="5-preguntas-de-relacion-entre-conceptos">5 preguntas de relación entre conceptos</h3>
+<div class="reading-block"><ol><li>Relacione acoplamiento, transferencia de energía y superposición de modos.</li><li>Relacione coordenadas normales, autovectores y desacoplamiento.</li><li>Relacione frecuencia normal, resonancia y patrón modal.</li><li>Relacione cadena discreta, condiciones de contorno y modos sinusoidales.</li><li>Relacione modos normales discretos, límite continuo y análisis de Fourier.</li></ol></div>
+</section>
+<section class="page" id="respuestas-modelo">
+<div class="page-head"><h2>8. Respuestas modelo</h2><p class="section-lead">Soluciones razonadas y modelos de desarrollo.</p></div>
+
+<details class="accordion"><summary>Respuestas a preguntas fáciles</summary><div class="accordion-body"><div class="reading-block"><ol><li>Un oscilador acoplado es un sistema de dos o más osciladores cuyas fuerzas dependen no solo de su propio desplazamiento, sino también del desplazamiento de otros osciladores. Esto hace que sus ecuaciones de movimiento estén ligadas.</li></ol></div>
+<div class="reading-block"><ol start="2"><li>Un modo normal es una forma colectiva de oscilación en la que todos los grados de libertad del sistema oscilan con la misma frecuencia y mantienen relaciones fijas de amplitud y fase.</li></ol></div>
+<div class="reading-block"><ol start="3"><li>Una frecuencia normal es la frecuencia propia asociada a un modo normal. No pertenece a una partícula aislada, sino al sistema completo oscilando según un patrón determinado.</li></ol></div>
+<div class="reading-block"><ol start="4"><li>En el modo en fase, los dos péndulos se desplazan igual en todo instante: \(x_A=x_B\). El muelle no se deforma y la frecuencia coincide con la del péndulo aislado.</li></ol></div>
+<div class="reading-block"><ol start="5"><li>En el modo en oposición de fase, los péndulos se desplazan con igual amplitud y signos contrarios: \(x_A=-x_B\). El muelle se deforma y aumenta la fuerza restauradora.</li></ol></div>
+<div class="reading-block"><ol start="6"><li>Porque en el modo en oposición el muelle de acoplamiento se estira o comprime. Eso añade una fuerza restauradora extra y aumenta la rigidez efectiva del sistema.</li></ol></div>
+<div class="reading-block"><ol start="7"><li>Las coordenadas normales son combinaciones lineales de las coordenadas físicas que convierten el sistema acoplado en ecuaciones independientes de oscilador armónico simple.</li></ol></div>
+<div class="reading-block"><ol start="8"><li>Significa que el movimiento inicial no coincide con un único patrón modal. La evolución temporal será suma de varios modos, cada uno con su frecuencia.</li></ol></div>
+<div class="reading-block"><ol start="9"><li>En general, un sistema lineal con N grados de libertad tiene N modos normales.</li></ol></div>
+<div class="reading-block"><ol start="10"><li>Las condiciones de contorno fijan qué patrones espaciales están permitidos. En una cadena con extremos fijos, obligan a que los extremos tengan desplazamiento nulo.</li></ol></div></div></details>
+<details class="accordion"><summary>Respuestas a preguntas medias</summary><div class="accordion-body"><div class="reading-block"><ol><li>Para dos péndulos idénticos acoplados por un muelle, con \(\omega_c^2=k/m\), las ecuaciones son:</li></ol></div>
+<div class="reading-block"><div class="formula-block">\[\ddot{x_A} + (\omega_0^2+\omega_c^2)x_A - \omega_c^2 x_B = 0 \\ \ddot{x_B} + (\omega_0^2+\omega_c^2)x_B - \omega_c^2 x_A = 0\]</div></div>
+<div class="reading-block"><p>Expresan que cada péndulo tiene su fuerza restauradora gravitatoria y una fuerza de acoplamiento debida a la diferencia \(x_A-x_B\).</p></div>
+<div class="reading-block"><ol start="2"><li>Sumando las ecuaciones se obtiene una ecuación para \(q_1=x_A+x_B\):</li></ol></div>
+<div class="reading-block"><div class="formula-block">\[\ddot{q_1} + \omega_0^2 q_1 = 0\]</div></div>
+<div class="reading-block"><p>Restándolas se obtiene una ecuación para \(q_2=x_A-x_B\):</p></div>
+<div class="reading-block"><div class="formula-block">\[\ddot{q_2} + (\omega_0^2+2\omega_c^2)q_2 = 0\]</div></div>
+<div class="reading-block"><p>Así, q_1 y q_2 evolucionan independientemente.</p></div>
+<div class="reading-block"><ol start="3"><li>Las frecuencias normales son:</li></ol></div>
+<div class="reading-block"><div class="formula-block">\[\omega_1 = \omega_0 \\ \omega_2 = \sqrt{\omega_0^2+2\omega_c^2}\]</div></div>
+<div class="reading-block"><p>La primera corresponde al modo en fase; la segunda al modo en oposición de fase.</p></div>
+<div class="reading-block"><ol start="4"><li>Si inicialmente solo se desplaza un péndulo, esa configuración equivale a sumar el modo en fase y el modo en oposición. Como ambos tienen frecuencias distintas, su fase relativa cambia con el tiempo. La interferencia entre modos concentra alternativamente la amplitud en A y en B.</li></ol></div>
+<div class="reading-block"><ol start="5"><li>Para x_A(0)=A_0, x_B(0)=0 y velocidades iniciales nulas:</li></ol></div>
+<div class="reading-block"><div class="formula-block">\[x_A(t) = (A_0/2)\left[\cos\left(\omega_0 t\right)+\cos\left(\omega' t\right)\right] \\ x_B(t) = (A_0/2)\left[\cos\left(\omega_0 t\right)-\cos\left(\omega' t\right)\right]\]</div></div>
+<div class="reading-block"><p>Esto muestra la modulación de amplitudes y la transferencia periódica de energía.</p></div>
+<div class="reading-block"><ol start="6"><li>Se supone una solución de modo normal:</li></ol></div>
+<div class="reading-block"><div class="formula-block">\[x_i(t)=A_i \cos\left(\omega t\right)\]</div></div>
+<div class="reading-block"><p>Al sustituir en las ecuaciones, se obtiene un sistema algebraico homogéneo para las amplitudes A_i. Las frecuencias permitidas son aquellas para las que existe una solución no nula.</p></div>
+<div class="reading-block"><ol start="7"><li>Porque un sistema homogéneo de la forma</li></ol></div>
+<div class="reading-block"><div class="formula-block">\[(\mathbf{K}-\omega^2\mathbf{M})\mathbf{a}=0\]</div></div>
+<div class="reading-block"><p>solo tiene solución distinta de a=0 si la matriz es singular. Eso exige</p></div>
+<div class="reading-block"><div class="formula-block">\[\det\left(\mathbf{K}-\omega^2\mathbf{M})=0\]</div></div>
+<div class="reading-block"><ol start="8"><li>Para extremos fijos, el patrón modal de una cadena de N masas es</li></ol></div>
+<div class="reading-block"><div class="formula-block">\[A_p=C\sin\!\left(\frac{pn\pi}{N+1}\right)\]</div></div>
+<div class="reading-block"><p>con p=1,...,N y n=1,...,N.</p></div>
+<div class="reading-block"><ol start="9"><li>Las frecuencias normales son</li></ol></div>
+<div class="reading-block"><div class="formula-block">\[\omega_n=2\omega_0\sin\!\left(\frac{n\pi}{2(N+1)}\right)\]</div></div>
+<div class="reading-block"><p>donde \(\omega_0^2=T/(ml)\) en el modelo de masas sobre una cuerda tensa.</p></div>
+<div class="reading-block"><ol start="10"><li>Para n pequeño frente a N, se puede aproximar el seno por su argumento. Entonces</li></ol></div>
+<div class="reading-block"><div class="formula-block">\[\omega_n\approx\frac{n\pi}{L}\sqrt{\frac{T}{\mu}}\]</div></div>
+<div class="reading-block"><p>que es la ley de frecuencias de una cuerda continua fija por ambos extremos.</p></div></div></details>
+<details class="accordion"><summary>Respuestas a preguntas difíciles</summary><div class="accordion-body"><div class="reading-block"><ol><li>En dos osciladores no idénticos, las masas o constantes restauradoras no son iguales. Se pierde la simetría que hacía naturales los patrones \((1,1)\) y \((1,-1)\). Los modos siguen existiendo si el sistema es lineal, pero las amplitudes relativas no tienen por qué ser iguales. Hay que calcularlas mediante el problema algebraico de autovectores.</li></ol></div>
+<div class="reading-block"><ol start="2"><li>Puede haber degeneración si dos modos distintos tienen la misma frecuencia. Esto suele estar asociado a simetrías. En tal caso, la frecuencia no determina un único patrón modal; cualquier combinación lineal de los modos degenerados también oscila con esa frecuencia.</li></ol></div>
+<div class="reading-block"><ol start="3"><li>Los modos bajos tienen longitudes de onda comparables al tamaño total del sistema, por eso “sienten” mucho los extremos. Los modos altos tienen variaciones espaciales rápidas y están dominados por la interacción local entre partículas vecinas; por eso dependen menos del detalle de las condiciones de contorno.</li></ol></div>
+<div class="reading-block"><ol start="4"><li>En una cadena discreta no se pueden formar modos con longitud de onda menor que unas pocas separaciones entre partículas. El modo máximo corresponde a alternancia de signo entre partículas vecinas. Por eso aparece una frecuencia máxima, aproximadamente \(2\omega_0\) en el modelo de French.</li></ol></div>
+<div class="reading-block"><ol start="5"><li>En un cristal iónico, los iones positivos y negativos pueden moverse en sentidos opuestos bajo el campo eléctrico de una onda electromagnética. Si la frecuencia de la radiación coincide con un modo normal de la red, se produce absorción intensa. French sitúa estas frecuencias en el infrarrojo para valores típicos de sólidos.</li></ol></div></div></details>
+<details class="accordion"><summary>Respuestas a preguntas de desarrollo largo</summary><div class="accordion-body"><div class="reading-block"><ol><li>Dos péndulos idénticos acoplados por un muelle tienen desplazamientos x_A y x_B. El muelle se deforma \(x_A-x_B\). Las ecuaciones son:</li></ol></div>
+<div class="reading-block"><div class="formula-block">\[\ddot{x_A} + (\omega_0^2+\omega_c^2)x_A - \omega_c^2x_B = 0 \\ \ddot{x_B} + (\omega_0^2+\omega_c^2)x_B - \omega_c^2x_A = 0\]</div></div>
+<div class="reading-block"><p>Por simetría, hay un modo en fase, \(x_A=x_B\), en el que el muelle no se deforma y la frecuencia es \(\omega_0\). Hay otro modo en oposición, \(x_A=-x_B\), en el que el muelle se deforma el doble y la frecuencia es \(\sqrt{\omega_0^2+2\omega_c^2}\). Al introducir \(q_1=x_A+x_B\) y \(q_2=x_A-x_B\), las ecuaciones se desacoplan. Una condición inicial general es combinación de ambos modos. Si se desplaza solo A, las amplitudes se transfieren periódicamente entre A y B por la diferencia entre las dos frecuencias normales.</p></div>
+<div class="reading-block"><ol start="2"><li>El método general consiste en escribir las ecuaciones lineales como M x''+Kx=0. Se busca una solución común \(\mathbf{x}=\mathbf{a}\cos(\omega t)\). Al sustituir, queda \((\mathbf{K}-\omega^2\mathbf{M})\mathbf{a}=0\). Para que haya un modo no trivial debe cumplirse \(\det(\mathbf{K}-\omega^2\mathbf{M})=0\). Las raíces dan las frecuencias normales; los vectores a asociados dan los patrones modales. En dos osciladores idénticos se obtienen los modos proporcional a \((1,1)\) y \((1,-1)\), con frecuencias \(\omega_0\) y \(\sqrt{\omega_0^2+2\omega_c^2}\).</li></ol></div>
+<div class="reading-block"><ol start="3"><li>En una cadena de N masas con extremos fijos, el desplazamiento transversal y_p de la masa p cumple</li></ol></div>
+<div class="reading-block"><div class="formula-block">\[\ddot{y_p} + 2\omega_0^2 y_p - \omega_0^2(y_{p+1}+y_{p-1})=0\]</div></div>
+<div class="reading-block"><p>con y_0=y_{N+1}=0. Buscando y_p=A_p cos(omega t), el patrón permitido por los extremos fijos es \(A_p=C\sin\!\left(\frac{pn\pi}{N+1}\right)\). Las frecuencias son \(\omega_n=2\omega_0\sin\!\left(\frac{n\pi}{2(N+1)}\right)\). Si N crece mucho y la separación entre masas disminuye manteniendo L constante, p l se transforma en x. Para modos bajos, \(\omega_n\approx\frac{n\pi}{L}\sqrt{\frac{T}{\mu}}\), y el modo espacial pasa a sin(n pi x/L). Así se obtiene la cuerda continua.</p></div>
+<div class="reading-block"><ol start="4"><li>Un sistema acoplado tiene varias frecuencias naturales. Si se fuerza externamente con frecuencia variable, la respuesta presenta máximos cerca de esas frecuencias. Cada máximo corresponde a un modo normal. En dos osciladores, la resonancia inferior muestra movimiento en fase; la superior, movimiento en oposición. Por tanto, la resonancia no solo mide frecuencias: también revela patrones espaciales de movimiento.</li></ol></div>
+<div class="reading-block"><ol start="5"><li>Los modos normales son la forma natural de describir sistemas con varios grados de libertad. En dos péndulos acoplados aparecen como oscilaciones en fase y en oposición. En una cadena discreta aparecen como patrones sinusoidales discretos. En una red cristalina aparecen como vibraciones colectivas de átomos. En todos los casos, el principio es el mismo: un sistema lineal acoplado se descompone en movimientos independientes, cada uno con su frecuencia y patrón modal.</li></ol></div></div></details>
+<details class="accordion"><summary>Respuestas a preguntas de relación entre conceptos</summary><div class="accordion-body"><div class="reading-block"><ol><li>El acoplamiento permite que la energía pase de un oscilador a otro. Ese intercambio se entiende como superposición de modos normales con frecuencias distintas. La energía no “salta” de forma arbitraria: la distribución visible cambia porque cambian las fases relativas de los modos.</li></ol></div>
+<div class="reading-block"><ol start="2"><li>Las coordenadas normales son las amplitudes asociadas a los autovectores del problema matricial. Al proyectar el movimiento sobre esas direcciones, el sistema deja de estar acoplado y cada coordenada normal satisface una ecuación independiente.</li></ol></div>
+<div class="reading-block"><ol start="3"><li>Cada frecuencia normal corresponde a un patrón modal. Al forzar el sistema cerca de esa frecuencia, se excita preferentemente ese patrón. Por eso la resonancia permite observar modos normales.</li></ol></div>
+<div class="reading-block"><ol start="4"><li>En una cadena discreta, las condiciones de contorno determinan qué patrones sinusoidales discretos caben en el sistema. Con extremos fijos, las amplitudes deben anularse en p=0 y p=N+1, lo que obliga a \(\theta=n\pi/(N+1)\).</li></ol></div>
+<div class="reading-block"><ol start="5"><li>Los modos normales discretos de una cadena se convierten, en el límite continuo, en funciones sinusoidales de una cuerda. La descomposición de movimientos generales en esos modos anticipa el análisis de Fourier: cualquier forma inicial adecuada se expresa como suma de modos propios.</li></ol></div></div></details>
+</section>
+<section class="page" id="resumen-final-de-repaso">
+<div class="page-head"><h2>9. Resumen final de repaso</h2><p class="section-lead">Síntesis operativa para el repaso final.</p></div>
+<div class="reading-block"><p>Ideas principales:</p></div>
+<div class="reading-block"><ul><li>Un sistema real suele tener varios grados de libertad y varias formas naturales de vibrar.</li><li>Un modo normal es una oscilación colectiva con una sola frecuencia y patrón fijo.</li><li>El movimiento general es superposición de modos normales.</li><li>Las coordenadas normales desacoplan las ecuaciones.</li><li>Las frecuencias normales se obtienen imponiendo solución no trivial al sistema algebraico.</li><li>En cadenas discretas con extremos fijos aparecen modos sinusoidales discretos.</li><li>El límite de muchos osciladores conecta con la cuerda continua y Fourier.</li><li>Las redes cristalinas son sistemas tridimensionales de osciladores acoplados.</li></ul></div>
+<div class="reading-block"><p>Conceptos imprescindibles:</p></div>
+<div class="reading-block"><ul><li>acoplamiento,</li><li>modo normal,</li><li>frecuencia normal,</li><li>coordenada normal,</li><li>patrón modal,</li><li>superposición,</li><li>resonancia,</li><li>condición de determinante nulo,</li><li>cadena discreta,</li><li>límite continuo.</li></ul></div>
+<div class="reading-block"><p>Relaciones clave:</p></div>
+<div class="reading-block"><ul><li>acoplamiento -&gt; transferencia de energía,</li><li>linealidad -&gt; superposición,</li><li>simetría -&gt; modos simples,</li><li>matriz dinámica -&gt; autovalores y autovectores,</li><li>condiciones de contorno -&gt; frecuencias permitidas,</li><li>N grande -&gt; sistema continuo,</li><li>red cristalina -&gt; modos vibratorios microscópicos.</li></ul></div>
+<div class="reading-block"><p>Errores que evitar:</p></div>
+<div class="reading-block"><ul><li>atribuir las frecuencias a osciladores individuales en vez de al sistema,</li><li>llamar modo normal a cualquier movimiento,</li><li>olvidar términos cruzados,</li><li>omitir \(\det(\mathbf{K}-\omega^2\mathbf{M})=0\),</li><li>no describir fases relativas,</li><li>no imponer extremos fijos,</li><li>aplicar el límite continuo a modos altos,</li><li>dar solo frecuencias sin patrón físico.</li></ul></div>
+</section>
+<section class="page" id="checklist-de-dominio">
+<div class="page-head"><h2>10. Checklist de dominio</h2><p class="section-lead">Comprobación práctica del dominio del tema.</p></div>
+<div class="checklist-box"><ul class="check-list"><li>Si no puedes explicar qué es un modo normal sin usar fórmulas, falta repasar la idea física de patrón colectivo.</li><li>Si confundes modo normal con movimiento de una sola masa, revisar la definición de patrón modal.</li><li>Si no puedes escribir las ecuaciones de dos péndulos acoplados, falta repasar fuerzas de acoplamiento y signos.</li><li>Si no ves por qué el modo en fase tiene frecuencia \(\omega_0\), revisar deformación del muelle en cada modo.</li><li>Si no ves por qué el modo en oposición tiene frecuencia mayor, revisar energía potencial elástica del acoplamiento.</li><li>Si no puedes pasar de \(x_A,x_B\) a q_1,q_2, falta repasar coordenadas normales.</li><li>Si obtienes frecuencias pero no sabes describir el movimiento, falta repasar autovectores/patrones de amplitud.</li><li>Si escribes soluciones sin condiciones iniciales, falta repasar superposición de modos.</li><li>Si no puedes explicar la transferencia de energía entre péndulos, falta repasar batidos por suma de frecuencias próximas.</li><li>Si olvidas que un sistema de N grados de libertad tiene N modos, revisar el vínculo entre grados de libertad y dimensión modal.</li><li>Si no puedes formular \((\mathbf{K}-\omega^2\mathbf{M})\mathbf{a}=0\), falta repasar el método general matricial.</li><li>Si impones cualquier theta en la cadena discreta, revisar condiciones de contorno.</li><li>Si no puedes deducir \(A_p=C\sin\!\left(\frac{pn\pi}{N+1}\right)\), falta repasar modos sinusoidales discretos.</li><li>Si no puedes interpretar n=1, n=2 y n=N, falta repasar nodos, signos relativos y modo máximo.</li><li>Si confundes el modelo discreto con la cuerda continua, revisar el límite N grande, l pequeño, L constante.</li><li>Si aplicas \(\omega_n\approx\frac{n\pi}{L}\sqrt{\frac{T}{\mu}}\) a todos los modos, revisar la aproximación de seno pequeño.</li><li>Si no puedes conectar el capítulo con Fourier, falta repasar que una forma general se descompone en modos normales.</li><li>Si no puedes conectar el capítulo con cristales, falta repasar la analogía átomos-muelles y modos de red.</li><li>Si puedes plantear un sistema de dos masas con muelles, hallar frecuencias, hallar modos y describir el movimiento, el núcleo del capítulo está asentado.</li><li>Si puedes resolver una cadena discreta sencilla y explicar su límite continuo, el capítulo está suficientemente asentado para examen.</li></ul></div>
+</section>
+</main>
+</div>
+</body>
+</html>
