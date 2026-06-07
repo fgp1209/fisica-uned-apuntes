@@ -440,7 +440,7 @@ function renderCurrentProblem() {
   els.topicTag.textContent = `${problem.tema} · ${problem.subtema}`;
   els.levelTag.textContent = problem.nivel;
   els.problemTitle.textContent = problem.titulo;
-  els.problemStatement.textContent = problem.enunciado;
+  els.problemStatement.textContent = normalizeVisibleText(problem.enunciado);
 
   els.stepNumber.textContent = current;
   els.stepTotal.textContent = lastStepIndex;
@@ -449,9 +449,9 @@ function renderCurrentProblem() {
   els.stepTitle.textContent = step?.titulo || "";
   els.stepKind.textContent = step?.tipo || "";
   els.boardFormula.innerHTML = renderFormula(step?.formula || "");
-  els.boardText.textContent = step?.textoPizarra || "";
-  els.stepExplanation.textContent = step?.voz || "";
-  els.board.classList.toggle("empty", !(step?.formula || step?.textoPizarra));
+  els.boardText.textContent = normalizeVisibleText(step?.textoPizarra || "");
+  els.stepExplanation.textContent = normalizeVisibleText(step?.voz || "");
+  els.board.classList.toggle("empty", !(hasContent(step?.formula) || hasContent(step?.textoPizarra)));
 
   els.prevStep.disabled = state.currentStepIndex === 0;
   els.nextStep.disabled = state.currentStepIndex === lastStepIndex;
@@ -508,10 +508,13 @@ function copyCurrentStep() {
 function buildProblemMarkdown(problem, step, stepIndex) {
   const steps = problem.steps.map((item, index) => {
     const marker = index === stepIndex ? " ← ATASCO AQUÍ" : "";
-    return `## Paso ${index}: ${item.titulo}${marker}\n\nTipo: ${item.tipo}\n\nPizarra:\n${item.formula || item.textoPizarra || ""}\n\nTexto/TTS:\n${item.voz || ""}`;
+    const board = [formulaToMarkdown(item.formula), normalizeVisibleText(item.textoPizarra || "")]
+      .filter(Boolean)
+      .join("\n");
+    return `## Paso ${index}: ${item.titulo}${marker}\n\nTipo: ${item.tipo}\n\nPizarra:\n${board}\n\nTexto/TTS:\n${normalizeVisibleText(item.voz || "")}`;
   }).join("\n\n---\n\n");
 
-  return `# ${problem.titulo}\n\nArchivo: ${problem.archivo}\nCategoría: ${problem.categoria}\nTema: ${problem.tema}\nSubtema: ${problem.subtema}\nNivel: ${problem.nivel}\n\n## Enunciado\n\n${problem.enunciado}\n\n## Punto de atasco\n\nPaso ${stepIndex}: ${step.titulo}\n\n---\n\n${steps}\n`;
+  return `# ${problem.titulo}\n\nArchivo: ${problem.archivo}\nCategoría: ${problem.categoria}\nTema: ${problem.tema}\nSubtema: ${problem.subtema}\nNivel: ${problem.nivel}\n\n## Enunciado\n\n${normalizeVisibleText(problem.enunciado)}\n\n## Punto de atasco\n\nPaso ${stepIndex}: ${step.titulo}\n\n---\n\n${steps}\n`;
 }
 
 function downloadText(filename, text) {
@@ -534,16 +537,79 @@ function toggleFullScreen() {
   }
 }
 
+function normalizeVisibleText(value) {
+  if (Array.isArray(value)) return value.map((line) => String(line).trim()).filter(Boolean).join("\n");
+  return String(value ?? "").replace(/\\n/g, "\n").trim();
+}
+
+function hasContent(value) {
+  if (Array.isArray(value)) return value.some((item) => String(item ?? "").trim());
+  return String(value ?? "").trim().length > 0;
+}
+
+function formulaToMarkdown(value) {
+  return normalizeFormulaLines(value).join("\n");
+}
+
+function normalizeFormulaLines(input) {
+  if (!input) return [];
+  const raw = Array.isArray(input) ? input : String(input).replace(/\\n/g, "\n").split(/\n|;/g);
+  return raw
+    .map((line) => normalizeMathAliases(line))
+    .map((line) => line.trim())
+    .filter(Boolean);
+}
+
+function normalizeMathAliases(input) {
+  return String(input ?? "")
+    .replace(/y_prime/g, "y'")
+    .replace(/y_second/g, "y''")
+    .replace(/Omega(?=_|\b)/g, "Ω")
+    .replace(/omega(?=_|\b)/g, "ω")
+    .replace(/theta(?=_|\b)/g, "θ")
+    .replace(/phi(?=_|\b)/g, "φ")
+    .replace(/alpha(?=_|\b)/g, "α")
+    .replace(/beta(?=_|\b)/g, "β")
+    .replace(/gamma(?=_|\b)/g, "γ")
+    .replace(/lambda(?=_|\b)/g, "λ")
+    .replace(/mu(?=_|\b)/g, "μ")
+    .replace(/Delta(?=_|\b)/g, "Δ")
+    .replace(/([A-Za-zθφωΩαβγλμ])_ddot\b/g, "$1̈")
+    .replace(/([A-Za-zθφωΩαβγλμ])_dot\b/g, "$1̇")
+    .replace(/sqrt\(([^()]+(?:\([^()]*\)[^()]*)?)\)/g, "√($1)")
+    .replace(/\\sqrt\{([^{}]+)\}/g, "√($1)")
+    .replace(/\\int/g, "∫")
+    .replace(/\\partial/g, "∂")
+    .replace(/\\sum/g, "Σ")
+    .replace(/\\cdot/g, "·")
+    .replace(/\\times/g, "×")
+    .replace(/\\le/g, "≤")
+    .replace(/\\ge/g, "≥")
+    .replace(/\\neq/g, "≠")
+    .replace(/\\approx/g, "≈")
+    .replace(/\\Rightarrow/g, "⇒")
+    .replace(/\\left/g, "")
+    .replace(/\\right/g, "");
+}
+
 function renderFormula(input) {
-  if (!input) return "";
+  const lines = normalizeFormulaLines(input);
+  if (!lines.length) return "";
+
+  return lines.map((line) => {
+    const html = renderMathLine(line);
+    const len = line.length;
+    const sizeClass = len > 52 ? "xlong" : len > 34 ? "long" : len < 12 ? "short" : "";
+    return `<span class="formula-line ${sizeClass}">${html}</span>`;
+  }).join("");
+}
+
+function renderMathLine(input) {
   let output = escapeHtml(input);
 
   output = output.replace(/\\frac\{([^{}]+)\}\{([^{}]+)\}/g, `<span class="frac"><span>$1</span><span>$2</span></span>`);
-  output = output.replace(/([A-Za-z])_\{?([A-Za-z0-9]+)\}?/g, "$1<sub>$2</sub>");
-  output = output.replace(/([A-Za-z0-9\)])\^\{?([A-Za-z0-9+\-]+)\}?/g, "$1<sup>$2</sup>");
-  output = output.replace(/\\Delta/g, "Δ");
-  output = output.replace(/\\cdot/g, "·");
-  output = output.replace(/;/g, "<br>");
+  output = output.replace(/([A-Za-zθφωΩαβγλμ])_\{?([A-Za-z0-9]+)\}?/g, "$1<sub>$2</sub>");
+  output = output.replace(/([A-Za-z0-9\)'θφωΩαβγλμ])\^\{?([A-Za-z0-9+\-]+)\}?/g, "$1<sup>$2</sup>");
 
   return output;
 }
