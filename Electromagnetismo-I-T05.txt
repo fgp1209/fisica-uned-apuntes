@@ -1,0 +1,1598 @@
+# Guía de estudio — Electromagnetismo I
+
+Capítulo trabajado: T05 — Dieléctricos y polarización eléctrica
+
+Fuente principal: Electromagnetismo I, Victoriano López Rodríguez, UNED, capítulo 5.
+
+## 1. Prerrequisitos mínimos
+
+1. Campo eléctrico electrostático.
+
+Definición breve: el campo eléctrico \(\mathbf E\) es el vector que da la fuerza por unidad de carga positiva de prueba: \(\mathbf F=q\mathbf E\).
+
+Por qué es necesario: el capítulo estudia qué ocurre cuando un material dieléctrico se introduce en un campo electrostático. Sin campo eléctrico no hay orientación ni desplazamiento relativo de cargas ligadas, salvo en materiales con polarización permanente.
+
+Ejemplo mínimo: entre dos placas planas con diferencia de potencial \(V\) y separación \(d\), despreciando bordes, el campo es aproximadamente uniforme y vale \(E=V/d\).
+
+2. Potencial electrostático.
+
+Definición breve: el potencial \(V\) es una magnitud escalar relacionada con el campo por \(\mathbf E=-\nabla V\). La diferencia de potencial entre dos puntos se obtiene mediante
+\[
+V_2-V_1=-\int_1^2 \mathbf E\cdot d\mathbf l.
+\]
+
+Por qué es necesario: el capítulo deduce primero el potencial creado por un material polarizado y después obtiene el campo a partir de él. Además, las condiciones en los límites incluyen la continuidad del potencial en una interfaz electrostática.
+
+Ejemplo mínimo: si el campo es uniforme y apunta en la dirección \(+x\), entonces \(V(x)\) decrece linealmente con \(x\).
+
+3. Dipolo eléctrico.
+
+Definición breve: un dipolo eléctrico es una distribución formada por dos cargas iguales y opuestas separadas una pequeña distancia. Su momento dipolar es
+\[
+\mathbf p=q\mathbf d,
+\]
+donde \(\mathbf d\) apunta de la carga negativa a la positiva.
+
+Por qué es necesario: el dieléctrico polarizado se modela macroscópicamente como una enorme colección de dipolos elementales. El vector polarización se define precisamente como momento dipolar por unidad de volumen.
+
+Ejemplo mínimo: una molécula polar, como el agua, tiene momento dipolar neto incluso sin campo externo; una molécula no polar puede adquirir un momento inducido al aplicar campo.
+
+4. Divergencia.
+
+Definición breve: la divergencia \(\nabla\cdot\mathbf A\) mide localmente la tendencia de un campo vectorial a tener fuentes o sumideros.
+
+Por qué es necesario: la densidad volumétrica de carga de polarización se expresa mediante
+\[
+\rho_p=-\nabla\cdot\mathbf P.
+\]
+Si \(\mathbf P\) es uniforme dentro del volumen, su divergencia se anula y no aparece carga ligada volumétrica en el interior.
+
+Ejemplo mínimo: para \(\mathbf P=k(y+b)\mathbf u_y\), se tiene \(\nabla\cdot\mathbf P=k\), luego \(\rho_p=-k\).
+
+5. Teorema de Gauss.
+
+Definición breve: en electrostática, el flujo de \(\mathbf E\) a través de una superficie cerrada depende de la carga total encerrada. En presencia de dieléctricos se introduce el vector desplazamiento \(\mathbf D\), cuyo flujo depende de la carga libre:
+\[
+\oint_S \mathbf D\cdot d\mathbf s=Q_{\text{libre}}.
+\]
+
+Por qué es necesario: el vector \(\mathbf D\) se introduce para separar, en la medida de lo posible, el efecto de las cargas libres del efecto de las cargas ligadas de polarización.
+
+Ejemplo mínimo: en una geometría esférica con carga libre \(Q\), si la simetría lo permite,
+\[
+\mathbf D=\frac{Q}{4\pi r^2}\mathbf u_r,
+\]
+y después se obtiene \(\mathbf E\) usando la relación constitutiva del medio.
+
+6. Rotacional y campo conservativo.
+
+Definición breve: en electrostática,
+\[
+\nabla\times\mathbf E=\mathbf 0,
+\]
+equivalentemente,
+\[
+\oint_C \mathbf E\cdot d\mathbf l=0.
+\]
+
+Por qué es necesario: la continuidad de la componente tangencial de \(\mathbf E\) en la superficie entre dos medios se deduce de que el campo electrostático es conservativo.
+
+Ejemplo mínimo: si un contorno rectangular atraviesa una interfaz y se hace tender su altura a cero, las contribuciones normales desaparecen y queda la igualdad de las componentes tangenciales de \(\mathbf E\).
+
+7. Conductores en equilibrio electrostático.
+
+Definición breve: en un conductor en equilibrio electrostático el campo en el interior es nulo, el potencial es constante y la carga libre se sitúa en la superficie.
+
+Por qué es necesario: el capítulo compara condiciones de contorno entre dos dieléctricos y entre un dieléctrico y un conductor. En el segundo caso, el hecho de que \(\mathbf E=\mathbf 0\) dentro del conductor simplifica las condiciones.
+
+Ejemplo mínimo: en la superficie de un conductor en contacto con un dieléctrico lineal, homogéneo e isótropo, la componente tangencial de \(\mathbf E\) en el dieléctrico es nula.
+
+8. Integrales de volumen y superficie.
+
+Definición breve: permiten sumar contribuciones elementales en distribuciones continuas. En este capítulo se integran dipolos elementales distribuidos en un volumen y cargas ligadas sobre superficies.
+
+Por qué es necesario: el potencial de un material polarizado se expresa como suma de contribuciones volumétricas y superficiales asociadas a \(\rho_p\) y \(\sigma_p\).
+
+Ejemplo mínimo:
+\[
+V(\mathbf r)=\frac{1}{4\pi\epsilon_0}
+\left[
+\int_{V'}\frac{\rho_p(\mathbf r')}{|\mathbf r-\mathbf r'|}\,dv'
++
+\int_{S'}\frac{\sigma_p(\mathbf r')}{|\mathbf r-\mathbf r'|}\,ds'
+\right].
+\]
+
+## 2. Idea central del capítulo
+
+El capítulo estudia qué ocurre cuando un campo electrostático actúa sobre un material aislante. En un conductor, las cargas libres se desplazan con facilidad hasta alcanzar el equilibrio electrostático. En un dieléctrico ideal, en cambio, las cargas no se mueven libremente por todo el material: están ligadas a átomos o moléculas. Lo que sí puede ocurrir es un pequeño desplazamiento relativo entre cargas positivas y negativas, o una orientación parcial de dipolos moleculares ya existentes. Ese efecto recibe el nombre de polarización eléctrica.
+
+La idea física básica es sencilla: un dieléctrico no aporta cargas libres móviles como un conductor, pero sí modifica el campo eléctrico porque su estructura interna de cargas se deforma o se orienta. Esa modificación se describe macroscópicamente mediante el vector polarización \(\mathbf P\), que mide el momento dipolar eléctrico por unidad de volumen. El capítulo no se centra en seguir cada átomo o molécula, sino en construir una descripción continua válida a escala macroscópica.
+
+Una vez introducida \(\mathbf P\), el texto muestra que un material polarizado puede tratarse, desde el punto de vista del potencial eléctrico, como si tuviera ciertas distribuciones de carga asociadas. Estas no son cargas libres añadidas desde fuera, sino cargas ligadas que aparecen por la organización de los dipolos. La densidad superficial de carga de polarización es
+\[
+\sigma_p=\mathbf P\cdot\mathbf n,
+\]
+y la densidad volumétrica de carga de polarización es
+\[
+\rho_p=-\nabla\cdot\mathbf P.
+\]
+Esta traducción es clave: permite usar herramientas ya conocidas de electrostática para calcular potenciales y campos en materiales polarizados.
+
+El siguiente paso es introducir el vector desplazamiento eléctrico:
+\[
+\mathbf D=\epsilon_0\mathbf E+\mathbf P.
+\]
+Su utilidad está en que su flujo a través de una superficie cerrada depende de la carga libre encerrada, no directamente de la carga ligada de polarización. En forma integral:
+\[
+\oint_S \mathbf D\cdot d\mathbf s=Q_{\text{libre}},
+\]
+y en forma local:
+\[
+\nabla\cdot\mathbf D=\rho_{\text{libre}}.
+\]
+Esto no significa que \(\mathbf D\) sustituya físicamente a \(\mathbf E\), ni que el campo eléctrico deje de estar producido por todas las cargas. Significa que \(\mathbf D\) es una herramienta eficaz para resolver problemas con dieléctricos cuando las cargas libres y la simetría del sistema son conocidas.
+
+El capítulo culmina caracterizando materiales mediante susceptibilidad y permitividad. En los casos más sencillos, lineales, homogéneos e isótropos, se cumple
+\[
+\mathbf P=\epsilon_0\chi_e\mathbf E,\qquad \mathbf D=\epsilon\mathbf E,
+\]
+con
+\[
+\epsilon=\epsilon_0(1+\chi_e).
+\]
+Esto permite resolver muchos problemas de examen con un procedimiento claro: calcular \(\mathbf D\) mediante Gauss si hay simetría, obtener \(\mathbf E\) dividiendo por \(\epsilon\), después calcular \(\mathbf P\) y, si se pide, las cargas de polarización.
+
+Finalmente, el capítulo estudia las condiciones en los límites. En la superficie entre dos medios no se pueden asignar libremente los valores de los campos a ambos lados: deben cumplir relaciones impuestas por el teorema de Gauss y por la circulación nula del campo electrostático. Para examen, esta parte es decisiva porque muchos problemas de dieléctricos no se resuelven solo con fórmulas de volumen, sino imponiendo continuidad del potencial, continuidad de la componente tangencial de \(\mathbf E\), salto de la componente normal de \(\mathbf D\) si hay carga libre superficial, y condiciones particulares si uno de los medios es conductor.
+
+## 3. Desarrollo completo del capítulo
+
+### 3.1. Qué es un dieléctrico y por qué no se comporta como un conductor
+
+Un dieléctrico es un material prácticamente aislante. Su conductividad es muy pequeña, por lo que no permite un transporte libre de carga como lo hace un conductor. Esta diferencia no es un detalle secundario: determina por completo la respuesta del material al campo eléctrico.
+
+En un conductor en equilibrio electrostático, las cargas libres se redistribuyen hasta anular el campo en el interior. En un dieléctrico ideal, las cargas están ligadas a la estructura atómica o molecular. No pueden recorrer macroscópicamente el material, pero sí pueden desplazarse ligeramente respecto de sus posiciones de equilibrio. Las cargas positivas y negativas de un átomo o molécula se separan una pequeña distancia, o los dipolos moleculares ya existentes se orientan parcialmente. El resultado macroscópico de esos desplazamientos es la polarización.
+
+El capítulo distingue moléculas polares y no polares. Las moléculas polares tienen momento dipolar neto incluso sin campo externo. Sin embargo, en ausencia de campo, la orientación de muchas moléculas suele ser desordenada, de modo que el momento total macroscópico puede anularse. Las moléculas no polares no tienen momento dipolar permanente, pero pueden adquirir uno inducido al aplicar un campo eléctrico. En ambos casos, el campo externo altera la distribución interna de carga y el material modifica el campo eléctrico resultante.
+
+Esta idea conecta con el capítulo anterior sobre dipolos y multipolos. Una molécula neutra no contribuye con un término monopolar neto porque su carga total es cero. La contribución dominante a cierta distancia suele ser dipolar; los términos superiores, como el cuadrupolar, decrecen más rápidamente y se suelen despreciar en una primera descripción macroscópica del dieléctrico.
+
+Un ejemplo útil es un átomo inicialmente esférico. Sin campo, la nube electrónica está distribuida de forma simétrica alrededor del núcleo. Al aplicar un campo, el núcleo y la nube electrónica se desplazan ligeramente en sentidos opuestos. El átomo sigue siendo neutro, pero deja de tener simetría perfecta de carga: aparece un momento dipolar inducido.
+
+### 3.2. Polarización eléctrica
+
+Para no estudiar molécula por molécula, se introduce una magnitud de campo: la polarización eléctrica \(\mathbf P\). Se define como el momento dipolar por unidad de volumen:
+\[
+\mathbf P=\lim_{\Delta v\to 0}\frac{\Delta\mathbf p}{\Delta v},
+\]
+donde
+\[
+\Delta\mathbf p=\sum_m \mathbf p_m.
+\]
+La suma se realiza sobre los momentos dipolares moleculares o atómicos dentro del volumen elemental.
+
+El volumen \(\Delta v\) debe entenderse con cuidado. No puede ser tan pequeño como para contener una o pocas moléculas, porque entonces la descripción continua perdería sentido. Pero debe ser pequeño comparado con las dimensiones macroscópicas del sistema. Así, \(\mathbf P\) representa un promedio local: asigna a cada punto del material un vector que resume la orientación y magnitud media de los dipolos de su entorno.
+
+La unidad de \(\mathbf P\) en el SI es \(\mathrm{C/m^2}\), porque el momento dipolar tiene unidades \(\mathrm{C\,m}\) y se divide por un volumen \(\mathrm{m^3}\). Esta unidad coincide con la de una densidad superficial de carga, lo cual no es accidental: una polarización uniforme de una placa produce cargas ligadas efectivas en sus caras.
+
+La polarización no es necesariamente paralela al campo aplicado en cualquier material. En materiales sencillos, lineales e isótropos, sí se toma proporcional a \(\mathbf E\). Pero el capítulo insiste en que, de forma general, la respuesta del material puede depender del punto, de la dirección del campo o incluso de la intensidad del campo.
+
+### 3.3. Potencial debido a un material polarizado
+
+Una vez definido \(\mathbf P\), el capítulo calcula el potencial creado por un material polarizado. La idea de partida es considerar el material como una distribución continua de dipolos. Un elemento de volumen \(dv'\), situado en \(\mathbf r'\), tiene momento dipolar elemental
+\[
+d\mathbf p=\mathbf P(\mathbf r')\,dv'.
+\]
+El potencial de ese dipolo elemental en el punto \(\mathbf r\) se integra sobre todo el volumen del material:
+\[
+V(\mathbf r)=\frac{1}{4\pi\epsilon_0}
+\int_{V'}
+\frac{\mathbf P(\mathbf r')\cdot(\mathbf r-\mathbf r')}
+{|\mathbf r-\mathbf r'|^3}\,dv'.
+\]
+
+Esta expresión es correcta, pero no es la forma más útil para resolver problemas. El capítulo la transforma usando cálculo vectorial, de manera que el potencial se escriba como el potencial ordinario de dos distribuciones equivalentes de carga: una en el volumen y otra en la superficie.
+
+El resultado es
+\[
+V(\mathbf r)=\frac{1}{4\pi\epsilon_0}
+\left[
+\int_{V'}\frac{\rho_p(\mathbf r')}{|\mathbf r-\mathbf r'|}\,dv'
++
+\int_{S'}\frac{\sigma_p(\mathbf r')}{|\mathbf r-\mathbf r'|}\,ds'
+\right],
+\]
+donde
+\[
+\rho_p=-\nabla'\cdot\mathbf P,
+\]
+y
+\[
+\sigma_p=\mathbf P\cdot\mathbf n.
+\]
+
+Este paso es central. Permite reemplazar una distribución continua de dipolos por cargas de polarización. No se está diciendo que hayan aparecido cargas libres nuevas; se está diciendo que el efecto eléctrico de los dipolos puede calcularse como si hubiera una densidad volumétrica y una densidad superficial de carga ligada.
+
+La interpretación física es clara en una placa uniformemente polarizada. En el interior, los extremos positivos y negativos de dipolos vecinos se compensan. En las superficies externas, en cambio, quedan extremos no compensados. Por eso, si \(\mathbf P\) es uniforme, \(\nabla\cdot\mathbf P=0\) dentro del volumen y no hay \(\rho_p\), pero sí aparece \(\sigma_p\) en las superficies donde \(\mathbf P\cdot\mathbf n\neq 0\).
+
+Si \(\mathbf P\) no es uniforme, además de las cargas superficiales puede aparecer carga ligada distribuida en el volumen. Por ejemplo, si \(\mathbf P=k(y+b)\mathbf u_y\), entonces
+\[
+\rho_p=-\nabla\cdot\mathbf P=-k.
+\]
+La polarización varía de un punto a otro y esa variación produce una densidad volumétrica equivalente.
+
+### 3.4. Campo eléctrico creado por un dieléctrico polarizado
+
+Conocido el potencial, el campo se obtiene mediante
+\[
+\mathbf E=-\nabla V.
+\]
+El capítulo utiliza esta relación para conectar los resultados del potencial con campos observables.
+
+Una consecuencia importante es que las cargas de polarización contribuyen al campo eléctrico igual que cualquier distribución de carga desde el punto de vista de la ecuación de Gauss para \(\mathbf E\):
+\[
+\nabla\cdot\mathbf E=\frac{1}{\epsilon_0}(\rho+\rho_p),
+\]
+donde \(\rho\) representa la densidad de carga libre y \(\rho_p\) la densidad ligada de polarización.
+
+Esto corrige una confusión frecuente: el campo eléctrico real \(\mathbf E\) no tiene como fuente solo la carga libre. Tiene como fuente toda la carga efectiva: libre más ligada. Lo que ocurre es que al introducir \(\mathbf D\) se empaquetan las cargas ligadas dentro de \(\mathbf P\), de forma que la divergencia de \(\mathbf D\) queda asociada solo a la carga libre.
+
+El ejemplo de una esfera uniformemente polarizada ayuda a fijar esta idea. Como \(\mathbf P\) es uniforme dentro de la esfera, \(\rho_p=0\) en el volumen. Sin embargo, en la superficie aparece una densidad ligada dependiente del ángulo, porque \(\sigma_p=\mathbf P\cdot\mathbf n\). El campo interno de una esfera uniformemente polarizada resulta uniforme y opuesto a \(\mathbf P\):
+\[
+\mathbf E=-\frac{\mathbf P}{3\epsilon_0}.
+\]
+El interés de este ejemplo no está solo en la fórmula, sino en mostrar que un campo puede deberse enteramente a cargas superficiales de polarización aunque no haya carga ligada volumétrica.
+
+### 3.5. Vector desplazamiento eléctrico
+
+Después de expresar las cargas ligadas mediante \(\mathbf P\), el capítulo introduce el vector desplazamiento eléctrico:
+\[
+\mathbf D=\epsilon_0\mathbf E+\mathbf P.
+\]
+Esta definición surge al aplicar el teorema de Gauss a un sistema con cargas libres dentro de un dieléctrico. Como el campo \(\mathbf E\) está producido por cargas libres y ligadas, inicialmente se tendría
+\[
+\oint_S \mathbf E\cdot d\mathbf s=\frac{1}{\epsilon_0}(Q_{\text{libre}}+Q_p).
+\]
+Pero la carga ligada encerrada puede expresarse en función de la polarización, y al reorganizar términos aparece
+\[
+\oint_S(\epsilon_0\mathbf E+\mathbf P)\cdot d\mathbf s=Q_{\text{libre}}.
+\]
+Por eso se define \(\mathbf D\).
+
+En forma integral:
+\[
+\oint_S \mathbf D\cdot d\mathbf s=Q_{\text{libre}}.
+\]
+En forma diferencial:
+\[
+\nabla\cdot\mathbf D=\rho_{\text{libre}}.
+\]
+
+La ventaja operacional es enorme. En problemas con simetría suficiente, se puede calcular \(\mathbf D\) mediante Gauss usando solo la carga libre. Después se obtiene \(\mathbf E\) a partir de la relación entre \(\mathbf D\), \(\mathbf E\) y \(\mathbf P\), o mediante la ecuación constitutiva del material.
+
+Pero hay que evitar una mala interpretación. \(\mathbf D\) no es un campo eléctrico nuevo que reemplace a \(\mathbf E\). Es una combinación útil:
+\[
+\mathbf D=\epsilon_0\mathbf E+\mathbf P.
+\]
+El propio capítulo señala que sus términos tienen significado físico distinto. \(\epsilon_0\mathbf E\) está relacionado con el campo eléctrico total, mientras que \(\mathbf P\) mide densidad de momento dipolar. Ambos tienen las mismas unidades, pero no son la misma clase de objeto físico.
+
+Además, aunque \(\nabla\cdot\mathbf D=\rho_{\text{libre}}\), el rotacional de \(\mathbf D\) no tiene por qué ser cero. En electrostática,
+\[
+\nabla\times\mathbf E=\mathbf 0,
+\]
+pero
+\[
+\nabla\times\mathbf D=\nabla\times\mathbf P.
+\]
+Por tanto, \(\mathbf D\) solo se calcula de forma directa por Gauss cuando la simetría del problema lo permite. No basta escribir \(\nabla\cdot\mathbf D=\rho\) para conocer todo el campo.
+
+### 3.6. Susceptibilidad y permitividad
+
+El capítulo pasa después de describir un material polarizado a caracterizar cómo se polariza cuando se aplica un campo. La relación entre polarización y campo depende del material. En los casos más simples se adopta una relación lineal:
+\[
+\mathbf P=\epsilon_0\chi_e\mathbf E.
+\]
+Aquí \(\chi_e\) es la susceptibilidad eléctrica.
+
+La susceptibilidad mide la facilidad con que el material se polariza bajo la acción de un campo eléctrico. Si \(\chi_e\) es grande, una misma intensidad de campo produce mayor polarización. Si es pequeña, el material se polariza débilmente.
+
+Sustituyendo en la definición de \(\mathbf D\):
+\[
+\mathbf D=\epsilon_0\mathbf E+\epsilon_0\chi_e\mathbf E
+=\epsilon_0(1+\chi_e)\mathbf E.
+\]
+Se define entonces la permitividad eléctrica:
+\[
+\epsilon=\epsilon_0(1+\chi_e),
+\]
+y queda
+\[
+\mathbf D=\epsilon\mathbf E.
+\]
+
+Esta relación es la base de muchos ejercicios de dieléctricos. En un material lineal, homogéneo e isótropo, \(\epsilon\) es una constante escalar. Entonces, una vez conocido \(\mathbf D\), el campo se obtiene directamente:
+\[
+\mathbf E=\frac{\mathbf D}{\epsilon}.
+\]
+Y la polarización puede calcularse como
+\[
+\mathbf P=\mathbf D-\epsilon_0\mathbf E
+=(\epsilon-\epsilon_0)\mathbf E.
+\]
+
+La permitividad relativa se escribe como
+\[
+\epsilon_r=\frac{\epsilon}{\epsilon_0}=1+\chi_e.
+\]
+Aunque el capítulo usa la permitividad como magnitud macroscópica de caracterización, conviene recordar que esta simplificación depende de hipótesis. Si el material no es lineal, \(\epsilon\) puede depender de \(\mathbf E\). Si no es homogéneo, puede depender del punto. Si no es isótropo, puede depender de la dirección y representarse mediante un tensor.
+
+### 3.7. Clases de dieléctricos
+
+El capítulo clasifica los dieléctricos según la forma de su polarización y según la naturaleza de la relación constitutiva.
+
+Un primer grupo lo forman los materiales con polarización permanente. En ellos existe polarización incluso sin campo exterior. Los electretes y ferroeléctricos pertenecen a este tipo. Los ferroeléctricos presentan fenómenos de inversión de polarización e histéresis, lo que los coloca fuera del comportamiento lineal simple.
+
+La distinción entre lineales y no lineales se refiere a si la susceptibilidad y la permitividad dependen o no del campo aplicado. En un dieléctrico lineal, duplicar el campo duplica la polarización. En un dieléctrico no lineal, esa proporcionalidad se rompe.
+
+La distinción entre isótropos y anisótropos se refiere a si la respuesta depende de la dirección del campo. En un medio isótropo, \(\mathbf D\) y \(\mathbf E\) son paralelos y se relacionan por un escalar \(\epsilon\). En un medio anisótropo, la permitividad puede ser un tensor:
+\[
+\begin{pmatrix}
+D_1\\
+D_2\\
+D_3
+\end{pmatrix}
+=
+\begin{pmatrix}
+\epsilon_1&0&0\\
+0&\epsilon_2&0\\
+0&0&\epsilon_3
+\end{pmatrix}
+\begin{pmatrix}
+E_1\\
+E_2\\
+E_3
+\end{pmatrix}
+\]
+cuando se eligen los ejes principales adecuados. Si los tres valores son iguales, el medio es isótropo. Si dos son iguales, se habla de medio monoaxial. Si los tres son distintos, biaxial.
+
+La distinción entre homogéneos y no homogéneos se refiere a si \(\epsilon\) y \(\chi_e\) dependen del punto. Un dieléctrico con \(\epsilon=\epsilon(\mathbf r)\) exige más cuidado: aunque \(\mathbf D\) pueda obtenerse por Gauss en algunos casos, \(\mathbf E=\mathbf D/\epsilon(\mathbf r)\) varía espacialmente de acuerdo con esa permitividad.
+
+En el trabajo ordinario del tema, salvo indicación contraria, se suele asumir que los materiales son homogéneos, lineales e isótropos. Esta hipótesis no es una verdad universal: es una simplificación explícita para poder resolver problemas de forma manejable.
+
+### 3.8. Ruptura en dieléctricos
+
+El capítulo también introduce la ruptura dieléctrica. Mientras el campo aplicado no es demasiado intenso, la respuesta del dieléctrico puede describirse como desplazamiento relativo de cargas ligadas u orientación de dipolos. Si el campo crece demasiado, pueden liberarse electrones e iones. Al acelerarse, estas partículas pueden ionizar otros átomos y desencadenar un proceso acumulativo que destruye el comportamiento aislante del material.
+
+El capítulo distingue dos mecanismos principales. La ruptura intrínseca se asocia a la existencia de electrones libres que, al aumentar el potencial aplicado, adquieren energía suficiente para arrancar otros electrones. La ruptura térmica se relaciona con el calentamiento por efecto Joule: una corriente pequeña, en un mal conductor del calor, puede producir una elevación local de temperatura que favorece la ruptura.
+
+La máxima intensidad de campo que soporta el dieléctrico sin romperse se denomina rigidez dieléctrica. Para el aire en condiciones normales, el valor citado es aproximadamente
+\[
+3\times10^6\ \mathrm{V/m}=3\ \mathrm{kV/mm}.
+\]
+Esto permite entender por qué una separación de \(1\ \mathrm{mm}\) en aire requiere del orden de \(3000\ \mathrm{V}\) para que salte una chispa.
+
+En examen, esta parte suele ser conceptual. No se trata de modelar microscópicamente toda la descarga, sino de saber qué significa la ruptura y por qué limita el uso de dieléctricos en condensadores y dispositivos eléctricos.
+
+### 3.9. Condiciones en los límites
+
+Las condiciones en los límites son relaciones que deben cumplir los campos al cruzar la superficie entre dos medios. Se obtienen usando dos propiedades básicas de la electrostática: la continuidad del potencial y las ecuaciones de flujo y circulación.
+
+Primero, el potencial electrostático es continuo en la superficie de separación:
+\[
+V_2=V_1.
+\]
+Si el campo es finito, una distancia normal infinitesimal entre dos puntos a ambos lados de la interfaz no puede producir un salto finito de potencial.
+
+Después se estudia la componente normal de \(\mathbf D\). Aplicando el teorema de Gauss a una cajita cilíndrica que atraviesa la interfaz, con normal \(\mathbf n\) dirigida del medio 1 al medio 2, se obtiene:
+\[
+(\mathbf D_2-\mathbf D_1)\cdot\mathbf n=\sigma_{\text{libre}}.
+\]
+En componentes:
+\[
+D_{n2}-D_{n1}=\sigma_{\text{libre}}.
+\]
+Si no hay carga libre superficial en la interfaz:
+\[
+D_{n2}=D_{n1}.
+\]
+En medios lineales, homogéneos e isótropos, donde \(\mathbf D=\epsilon\mathbf E\), queda
+\[
+\epsilon_2 E_{n2}-\epsilon_1 E_{n1}=\sigma_{\text{libre}}.
+\]
+
+La componente tangencial de \(\mathbf E\) se obtiene de la circulación nula del campo electrostático. Tomando un rectángulo elemental que cruza la interfaz:
+\[
+\mathbf E_{t2}=\mathbf E_{t1}.
+\]
+En forma vectorial:
+\[
+\mathbf n\times(\mathbf E_2-\mathbf E_1)=\mathbf 0.
+\]
+Si los medios son lineales e isótropos, esto implica
+\[
+\frac{D_{t2}}{\epsilon_2}=\frac{D_{t1}}{\epsilon_1}.
+\]
+Por tanto, no hay que afirmar que \(\mathbf D_t\) sea continua en general. Lo continuo es \(\mathbf E_t\).
+
+Para la polarización, la discontinuidad normal se relaciona con la carga ligada superficial. Con \(\mathbf n\) del medio 1 al medio 2, la carga ligada superficial efectiva en la interfaz puede escribirse como
+\[
+\sigma_p=(\mathbf P_1-\mathbf P_2)\cdot\mathbf n.
+\]
+Si uno de los medios es vacío, \(\mathbf P_2=\mathbf 0\), y se recupera la expresión \(\sigma_p=\mathbf P\cdot\mathbf n\) para la superficie externa del dieléctrico, con la normal saliente del material.
+
+Cuando uno de los medios es un conductor en equilibrio electrostático, el campo dentro del conductor es nulo. El potencial del conductor es constante. En la superficie conductor-dieléctrico, la componente tangencial del campo eléctrico en el dieléctrico es nula:
+\[
+E_t=0.
+\]
+La componente normal del desplazamiento en el dieléctrico viene fijada por la carga libre superficial:
+\[
+D_n=\sigma_{\text{libre}}.
+\]
+Si el dieléctrico es lineal e isótropo:
+\[
+E_n=\frac{\sigma_{\text{libre}}}{\epsilon}.
+\]
+
+Estas condiciones son una herramienta de resolución, no un añadido decorativo. En problemas con placas, esferas, cilindros coaxiales o capas dieléctricas, los valores de \(\mathbf E\), \(\mathbf D\), \(\mathbf P\), \(\sigma\), \(\rho_p\) y \(\sigma_p\) se obtienen combinando simetría, Gauss, diferencia de potencial y condiciones en los límites.
+
+### 3.10. Procedimiento tipo de resolución de problemas del capítulo
+
+El procedimiento más seguro empieza identificando las cargas libres. No se debe empezar calculando cargas de polarización si el problema se puede resolver primero con \(\mathbf D\). Si hay simetría plana, cilíndrica o esférica, se aplica
+\[
+\oint_S\mathbf D\cdot d\mathbf s=Q_{\text{libre}}.
+\]
+
+Después se usa la relación constitutiva. En un dieléctrico lineal, homogéneo e isótropo:
+\[
+\mathbf E=\frac{\mathbf D}{\epsilon}.
+\]
+Si el medio es vacío, \(\epsilon=\epsilon_0\). Si hay varias regiones, hay que escribir una expresión para cada región.
+
+A continuación se calcula la polarización:
+\[
+\mathbf P=\mathbf D-\epsilon_0\mathbf E,
+\]
+o, si procede,
+\[
+\mathbf P=\epsilon_0\chi_e\mathbf E.
+\]
+
+Luego se obtienen las cargas ligadas:
+\[
+\rho_p=-\nabla\cdot\mathbf P,
+\qquad
+\sigma_p=\mathbf P\cdot\mathbf n.
+\]
+Aquí es donde más errores de signo aparecen. La normal \(\mathbf n\) debe estar definida de forma explícita. En una superficie externa del dieléctrico, suele tomarse hacia fuera del material. En una interfaz entre dos dieléctricos, hay que fijar una orientación y mantenerla.
+
+Si existe una batería o una diferencia de potencial impuesta, se añade la condición
+\[
+\Delta V=-\int \mathbf E\cdot d\mathbf l.
+\]
+En sistemas de capas, esta condición suele ser tan importante como Gauss. Cuando las placas están conectadas entre sí por un conductor, la diferencia de potencial entre ellas es cero; cuando están conectadas a una batería, la diferencia de potencial es el valor impuesto por la batería.
+
+Por último, se revisan condiciones en los límites. En una interfaz sin carga libre superficial debe ser continuo \(D_n\). En electrostática siempre debe ser continuo \(E_t\). En un conductor, \(E_t=0\) en la superficie y el potencial es constante. Si una solución viola estas condiciones, está mal aunque las fórmulas intermedias parezcan correctas.
+
+## 4. Conceptos clave
+
+1. Dieléctrico.
+
+Definición precisa: material prácticamente aislante cuya conductividad es muy pequeña y cuyas cargas están ligadas a átomos o moléculas.
+
+Explicación desarrollada: un dieléctrico no responde al campo moviendo cargas libres por todo el material, sino desplazando ligeramente cargas ligadas u orientando dipolos. Por eso puede modificar el campo eléctrico sin comportarse como conductor.
+
+Ejemplo: una placa dieléctrica introducida entre las placas de un condensador se polariza y altera la relación entre carga libre y diferencia de potencial.
+
+Relación con otros conceptos: se relaciona con polarización, cargas ligadas, permitividad y condiciones de contorno.
+
+Posible forma de preguntarlo en examen: “Explique la diferencia entre un conductor y un dieléctrico ideal en presencia de un campo electrostático”.
+
+2. Carga libre.
+
+Definición precisa: carga que se aporta externamente o que, en un conductor, puede moverse con facilidad; en el formalismo con dieléctricos es la fuente de la divergencia de \(\mathbf D\).
+
+Explicación desarrollada: la carga libre no debe confundirse con la carga ligada de polarización. En un dieléctrico ideal, las cargas ligadas se desplazan localmente, pero no circulan por todo el material.
+
+Ejemplo: la carga depositada en las placas de un condensador es carga libre.
+
+Relación con otros conceptos: aparece en \(\nabla\cdot\mathbf D=\rho_{\text{libre}}\) y en la condición \((\mathbf D_2-\mathbf D_1)\cdot\mathbf n=\sigma_{\text{libre}}\).
+
+Posible forma de preguntarlo en examen: “¿Por qué el flujo de \(\mathbf D\) depende de la carga libre y no de la carga total?”.
+
+3. Carga ligada o de polarización.
+
+Definición precisa: carga efectiva asociada a la polarización del material, no transportable libremente por el dieléctrico.
+
+Explicación desarrollada: al polarizarse el material, los dipolos internos pueden dejar extremos no compensados en superficies o producir una densidad equivalente en el volumen si \(\mathbf P\) varía espacialmente.
+
+Ejemplo:
+\[
+\rho_p=-\nabla\cdot\mathbf P,\qquad \sigma_p=\mathbf P\cdot\mathbf n.
+\]
+
+Relación con otros conceptos: es fuente de \(\mathbf E\), pero queda absorbida en la definición de \(\mathbf D\).
+
+Posible forma de preguntarlo en examen: “Deducir o interpretar las densidades \(\rho_p\) y \(\sigma_p\) de un dieléctrico polarizado”.
+
+4. Molécula polar.
+
+Definición precisa: molécula que posee momento dipolar neto incluso en ausencia de campo eléctrico externo.
+
+Explicación desarrollada: aunque cada molécula tenga dipolo, el material puede no presentar polarización macroscópica si los dipolos están orientados al azar. El campo externo tiende a orientarlos.
+
+Ejemplo: el agua es el ejemplo mencionado de molécula polar.
+
+Relación con otros conceptos: conecta la descripción microscópica con la polarización macroscópica.
+
+Posible forma de preguntarlo en examen: “Distinguir moléculas polares y no polares y explicar cómo contribuyen a la polarización”.
+
+5. Molécula no polar.
+
+Definición precisa: molécula sin momento dipolar neto en ausencia de campo eléctrico externo.
+
+Explicación desarrollada: puede polarizarse por inducción cuando un campo eléctrico desplaza relativamente sus cargas positivas y negativas.
+
+Ejemplo: un átomo con nube electrónica inicialmente esférica adquiere un momento dipolar inducido al aplicar campo.
+
+Relación con otros conceptos: explica la polarización inducida y la susceptibilidad.
+
+Posible forma de preguntarlo en examen: “¿Puede polarizarse un material formado por moléculas no polares? Razone la respuesta”.
+
+6. Polarización eléctrica \(\mathbf P\).
+
+Definición precisa:
+\[
+\mathbf P=\lim_{\Delta v\to0}\frac{1}{\Delta v}\sum_m\mathbf p_m.
+\]
+
+Explicación desarrollada: representa el momento dipolar medio por unidad de volumen. Es una magnitud macroscópica de campo, no un momento dipolar individual.
+
+Ejemplo: si todos los dipolos de una placa apuntan en \(+\mathbf u_y\), \(\mathbf P=P\mathbf u_y\).
+
+Relación con otros conceptos: permite definir \(\rho_p\), \(\sigma_p\) y \(\mathbf D\).
+
+Posible forma de preguntarlo en examen: “Defina la polarización eléctrica y explique su significado físico”.
+
+7. Densidad superficial de carga de polarización.
+
+Definición precisa:
+\[
+\sigma_p=\mathbf P\cdot\mathbf n.
+\]
+
+Explicación desarrollada: aparece en las superficies donde la polarización tiene componente normal. Su signo depende de la orientación de \(\mathbf P\) respecto de la normal elegida.
+
+Ejemplo: si \(\mathbf P=P\mathbf u_y\) y la normal de una cara es \(\mathbf n=\mathbf u_y\), entonces \(\sigma_p=P\). Si la normal es \(-\mathbf u_y\), entonces \(\sigma_p=-P\).
+
+Relación con otros conceptos: contribuye al potencial como una distribución superficial de carga.
+
+Posible forma de preguntarlo en examen: “Calcule las cargas de polarización superficiales de una placa con polarización uniforme”.
+
+8. Densidad volumétrica de carga de polarización.
+
+Definición precisa:
+\[
+\rho_p=-\nabla\cdot\mathbf P.
+\]
+
+Explicación desarrollada: aparece cuando la polarización no es uniforme. Si \(\mathbf P\) es constante dentro del material, \(\rho_p=0\) en el volumen.
+
+Ejemplo: para \(\mathbf P=k(y+b)\mathbf u_y\), \(\rho_p=-k\).
+
+Relación con otros conceptos: junto con \(\sigma_p\), permite calcular el potencial de un material polarizado.
+
+Posible forma de preguntarlo en examen: “Dado \(\mathbf P(\mathbf r)\), obtener \(\rho_p\) y discutir si hay carga ligada en el volumen”.
+
+9. Potencial de un material polarizado.
+
+Definición precisa:
+\[
+V(\mathbf r)=\frac{1}{4\pi\epsilon_0}
+\left[
+\int_{V'}\frac{\rho_p(\mathbf r')}{|\mathbf r-\mathbf r'|}\,dv'
++
+\int_{S'}\frac{\sigma_p(\mathbf r')}{|\mathbf r-\mathbf r'|}\,ds'
+\right].
+\]
+
+Explicación desarrollada: el potencial de un continuo de dipolos puede reescribirse como potencial de cargas ligadas equivalentes.
+
+Ejemplo: una esfera uniformemente polarizada tiene \(\rho_p=0\), pero \(\sigma_p\neq0\) en su superficie.
+
+Relación con otros conceptos: enlaza dipolos, polarización y cálculo de \(\mathbf E\).
+
+Posible forma de preguntarlo en examen: “Explicar cómo se obtiene el potencial de un material polarizado y qué representan las cargas de polarización”.
+
+10. Vector desplazamiento eléctrico \(\mathbf D\).
+
+Definición precisa:
+\[
+\mathbf D=\epsilon_0\mathbf E+\mathbf P.
+\]
+
+Explicación desarrollada: se introduce para que su flujo a través de una superficie cerrada dependa de la carga libre encerrada:
+\[
+\oint_S\mathbf D\cdot d\mathbf s=Q_{\text{libre}}.
+\]
+
+Ejemplo: en una simetría esférica con carga libre \(Q\), \(\mathbf D=Q(4\pi r^2)^{-1}\mathbf u_r\).
+
+Relación con otros conceptos: se relaciona con Gauss, carga libre, polarización y permitividad.
+
+Posible forma de preguntarlo en examen: “Definir \(\mathbf D\), deducir su ley de Gauss y explicar su utilidad”.
+
+11. Susceptibilidad eléctrica \(\chi_e\).
+
+Definición precisa: magnitud que relaciona la polarización con el campo en un material lineal:
+\[
+\mathbf P=\epsilon_0\chi_e\mathbf E.
+\]
+
+Explicación desarrollada: mide la respuesta polarizable del material. Puede ser una constante, depender del punto, depender del campo o ser tensorial en materiales más generales.
+
+Ejemplo: si \(\chi_e=4\), entonces \(\epsilon=5\epsilon_0\).
+
+Relación con otros conceptos: determina la permitividad mediante \(\epsilon=\epsilon_0(1+\chi_e)\).
+
+Posible forma de preguntarlo en examen: “¿Qué hipótesis permiten pasar de \(\mathbf D=\epsilon_0\mathbf E+\mathbf P\) a \(\mathbf D=\epsilon\mathbf E\)?”.
+
+12. Permitividad eléctrica \(\epsilon\).
+
+Definición precisa:
+\[
+\epsilon=\epsilon_0(1+\chi_e)
+\]
+en medios lineales, homogéneos e isótropos.
+
+Explicación desarrollada: caracteriza macroscópicamente cómo se relacionan \(\mathbf D\) y \(\mathbf E\):
+\[
+\mathbf D=\epsilon\mathbf E.
+\]
+
+Ejemplo: en un condensador plano lleno de dieléctrico h.l.i., para una misma \(\mathbf D\), el campo eléctrico es menor cuanto mayor es \(\epsilon\).
+
+Relación con otros conceptos: interviene en las condiciones de contorno y en la clasificación de materiales.
+
+Posible forma de preguntarlo en examen: “Explique el significado de la permitividad y su relación con la susceptibilidad”.
+
+13. Medio lineal.
+
+Definición precisa: medio en el que \(\chi_e\) y \(\epsilon\) no dependen del campo aplicado.
+
+Explicación desarrollada: la polarización es proporcional al campo. Esta hipótesis permite usar superposición y relaciones constitutivas simples.
+
+Ejemplo: si \(\mathbf E\) se duplica, \(\mathbf P\) se duplica.
+
+Relación con otros conceptos: permite escribir \(\mathbf D=\epsilon\mathbf E\) con \(\epsilon\) constante respecto de \(\mathbf E\).
+
+Posible forma de preguntarlo en examen: “Diferenciar dieléctricos lineales y no lineales”.
+
+14. Medio homogéneo.
+
+Definición precisa: medio cuyas propiedades eléctricas, como \(\chi_e\) y \(\epsilon\), no dependen del punto.
+
+Explicación desarrollada: una misma intensidad de campo produce la misma respuesta en cualquier lugar del material.
+
+Ejemplo: \(\epsilon=\epsilon_0\epsilon_r\) constante en todo el volumen.
+
+Relación con otros conceptos: simplifica el cálculo de \(\mathbf E\), \(\mathbf D\) y \(\mathbf P\).
+
+Posible forma de preguntarlo en examen: “¿Qué cambia si la permitividad depende de la posición?”.
+
+15. Medio isótropo.
+
+Definición precisa: medio cuya respuesta no depende de la dirección del campo eléctrico.
+
+Explicación desarrollada: \(\mathbf D\) y \(\mathbf E\) son paralelos y se relacionan por un escalar.
+
+Ejemplo: \(\mathbf D=\epsilon\mathbf E\).
+
+Relación con otros conceptos: se opone al medio anisótropo, donde \(\epsilon\) puede ser un tensor.
+
+Posible forma de preguntarlo en examen: “Explique por qué en un medio anisótropo la permitividad no se representa necesariamente por un escalar”.
+
+16. Medio anisótropo.
+
+Definición precisa: medio cuya respuesta depende de la dirección del campo eléctrico.
+
+Explicación desarrollada: la permitividad se representa mediante un tensor. En ejes principales puede escribirse como una matriz diagonal.
+
+Ejemplo:
+\[
+D_i=\epsilon_i E_i
+\]
+en los ejes principales si la matriz es diagonal.
+
+Relación con otros conceptos: modifica la relación entre \(\mathbf D\) y \(\mathbf E\) y exige mayor cuidado en condiciones de contorno.
+
+Posible forma de preguntarlo en examen: “Describir la forma tensorial de la permitividad en un cristal anisótropo”.
+
+17. Ruptura dieléctrica.
+
+Definición precisa: pérdida del comportamiento aislante del dieléctrico cuando el campo aplicado es suficientemente intenso para liberar y acelerar cargas.
+
+Explicación desarrollada: la ionización y la multiplicación de portadores pueden destruir el dieléctrico. También puede producirse por calentamiento térmico.
+
+Ejemplo: el aire rompe aproximadamente a \(3\times10^6\ \mathrm{V/m}\) en condiciones normales.
+
+Relación con otros conceptos: limita la máxima diferencia de potencial aplicable a un dieléctrico.
+
+Posible forma de preguntarlo en examen: “Definir rigidez dieléctrica y explicar los mecanismos de ruptura”.
+
+18. Rigidez dieléctrica.
+
+Definición precisa: máxima intensidad de campo que soporta un dieléctrico sin sufrir ruptura.
+
+Explicación desarrollada: no es una permitividad; es un límite de funcionamiento. Depende del material y de condiciones ambientales.
+
+Ejemplo: para \(1\ \mathrm{mm}\) de aire, un orden de magnitud de \(3000\ \mathrm{V}\) puede producir chispa.
+
+Relación con otros conceptos: conecta el estudio electrostático con la validez física de los modelos ideales.
+
+Posible forma de preguntarlo en examen: “¿Qué diferencia hay entre permitividad y rigidez dieléctrica?”.
+
+19. Continuidad del potencial.
+
+Definición precisa: en una interfaz electrostática sin campo infinito,
+\[
+V_2=V_1.
+\]
+
+Explicación desarrollada: el potencial no puede saltar finitamente al cruzar una distancia infinitesimal si el campo es finito.
+
+Ejemplo: al resolver Laplace o Poisson en dos regiones, se imponen potenciales iguales en la frontera.
+
+Relación con otros conceptos: complementa las condiciones sobre \(\mathbf E\) y \(\mathbf D\).
+
+Posible forma de preguntarlo en examen: “Justificar la continuidad del potencial en la superficie entre dos dieléctricos”.
+
+20. Condición normal de \(\mathbf D\).
+
+Definición precisa:
+\[
+(\mathbf D_2-\mathbf D_1)\cdot\mathbf n=\sigma_{\text{libre}}.
+\]
+
+Explicación desarrollada: se deduce de Gauss aplicado a una caja elemental que cruza la interfaz. Si no hay carga libre superficial, \(D_n\) es continuo.
+
+Ejemplo: en una frontera sin carga libre,
+\[
+D_{n2}=D_{n1}.
+\]
+
+Relación con otros conceptos: relaciona carga libre superficial y discontinuidad del desplazamiento eléctrico.
+
+Posible forma de preguntarlo en examen: “Derivar la condición de contorno para las componentes normales de \(\mathbf D\)”.
+
+21. Condición tangencial de \(\mathbf E\).
+
+Definición precisa:
+\[
+\mathbf n\times(\mathbf E_2-\mathbf E_1)=\mathbf 0.
+\]
+
+Explicación desarrollada: se deduce de que el campo electrostático es conservativo. La componente tangencial de \(\mathbf E\) es continua al cruzar la interfaz.
+
+Ejemplo: en una frontera entre dos dieléctricos,
+\[
+E_{t2}=E_{t1}.
+\]
+
+Relación con otros conceptos: en medios lineales implica una relación entre las componentes tangenciales de \(\mathbf D\), pero no su continuidad directa.
+
+Posible forma de preguntarlo en examen: “Explique qué componente del campo eléctrico se conserva en una interfaz y por qué”.
+
+22. Condición conductor-dieléctrico.
+
+Definición precisa: en equilibrio electrostático, dentro del conductor \(\mathbf E=0\), por lo que en la superficie del dieléctrico \(E_t=0\) y \(D_n=\sigma_{\text{libre}}\).
+
+Explicación desarrollada: el conductor obliga a que su superficie sea equipotencial. El campo justo fuera del conductor es normal a la superficie.
+
+Ejemplo: en un dieléctrico h.l.i. junto a conductor,
+\[
+E_n=\frac{\sigma}{\epsilon}.
+\]
+
+Relación con otros conceptos: combina propiedades de conductores, condiciones de contorno y permitividad.
+
+Posible forma de preguntarlo en examen: “Deducir el campo en la superficie de un conductor en contacto con un dieléctrico”.
+
+## 5. Relaciones entre ideas
+
+La estructura conceptual del capítulo se apoya en una cadena clara. Primero se distingue el dieléctrico del conductor: en el conductor hay cargas móviles; en el dieléctrico ideal hay cargas ligadas. Esa diferencia obliga a cambiar el lenguaje del problema. Ya no basta hablar solo de carga libre y campo eléctrico; hay que describir cómo el material se polariza.
+
+La polarización \(\mathbf P\) depende de la existencia de dipolos microscópicos, permanentes o inducidos. La descripción microscópica se resume macroscópicamente en el momento dipolar por unidad de volumen. Así, el capítulo pasa de los dipolos individuales del capítulo anterior a un campo continuo \(\mathbf P(\mathbf r)\).
+
+Una vez existe \(\mathbf P\), aparecen las cargas de polarización. La relación no es opcional: si \(\mathbf P\) tiene componente normal en una superficie, aparece \(\sigma_p\); si \(\mathbf P\) tiene divergencia no nula, aparece \(\rho_p\). Las cargas ligadas no son una nueva clase de partículas añadidas al problema, sino la forma electrostática equivalente de una distribución de dipolos.
+
+El potencial y el campo se conectan con esas cargas ligadas. El campo eléctrico \(\mathbf E\) es producido por cargas libres y cargas de polarización. Por eso la ecuación para \(\mathbf E\) incluye ambas:
+\[
+\nabla\cdot\mathbf E=\frac{\rho+\rho_p}{\epsilon_0}.
+\]
+En cambio, el desplazamiento eléctrico se define para que su divergencia dependa solo de la carga libre:
+\[
+\nabla\cdot\mathbf D=\rho.
+\]
+Esta es una jerarquía importante: \(\mathbf E\) es el campo electrostático físico que actúa sobre cargas; \(\mathbf P\) describe la respuesta del material; \(\mathbf D\) reorganiza ambas magnitudes para facilitar el cálculo en presencia de dieléctricos.
+
+La susceptibilidad y la permitividad entran después, no antes. Primero se define \(\mathbf P\), luego \(\mathbf D\), y solo entonces se introduce una ley material que relaciona \(\mathbf P\) con \(\mathbf E\). En medios lineales, homogéneos e isótropos, esa ley toma la forma simple:
+\[
+\mathbf D=\epsilon\mathbf E.
+\]
+Confundir esta relación con una definición universal es un error. La definición general es \(\mathbf D=\epsilon_0\mathbf E+\mathbf P\); la fórmula \(\mathbf D=\epsilon\mathbf E\) requiere hipótesis sobre el material.
+
+Las condiciones en los límites son consecuencia directa de las ecuaciones de campo. La componente normal de \(\mathbf D\) está vinculada a la carga libre superficial porque procede de una ley de flujo. La componente tangencial de \(\mathbf E\) es continua porque procede de una ley de circulación. Esto crea una oposición importante:
+\[
+D_n \text{ salta si hay } \sigma_{\text{libre}},\qquad E_t \text{ es continuo en electrostática}.
+\]
+No se deben intercambiar estas condiciones.
+
+Las condiciones en conductor-dieléctrico son un caso particular de las condiciones generales. Como en el conductor electrostático \(\mathbf E=0\), su superficie es equipotencial y el campo exterior no puede tener componente tangencial. La componente normal queda determinada por la carga libre superficial. Por tanto, conductor y dieléctrico se conectan mediante condiciones de contorno, no mediante la misma física interna.
+
+La ruptura dieléctrica aparece como límite del modelo. Todo el desarrollo anterior supone que las cargas permanecen ligadas y que el material conserva su carácter aislante. Cuando el campo es demasiado intenso, aparecen cargas móviles, ionización y posible destrucción del dieléctrico. La ruptura marca la frontera entre el comportamiento dieléctrico idealizado y la conducción o descarga.
+
+Históricamente, el tratamiento conserva el enfoque clásico del electromagnetismo: se parte de leyes electrostáticas ya conocidas, se introduce una magnitud macroscópica nueva para medios materiales y se reescriben las ecuaciones de campo de forma útil. El capítulo no sustituye la electrostática del vacío; la amplía para poder tratar materiales.
+
+## 6. Errores habituales
+
+1. Error: creer que un dieléctrico no tiene cargas.
+
+Por qué está mal: un dieléctrico contiene cargas positivas y negativas, pero están ligadas a átomos o moléculas. Lo que no tiene, idealmente, son cargas libres móviles como un conductor.
+
+Corrección: decir que en un dieléctrico ideal las cargas no se desplazan macroscópicamente, sino que se redistribuyen localmente produciendo polarización.
+
+Respuesta incorrecta: “Un dieléctrico no tiene cargas, por eso no afecta al campo”.
+
+Respuesta correcta: “Un dieléctrico tiene cargas ligadas; al aplicar un campo se polariza y modifica el campo eléctrico”.
+
+2. Error: confundir carga libre con carga de polarización.
+
+Por qué está mal: la carga libre es la fuente de \(\nabla\cdot\mathbf D\); la carga de polarización procede de \(\mathbf P\) y contribuye a \(\mathbf E\).
+
+Corrección: separar siempre \(\rho\) y \(\rho_p\). Usar
+\[
+\nabla\cdot\mathbf D=\rho,
+\qquad
+\nabla\cdot\mathbf E=\frac{\rho+\rho_p}{\epsilon_0}.
+\]
+
+Respuesta incorrecta: “La carga de polarización encerrada se mete en el lado derecho de Gauss para \(\mathbf D\)”.
+
+Respuesta correcta: “La carga de polarización se incorpora en \(\mathbf P\); el flujo de \(\mathbf D\) depende de la carga libre”.
+
+3. Error: aplicar \(\sigma_p=P\) sin mirar la normal.
+
+Por qué está mal: la fórmula correcta es
+\[
+\sigma_p=\mathbf P\cdot\mathbf n.
+\]
+El signo depende de la orientación de la superficie.
+
+Corrección: dibujar la normal en cada cara antes de calcular \(\sigma_p\).
+
+Respuesta incorrecta: “En las dos caras de la placa \(\sigma_p=P\)”.
+
+Respuesta correcta: “En una cara \(\sigma_p=P\) y en la opuesta \(\sigma_p=-P\), si \(\mathbf P\) es normal a ambas y la normal saliente cambia de sentido”.
+
+4. Error: afirmar que si \(\mathbf P\) es uniforme no hay cargas de polarización.
+
+Por qué está mal: si \(\mathbf P\) es uniforme, \(\rho_p=0\) en el volumen, pero puede haber \(\sigma_p\) en la superficie.
+
+Corrección: distinguir cargas volumétricas y superficiales.
+
+Respuesta incorrecta: “Como \(\nabla\cdot\mathbf P=0\), no hay carga ligada”.
+
+Respuesta correcta: “No hay carga ligada volumétrica, pero sí puede haber carga ligada superficial si \(\mathbf P\cdot\mathbf n\neq0\)”.
+
+5. Error: usar \(\mathbf D=\epsilon\mathbf E\) en cualquier dieléctrico.
+
+Por qué está mal: esa relación solo vale en medios lineales, homogéneos e isótropos si \(\epsilon\) es un escalar constante.
+
+Corrección: partir de
+\[
+\mathbf D=\epsilon_0\mathbf E+\mathbf P.
+\]
+Usar \(\mathbf D=\epsilon\mathbf E\) solo si el enunciado permite esa hipótesis.
+
+Respuesta incorrecta: “Siempre \(\mathbf D=\epsilon\mathbf E\)”.
+
+Respuesta correcta: “En un medio h.l.i. \(\mathbf D=\epsilon\mathbf E\); en general hay que usar \(\mathbf D=\epsilon_0\mathbf E+\mathbf P\)”.
+
+6. Error: pensar que \(\mathbf D\) es el campo eléctrico real.
+
+Por qué está mal: el campo que ejerce fuerza sobre una carga es \(\mathbf E\). \(\mathbf D\) es una combinación útil de \(\epsilon_0\mathbf E\) y \(\mathbf P\).
+
+Corrección: usar \(\mathbf D\) como herramienta para aplicar Gauss con cargas libres y después obtener \(\mathbf E\).
+
+Respuesta incorrecta: “La fuerza sobre una carga es \(q\mathbf D\)”.
+
+Respuesta correcta: “La fuerza sobre una carga es \(q\mathbf E\); \(\mathbf D\) ayuda a calcular el campo en medios materiales”.
+
+7. Error: aplicar Gauss a \(\mathbf D\) sin simetría suficiente y pretender obtener el campo.
+
+Por qué está mal: conocer solo la divergencia de un campo no determina completamente el campo. Además, \(\nabla\times\mathbf D=\nabla\times\mathbf P\) puede no ser cero.
+
+Corrección: usar Gauss para \(\mathbf D\) solo cuando la simetría permita conocer dirección y dependencia espacial.
+
+Respuesta incorrecta: “Como sé la carga libre, ya sé \(\mathbf D\) en cualquier geometría”.
+
+Respuesta correcta: “Gauss da \(\mathbf D\) directamente solo en geometrías con simetría adecuada”.
+
+8. Error: confundir continuidad de \(\mathbf D\) con continuidad de \(\mathbf E\).
+
+Por qué está mal: en una interfaz sin carga libre superficial se conserva \(D_n\), no necesariamente \(E_n\). En electrostática se conserva \(E_t\), no necesariamente \(D_t\).
+
+Corrección: recordar:
+\[
+D_{n2}-D_{n1}=\sigma_{\text{libre}},
+\qquad
+E_{t2}=E_{t1}.
+\]
+
+Respuesta incorrecta: “El campo eléctrico normal siempre es continuo”.
+
+Respuesta correcta: “El desplazamiento normal es continuo si no hay carga libre superficial; el campo normal puede cambiar si cambia la permitividad”.
+
+9. Error: olvidar la continuidad del potencial.
+
+Por qué está mal: si el campo es finito, el potencial no salta al cruzar una interfaz. Esta condición es esencial en problemas por regiones.
+
+Corrección: imponer \(V_1=V_2\) en la frontera junto con las condiciones de campo.
+
+Respuesta incorrecta: “Resuelvo cada región por separado y no igualo los potenciales”.
+
+Respuesta correcta: “Las soluciones por regiones deben tener potencial continuo en la superficie común”.
+
+10. Error: en conductor-dieléctrico, poner \(E_n=0\) fuera del conductor.
+
+Por qué está mal: dentro del conductor \(E=0\), pero fuera puede haber campo normal. Lo que se anula en la superficie es la componente tangencial del campo exterior.
+
+Corrección: usar \(E_t=0\) fuera y \(D_n=\sigma_{\text{libre}}\).
+
+Respuesta incorrecta: “Como el conductor tiene \(E=0\), también el campo justo fuera es cero”.
+
+Respuesta correcta: “En equilibrio, el campo en el dieléctrico junto al conductor es normal a la superficie y su componente normal depende de la carga superficial”.
+
+11. Error: decir que mayor permitividad significa mayor campo para la misma carga libre.
+
+Por qué está mal: si \(\mathbf D\) está fijado por la carga libre y la geometría, en un medio h.l.i. \(\mathbf E=\mathbf D/\epsilon\). Mayor \(\epsilon\) implica menor \(\mathbf E\) para el mismo \(\mathbf D\).
+
+Corrección: distinguir condiciones de carga fija y potencial fijo.
+
+Respuesta incorrecta: “Al meter un dieléctrico de mayor permitividad aumenta siempre el campo”.
+
+Respuesta correcta: “Para una carga libre dada, mayor permitividad reduce \(E\); para potencial impuesto, cambia la carga libre necesaria”.
+
+12. Error: confundir rigidez dieléctrica con permitividad.
+
+Por qué está mal: la permitividad caracteriza la respuesta lineal del material; la rigidez dieléctrica indica el campo máximo antes de ruptura.
+
+Corrección: tratarlas como magnitudes distintas.
+
+Respuesta incorrecta: “Un material con mucha permitividad siempre soporta más campo”.
+
+Respuesta correcta: “La capacidad de polarizarse y la resistencia a la ruptura son propiedades diferentes”.
+
+13. Error: no indicar el sentido de \(\mathbf n\) en las condiciones de contorno.
+
+Por qué está mal: el signo de los saltos depende de la orientación de la normal.
+
+Corrección: escribir siempre “\(\mathbf n\) apunta del medio 1 al medio 2” o “\(\mathbf n\) es normal saliente del dieléctrico”.
+
+Respuesta incorrecta: “\(D_2-D_1=\sigma\)” sin definir normal.
+
+Respuesta correcta: “Con \(\mathbf n\) del medio 1 al 2, \((\mathbf D_2-\mathbf D_1)\cdot\mathbf n=\sigma_{\text{libre}}\)”.
+
+14. Error: mezclar \(\rho_p\) y \(\sigma_p\) en el potencial.
+
+Por qué está mal: una densidad volumétrica se integra en volumen y una superficial en superficie. Tienen unidades distintas.
+
+Corrección: escribir
+\[
+\int_{V'}\rho_p\,dv',\qquad \int_{S'}\sigma_p\,ds'.
+\]
+
+Respuesta incorrecta: “Integro \(\sigma_p\) en todo el volumen”.
+
+Respuesta correcta: “\(\rho_p\) se integra en el volumen; \(\sigma_p\) sobre la superficie”.
+
+15. Error: suponer que todo dieléctrico polarizado tiene momento dipolar total no nulo.
+
+Por qué está mal: puede haber polarización local con compensación global, o distribuciones donde el momento total depende de la geometría.
+
+Corrección: distinguir entre polarización local \(\mathbf P(\mathbf r)\) y momento dipolar total \(\mathbf p=\int \mathbf P\,dv\), cuando proceda.
+
+Respuesta incorrecta: “Si hay polarización local, siempre hay momento total distinto de cero”.
+
+Respuesta correcta: “La polarización local puede integrarse para obtener un momento total, pero este depende de la distribución y de la geometría”.
+
+## 7. Preguntas orientadas a examen
+
+### 10 preguntas fáciles
+
+1. Defina qué es un dieléctrico ideal y explique en qué se diferencia de un conductor.
+
+2. Distinga entre moléculas polares y no polares.
+
+3. Defina el vector polarización eléctrica \(\mathbf P\) e indique sus unidades en el SI.
+
+4. Escriba las expresiones de \(\rho_p\) y \(\sigma_p\) en función de \(\mathbf P\).
+
+5. ¿Qué significa físicamente que \(\rho_p=-\nabla\cdot\mathbf P\)?
+
+6. Defina el vector desplazamiento eléctrico \(\mathbf D\).
+
+7. Escriba la ley de Gauss para \(\mathbf D\) en forma integral y diferencial.
+
+8. En un medio lineal, homogéneo e isótropo, ¿cómo se relacionan \(\mathbf P\), \(\mathbf D\) y \(\mathbf E\)?
+
+9. ¿Qué es la rigidez dieléctrica?
+
+10. ¿Qué condición cumple la componente tangencial de \(\mathbf E\) en la frontera entre dos dieléctricos?
+
+### 10 preguntas medias
+
+11. Explique por qué un material polarizado puede describirse mediante cargas de polarización superficiales y volumétricas.
+
+12. Una placa dieléctrica tiene polarización uniforme \(\mathbf P=P\mathbf u_y\). Determine el signo de \(\sigma_p\) en sus dos caras perpendiculares al eje \(Y\).
+
+13. Si \(\mathbf P=k(y+b)\mathbf u_y\), calcule \(\rho_p\).
+
+14. Justifique por qué el flujo de \(\mathbf D\) depende de la carga libre encerrada.
+
+15. Explique por qué \(\mathbf D\) no debe interpretarse como el campo eléctrico que ejerce fuerza sobre una carga.
+
+16. En una interfaz sin carga libre superficial entre dos dieléctricos h.l.i., relacione las componentes normales de \(\mathbf E\) a ambos lados.
+
+17. En una interfaz entre dos dieléctricos h.l.i., relacione las componentes tangenciales de \(\mathbf D\).
+
+18. ¿Qué hipótesis materiales permiten escribir \(\mathbf D=\epsilon\mathbf E\) con \(\epsilon\) escalar constante?
+
+19. Explique la diferencia entre ruptura intrínseca y ruptura térmica en un dieléctrico.
+
+20. En la superficie de un conductor en contacto con un dieléctrico, ¿qué ocurre con la componente tangencial de \(\mathbf E\) y con la normal de \(\mathbf D\)?
+
+### 5 preguntas difíciles
+
+21. Partiendo del potencial de un dipolo elemental, explique cómo se transforma el potencial de un material polarizado en una suma de contribuciones de \(\rho_p\) y \(\sigma_p\).
+
+22. Deducir la condición de contorno para la componente normal de \(\mathbf D\) aplicando Gauss a una caja cilíndrica elemental.
+
+23. Deducir la condición de contorno para la componente tangencial de \(\mathbf E\) usando la circulación nula del campo electrostático.
+
+24. Un dieléctrico h.l.i. ocupa una región con permitividad \(\epsilon\). Si se conoce \(\mathbf D\), explique cómo obtener \(\mathbf E\), \(\mathbf P\), \(\rho_p\) y \(\sigma_p\), indicando en qué pasos puede haber errores de signo.
+
+25. Explique por qué en un medio anisótropo la relación entre \(\mathbf D\) y \(\mathbf E\) no se reduce en general a multiplicar por una constante escalar.
+
+### 5 preguntas de desarrollo largo
+
+26. Desarrolle el concepto de polarización eléctrica desde la escala molecular hasta la descripción macroscópica mediante \(\mathbf P\).
+
+27. Explique el papel de las cargas de polarización en el cálculo del potencial y del campo de un material dieléctrico polarizado.
+
+28. Desarrolle la introducción del vector desplazamiento eléctrico \(\mathbf D\), su ley de Gauss y su utilidad en problemas con dieléctricos.
+
+29. Explique la susceptibilidad y la permitividad eléctricas, incluyendo la clasificación de dieléctricos lineales/no lineales, homogéneos/no homogéneos e isótropos/anisótropos.
+
+30. Desarrolle las condiciones en los límites entre dos dieléctricos y entre un dieléctrico y un conductor.
+
+### 5 preguntas de relación entre conceptos
+
+31. Relacione polarización, carga ligada y vector desplazamiento eléctrico.
+
+32. Compare el papel de \(\mathbf E\) y \(\mathbf D\) en electrostática con dieléctricos.
+
+33. Relacione permitividad, susceptibilidad y clasificación de materiales dieléctricos.
+
+34. Compare las condiciones de contorno normales y tangenciales para \(\mathbf E\) y \(\mathbf D\).
+
+35. Relacione ruptura dieléctrica, rigidez dieléctrica y validez del modelo de cargas ligadas.
+
+## 8. Respuestas modelo
+
+### Respuestas a las 10 preguntas fáciles
+
+1. Un dieléctrico ideal es un material prácticamente aislante en el que las cargas no se desplazan libremente por todo el volumen. En presencia de un campo eléctrico, sus cargas ligadas pueden desplazarse ligeramente respecto de sus posiciones de equilibrio o sus dipolos pueden orientarse. Se diferencia de un conductor en que este posee cargas libres que se redistribuyen hasta anular el campo en su interior en equilibrio electrostático. En el dieléctrico, el campo puede penetrar en el material y producir polarización.
+
+2. Una molécula polar tiene momento dipolar eléctrico neto en ausencia de campo externo. Una molécula no polar no tiene momento dipolar neto sin campo, aunque puede adquirir un momento inducido cuando se aplica un campo eléctrico. En un material con moléculas polares, la polarización macroscópica puede ser nula si las orientaciones están desordenadas; al aplicar campo, los dipolos tienden a orientarse.
+
+3. La polarización eléctrica se define como el momento dipolar por unidad de volumen:
+\[
+\mathbf P=\lim_{\Delta v\to0}\frac{1}{\Delta v}\sum_m\mathbf p_m.
+\]
+Es una magnitud macroscópica que asigna a cada punto el promedio local de los momentos dipolares. Sus unidades son \(\mathrm{C/m^2}\).
+
+4. Las densidades de carga de polarización son
+\[
+\rho_p=-\nabla\cdot\mathbf P,
+\qquad
+\sigma_p=\mathbf P\cdot\mathbf n.
+\]
+La primera es volumétrica y aparece cuando la polarización varía espacialmente. La segunda es superficial y depende de la componente normal de la polarización en la superficie considerada.
+
+5. La ecuación \(\rho_p=-\nabla\cdot\mathbf P\) significa que una variación espacial de la polarización produce una densidad efectiva de carga ligada en el volumen. Si \(\mathbf P\) es uniforme, su divergencia es nula y no hay carga de polarización volumétrica, aunque puede haber carga superficial.
+
+6. El vector desplazamiento eléctrico se define como
+\[
+\mathbf D=\epsilon_0\mathbf E+\mathbf P.
+\]
+Es una combinación del campo eléctrico y la polarización que resulta útil porque su flujo a través de una superficie cerrada depende de la carga libre encerrada.
+
+7. La ley de Gauss para \(\mathbf D\) es, en forma integral:
+\[
+\oint_S\mathbf D\cdot d\mathbf s=Q_{\text{libre}}.
+\]
+En forma diferencial:
+\[
+\nabla\cdot\mathbf D=\rho_{\text{libre}}.
+\]
+Estas expresiones separan la carga libre de la carga ligada de polarización.
+
+8. En un medio lineal, homogéneo e isótropo:
+\[
+\mathbf P=\epsilon_0\chi_e\mathbf E,
+\]
+\[
+\mathbf D=\epsilon_0\mathbf E+\mathbf P,
+\]
+y por tanto
+\[
+\mathbf D=\epsilon\mathbf E,
+\qquad
+\epsilon=\epsilon_0(1+\chi_e).
+\]
+
+9. La rigidez dieléctrica es la máxima intensidad de campo eléctrico que puede soportar un dieléctrico sin sufrir ruptura. No mide la facilidad de polarización, sino el límite de campo antes de que el material deje de comportarse como aislante.
+
+10. La componente tangencial de \(\mathbf E\) es continua en la frontera entre dos dieléctricos en electrostática:
+\[
+\mathbf E_{t2}=\mathbf E_{t1}.
+\]
+Equivale a
+\[
+\mathbf n\times(\mathbf E_2-\mathbf E_1)=\mathbf 0.
+\]
+
+### Respuestas a las 10 preguntas medias
+
+11. Un material polarizado puede describirse como una distribución continua de dipolos. Al sumar el potencial de todos los dipolos elementales y transformar la integral, el resultado se escribe como el potencial de una densidad volumétrica \(\rho_p=-\nabla\cdot\mathbf P\) y una densidad superficial \(\sigma_p=\mathbf P\cdot\mathbf n\). Estas cargas no son libres; representan el efecto electrostático equivalente de la polarización.
+
+12. Si la placa tiene \(\mathbf P=P\mathbf u_y\), en la cara cuya normal saliente es \(+\mathbf u_y\) se tiene
+\[
+\sigma_p=P.
+\]
+En la cara opuesta, cuya normal saliente es \(-\mathbf u_y\),
+\[
+\sigma_p=-P.
+\]
+El signo depende exclusivamente del producto escalar entre \(\mathbf P\) y la normal.
+
+13. Para \(\mathbf P=k(y+b)\mathbf u_y\),
+\[
+\nabla\cdot\mathbf P=\frac{\partial}{\partial y}[k(y+b)]=k.
+\]
+Por tanto,
+\[
+\rho_p=-k.
+\]
+
+14. El flujo de \(\mathbf D\) depende de la carga libre porque \(\mathbf D\) se define como \(\epsilon_0\mathbf E+\mathbf P\). Al aplicar Gauss a \(\mathbf E\), aparece la carga libre más la carga de polarización. Pero la carga de polarización puede expresarse mediante una integral de \(\mathbf P\), y al reorganizar términos queda:
+\[
+\oint_S(\epsilon_0\mathbf E+\mathbf P)\cdot d\mathbf s=Q_{\text{libre}}.
+\]
+Por eso se introduce \(\mathbf D\).
+
+15. \(\mathbf D\) no es el campo que ejerce fuerza sobre una carga. La fuerza electrostática sobre una carga de prueba es \(\mathbf F=q\mathbf E\). El vector \(\mathbf D\) es una magnitud auxiliar formada por \(\epsilon_0\mathbf E\) y \(\mathbf P\), útil para aplicar Gauss en medios materiales. Confundirlo con \(\mathbf E\) lleva a errores físicos y dimensionales en la interpretación de la fuerza.
+
+16. Si no hay carga libre superficial,
+\[
+D_{n2}=D_{n1}.
+\]
+En medios h.l.i.,
+\[
+D_n=\epsilon E_n.
+\]
+Por tanto,
+\[
+\epsilon_2 E_{n2}=\epsilon_1 E_{n1}.
+\]
+El campo normal no tiene por qué ser continuo si las permitividades son distintas.
+
+17. En electrostática,
+\[
+E_{t2}=E_{t1}.
+\]
+Como en medios h.l.i. \(\mathbf D=\epsilon\mathbf E\), se tiene
+\[
+\frac{D_{t2}}{\epsilon_2}=\frac{D_{t1}}{\epsilon_1}.
+\]
+Luego \(\mathbf D_t\) no es, en general, continua si \(\epsilon_1\neq\epsilon_2\).
+
+18. Para escribir \(\mathbf D=\epsilon\mathbf E\) con \(\epsilon\) escalar constante se necesita que el material sea lineal, homogéneo e isótropo. Lineal significa que la respuesta no depende de la intensidad del campo; homogéneo, que no depende del punto; isótropo, que no depende de la dirección del campo.
+
+19. La ruptura intrínseca se produce cuando electrones libres acelerados por un campo intenso alcanzan energía suficiente para ionizar otros átomos, multiplicando los portadores y destruyendo el comportamiento aislante. La ruptura térmica se debe al calentamiento asociado a corrientes y a la mala disipación de calor del dieléctrico, lo que eleva la temperatura y favorece la ruptura.
+
+20. En la superficie de un conductor en contacto con un dieléctrico, el campo eléctrico dentro del conductor es nulo y el conductor es equipotencial. Por ello, la componente tangencial de \(\mathbf E\) justo fuera del conductor también debe ser nula:
+\[
+E_t=0.
+\]
+La componente normal de \(\mathbf D\) en el dieléctrico queda determinada por la carga libre superficial:
+\[
+D_n=\sigma_{\text{libre}}.
+\]
+
+### Respuestas a las 5 preguntas difíciles
+
+21. Se parte del potencial de un dipolo elemental \(d\mathbf p=\mathbf P(\mathbf r')\,dv'\):
+\[
+dV(\mathbf r)=\frac{1}{4\pi\epsilon_0}
+\frac{\mathbf P(\mathbf r')\cdot(\mathbf r-\mathbf r')}{|\mathbf r-\mathbf r'|^3}\,dv'.
+\]
+Al integrar sobre el volumen se obtiene el potencial de todo el material. Usando identidades vectoriales, el integrando se transforma en una divergencia más un término con \(\nabla'\cdot\mathbf P\). Aplicando el teorema de la divergencia, aparece una integral de superficie y una de volumen. Se identifican entonces
+\[
+\sigma_p=\mathbf P\cdot\mathbf n,
+\qquad
+\rho_p=-\nabla'\cdot\mathbf P.
+\]
+Así, el potencial queda como la suma del potencial creado por una distribución superficial y una volumétrica de carga ligada.
+
+22. Se toma una caja cilíndrica elemental que atraviesa la superficie entre dos medios, con normal \(\mathbf n\) del medio 1 al medio 2. Al aplicar Gauss a \(\mathbf D\),
+\[
+\oint_S\mathbf D\cdot d\mathbf s=Q_{\text{libre}}.
+\]
+Al hacer tender a cero la altura de la caja, el flujo lateral se anula y quedan las dos tapas:
+\[
+\mathbf D_2\cdot\mathbf n\,ds-\mathbf D_1\cdot\mathbf n\,ds=\sigma_{\text{libre}}\,ds.
+\]
+Dividiendo por \(ds\):
+\[
+(\mathbf D_2-\mathbf D_1)\cdot\mathbf n=\sigma_{\text{libre}}.
+\]
+Si \(\sigma_{\text{libre}}=0\), la componente normal de \(\mathbf D\) es continua.
+
+23. Se toma un rectángulo elemental que cruza la interfaz, con dos lados paralelos a la superficie. En electrostática:
+\[
+\oint_C\mathbf E\cdot d\mathbf l=0.
+\]
+Al hacer tender a cero la altura del rectángulo, las contribuciones de los lados normales a la superficie desaparecen. Quedan las contribuciones tangenciales a ambos lados:
+\[
+\mathbf E_{2t}\cdot\Delta\mathbf l-\mathbf E_{1t}\cdot\Delta\mathbf l=0.
+\]
+Como \(\Delta\mathbf l\) es arbitrario,
+\[
+\mathbf E_{2t}=\mathbf E_{1t}.
+\]
+En forma vectorial:
+\[
+\mathbf n\times(\mathbf E_2-\mathbf E_1)=\mathbf 0.
+\]
+
+24. Si el dieléctrico es h.l.i. y se conoce \(\mathbf D\), primero se calcula
+\[
+\mathbf E=\frac{\mathbf D}{\epsilon}.
+\]
+Después,
+\[
+\mathbf P=\mathbf D-\epsilon_0\mathbf E
+=(\epsilon-\epsilon_0)\mathbf E.
+\]
+A continuación se obtiene la carga ligada volumétrica:
+\[
+\rho_p=-\nabla\cdot\mathbf P.
+\]
+Finalmente, en cada superficie del dieléctrico:
+\[
+\sigma_p=\mathbf P\cdot\mathbf n.
+\]
+Los errores típicos son usar una normal con signo incorrecto, olvidar que \(\rho_p\) puede ser cero aunque \(\sigma_p\) no lo sea, y aplicar \(\mathbf D=\epsilon\mathbf E\) fuera de sus hipótesis.
+
+25. En un medio anisótropo la respuesta del material depende de la dirección del campo eléctrico. Por eso la permitividad no puede representarse, en general, mediante un único escalar. En ejes principales puede escribirse una relación tensorial diagonal:
+\[
+\begin{pmatrix}
+D_1\\D_2\\D_3
+\end{pmatrix}
+=
+\begin{pmatrix}
+\epsilon_1&0&0\\
+0&\epsilon_2&0\\
+0&0&\epsilon_3
+\end{pmatrix}
+\begin{pmatrix}
+E_1\\E_2\\E_3
+\end{pmatrix}.
+\]
+Si \(\epsilon_1\), \(\epsilon_2\) y \(\epsilon_3\) son distintos, cada componente responde de forma diferente. Solo si los tres coinciden se recupera el caso isótropo \(\mathbf D=\epsilon\mathbf E\).
+
+### Respuestas a las 5 preguntas de desarrollo largo
+
+26. La polarización eléctrica surge porque un campo eléctrico altera la distribución interna de carga de átomos y moléculas. En moléculas no polares, el campo induce una separación relativa entre cargas positivas y negativas. En moléculas polares, que ya poseen momento dipolar permanente, el campo tiende a orientar esos dipolos. En ambos casos, el material adquiere una organización dipolar macroscópica.
+
+Para pasar de la escala molecular a la macroscópica se define el vector polarización:
+\[
+\mathbf P=\lim_{\Delta v\to0}\frac{1}{\Delta v}\sum_m\mathbf p_m.
+\]
+Este límite no debe entenderse como un volumen molecular, sino como un volumen pequeño a escala del sistema y grande a escala molecular. Así se obtiene un campo continuo \(\mathbf P(\mathbf r)\), que describe el momento dipolar medio por unidad de volumen.
+
+La polarización permite tratar el dieléctrico sin seguir cada carga microscópica. A partir de ella se deducen cargas ligadas equivalentes y se construye el vector desplazamiento. Por eso \(\mathbf P\) es el puente entre la estructura interna del material y las ecuaciones macroscópicas del campo eléctrico.
+
+27. Un material polarizado puede verse como una distribución de dipolos. Al calcular el potencial debido a esos dipolos, la expresión inicial puede transformarse en la suma de dos potenciales: uno producido por una densidad volumétrica de carga ligada,
+\[
+\rho_p=-\nabla\cdot\mathbf P,
+\]
+y otro producido por una densidad superficial,
+\[
+\sigma_p=\mathbf P\cdot\mathbf n.
+\]
+
+Estas cargas de polarización no son cargas libres añadidas al sistema. Son la representación equivalente del efecto de los dipolos. Su utilidad es que permiten usar las técnicas de potencial y campo ya conocidas para distribuciones continuas de carga.
+
+El campo eléctrico real \(\mathbf E\) tiene como fuentes tanto las cargas libres como las cargas ligadas:
+\[
+\nabla\cdot\mathbf E=\frac{\rho+\rho_p}{\epsilon_0}.
+\]
+Por tanto, ignorar las cargas de polarización da un campo incorrecto. Sin embargo, al introducir \(\mathbf D\), la contribución de las cargas ligadas queda incorporada en \(\mathbf P\), y la divergencia de \(\mathbf D\) depende solo de \(\rho\). Esta separación es la razón práctica de introducir \(\mathbf D\).
+
+28. En presencia de dieléctricos, el campo eléctrico está producido por cargas libres y por cargas de polarización. Si se aplica directamente Gauss a \(\mathbf E\), aparece la carga total:
+\[
+\oint_S\mathbf E\cdot d\mathbf s=\frac{1}{\epsilon_0}(Q_{\text{libre}}+Q_p).
+\]
+Como \(Q_p\) puede escribirse mediante la polarización, se reorganiza la expresión y aparece:
+\[
+\oint_S(\epsilon_0\mathbf E+\mathbf P)\cdot d\mathbf s=Q_{\text{libre}}.
+\]
+Se define entonces
+\[
+\mathbf D=\epsilon_0\mathbf E+\mathbf P.
+\]
+
+La ley de Gauss para \(\mathbf D\) queda:
+\[
+\oint_S\mathbf D\cdot d\mathbf s=Q_{\text{libre}},
+\qquad
+\nabla\cdot\mathbf D=\rho_{\text{libre}}.
+\]
+Su utilidad es que, si la simetría del problema lo permite, \(\mathbf D\) puede calcularse usando solo la carga libre. Después se obtiene \(\mathbf E\) mediante la relación constitutiva del material. En medios h.l.i.,
+\[
+\mathbf E=\frac{\mathbf D}{\epsilon}.
+\]
+
+No obstante, \(\mathbf D\) no reemplaza a \(\mathbf E\). El campo que actúa sobre cargas es \(\mathbf E\). Además, \(\nabla\times\mathbf D=\nabla\times\mathbf P\), por lo que \(\mathbf D\) no es necesariamente conservativo. Su uso requiere simetría y una ley material adecuada.
+
+29. La susceptibilidad eléctrica \(\chi_e\) mide la relación entre la polarización y el campo eléctrico en un material lineal:
+\[
+\mathbf P=\epsilon_0\chi_e\mathbf E.
+\]
+Sustituyendo en \(\mathbf D=\epsilon_0\mathbf E+\mathbf P\), se obtiene
+\[
+\mathbf D=\epsilon_0(1+\chi_e)\mathbf E.
+\]
+Esto permite definir la permitividad:
+\[
+\epsilon=\epsilon_0(1+\chi_e),
+\]
+y escribir
+\[
+\mathbf D=\epsilon\mathbf E.
+\]
+
+Esta forma simple exige hipótesis. Si la respuesta no depende de la intensidad del campo, el material es lineal. Si \(\epsilon\) y \(\chi_e\) no dependen del punto, es homogéneo. Si no dependen de la dirección del campo, es isótropo. En tal caso \(\epsilon\) es una constante escalar.
+
+Si la respuesta depende de la intensidad de \(\mathbf E\), el material es no lineal. Los ferroeléctricos son un ejemplo importante por su polarización permanente, inversión de polarización e histéresis. Si la respuesta depende de la dirección, el medio es anisótropo y la permitividad debe tratarse como tensor. Si depende del punto, el medio es no homogéneo.
+
+30. En la frontera entre dos dieléctricos, el potencial electrostático es continuo:
+\[
+V_1=V_2.
+\]
+La componente normal de \(\mathbf D\) cumple
+\[
+(\mathbf D_2-\mathbf D_1)\cdot\mathbf n=\sigma_{\text{libre}}.
+\]
+Si no hay carga libre superficial, \(D_{n2}=D_{n1}\). La componente tangencial de \(\mathbf E\) es continua:
+\[
+\mathbf n\times(\mathbf E_2-\mathbf E_1)=\mathbf 0.
+\]
+
+En medios h.l.i., estas condiciones se traducen en
+\[
+\epsilon_2E_{n2}-\epsilon_1E_{n1}=\sigma_{\text{libre}},
+\]
+y
+\[
+E_{t2}=E_{t1}.
+\]
+Por tanto, \(E_n\) puede saltar si cambia \(\epsilon\), y \(D_t\) puede saltar aunque \(E_t\) sea continuo.
+
+Si uno de los medios es conductor en equilibrio electrostático, dentro del conductor \(\mathbf E=0\) y el potencial es constante. En la superficie conductor-dieléctrico:
+\[
+E_t=0,
+\qquad
+D_n=\sigma_{\text{libre}}.
+\]
+Esto significa que el campo justo fuera del conductor es normal a la superficie y que su valor depende de la carga superficial y de la permitividad del dieléctrico.
+
+### Respuestas a las 5 preguntas de relación entre conceptos
+
+31. La polarización \(\mathbf P\) describe el momento dipolar por unidad de volumen. Cuando \(\mathbf P\) varía espacialmente o tiene componente normal en una superficie, aparecen cargas ligadas:
+\[
+\rho_p=-\nabla\cdot\mathbf P,
+\qquad
+\sigma_p=\mathbf P\cdot\mathbf n.
+\]
+El vector desplazamiento
+\[
+\mathbf D=\epsilon_0\mathbf E+\mathbf P
+\]
+incorpora esa polarización para que su divergencia dependa solo de la carga libre:
+\[
+\nabla\cdot\mathbf D=\rho_{\text{libre}}.
+\]
+Así, \(\mathbf P\) explica las cargas ligadas y \(\mathbf D\) reorganiza el problema separando carga libre y polarización.
+
+32. \(\mathbf E\) es el campo eléctrico físico: determina la fuerza sobre una carga y se obtiene del potencial mediante \(\mathbf E=-\nabla V\). Sus fuentes son las cargas libres y las cargas de polarización. \(\mathbf D\), en cambio, es una combinación auxiliar:
+\[
+\mathbf D=\epsilon_0\mathbf E+\mathbf P.
+\]
+Su divergencia depende de la carga libre. En problemas con simetría, \(\mathbf D\) suele calcularse primero por Gauss y luego se obtiene \(\mathbf E\). Pero no debe confundirse su utilidad matemática con el papel físico de \(\mathbf E\).
+
+33. La susceptibilidad relaciona \(\mathbf P\) con \(\mathbf E\) en un medio lineal:
+\[
+\mathbf P=\epsilon_0\chi_e\mathbf E.
+\]
+La permitividad se define entonces como
+\[
+\epsilon=\epsilon_0(1+\chi_e).
+\]
+Si \(\epsilon\) es constante escalar, el medio es lineal, homogéneo e isótropo. Si depende del campo, es no lineal; si depende del punto, no homogéneo; si depende de la dirección, anisótropo. La relación entre estas magnitudes clasifica el comportamiento macroscópico del dieléctrico.
+
+34. Las condiciones normales y tangenciales proceden de leyes distintas. La componente normal de \(\mathbf D\) se obtiene de Gauss:
+\[
+D_{n2}-D_{n1}=\sigma_{\text{libre}}.
+\]
+La componente tangencial de \(\mathbf E\) se obtiene de la circulación nula:
+\[
+E_{t2}=E_{t1}.
+\]
+En medios h.l.i., esto implica relaciones para \(\mathbf E_n\) y \(\mathbf D_t\), pero no su continuidad general. El error habitual es intercambiar qué componente de qué vector es continua.
+
+35. El modelo de dieléctrico del capítulo supone que las cargas permanecen ligadas y que el material responde mediante polarización. La ruptura dieléctrica ocurre cuando el campo es tan intenso que se liberan cargas y se producen procesos de ionización o calentamiento que destruyen el comportamiento aislante. La rigidez dieléctrica mide el campo máximo antes de esa ruptura. Por tanto, la validez del modelo de cargas ligadas exige campos por debajo de la rigidez dieléctrica del material.
+
+## 9. Resumen final de repaso
+
+Ideas principales:
+
+1. Un dieléctrico ideal no tiene cargas libres móviles como un conductor; tiene cargas ligadas que pueden desplazarse ligeramente o formar dipolos orientados.
+
+2. La polarización eléctrica \(\mathbf P\) es el momento dipolar por unidad de volumen:
+\[
+\mathbf P=\lim_{\Delta v\to0}\frac{\Delta\mathbf p}{\Delta v}.
+\]
+
+3. Un material polarizado equivale electrostáticamente a cargas de polarización:
+\[
+\rho_p=-\nabla\cdot\mathbf P,
+\qquad
+\sigma_p=\mathbf P\cdot\mathbf n.
+\]
+
+4. El potencial de un material polarizado puede calcularse como potencial de \(\rho_p\) y \(\sigma_p\).
+
+5. El vector desplazamiento se define como
+\[
+\mathbf D=\epsilon_0\mathbf E+\mathbf P.
+\]
+
+6. Su ley de Gauss es
+\[
+\oint_S\mathbf D\cdot d\mathbf s=Q_{\text{libre}},
+\qquad
+\nabla\cdot\mathbf D=\rho_{\text{libre}}.
+\]
+
+7. En medios lineales, homogéneos e isótropos:
+\[
+\mathbf P=\epsilon_0\chi_e\mathbf E,
+\qquad
+\mathbf D=\epsilon\mathbf E,
+\qquad
+\epsilon=\epsilon_0(1+\chi_e).
+\]
+
+8. Las condiciones en los límites fundamentales son:
+\[
+V_2=V_1,
+\]
+\[
+(\mathbf D_2-\mathbf D_1)\cdot\mathbf n=\sigma_{\text{libre}},
+\]
+\[
+\mathbf n\times(\mathbf E_2-\mathbf E_1)=\mathbf 0.
+\]
+
+9. En la superficie de un conductor en contacto con un dieléctrico:
+\[
+E_t=0,
+\qquad
+D_n=\sigma_{\text{libre}}.
+\]
+
+10. La ruptura dieléctrica marca el límite del modelo aislante. La rigidez dieléctrica es el campo máximo soportado antes de la ruptura.
+
+Conceptos imprescindibles:
+
+- Dieléctrico.
+- Carga libre.
+- Carga ligada.
+- Molécula polar y no polar.
+- Polarización \(\mathbf P\).
+- Cargas de polarización \(\rho_p\) y \(\sigma_p\).
+- Desplazamiento eléctrico \(\mathbf D\).
+- Susceptibilidad \(\chi_e\).
+- Permitividad \(\epsilon\).
+- Medio lineal, homogéneo e isótropo.
+- Medio anisótropo.
+- Ruptura y rigidez dieléctrica.
+- Condiciones de contorno.
+
+Relaciones clave:
+
+- \(\mathbf P\) mide la respuesta dipolar del material.
+- \(\rho_p\) y \(\sigma_p\) se obtienen de \(\mathbf P\).
+- \(\mathbf E\) tiene como fuentes cargas libres y ligadas.
+- \(\mathbf D\) tiene divergencia asociada a carga libre.
+- \(\epsilon\) conecta \(\mathbf D\) y \(\mathbf E\) solo bajo hipótesis materiales.
+- \(D_n\) se relaciona con carga libre superficial.
+- \(E_t\) es continuo en electrostática.
+
+Errores que evitar:
+
+- Tratar el dieléctrico como si no tuviera cargas.
+- Confundir carga libre con carga ligada.
+- Olvidar el signo de \(\sigma_p=\mathbf P\cdot\mathbf n\).
+- Usar \(\mathbf D=\epsilon\mathbf E\) sin comprobar hipótesis.
+- Decir que \(\mathbf D\) ejerce fuerza sobre cargas.
+- Suponer que \(E_n\) siempre es continuo.
+- Suponer que \(D_t\) siempre es continuo.
+- Olvidar la continuidad del potencial.
+- Confundir permitividad con rigidez dieléctrica.
+
+## 10. Checklist de dominio
+
+- Si no puedes explicar por qué un dieléctrico se polariza sin conducir corriente libre, falta repasar la diferencia entre cargas libres y cargas ligadas.
+
+- Si no puedes definir \(\mathbf P\) como momento dipolar por unidad de volumen, falta repasar polarización eléctrica.
+
+- Si confundes moléculas polares con moléculas polarizadas, revisar la diferencia entre dipolo permanente y dipolo inducido.
+
+- Si no puedes calcular \(\rho_p\) a partir de \(\mathbf P\), falta repasar divergencia.
+
+- Si no puedes calcular \(\sigma_p\) con el signo correcto, falta repasar normales de superficie.
+
+- Si dices que una polarización uniforme implica ausencia total de carga ligada, revisar la diferencia entre carga volumétrica y carga superficial de polarización.
+
+- Si no sabes escribir el potencial de un material polarizado mediante \(\rho_p\) y \(\sigma_p\), falta repasar campo y potencial de distribuciones continuas.
+
+- Si no puedes explicar por qué se introduce \(\mathbf D\), falta repasar Gauss en dieléctricos.
+
+- Si confundes \(\mathbf E\) con \(\mathbf D\), revisar el significado físico de cada vector.
+
+- Si aplicas \(\mathbf D=\epsilon\mathbf E\) sin comprobar que el medio es lineal, homogéneo e isótropo, revisar relaciones constitutivas.
+
+- Si no puedes deducir \(\epsilon=\epsilon_0(1+\chi_e)\), falta repasar susceptibilidad y permitividad.
+
+- Si confundes material anisótropo con no homogéneo, revisar la clasificación de dieléctricos.
+
+- Si no puedes escribir la condición \((\mathbf D_2-\mathbf D_1)\cdot\mathbf n=\sigma_{\text{libre}}\), falta repasar Gauss aplicado a una caja elemental.
+
+- Si no puedes escribir la condición \(\mathbf n\times(\mathbf E_2-\mathbf E_1)=0\), falta repasar la circulación nula de \(\mathbf E\).
+
+- Si afirmas que \(E_n\) es siempre continuo, revisar condiciones normales.
+
+- Si afirmas que \(D_t\) es siempre continuo, revisar condiciones tangenciales.
+
+- Si no recuerdas qué ocurre en la superficie de un conductor, falta repasar conductores en equilibrio electrostático.
+
+- Si confundes rigidez dieléctrica con permitividad, revisar ruptura en dieléctricos.
+
+- Si puedes resolver una geometría plana o esférica calculando primero \(\mathbf D\), después \(\mathbf E\), luego \(\mathbf P\), y finalmente \(\rho_p\) y \(\sigma_p\), el capítulo está suficientemente asentado.
+
+- Si puedes justificar las condiciones de contorno sin memorizar solo la fórmula, el capítulo está preparado para una pregunta teórica de examen.

@@ -1,0 +1,879 @@
+# Guía de estudio — Electromagnetismo I (UNED)
+
+Capítulo EM6–7: Conductores, condensadores y energía electrostática
+
+## 1. Prerrequisitos mínimos
+
+- Campo eléctrico y fuerza eléctrica.
+  Definición breve: el campo eléctrico \(\mathbf E\) es la magnitud vectorial que da la fuerza por unidad de carga positiva de prueba: \(\mathbf F=q\mathbf E\).
+  Por qué es necesario: todo el capítulo se apoya en saber qué campo hay dentro, fuera y entre conductores.
+  Ejemplo mínimo: si una carga \(q\) está en una región con campo uniforme \(\mathbf E=E_0\mathbf u_x\), la fuerza es \(qE_0\mathbf u_x\) si \(q>0\), y en sentido contrario si \(q<0\).
+
+- Potencial electrostático.
+  Definición breve: el potencial \(V\) es una función escalar relacionada con el campo por \(\mathbf E=-\nabla V\). La diferencia de potencial mide trabajo por unidad de carga.
+  Por qué es necesario: los conductores en equilibrio son equipotenciales, y los sistemas de conductores se describen mediante relaciones entre cargas \(Q_i\) y potenciales \(V_i\).
+  Ejemplo mínimo: si entre dos placas \(V_1-V_2=V\) y la separación es \(d\), despreciando bordes el campo vale aproximadamente \(E=V/d\).
+
+- Teorema de Gauss.
+  Definición breve: el flujo de \(\mathbf E\) a través de una superficie cerrada está relacionado con la carga encerrada. En medios lineales se usa también \(\mathbf D=\varepsilon \mathbf E\).
+  Por qué es necesario: permite justificar que la carga de un conductor en equilibrio está en la superficie y calcular campos en condensadores con simetría.
+  Ejemplo mínimo: en un condensador esférico, una superficie gaussiana esférica entre las dos armaduras encierra \(Q\), de modo que \(E(r)\propto 1/r^2\).
+
+- Conductores en equilibrio electrostático.
+  Definición breve: un conductor es un cuerpo con cargas libres; en equilibrio electrostático no puede existir campo eléctrico en su interior, porque las cargas se moverían.
+  Por qué es necesario: de \( \mathbf E=0\) dentro del conductor se deduce \(V=\) constante, carga superficial, campo normal y apantallamiento.
+  Ejemplo mínimo: una esfera metálica cargada no tiene campo en el metal; el campo aparece fuera y es normal a su superficie.
+
+- Densidad de carga.
+  Definición breve: una distribución continua se describe con densidad volumétrica \(\rho\), superficial \(\sigma\) o lineal \(\lambda\).
+  Por qué es necesario: en conductores cargados la carga se sitúa sobre la superficie, por lo que aparece \(\sigma\); en la energía de distribuciones continuas aparecen integrales con \(\rho\) y \(\sigma\).
+  Ejemplo mínimo: si una placa conductora de superficie \(S\) almacena carga \(Q\), una distribución uniforme tendría \(\sigma=Q/S\), aunque en un conductor real no siempre será uniforme.
+
+- Dieléctricos lineales y permitividad.
+  Definición breve: en un medio lineal, homogéneo e isótropo se puede escribir \(\mathbf D=\varepsilon\mathbf E\).
+  Por qué es necesario: la capacidad de un condensador depende del dieléctrico entre sus placas, y la energía del campo se escribe con \(\mathbf D\cdot\mathbf E\).
+  Ejemplo mínimo: en un condensador plano ideal, sustituir vacío por un dieléctrico de permitividad \(\varepsilon\) cambia \(C\) de \(\varepsilon_0 S/d\) a \(\varepsilon S/d\).
+
+- Trabajo y energía potencial.
+  Definición breve: la energía electrostática es el trabajo necesario para formar una distribución de cargas desde una situación de referencia.
+  Por qué es necesario: el capítulo 7 interpreta la energía de cargas, conductores y condensadores como trabajo de ensamblaje o como energía almacenada en el campo.
+  Ejemplo mínimo: traer una carga \(q\) desde el infinito hasta un punto de potencial \(V\) requiere energía \(W_e=qV\), si el infinito se toma como origen de potencial.
+
+- Cálculo vectorial e integral elemental.
+  Definición breve: hay que manejar gradiente, integrales de línea, integrales de superficie y volumen.
+  Por qué es necesario: se calcula \(V\) integrando \(\mathbf E\), se obtiene \(C\) mediante \(Q/V\), y la energía del campo exige integrar una densidad energética.
+  Ejemplo mínimo: en un campo radial, \(V_a-V_b=-\int_b^a \mathbf E\cdot d\mathbf l\).
+
+- Sistemas de coordenadas con simetría.
+  Definición breve: coordenadas cartesianas, cilíndricas y esféricas permiten adaptar el cálculo a placas, cilindros y esferas.
+  Por qué es necesario: la elección de coordenadas decide si Gauss sirve de forma directa para calcular el campo.
+  Ejemplo mínimo: placas planas sugieren cartesianas; conductores coaxiales, cilíndricas; esferas concéntricas, esféricas.
+
+## 2. Idea central del capítulo
+
+Los capítulos EM6–7 trasladan la electrostática básica a sistemas reales de conductores. Hasta aquí se han estudiado campos y potenciales producidos por cargas dadas; ahora el problema cambia: cuando aparece un conductor, las cargas libres no se quedan donde estaban, sino que se redistribuyen hasta anular el campo en el interior del material conductor. Esa redistribución convierte la superficie del conductor en una superficie equipotencial y fija una condición muy fuerte para resolver problemas.
+
+El capítulo dedicado a conductores enseña a describir sistemas formados por varios conductores mediante magnitudes globales: la carga total de cada conductor y su potencial. Como el problema electrostático es lineal en estas condiciones, los potenciales se expresan como combinaciones lineales de las cargas. De ahí aparecen los coeficientes de potencial. Si se invierte la relación y se expresan las cargas en función de los potenciales, aparecen los coeficientes de capacidad e influencia. Esta parte no es una colección de nombres: es una forma compacta de codificar la geometría del sistema.
+
+El condensador es el caso más importante de sistema de conductores. Está formado por dos conductores con cargas iguales y opuestas. Su rasgo esencial no es que "guarde carga neta", porque su carga total es nula, sino que concentra campo eléctrico y energía en la región comprendida entre sus armaduras. Por eso la capacidad no mide simplemente cuánta carga hay, sino cuánta carga puede separarse entre conductores por unidad de diferencia de potencial.
+
+El capítulo de energía electrostática completa la imagen. Una vez se conoce el campo o el potencial, se puede calcular la energía necesaria para formar el sistema. Esa energía puede escribirse como suma sobre cargas, como expresión en función de los potenciales de conductores o como integral de densidad de energía del campo. Esta última forma es especialmente importante: el condensador no "almacena energía en las placas", sino en el campo electrostático que se crea entre ellas.
+
+Finalmente, la energía permite calcular fuerzas y presiones. Si al desplazar virtualmente un conductor cambia la energía del sistema, esa variación está asociada a una fuerza electrostática. La presión electrostática sobre una superficie conductora cargada se obtiene precisamente así, y resulta proporcional a \(\sigma^2\), por lo que no depende del signo de la carga. Esta idea aparece con frecuencia en cuestiones de examen porque obliga a distinguir campo, carga, energía y fuerza.
+
+## 3. Desarrollo completo del capítulo
+
+### 3.1. Conductores en equilibrio electrostático
+
+Un conductor se caracteriza por tener cargas libres. Si en su interior hubiera un campo electrostático no nulo, esas cargas se moverían; por tanto, en equilibrio electrostático debe cumplirse
+
+\[
+\mathbf E=0
+\]
+
+en el interior del conductor. Como \(\mathbf E=-\nabla V\), esto implica que el potencial es constante en todo el volumen conductor. La superficie que limita al conductor también es equipotencial.
+
+Esta afirmación importa porque cambia el tipo de problema. En una distribución de carga cualquiera, el campo se calcula sumando contribuciones. En un conductor, en cambio, no se conoce de antemano la distribución superficial de carga; lo que se conoce es la condición final: el interior debe quedar sin campo y toda la superficie debe estar al mismo potencial.
+
+La consecuencia inmediata es que el campo justo fuera del conductor es perpendicular a la superficie. Si tuviera componente tangencial, las cargas superficiales podrían desplazarse por la superficie, y no habría equilibrio. En puntos exteriores próximos a una superficie conductora cargada, el campo viene dado por
+
+\[
+\mathbf E=\frac{\sigma}{\varepsilon}\mathbf n,
+\]
+
+donde \(\mathbf n\) es la normal saliente y \(\varepsilon\) la permitividad del medio exterior.
+
+Un ejemplo que fija la idea es una esfera metálica cargada. Dentro del metal no hay campo; fuera sí. La carga está sobre la superficie y el campo exterior es radial. En una esfera aislada y simétrica, la densidad superficial será uniforme; en un conductor de forma irregular no tiene por qué serlo. Esta distinción es esencial.
+
+### 3.2. Carga inducida y apantallamiento
+
+Cuando un conductor se introduce en un campo externo, sus cargas libres se desplazan hasta generar un campo propio que anula el campo total en el interior. Las cargas que aparecen en la superficie por este proceso se llaman cargas inducidas.
+
+El apantallamiento aparece cuando un conductor impide que un campo externo afecte a una región interior. Si un conductor rodea a otro, puede ocurrir que un conductor externo induzca carga en la cara exterior del conductor que rodea, pero no modifique el campo en la región protegida. En lenguaje de coeficientes, algunos coeficientes de influencia se anulan por razones de apantallamiento.
+
+Esta idea se conecta con los condensadores esféricos o coaxiales: cuando una armadura rodea a la otra, el campo queda esencialmente confinado entre ambas. Por eso las cargas externas no modifican la diferencia de potencial entre las armaduras si el apantallamiento es completo.
+
+### 3.3. Capacidad de un conductor aislado
+
+Un conductor aislado que se carga hasta un potencial \(V\) almacena una carga \(Q\). La capacidad se define como
+
+\[
+C=\frac{Q}{V}.
+\]
+
+La capacidad no depende de \(Q\) ni de \(V\) por separado, sino de la geometría del conductor y del medio que lo rodea. Esto es importante: aumentar la carga aumenta el potencial en la misma proporción, de modo que la razón \(Q/V\) permanece constante si no cambia la geometría ni el medio.
+
+El ejemplo conceptual más simple es una esfera conductora aislada. Una esfera de mayor radio tiene mayor capacidad porque puede situar más carga con menor incremento de potencial. En examen, lo importante no es memorizar esta frase, sino entender que la capacidad es una propiedad geométrica, no una cantidad de carga almacenada en un caso concreto.
+
+### 3.4. Sistemas de conductores y coeficientes de potencial
+
+Si hay \(N\) conductores, cada uno con carga \(Q_i\) y potencial \(V_i\), el potencial de cada conductor depende linealmente de todas las cargas:
+
+\[
+V_i=\sum_{j=1}^{N}p_{ij}Q_j.
+\]
+
+Los coeficientes \(p_{ij}\) se llaman coeficientes de potencial. Dependen de la forma, tamaño y posición relativa de los conductores, no de las cargas concretas que se hayan puesto. El término \(p_{ii}\) mide la contribución al potencial del conductor \(i\) debida a su propia carga; el término \(p_{ij}\) mide la contribución en \(i\) debida a la carga situada en \(j\).
+
+Estos coeficientes son simétricos:
+
+\[
+p_{ij}=p_{ji}.
+\]
+
+Además, en los casos considerados se cumple que los coeficientes propios son positivos y mayores que los mutuos:
+
+\[
+p_{ii}>p_{ij}>0.
+\]
+
+La interpretación física es razonable: una carga situada en un conductor eleva más el potencial de ese mismo conductor que el de otro conductor separado.
+
+Un ejemplo típico es el de dos esferas pequeñas separadas una distancia mucho mayor que sus radios. Entonces el potencial propio de cada esfera se aproxima al de una esfera aislada, y el potencial que una carga crea en la otra se aproxima al potencial de una carga puntual situada a la distancia entre centros. Esta aproximación se usa cuando la influencia mutua es pequeña.
+
+### 3.5. Coeficientes de capacidad e influencia
+
+La relación anterior puede invertirse para expresar las cargas en función de los potenciales:
+
+\[
+Q_i=\sum_{j=1}^{N}c_{ij}V_j.
+\]
+
+Los coeficientes \(c_{ii}\) se llaman coeficientes de capacidad. Los coeficientes \(c_{ij}\), con \(i\ne j\), se llaman coeficientes de inducción o influencia.
+
+El signo de estos coeficientes tiene sentido físico. Los coeficientes de capacidad son positivos:
+
+\[
+c_{ii}>0,
+\]
+
+porque si un conductor se pone a potencial positivo respecto de los demás, adquiere carga positiva. En cambio, los coeficientes de influencia son negativos:
+
+\[
+c_{ij}<0 \quad (i\ne j),
+\]
+
+porque un conductor positivo induce carga de signo contrario en los otros conductores conectados a tierra.
+
+Estos coeficientes son útiles cuando las condiciones del problema se dan en potenciales, no en cargas. Por ejemplo, si varios conductores están conectados a una batería o a tierra, normalmente se conocen potenciales. Entonces conviene trabajar con \(Q_i=\sum c_{ij}V_j\), no con \(V_i=\sum p_{ij}Q_j\).
+
+### 3.6. Condensadores
+
+Un condensador está formado por dos conductores con cargas iguales en módulo y opuestas en signo. La diferencia de potencial entre ellos es proporcional a la carga separada. Su capacidad se define como
+
+\[
+C=\frac{Q}{V_1-V_2},
+\]
+
+donde \(Q\) es el valor absoluto de la carga de una armadura.
+
+Este sistema no almacena carga neta: una armadura tiene \(+Q\) y la otra \(-Q\). Lo que almacena es energía en el campo eléctrico que aparece entre ambas. Por eso el libro insiste en que el condensador "condensa" el campo en la región comprendida entre los conductores.
+
+El procedimiento usual para hallar la capacidad es:
+
+1. Suponer cargas \(+Q\) y \(-Q\) en las armaduras.
+2. Elegir las coordenadas adaptadas a la simetría.
+3. Calcular \(\mathbf E\) con el teorema de Gauss.
+4. Calcular la diferencia de potencial con \(V_1-V_2=-\int_2^1\mathbf E\cdot d\mathbf l\).
+5. Dividir \(Q\) entre la diferencia de potencial.
+
+Para un condensador plano ideal de placas de superficie \(S\), separación \(d\) y permitividad \(\varepsilon\), despreciando efectos de borde,
+
+\[
+C=\varepsilon\frac{S}{d}.
+\]
+
+Para un condensador esférico de radios \(R_1\) y \(R_2\),
+
+\[
+C=4\pi\varepsilon\frac{R_1R_2}{R_2-R_1}.
+\]
+
+Para un condensador cilíndrico coaxial, la capacidad por unidad de longitud es
+
+\[
+C_l=\frac{2\pi\varepsilon}{\ln(b/a)}.
+\]
+
+Estas fórmulas no deben aprenderse como recetas aisladas. Cada una sale de Gauss más la definición de potencial.
+
+### 3.7. Asociación de condensadores
+
+En paralelo, todos los condensadores tienen la misma diferencia de potencial. La carga total es la suma de las cargas individuales, de modo que
+
+\[
+C_{\rm eq}=C_1+C_2+\cdots+C_N.
+\]
+
+En serie, todos los condensadores tienen la misma carga en módulo, y la diferencia de potencial total es la suma de las diferencias de potencial parciales. Por eso
+
+\[
+\frac{1}{C_{\rm eq}}=\frac{1}{C_1}+\frac{1}{C_2}+\cdots+\frac{1}{C_N}.
+\]
+
+La confusión típica consiste en aplicar la regla de resistencias. Aquí no se razona por analogía con resistencias; se razona por qué magnitud se conserva o se iguala: en paralelo se iguala \(V\), en serie se iguala \(Q\).
+
+### 3.8. Energía electrostática de cargas puntuales
+
+La energía electrostática es el trabajo necesario para situar las cargas en sus posiciones finales. Para una carga \(q\) desplazada entre dos puntos de potenciales \(V_1\) y \(V_2\), el trabajo externo sin variación de energía cinética es
+
+\[
+W_e=q(V_2-V_1).
+\]
+
+Si el punto inicial está en el infinito y allí se toma \(V=0\), queda
+
+\[
+W_e=qV.
+\]
+
+Para un sistema de \(N\) cargas puntuales,
+
+\[
+W_e=\frac12\sum_{j=1}^{N}\sum_{\substack{i=1\\ i\ne j}}^{N}
+\frac{1}{4\pi\varepsilon_0}
+\frac{q_iq_j}{|\mathbf r_j-\mathbf r_i|}.
+\]
+
+También puede escribirse como
+
+\[
+W_e=\frac12\sum_{j=1}^{N}q_jV_j,
+\]
+
+donde \(V_j\) es el potencial en la posición de \(q_j\) debido a las demás cargas, no a ella misma.
+
+El factor \(1/2\) evita contar dos veces cada pareja. La exclusión de \(i=j\) evita introducir la energía propia de una carga puntual, que divergiría. Esta exclusión es una fuente frecuente de errores.
+
+### 3.9. Energía de distribuciones continuas y de conductores
+
+Para una distribución continua de carga, la energía se expresa como
+
+\[
+W_e=\frac12\int_V \rho(\mathbf r)V(\mathbf r)\,dv
++\frac12\int_S \sigma(\mathbf r)V(\mathbf r)\,ds.
+\]
+
+En un sistema de conductores, la carga está en la superficie y cada conductor está a potencial constante. Por tanto,
+
+\[
+W_e=\frac12\sum_{j=1}^{N}Q_jV_j.
+\]
+
+Si se sustituye \(V_i=\sum_jp_{ij}Q_j\), se obtiene
+
+\[
+W_e=\frac12\sum_{i=1}^{N}\sum_{j=1}^{N}p_{ij}Q_iQ_j.
+\]
+
+En un condensador con cargas \(+Q\) y \(-Q\),
+
+\[
+W_e=\frac12Q(V_1-V_2).
+\]
+
+Si llamamos \(V=V_1-V_2\), entonces
+
+\[
+W_e=\frac12QV=\frac12CV^2=\frac{Q^2}{2C}.
+\]
+
+Las tres formas son equivalentes, pero cada una conviene en una situación distinta. Si se mantiene \(V\) constante por una batería, suele ser cómoda \(\frac12CV^2\). Si el condensador queda aislado y \(Q\) se conserva, suele ser más segura \(\frac{Q^2}{2C}\).
+
+### 3.10. Energía en función del campo
+
+La energía electrostática también puede escribirse como energía almacenada en el campo:
+
+\[
+W_e=\frac12\int \mathbf D\cdot\mathbf E\,dv.
+\]
+
+La integral se extiende por la región donde existe campo. En un medio lineal, \(\mathbf D=\varepsilon\mathbf E\), por lo que la densidad de energía es
+
+\[
+u_e=\frac12\mathbf D\cdot\mathbf E
+=\frac12\varepsilon E^2
+=\frac{D^2}{2\varepsilon}.
+\]
+
+Esta expresión es muy útil en condensadores porque el campo queda concentrado en una región simple. Por ejemplo, en un condensador plano ideal,
+
+\[
+W_e=\frac12\varepsilon E^2(Sd),
+\]
+
+y como \(E=V/d\), se recupera
+
+\[
+W_e=\frac12\varepsilon\frac{S}{d}V^2=\frac12CV^2.
+\]
+
+La fórmula de energía del campo no debe aplicarse sin cuidado a cargas puntuales, porque el campo diverge en la posición de la carga y la integral de energía propia no es finita.
+
+### 3.11. Fuerza electrostática y presión
+
+La fuerza sobre un conductor cargado puede obtenerse mediante variaciones virtuales de energía. Si el sistema está aislado, las cargas se mantienen constantes y se cumple
+
+\[
+F_x=-\left(\frac{\partial W_e}{\partial x}\right)_Q.
+\]
+
+Si el sistema está unido a fuentes que mantienen constantes los potenciales, aparece el signo opuesto en la relación efectiva usada para calcular la fuerza:
+
+\[
+F_x=\left(\frac{\partial W_e}{\partial x}\right)_V.
+\]
+
+La diferencia de signo no es un detalle algebraico: indica que en el segundo caso la batería puede suministrar o absorber energía durante el desplazamiento.
+
+La presión electrostática sobre la superficie de un conductor cargado se obtiene suponiendo un pequeño desplazamiento normal de la superficie. Como dentro del conductor el campo es nulo, la energía cambia al crear o eliminar una pequeña franja de campo. El resultado es
+
+\[
+p=\frac12\mathbf D\cdot\mathbf E.
+\]
+
+En la superficie de un conductor,
+
+\[
+\mathbf D=\sigma\mathbf n,\qquad \mathbf E=\frac{\mathbf D}{\varepsilon}.
+\]
+
+Por tanto,
+
+\[
+p=\frac{\sigma^2}{2\varepsilon}.
+\]
+
+La presión no depende del signo de la carga porque aparece \(\sigma^2\). Una superficie con carga positiva y otra con carga negativa, si tienen el mismo \(|\sigma|\), soportan la misma presión electrostática.
+
+## 4. Conceptos clave
+
+- Conductor en equilibrio electrostático.
+  Definición precisa: cuerpo con cargas libres en el que, en equilibrio, el campo eléctrico interior es nulo y el potencial es constante.
+  Explicación desarrollada: si hubiera campo interior, las cargas libres se moverían. La condición de equilibrio impone \(\mathbf E=0\) dentro y \(V=\) constante en todo el conductor.
+  Ejemplo: una esfera metálica cargada no tiene campo dentro del metal.
+  Relación con otros conceptos: conduce a superficie equipotencial, carga superficial y campo normal.
+  Posible pregunta de examen: "Discuta si la superficie de un conductor es equipotencial y si eso implica carga superficial uniforme."
+
+- Carga inducida.
+  Definición precisa: carga superficial que aparece por redistribución de cargas libres cuando un conductor está sometido a un campo o a otros conductores cargados.
+  Explicación desarrollada: no es carga creada de la nada; es separación de carga dentro del conductor para anular el campo en el interior.
+  Ejemplo: una carga puntual próxima a un conductor descargado induce carga de signo contrario en la zona cercana.
+  Relación con otros conceptos: apantallamiento, coeficientes de influencia.
+  Posible pregunta de examen: "Una carga frente a un conductor descargado, ¿experimenta fuerza? Razone el signo."
+
+- Apantallamiento.
+  Definición precisa: anulación del efecto de campos externos en una región protegida por un conductor.
+  Explicación desarrollada: las cargas inducidas se distribuyen de manera que el campo en el interior del conductor sea cero y puede aislar una cavidad o un conductor interno.
+  Ejemplo: un conductor rodeado por una carcasa conductora no queda influido por un conductor exterior.
+  Relación con otros conceptos: permite que ciertos coeficientes de influencia sean nulos.
+  Posible pregunta de examen: "Explique cuándo un conductor externo no influye en un conductor interno."
+
+- Campo en la superficie de un conductor.
+  Definición precisa: en el exterior inmediato de un conductor cargado, el campo es normal a la superficie y vale \(\mathbf E=(\sigma/\varepsilon)\mathbf n\).
+  Explicación desarrollada: la componente tangencial debe anularse; la componente normal se fija por la carga superficial.
+  Ejemplo: en una placa conductora grande, el campo sale perpendicularmente si \(\sigma>0\).
+  Relación con otros conceptos: presión electrostática y condiciones de contorno.
+  Posible pregunta de examen: "Deduzca el campo exterior próximo a la superficie de un conductor cargado."
+
+- Capacidad de un conductor aislado.
+  Definición precisa: \(C=Q/V\), con \(V\) referido al origen elegido, normalmente el infinito.
+  Explicación desarrollada: mide la relación entre carga almacenada y potencial adquirido; depende de geometría y medio.
+  Ejemplo: dos conductores de distinta forma pueden necesitar distinta carga para alcanzar el mismo potencial.
+  Relación con otros conceptos: es un caso particular de coeficientes de capacidad.
+  Posible pregunta de examen: "¿Depende la capacidad de la carga aplicada?"
+
+- Coeficientes de potencial.
+  Definición precisa: coeficientes \(p_{ij}\) que relacionan potenciales y cargas mediante \(V_i=\sum_jp_{ij}Q_j\).
+  Explicación desarrollada: resumen la influencia geométrica de las cargas de los conductores sobre los potenciales.
+  Ejemplo: en dos esferas lejanas, \(p_{12}\) es pequeño frente a \(p_{11}\).
+  Relación con otros conceptos: su inversión da los coeficientes de capacidad e influencia; aparecen en la energía \(W_e\).
+  Posible pregunta de examen: "Calcule la capacidad de un sistema a partir de coeficientes de potencial."
+
+- Coeficientes de capacidad e influencia.
+  Definición precisa: coeficientes \(c_{ij}\) que relacionan cargas y potenciales mediante \(Q_i=\sum_jc_{ij}V_j\).
+  Explicación desarrollada: \(c_{ii}>0\) mide la respuesta propia; \(c_{ij}<0\) mide la carga inducida en \(i\) por el potencial de \(j\).
+  Ejemplo: un conductor puesto a tierra adquiere carga inducida negativa si otro conductor cercano está a potencial positivo.
+  Relación con otros conceptos: son la herramienta natural cuando hay baterías o conductores a tierra.
+  Posible pregunta de examen: "Explique el signo de los coeficientes de influencia."
+
+- Condensador.
+  Definición precisa: sistema de dos conductores con cargas \(+Q\) y \(-Q\), cuya capacidad es \(C=Q/(V_1-V_2)\).
+  Explicación desarrollada: no almacena carga neta, sino energía del campo producido entre armaduras.
+  Ejemplo: dos placas paralelas con cargas opuestas.
+  Relación con otros conceptos: capacidad, energía \(\frac12CV^2\), presión entre placas.
+  Posible pregunta de examen: "¿Qué diferencia hay entre capacitor aislado y condensador?"
+
+- Asociación de condensadores.
+  Definición precisa: combinación de condensadores en serie o paralelo sustituible por una capacidad equivalente.
+  Explicación desarrollada: en paralelo se conserva la misma diferencia de potencial; en serie, la misma carga.
+  Ejemplo: dos condensadores en paralelo tienen \(C_{\rm eq}=C_1+C_2\).
+  Relación con otros conceptos: carga, potencial y energía almacenada.
+  Posible pregunta de examen: "Determine cargas y diferencias de potencial en una red de condensadores."
+
+- Energía electrostática.
+  Definición precisa: trabajo necesario para formar una distribución de cargas en sus posiciones finales.
+  Explicación desarrollada: depende de las interacciones entre cargas y no incluye, en el caso puntual, la energía propia de creación de las cargas.
+  Ejemplo: dos cargas del mismo signo tienen energía positiva si se traen desde el infinito.
+  Relación con otros conceptos: potencial, campo y fuerza.
+  Posible pregunta de examen: "Explique el factor \(1/2\) en \(W_e=\frac12\sum q_iV_i\)."
+
+- Energía del campo.
+  Definición precisa: forma de la energía electrostática dada por \(W_e=\frac12\int\mathbf D\cdot\mathbf E\,dv\).
+  Explicación desarrollada: interpreta la energía como distribuida en el espacio donde existe campo.
+  Ejemplo: en un condensador plano ideal, el campo ocupa un volumen \(Sd\).
+  Relación con otros conceptos: densidad de energía, condensadores, fuerzas por desplazamiento virtual.
+  Posible pregunta de examen: "¿Puede usarse esta expresión directamente para cargas puntuales?"
+
+- Presión electrostática.
+  Definición precisa: fuerza normal por unidad de superficie sobre una superficie conductora cargada, \(p=\sigma^2/(2\varepsilon)\).
+  Explicación desarrollada: se obtiene de la variación de energía al desplazar virtualmente la superficie.
+  Ejemplo: dos placas de un condensador se atraen por la presión asociada al campo entre ellas.
+  Relación con otros conceptos: energía del campo, campo en la superficie, independencia del signo de la carga.
+  Posible pregunta de examen: "¿Depende la presión electrostática del signo de la carga?"
+
+## 5. Relaciones entre ideas
+
+La cadena conceptual del bloque es: cargas producen campo; el campo deriva de un potencial; los conductores imponen \( \mathbf E=0\) dentro y \(V=\) constante; esas condiciones obligan a redistribuir la carga sobre la superficie. A partir de ahí, un conductor ya no se describe solo por una densidad de carga conocida punto a punto, sino por magnitudes globales: carga total y potencial.
+
+Los coeficientes de potencial aparecen porque el potencial es lineal en las cargas. Son una consecuencia directa del principio de superposición aplicado a conductores. Si las cargas son los datos, se usa \(V_i=\sum p_{ij}Q_j\). Si los potenciales son los datos, se usa la relación inversa \(Q_i=\sum c_{ij}V_j\). No son dos teorías distintas, sino dos maneras de escribir la misma dependencia lineal.
+
+Los condensadores son sistemas de conductores especialmente importantes porque separan carga sin acumular carga neta. La capacidad mide la facilidad con la que esa separación produce una diferencia de potencial. La geometría y el dieléctrico gobiernan el resultado; por eso aparecen fórmulas distintas para placas, esferas y cilindros.
+
+La energía electrostática une las dos descripciones: la de cargas y potenciales, y la del campo. Para cargas puntuales o conductores se escribe con sumas de \(qV\) o \(QV\). Para distribuciones continuas o campos en medios materiales se escribe con integrales. En condensadores ambas formas son equivalentes y llevan a \(W_e=\frac12QV=\frac12CV^2=Q^2/(2C)\).
+
+La fuerza electrostática es una consecuencia de la variación de energía. Si un desplazamiento virtual disminuye la energía de un sistema aislado, el sistema tiende a realizarlo. Si el sistema está unido a una fuente de potencial, hay intercambio de energía con la fuente y cambia el signo efectivo de la relación entre fuerza y derivada de la energía. Esta oposición entre sistema aislado y sistema a potencial constante es una de las trampas más importantes del tema.
+
+La presión electrostática es el punto final natural: conecta campo en la superficie, energía del campo y fuerza mecánica. Al depender de \(\sigma^2\), no cambia al cambiar el signo de la carga superficial. Esta conclusión es simple, pero suele fallarse cuando se razona solo con atracción y repulsión sin pasar por energía o campo.
+
+Históricamente, el recorrido del tema sigue el desarrollo clásico de la electrostática: primero leyes de fuerza y campo; después potencial y conductores; luego capacidad y condensadores; finalmente energía y fuerzas. El interés docente de este orden es que cada concepto nuevo reduce la dificultad de problemas que, planteados solo con Coulomb, serían inmanejables.
+
+## 6. Errores habituales
+
+- Error: "Como dentro del conductor \(E=0\), fuera también debe ser cero cerca de la superficie."
+  Por qué está mal: la condición \(E=0\) se refiere al interior del conductor en equilibrio; fuera puede haber campo.
+  Corrección: justo fuera, el campo normal vale \(\mathbf E=(\sigma/\varepsilon)\mathbf n\).
+  Respuesta incorrecta: "Un conductor cargado no produce campo porque dentro \(E=0\)."
+  Respuesta correcta: "Dentro del conductor \(E=0\), pero fuera hay campo normal a la superficie si existe carga superficial."
+
+- Error: "Si la superficie es equipotencial, la carga superficial es uniforme."
+  Por qué está mal: equipotencial no implica densidad superficial constante; la densidad depende de la geometría.
+  Corrección: solo en geometrías muy simétricas, como una esfera aislada, puede ser uniforme.
+  Respuesta incorrecta: "Todo conductor cargado tiene \(\sigma=Q/S\)."
+  Respuesta correcta: "La carga está en la superficie, pero \(\sigma\) puede variar de un punto a otro."
+
+- Error: "Un conductor conectado a tierra tiene siempre carga nula."
+  Por qué está mal: estar a tierra fija el potencial, no necesariamente la carga.
+  Corrección: un conductor a tierra puede intercambiar carga con la Tierra y quedar cargado por inducción.
+  Respuesta incorrecta: "Si \(V=0\), entonces \(Q=0\)."
+  Respuesta correcta: "Si \(V=0\), el potencial está fijado; la carga depende de los otros conductores y campos presentes."
+
+- Error: "La capacidad cambia si aumento la carga."
+  Por qué está mal: en régimen lineal, \(Q\) y \(V\) cambian proporcionalmente.
+  Corrección: \(C\) depende de geometría y permitividad.
+  Respuesta incorrecta: "Al duplicar \(Q\), se duplica \(C\)."
+  Respuesta correcta: "Al duplicar \(Q\), se duplica \(V\); \(C=Q/V\) permanece igual."
+
+- Error: "Los coeficientes de influencia son positivos porque todo potencial positivo produce cargas positivas."
+  Por qué está mal: un conductor positivo induce carga de signo contrario en conductores próximos conectados a tierra.
+  Corrección: \(c_{ii}>0\) y \(c_{ij}<0\) para \(i\ne j\).
+  Respuesta incorrecta: "\(c_{12}>0\) porque \(V_2>0\)."
+  Respuesta correcta: "\(c_{12}<0\) porque mide carga inducida en 1 por el potencial de 2."
+
+- Error: "En serie se suman capacidades como en paralelo."
+  Por qué está mal: en serie la carga es la misma y se suman diferencias de potencial.
+  Corrección: en serie \(1/C_{\rm eq}=\sum 1/C_i\); en paralelo \(C_{\rm eq}=\sum C_i\).
+  Respuesta incorrecta: "Dos condensadores de \(1\,\mu{\rm F}\) en serie dan \(2\,\mu{\rm F}\)."
+  Respuesta correcta: "Dos condensadores iguales \(C\) en serie dan \(C/2\)."
+
+- Error: "La energía de \(N\) cargas es \(\sum q_iV_i\)."
+  Por qué está mal: cuenta dos veces cada interacción.
+  Corrección: hay que usar \(\frac12\sum q_iV_i\), excluyendo el potencial propio de cada carga.
+  Respuesta incorrecta: "\(W=q_1V_1+q_2V_2\)."
+  Respuesta correcta: "\(W=\frac12(q_1V_1+q_2V_2)\), con \(V_i\) debido a las otras cargas."
+
+- Error: "La energía de un condensador siempre debe escribirse como \(\frac12CV^2\)."
+  Por qué está mal: es correcta, pero puede ser incómoda o peligrosa si el sistema está aislado y cambia \(C\).
+  Corrección: si \(Q\) es constante, usar \(W=Q^2/(2C)\); si \(V\) es constante, usar \(W=\frac12CV^2\).
+  Respuesta incorrecta: "Al separar placas con batería desconectada, \(V\) se conserva."
+  Respuesta correcta: "Con batería desconectada se conserva \(Q\); al cambiar \(C\), cambia \(V\)."
+
+- Error: "La presión electrostática cambia de signo si cambia el signo de la carga."
+  Por qué está mal: \(p=\sigma^2/(2\varepsilon)\).
+  Corrección: depende del cuadrado de la densidad superficial.
+  Respuesta incorrecta: "Una superficie negativa sufre presión opuesta a una positiva."
+  Respuesta correcta: "La presión tiene el mismo módulo para \(+\sigma\) y \(-\sigma\); lo que cambia es el sentido del campo."
+
+- Error: "La expresión \(\frac12\int\mathbf D\cdot\mathbf E\,dv\) sirve sin matices para cargas puntuales."
+  Por qué está mal: el campo de una carga puntual diverge en su posición y la energía propia no es finita.
+  Corrección: para cargas puntuales se excluyen los términos de autoenergía y se calcula la energía de interacción.
+  Respuesta incorrecta: "Integro \(E^2\) hasta \(r=0\) para una carga puntual."
+  Respuesta correcta: "Para cargas puntuales uso la suma de interacciones y excluyo \(i=j\)."
+
+## 7. Preguntas orientadas a examen
+
+### 10 preguntas fáciles
+
+F1. ¿Qué condición cumple el campo eléctrico en el interior de un conductor en equilibrio electrostático?
+
+F2. ¿Por qué la superficie de un conductor en equilibrio es equipotencial?
+
+F3. ¿Dónde se sitúa la carga neta depositada sobre un conductor en equilibrio?
+
+F4. Escriba la expresión del campo eléctrico exterior próximo a la superficie de un conductor cargado.
+
+F5. Defina capacidad de un conductor aislado.
+
+F6. Defina condensador y capacidad de un condensador.
+
+F7. ¿Cuál es la capacidad de un condensador plano ideal de superficie \(S\), separación \(d\) y permitividad \(\varepsilon\)?
+
+F8. Escriba la energía electrostática de un condensador en función de \(Q\), \(V\) y \(C\).
+
+F9. ¿Qué magnitud representa \(\frac12\mathbf D\cdot\mathbf E\)?
+
+F10. ¿Depende la presión electrostática sobre un conductor del signo de la carga?
+
+### 10 preguntas medias
+
+M1. Explique por qué la carga superficial de un conductor no tiene por qué ser uniforme aunque la superficie sea equipotencial.
+
+M2. Enuncie la relación entre potenciales y cargas mediante coeficientes de potencial.
+
+M3. ¿Qué significan los coeficientes \(p_{ij}\) y por qué son simétricos?
+
+M4. Escriba la relación inversa entre cargas y potenciales mediante coeficientes de capacidad e influencia.
+
+M5. Justifique el signo de los coeficientes de capacidad y de influencia.
+
+M6. Explique la diferencia física entre un conductor aislado que almacena carga y un condensador.
+
+M7. Deduzca cualitativamente la regla de asociación de condensadores en paralelo.
+
+M8. Deduzca cualitativamente la regla de asociación de condensadores en serie.
+
+M9. Explique el factor \(1/2\) en la energía electrostática de un sistema de cargas.
+
+M10. ¿Por qué cambia el criterio de fuerza cuando el sistema está aislado o unido a una fuente de potencial?
+
+### 5 preguntas difíciles
+
+D1. A partir de \(V_i=\sum_jp_{ij}Q_j\), obtenga la energía de un sistema de conductores en función de los coeficientes de potencial.
+
+D2. Calcule la capacidad de un condensador esférico de radios \(R_1\) y \(R_2\), con permitividad \(\varepsilon\) entre armaduras.
+
+D3. Calcule la capacidad por unidad de longitud de un condensador cilíndrico coaxial de radios \(a\) y \(b\).
+
+D4. Un condensador plano se carga y se desconecta de la batería. Después se aumenta la distancia entre placas. Razone cómo cambian \(C\), \(Q\), \(V\) y \(W_e\).
+
+D5. Explique por qué la expresión de energía en función del campo no se puede aplicar sin precaución a cargas puntuales.
+
+### 5 preguntas de desarrollo largo
+
+L1. Desarrolle las propiedades electrostáticas de los conductores en equilibrio y sus consecuencias para el campo, el potencial y la distribución de carga.
+
+L2. Explique la construcción de los coeficientes de potencial y de los coeficientes de capacidad e influencia en un sistema de conductores.
+
+L3. Desarrolle el concepto de condensador, la definición de capacidad y el método general de cálculo mediante Gauss y diferencia de potencial.
+
+L4. Desarrolle la energía electrostática desde cargas puntuales hasta conductores y condensadores.
+
+L5. Desarrolle el cálculo de fuerzas y presión electrostática mediante variaciones de energía.
+
+### 5 preguntas de relación entre conceptos
+
+R1. Relacione apantallamiento, cargas inducidas y coeficientes de influencia.
+
+R2. Relacione capacidad, geometría y permitividad del medio.
+
+R3. Relacione las tres expresiones de energía de un condensador: \(\frac12QV\), \(\frac12CV^2\) y \(Q^2/(2C)\).
+
+R4. Relacione energía del campo y presión electrostática.
+
+R5. Relacione las condiciones "carga constante" y "potencial constante" con el cálculo de fuerzas.
+
+## 8. Respuestas modelo
+
+### Respuestas fáciles
+
+F1. En equilibrio electrostático, el campo eléctrico en el interior de un conductor es nulo: \(\mathbf E=0\). Si no lo fuera, las cargas libres del conductor se moverían bajo la acción de la fuerza eléctrica, de modo que no habría equilibrio.
+
+F2. Como \(\mathbf E=-\nabla V\), si \(\mathbf E=0\) dentro del conductor, entonces \(\nabla V=0\) y el potencial es constante. La superficie del conductor forma parte del mismo conductor, por lo que también está a potencial constante.
+
+F3. La carga neta depositada sobre un conductor en equilibrio se distribuye sobre su superficie. En el interior del material conductor no queda carga neta, porque una superficie gaussiana interior tendría flujo nulo y, por tanto, carga encerrada nula.
+
+F4. En el exterior inmediato de la superficie de un conductor cargado,
+
+\[
+\mathbf E=\frac{\sigma}{\varepsilon}\mathbf n.
+\]
+
+El campo es normal a la superficie. El sentido depende del signo de \(\sigma\).
+
+F5. La capacidad de un conductor aislado se define como la razón entre la carga que almacena y el potencial que adquiere:
+
+\[
+C=\frac{Q}{V}.
+\]
+
+Depende de la geometría del conductor y del medio, no de \(Q\) y \(V\) por separado.
+
+F6. Un condensador es un sistema de dos conductores con cargas iguales en módulo y opuestas en signo. Su capacidad es
+
+\[
+C=\frac{Q}{V_1-V_2},
+\]
+
+donde \(Q\) es el valor absoluto de la carga de una armadura.
+
+F7. Para placas planoparalelas ideales, despreciando efectos de borde,
+
+\[
+C=\varepsilon\frac{S}{d}.
+\]
+
+La capacidad aumenta con la superficie y la permitividad, y disminuye al aumentar la separación.
+
+F8. La energía de un condensador puede escribirse como
+
+\[
+W_e=\frac12QV=\frac12CV^2=\frac{Q^2}{2C}.
+\]
+
+Las tres formas son equivalentes si se usa \(Q=CV\).
+
+F9. La magnitud
+
+\[
+u_e=\frac12\mathbf D\cdot\mathbf E
+\]
+
+es la densidad de energía electrostática del campo. En un medio lineal también puede escribirse como \(u_e=\frac12\varepsilon E^2\).
+
+F10. No. La presión electrostática sobre una superficie conductora cargada es
+
+\[
+p=\frac{\sigma^2}{2\varepsilon}.
+\]
+
+Como depende de \(\sigma^2\), no cambia al cambiar el signo de la carga.
+
+### Respuestas medias
+
+M1. Que la superficie sea equipotencial significa que \(V\) es constante sobre ella, no que \(\sigma\) sea constante. La densidad superficial se ajusta para que el campo interior sea nulo y el campo exterior sea normal a la superficie. En geometrías no simétricas, esa condición exige una densidad superficial variable.
+
+M2. Para \(N\) conductores, los potenciales se escriben como
+
+\[
+V_i=\sum_{j=1}^{N}p_{ij}Q_j.
+\]
+
+Los coeficientes \(p_{ij}\) dependen únicamente de la geometría del sistema y del medio.
+
+M3. El coeficiente \(p_{ij}\) mide la contribución al potencial del conductor \(i\) debida a la carga del conductor \(j\), cuando se consideran las condiciones del sistema. Son simétricos, \(p_{ij}=p_{ji}\), porque el trabajo de formar el sistema no depende del orden en que se carguen los conductores.
+
+M4. La relación inversa es
+
+\[
+Q_i=\sum_{j=1}^{N}c_{ij}V_j.
+\]
+
+Los términos \(c_{ii}\) son coeficientes de capacidad y los términos \(c_{ij}\), con \(i\ne j\), son coeficientes de inducción o influencia.
+
+M5. Los coeficientes \(c_{ii}\) son positivos porque un conductor puesto a potencial positivo adquiere carga positiva. Los coeficientes \(c_{ij}\) son negativos porque un conductor a potencial positivo induce carga de signo contrario en otros conductores conectados a tierra.
+
+M6. Un conductor aislado puede tener carga neta y un potencial respecto al infinito. Un condensador, en cambio, tiene dos armaduras con cargas \(+Q\) y \(-Q\), por lo que su carga neta total es cero. Lo esencial del condensador es la separación de carga y la energía almacenada en el campo.
+
+M7. En paralelo, todos los condensadores están sometidos a la misma diferencia de potencial \(V\). La carga total es \(Q_T=Q_1+\cdots+Q_N\). Como \(Q_i=C_iV\), se obtiene \(Q_T=(C_1+\cdots+C_N)V\), de modo que \(C_{\rm eq}=\sum C_i\).
+
+M8. En serie, la carga en cada condensador es la misma en módulo. La diferencia de potencial total es la suma de las diferencias de potencial: \(V=V_1+\cdots+V_N\). Como \(V_i=Q/C_i\), queda \(V=Q\sum 1/C_i\), y por tanto \(1/C_{\rm eq}=\sum 1/C_i\).
+
+M9. El factor \(1/2\) aparece porque al sumar \(q_iV_i\), cada par de cargas se cuenta dos veces: la contribución de \(i\) sobre \(j\) y la de \(j\) sobre \(i\). Dividir por dos elimina esa doble cuenta.
+
+M10. En un sistema aislado, el trabajo mecánico procede de la variación de la energía electrostática del propio sistema, de modo que \(F_x=-(\partial W_e/\partial x)_Q\). Si los conductores están conectados a fuentes, la fuente intercambia energía con el sistema y el signo efectivo se invierte al trabajar a potencial constante.
+
+### Respuestas difíciles
+
+D1. Partimos de la energía de conductores
+
+\[
+W_e=\frac12\sum_i Q_iV_i.
+\]
+
+Sustituyendo
+
+\[
+V_i=\sum_jp_{ij}Q_j,
+\]
+
+queda
+
+\[
+W_e=\frac12\sum_i Q_i\sum_jp_{ij}Q_j
+=\frac12\sum_i\sum_jp_{ij}Q_iQ_j.
+\]
+
+Esta expresión muestra que la energía depende de las cargas y de la geometría a través de \(p_{ij}\).
+
+D2. En un condensador esférico, para \(R_1<r<R_2\),
+
+\[
+E(r)=\frac{Q}{4\pi\varepsilon r^2}.
+\]
+
+La diferencia de potencial es
+
+\[
+V=V_1-V_2=\int_{R_1}^{R_2}\frac{Q}{4\pi\varepsilon r^2}\,dr
+=\frac{Q}{4\pi\varepsilon}\left(\frac1{R_1}-\frac1{R_2}\right).
+\]
+
+Entonces
+
+\[
+C=\frac{Q}{V}=4\pi\varepsilon\frac{R_1R_2}{R_2-R_1}.
+\]
+
+D3. Para cilindros coaxiales de longitud \(l\), \(a<\rho<b\), Gauss da
+
+\[
+E(\rho)=\frac{Q}{2\pi\varepsilon l}\frac1{\rho}.
+\]
+
+La diferencia de potencial es
+
+\[
+V=\int_a^b\frac{Q}{2\pi\varepsilon l}\frac{d\rho}{\rho}
+=\frac{Q}{2\pi\varepsilon l}\ln\frac ba.
+\]
+
+La capacidad por unidad de longitud es
+
+\[
+C_l=\frac{C}{l}=\frac{2\pi\varepsilon}{\ln(b/a)}.
+\]
+
+D4. Al desconectar la batería, el condensador queda aislado y la carga \(Q\) se conserva. Si aumenta la distancia \(d\), la capacidad \(C=\varepsilon S/d\) disminuye. Como \(V=Q/C\), la diferencia de potencial aumenta. La energía
+
+\[
+W_e=\frac{Q^2}{2C}
+\]
+
+también aumenta. Ese aumento procede del trabajo mecánico realizado al separar las placas contra la atracción electrostática.
+
+D5. La expresión
+
+\[
+W_e=\frac12\int \mathbf D\cdot\mathbf E\,dv
+\]
+
+incluye la energía asociada al campo. Para una carga puntual, el campo crece como \(1/r^2\) al acercarse a la carga, y la integral de energía propia diverge en \(r=0\). Por eso, en sistemas de cargas puntuales se calcula la energía de interacción entre cargas distintas y se excluyen los términos de autoenergía.
+
+### Respuestas de desarrollo largo
+
+L1. En un conductor hay cargas libres. En equilibrio electrostático no puede existir campo eléctrico en su interior, porque las cargas libres se moverían. Por tanto, \(\mathbf E=0\) dentro del conductor. De \(\mathbf E=-\nabla V\) se deduce que el potencial es constante en todo el conductor y en su superficie. La carga neta se sitúa en la superficie, como se justifica con Gauss: una superficie cerrada dentro del conductor tiene flujo nulo, luego encierra carga neta nula. En el exterior inmediato, el campo es normal a la superficie y vale \(\mathbf E=(\sigma/\varepsilon)\mathbf n\). Si un campo externo actúa sobre el conductor, las cargas se redistribuyen hasta anular el campo interior; esas son las cargas inducidas. Esta redistribución explica el apantallamiento electrostático.
+
+L2. En un sistema de \(N\) conductores, el potencial de cada conductor depende linealmente de todas las cargas. Se escribe \(V_i=\sum_jp_{ij}Q_j\). Los coeficientes \(p_{ij}\) dependen de la geometría y son simétricos. Si se invierte el sistema, se obtiene \(Q_i=\sum_jc_{ij}V_j\). Los \(c_{ii}\) son coeficientes de capacidad, positivos; los \(c_{ij}\), con \(i\ne j\), son coeficientes de influencia, negativos. La primera forma es adecuada si se conocen cargas; la segunda, si se imponen potenciales o conexiones a tierra. Ambas describen el mismo sistema físico desde datos distintos.
+
+L3. Un condensador está formado por dos conductores con cargas opuestas \(+Q\) y \(-Q\). Su capacidad se define como \(C=Q/(V_1-V_2)\). Para calcularla se supone una carga \(Q\), se halla el campo entre armaduras mediante Gauss si hay simetría, se calcula la diferencia de potencial integrando el campo, y se divide \(Q\) entre esa diferencia de potencial. En placas planas se obtiene \(C=\varepsilon S/d\); en esferas concéntricas, \(C=4\pi\varepsilon R_1R_2/(R_2-R_1)\); en cilindros coaxiales, \(C_l=2\pi\varepsilon/\ln(b/a)\). La capacidad depende de la geometría y del dieléctrico, no de la carga particular.
+
+L4. La energía electrostática es el trabajo necesario para formar una distribución de cargas. Para cargas puntuales se suma la interacción entre pares, excluyendo la autoenergía, y se obtiene \(W_e=\frac12\sum q_iV_i\). Para distribuciones continuas se sustituye la suma por integrales: \(W_e=\frac12\int\rho V\,dv+\frac12\int\sigma V\,ds\). En conductores, como cada conductor es equipotencial, queda \(W_e=\frac12\sum Q_iV_i\). En un condensador, esto se reduce a \(W_e=\frac12QV=\frac12CV^2=Q^2/(2C)\). También puede verse como energía del campo: \(W_e=\frac12\int\mathbf D\cdot\mathbf E\,dv\).
+
+L5. Las fuerzas electrostáticas pueden calcularse mediante desplazamientos virtuales. Si el sistema está aislado, las cargas permanecen constantes y el trabajo mecánico sale de la variación de energía electrostática: \(F_x=-(\partial W_e/\partial x)_Q\). Si los conductores están conectados a fuentes de potencial, la fuente intercambia energía y el signo efectivo cambia al trabajar a \(V\) constante. La presión sobre un conductor cargado se obtiene desplazando virtualmente una superficie elemental normal a ella. Como dentro del conductor el campo es nulo, se obtiene \(p=\frac12\mathbf D\cdot\mathbf E\), y en la superficie \(p=\sigma^2/(2\varepsilon)\). Por eso no depende del signo de la carga.
+
+### Respuestas de relación entre conceptos
+
+R1. Las cargas inducidas son la redistribución superficial que permite que el campo interior del conductor sea nulo. El apantallamiento es una consecuencia global de esa redistribución: una región queda protegida de campos externos. En coeficientes de influencia, esto puede traducirse en coeficientes nulos entre conductores separados por una pantalla conductora.
+
+R2. La capacidad mide \(Q/V\), pero no depende de \(Q\) ni de \(V\) como variables independientes. Depende de la geometría porque esta determina el campo para una carga dada, y depende de \(\varepsilon\) porque el medio modifica la relación entre \(\mathbf D\) y \(\mathbf E\). Por eso un dieléctrico aumenta la capacidad respecto al vacío si \(\varepsilon>\varepsilon_0\).
+
+R3. Las tres expresiones son equivalentes porque \(Q=CV\). La forma \(\frac12QV\) muestra el origen energético como carga por potencial medio durante el proceso de carga. La forma \(\frac12CV^2\) conviene cuando \(V\) está fijado. La forma \(Q^2/(2C)\) conviene cuando el condensador está aislado y \(Q\) se conserva.
+
+R4. La energía del campo tiene densidad \(u_e=\frac12\mathbf D\cdot\mathbf E\). La presión electrostática sobre una superficie conductora se obtiene al considerar cómo cambia esa energía si la superficie se desplaza. Por eso la presión toma la misma forma básica, \(p=\frac12\mathbf D\cdot\mathbf E\), y en la superficie se reduce a \(p=\sigma^2/(2\varepsilon)\).
+
+R5. Si la carga es constante, el sistema está aislado y se usa la energía con \(Q\) fijo; para un condensador suele convenir \(W_e=Q^2/(2C)\). Si el potencial es constante, hay una fuente conectada, y conviene usar \(W_e=\frac12CV^2\), teniendo en cuenta el intercambio energético con la fuente. Confundir estas condiciones cambia el signo o la conclusión física de la fuerza.
+
+## 9. Resumen final de repaso
+
+Ideas principales:
+- En un conductor en equilibrio electrostático, \(\mathbf E=0\) en el interior y \(V\) es constante.
+- La carga neta de un conductor se sitúa en la superficie.
+- El campo exterior inmediato es normal a la superficie: \(\mathbf E=(\sigma/\varepsilon)\mathbf n\).
+- Un sistema de conductores se describe mediante \(V_i=\sum p_{ij}Q_j\) o mediante \(Q_i=\sum c_{ij}V_j\).
+- Un condensador tiene cargas \(+Q\) y \(-Q\), y capacidad \(C=Q/(V_1-V_2)\).
+- La capacidad depende de geometría y permitividad.
+- La energía electrostática puede escribirse con cargas, potenciales o campos.
+- La presión electrostática sobre un conductor es \(p=\sigma^2/(2\varepsilon)\).
+
+Conceptos imprescindibles:
+- Conductor equipotencial.
+- Carga inducida.
+- Apantallamiento.
+- Capacidad.
+- Coeficientes de potencial.
+- Coeficientes de capacidad e influencia.
+- Condensador.
+- Energía de cargas.
+- Energía del campo.
+- Fuerza por variación de energía.
+- Presión electrostática.
+
+Relaciones clave:
+- \(\mathbf E=0\) dentro del conductor \(\Rightarrow V=\) constante.
+- Superficie equipotencial \(\Rightarrow\) campo exterior normal.
+- \(V_i=\sum p_{ij}Q_j\) \(\Leftrightarrow\) \(Q_i=\sum c_{ij}V_j\).
+- \(C=Q/V\) y \(W_e=\frac12QV\).
+- \(\mathbf D=\varepsilon\mathbf E\) \(\Rightarrow u_e=\frac12\mathbf D\cdot\mathbf E\).
+- Variación de energía \(\Rightarrow\) fuerza y presión.
+
+Errores que evitar:
+- Confundir \(E=0\) dentro con \(E=0\) fuera.
+- Suponer que \(\sigma\) siempre es uniforme.
+- Pensar que tierra implica carga nula.
+- Usar reglas de resistencias para condensadores sin razonar.
+- Contar dos veces la energía de interacción.
+- Aplicar energía de campo a cargas puntuales sin excluir autoenergía.
+- Usar \(\frac12CV^2\) cuando el dato conservado es \(Q\).
+- Decir que la presión depende del signo de la carga.
+
+## 10. Checklist de dominio
+
+- Si no puedes explicar por qué \(\mathbf E=0\) dentro de un conductor en equilibrio, falta repasar conductores y movimiento de cargas libres.
+
+- Si no puedes deducir que un conductor es equipotencial, falta repasar la relación \(\mathbf E=-\nabla V\).
+
+- Si confundes superficie equipotencial con densidad superficial uniforme, revisar la diferencia entre condición de potencial y distribución de carga.
+
+- Si no sabes justificar que la carga neta está en la superficie, falta repasar el teorema de Gauss aplicado al interior del conductor.
+
+- Si no puedes escribir \(\mathbf E=(\sigma/\varepsilon)\mathbf n\), falta repasar condiciones de contorno en la superficie de un conductor.
+
+- Si confundes capacidad con carga almacenada, revisar la definición \(C=Q/V\) y su dependencia geométrica.
+
+- Si confundes \(p_{ij}\) con \(c_{ij}\), revisar qué relación usa cargas como incógnitas y cuál usa potenciales como incógnitas.
+
+- Si no sabes justificar \(c_{ii}>0\) y \(c_{ij}<0\), falta repasar inducción electrostática y conductores a tierra.
+
+- Si no puedes calcular \(C=\varepsilon S/d\) desde Gauss y potencial, falta repasar el método general de cálculo de capacidades.
+
+- Si no puedes distinguir serie y paralelo en condensadores, revisar qué magnitud es común: \(Q\) en serie y \(V\) en paralelo.
+
+- Si no sabes de dónde sale el factor \(1/2\) en \(W_e=\frac12\sum q_iV_i\), falta repasar doble conteo de interacciones.
+
+- Si incluyes el potencial propio de una carga puntual en \(V_i\), revisar autoenergía y exclusión de términos \(i=j\).
+
+- Si no puedes pasar de \(W_e=\frac12\sum Q_iV_i\) a \(W_e=\frac12\sum_{ij}p_{ij}Q_iQ_j\), falta repasar coeficientes de potencial.
+
+- Si no sabes cuándo usar \(W_e=\frac12CV^2\) o \(W_e=Q^2/(2C)\), revisar la diferencia entre batería conectada y condensador aislado.
+
+- Si dices que la energía de un condensador está en las placas, revisar la interpretación de \(W_e=\frac12\int\mathbf D\cdot\mathbf E\,dv\).
+
+- Si no puedes explicar por qué la presión electrostática no depende del signo de la carga, falta repasar \(p=\sigma^2/(2\varepsilon)\).
+
+- Si puedes resolver un condensador plano, uno esférico y uno cilíndrico usando Gauss, potencial y \(C=Q/V\), el bloque de capacidad está suficientemente asentado.
+
+- Si puedes discutir qué cambia al separar placas con batería conectada y con batería desconectada, el bloque de energía y fuerzas está razonablemente dominado.
+
+- Si puedes responder sin formulario a una cuestión sobre presión electrostática y otra sobre coeficientes de potencial, el capítulo está preparado para examen básico.
+
+- Si puedes detectar en un enunciado si se conserva \(Q\) o se conserva \(V\), el capítulo está asentado para problemas tipo UNED.
