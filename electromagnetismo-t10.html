@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="color-scheme" content="light dark" />
+  <title>Electromagnetismo I &mdash; T10 Corriente el&eacute;ctrica y conducci&oacute;n</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/icon-32.png" />
+  <link rel="icon" type="image/png" sizes="50x50" href="assets/icons/icon-50.png" />
+  <link rel="apple-touch-icon" sizes="100x100" href="assets/icons/icon-100.png" />
+  <meta name="theme-color" content="#7c2d12" />
+  <link rel="stylesheet" href="assets/styles.css" />
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+  <script defer src="assets/app.js"></script>
+</head>
+<body class="subject-electromagnetismo">
+  <div class="wrap">
+    <header class="cover">
+      <div class="top-actions">
+        <a class="back-link" href="index.html">&larr; Volver al &iacute;ndice</a>
+        <a class="back-link secondary" href="#preguntas">Preguntas</a>
+        <a class="back-link secondary" href="#checklist">Checklist</a>
+      </div>
+      <p class="eyebrow">Electromagnetismo I &middot; Tema 10</p>
+      <h1>Corriente el&eacute;ctrica y conducci&oacute;n</h1>
+      <p class="subtitle">Intensidad y densidad de corriente, continuidad, leyes de Ohm y Joule, condiciones de contorno, relajaci&oacute;n, fuerza electromotriz y leyes de Kirchhoff.</p>
+      <p class="source-note">Capítulo trabajado: T10 / EM10 — Corriente eléctrica y conducción</p>
+      <p class="source-note">Fuente principal: Victoriano López Rodríguez, Electromagnetismo I, UNED, capítulo 10: Corriente eléctrica.</p>
+      <div class="chips"><span class="chip">tema 10</span><span class="chip">apuntes completos</span><span class="chip">MathJax</span><span class="chip">mapa clicable</span><span class="chip">orientado a examen</span><span class="chip">estado: listo</span></div>
+    </header>
+    <div class="toolbar no-print">
+      <nav><a href="#mapa">Mapa</a><a href="#prerrequisitos">Prerrequisitos</a><a href="#idea-central">Idea central</a><a href="#desarrollo">Desarrollo</a><a href="#conceptos">Conceptos</a><a href="#errores">Errores</a><a href="#preguntas">Preguntas</a><a href="#respuestas">Respuestas</a><a href="#resumen">Resumen</a><a href="#checklist">Checklist</a></nav>
+      <div class="toolbar-actions"><button class="btn" onclick="printReady()">Imprimir / guardar PDF</button></div>
+    </div>
+    <main>
+      <section class="page" id="mapa">
+        <div class="page-head"><h2>Mapa conceptual clicable</h2><span class="page-no">T10 &middot; mapa</span></div>
+        <div class="concept-map">
+          <a class="map-node" href="#prerrequisitos"><span>Prerrequisitos</span><small>Campo, potencial, flujo, divergencia, contorno y conductores.</small></a>
+          <a class="map-node" href="#idea-central"><span>Idea central</span><small>Describir el transporte de carga y la disipaci&oacute;n en conductores reales.</small></a>
+          <a class="map-node" href="#desarrollo"><span>Desarrollo</span><small>Corriente, continuidad, Ohm, Joule, fronteras, relajaci&oacute;n, f.e.m. y circuitos.</small></a>
+          <a class="map-node" href="#conceptos"><span>Conceptos clave</span><small>Intensidad, densidad, conductividad, resistencia, potencia y Kirchhoff.</small></a>
+          <a class="map-node" href="#relaciones"><span>Relaciones</span><small>De las leyes locales de campo a las leyes macrosc&oacute;picas de circuitos.</small></a>
+          <a class="map-node" href="#errores"><span>Errores habituales</span><small>Equilibrio frente a conducci&oacute;n, magnitudes locales, hip&oacute;tesis y signos.</small></a>
+          <a class="map-node" href="#preguntas"><span>Preguntas</span><small>35 cuestiones por dificultad y tipo de razonamiento.</small></a>
+          <a class="map-node" href="#respuestas"><span>Respuestas modelo</span><small>Soluciones razonadas para todas las preguntas.</small></a>
+          <a class="map-node" href="#resumen"><span>Resumen</span><small>F&oacute;rmulas, conexiones y errores para el repaso.</small></a>
+          <a class="map-node" href="#checklist"><span>Checklist</span><small>Control final de conducci&oacute;n y circuitos.</small></a>
+        </div>
+      </section>
+      <section class="page" id="prerrequisitos"><div class="page-head"><h2>1. Prerrequisitos m&iacute;nimos</h2><span class="page-no">1</span></div><div class="card-grid">
+          <article class="definition-card"><h3>campo eléctrico \(\mathbf{E}\).</h3>
+            <p>Definición breve: campo vectorial que expresa la fuerza eléctrica por unidad de carga positiva. Por qué es necesario: en este capítulo la corriente de conducción aparece porque las cargas móviles son arrastradas por un campo eléctrico dentro del conductor. La ley local básica será \(\mathbf{J}=\gamma \mathbf{E}\). Ejemplo mínimo: si en un metal hay un campo \(\mathbf{E}\), los electrones sienten una fuerza \(-e\mathbf{E}\), aunque el sentido convencional de la corriente se toma como el de \(\mathbf{J}\), que coincide con el de \(\mathbf{E}\) en un conductor óhmico.</p></article>
+          <article class="definition-card"><h3>potencial eléctrico \(V\).</h3>
+            <p>Definición breve: magnitud escalar asociada al campo conservativo mediante \(\mathbf{E}=-\nabla V\). Por qué es necesario: la diferencia de potencial entre dos puntos permite definir la ley macroscópica de Ohm, \(V=RI\), y calcular resistencias cuando el problema se resuelve mediante el potencial. Ejemplo mínimo: en un cilindro conductor uniforme de longitud \(l\), si el campo es uniforme, la diferencia de potencial entre extremos es \(V=El\).</p></article>
+          <article class="definition-card"><h3>flujo de un campo vectorial.</h3>
+            <p>Definición breve: integral de superficie \(\int_S \mathbf{A}\cdot d\mathbf{s}\), que mide cuánto atraviesa el campo una superficie orientada. Por qué es necesario: la intensidad de corriente se obtiene integrando la densidad de corriente sobre una superficie: \(I=\int_S \mathbf{J}\cdot d\mathbf{s}\). La ecuación de continuidad también se formula como flujo de \(\mathbf{J}\) a través de una superficie cerrada. Ejemplo mínimo: si \(\mathbf{J}\) es uniforme y perpendicular a una sección \(S\), entonces \(I=JS\).</p></article>
+          <article class="definition-card"><h3>divergencia.</h3>
+            <p>Definición breve: operador diferencial que mide localmente el flujo neto saliente de un campo vectorial por unidad de volumen. Por qué es necesario: la forma diferencial de la conservación de la carga es \(\nabla\cdot\mathbf{J}+\partial\rho/\partial t=0\). En corriente continua queda \(\nabla\cdot\mathbf{J}=0\). Ejemplo mínimo: en un conductor cilíndrico de sección constante con corriente estacionaria uniforme, no puede aparecer una divergencia positiva o negativa de \(\mathbf{J}\) en el interior, porque eso implicaría acumulación o desaparición de carga.</p></article>
+          <article class="definition-card"><h3>teorema de la divergencia.</h3>
+            <p>Definición breve: relaciona el flujo de un campo por una superficie cerrada con la integral de su divergencia en el volumen encerrado:</p>
+            <div class="formula-block">\[
+\oint_S \mathbf{A}\cdot d\mathbf{s}=\int_V \nabla\cdot\mathbf{A}\,dv.
+\]</div>
+            <p>Por qué es necesario: permite pasar de la forma integral de la ecuación de continuidad a su forma diferencial. Ejemplo mínimo: aplicar el teorema a \(\mathbf{J}\) transforma \(\oint_S\mathbf{J}\cdot d\mathbf{s}\) en \(\int_V\nabla\cdot\mathbf{J}\,dv\).</p></article>
+          <article class="definition-card"><h3>condiciones de contorno electrostáticas.</h3>
+            <p>Definición breve: relaciones que cumplen las componentes normales y tangenciales de los campos al cruzar una superficie de separación. Por qué es necesario: el capítulo extiende este tipo de razonamiento a \(\mathbf{J}\), \(\mathbf{D}\) y \(\mathbf{E}\) en conductores con distinta conductividad y permitividad. Ejemplo mínimo: en régimen estacionario, la componente normal de \(\mathbf{J}\) es continua al atravesar una frontera entre medios: \(J_{n1}=J_{n2}\).</p></article>
+          <article class="definition-card"><h3>conductores en electrostática.</h3>
+            <p>Definición breve: en equilibrio electrostático el campo eléctrico en el interior de un conductor idealizado es nulo y la carga libre se sitúa en la superficie. Por qué es necesario: el capítulo empieza precisamente rompiendo esa situación: para que haya corriente en un conductor real debe existir campo eléctrico en su interior. Ejemplo mínimo: un conductor aislado cargado en equilibrio tiene \(\mathbf{E}=0\) dentro; un conductor por el que circula corriente continua tiene, en general, \(\mathbf{E}\neq 0\).</p></article>
+          <article class="definition-card"><h3>energía y potencia.</h3>
+            <p>Definición breve: la potencia es energía transferida por unidad de tiempo, \(P=dW/dt\). Por qué es necesario: la ley de Joule interpreta la corriente como un proceso disipativo: la energía eléctrica se transforma en energía térmica. Ejemplo mínimo: si una resistencia \(R\) conduce una corriente \(I\), la potencia disipada es \(P=RI^2\).</p></article>
+          <article class="definition-card"><h3>circuitos elementales.</h3>
+            <p>Definición breve: idealización de conductores, generadores y resistencias como elementos conectados por ramas y nudos. Por qué es necesario: las leyes de Kirchhoff se introducen como traducciones macroscópicas de conservación de carga y energía. Ejemplo mínimo: en un nudo, si entran \(I_1\) e \(I_2\) y sale \(I_3\), debe cumplirse \(I_1+I_2-I_3=0\).</p></article>
+          <article class="definition-card"><h3>ecuación de Laplace.</h3>
+            <p>Definición breve: ecuación \(\nabla^2 V=0\) que aparece en regiones sin carga libre cuando el potencial gobierna el campo. Por qué es necesario: para calcular resistencias de geometría no trivial se puede resolver primero el problema de potencial y luego usar \(\mathbf{J}=\gamma\mathbf{E}\). Ejemplo mínimo: en un cable coaxial, la simetría cilíndrica permite resolver \(V(\rho)\), obtener \(E_\rho\) y después calcular la corriente radial.</p></article>
+        </div></section>
+      <section class="page" id="idea-central"><div class="page-head"><h2>2. Idea central del cap&iacute;tulo</h2><span class="page-no">2</span></div><article class="reading-block">
+            <p>El capítulo abandona la situación puramente electrostática de cargas en reposo y entra en el estudio de cargas que se mueven de manera prácticamente uniforme. El cambio conceptual es importante: en electrostática el campo dentro de un conductor en equilibrio es nulo, mientras que en conducción debe existir un campo dentro del conductor para mantener el movimiento de las cargas. Esa diferencia es una fuente frecuente de errores: un conductor con corriente no se trata como un conductor electrostático perfecto.</p>
+            <p>El problema físico que se aborda es cómo describir de forma macroscópica el transporte de carga. Para ello se introducen dos magnitudes: la intensidad de corriente \(I\), que mide carga por unidad de tiempo atravesando una superficie, y la densidad de corriente \(\mathbf{J}\), que describe localmente ese transporte. La relación \(I=\int_S \mathbf{J}\cdot d\mathbf{s}\) permite pasar del punto al circuito.</p>
+            <p>A partir de ahí el capítulo impone una restricción física fundamental: la carga se conserva. La ecuación de continuidad es la formulación matemática de esa conservación. En régimen estacionario no se acumula carga en el interior de un volumen, por lo que el flujo neto de corriente a través de cualquier superficie cerrada es nulo. La primera ley de Kirchhoff aparece como una consecuencia directa de esta idea aplicada a un nudo.</p>
+            <p>Después se estudia cómo responde un medio conductor al campo eléctrico. La ley de Ohm se presenta en dos niveles. En el nivel macroscópico, \(V=RI\), relaciona diferencia de potencial e intensidad. En el nivel local, \(\mathbf{J}=\gamma\mathbf{E}\), relaciona densidad de corriente y campo mediante la conductividad del material. La resistencia ya no es solo una propiedad del material: depende también de la geometría. Un mismo material puede ofrecer resistencias distintas si cambia la longitud, la sección o la disposición de los conductores.</p>
+            <p>La conducción tiene un coste energético. Las cargas que se mueven chocan con la red del material o con otros portadores, y parte de la energía se transforma en calor. La ley de Joule expresa esta disipación mediante \(P=RI^2\) o, localmente, mediante \(\mathbf{E}\cdot\mathbf{J}\). Esta parte conecta con la fuerza electromotriz: si toda corriente en un conductor disipa energía, para mantener una corriente continua en un circuito cerrado hace falta una fuente de energía, es decir, un campo no conservativo.</p>
+            <p>La fuerza electromotriz se introduce como la integral de línea del campo no conservativo que mantiene el movimiento de las cargas:</p>
+            <div class="formula-block">\[
+\mathcal{E}=\oint_C \mathbf{E}_0\cdot d\mathbf{l}.
+\]</div>
+            <p>No es simplemente una diferencia de potencial, aunque en circuito abierto coincide con la diferencia de potencial entre los bornes del generador. Esta distinción es esencial: el potencial procede del campo conservativo; la f.e.m. procede de un mecanismo capaz de suministrar energía al circuito.</p>
+            <p>El capítulo culmina en las leyes de Kirchhoff. La primera se apoya en la conservación de la carga. La segunda se apoya en la conservación de la energía: la suma de las fuerzas electromotrices en una malla se iguala a la suma de las caídas de tensión resistivas. En conjunto, el capítulo crea el puente entre el campo electromagnético y la teoría elemental de circuitos.</p>
+        </article></section>
+      <section class="page" id="desarrollo"><div class="page-head"><h2>3. Desarrollo completo del cap&iacute;tulo</h2><span class="page-no">3</span></div>
+        <article class="reading-block" id="3-1-de-la-electrostatica-a-la-conduccion"><h3>3.1. De la electrostática a la conducción</h3>
+            <p>Hasta este punto de la asignatura se han estudiado campos producidos por cargas estáticas. En ese marco, el conductor en equilibrio tiene una propiedad muy fuerte: su campo interior es nulo. El capítulo 10 cambia de régimen. Ahora interesan cargas que se mueven, pero no de forma arbitraria, sino de manera compatible con una corriente estable o casi estable.</p>
+            <p>La primera consecuencia es que dentro de un conductor por el que circula corriente debe haber campo eléctrico. Si no hubiera campo, no habría fuerza que mantuviera el arrastre de las cargas. Esto no significa que los electrones se desplacen a la velocidad con la que se propaga la perturbación electromagnética por el circuito. El campo se establece muy deprisa a lo largo del conductor; el movimiento medio de los portadores puede ser lento. Esta diferencia entre propagación de la señal y velocidad de arrastre es básica para entender por qué al cerrar un circuito el efecto se percibe casi instantáneamente en puntos alejados.</p>
+            <p>El conductor con corriente continua se considera globalmente neutro en cada volumen macroscópico: hay cargas móviles y cargas fijas de la red, pero no una carga neta volumétrica apreciable en un conductor homogéneo e isótropo en régimen estacionario. Esto permite que no aparezca un campo electrostático exterior por exceso de carga volumétrica, aunque la corriente sí producirá campo magnético, tema que se estudiará después.</p></article>
+        <article class="reading-block" id="3-2-tipos-de-corriente"><h3>3.2. Tipos de corriente</h3>
+            <p>El capítulo distingue varios tipos de corriente según el mecanismo físico que produce el transporte de carga. La corriente de conducción es la que se estudia aquí con detalle: aparece cuando las cargas se arrastran dentro de un medio eléctricamente neutro. En un metal, los portadores son electrones libres; en un electrolito, iones positivos y negativos; en un semiconductor, electrones y huecos.</p>
+            <p>La corriente de convección tiene otra naturaleza: se produce cuando una masa material transporta carga al moverse. El ejemplo conceptual es un fluido con iones que se desplaza, o un haz de partículas cargadas.</p>
+            <p>El capítulo también menciona corrientes que serán más importantes en campos variables con el tiempo: la corriente de polarización, asociada a la variación temporal de \(\mathbf{P}\), y la corriente de desplazamiento, asociada a la variación temporal de \(\mathbf{D}\). No son el centro del capítulo, pero conviene verlas como ampliación natural de la idea de corriente cuando el campo electromagnético ya no es estacionario.</p></article>
+        <article class="reading-block" id="3-3-intensidad-de-corriente"><h3>3.3. Intensidad de corriente</h3>
+            <p>La intensidad de corriente se define como la carga neta que atraviesa una superficie por unidad de tiempo:</p>
+            <div class="formula-block">\[
+I=\frac{dq}{dt}.
+\]</div>
+            <p>Su unidad en el SI es el amperio, \(1\,\mathrm{A}=1\,\mathrm{C/s}\). Esta definición es global: se refiere a lo que atraviesa una superficie completa.</p>
+            <p>Es importante entender que \(I\) no es un vector. En circuitos se le asigna un sentido de referencia, pero matemáticamente es una magnitud escalar con signo según la orientación adoptada. El vector que sí describe dirección local es la densidad de corriente \(\mathbf{J}\).</p></article>
+        <article class="reading-block" id="3-4-densidad-de-corriente"><h3>3.4. Densidad de corriente</h3>
+            <p>La densidad de corriente mide corriente por unidad de superficie en un punto. Si se considera una superficie elemental normal a la dirección de la corriente, se define:</p>
+            <div class="formula-block">\[
+\mathbf{J}=\lim_{\Delta s\to 0}\frac{\Delta I}{\Delta s}.
+\]</div>
+            <p>Su unidad es \(\mathrm{A/m^2}\).</p>
+            <p>La forma microscópica que usa el capítulo parte de grupos de cargas con densidad \(\rho_j\) y velocidad media \(\langle \mathbf{v}\rangle_j\):</p>
+            <div class="formula-block">\[
+\mathbf{J}=\sum_j \rho_j \langle \mathbf{v}\rangle_j.
+\]</div>
+            <p>Para un solo tipo de portador:</p>
+            <div class="formula-block">\[
+\mathbf{J}=\rho \langle \mathbf{v}\rangle=nq\langle \mathbf{v}\rangle.
+\]</div>
+            <p>Esta expresión fija una idea fundamental: la corriente no depende solo de que las cargas se muevan, sino de que haya movimiento neto orientado. En ausencia de campo, las cargas pueden moverse térmicamente de forma aleatoria, pero si el promedio vectorial de velocidades no produce arrastre neto, no hay corriente macroscópica.</p>
+            <p>La relación entre \(I\) y \(\mathbf{J}\) es:</p>
+            <div class="formula-block">\[
+dI=\mathbf{J}\cdot d\mathbf{s},\qquad I=\int_S \mathbf{J}\cdot d\mathbf{s}.
+\]</div>
+            <p>El producto escalar selecciona la componente normal de \(\mathbf{J}\) a la superficie. Si una corriente es tangencial a una superficie, no la atraviesa; por tanto, no contribuye al flujo por esa superficie.</p></article>
+        <article class="reading-block" id="3-5-lineas-y-tubos-de-corriente"><h3>3.5. Líneas y tubos de corriente</h3>
+            <p>Las líneas de corriente son curvas tangentes a \(\mathbf{J}\) en cada punto. Un tubo de corriente es una superficie formada por líneas de corriente. En régimen estacionario, por cualquier sección transversal de un mismo tubo pasa la misma corriente, porque no puede atravesar corriente por las paredes del tubo si \(\mathbf{J}\) es tangente a ellas.</p>
+            <p>Este concepto no es decorativo. En problemas de simetría permite elegir superficies de integración adecuadas y razonar si la corriente que atraviesa dos secciones debe ser la misma. Es el análogo conductor de las líneas de campo, pero con una diferencia: las líneas de \(\mathbf{J}\) representan transporte real de carga.</p></article>
+        <article class="reading-block" id="3-6-conservacion-de-la-carga-y-ecuacion-de-continuidad"><h3>3.6. Conservación de la carga y ecuación de continuidad</h3>
+            <p>La carga no se crea ni se destruye. Si una superficie cerrada \(S\) encierra un volumen \(V\), el flujo saliente de corriente debe igualar la disminución de carga dentro del volumen:</p>
+            <div class="formula-block">\[
+\oint_S \mathbf{J}\cdot d\mathbf{s}=-\frac{dQ}{dt}.
+\]</div>
+            <p>Como</p>
+            <div class="formula-block">\[
+Q=\int_V \rho\,dv,
+\]</div>
+            <p>se obtiene:</p>
+            <div class="formula-block">\[
+\oint_S \mathbf{J}\cdot d\mathbf{s}=-\frac{d}{dt}\int_V \rho\,dv.
+\]</div>
+            <p>Esta es la forma integral de la ecuación de continuidad. El signo menos importa: si sale corriente neta de un volumen, la carga dentro disminuye.</p>
+            <p>Aplicando el teorema de la divergencia:</p>
+            <div class="formula-block">\[
+\oint_S \mathbf{J}\cdot d\mathbf{s}=\int_V \nabla\cdot\mathbf{J}\,dv,
+\]</div>
+            <p>y como la igualdad debe cumplirse para cualquier volumen, se obtiene la forma diferencial:</p>
+            <div class="formula-block">\[
+\nabla\cdot\mathbf{J}+\frac{\partial \rho}{\partial t}=0.
+\]</div>
+            <p>Esta ecuación es una de las más importantes del capítulo. No es una ley empírica de un material: es conservación de carga escrita localmente.</p>
+            <p>En corriente continua no hay acumulación local de carga:</p>
+            <div class="formula-block">\[
+\frac{\partial \rho}{\partial t}=0,
+\]</div>
+            <p>y por tanto:</p>
+            <div class="formula-block">\[
+\nabla\cdot\mathbf{J}=0.
+\]</div>
+            <p>Esto significa que en régimen estacionario no hay fuentes ni sumideros de corriente dentro del conductor. La corriente que entra en una región debe salir.</p></article>
+        <article class="reading-block" id="3-7-primera-ley-de-kirchhoff"><h3>3.7. Primera ley de Kirchhoff</h3>
+            <p>La primera ley de Kirchhoff se obtiene aplicando la ecuación de continuidad a un nudo. Si en el nudo no se acumula carga, la suma algebraica de corrientes que entran y salen debe ser nula:</p>
+            <div class="formula-block">\[
+\sum_i I_i=0.
+\]</div>
+            <p>Esta ley no es una regla de cálculo independiente del electromagnetismo; es la conservación de la carga aplicada a circuitos. Por eso en examen conviene justificarla así. Decir solo "la suma de corrientes es cero" es incompleto si se pregunta su fundamento.</p></article>
+        <article class="reading-block" id="3-8-ley-de-ohm-macroscopica"><h3>3.8. Ley de Ohm macroscópica</h3>
+            <p>Ohm estableció experimentalmente que, para ciertos conductores, la diferencia de potencial aplicada y la corriente resultante son proporcionales:</p>
+            <div class="formula-block">\[
+V=RI.
+\]</div>
+            <p>La constante \(R\) es la resistencia eléctrica y se mide en ohmios:</p>
+            <div class="formula-block">\[
+1\,\Omega=1\,\mathrm{V/A}.
+\]</div>
+            <p>Esta ley caracteriza conductores lineales u óhmicos. Que un material o dispositivo sea conductor no significa automáticamente que cumpla \(V=RI\) con \(R\) constante. La linealidad exige que \(R\) no dependa del voltaje aplicado o de la corriente.</p></article>
+        <article class="reading-block" id="3-9-ley-de-ohm-puntual"><h3>3.9. Ley de Ohm puntual</h3>
+            <p>El capítulo no se queda en \(V=RI\). Desciende al nivel local. En un metal, el campo eléctrico acelera a los electrones entre choques; al chocar con la red, pierden parte de la energía adquirida y el promedio produce una velocidad de arrastre. El texto expresa esta idea mediante:</p>
+            <div class="formula-block">\[
+\langle\mathbf{v}\rangle=\mu\mathbf{E},
+\]</div>
+            <p>donde \(\mu\) es la movilidad del portador.</p>
+            <p>Para un tipo de carga:</p>
+            <div class="formula-block">\[
+\mathbf{J}=nq\langle\mathbf{v}\rangle=nq\mu\mathbf{E}.
+\]</div>
+            <p>La constante de proporcionalidad se llama conductividad:</p>
+            <div class="formula-block">\[
+\gamma=\rho\mu,
+\]</div>
+            <p>y la ley de Ohm en forma puntual queda:</p>
+            <div class="formula-block">\[
+\mathbf{J}=\gamma\mathbf{E}.
+\]</div>
+            <p>La resistividad es la inversa:</p>
+            <div class="formula-block">\[
+\rho_c=\frac{1}{\gamma}.
+\]</div>
+            <p>No debe confundirse \(\rho\), densidad de carga, con \(\rho_c\), resistividad. Esta confusión es frecuente porque ambas se escriben con letras parecidas.</p>
+            <p>El comportamiento del medio se clasifica según cómo sea \(\gamma\). Si no depende del campo, el medio es lineal. Si no depende de la dirección, es isótropo. Si no depende del punto, es homogéneo. En este capítulo, muchas fórmulas simples requieren medio lineal, homogéneo e isótropo.</p></article>
+        <article class="reading-block" id="3-10-resistencia-de-un-conductor-cilindrico"><h3>3.10. Resistencia de un conductor cilíndrico</h3>
+            <p>La resistividad es propiedad del material; la resistencia depende del material y de la geometría. Para un conductor cilíndrico de longitud \(l\), sección \(S\), conductividad \(\gamma\) y campo uniforme:</p>
+            <div class="formula-block">\[
+V=El,\qquad I=\gamma ES.
+\]</div>
+            <p>Por tanto:</p>
+            <div class="formula-block">\[
+R=\frac{V}{I}=\frac{1}{\gamma}\frac{l}{S}=\rho_c\frac{l}{S}.
+\]</div>
+            <p>Esta fórmula dice mucho físicamente: aumentar la longitud aumenta la resistencia; aumentar la sección la disminuye; usar un material de mayor resistividad la aumenta.</p>
+            <p>En examen, esta deducción es más segura que memorizar la fórmula sin condiciones. La fórmula \(R=\rho_c l/S\) solo es directa para geometría uniforme y corriente distribuida homogéneamente.</p></article>
+        <article class="reading-block" id="3-11-ley-de-joule"><h3>3.11. Ley de Joule</h3>
+            <p>Cuando las cargas se mueven en un conductor, chocan con otras cargas y con los átomos del material. La energía transferida al material aparece como energía térmica. Si entre los extremos de un elemento hay diferencia de potencial \(V\), el trabajo para trasladar una carga \(dq\) es:</p>
+            <div class="formula-block">\[
+dW=V\,dq.
+\]</div>
+            <p>La potencia es:</p>
+            <div class="formula-block">\[
+P=\frac{dW}{dt}=V\frac{dq}{dt}=VI.
+\]</div>
+            <p>Si el elemento es una resistencia óhmica, \(V=RI\), luego:</p>
+            <div class="formula-block">\[
+P=RI^2.
+\]</div>
+            <p>También puede escribirse:</p>
+            <div class="formula-block">\[
+P=\frac{V^2}{R},
+\]</div>
+            <p>pero la forma destacada en el capítulo es \(P=RI^2\), como potencia disipada en calor.</p>
+            <p>La consecuencia conceptual es fuerte: una corriente continua en una resistencia necesita una fuente de energía permanente. Si no hay fuente, la disipación acabaría anulando la corriente.</p></article>
+        <article class="reading-block" id="3-12-ley-de-joule-en-forma-local"><h3>3.12. Ley de Joule en forma local</h3>
+            <p>El capítulo expresa la disipación en términos de campos:</p>
+            <div class="formula-block">\[
+dP=\mathbf{E}\cdot\mathbf{J}\,dv.
+\]</div>
+            <p>Por tanto, la densidad de potencia disipada es:</p>
+            <div class="formula-block">\[
+\frac{dP}{dv}=\mathbf{E}\cdot\mathbf{J}.
+\]</div>
+            <p>En un volumen \(V\):</p>
+            <div class="formula-block">\[
+P=\int_V \mathbf{E}\cdot\mathbf{J}\,dv.
+\]</div>
+            <p>Usando \(\mathbf{J}=\gamma\mathbf{E}\):</p>
+            <div class="formula-block">\[
+P=\int_V \gamma E^2\,dv=\int_V \frac{J^2}{\gamma}\,dv.
+\]</div>
+            <p>De aquí se obtiene una expresión útil para la resistencia de un volumen conductor:</p>
+            <div class="formula-block">\[
+R=\frac{1}{I^2}\int_V \mathbf{E}\cdot\mathbf{J}\,dv.
+\]</div>
+            <p>Esta relación es importante para geometrías no elementales, porque permite calcular la resistencia a partir de la disipación total.</p></article>
+        <article class="reading-block" id="3-13-condiciones-en-los-limites-para-corriente-estacionaria"><h3>3.13. Condiciones en los límites para corriente estacionaria</h3>
+            <p>En una frontera entre dos medios conductores con conductividades \(\gamma_1,\gamma_2\) y permitividades \(\varepsilon_1,\varepsilon_2\), los campos deben cumplir condiciones derivadas de continuidad de carga, Gauss y carácter conservativo del campo eléctrico fuera de las fuentes.</p>
+            <p>Para corrientes estacionarias:</p>
+            <div class="formula-block">\[
+\oint_S \mathbf{J}\cdot d\mathbf{s}=0,\qquad
+\oint_S \mathbf{D}\cdot d\mathbf{s}=Q,\qquad
+\oint_C \mathbf{E}\cdot d\mathbf{l}=0.
+\]</div>
+            <p>De ellas se deduce:</p>
+            <div class="formula-block">\[
+J_{n1}=J_{n2},
+\]</div>
+            <div class="formula-block">\[
+D_{n2}-D_{n1}=\sigma,
+\]</div>
+            <div class="formula-block">\[
+E_{t1}=E_{t2}.
+\]</div>
+            <p>Combinando con \(\mathbf{D}=\varepsilon\mathbf{E}\) y \(\mathbf{J}=\gamma\mathbf{E}\):</p>
+            <div class="formula-block">\[
+\gamma_1 E_{n1}=\gamma_2 E_{n2},
+\]</div>
+            <div class="formula-block">\[
+\varepsilon_2E_{n2}-\varepsilon_1E_{n1}=\sigma,
+\]</div>
+            <div class="formula-block">\[
+\frac{J_{t1}}{\gamma_1}=\frac{J_{t2}}{\gamma_2}.
+\]</div>
+            <p>Si hay componente normal de corriente, la densidad de carga superficial en la separación puede escribirse:</p>
+            <div class="formula-block">\[
+\sigma=J_n\left(\frac{\varepsilon_2}{\gamma_2}-\frac{\varepsilon_1}{\gamma_1}\right).
+\]</div>
+            <p>Estas fórmulas no deben aplicarse mecánicamente. Hay que identificar antes qué componente es normal, qué componente es tangencial y cuál es la orientación de la normal escogida.</p></article>
+        <article class="reading-block" id="3-14-carga-en-conductores-homogeneos-y-no-homogeneos"><h3>3.14. Carga en conductores homogéneos y no homogéneos</h3>
+            <p>El capítulo analiza una diferencia sutil. En un conductor lineal, homogéneo e isótropo con corriente continua no se acumula carga en el volumen. Se parte de:</p>
+            <div class="formula-block">\[
+\nabla\cdot\mathbf{J}=0,\qquad \mathbf{J}=\gamma\mathbf{E},\qquad \mathbf{D}=\varepsilon\mathbf{E}.
+\]</div>
+            <p>Si \(\varepsilon\) y \(\gamma\) son constantes, se obtiene \(\rho=0\) en el volumen.</p>
+            <p>En un conductor no homogéneo, sin embargo, la relación \(\varepsilon/\gamma\) puede variar espacialmente. Entonces puede aparecer densidad de carga asociada a esa variación:</p>
+            <div class="formula-block">\[
+\mathbf{J}\cdot\nabla\left(\frac{\varepsilon}{\gamma}\right)=\rho.
+\]</div>
+            <p>La idea física es que no toda carga asociada a conducción aparece en los electrodos; también puede aparecer en fronteras o zonas donde cambian las propiedades materiales.</p></article>
+        <article class="reading-block" id="3-15-resistencia-y-capacidad-de-un-sistema-de-dos-conductores"><h3>3.15. Resistencia y capacidad de un sistema de dos conductores</h3>
+            <p>El capítulo muestra una analogía entre problemas de conducción estacionaria y problemas electrostáticos. Considera dos conductores ideales inmersos en un medio lineal, homogéneo e isótropo de conductividad \(\gamma\) y permitividad \(\varepsilon\). Si se conoce el campo entre ellos, la resistencia puede escribirse:</p>
+            <div class="formula-block">\[
+R=\frac{\int_L \mathbf{E}\cdot d\mathbf{l}}{\int_{S_1}\gamma\mathbf{E}\cdot d\mathbf{s}}.
+\]</div>
+            <p>La conductancia es:</p>
+            <div class="formula-block">\[
+G=\frac{\int_{S_1}\gamma\mathbf{E}\cdot d\mathbf{s}}{\int_L \mathbf{E}\cdot d\mathbf{l}}.
+\]</div>
+            <p>La capacidad del mismo sistema es:</p>
+            <div class="formula-block">\[
+C=\frac{\varepsilon\int_{S_1}\mathbf{E}\cdot d\mathbf{s}}{\int_L\mathbf{E}\cdot d\mathbf{l}}.
+\]</div>
+            <p>Para medio lineal, homogéneo e isótropo:</p>
+            <div class="formula-block">\[
+RC=\frac{\varepsilon}{\gamma}.
+\]</div>
+            <p>Esta relación no es universal sin condiciones. Falla si no se pueden extraer \(\varepsilon\) y \(\gamma\) de las integrales o si hay varios medios que obligan a tratar fronteras internas.</p>
+            <p>El método práctico es: se supone una diferencia de potencial \(V_0\), se resuelve \(V\) mediante Laplace cuando procede, se calcula \(\mathbf{E}=-\nabla V\), luego \(\mathbf{J}=\gamma\mathbf{E}\), se integra para obtener \(I\), y finalmente \(R=V_0/I\).</p></article>
+        <article class="reading-block" id="3-16-tiempo-de-relajacion"><h3>3.16. Tiempo de relajación</h3>
+            <p>Cuando se coloca carga dentro de un conductor, no permanece indefinidamente en el volumen. En un medio lineal, homogéneo e isótropo, la combinación de continuidad, ley de Ohm y Gauss lleva a:</p>
+            <div class="formula-block">\[
+\rho(t)=\rho_0 e^{-\gamma t/\varepsilon}.
+\]</div>
+            <p>El tiempo de relajación se define como:</p>
+            <div class="formula-block">\[
+\tau=\frac{\varepsilon}{\gamma}.
+\]</div>
+            <p>Es el tiempo en el que la densidad de carga baja hasta \(e^{-1}\) de su valor inicial, aproximadamente el \(36{,}8\%\). En buenos conductores \(\gamma\) es grande, luego \(\tau\) es muy pequeño. Por eso, en muchos problemas electrostáticos se puede considerar que el equilibrio se alcanza casi inmediatamente.</p>
+            <p>La idea examinable es que la desaparición de carga volumétrica en un conductor no es mágica ni instantánea en sentido matemático: se describe por un decaimiento exponencial.</p></article>
+        <article class="reading-block" id="3-17-fuerza-electromotriz"><h3>3.17. Fuerza electromotriz</h3>
+            <p>La corriente en un circuito cerrado no puede mantenerse solo con un campo electrostático. Si \(\mathbf{E}\) es conservativo:</p>
+            <div class="formula-block">\[
+\oint_C \mathbf{E}\cdot d\mathbf{l}=0.
+\]</div>
+            <p>Usando \(\mathbf{J}=\gamma\mathbf{E}\), esto no permite sostener una corriente cerrada con disipación. Hace falta un campo no conservativo \(\mathbf{E}_0\), producido por un generador.</p>
+            <p>La ley local se escribe entonces:</p>
+            <div class="formula-block">\[
+\mathbf{J}=\gamma(\mathbf{E}+\mathbf{E}_0).
+\]</div>
+            <p>La fuerza electromotriz se define como:</p>
+            <div class="formula-block">\[
+\mathcal{E}=\oint_C \mathbf{E}_0\cdot d\mathbf{l}.
+\]</div>
+            <p>Su unidad es el voltio, pero no debe confundirse con una diferencia de potencial en todos los casos. La f.e.m. mide energía por unidad de carga suministrada por el mecanismo no conservativo. Una pila, una batería o un generador electromagnético son fuentes de este tipo de campo.</p>
+            <p>En circuito abierto, \(\mathbf{J}=0\). En ese caso la f.e.m. coincide con la diferencia de potencial entre bornes:</p>
+            <div class="formula-block">\[
+\mathcal{E}=V_B-V_A.
+\]</div>
+            <p>En circuito cerrado, la diferencia de potencial entre bornes disminuye por la caída interna:</p>
+            <div class="formula-block">\[
+V_B-V_A=\mathcal{E}-R_g I.
+\]</div>
+            <p>Si el dispositivo funciona como receptor o se está cargando, aparece:</p>
+            <div class="formula-block">\[
+V_B-V_A=\mathcal{E}+R_g I.
+\]</div>
+            <p>La resistencia interna \(R_g\) representa la caída de tensión asociada al paso de corriente dentro del propio generador.</p></article>
+        <article class="reading-block" id="3-18-segunda-ley-de-kirchhoff"><h3>3.18. Segunda ley de Kirchhoff</h3>
+            <p>En un circuito con un generador de f.e.m. \(\mathcal{E}\), resistencia interna \(R_g\) y resistencia externa \(R_e\), la ecuación energética es:</p>
+            <div class="formula-block">\[
+\mathcal{E}=I(R_g+R_e).
+\]</div>
+            <p>Para varios generadores y resistencias en serie:</p>
+            <div class="formula-block">\[
+\sum_k \mathcal{E}_k=\sum_i R_i I.
+\]</div>
+            <p>En una malla con ramas donde las corrientes pueden ser distintas:</p>
+            <div class="formula-block">\[
+\sum_k \mathcal{E}_k=\sum_i R_i I_i.
+\]</div>
+            <p>Esta es la segunda ley de Kirchhoff. Su fundamento es la conservación de la energía. Si se multiplica por la corriente, la potencia suministrada por los generadores se iguala a la potencia disipada en resistencias:</p>
+            <div class="formula-block">\[
+I\sum_k\mathcal{E}_k=\sum_i R_i I^2.
+\]</div>
+            <p>En examen, conviene cuidar los signos. Una f.e.m. puede contar como subida o como bajada según el sentido de recorrido elegido en la malla. Una resistencia recorrida en el sentido de la corriente representa caída de potencial.</p></article>
+        <article class="reading-block" id="3-19-asociacion-de-resistencias"><h3>3.19. Asociación de resistencias</h3>
+            <p>Las resistencias en serie conducen la misma corriente. Aplicando la segunda ley de Kirchhoff:</p>
+            <div class="formula-block">\[
+R_{\mathrm{eq}}=R_1+R_2+\cdots+R_N.
+\]</div>
+            <p>La resistencia equivalente es mayor que cualquiera de las parciales.</p>
+            <p>Las resistencias en paralelo comparten la misma diferencia de potencial. Aplicando la primera ley de Kirchhoff al nudo:</p>
+            <div class="formula-block">\[
+\frac{1}{R_{\mathrm{eq}}}=\frac{1}{R_1}+\frac{1}{R_2}+\cdots+\frac{1}{R_N}.
+\]</div>
+            <p>La resistencia equivalente en paralelo es menor que la menor de las resistencias individuales.</p>
+            <p>Estas fórmulas son consecuencia de Kirchhoff, no reglas aisladas. Por eso, en problemas, si una asociación no es claramente serie o paralelo, no se deben aplicar sin analizar nudos, ramas y corrientes.</p></article>
+      </section>
+      <section class="page" id="conceptos"><div class="page-head"><h2>4. Conceptos clave</h2><span class="page-no">4</span></div><div class="card-grid">
+          <article class="definition-card"><h3>corriente eléctrica.</h3>
+            <p>Definición precisa: movimiento de partículas cargadas que produce desplazamiento neto de carga en una dirección. Explicación desarrollada: no basta con que existan cargas móviles; debe haber un arrastre neto. En un conductor sin campo, los movimientos microscópicos aleatorios no producen corriente macroscópica. Ejemplo: electrones libres en un metal sometido a un campo eléctrico. Relación con otros conceptos: se mide globalmente mediante \(I\) y localmente mediante \(\mathbf{J}\). Posible forma de preguntarlo en examen: "Defina corriente eléctrica y distinga corriente de conducción y de convección."</p></article>
+          <article class="definition-card"><h3>corriente de conducción.</h3>
+            <p>Definición precisa: corriente debida al arrastre de cargas dentro de un medio eléctricamente neutro. Explicación desarrollada: es la corriente tratada por la ley de Ohm en el capítulo. En metales intervienen electrones; en electrolitos, iones; en semiconductores, electrones y huecos. Ejemplo: corriente en un hilo metálico conectado a una batería. Relación con otros conceptos: se describe por \(\mathbf{J}=\gamma\mathbf{E}\) cuando el medio es óhmico. Posible forma de preguntarlo en examen: "¿Qué tipo de corriente describe la ley de Ohm puntual?"</p></article>
+          <article class="definition-card"><h3>corriente de convección.</h3>
+            <p>Definición precisa: corriente producida por transporte de masa que arrastra carga. Explicación desarrollada: aquí el movimiento de la materia lleva consigo carga. No es el fenómeno principal del capítulo, pero sirve para no identificar toda corriente con conducción óhmica. Ejemplo: un haz de electrones en un tubo o un fluido con iones en movimiento. Relación con otros conceptos: también transporta carga, pero no se modela necesariamente con \(\mathbf{J}=\gamma\mathbf{E}\). Posible forma de preguntarlo en examen: "Compare corriente de conducción y corriente de convección."</p></article>
+          <article class="definition-card"><h3>intensidad de corriente \(I\).</h3>
+            <p>Definición precisa: carga neta que atraviesa una superficie por unidad de tiempo, \(I=dq/dt\). Explicación desarrollada: es una magnitud global asociada a una superficie. En circuitos se le da signo según un sentido de referencia. Ejemplo: si pasan \(2\,\mathrm{C}\) en \(1\,\mathrm{s}\), \(I=2\,\mathrm{A}\). Relación con otros conceptos: se obtiene integrando \(\mathbf{J}\): \(I=\int_S\mathbf{J}\cdot d\mathbf{s}\). Posible forma de preguntarlo en examen: "Explique la relación entre intensidad y densidad de corriente."</p></article>
+          <article class="definition-card"><h3>densidad de corriente \(\mathbf{J}\).</h3>
+            <p>Definición precisa: corriente por unidad de área en un punto, orientada según el transporte convencional de carga. Explicación desarrollada: permite describir cómo se reparte la corriente en el espacio. No todas las zonas de una sección tienen por qué llevar la misma corriente si \(\mathbf{J}\) no es uniforme. Ejemplo: en un hilo homogéneo con corriente uniforme, \(J=I/S\). Relación con otros conceptos: aparece en continuidad, Ohm puntual, Joule local y condiciones de contorno. Posible forma de preguntarlo en examen: "Calcule \(I\) a partir de una densidad \(\mathbf{J}\) dada."</p></article>
+          <article class="definition-card"><h3>velocidad media de arrastre.</h3>
+            <p>Definición precisa: velocidad media de los portadores que contribuye al transporte neto de carga. Explicación desarrollada: el movimiento microscópico es caótico, pero el campo introduce una componente media. Esa componente produce corriente. Ejemplo: \(\mathbf{J}=nq\langle\mathbf{v}\rangle\). Relación con otros conceptos: se relaciona con la movilidad mediante \(\langle\mathbf{v}\rangle=\mu\mathbf{E}\). Posible forma de preguntarlo en examen: "Justifique la forma local de la ley de Ohm a partir de la movilidad."</p></article>
+          <article class="definition-card"><h3>ecuación de continuidad.</h3>
+            <p>Definición precisa: expresión de la conservación de la carga,</p>
+            <div class="formula-block">\[
+\nabla\cdot\mathbf{J}+\frac{\partial\rho}{\partial t}=0.
+\]</div>
+            <p>Explicación desarrollada: si la divergencia de \(\mathbf{J}\) es positiva, sale corriente neta de la región y la densidad de carga disminuye; si es negativa, entra más corriente de la que sale y la densidad aumenta. Ejemplo: en corriente estacionaria, \(\partial\rho/\partial t=0\), por lo que \(\nabla\cdot\mathbf{J}=0\). Relación con otros conceptos: fundamenta la primera ley de Kirchhoff. Posible forma de preguntarlo en examen: "Derive la primera ley de Kirchhoff a partir de la ecuación de continuidad."</p></article>
+          <article class="definition-card"><h3>corriente continua.</h3>
+            <p>Definición precisa: corriente que no depende del tiempo en cada punto. Explicación desarrollada: no implica necesariamente que el campo sea uniforme en el espacio; implica ausencia de variación temporal local de carga en régimen estacionario. Ejemplo: una batería conectada a una resistencia ideal en régimen permanente. Relación con otros conceptos: conduce a \(\nabla\cdot\mathbf{J}=0\). Posible forma de preguntarlo en examen: "¿Qué simplificación introduce la corriente continua en la ecuación de continuidad?"</p></article>
+          <article class="definition-card"><h3>primera ley de Kirchhoff.</h3>
+            <p>Definición precisa: en un nudo, la suma algebraica de corrientes que entran y salen es nula:</p>
+            <div class="formula-block">\[
+\sum_i I_i=0.
+\]</div>
+            <p>Explicación desarrollada: el nudo no puede acumular carga en régimen estacionario; por tanto, lo que entra debe salir. Ejemplo: si entran \(3\,\mathrm{A}\) y \(2\,\mathrm{A}\), debe salir \(5\,\mathrm{A}\). Relación con otros conceptos: es la versión de circuito de la conservación de la carga. Posible forma de preguntarlo en examen: "¿De qué ley fundamental procede la primera ley de Kirchhoff?"</p></article>
+          <article class="definition-card"><h3>ley de Ohm macroscópica.</h3>
+            <p>Definición precisa: relación \(V=RI\) para conductores óhmicos. Explicación desarrollada: expresa proporcionalidad entre tensión aplicada e intensidad. La resistencia es constante solo en materiales o dispositivos lineales dentro del régimen considerado. Ejemplo: una resistencia de \(10\,\Omega\) con \(2\,\mathrm{A}\) tiene \(V=20\,\mathrm{V}\). Relación con otros conceptos: se conecta con la ley puntual integrando campo y corriente en una geometría concreta. Posible forma de preguntarlo en examen: "¿Cuándo es válida la ley de Ohm \(V=RI\)?"</p></article>
+          <article class="definition-card"><h3>ley de Ohm puntual.</h3>
+            <p>Definición precisa:</p>
+            <div class="formula-block">\[
+\mathbf{J}=\gamma\mathbf{E}.
+\]</div>
+            <p>Explicación desarrollada: relaciona la respuesta local del medio con el campo aplicado. La conductividad \(\gamma\) caracteriza el material. Ejemplo: si \(\gamma=5\,\mathrm{S/m}\) y \(E=2\,\mathrm{V/m}\), entonces \(J=10\,\mathrm{A/m^2}\). Relación con otros conceptos: permite obtener resistencia, disipación y condiciones de contorno. Posible forma de preguntarlo en examen: "Explique la diferencia entre la ley de Ohm macroscópica y puntual."</p></article>
+          <article class="definition-card"><h3>conductividad \(\gamma\).</h3>
+            <p>Definición precisa: constante de proporcionalidad entre \(\mathbf{J}\) y \(\mathbf{E}\) en un medio óhmico. Explicación desarrollada: mide la facilidad con que el material conduce corriente. Puede depender del punto, de la dirección o del campo si el medio no es homogéneo, isótropo o lineal. Ejemplo: un buen metal tiene alta conductividad. Relación con otros conceptos: \(\rho_c=1/\gamma\), \(\mathbf{J}=\gamma\mathbf{E}\), \(\tau=\varepsilon/\gamma\). Posible forma de preguntarlo en examen: "Defina conductividad y resistividad."</p></article>
+          <article class="definition-card"><h3>resistividad \(\rho_c\).</h3>
+            <p>Definición precisa: inversa de la conductividad, \(\rho_c=1/\gamma\). Explicación desarrollada: caracteriza la oposición intrínseca del material al paso de corriente. Ejemplo: en un cilindro \(R=\rho_c l/S\). Relación con otros conceptos: no debe confundirse con densidad de carga \(\rho\). Posible forma de preguntarlo en examen: "¿Por qué resistencia y resistividad no son lo mismo?"</p></article>
+          <article class="definition-card"><h3>resistencia \(R\).</h3>
+            <p>Definición precisa: cociente entre diferencia de potencial e intensidad en un conductor óhmico: \(R=V/I\). Explicación desarrollada: depende del material y de la geometría. No es una propiedad puramente material. Ejemplo: \(R=\rho_c l/S\) para cilindro uniforme. Relación con otros conceptos: aparece en Joule, Kirchhoff y asociaciones. Posible forma de preguntarlo en examen: "Calcule la resistencia de un conductor de geometría dada."</p></article>
+          <article class="definition-card"><h3>ley de Joule.</h3>
+            <p>Definición precisa: potencia disipada en una resistencia:</p>
+            <div class="formula-block">\[
+P=RI^2.
+\]</div>
+            <p>Explicación desarrollada: representa conversión de energía eléctrica en calor por choques de los portadores con el material. Ejemplo: una resistencia de \(4\,\Omega\) atravesada por \(3\,\mathrm{A}\) disipa \(36\,\mathrm{W}\). Relación con otros conceptos: exige una fuente de energía si se quiere mantener corriente permanente. Posible forma de preguntarlo en examen: "Explique por qué una corriente continua necesita una fuente de energía."</p></article>
+          <article class="definition-card"><h3>densidad de potencia disipada.</h3>
+            <p>Definición precisa:</p>
+            <div class="formula-block">\[
+\frac{dP}{dv}=\mathbf{E}\cdot\mathbf{J}.
+\]</div>
+            <p>Explicación desarrollada: mide potencia disipada por unidad de volumen. En medio óhmico se escribe \(\gamma E^2\) o \(J^2/\gamma\). Ejemplo: si \(\mathbf{E}\) y \(\mathbf{J}\) son paralelos, la disipación local es \(EJ\). Relación con otros conceptos: permite calcular \(R\) mediante integración en el volumen. Posible forma de preguntarlo en examen: "Derive la expresión integral de la potencia disipada en un volumen conductor."</p></article>
+          <article class="definition-card"><h3>condiciones en los límites de \(\mathbf{J}\).</h3>
+            <p>Definición precisa: en régimen estacionario, \(J_{n1}=J_{n2}\). Explicación desarrollada: si la componente normal de la corriente no fuera continua, se acumularía carga indefinidamente en la frontera. Ejemplo: en dos materiales en serie con la misma sección, la densidad normal de corriente es la misma en ambos. Relación con otros conceptos: se combina con \(\mathbf{J}=\gamma\mathbf{E}\) para obtener campos normales distintos. Posible forma de preguntarlo en examen: "Derive la condición de continuidad de la componente normal de \(\mathbf{J}\)."</p></article>
+          <article class="definition-card"><h3>carga superficial en frontera conductora.</h3>
+            <p>Definición precisa:</p>
+            <div class="formula-block">\[
+\sigma=J_n\left(\frac{\varepsilon_2}{\gamma_2}-\frac{\varepsilon_1}{\gamma_1}\right).
+\]</div>
+            <p>Explicación desarrollada: aparece cuando la relación \(\varepsilon/\gamma\) cambia al cruzar la frontera y existe corriente normal. Ejemplo: dos conductores de distinta conductividad unidos en serie pueden acumular carga en la unión. Relación con otros conceptos: procede de combinar Gauss con continuidad de \(\mathbf{J}\). Posible forma de preguntarlo en examen: "¿Por qué puede existir carga superficial en la unión de dos conductores con corriente?"</p></article>
+          <article class="definition-card"><h3>relación \(RC=\varepsilon/\gamma\).</h3>
+            <p>Definición precisa: producto resistencia-capacidad para dos conductores en un medio lineal, homogéneo e isótropo. Explicación desarrollada: surge porque el mismo campo geométrico sirve para calcular conducción y capacidad cuando \(\varepsilon\) y \(\gamma\) son constantes. Ejemplo: sistema coaxial con un solo medio entre conductores. Relación con otros conceptos: vincula problemas electrostáticos y de conducción. Posible forma de preguntarlo en examen: "Indique las condiciones de validez de \(RC=\varepsilon/\gamma\)."</p></article>
+          <article class="definition-card"><h3>tiempo de relajación \(\tau\).</h3>
+            <p>Definición precisa:</p>
+            <div class="formula-block">\[
+\tau=\frac{\varepsilon}{\gamma}.
+\]</div>
+            <p>Explicación desarrollada: tiempo característico con que una densidad de carga volumétrica decae en un conductor homogéneo. Ejemplo: \(\rho(t)=\rho_0 e^{-t/\tau}\). Relación con otros conceptos: conecta continuidad, Gauss y Ohm. Posible forma de preguntarlo en examen: "Deduzca la ley de decaimiento de la carga volumétrica en un conductor."</p></article>
+          <article class="definition-card"><h3>fuerza electromotriz.</h3>
+            <p>Definición precisa:</p>
+            <div class="formula-block">\[
+\mathcal{E}=\oint_C\mathbf{E}_0\cdot d\mathbf{l},
+\]</div>
+            <p>donde \(\mathbf{E}_0\) es un campo no conservativo. Explicación desarrollada: mide la energía por unidad de carga suministrada por un generador. No es, en general, una diferencia de potencial electrostática. Ejemplo: una pila proporciona f.e.m. mediante procesos electroquímicos. Relación con otros conceptos: permite mantener corriente frente a la disipación Joule. Posible forma de preguntarlo en examen: "Explique por qué la f.e.m. no debe identificarse siempre con una d.d.p."</p></article>
+          <article class="definition-card"><h3>resistencia interna de un generador.</h3>
+            <p>Definición precisa: resistencia efectiva \(R_g\) asociada a la caída de tensión dentro del generador cuando suministra corriente. Explicación desarrollada: hace que la tensión entre bornes sea menor que la f.e.m. en descarga:</p>
+            <div class="formula-block">\[
+V_B-V_A=\mathcal{E}-R_g I.
+\]</div>
+            <p>Ejemplo: una batería con alta resistencia interna pierde mucha tensión al entregar corriente. Relación con otros conceptos: aparece en la segunda ley de Kirchhoff y en el balance de potencia. Posible forma de preguntarlo en examen: "Distinga f.e.m. y tensión en bornes de un generador real."</p></article>
+          <article class="definition-card"><h3>segunda ley de Kirchhoff.</h3>
+            <p>Definición precisa: en una malla, la suma algebraica de f.e.m. es igual a la suma de caídas resistivas:</p>
+            <div class="formula-block">\[
+\sum_k\mathcal{E}_k=\sum_i R_iI_i.
+\]</div>
+            <p>Explicación desarrollada: expresa conservación de energía en un circuito cerrado. Ejemplo: \(\mathcal{E}=I(R_g+R_e)\). Relación con otros conceptos: se combina con la primera ley para analizar redes. Posible forma de preguntarlo en examen: "Justifique la segunda ley de Kirchhoff como conservación de energía."</p></article>
+          <article class="definition-card"><h3>resistencias en serie.</h3>
+            <p>Definición precisa: resistencias atravesadas por la misma corriente. Explicación desarrollada: las caídas de tensión se suman, por lo que la resistencia equivalente es la suma. Ejemplo: \(R_{\mathrm{eq}}=R_1+R_2\). Relación con otros conceptos: se deduce de la segunda ley de Kirchhoff. Posible forma de preguntarlo en examen: "Derive la asociación en serie desde Kirchhoff."</p></article>
+          <article class="definition-card"><h3>resistencias en paralelo.</h3>
+            <p>Definición precisa: resistencias sometidas a la misma diferencia de potencial. Explicación desarrollada: las corrientes se reparten entre ramas y se suman en los nudos. Ejemplo: \(1/R_{\mathrm{eq}}=1/R_1+1/R_2\). Relación con otros conceptos: se deduce de la primera ley de Kirchhoff. Posible forma de preguntarlo en examen: "Derive la asociación en paralelo desde Kirchhoff."</p></article>
+        </div></section>
+      <section class="page" id="relaciones"><div class="page-head"><h2>5. Relaciones entre ideas</h2><span class="page-no">5</span></div><article class="reading-block">
+            <p>El capítulo está organizado en una cadena conceptual muy precisa. Primero se define qué se mueve: cargas. Después se cuantifica el movimiento mediante \(I\) y \(\mathbf{J}\). Luego se impone la conservación de la carga mediante la ecuación de continuidad. A partir de ahí aparecen las leyes de circuitos como versiones integradas y simplificadas de principios de campo.</p>
+            <p>La intensidad \(I\) depende de la elección de una superficie, mientras que \(\mathbf{J}\) es una magnitud local. Esta relación punto-superficie es fundamental. Si el problema da \(\mathbf{J}\), no se debe inventar \(I\): hay que integrar \(\mathbf{J}\cdot d\mathbf{s}\). Si el problema da \(I\) y hay simetría, se puede deducir \(\mathbf{J}\) repartiendo la corriente sobre una superficie adecuada.</p>
+            <p>La ecuación de continuidad conecta corriente y carga. Si \(\nabla\cdot\mathbf{J}\neq 0\), hay variación temporal de \(\rho\). Si el régimen es estacionario, \(\nabla\cdot\mathbf{J}=0\). Esta última ecuación se traduce en que la corriente no nace ni muere dentro del conductor. En circuitos, esta misma idea se convierte en la primera ley de Kirchhoff.</p>
+            <p>La ley de Ohm puntual conecta el campo que empuja las cargas con la densidad de corriente que resulta. La ley macroscópica \(V=RI\) aparece cuando se integran campo y corriente en una geometría concreta. Por tanto, \(R\) no es una constante misteriosa: resume material y forma. En geometrías sencillas se obtiene \(R=\rho_c l/S\); en geometrías generales se calcula resolviendo el campo.</p>
+            <p>La ley de Joule introduce la consecuencia energética de la conducción. Si \(\mathbf{J}\) existe en un medio resistivo, hay disipación \(\mathbf{E}\cdot\mathbf{J}\). Esta disipación obliga a introducir la fuerza electromotriz. La oposición importante es esta: el campo electrostático es conservativo y no puede sostener una corriente cerrada; el generador introduce un campo no conservativo que sí puede suministrar energía por ciclo cerrado.</p>
+            <p>Las condiciones en los límites enlazan conducción y electrostática. La componente tangencial de \(\mathbf{E}\) sigue siendo continua si el campo es conservativo fuera de fuentes, pero la componente normal de \(\mathbf{J}\) debe ser continua en estacionario. Eso obliga a que los campos normales sean distintos si las conductividades son distintas. De ahí puede surgir carga superficial en la frontera.</p>
+            <p>La relación \(RC=\varepsilon/\gamma\) revela una jerarquía útil: en un medio lineal, homogéneo e isótropo, la misma geometría que determina la capacidad determina también la resistencia de fuga o conducción. Pero esta relación depende de hipótesis materiales. Si hay varios medios o propiedades variables, hay que volver a las integrales y a las condiciones de contorno.</p>
+            <p>El tiempo de relajación se sitúa entre electrostática y conducción. Explica por qué los conductores alcanzan rápidamente el equilibrio electrostático: cualquier carga volumétrica decae exponencialmente. Así se entiende mejor la afirmación electrostática de que la carga se sitúa en la superficie; no es una imposición arbitraria, sino el resultado dinámico de la conducción.</p>
+            <p>Las leyes de Kirchhoff cierran el capítulo al nivel de circuitos. La primera procede de conservación de carga. La segunda procede de conservación de energía. Las asociaciones de resistencias en serie y paralelo no son recetas aisladas: la serie sale de sumar caídas de tensión en una misma corriente; el paralelo sale de sumar corrientes en ramas con la misma tensión.</p>
+            <p>Históricamente, el capítulo refleja la transición desde una ley experimental, la de Ohm, hacia una lectura de campo. Ohm proporciona \(V=RI\); la teoría de campos proporciona \(\mathbf{J}=\gamma\mathbf{E}\), continuidad, condiciones de contorno y balance energético. Para examen UNED, suele ser más valioso mostrar esa conexión que limitarse a escribir fórmulas.</p>
+        </article></section>
+      <section class="page" id="errores"><div class="page-head"><h2>6. Errores habituales</h2><span class="page-no">6</span></div>
+        <details class="accordion error-box"><summary>creer que en todo conductor el campo interior es nulo.</summary>
+            <p>Por qué está mal: eso solo corresponde al equilibrio electrostático. En conducción debe haber campo dentro del conductor para mantener la corriente. Corrección: distinguir conductor en equilibrio electrostático de conductor con corriente. Ejemplo de respuesta incorrecta: "Como es conductor, \(\mathbf{E}=0\) dentro, luego no puede haber caída de tensión." Ejemplo de respuesta correcta: "En un conductor óhmico con corriente estacionaria existe \(\mathbf{E}\neq 0\) y \(\mathbf{J}=\gamma\mathbf{E}\)."</p></details>
+        <details class="accordion error-box"><summary>confundir intensidad \(I\) con densidad de corriente \(\mathbf{J}\).</summary>
+            <p>Por qué está mal: \(I\) es escalar asociado a una superficie; \(\mathbf{J}\) es vector local. Corrección: usar \(I=\int_S\mathbf{J}\cdot d\mathbf{s}\). Ejemplo incorrecto: "La densidad de corriente es \(I=J\)." Ejemplo correcto: "Si \(\mathbf{J}\) es uniforme y normal a una sección \(S\), entonces \(I=JS\)."</p></details>
+        <details class="accordion error-box"><summary>olvidar el producto escalar en \(I=\int_S\mathbf{J}\cdot d\mathbf{s}\).</summary>
+            <p>Por qué está mal: solo atraviesa la superficie la componente normal de \(\mathbf{J}\). Corrección: proyectar siempre \(\mathbf{J}\) sobre la normal. Ejemplo incorrecto: "Si \(J\) es tangencial a la superficie, \(I=JS\)." Ejemplo correcto: "Si \(J\) es tangencial, \(\mathbf{J}\cdot d\mathbf{s}=0\), luego no atraviesa corriente."</p></details>
+        <details class="accordion error-box"><summary>aplicar \(\nabla\cdot\mathbf{J}=0\) a cualquier corriente.</summary>
+            <p>Por qué está mal: solo vale en corriente estacionaria sin acumulación local de carga. Corrección: usar la forma general \(\nabla\cdot\mathbf{J}+\partial\rho/\partial t=0\). Ejemplo incorrecto: "La divergencia de \(\mathbf{J}\) siempre es cero." Ejemplo correcto: "En general, \(\nabla\cdot\mathbf{J}=-\partial\rho/\partial t\); solo en régimen estacionario queda cero."</p></details>
+        <details class="accordion error-box"><summary>decir que la primera ley de Kirchhoff es una regla empírica sin fundamento.</summary>
+            <p>Por qué está mal: procede de conservación de la carga. Corrección: justificarla aplicando continuidad a un volumen que rodea el nudo. Ejemplo incorrecto: "La suma de corrientes es cero porque lo dice Kirchhoff." Ejemplo correcto: "Como no se acumula carga en el nudo, la corriente neta que entra debe igualar la que sale."</p></details>
+        <details class="accordion error-box"><summary>confundir \(\rho\) densidad de carga con \(\rho_c\) resistividad.</summary>
+            <p>Por qué está mal: representan magnitudes distintas y con unidades distintas. Corrección: reservar \(\rho\) para carga por volumen y \(\rho_c=1/\gamma\) para resistividad. Ejemplo incorrecto: "La resistencia es \(\rho l/S\), donde \(\rho\) es la densidad de carga." Ejemplo correcto: "La resistencia cilíndrica es \(R=\rho_c l/S\), donde \(\rho_c\) es la resistividad."</p></details>
+        <details class="accordion error-box"><summary>aplicar \(R=\rho_c l/S\) a cualquier geometría.</summary>
+            <p>Por qué está mal: esa fórmula supone sección uniforme y campo/corriente distribuidos de forma adecuada. Corrección: para geometrías no uniformes, calcular \(\mathbf{E}\), \(\mathbf{J}\), \(I\) y \(V\), o integrar elementos diferenciales de resistencia. Ejemplo incorrecto: "Para un conductor esférico uso \(R=\rho_c l/S\) con \(S\) cualquiera." Ejemplo correcto: "En simetría esférica se usa \(J=I/(4\pi r^2)\), luego \(E=J/\gamma\) y se integra \(V=\int E\,dr\)."</p></details>
+        <details class="accordion error-box"><summary>creer que la f.e.m. es siempre igual a la diferencia de potencial.</summary>
+            <p>Por qué está mal: la f.e.m. procede de un campo no conservativo; la d.d.p. procede del campo conservativo. Coinciden en circuito abierto para un generador, no en general. Corrección: distinguir \(\mathcal{E}\) de \(V_B-V_A\). Ejemplo incorrecto: "La f.e.m. y la tensión en bornes son siempre lo mismo." Ejemplo correcto: "En descarga, \(V_B-V_A=\mathcal{E}-R_gI\)."</p></details>
+        <details class="accordion error-box"><summary>ignorar la resistencia interna del generador.</summary>
+            <p>Por qué está mal: un generador real disipa parte de la energía dentro de sí mismo. Corrección: incluir \(R_g\) cuando el enunciado indique generador real o caída interna. Ejemplo incorrecto: "La tensión en bornes de una batería entregando corriente es \(\mathcal{E}\)." Ejemplo correcto: "Si entrega corriente, la tensión en bornes es \(\mathcal{E}-R_gI\)."</p></details>
+        <details class="accordion error-box"><summary>aplicar mal las condiciones de contorno de \(\mathbf{J}\).</summary>
+            <p>Por qué está mal: en régimen estacionario es la componente normal de \(\mathbf{J}\), no necesariamente todo el vector, la que es continua. Corrección: separar componentes normales y tangenciales. Ejemplo incorrecto: "\(\mathbf{J}_1=\mathbf{J}_2\) siempre en la frontera." Ejemplo correcto: "\(J_{n1}=J_{n2}\), pero la componente tangencial puede cambiar según las conductividades."</p></details>
+        <details class="accordion error-box"><summary>suponer que no puede haber carga superficial entre dos conductores con corriente.</summary>
+            <p>Por qué está mal: si cambia \(\varepsilon/\gamma\) y hay corriente normal, puede aparecer \(\sigma\). Corrección: usar \(\sigma=J_n(\varepsilon_2/\gamma_2-\varepsilon_1/\gamma_1)\). Ejemplo incorrecto: "Como hay corriente estacionaria, no hay ninguna carga." Ejemplo correcto: "No hay acumulación volumétrica en cada medio homogéneo, pero puede haber carga superficial en la frontera."</p></details>
+        <details class="accordion error-box"><summary>usar \(RC=\varepsilon/\gamma\) sin comprobar hipótesis.</summary>
+            <p>Por qué está mal: requiere medio lineal, homogéneo e isótropo entre los conductores. Corrección: si hay varios medios o propiedades variables, calcular \(R\) y \(C\) por separado. Ejemplo incorrecto: "Aunque \(\gamma\) varíe con la posición, siempre \(RC=\varepsilon/\gamma\)." Ejemplo correcto: "Si \(\gamma\) no es constante, no puede sacarse de la integral y la relación simple no es aplicable directamente."</p></details>
+        <details class="accordion error-box"><summary>confundir corriente convencional con movimiento electrónico.</summary>
+            <p>Por qué está mal: en metales los electrones se mueven en sentido contrario al campo, pero \(\mathbf{J}\) se toma en el sentido convencional de carga positiva. Corrección: distinguir portador real y sentido de corriente. Ejemplo incorrecto: "Como los electrones van hacia la izquierda, \(\mathbf{J}\) también." Ejemplo correcto: "Para electrones, \(\mathbf{J}\) tiene sentido contrario a su velocidad media."</p></details>
+        <details class="accordion error-box"><summary>creer que la segunda ley de Kirchhoff procede de conservación de carga.</summary>
+            <p>Por qué está mal: la conservación de carga fundamenta la primera ley; la segunda expresa conservación de energía. Corrección: asociar nudos con carga y mallas con energía. Ejemplo incorrecto: "La suma de tensiones en una malla es cero porque no se acumula carga." Ejemplo correcto: "La suma de f.e.m. y caídas de tensión expresa que la energía suministrada por unidad de carga se disipa o se transforma en la malla."</p></details>
+        <details class="accordion error-box"><summary>identificar serie o paralelo solo por la apariencia del dibujo.</summary>
+            <p>Por qué está mal: lo decisivo es si comparten corriente o tensión. Corrección: en serie, misma corriente; en paralelo, misma d.d.p. Ejemplo incorrecto: "Estas resistencias están cerca en el dibujo, luego están en paralelo." Ejemplo correcto: "Están en paralelo si sus extremos están conectados a los mismos dos nudos."</p></details>
+      </section>
+      <section class="page" id="preguntas"><div class="page-head"><h2>7. Preguntas orientadas a examen</h2><span class="page-no">7</span></div>
+        <h3>10 preguntas fáciles</h3><div class="card-grid">
+          <article class="question-card"><h3>F1</h3><p>Defina intensidad de corriente e indique su unidad en el SI.</p></article>
+          <article class="question-card"><h3>F2</h3><p>Defina densidad de corriente y explique por qué es una magnitud vectorial.</p></article>
+          <article class="question-card"><h3>F3</h3><p>Escriba la relación entre intensidad y densidad de corriente.</p></article>
+          <article class="question-card"><h3>F4</h3><p>¿Qué diferencia hay entre corriente de conducción y corriente de convección?</p></article>
+          <article class="question-card"><h3>F5</h3><p>Escriba la ecuación de continuidad en forma diferencial.</p></article>
+          <article class="question-card"><h3>F6</h3><p>¿Qué forma toma la ecuación de continuidad en corriente continua?</p></article>
+          <article class="question-card"><h3>F7</h3><p>Enuncie la primera ley de Kirchhoff.</p></article>
+          <article class="question-card"><h3>F8</h3><p>Escriba la ley de Ohm macroscópica y la ley de Ohm puntual.</p></article>
+          <article class="question-card"><h3>F9</h3><p>Defina conductividad y resistividad.</p></article>
+          <article class="question-card"><h3>F10</h3><p>Escriba la ley de Joule para una resistencia.</p></article>
+        </div>
+        <h3>10 preguntas medias</h3><div class="card-grid">
+          <article class="question-card"><h3>M1</h3><p>Deduzca la relación \(I=\int_S\mathbf{J}\cdot d\mathbf{s}\) a partir de la idea de flujo de carga.</p></article>
+          <article class="question-card"><h3>M2</h3><p>Explique por qué en un conductor con corriente estacionaria puede existir campo eléctrico en su interior.</p></article>
+          <article class="question-card"><h3>M3</h3><p>Derive la ecuación de continuidad en forma diferencial desde su forma integral.</p></article>
+          <article class="question-card"><h3>M4</h3><p>Justifique la primera ley de Kirchhoff a partir de la conservación de la carga.</p></article>
+          <article class="question-card"><h3>M5</h3><p>A partir de \(\langle\mathbf{v}\rangle=\mu\mathbf{E}\), obtenga \(\mathbf{J}=\gamma\mathbf{E}\).</p></article>
+          <article class="question-card"><h3>M6</h3><p>Deduzca \(R=\rho_c l/S\) para un conductor cilíndrico uniforme.</p></article>
+          <article class="question-card"><h3>M7</h3><p>Exprese la potencia disipada en un volumen conductor en función de \(\mathbf{E}\) y \(\mathbf{J}\).</p></article>
+          <article class="question-card"><h3>M8</h3><p>Explique las condiciones de contorno \(J_{n1}=J_{n2}\), \(D_{n2}-D_{n1}=\sigma\) y \(E_{t1}=E_{t2}\).</p></article>
+          <article class="question-card"><h3>M9</h3><p>Explique el significado físico del tiempo de relajación \(\tau=\varepsilon/\gamma\).</p></article>
+          <article class="question-card"><h3>M10</h3><p>Distinga fuerza electromotriz y diferencia de potencial entre bornes.</p></article>
+        </div>
+        <h3>5 preguntas difíciles</h3><div class="card-grid">
+          <article class="question-card"><h3>D1</h3><p>En una frontera entre dos medios con \(\gamma_1,\gamma_2,\varepsilon_1,\varepsilon_2\), deduzca la expresión de la carga superficial \(\sigma\) cuando hay corriente normal estacionaria.</p></article>
+          <article class="question-card"><h3>D2</h3><p>Demuestre la relación \(RC=\varepsilon/\gamma\) para dos conductores en un medio lineal, homogéneo e isótropo.</p></article>
+          <article class="question-card"><h3>D3</h3><p>Explique por qué un campo electrostático no puede mantener indefinidamente una corriente continua en un circuito cerrado.</p></article>
+          <article class="question-card"><h3>D4</h3><p>A partir de continuidad, Ohm puntual y Gauss, deduzca \(\rho(t)=\rho_0 e^{-\gamma t/\varepsilon}\).</p></article>
+          <article class="question-card"><h3>D5</h3><p>Justifique la segunda ley de Kirchhoff como balance de potencia, no solo como suma de tensiones.</p></article>
+        </div>
+        <h3>5 preguntas de desarrollo largo</h3><div class="card-grid">
+          <article class="question-card"><h3>L1</h3><p>Desarrolle el paso de electrostática a conducción: campo interior, movimiento de cargas, neutralidad macroscópica y necesidad de generadores.</p></article>
+          <article class="question-card"><h3>L2</h3><p>Exponga de forma completa la cadena conceptual intensidad-densidad-continuidad-Kirchhoff.</p></article>
+          <article class="question-card"><h3>L3</h3><p>Desarrolle la ley de Ohm desde el punto de vista macroscópico y puntual, incluyendo movilidad, conductividad, resistividad y resistencia geométrica.</p></article>
+          <article class="question-card"><h3>L4</h3><p>Explique la ley de Joule y su relación con la fuerza electromotriz y la conservación de la energía en circuitos.</p></article>
+          <article class="question-card"><h3>L5</h3><p>Desarrolle las condiciones en los límites para \(\mathbf{J}\), \(\mathbf{D}\) y \(\mathbf{E}\), incluyendo su interpretación física.</p></article>
+        </div>
+        <h3>5 preguntas de relación entre conceptos</h3><div class="card-grid">
+          <article class="question-card"><h3>R1</h3><p>Relacione la ecuación de continuidad con la primera ley de Kirchhoff.</p></article>
+          <article class="question-card"><h3>R2</h3><p>Relacione la ley de Ohm puntual con la ley de Ohm macroscópica.</p></article>
+          <article class="question-card"><h3>R3</h3><p>Relacione la ley de Joule con la necesidad de un campo no conservativo.</p></article>
+          <article class="question-card"><h3>R4</h3><p>Relacione el tiempo de relajación con el equilibrio electrostático en conductores.</p></article>
+          <article class="question-card"><h3>R5</h3><p>Relacione las asociaciones de resistencias con las dos leyes de Kirchhoff.</p></article>
+        </div>
+      </section>
+      <section class="page" id="respuestas"><div class="page-head"><h2>8. Respuestas modelo</h2><span class="page-no">8</span></div>
+        <h3>Respuestas a las preguntas fáciles</h3>
+        <details class="accordion accordion-answer"><summary>F1. Defina intensidad de corriente e indique su unidad en el SI.</summary>
+            <p>La intensidad de corriente es la carga neta que atraviesa una superficie por unidad de tiempo:</p>
+            <div class="formula-block">\[
+I=\frac{dq}{dt}.
+\]</div>
+            <p>Su unidad en el SI es el amperio, \(1\,\mathrm{A}=1\,\mathrm{C/s}\). Es una magnitud global asociada a una superficie determinada.</p></details>
+        <details class="accordion accordion-answer"><summary>F2. Defina densidad de corriente y explique por qué es una magnitud vectorial.</summary>
+            <p>La densidad de corriente \(\mathbf{J}\) es la corriente por unidad de área en un punto, orientada según el sentido convencional del transporte de carga. Es vectorial porque no solo interesa cuánta carga atraviesa una zona, sino también en qué dirección fluye. Su unidad es \(\mathrm{A/m^2}\).</p></details>
+        <details class="accordion accordion-answer"><summary>F3. Escriba la relación entre intensidad y densidad de corriente.</summary>
+            <p>Para una superficie elemental:</p>
+            <div class="formula-block">\[
+dI=\mathbf{J}\cdot d\mathbf{s}.
+\]</div>
+            <p>Para una superficie finita:</p>
+            <div class="formula-block">\[
+I=\int_S\mathbf{J}\cdot d\mathbf{s}.
+\]</div>
+            <p>El producto escalar indica que solo cuenta la componente de \(\mathbf{J}\) normal a la superficie.</p></details>
+        <details class="accordion accordion-answer"><summary>F4. ¿Qué diferencia hay entre corriente de conducción y corriente de convección?</summary>
+            <p>La corriente de conducción es el arrastre de cargas dentro de un medio eléctricamente neutro, como electrones en un metal o iones en un electrolito. La corriente de convección se produce cuando una masa que contiene carga se desplaza, arrastrando esa carga. La primera es la que se estudia con la ley de Ohm en este capítulo.</p></details>
+        <details class="accordion accordion-answer"><summary>F5. Escriba la ecuación de continuidad en forma diferencial.</summary>
+            <p>La ecuación de continuidad en forma diferencial es:</p>
+            <div class="formula-block">\[
+\nabla\cdot\mathbf{J}+\frac{\partial\rho}{\partial t}=0.
+\]</div>
+            <p>Expresa localmente la conservación de la carga.</p></details>
+        <details class="accordion accordion-answer"><summary>F6. ¿Qué forma toma la ecuación de continuidad en corriente continua?</summary>
+            <p>En corriente continua no hay acumulación local de carga:</p>
+            <div class="formula-block">\[
+\frac{\partial\rho}{\partial t}=0.
+\]</div>
+            <p>Por tanto:</p>
+            <div class="formula-block">\[
+\nabla\cdot\mathbf{J}=0.
+\]</div>
+            <p>Esto significa que no hay fuentes ni sumideros de corriente en el interior del conductor en régimen estacionario.</p></details>
+        <details class="accordion accordion-answer"><summary>F7. Enuncie la primera ley de Kirchhoff.</summary>
+            <p>La primera ley de Kirchhoff dice que en un nudo la suma algebraica de las corrientes que entran y salen es nula:</p>
+            <div class="formula-block">\[
+\sum_i I_i=0.
+\]</div>
+            <p>Procede de la conservación de la carga aplicada a un volumen que rodea el nudo.</p></details>
+        <details class="accordion accordion-answer"><summary>F8. Escriba la ley de Ohm macroscópica y la ley de Ohm puntual.</summary>
+            <p>La ley de Ohm macroscópica es:</p>
+            <div class="formula-block">\[
+V=RI.
+\]</div>
+            <p>La ley de Ohm puntual es:</p>
+            <div class="formula-block">\[
+\mathbf{J}=\gamma\mathbf{E}.
+\]</div>
+            <p>La primera relaciona magnitudes de circuito; la segunda relaciona campos locales.</p></details>
+        <details class="accordion accordion-answer"><summary>F9. Defina conductividad y resistividad.</summary>
+            <p>La conductividad \(\gamma\) mide la respuesta local de un medio conductor:</p>
+            <div class="formula-block">\[
+\mathbf{J}=\gamma\mathbf{E}.
+\]</div>
+            <p>La resistividad es su inversa:</p>
+            <div class="formula-block">\[
+\rho_c=\frac{1}{\gamma}.
+\]</div>
+            <p>La conductividad se mide en \(\mathrm{S/m}\) y la resistividad en \(\Omega\,\mathrm{m}\).</p></details>
+        <details class="accordion accordion-answer"><summary>F10. Escriba la ley de Joule para una resistencia.</summary>
+            <p>La ley de Joule para una resistencia es:</p>
+            <div class="formula-block">\[
+P=RI^2.
+\]</div>
+            <p>También puede escribirse \(P=VI\) y, usando \(V=RI\), se obtiene \(P=V^2/R\). En el capítulo se interpreta como potencia eléctrica transformada en calor.</p></details>
+        <h3>Respuestas a las preguntas medias</h3>
+        <details class="accordion accordion-answer"><summary>M1. Deduzca la relación \(I=\int_S\mathbf{J}\cdot d\mathbf{s}\) a partir de la idea de flujo de carga.</summary>
+            <p>La densidad de corriente \(\mathbf{J}\) mide la corriente que atraviesa una superficie por unidad de área y con orientación. En una superficie elemental \(d\mathbf{s}\), solo la componente normal de \(\mathbf{J}\) contribuye al paso de carga; por eso:</p>
+            <div class="formula-block">\[
+dI=\mathbf{J}\cdot d\mathbf{s}.
+\]</div>
+            <p>Sumando todas las contribuciones sobre una superficie \(S\):</p>
+            <div class="formula-block">\[
+I=\int_S\mathbf{J}\cdot d\mathbf{s}.
+\]</div>
+            <p>Si \(\mathbf{J}\) es uniforme y perpendicular a \(S\), se reduce a \(I=JS\).</p></details>
+        <details class="accordion accordion-answer"><summary>M2. Explique por qué en un conductor con corriente estacionaria puede existir campo eléctrico en su interior.</summary>
+            <p>En electrostática, un conductor en equilibrio tiene \(\mathbf{E}=0\) en su interior. Pero si circula corriente, las cargas deben ser arrastradas. En un conductor óhmico ese arrastre se describe mediante:</p>
+            <div class="formula-block">\[
+\mathbf{J}=\gamma\mathbf{E}.
+\]</div>
+            <p>Si \(\mathbf{E}=0\), entonces \(\mathbf{J}=0\). Por tanto, en un conductor real con corriente debe existir campo eléctrico interno, salvo idealizaciones de conductividad infinita.</p></details>
+        <details class="accordion accordion-answer"><summary>M3. Derive la ecuación de continuidad en forma diferencial desde su forma integral.</summary>
+            <p>Se parte de:</p>
+            <div class="formula-block">\[
+\oint_S\mathbf{J}\cdot d\mathbf{s}=-\frac{d}{dt}\int_V\rho\,dv.
+\]</div>
+            <p>Aplicando el teorema de la divergencia al primer miembro:</p>
+            <div class="formula-block">\[
+\int_V\nabla\cdot\mathbf{J}\,dv=-\int_V\frac{\partial\rho}{\partial t}\,dv.
+\]</div>
+            <p>Como la igualdad vale para cualquier volumen, los integrandos deben ser iguales:</p>
+            <div class="formula-block">\[
+\nabla\cdot\mathbf{J}=-\frac{\partial\rho}{\partial t}.
+\]</div>
+            <p>Luego:</p>
+            <div class="formula-block">\[
+\nabla\cdot\mathbf{J}+\frac{\partial\rho}{\partial t}=0.
+\]</div></details>
+        <details class="accordion accordion-answer"><summary>M4. Justifique la primera ley de Kirchhoff a partir de la conservación de la carga.</summary>
+            <p>Se rodea el nudo con una superficie cerrada. En régimen estacionario no se acumula carga dentro de esa superficie, así que:</p>
+            <div class="formula-block">\[
+\oint_S\mathbf{J}\cdot d\mathbf{s}=0.
+\]</div>
+            <p>Las contribuciones al flujo son las corrientes que atraviesan las ramas conectadas al nudo. Si se asignan signos a corrientes entrantes y salientes, la ecuación se convierte en:</p>
+            <div class="formula-block">\[
+\sum_i I_i=0.
+\]</div>
+            <p>Por tanto, la primera ley de Kirchhoff es conservación de carga.</p></details>
+        <details class="accordion accordion-answer"><summary>M5. A partir de \(\langle\mathbf{v}\rangle=\mu\mathbf{E}\), obtenga \(\mathbf{J}=\gamma\mathbf{E}\).</summary>
+            <p>Para un tipo de portador:</p>
+            <div class="formula-block">\[
+\mathbf{J}=nq\langle\mathbf{v}\rangle.
+\]</div>
+            <p>Si la velocidad media de arrastre es proporcional al campo:</p>
+            <div class="formula-block">\[
+\langle\mathbf{v}\rangle=\mu\mathbf{E},
+\]</div>
+            <p>entonces:</p>
+            <div class="formula-block">\[
+\mathbf{J}=nq\mu\mathbf{E}.
+\]</div>
+            <p>Se define la conductividad como \(\gamma=nq\mu\), o en notación del capítulo \(\gamma=\rho\mu\), y queda:</p>
+            <div class="formula-block">\[
+\mathbf{J}=\gamma\mathbf{E}.
+\]</div></details>
+        <details class="accordion accordion-answer"><summary>M6. Deduzca \(R=\rho_c l/S\) para un conductor cilíndrico uniforme.</summary>
+            <p>En un conductor cilíndrico uniforme de longitud \(l\), sección \(S\), campo uniforme y conductividad \(\gamma\):</p>
+            <div class="formula-block">\[
+V=\int_0^l \mathbf{E}\cdot d\mathbf{l}=El.
+\]</div>
+            <p>La corriente es:</p>
+            <div class="formula-block">\[
+I=\int_S\mathbf{J}\cdot d\mathbf{s}=\gamma ES.
+\]</div>
+            <p>Por tanto:</p>
+            <div class="formula-block">\[
+R=\frac{V}{I}=\frac{El}{\gamma ES}=\frac{1}{\gamma}\frac{l}{S}=\rho_c\frac{l}{S}.
+\]</div></details>
+        <details class="accordion accordion-answer"><summary>M7. Exprese la potencia disipada en un volumen conductor en función de \(\mathbf{E}\) y \(\mathbf{J}\).</summary>
+            <p>En un elemento de volumen \(dv\), la potencia disipada es:</p>
+            <div class="formula-block">\[
+dP=\mathbf{E}\cdot\mathbf{J}\,dv.
+\]</div>
+            <p>Por tanto:</p>
+            <div class="formula-block">\[
+P=\int_V\mathbf{E}\cdot\mathbf{J}\,dv.
+\]</div>
+            <p>Si el medio es óhmico:</p>
+            <div class="formula-block">\[
+P=\int_V\gamma E^2\,dv=\int_V\frac{J^2}{\gamma}\,dv.
+\]</div>
+            <p>Esta expresión permite calcular disipación incluso cuando \(\mathbf{E}\) y \(\mathbf{J}\) no son uniformes.</p></details>
+        <details class="accordion accordion-answer"><summary>M8. Explique las condiciones de contorno \(J_{n1}=J_{n2}\), \(D_{n2}-D_{n1}=\sigma\) y \(E_{t1}=E_{t2}\).</summary>
+            <p>La condición \(J_{n1}=J_{n2}\) expresa que, en régimen estacionario, no se acumula carga indefinidamente en la frontera. La condición \(D_{n2}-D_{n1}=\sigma\) procede del teorema de Gauss y permite carga superficial libre. La condición \(E_{t1}=E_{t2}\) procede de la circulación nula del campo conservativo en una curva elemental que atraviesa la frontera. Juntas determinan cómo cambian los campos al pasar de un medio a otro.</p></details>
+        <details class="accordion accordion-answer"><summary>M9. Explique el significado físico del tiempo de relajación \(\tau=\varepsilon/\gamma\).</summary>
+            <p>El tiempo de relajación:</p>
+            <div class="formula-block">\[
+\tau=\frac{\varepsilon}{\gamma}
+\]</div>
+            <p>mide la rapidez con que desaparece una densidad de carga volumétrica inicial en un conductor homogéneo. La densidad decae como:</p>
+            <div class="formula-block">\[
+\rho(t)=\rho_0 e^{-t/\tau}.
+\]</div>
+            <p>En buenos conductores \(\gamma\) es grande, así que \(\tau\) es muy pequeño. Por eso el equilibrio electrostático se alcanza rápidamente.</p></details>
+        <details class="accordion accordion-answer"><summary>M10. Distinga fuerza electromotriz y diferencia de potencial entre bornes.</summary>
+            <p>La diferencia de potencial procede del campo conservativo:</p>
+            <div class="formula-block">\[
+V_B-V_A=-\int_A^B\mathbf{E}\cdot d\mathbf{l}.
+\]</div>
+            <p>La fuerza electromotriz procede de un campo no conservativo:</p>
+            <div class="formula-block">\[
+\mathcal{E}=\oint_C\mathbf{E}_0\cdot d\mathbf{l}.
+\]</div>
+            <p>En circuito abierto, para un generador, pueden coincidir numéricamente. En circuito cerrado, si hay resistencia interna, la tensión en bornes es menor:</p>
+            <div class="formula-block">\[
+V_B-V_A=\mathcal{E}-R_gI.
+\]</div></details>
+        <h3>Respuestas a las preguntas difíciles</h3>
+        <details class="accordion accordion-answer"><summary>D1. En una frontera entre dos medios con \(\gamma_1,\gamma_2,\varepsilon_1,\varepsilon_2\), deduzca la expresión de la carga superficial \(\sigma\) cuando hay corriente normal estacionaria.</summary>
+            <p>En régimen estacionario, la componente normal de \(\mathbf{J}\) es continua:</p>
+            <div class="formula-block">\[
+J_{n1}=J_{n2}=J_n.
+\]</div>
+            <p>Como \(\mathbf{J}=\gamma\mathbf{E}\), se tiene:</p>
+            <div class="formula-block">\[
+E_{n1}=\frac{J_n}{\gamma_1},\qquad E_{n2}=\frac{J_n}{\gamma_2}.
+\]</div>
+            <p>La condición normal para \(\mathbf{D}\) es:</p>
+            <div class="formula-block">\[
+D_{n2}-D_{n1}=\sigma.
+\]</div>
+            <p>Usando \(\mathbf{D}=\varepsilon\mathbf{E}\):</p>
+            <div class="formula-block">\[
+\sigma=\varepsilon_2E_{n2}-\varepsilon_1E_{n1}
+=J_n\left(\frac{\varepsilon_2}{\gamma_2}-\frac{\varepsilon_1}{\gamma_1}\right).
+\]</div>
+            <p>La carga superficial aparece si cambia la razón \(\varepsilon/\gamma\) entre medios.</p></details>
+        <details class="accordion accordion-answer"><summary>D2. Demuestre la relación \(RC=\varepsilon/\gamma\) para dos conductores en un medio lineal, homogéneo e isótropo.</summary>
+            <p>Para dos conductores en un medio lineal, homogéneo e isótropo:</p>
+            <div class="formula-block">\[
+R=\frac{\int_L\mathbf{E}\cdot d\mathbf{l}}{\int_{S_1}\gamma\mathbf{E}\cdot d\mathbf{s}}.
+\]</div>
+            <p>Como \(\gamma\) es constante:</p>
+            <div class="formula-block">\[
+R=\frac{\int_L\mathbf{E}\cdot d\mathbf{l}}{\gamma\int_{S_1}\mathbf{E}\cdot d\mathbf{s}}.
+\]</div>
+            <p>La capacidad es:</p>
+            <div class="formula-block">\[
+C=\frac{\varepsilon\int_{S_1}\mathbf{E}\cdot d\mathbf{s}}{\int_L\mathbf{E}\cdot d\mathbf{l}}.
+\]</div>
+            <p>Multiplicando:</p>
+            <div class="formula-block">\[
+RC=
+\frac{\int_L\mathbf{E}\cdot d\mathbf{l}}{\gamma\int_{S_1}\mathbf{E}\cdot d\mathbf{s}}
+\cdot
+\frac{\varepsilon\int_{S_1}\mathbf{E}\cdot d\mathbf{s}}{\int_L\mathbf{E}\cdot d\mathbf{l}}
+=\frac{\varepsilon}{\gamma}.
+\]</div>
+            <p>La demostración exige que \(\varepsilon\) y \(\gamma\) puedan sacarse de las integrales.</p></details>
+        <details class="accordion accordion-answer"><summary>D3. Explique por qué un campo electrostático no puede mantener indefinidamente una corriente continua en un circuito cerrado.</summary>
+            <p>Un campo electrostático es conservativo, por lo que:</p>
+            <div class="formula-block">\[
+\oint_C\mathbf{E}\cdot d\mathbf{l}=0.
+\]</div>
+            <p>Si solo existiera ese campo en un circuito cerrado óhmico, no habría aporte neto de energía por vuelta. Pero una corriente en una resistencia disipa potencia \(P=RI^2\). Mantener una corriente indefinidamente requiere compensar esa disipación. Por tanto, hace falta un campo no conservativo \(\mathbf{E}_0\) cuya circulación no sea nula:</p>
+            <div class="formula-block">\[
+\mathcal{E}=\oint_C\mathbf{E}_0\cdot d\mathbf{l}.
+\]</div>
+            <p>Ese campo lo proporciona un generador.</p></details>
+        <details class="accordion accordion-answer"><summary>D4. A partir de continuidad, Ohm puntual y Gauss, deduzca \(\rho(t)=\rho_0 e^{-\gamma t/\varepsilon}\).</summary>
+            <p>Se parte de continuidad:</p>
+            <div class="formula-block">\[
+\nabla\cdot\mathbf{J}=-\frac{\partial\rho}{\partial t}.
+\]</div>
+            <p>Con Ohm puntual:</p>
+            <div class="formula-block">\[
+\mathbf{J}=\gamma\mathbf{E}.
+\]</div>
+            <p>Si \(\gamma\) es constante:</p>
+            <div class="formula-block">\[
+\gamma\nabla\cdot\mathbf{E}=-\frac{\partial\rho}{\partial t}.
+\]</div>
+            <p>Por Gauss en medio homogéneo:</p>
+            <div class="formula-block">\[
+\nabla\cdot\mathbf{E}=\frac{\rho}{\varepsilon}.
+\]</div>
+            <p>Sustituyendo:</p>
+            <div class="formula-block">\[
+\frac{\gamma}{\varepsilon}\rho=-\frac{\partial\rho}{\partial t}.
+\]</div>
+            <p>La solución es:</p>
+            <div class="formula-block">\[
+\rho(t)=\rho_0e^{-\gamma t/\varepsilon}.
+\]</div>
+            <p>El tiempo característico es \(\tau=\varepsilon/\gamma\).</p></details>
+        <details class="accordion accordion-answer"><summary>D5. Justifique la segunda ley de Kirchhoff como balance de potencia, no solo como suma de tensiones.</summary>
+            <p>En una malla, la segunda ley de Kirchhoff puede escribirse:</p>
+            <div class="formula-block">\[
+\sum_k\mathcal{E}_k=\sum_i R_iI_i.
+\]</div>
+            <p>Si se considera un circuito serie y se multiplica por \(I\):</p>
+            <div class="formula-block">\[
+I\sum_k\mathcal{E}_k=\sum_i R_iI^2.
+\]</div>
+            <p>El término izquierdo es la potencia suministrada por los generadores; el derecho es la potencia disipada por efecto Joule en las resistencias. Por tanto, la ley no es solo una suma formal de tensiones: expresa que la energía entregada por unidad de tiempo se transforma en las resistencias y otros elementos del circuito.</p></details>
+        <h3>Respuestas a las preguntas de desarrollo largo</h3>
+        <details class="accordion accordion-answer"><summary>L1. Desarrolle el paso de electrostática a conducción: campo interior, movimiento de cargas, neutralidad macroscópica y necesidad de generadores.</summary>
+            <p>En electrostática se estudian cargas en reposo y conductores en equilibrio, donde el campo interno es nulo. En conducción se estudian cargas móviles. Para que haya corriente de conducción en un material óhmico debe existir campo eléctrico interno, pues \(\mathbf{J}=\gamma\mathbf{E}\). Aunque el conductor sea macroscópicamente neutro, los portadores móviles se desplazan bajo el campo y chocan con la red, generando disipación. Esa disipación exige un generador que aporte energía. El generador actúa mediante un campo no conservativo, capaz de realizar trabajo neto sobre las cargas en un circuito cerrado.</p></details>
+        <details class="accordion accordion-answer"><summary>L2. Exponga de forma completa la cadena conceptual intensidad-densidad-continuidad-Kirchhoff.</summary>
+            <p>La intensidad \(I\) mide la carga por unidad de tiempo que atraviesa una superficie. La densidad \(\mathbf{J}\) describe localmente ese flujo y se relaciona con \(I\) por \(I=\int_S\mathbf{J}\cdot d\mathbf{s}\). La conservación de la carga impone que el flujo saliente de \(\mathbf{J}\) por una superficie cerrada sea igual a la disminución de carga interior. De ahí surge la ecuación de continuidad. En régimen estacionario, \(\nabla\cdot\mathbf{J}=0\). Si se aplica a un nudo de circuito, se obtiene la primera ley de Kirchhoff: la suma algebraica de corrientes entrantes y salientes es nula.</p></details>
+        <details class="accordion accordion-answer"><summary>L3. Desarrolle la ley de Ohm desde el punto de vista macroscópico y puntual, incluyendo movilidad, conductividad, resistividad y resistencia geométrica.</summary>
+            <p>La ley de Ohm macroscópica \(V=RI\) relaciona tensión e intensidad en un conductor óhmico. La ley local \(\mathbf{J}=\gamma\mathbf{E}\) expresa la respuesta punto a punto del medio. Microscópicamente, el campo produce una velocidad media de arrastre \(\langle\mathbf{v}\rangle=\mu\mathbf{E}\), y como \(\mathbf{J}=nq\langle\mathbf{v}\rangle\), aparece la conductividad \(\gamma=nq\mu\). La resistividad es \(\rho_c=1/\gamma\). Para un cilindro uniforme, integrar campo y corriente da \(R=\rho_c l/S\). Por tanto, la resistencia depende tanto del material como de la geometría.</p></details>
+        <details class="accordion accordion-answer"><summary>L4. Explique la ley de Joule y su relación con la fuerza electromotriz y la conservación de la energía en circuitos.</summary>
+            <p>La ley de Joule afirma que una resistencia atravesada por corriente disipa potencia \(P=RI^2\). Localmente, la disipación se escribe \(\mathbf{E}\cdot\mathbf{J}\). Esta energía procede del trabajo del campo sobre los portadores y se transforma en calor por choques con el material. Como un campo electrostático no puede aportar trabajo neto en una vuelta cerrada, mantener corriente requiere un campo no conservativo. La fuerza electromotriz mide la circulación de ese campo no conservativo. En circuitos, la segunda ley de Kirchhoff expresa que la energía por unidad de carga suministrada por generadores se iguala a las caídas resistivas.</p></details>
+        <details class="accordion accordion-answer"><summary>L5. Desarrolle las condiciones en los límites para \(\mathbf{J}\), \(\mathbf{D}\) y \(\mathbf{E}\), incluyendo su interpretación física.</summary>
+            <p>En una frontera entre dos medios conductores, la conservación de carga exige que la componente normal de \(\mathbf{J}\) sea continua: \(J_{n1}=J_{n2}\). El teorema de Gauss aplicado a \(\mathbf{D}\) permite una discontinuidad normal si existe carga superficial: \(D_{n2}-D_{n1}=\sigma\). La circulación nula del campo conservativo exige continuidad tangencial de \(\mathbf{E}\): \(E_{t1}=E_{t2}\). Al combinar estas condiciones con \(\mathbf{J}=\gamma\mathbf{E}\) y \(\mathbf{D}=\varepsilon\mathbf{E}\), se obtienen relaciones entre campos normales, corrientes tangenciales y carga superficial. Estas condiciones son indispensables para problemas con varios materiales.</p></details>
+        <h3>Respuestas a las preguntas de relación entre conceptos</h3>
+        <details class="accordion accordion-answer"><summary>R1. Relacione la ecuación de continuidad con la primera ley de Kirchhoff.</summary>
+            <p>La ecuación de continuidad expresa conservación local de carga. En régimen estacionario se reduce a \(\nabla\cdot\mathbf{J}=0\), o en forma integral \(\oint_S\mathbf{J}\cdot d\mathbf{s}=0\). Si la superficie cerrada rodea un nudo, el flujo por las ramas se convierte en suma algebraica de corrientes. Por tanto, \(\sum_i I_i=0\). La primera ley de Kirchhoff es continuidad aplicada a un nudo.</p></details>
+        <details class="accordion accordion-answer"><summary>R2. Relacione la ley de Ohm puntual con la ley de Ohm macroscópica.</summary>
+            <p>La ley puntual \(\mathbf{J}=\gamma\mathbf{E}\) describe el material localmente. La ley macroscópica \(V=RI\) se obtiene al integrar el campo para hallar la diferencia de potencial y al integrar \(\mathbf{J}\) para hallar la corriente. En geometrías sencillas, como un cilindro uniforme, ambas llevan a \(R=(1/\gamma)l/S\). Por tanto, \(R\) resume en una sola constante el efecto del material y de la geometría.</p></details>
+        <details class="accordion accordion-answer"><summary>R3. Relacione la ley de Joule con la necesidad de un campo no conservativo.</summary>
+            <p>La ley de Joule indica que una corriente en una resistencia disipa energía. Si el único campo fuera electrostático, su circulación cerrada sería nula y no podría aportar energía neta por ciclo. Por eso se introduce un campo no conservativo \(\mathbf{E}_0\), cuya circulación define la f.e.m. La f.e.m. es necesaria para mantener la corriente frente a la disipación.</p></details>
+        <details class="accordion accordion-answer"><summary>R4. Relacione el tiempo de relajación con el equilibrio electrostático en conductores.</summary>
+            <p>En electrostática se afirma que la carga libre en un conductor se sitúa en la superficie y que el campo interior se anula. El tiempo de relajación explica dinámicamente cómo se alcanza esa situación: una densidad de carga volumétrica inicial decae como \(\rho(t)=\rho_0e^{-t/\tau}\), con \(\tau=\varepsilon/\gamma\). En buenos conductores, \(\tau\) es muy pequeño, por lo que el equilibrio se alcanza rápidamente.</p></details>
+        <details class="accordion accordion-answer"><summary>R5. Relacione las asociaciones de resistencias con las dos leyes de Kirchhoff.</summary>
+            <p>En serie, todas las resistencias llevan la misma corriente y las caídas de tensión se suman; esto procede de la segunda ley de Kirchhoff y lleva a \(R_{\mathrm{eq}}=\sum_iR_i\). En paralelo, todas las ramas tienen la misma tensión y las corrientes se suman en los nudos; esto procede de la primera ley de Kirchhoff y lleva a \(1/R_{\mathrm{eq}}=\sum_i1/R_i\).</p></details>
+      </section>
+      <section class="page" id="resumen"><div class="page-head"><h2>9. Resumen final de repaso</h2><span class="page-no">9</span></div><div class="summary-box">
+
+          <h3>Ideas principales</h3>
+            <ul>
+              <li>La corriente eléctrica es transporte neto de carga.</li>
+              <li>\(I\) mide corriente a través de una superficie; \(\mathbf{J}\) mide corriente local.</li>
+              <li>La conservación de carga se escribe \(\nabla\cdot\mathbf{J}+\partial\rho/\partial t=0\).</li>
+              <li>En corriente continua, \(\nabla\cdot\mathbf{J}=0\).</li>
+              <li>La primera ley de Kirchhoff procede de conservación de carga.</li>
+              <li>La ley de Ohm puntual es \(\mathbf{J}=\gamma\mathbf{E}\).</li>
+              <li>La resistencia depende de material y geometría.</li>
+              <li>La ley de Joule expresa disipación térmica.</li>
+              <li>Mantener corriente cerrada requiere f.e.m., es decir, campo no conservativo.</li>
+              <li>La segunda ley de Kirchhoff procede de conservación de energía.</li>
+            </ul>
+          <h3>Conceptos imprescindibles</h3>
+            <ul>
+              <li>\(I=dq/dt\).</li>
+              <li>\(I=\int_S\mathbf{J}\cdot d\mathbf{s}\).</li>
+              <li>\(\mathbf{J}=\sum_j\rho_j\langle\mathbf{v}\rangle_j\).</li>
+              <li>\(\nabla\cdot\mathbf{J}+\partial\rho/\partial t=0\).</li>
+              <li>\(V=RI\).</li>
+              <li>\(\mathbf{J}=\gamma\mathbf{E}\).</li>
+              <li>\(\rho_c=1/\gamma\).</li>
+              <li>\(R=\rho_c l/S\) solo para geometría cilíndrica uniforme.</li>
+              <li>\(P=RI^2\).</li>
+              <li>\(P=\int_V\mathbf{E}\cdot\mathbf{J}\,dv\).</li>
+              <li>\(J_{n1}=J_{n2}\).</li>
+              <li>\(D_{n2}-D_{n1}=\sigma\).</li>
+              <li>\(E_{t1}=E_{t2}\).</li>
+              <li>\(\tau=\varepsilon/\gamma\).</li>
+              <li>\(\mathcal{E}=\oint_C\mathbf{E}_0\cdot d\mathbf{l}\).</li>
+              <li>\(\sum\mathcal{E}_k=\sum R_iI_i\).</li>
+            </ul>
+          <h3>Relaciones clave</h3>
+            <ul>
+              <li>Densidad de corriente integrada sobre superficie da intensidad.</li>
+              <li>Continuidad integrada en un nudo da la primera ley de Kirchhoff.</li>
+              <li>Ohm puntual integrado en una geometría da \(V=RI\).</li>
+              <li>Joule local integrado en volumen da potencia total.</li>
+              <li>Disipación Joule exige f.e.m. para mantener corriente.</li>
+              <li>Condiciones de contorno combinan continuidad, Gauss y campo conservativo.</li>
+              <li>\(RC=\varepsilon/\gamma\) solo bajo hipótesis materiales simples.</li>
+              <li>Tiempo de relajación explica la desaparición de carga volumétrica en conductores.</li>
+            </ul>
+          <h3>Errores que evitar</h3>
+            <ul>
+              <li>Usar \(\mathbf{E}=0\) dentro de un conductor con corriente.</li>
+              <li>Confundir \(I\) y \(\mathbf{J}\).</li>
+              <li>Olvidar el producto escalar en \(I=\int_S\mathbf{J}\cdot d\mathbf{s}\).</li>
+              <li>Aplicar \(\nabla\cdot\mathbf{J}=0\) fuera del régimen estacionario.</li>
+              <li>Confundir densidad de carga \(\rho\) con resistividad \(\rho_c\).</li>
+              <li>Usar \(R=\rho_c l/S\) en geometrías no uniformes sin justificar.</li>
+              <li>Identificar siempre f.e.m. con diferencia de potencial.</li>
+              <li>Aplicar condiciones de contorno sin separar componentes normales y tangenciales.</li>
+              <li>Usar asociaciones serie/paralelo por apariencia visual del circuito.</li>
+            </ul>
+        </div></section>
+      <section class="page" id="checklist"><div class="page-head"><h2>10. Checklist de dominio</h2><span class="page-no">10</span></div><div class="checklist-box">
+            <ul>
+              <li>Si no puedes explicar por qué en un conductor con corriente \(\mathbf{E}\) no tiene por qué ser nulo, falta repasar la diferencia entre electrostática y conducción.</li>
+              <li>Si confundes intensidad \(I\) con densidad \(\mathbf{J}\), revisar las definiciones \(I=dq/dt\) e \(I=\int_S\mathbf{J}\cdot d\mathbf{s}\).</li>
+              <li>Si no sabes decidir qué superficie usar para calcular \(I\), falta repasar flujo de campos vectoriales.</li>
+              <li>Si olvidas el signo en la ecuación de continuidad, falta repasar el significado de flujo saliente y disminución de carga interna.</li>
+              <li>Si no puedes derivar \(\nabla\cdot\mathbf{J}+\partial\rho/\partial t=0\), falta repasar el teorema de la divergencia.</li>
+              <li>Si no puedes justificar la primera ley de Kirchhoff, falta repasar conservación de carga en un nudo.</li>
+              <li>Si aplicas \(V=RI\) sin comprobar linealidad, revisar qué significa conductor óhmico.</li>
+              <li>Si no distingues \(\gamma\) de \(\rho_c\), falta repasar conductividad y resistividad.</li>
+              <li>Si no puedes deducir \(R=\rho_c l/S\), falta repasar la integración de \(\mathbf{E}\) y \(\mathbf{J}\) en un cilindro.</li>
+              <li>Si usas \(R=\rho_c l/S\) en geometrías esféricas, coaxiales o variables sin más, revisar el método general de cálculo de resistencia.</li>
+              <li>Si no puedes escribir \(P=\int_V\mathbf{E}\cdot\mathbf{J}\,dv\), falta repasar ley de Joule local.</li>
+              <li>Si no puedes explicar por qué hace falta f.e.m. para mantener corriente, falta repasar disipación Joule y campos no conservativos.</li>
+              <li>Si confundes f.e.m. con tensión en bornes, revisar circuito abierto, circuito cerrado y resistencia interna.</li>
+              <li>Si no sabes cuándo \(V_B-V_A=\mathcal{E}-R_gI\), falta repasar generador real en descarga.</li>
+              <li>Si no sabes cuándo \(V_B-V_A=\mathcal{E}+R_gI\), falta repasar receptor o batería en carga.</li>
+              <li>Si no puedes obtener \(J_{n1}=J_{n2}\), falta repasar continuidad en una frontera.</li>
+              <li>Si no puedes explicar la aparición de \(\sigma\) en una frontera entre conductores, revisar \(D_{n2}-D_{n1}=\sigma\) y \(\mathbf{J}=\gamma\mathbf{E}\).</li>
+              <li>Si aplicas \(RC=\varepsilon/\gamma\) sin comprobar medio homogéneo, revisar resistencia y capacidad en sistemas de dos conductores.</li>
+              <li>Si no puedes deducir \(\rho(t)=\rho_0e^{-\gamma t/\varepsilon}\), falta repasar continuidad, Ohm puntual y Gauss.</li>
+              <li>Si puedes resolver un problema de resistencia con \(\mathbf{J}\) no uniforme integrando \(E=J/\gamma\), el capítulo está suficientemente asentado.</li>
+              <li>Si puedes justificar las dos leyes de Kirchhoff desde conservación de carga y energía, el capítulo está suficientemente asentado.</li>
+              <li>Si puedes resolver una asociación de resistencias sin fiarte solo del dibujo, el capítulo está suficientemente asentado.</li>
+            </ul>
+        </div></section>
+    </main>
+  </div>
+</body>
+</html>
