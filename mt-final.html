@@ -1,0 +1,1189 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Mecánica Teórica UNED — patrones resueltos por variantes</title>
+<script>window.MathJax={tex:{inlineMath:[['\\(','\\)'],['$','$']],displayMath:[['\\[','\\]']]},svg:{fontCache:'global'}};</script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+<style>
+:root{--bg:#08111f;--panel:#0d1b2e;--panel2:#12243c;--text:#e7edf7;--muted:#aab7ca;--line:#28415f;--accent:#b89cff;--accent2:#d6c4ff;--warn:#ffd166;--ok:#7bd88f;--code:#06101d;--shadow:0 14px 40px rgba(0,0,0,.35);--max:1120px}body.light{--bg:#eef3fb;--panel:#fff;--panel2:#f6f9ff;--text:#122033;--muted:#52657f;--line:#d4deec;--accent:#6f42c1;--accent2:#4b2f87;--code:#f2f6fb;--shadow:0 12px 32px rgba(25,55,95,.12)}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);font:16px/1.55 system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}a{color:var(--accent)}.wrap{max-width:var(--max);margin:0 auto;padding:24px}.cover{background:linear-gradient(135deg,var(--panel),var(--panel2));border:1px solid var(--line);border-radius:22px;padding:28px;box-shadow:var(--shadow);margin-bottom:18px}.eyebrow{color:var(--accent2);font-weight:800;text-transform:uppercase;letter-spacing:.08em;font-size:.78rem;margin:0 0 10px}h1{font-size:clamp(2rem,5vw,3.4rem);line-height:1.03;margin:0 0 12px}h2{font-size:1.7rem;margin:0 0 14px;border-bottom:1px solid var(--line);padding-bottom:10px}h3{font-size:1.35rem;margin:0 0 10px}h4{font-size:1.05rem;margin:14px 0 8px;color:var(--accent2)}p{margin:0 0 12px}.subtitle{color:var(--muted);font-size:1.08rem;max-width:900px}.toolbar{position:sticky;top:0;z-index:10;background:rgba(8,17,31,.86);backdrop-filter:blur(10px);border:1px solid var(--line);border-radius:16px;margin:16px 0;padding:10px;display:flex;gap:10px;justify-content:space-between;align-items:center}body.light .toolbar{background:rgba(238,243,251,.9)}nav{display:flex;gap:8px;flex-wrap:wrap}nav a,.btn{border:1px solid var(--line);background:var(--panel2);color:var(--text);border-radius:999px;padding:8px 12px;text-decoration:none;font-weight:800;font-size:.9rem}.btn{cursor:pointer}.page{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:24px;margin:18px 0;box-shadow:var(--shadow)}.block-lead{color:var(--muted);margin-bottom:18px}.problem{border:1px solid var(--line);background:var(--panel2);border-radius:18px;padding:18px;margin:18px 0}.variant{background:rgba(0,0,0,.10);border:1px solid var(--line);border-radius:16px;padding:14px;margin:14px 0}.meta{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}.badge{font-size:.78rem;border:1px solid var(--line);border-radius:999px;padding:4px 9px;color:var(--accent2);background:var(--code);font-weight:800}.statement{background:var(--code);border-left:4px solid var(--accent);border-radius:12px;padding:14px;margin:10px 0;color:var(--text)}details{border:1px solid var(--line);border-radius:14px;background:var(--code);margin-top:10px;overflow:hidden}summary{cursor:pointer;padding:13px 15px;font-weight:900;color:var(--accent2);background:rgba(184,156,255,.09)}.solution{padding:15px 18px}ol{margin:0;padding-left:1.25rem}li{margin:0 0 9px}.result{border:1px solid rgba(123,216,143,.5);background:rgba(123,216,143,.10);border-radius:12px;padding:12px;margin-top:12px}.trap{border:1px solid rgba(255,209,102,.45);background:rgba(255,209,102,.10);border-radius:12px;padding:12px;margin-top:12px;color:var(--text)}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}.formula-card{background:var(--panel2);border:1px solid var(--line);border-radius:14px;padding:14px;overflow-x:auto}.formula-card strong{color:var(--accent2)}.index-list{columns:2;column-gap:30px;color:var(--muted)}.index-list li{break-inside:avoid}.small{color:var(--muted);font-size:.95rem}.source{border-left:4px solid var(--warn);padding:10px 14px;background:rgba(255,209,102,.08);border-radius:12px;margin-top:12px}@media(max-width:720px){.wrap{padding:12px}.cover,.page{padding:18px}.toolbar{position:static}.index-list{columns:1}}@media print{.toolbar,.no-print{display:none!important}body{background:white;color:black}.page,.cover,.problem,.variant{box-shadow:none;break-inside:avoid}details{break-inside:avoid}}
+</style><script>
+function toggleTheme(){document.body.classList.toggle('light');localStorage.setItem('mt-theme',document.body.classList.contains('light')?'light':'dark');}
+function openAll(){document.querySelectorAll('details').forEach(d=>d.open=true);}
+function closeAll(){document.querySelectorAll('details').forEach(d=>d.open=false);}
+window.addEventListener('DOMContentLoaded',()=>{ if(localStorage.getItem('mt-theme')==='light') document.body.classList.add('light'); });
+</script></head><body><div class="wrap">
+<header class="cover"><p class="eyebrow">Mecánica Teórica UNED · patrones de examen</p><h1>Patrones resueltos por variantes acumulativas</h1>
+<p class="subtitle">Documento operativo: cada bloque agrupa temas que se solapan en examen; cada problema contiene variantes reales o semi-reales; cada solución queda cerrada en desplegable. Las fórmulas OCR dudosas se han normalizado o marcado.</p>
+<div class="source"><strong>Base:</strong> histórico de 43 exámenes / 97 páginas, estructura reciente en tres bloques: Hamilton/HJ/Poisson, Liouville-invariantes y medios continuos.</div></header>
+<div class="toolbar no-print"><nav>
+<a href="#b1">B1</a>
+<a href="#b2">B2</a>
+<a href="#b3">B3</a>
+<a href="#b4">B4</a>
+<a href="#b5">B5</a>
+<a href="#formulario">Formulario</a></nav><div><button class="btn" onclick="toggleTheme()">Noche / día</button> <button class="btn" onclick="openAll()">Abrir soluciones</button> <button class="btn" onclick="closeAll()">Cerrar</button></div></div>
+<section class="page"><h2>Índice operativo</h2><ol class="index-list">
+<li><a href="#b1p1">Bloque 1. Problema 1</a> — Problema 1 — Hamilton-Jacobi inverso: te dan la función principal</li>
+<li><a href="#b1p2">Bloque 1. Problema 2</a> — Problema 2 — Hamilton-Jacobi directo: te dan H</li>
+<li><a href="#b1p3">Bloque 1. Problema 3</a> — Problema 3 — Legendre: de L a H y vuelta</li>
+<li><a href="#b2p1">Bloque 2. Problema 1</a> — Problema 1 — Transformación canónica y generadora</li>
+<li><a href="#b2p2">Bloque 2. Problema 2</a> — Problema 2 — Poisson y constantes del movimiento</li>
+<li><a href="#b2p3">Bloque 2. Problema 3</a> — Problema 3 — Acción-ángulo como transformación canónica</li>
+<li><a href="#b3p1">Bloque 3. Problema 1</a> — Problema 1 — Teorema de Liouville y nubes de fase</li>
+<li><a href="#b3p2">Bloque 3. Problema 2</a> — Problema 2 — Invariante adiabático de partícula en caja</li>
+<li><a href="#b3p3">Bloque 3. Problema 3</a> — Problema 3 — Escalas temporales adiabáticas</li>
+<li><a href="#b4p1">Bloque 4. Problema 1</a> — Problema 1 — Cuerda y ecuación de ondas</li>
+<li><a href="#b4p2">Bloque 4. Problema 2</a> — Problema 2 — Campo escalar tipo Klein-Gordon</li>
+<li><a href="#b4p3">Bloque 4. Problema 3</a> — Problema 3 — Noether y cantidades conservadas</li>
+<li><a href="#b4p4">Bloque 4. Problema 4</a> — Problema 4 — Modelo discreto, continuo y ondas</li>
+<li><a href="#b5p1">Bloque 5. Problema 1</a> — Problema 1 — Función de Airy</li>
+<li><a href="#b5p2">Bloque 5. Problema 2</a> — Problema 2 — Reynolds y conservación de masa</li>
+</ol></section>
+<section class="page" id="b1"><h2>Bloque 1 — Formalismo Hamiltoniano y Hamilton-Jacobi</h2><p class="block-lead">Bloque dominante reciente. El examen no premia recitar teoría: premia reconstruir H, S, L y la ley de movimiento con pocas líneas limpias.</p>
+<article class="problem" id="b1p1"><div class="meta"><span class="badge">Bloque 1</span><span class="badge">Problema 1</span><span class="badge">5 variantes</span></div><h3>Problema 1 — Hamilton-Jacobi inverso: te dan la función principal</h3>
+<div class="variant">
+<div class="meta"><span class="badge">Variante 1</span><span class="badge">Real normalizado · patrón 2024/2025</span><span class="badge">real/semi-real</span></div>
+<h4>Enunciado Variante 1 — S exponencial: reconstruir H y movimiento</h4>
+<div class="statement">Sea \(S(q,t;E)=\sqrt{2E}\,e^q-Et\) la función principal de Hamilton-Jacobi de un sistema unidimensional. Determine el Hamiltoniano, resuelva las ecuaciones de Hamilton y obtenga el lagrangiano.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>Primer paso: \(p=\partial S/\partial q=\sqrt{2E}\,e^q\). Por tanto \(E=\tfrac12 p^2 e^{-2q}\).</li>
+<li>Hamilton-Jacobi da \(H(q,p)+\partial S/\partial t=0\), luego \(H=E=\tfrac12 e^{-2q}p^2\).</li>
+<li>Ecuaciones de Hamilton: \(\dot q=\partial H/\partial p=e^{-2q}p\), \(\dot p=-\partial H/\partial q=e^{-2q}p^2\).</li>
+<li>Como \(H=E\), también \(p=\sqrt{2E}e^q\). Entonces \(\dot q=\sqrt{2E}e^{-q}\).</li>
+<li>Integrando: \(e^q=\sqrt{2E}\,t+C\). La solución general es \(q(t)=\ln(\sqrt{2E}\,t+C)\), \(p(t)=\sqrt{2E}(\sqrt{2E}\,t+C)\).</li>
+<li>Para el lagrangiano: \(\dot q=e^{-2q}p\Rightarrow p=e^{2q}\dot q\). Así \(L=p\dot q-H=\tfrac12 e^{2q}\dot q^2\).</li>
+</ol>
+<div class="result"><strong>Resultado.</strong> \(H=\frac12e^{-2q}p^2,\quad L=\frac12e^{2q}\dot q^2\)</div>
+<div class="trap"><strong>Error típico.</strong> Error rojo: no dejar H en función de \((q,p,t)\). Es obligatorio eliminar \(E\).</div>
+</div></details></div>
+<div class="variant">
+<div class="meta"><span class="badge">Variante 2</span><span class="badge">Semi-real · mismo patrón</span><span class="badge">real/semi-real</span></div>
+<h4>Enunciado Variante 2 — Partícula libre desde coordenada inicial</h4>
+<div class="statement">Sea \(S(q,t;q_0)=\dfrac{m(q-q_0)^2}{2t}\). Determine el Hamiltoniano y la ley de movimiento.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>Mismo patrón que variante 1: derivar \(S\) antes de interpretar.</li>
+<li>\(p=\partial S/\partial q=m(q-q_0)/t\). Por tanto \(q=q_0+pt/m\).</li>
+<li>\(\partial S/\partial t=-m(q-q_0)^2/(2t^2)=-p^2/(2m)\).</li>
+<li>HJ implica \(H=-S_t=p^2/(2m)\).</li>
+<li>Hamilton: \(\dot q=p/m\), \(\dot p=0\). Luego \(q(t)=q_0+p_0t/m\).</li>
+</ol>
+<div class="result"><strong>Resultado.</strong> \(H=p^2/(2m)\)</div>
+<div class="trap"><strong>Error típico.</strong> No confundir \(q_0\) con una coordenada dinámica: es parámetro de la función principal.</div>
+</div></details></div>
+<div class="variant">
+<div class="meta"><span class="badge">Variante 3</span><span class="badge">Semi-real · función principal estándar</span><span class="badge">real/semi-real</span></div>
+<h4>Enunciado Variante 3 — S con parámetro de momento</h4>
+<div class="statement">Sea \(S(q,t;\alpha)=\alpha q-\dfrac{\alpha^2}{2m}t\). Determine el sistema y la trayectoria.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>Base igual a variante 1: \(p=S_q=\alpha\).</li>
+<li>\(-S_t=\alpha^2/(2m)=p^2/(2m)\), luego \(H=p^2/(2m)\).</li>
+<li>La ecuación \(p=\alpha\) ya muestra que el momento es constante.</li>
+<li>Hamilton: \(\dot q=p/m=\alpha/m\), luego \(q(t)=q(0)+\alpha t/m\).</li>
+<li>Si se usa \(\beta=\partial S/\partial\alpha\), queda \(\beta=q-\alpha t/m\), que es la constante de integración.</li>
+</ol>
+<div class="result"><strong>Resultado.</strong>\[Partícula libre; \(q(t)=\beta+\alpha t/m\)\]</div>
+<div class="trap"><strong>Error típico.</strong> Fallo típico: pensar que toda \(S\) con \(\alpha\) representa energía. Aquí \(\alpha\) es momento.</div>
+</div></details></div>
+<div class="variant">
+<div class="meta"><span class="badge">Variante 4</span><span class="badge">Semi-real · HJ con H(t)</span><span class="badge">real/semi-real</span></div>
+<h4>Enunciado Variante 4 — S dependiente del tiempo con fuerza externa</h4>
+<div class="statement">Sea una función principal que genera un movimiento unidimensional bajo fuerza dependiente del tiempo. Al derivarla se obtiene \(p=\alpha+\tfrac12At^2\). Reconstruya el Hamiltoniano compatible y resuelva el movimiento.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>Si \(p(t)=\alpha+At^2/2\), entonces \(\dot p=At\).</li>
+<li>Hamilton exige \(\dot p=-\partial H/\partial q\), así que \(\partial H/\partial q=-At\).</li>
+<li>El Hamiltoniano natural compatible es \(H=p^2/(2m)-Atq\).</li>
+<li>Entonces \(\dot q=p/m\), \(\dot p=At\).</li>
+<li>Integrando: \(p(t)=p_0+At^2/2\), \(q(t)=q_0+p_0t/m+At^3/(6m)\).</li>
+<li>El lagrangiano correspondiente es \(L=\tfrac12m\dot q^2+Atq\).</li>
+</ol>
+<div class="result"><strong>Resultado.</strong> \(H=p^2/(2m)-Atq\)</div>
+<div class="trap"><strong>Error típico.</strong> La energía no se conserva: el Hamiltoniano depende explícitamente de \(t\).</div>
+</div></details></div>
+<div class="variant">
+<div class="meta"><span class="badge">Variante 5</span><span class="badge">Real/semi-real · apartado de cierre</span><span class="badge">real/semi-real</span></div>
+<h4>Enunciado Variante 5 — Verificar S por sustitución</h4>
+<div class="statement">Dado \(H(q,p)=\tfrac12e^{-2q}p^2\), compruebe que \(S(q,t;E)=\sqrt{2E}e^q-Et\) satisface la ecuación de Hamilton-Jacobi.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>Esto reutiliza la variante 1, pero ahora solo se pide verificación.</li>
+<li>Calcular \(S_q=\sqrt{2E}e^q\).</li>
+<li>Sustituir en \(H(q,S_q)\): \(H=\tfrac12e^{-2q}(2E e^{2q})=E\).</li>
+<li>Calcular \(S_t=-E\).</li>
+<li>Por tanto \(H+S_t=E-E=0\). Queda verificada.</li>
+</ol>
+<div class="result"><strong>Resultado.</strong> \(H(q,S_q)+S_t=0\)</div>
+<div class="trap"><strong>Error típico.</strong> En examen basta esta verificación: no hay que volver a resolver el movimiento.</div>
+</div></details></div>
+</article>
+<article class="problem" id="b1p2"><div class="meta"><span class="badge">Bloque 1</span><span class="badge">Problema 2</span><span class="badge">5 variantes</span></div><h3>Problema 2 — Hamilton-Jacobi directo: te dan H</h3>
+<div class="variant">
+<div class="meta"><span class="badge">Variante 1</span><span class="badge">Semi-real · patrón base</span><span class="badge">real/semi-real</span></div>
+<h4>Enunciado Variante 1 — Hamiltoniano natural 1D</h4>
+<div class="statement">Sea \(H(q,p)=\dfrac{p^2}{2m}+V(q)\). Resolver formalmente la ecuación de Hamilton-Jacobi para un sistema autónomo unidimensional.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>Al no depender explícitamente de \(t\), usar \(S(q,t;E)=W(q;E)-Et\).</li>
+<li>HJ: \(\frac{1}{2m}(W')^2+V(q)=E\).</li>
+<li>Despejar \(W' = p(q,E)=\pm\sqrt{2m(E-V(q))}\).</li>
+<li>Integrar: \(W(q;E)=\int^q \sqrt{2m(E-V(u))}\,du\).</li>
+<li>La ley temporal sale de \(\partial S/\partial E=\beta\): \(\partial W/\partial E-t=\beta\).</li>
+</ol>
+<div class="result"><strong>Resultado.</strong> \(S=\int^q\sqrt{2m(E-V(u))}\,du-Et\)</div>
+<div class="trap"><strong>Error típico.</strong> No intentar integrar si \(V(q)\) es genérico. La respuesta por cuadraturas es válida.</div>
+</div></details></div>
+<div class="variant">
+<div class="meta"><span class="badge">Variante 2</span><span class="badge">Real normalizado · histórico antiguo</span><span class="badge">real/semi-real</span></div>
+<h4>Enunciado Variante 2 — Partícula libre relativista</h4>
+<div class="statement">Sea \(H(q,p)=c\sqrt{m^2c^2+p^2}\). Resolver Hamilton-Jacobi y obtener la función principal.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>Base igual a variante 1: sistema autónomo, usar \(S=W(q)-Et\).</li>
+<li>HJ: \(c\sqrt{m^2c^2+(W')^2}=E\).</li>
+<li>\(W'=p=\pm\sqrt{E^2/c^2-m^2c^2}\), constante.</li>
+<li>Por tanto \(W=pq\) y \(S=pq-Et\), con \(E=c\sqrt{m^2c^2+p^2}\).</li>
+<li>La velocidad se obtiene de Hamilton: \(\dot q=\partial H/\partial p=c p/\sqrt{m^2c^2+p^2}=c^2p/E\).</li>
+</ol>
+<div class="result"><strong>Resultado.</strong> \(S=pq-c\sqrt{m^2c^2+p^2}\,t\)</div>
+<div class="trap"><strong>Error típico.</strong> No escribir \(H=mc^2+p^2/2m\): eso es solo límite no relativista.</div>
+</div></details></div>
+<div class="variant">
+<div class="meta"><span class="badge">Variante 3</span><span class="badge">Semi-real · H separable</span><span class="badge">real/semi-real</span></div>
+<h4>Enunciado Variante 3 — Campo gravitatorio uniforme</h4>
+<div class="statement">Sea \(H(z,p)=p^2/(2m)+mgz\). Resolver Hamilton-Jacobi por separación.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>Como \(H\) no depende de \(t\), usar \(S=W(z;E)-Et\).</li>
+<li>HJ: \((W')^2/(2m)+mgz=E\).</li>
+<li>\(W'=\pm\sqrt{2m(E-mgz)}\).</li>
+<li>Integración: \(W(z)=\mp \dfrac{2}{3mg}\sqrt{2m}\,(E-mgz)^{3/2}\), salvo constante.</li>
+<li>La trayectoria sale de \(\partial W/\partial E-t=\beta\); equivale a caída uniformemente acelerada.</li>
+</ol>
+<div class="result"><strong>Resultado.</strong> \(S=W(z;E)-Et\)</div>
+<div class="trap"><strong>Error típico.</strong> La raíz fija la rama de subida o bajada; no es un error que haya dos signos.</div>
+</div></details></div>
+<div class="variant">
+<div class="meta"><span class="badge">Variante 4</span><span class="badge">Real normalizado · histórico</span><span class="badge">real/semi-real</span></div>
+<h4>Enunciado Variante 4 — Fuerza creciente en el tiempo</h4>
+<div class="statement">Una partícula tiene \(L(q,\dot q,t)=\tfrac12m\dot q^2+Atq\). Resolver la ecuación de Hamilton-Jacobi.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>Momento: \(p=m\dot q\). Hamiltoniano: \(H=p^2/(2m)-Atq\).</li>
+<li>HJ: \(S_t+S_q^2/(2m)-Atq=0\). No es separable como \(W-Et\).</li>
+<li>Usar ansatz lineal en \(q\): \(S=a(t)q+b(t)\).</li>
+<li>Sustitución: \(a'q+b'+a^2/(2m)-Atq=0\).</li>
+<li>Coeficientes: \(a'=At\Rightarrow a=\alpha+At^2/2\).</li>
+<li>\(b'=-a^2/(2m)\Rightarrow b=-\frac1{2m}\left(\alpha^2t+\frac{\alpha A}{3}t^3+\frac{A^2}{20}t^5\right)\).</li>
+</ol>
+<div class="result"><strong>Resultado.</strong> \(S=(\alpha+At^2/2)q-\frac1{2m}\left(\alpha^2t+\frac{\alpha A}{3}t^3+\frac{A^2}{20}t^5\right)\)</div>
+<div class="trap"><strong>Error típico.</strong> El truco es reconocer que la fuerza depende de \(t\), no de \(q\).</div>
+</div></details></div>
+<div class="variant">
+<div class="meta"><span class="badge">Variante 5</span><span class="badge">Real/semi-real · separabilidad</span><span class="badge">real/semi-real</span></div>
+<h4>Enunciado Variante 5 — Sistema separable 2D</h4>
+<div class="statement">Sea \(H=\tfrac12(p_x^2+p_y^2)+A x^2+B y^2\). Resolver Hamilton-Jacobi por separación formal.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>Usar \(S=W_x(x)+W_y(y)-Et\).</li>
+<li>HJ: \(\tfrac12W_x'^2+Ax^2+\tfrac12W_y'^2+By^2=E\).</li>
+<li>Separar con constante \(E_x\): \(\tfrac12W_x'^2+Ax^2=E_x\), \(\tfrac12W_y'^2+By^2=E-E_x\).</li>
+<li>Por tanto \(W_x=\int\sqrt{2(E_x-Ax^2)}dx\), \(W_y=\int\sqrt{2(E-E_x-By^2)}dy\).</li>
+<li>Las leyes temporales salen de \(\partial S/\partial E\) y \(\partial S/\partial E_x\).</li>
+</ol>
+<div class="result"><strong>Resultado.</strong>\[Separación aditiva en \(x\) e \(y\)\]</div>
+<div class="trap"><strong>Error típico.</strong> Si el potencial se suma por coordenadas, no mezclar las constantes de separación.</div>
+</div></details></div>
+</article>
+<article class="problem" id="b1p3"><div class="meta"><span class="badge">Bloque 1</span><span class="badge">Problema 3</span><span class="badge">5 variantes</span></div><h3>Problema 3 — Legendre: de L a H y vuelta</h3>
+<div class="variant">
+<div class="meta"><span class="badge">Variante 1</span><span class="badge">Semi-real · patrón base</span><span class="badge">real/semi-real</span></div>
+<h4>Enunciado Variante 1 — Lagrangiano natural</h4>
+<div class="statement">Dado \(L(q,\dot q)=\tfrac12m\dot q^2-V(q)\), obtenga \(H\), ecuaciones de Hamilton y conservación de energía.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>Momento: \(p=\partial L/\partial\dot q=m\dot q\).</li>
+<li>Invertir: \(\dot q=p/m\).</li>
+<li>Transformada de Legendre: \(H=p\dot q-L=p^2/(2m)+V(q)\).</li>
+<li>Hamilton: \(\dot q=p/m\), \(\dot p=-V'(q)\).</li>
+<li>Como \(H\) no depende explícitamente de \(t\), \(H=E\) se conserva.</li>
+</ol>
+<div class="result"><strong>Resultado.</strong> \(H=p^2/(2m)+V(q)\)</div>
+<div class="trap"><strong>Error típico.</strong> No sustituir \(p=m\dot q\) al final y dejar H en velocidades.</div>
+</div></details></div>
+<div class="variant">
+<div class="meta"><span class="badge">Variante 2</span><span class="badge">Semi-real · coordenada curvilínea</span><span class="badge">real/semi-real</span></div>
+<h4>Enunciado Variante 2 — Masa variable/métrica</h4>
+<div class="statement">Dado \(L=\tfrac12M(q)\dot q^2-V(q)\), obtenga el Hamiltoniano.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>Igual que variante 1, pero el factor cinético depende de \(q\).</li>
+<li>\(p=M(q)\dot q\Rightarrow \dot q=p/M(q)\).</li>
+<li>\(H=p\dot q-L=p^2/M-\tfrac12M(p/M)^2+V\).</li>
+<li>Resultado: \(H=p^2/[2M(q)]+V(q)\).</li>
+<li>Hamilton da \(\dot p=-\partial H/\partial q\), que incluye derivada de \(M(q)\).</li>
+</ol>
+<div class="result"><strong>Resultado.</strong> \(H=\frac{p^2}{2M(q)}+V(q)\)</div>
+<div class="trap"><strong>Error típico.</strong> La derivada \(\partial H/\partial q\) no es solo \(V'\) si \(M\) depende de \(q\).</div>
+</div></details></div>
+<div class="variant">
+<div class="meta"><span class="badge">Variante 3</span><span class="badge">Semi-real · canónico vs mecánico</span><span class="badge">real/semi-real</span></div>
+<h4>Enunciado Variante 3 — Potencial dependiente de velocidad</h4>
+<div class="statement">Dado \(L=\tfrac12m\dot q^2+A(q,t)\dot q-V(q,t)\), obtenga el momento canónico y el Hamiltoniano.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>Momento canónico: \(p=m\dot q+A(q,t)\).</li>
+<li>Invertir: \(\dot q=[p-A(q,t)]/m\).</li>
+<li>\(H=p\dot q-L\). Sustituyendo cuidadosamente se obtiene \(H=[p-A(q,t)]^2/(2m)+V(q,t)\).</li>
+<li>El momento mecánico es \(m\dot q=p-A\).</li>
+<li>Si \(A,V\) dependen de \(t\), \(H\) no se conserva necesariamente.</li>
+</ol>
+<div class="result"><strong>Resultado.</strong> \(H=\frac{(p-A)^2}{2m}+V\)</div>
+<div class="trap"><strong>Error típico.</strong> Error típico: llamar \(p\) a \(m\dot q\). Aquí no coincide.</div>
+</div></details></div>
+<div class="variant">
+<div class="meta"><span class="badge">Variante 4</span><span class="badge">Real/semi-real · Routh/cíclicas</span><span class="badge">real/semi-real</span></div>
+<h4>Enunciado Variante 4 — Coordenada cíclica y reducción</h4>
+<div class="statement">Sea \(L(q,\theta,\dot q,\dot\theta)=\tfrac12a(q)\dot q^2+	frac12b(q)\dot\theta^2-V(q)\), con \(\theta\) cíclica. Reduzca el problema.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>\(p_\theta=\partial L/\partial\dot\theta=b(q)\dot\theta=\ell\), constante.</li>
+<li>Despejar \(\dot\theta=\ell/b(q)\).</li>
+<li>Para la ecuación radial no basta sustituir directamente en \(L\); se usa Routh: \(R=L-p_\theta\dot\theta\).</li>
+<li>\(R=\tfrac12a\dot q^2-V(q)-\ell^2/[2b(q)]\).</li>
+<li>La dinámica de \(q\) equivale a un potencial efectivo \(V_{ef}=V+\ell^2/[2b(q)]\).</li>
+</ol>
+<div class="result"><strong>Resultado.</strong> \(V_{ef}=V(q)+\ell^2/[2b(q)]\)</div>
+<div class="trap"><strong>Error típico.</strong> Trampa clásica: sustituir en L sin hacer Routh cambia el signo del término centrífugo.</div>
+</div></details></div>
+<div class="variant">
+<div class="meta"><span class="badge">Variante 5</span><span class="badge">Semi-real · energía no conservada</span><span class="badge">real/semi-real</span></div>
+<h4>Enunciado Variante 5 — H dependiente de t</h4>
+<div class="statement">Sea \(L=\tfrac12m\dot q^2+Atq\). Obtenga \(H\) y decida si se conserva.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>Es la misma estructura de la variante 4 del problema HJ directo.</li>
+<li>\(p=m\dot q\).</li>
+<li>\(H=p^2/(2m)-Atq\).</li>
+<li>Hamilton: \(\dot q=p/m\), \(\dot p=At\).</li>
+<li>Como \(\partial H/\partial t=-Aq\neq0\), el Hamiltoniano no es constante en general.</li>
+</ol>
+<div class="result"><strong>Resultado.</strong> \(\dot H=\partial H/\partial t=-Aq\)</div>
+<div class="trap"><strong>Error típico.</strong> No asociar automáticamente Hamiltoniano con energía conservada.</div>
+</div></details></div>
+</article>
+</section>
+<section class="page" id="b2"><h2>Bloque 2 — Transformaciones canónicas y corchetes de Poisson</h2><p class="block-lead">Bloque de técnica formal. Los apartados suelen ser cortos, pero penalizan mucho signos y definición exacta.</p>
+<article class="problem" id="b2p1"><div class="meta"><span class="badge">Bloque 2</span><span class="badge">Problema 1</span><span class="badge">5 variantes</span></div><h3>Problema 1 — Transformación canónica y generadora</h3>
+<div class="variant">
+<div class="meta"><span class="badge">Variante 1</span><span class="badge">Real normalizado · histórico</span><span class="badge">real/semi-real</span></div>
+<h4>Enunciado Variante 1 — Intercambio lineal \(Q=-p\)</h4>
+<div class="statement">Demuestre que \(Q=-p\), \(P=q+A(t)p\) es transformación canónica y obtenga una generadora de tipo 1.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>Comprobar canonicidad: \(\{Q,P\}=Q_qP_p-Q_pP_q=0-(-1)(1)=1\).</li>
+<li>Para \(F_1(q,Q,t)\): \(p=\partial F_1/\partial q\), \(P=-\partial F_1/\partial Q\).</li>
+<li>Como \(Q=-p\), entonces \(p=-Q\), luego \(F_1=-qQ+f(Q,t)\).</li>
+<li>\(P=-F_{1Q}=q-f_Q\). Pero \(P=q+A(t)p=q-A(t)Q\).</li>
+<li>Por tanto \(f_Q=A(t)Q\), \(f=\tfrac12A(t)Q^2\).</li>
+<li>Generadora: \(F_1=-qQ+\tfrac12A(t)Q^2\).</li>
+</ol>
+<div class="result"><strong>Resultado.</strong> \(F_1(q,Q,t)=-qQ+\frac12A(t)Q^2\)</div>
+<div class="trap"><strong>Error típico.</strong> El signo de \(P=-F_{1Q}\) es el punto donde más se falla.</div>
+</div></details></div>
+<div class="variant">
+<div class="meta"><span class="badge">Variante 2</span><span class="badge">Real normalizado · histórico</span><span class="badge">real/semi-real</span></div>
+<h4>Enunciado Variante 2 — Obtener \(F_2\) desde \(F_1\)</h4>
+<div class="statement">Para la transformación de la variante 1, obtenga una generadora de tipo 2.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>Usar la variante 1. De \(P=q-AQ\), se obtiene \(Q=(q-P)/A\), si \(A\neq0\).</li>
+<li>Relación entre generadoras: \(F_2(q,P,t)=F_1(q,Q,t)+PQ\).</li>
+<li>Sustituir \(Q=(q-P)/A\).</li>
+<li>\(F_2=-qQ+\tfrac12AQ^2+PQ=(P-q)Q+\tfrac12AQ^2\).</li>
+<li>Como \(P-q=-AQ\), queda \(F_2=-\tfrac12A Q^2=-\dfrac{(q-P)^2}{2A}\).</li>
+<li>Verificación: \(p=F_{2q}=-(q-P)/A=-Q\); \(Q=F_{2P}=(q-P)/A\).</li>
+</ol>
+<div class="result"><strong>Resultado.</strong> \(F_2(q,P,t)=-\dfrac{(q-P)^2}{2A(t)}\)</div>
+<div class="trap"><strong>Error típico.</strong> Si \(A\) depende de \(t\), el nuevo Hamiltoniano incluye \(\partial F_2/\partial t\).</div>
+</div></details></div>
+<div class="variant">
+<div class="meta"><span class="badge">Variante 3</span><span class="badge">Real/semi-real · transformación dependiente del tiempo</span><span class="badge">real/semi-real</span></div>
+<h4>Enunciado Variante 3 — Nuevo Hamiltoniano</h4>
+<div class="statement">Si la transformación anterior depende de \(t\), escriba el nuevo Hamiltoniano \(K\).</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>Base: para generadora tipo 2, \(K=H+\partial F_2/\partial t\).</li>
+<li>Usar \(F_2=-(q-P)^2/[2A(t)]\).</li>
+<li>La derivada temporal se toma manteniendo \((q,P)\) fijos.</li>
+<li>\(\partial_tF_2=\frac{A'(t)}{2A(t)^2}(q-P)^2\).</li>
+<li>Luego \(K(Q,P,t)=H(q,p,t)+\frac{A'}{2A^2}(q-P)^2\), reexpresando \(q,p\) en \(Q,P\).</li>
+</ol>
+<div class="result"><strong>Resultado.</strong> \(K=H+\partial F/\partial t\)</div>
+<div class="trap"><strong>Error típico.</strong> No basta sustituir variables en H cuando la transformación depende del tiempo.</div>
+</div></details></div>
+<div class="variant">
+<div class="meta"><span class="badge">Variante 4</span><span class="badge">Real normalizado · histórico</span><span class="badge">real/semi-real</span></div>
+<h4>Enunciado Variante 4 — Rotación del oscilador armónico</h4>
+<div class="statement">Demuestre que \(x=Q\cos\lambda+P(m\omega)^{-1}\sin\lambda\), \(p=-m\omega Q\sin\lambda+P\cos\lambda\) es canónica para el oscilador armónico.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>Es una rotación escalada en el espacio de fases.</li>
+<li>Calcular \(\{x,p\}_{Q,P}=x_Qp_P-x_Pp_Q\).</li>
+<li>\(x_Q=\cos\lambda\), \(x_P=(m\omega)^{-1}\sin\lambda\).</li>
+<li>\(p_P=\cos\lambda\), \(p_Q=-m\omega\sin\lambda\).</li>
+<li>\(\{x,p\}=\cos^2\lambda+\sin^2\lambda=1\). Canónica.</li>
+<li>Además \(p^2/(2m)+m\omega^2x^2/2=P^2/(2m)+m\omega^2Q^2/2\).</li>
+</ol>
+<div class="result"><strong>Resultado.</strong>\[Transformación canónica; \(H\) queda invariante.\]</div>
+<div class="trap"><strong>Error típico.</strong> No tratarla como rotación euclídea ordinaria: las escalas \(m\omega\) son esenciales.</div>
+</div></details></div>
+<div class="variant">
+<div class="meta"><span class="badge">Variante 5</span><span class="badge">Real normalizado · histórico</span><span class="badge">real/semi-real</span></div>
+<h4>Enunciado Variante 5 — Añadir derivada total a L</h4>
+<div class="statement">Demuestre que reemplazar \(L\) por \(L'=L+df(q,t)/dt\) induce una transformación canónica.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>\(L'=L+f_q\dot q+f_t\).</li>
+<li>Nuevo momento: \(P=\partial L'/\partial\dot q=p+f_q\). La coordenada no cambia: \(Q=q\).</li>
+<li>Usar generadora tipo 2 \(F_2(q,P,t)=qP-f(q,t)\).</li>
+<li>Entonces \(p=F_{2q}=P-f_q\Rightarrow P=p+f_q\).</li>
+<li>\(Q=F_{2P}=q\).</li>
+<li>Nuevo Hamiltoniano: \(K=H+\partial F_2/\partial t=H-f_t\), consistente con \(H'=P\dot q-L'\).</li>
+</ol>
+<div class="result"><strong>Resultado.</strong> \(Q=q,\quad P=p+f_q\)</div>
+<div class="trap"><strong>Error típico.</strong> La invariancia de Euler-Lagrange no significa que el momento canónico no cambie.</div>
+</div></details></div>
+</article>
+<article class="problem" id="b2p2"><div class="meta"><span class="badge">Bloque 2</span><span class="badge">Problema 2</span><span class="badge">5 variantes</span></div><h3>Problema 2 — Poisson y constantes del movimiento</h3>
+<div class="variant">
+<div class="meta"><span class="badge">Variante 1</span><span class="badge">Semi-real · patrón base</span><span class="badge">real/semi-real</span></div>
+<h4>Enunciado Variante 1 — Conservación por coordenada cíclica</h4>
+<div class="statement">Sea \(H(q_1,q_2,p_1,p_2)=p_1^2/2m+p_2^2/2m+V(q_1)\). Obtenga constantes del movimiento.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>Hamilton no depende de \(q_2\). Por tanto \(\dot p_2=-\partial H/\partial q_2=0\).</li>
+<li>Si \(H\) no depende explícitamente de \(t\), también \(H\) se conserva.</li>
+<li>Constantes independientes: \(p_2\) y \(H\).</li>
+<li>Por Poisson: \(\dot F=\{F,H\}+\partial F/\partial t\).</li>
+<li>\(\{p_2,H\}=-\partial H/\partial q_2=0\).</li>
+</ol>
+<div class="result"><strong>Resultado.</strong> \(p_2=cte,\quad H=cte\)</div>
+<div class="trap"><strong>Error típico.</strong> No hace falta resolver el movimiento para detectar constantes.</div>
+</div></details></div>
+<div class="variant">
+<div class="meta"><span class="badge">Variante 2</span><span class="badge">Real normalizado · bloque I reciente</span><span class="badge">real/semi-real</span></div>
+<h4>Enunciado Variante 2 — Hamiltoniano con potencial lineal</h4>
+<div class="statement">Considere \(H=p_x^2+p_y^2+\alpha x\). Obtenga dos constantes independientes mediante Hamilton.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>Ecuaciones: \(\dot x=2p_x\), \(\dot y=2p_y\), \(\dot p_x=-\alpha\), \(\dot p_y=0\).</li>
+<li>Primera constante: \(p_y\).</li>
+<li>Segunda constante: \(H\), porque no depende explícitamente de \(t\).</li>
+<li>Son independientes porque \(dH\) no es proporcional a \(dp_y\) en general.</li>
+<li>No se exige resolver \(x(t),y(t)\) si solo piden constantes.</li>
+</ol>
+<div class="result"><strong>Resultado.</strong> \(p_y, H\)</div>
+<div class="trap"><strong>Error típico.</strong> La coordenada cíclica es \(y\), no \(x\).</div>
+</div></details></div>
+<div class="variant">
+<div class="meta"><span class="badge">Variante 3</span><span class="badge">Real normalizado · bloque I reciente</span><span class="badge">real/semi-real</span></div>
+<h4>Enunciado Variante 3 — Constante no evidente por Poisson</h4>
+<div class="statement">Para \(H=p_x^2+p_y^2+\alpha x\), demuestre que \(I=xp_y^2-yp_xp_y-\frac{\alpha}{4}y^2\) es constante.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>Usar \(\dot I=\{I,H\}\). Más rápido: derivar usando las ecuaciones de la variante 2.</li>
+<li>\(\dot p_y=0\), \(\dot p_x=-\alpha\), \(\dot x=2p_x\), \(\dot y=2p_y\).</li>
+<li>\(d(xp_y^2)/dt=2p_xp_y^2\).</li>
+<li>\(d(-yp_xp_y)/dt=-2p_y p_xp_y+\alpha y p_y\).</li>
+<li>\(d[-(\alpha/4)y^2]/dt=-(\alpha/2)y(2p_y)=-\alpha yp_y\).</li>
+<li>La suma es cero. Por tanto \(I\) se conserva.</li>
+</ol>
+<div class="result"><strong>Resultado.</strong> \(\dot I=0\)</div>
+<div class="trap"><strong>Error típico.</strong> El coeficiente \(-\alpha/4\) depende de que \(H\) use \(p^2\), no \(p^2/2\).</div>
+</div></details></div>
+<div class="variant">
+<div class="meta"><span class="badge">Variante 4</span><span class="badge">Real normalizado · histórico</span><span class="badge">real/semi-real</span></div>
+<h4>Enunciado Variante 4 — Simetría esférica y momento angular</h4>
+<div class="statement">Demuestre que \(\{f,L_z\}=0\) si \(f\) depende solo de escalares rotacionalmente invariantes, por ejemplo \(q^2,p^2,q\cdot p\).</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>Basta demostrarlo para los tres escalares generadores.</li>
+<li>\(L_z=xp_y-yp_x\).</li>
+<li>\(\{q^2,L_z\}=\{x^2+y^2+z^2,L_z\}=0\): rotación no cambia la distancia.</li>
+<li>\(\{p^2,L_z\}=0\): rotación no cambia el módulo del momento.</li>
+<li>\(\{q\cdot p,L_z\}=0\): producto escalar invariante bajo rotación común de \(q,p\).</li>
+<li>Por regla de la cadena, si \(f=f(q^2,p^2,q\cdot p)\), entonces \(\{f,L_z\}=0\).</li>
+</ol>
+<div class="result"><strong>Resultado.</strong> \(\{f,L_z\}=0\)</div>
+<div class="trap"><strong>Error típico.</strong> No expandir todo si puedes razonar por invariancia rotacional; es aceptable si queda formal.</div>
+</div></details></div>
+<div class="variant">
+<div class="meta"><span class="badge">Variante 5</span><span class="badge">Real normalizado · bloque reciente</span><span class="badge">real/semi-real</span></div>
+<h4>Enunciado Variante 5 — ¿Cuarta constante por corchetes?</h4>
+<div class="statement">Si se tienen tres constantes independientes \(H,p_y,I\), discuta si puede obtenerse una cuarta constante independiente usando corchetes de Poisson entre ellas.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>Si \(A\) y \(B\) son constantes, \(\{A,B\}\) también es constante por identidad de Jacobi.</li>
+<li>Pero eso no garantiza independencia funcional.</li>
+<li>En el ejemplo \(H,p_y,I\), los corchetes entre constantes suelen cerrarse en funciones de las mismas constantes o cero.</li>
+<li>Para un sistema de dos grados de libertad, el espacio de fases tiene dimensión 4; más de 3 constantes independientes suele implicar sobreconstricción excepcional.</li>
+<li>Respuesta esperada: no basta aplicar corchetes para fabricar una constante independiente nueva; hay que verificar independencia funcional mediante rango jacobiano.</li>
+</ol>
+<div class="result"><strong>Resultado.</strong>\[No, salvo verificación explícita de independencia; en el patrón real no aparece una cuarta independiente.\]</div>
+<div class="trap"><strong>Error típico.</strong> Decir “sí porque el corchete de constantes es constante” es incompleto: falta independencia.</div>
+</div></details></div>
+</article>
+<article class="problem" id="b2p3"><div class="meta"><span class="badge">Bloque 2</span><span class="badge">Problema 3</span><span class="badge">5 variantes</span></div><h3>Problema 3 — Acción-ángulo como transformación canónica</h3>
+<div class="variant">
+<div class="meta"><span class="badge">Variante 1</span><span class="badge">Real/semi-real · histórico</span><span class="badge">real/semi-real</span></div>
+<h4>Enunciado Variante 1 — Oscilador armónico</h4>
+<div class="statement">Para \(H=p^2/(2m)+m\omega^2q^2/2\), introduzca \(J,\theta\) y compruebe que son variables canónicas.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>Definir \(q=\sqrt{2J/(m\omega)}\sin\theta\), \(p=\sqrt{2m\omega J}\cos\theta\).</li>
+<li>Sustituyendo en H: \(H=\omega J\).</li>
+<li>La canonicidad puede verificarse con \(p\,dq=J\,d\theta+dF\), o con \(\{\theta,J\}=1\).</li>
+<li>Físicamente, \(J\) mide el área de la elipse de fase: \(J=A/(2\pi)=E/\omega\).</li>
+<li>La variable \(\theta\) avanza uniformemente: \(\dot\theta=\partial H/\partial J=\omega\).</li>
+</ol>
+<div class="result"><strong>Resultado.</strong> \(H=\omega J,\quad \dot\theta=\omega\)</div>
+<div class="trap"><strong>Error típico.</strong> No confundir \(J\) con el momento angular; aquí es acción.</div>
+</div></details></div>
+<div class="variant">
+<div class="meta"><span class="badge">Variante 2</span><span class="badge">Real normalizado · histórico</span><span class="badge">real/semi-real</span></div>
+<h4>Enunciado Variante 2 — Frecuencia dependiente lenta</h4>
+<div class="statement">Si \(\omega=\omega(t)\), explique qué ocurre con \(J=E/\omega\) en el límite adiabático.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>La transformación instantánea a acción-ángulo sigue siendo útil, pero el nuevo Hamiltoniano adquiere términos por dependencia temporal.</li>
+<li>Si \(\omega\) cambia lentamente frente al periodo, \(J\) es invariante adiabático.</li>
+<li>Por tanto \(E/\omega\simeq cte\).</li>
+<li>Si \(\omega\) aumenta lentamente, \(E\) aumenta proporcionalmente.</li>
+<li>La condición física es que el oscilador complete muchos ciclos antes de que \(\omega\) cambie apreciablemente.</li>
+</ol>
+<div class="result"><strong>Resultado.</strong> \(J=E/\omega\simeq cte\)</div>
+<div class="trap"><strong>Error típico.</strong> Adiabático no significa exacto; significa conservado hasta correcciones pequeñas.</div>
+</div></details></div>
+<div class="variant">
+<div class="meta"><span class="badge">Variante 3</span><span class="badge">Real normalizado · histórico</span><span class="badge">real/semi-real</span></div>
+<h4>Enunciado Variante 3 — Potencial triangular \(V=a|q|\)</h4>
+<div class="statement">Sea \(H=p^2/(2m)+a|q|\). Determine la acción \(A(E)=\oint p\,dq\) y la frecuencia asociada.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>Puntos de retorno: \(|q|=E/a\).</li>
+<li>Por simetría: \(A(E)=4\int_0^{E/a}\sqrt{2m(E-aq)}\,dq\).</li>
+<li>Integrando: \(A(E)=\frac{8\sqrt{2m}}{3a}E^{3/2}\).</li>
+<li>El periodo es \(T=dA/dE=\frac{4\sqrt{2mE}}{a}\).</li>
+<li>La frecuencia angular es \(\Omega=2\pi/T=\frac{\pi a}{2\sqrt{2mE}}\). Si se usa \(J=A/(2\pi)\), entonces \(\Omega=\partial H/\partial J\).</li>
+</ol>
+<div class="result"><strong>Resultado.</strong> \(A=\frac{8\sqrt{2m}}{3a}E^{3/2}\)</div>
+<div class="trap"><strong>Error típico.</strong> Usar \(A\) o \(J\) exige cuidado: \(J=A/(2\pi)\).</div>
+</div></details></div>
+<div class="variant">
+<div class="meta"><span class="badge">Variante 4</span><span class="badge">Real normalizado · histórico</span><span class="badge">real/semi-real</span></div>
+<h4>Enunciado Variante 4 — Periodo desde área</h4>
+<div class="statement">Demuestre que para una órbita cerrada 1D el periodo cumple \(T=dA/dE\), donde \(A(E)\) es el área encerrada en el espacio de fases.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>El área encerrada es \(A(E)=\oint p(q,E)dq\).</li>
+<li>Derivar respecto a E: \(dA/dE=\oint \partial p/\partial E\,dq\).</li>
+<li>Para \(H=p^2/(2m)+V(q)=E\), \(\partial p/\partial E=m/p=1/\dot q\).</li>
+<li>Entonces \(dA/dE=\oint dq/\dot q=\oint dt=T\).</li>
+<li>La demostración generaliza a sistemas 1D cerrados separables.</li>
+</ol>
+<div class="result"><strong>Resultado.</strong> \(T=\frac{dA}{dE}\)</div>
+<div class="trap"><strong>Error típico.</strong> No meter un factor \(2\pi\) si \(A\) es área total, no acción normalizada.</div>
+</div></details></div>
+<div class="variant">
+<div class="meta"><span class="badge">Variante 5</span><span class="badge">Real normalizado · histórico</span><span class="badge">real/semi-real</span></div>
+<h4>Enunciado Variante 5 — Peonza simétrica integrable</h4>
+<div class="statement">Explique por qué la peonza simétrica con un punto fijo es integrable por cuadraturas usando coordenadas cíclicas.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>Las coordenadas de Euler típicas son \((\phi,\theta,\psi)\).</li>
+<li>Para peonza simétrica en gravedad, \(\phi\) y \(\psi\) son cíclicas.</li>
+<li>Por tanto \(p_\phi\) y \(p_\psi\) son constantes.</li>
+<li>Además, como el lagrangiano no depende explícitamente de \(t\), la energía se conserva.</li>
+<li>Con esas tres constantes se reduce el movimiento a una ecuación efectiva de primer orden para \(\theta(t)\).</li>
+<li>Resolver \(\theta(t)\), \(\phi(t)\), \(\psi(t)\) queda en cuadraturas.</li>
+</ol>
+<div class="result"><strong>Resultado.</strong>\[Tres constantes \(E,p_\phi,p_\psi\) reducen el problema a cuadraturas.\]</div>
+<div class="trap"><strong>Error típico.</strong> No hace falta resolver la peonza completa: el examen suele pedir demostrar integrabilidad.</div>
+</div></details></div>
+</article>
+</section>
+<section class="page" id="b3"><h2>Bloque 3 — Liouville, espacio de fases e invariantes adiabáticos</h2><p class="block-lead">Segundo bloque actual. La clave es distinguir conservación hamiltoniana de conservación energética y no convertir preguntas conceptuales en cálculo largo.</p>
+<article class="problem" id="b3p1"><div class="meta"><span class="badge">Bloque 3</span><span class="badge">Problema 1</span><span class="badge">5 variantes</span></div><h3>Problema 1 — Teorema de Liouville y nubes de fase</h3>
+<div class="variant">
+<div class="meta"><span class="badge">Variante 1</span><span class="badge">Real normalizado · reciente</span><span class="badge">real/semi-real</span></div>
+<h4>Enunciado Variante 1 — Rectángulo en oscilador armónico inverso</h4>
+<div class="statement">Un grupo de partículas ocupa inicialmente el rectángulo \(-a<q_0<a\), \(-b<p_0<b\). Evoluciona con \(H=(p^2-q^2)/2\). Demuestre que el área se conserva.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>Hamilton: \(\dot q=p\), \(\dot p=q\).</li>
+<li>Solución: \(q=q_0\cosh t+p_0\sinh t\), \(p=q_0\sinh t+p_0\cosh t\).</li>
+<li>Transformación lineal: \(\binom q p=M(t)\binom{q_0}{p_0}\), con \(M=\begin{pmatrix}\cosh t&\sinh t\\\sinh t&\cosh t\end{pmatrix}\).</li>
+<li>Jacobiano: \(\det M=\cosh^2t-\sinh^2t=1\).</li>
+<li>El área final es \(A(t)=|\det M|A(0)=A(0)=4ab\).</li>
+</ol>
+<div class="result"><strong>Resultado.</strong> \(A(t)=4ab\)</div>
+<div class="trap"><strong>Error típico.</strong> La región se deforma y se estira; el área no cambia.</div>
+</div></details></div>
+<div class="variant">
+<div class="meta"><span class="badge">Variante 2</span><span class="badge">Real normalizado · reciente</span><span class="badge">real/semi-real</span></div>
+<h4>Enunciado Variante 2 — Cálculo cualitativo de la región</h4>
+<div class="statement">Para la variante 1, describa cualitativamente la región ocupada a medida que avanza el tiempo y cuando \(t\to\infty\).</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>Usar la solución de la variante 1.</li>
+<li>Los lados del rectángulo se transforman en un paralelogramo hiperbólicamente estirado.</li>
+<li>Las direcciones propias son \(p=q\) y \(p=-q\).</li>
+<li>Para \(t\to\infty\), domina la dirección expansiva asociada a \(q+p\).</li>
+<li>La región se vuelve muy alargada y estrecha, pero con área constante.</li>
+</ol>
+<div class="result"><strong>Resultado.</strong>\[Paralelogramo hiperbólico, área constante.\]</div>
+<div class="trap"><strong>Error típico.</strong> No decir que el área crece porque visualmente se estira.</div>
+</div></details></div>
+<div class="variant">
+<div class="meta"><span class="badge">Variante 3</span><span class="badge">Real normalizado · reciente</span><span class="badge">real/semi-real</span></div>
+<h4>Enunciado Variante 3 — Densidad \(
+ho(H)\) estacionaria</h4>
+<div class="statement">Demuestre que si la densidad inicial de estados depende solo del Hamiltoniano, \(\rho=\rho(H)\), entonces es estacionaria.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>La evolución de una densidad hamiltoniana cumple \(\partial_t\rho+\{\rho,H\}=0\).</li>
+<li>Si \(\rho=\rho(H)\), entonces \(\{\rho(H),H\}=\rho'(H)\{H,H\}=0\).</li>
+<li>Si además no hay dependencia explícita en \(t\), \(\partial_t\rho=0\).</li>
+<li>Interpretación: el flujo mueve puntos sobre superficies de energía y la densidad es igual en toda esa superficie.</li>
+<li>Por tanto la distribución no cambia en el tiempo.</li>
+</ol>
+<div class="result"><strong>Resultado.</strong> \(\rho(H)\Rightarrow\dot\rho=0\)</div>
+<div class="trap"><strong>Error típico.</strong> Liouville no dice que cualquier densidad sea estacionaria; dice que se transporta sin compresión.</div>
+</div></details></div>
+<div class="variant">
+<div class="meta"><span class="badge">Variante 4</span><span class="badge">Semi-real · demostración corta</span><span class="badge">real/semi-real</span></div>
+<h4>Enunciado Variante 4 — Prueba por divergencia del flujo</h4>
+<div class="statement">Demuestre Liouville para un sistema 1D usando la divergencia del flujo de fase.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>El flujo de fase es \(\vec v_f=(\dot q,\dot p)=(H_p,-H_q)\).</li>
+<li>Su divergencia es \(\partial\dot q/\partial q+\partial\dot p/\partial p\).</li>
+<li>\(\partial H_p/\partial q+\partial(-H_q)/\partial p=H_{pq}-H_{qp}=0\).</li>
+<li>Flujo incompresible: un volumen/área material en fase se conserva.</li>
+<li>Esa es la forma local del teorema de Liouville.</li>
+</ol>
+<div class="result"><strong>Resultado.</strong> \(\nabla_f\cdot\vec v_f=0\)</div>
+<div class="trap"><strong>Error típico.</strong> La cancelación requiere derivadas cruzadas regulares.</div>
+</div></details></div>
+<div class="variant">
+<div class="meta"><span class="badge">Variante 5</span><span class="badge">Real/semi-real · apartado corto</span><span class="badge">real/semi-real</span></div>
+<h4>Enunciado Variante 5 — Rozamiento añadido</h4>
+<div class="statement">Discuta qué ocurre con el resultado de Liouville si se añade una fuerza de rozamiento proporcional al momento: \(\dot q=p/m\), \(\dot p=-V'(q)-\gamma p\).</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>Ya no es un sistema hamiltoniano en las variables \((q,p)\) usuales.</li>
+<li>Divergencia del flujo: \(\partial(p/m)/\partial q+\partial[-V'(q)-\gamma p]/\partial p=-\gamma\).</li>
+<li>La divergencia es negativa: el área de fase se contrae.</li>
+<li>La densidad puede aumentar localmente porque las trayectorias se comprimen.</li>
+<li>Físicamente, la disipación lleva el sistema hacia regiones de menor energía.</li>
+</ol>
+<div class="result"><strong>Resultado.</strong> \(A(t)=A(0)e^{-\gamma t}\) en el caso lineal simple.</div>
+<div class="trap"><strong>Error típico.</strong> Rozamiento rompe la hipótesis hamiltoniana de Liouville.</div>
+</div></details></div>
+</article>
+<article class="problem" id="b3p2"><div class="meta"><span class="badge">Bloque 3</span><span class="badge">Problema 2</span><span class="badge">5 variantes</span></div><h3>Problema 2 — Invariante adiabático de partícula en caja</h3>
+<div class="variant">
+<div class="meta"><span class="badge">Variante 1</span><span class="badge">Real normalizado · histórico/reciente</span><span class="badge">real/semi-real</span></div>
+<h4>Enunciado Variante 1 — Caja con paredes lentas</h4>
+<div class="statement">Una partícula de masa \(m\) se mueve entre dos paredes separadas \(L\), colisionando elásticamente. Deduzca el invariante adiabático.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>Entre choques, el momento tiene módulo constante \(p=\sqrt{2mE}\).</li>
+<li>La órbita en fase recorre de ida y vuelta el intervalo \([0,L]\).</li>
+<li>La acción de área es \(A=\oint p\,dq=2pL\).</li>
+<li>Si \(L(t)\) varía lentamente, \(A=2pL\) se conserva aproximadamente.</li>
+<li>Por tanto \(pL=cte\), y como \(E=p^2/(2m)\), \(E L^2=cte\).</li>
+</ol>
+<div class="result"><strong>Resultado.</strong> \(E L^2\simeq cte\)</div>
+<div class="trap"><strong>Error típico.</strong> El invariante no es la energía si las paredes se mueven.</div>
+</div></details></div>
+<div class="variant">
+<div class="meta"><span class="badge">Variante 2</span><span class="badge">Real normalizado · reciente</span><span class="badge">real/semi-real</span></div>
+<h4>Enunciado Variante 2 — Paredes que se acercan</h4>
+<div class="statement">Explique por qué la energía aumenta si las paredes móviles se acercan lentamente.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>Usar variante 1: \(E L^2=cte\).</li>
+<li>Si \(L\) disminuye, \(E\) debe aumentar como \(1/L^2\).</li>
+<li>Interpretación microscópica: en cada choque contra una pared que se acerca, la partícula rebota con mayor velocidad.</li>
+<li>La condición de lentitud permite promediar muchos choques y usar el invariante adiabático.</li>
+<li>No contradice conservación de energía porque las paredes hacen trabajo sobre la partícula.</li>
+</ol>
+<div class="result"><strong>Resultado.</strong> \(L\downarrow\Rightarrow E\uparrow\)</div>
+<div class="trap"><strong>Error típico.</strong> No responder “choques elásticos conservan energía”: son elásticos en el marco instantáneo de la pared, pero la pared móvil transfiere energía.</div>
+</div></details></div>
+<div class="variant">
+<div class="meta"><span class="badge">Variante 3</span><span class="badge">Real normalizado · reciente</span><span class="badge">real/semi-real</span></div>
+<h4>Enunciado Variante 3 — Dada \(E(t)\), hallar \(L(t)\)</h4>
+<div class="statement">Si durante la observación \(E(t)=E_0e^{\alpha t}\), halle la ley \(L(t)\) compatible con variación adiabática.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>Usar \(E(t)L(t)^2=E_0L_0^2\).</li>
+<li>\(L(t)=L_0\sqrt{E_0/E(t)}\).</li>
+<li>Sustituyendo \(E(t)=E_0e^{\alpha t}\): \(L(t)=L_0e^{-\alpha t/2}\).</li>
+<li>Si \(\alpha>0\), las paredes se acercan.</li>
+<li>El periodo será \(T(t)=2L(t)/v(t)\), con \(v\propto\sqrt E\), luego \(T\propto L/\sqrt E\).</li>
+</ol>
+<div class="result"><strong>Resultado.</strong> \(L(t)=L_0e^{-\alpha t/2}\)</div>
+<div class="trap"><strong>Error típico.</strong> No confundir \(L\) longitud con lagrangiano.</div>
+</div></details></div>
+<div class="variant">
+<div class="meta"><span class="badge">Variante 4</span><span class="badge">Real normalizado · reciente</span><span class="badge">real/semi-real</span></div>
+<h4>Enunciado Variante 4 — Rozamiento leve</h4>
+<div class="statement">Con paredes fijas y rozamiento leve \(F=-kv\), determine cómo varía el periodo de oscilación horizontal.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>Ecuación entre choques: \(m\dot v=-kv\).</li>
+<li>\(v(t)=v_0e^{-kt/m}\), en aproximación lenta promediada.</li>
+<li>El periodo de ida y vuelta es \(T=2L/v\).</li>
+<li>Por tanto \(T(t)=T_0 e^{kt/m}\).</li>
+<li>La energía decae como \(E\propto v^2\propto e^{-2kt/m}\).</li>
+</ol>
+<div class="result"><strong>Resultado.</strong> \(T(t)=T_0e^{kt/m}\)</div>
+<div class="trap"><strong>Error típico.</strong> El rozamiento aumenta el periodo porque reduce la velocidad.</div>
+</div></details></div>
+<div class="variant">
+<div class="meta"><span class="badge">Variante 5</span><span class="badge">Real normalizado · apartado conceptual</span><span class="badge">real/semi-real</span></div>
+<h4>Enunciado Variante 5 — Procedimiento de variación del periodo</h4>
+<div class="statement">Describa el procedimiento para deducir la ley de variación del periodo a partir de \(E(t)\) y \(L(t)\).</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>Primero escribir la velocidad: \(v(t)=\sqrt{2E(t)/m}\).</li>
+<li>Después escribir el periodo de ida y vuelta: \(T(t)=2L(t)/v(t)\).</li>
+<li>Sustituir la ley \(L(t)\) deducida del invariante adiabático.</li>
+<li>Simplificar la dependencia temporal.</li>
+<li>Interpretar si el periodo aumenta o disminuye según paredes/energía.</li>
+</ol>
+<div class="result"><strong>Resultado.</strong> \(T(t)=2L(t)\sqrt{m/[2E(t)]}\)</div>
+<div class="trap"><strong>Error típico.</strong> Este apartado suele ser conceptual: no hace falta rederivar todo el invariante.</div>
+</div></details></div>
+</article>
+<article class="problem" id="b3p3"><div class="meta"><span class="badge">Bloque 3</span><span class="badge">Problema 3</span><span class="badge">5 variantes</span></div><h3>Problema 3 — Escalas temporales adiabáticas</h3>
+<div class="variant">
+<div class="meta"><span class="badge">Variante 1</span><span class="badge">Real normalizado · reciente</span><span class="badge">real/semi-real</span></div>
+<h4>Enunciado Variante 1 — Oscilador \(\omega(t)\)</h4>
+<div class="statement">En un oscilador de frecuencia variable \(\omega(t)\), explique la condición \(2\pi/\omega\ll \Delta t\ll \omega/\dot\omega\).</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>La primera desigualdad dice que \(\Delta t\) contiene muchos periodos de oscilación.</li>
+<li>Permite promediar sobre la fase rápida.</li>
+<li>La segunda dice que durante \(\Delta t\), la frecuencia cambia poco relativamente.</li>
+<li>\(\omega/\dot\omega\) es la escala temporal de variación macroscópica de \(\omega\).</li>
+<li>Así se separan escala rápida oscilatoria y escala lenta paramétrica.</li>
+</ol>
+<div class="result"><strong>Resultado.</strong>\[Muchos ciclos, pero parámetro casi constante.\]</div>
+<div class="trap"><strong>Error típico.</strong> No leer \(\Delta t\) como paso infinitesimal: es intermedio.</div>
+</div></details></div>
+<div class="variant">
+<div class="meta"><span class="badge">Variante 2</span><span class="badge">Semi-real</span><span class="badge">real/semi-real</span></div>
+<h4>Enunciado Variante 2 — Energía frente a frecuencia</h4>
+<div class="statement">Si \(J=E/\omega\) es invariante adiabático, determine \(E(t)</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>Usar \(E/\omega=cte\).</li>
+<li>Si \(E(0)=E_0\), \(\omega(0)=\omega_0\), entonces \(E(t)=E_0\omega(t)/\omega_0\).</li>
+<li>Si \(\omega\) aumenta, el sistema absorbe energía del agente que cambia el parámetro.</li>
+<li>No es conservación de energía; es conservación de acción.</li>
+<li>La validez exige cambio lento.</li>
+</ol>
+<div class="result"><strong>Resultado.</strong> \(E(t)=E_0\omega(t)/\omega_0\)</div>
+<div class="trap"><strong>Error típico.</strong> Adiabático no equivale a aislado energéticamente.</div>
+</div></details></div>
+<div class="variant">
+<div class="meta"><span class="badge">Variante 3</span><span class="badge">Semi-real</span><span class="badge">real/semi-real</span></div>
+<h4>Enunciado Variante 3 — Identificar cuándo falla</h4>
+<div class="statement">Indique cuándo no puede aplicarse el invariante adiabático de un oscilador con \(\omega(t)\).</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>Falla si \(\dot\omega/\omega\) no es pequeño frente a \(\omega\).</li>
+<li>Falla cerca de puntos donde \(\omega\to0\), porque el periodo diverge.</li>
+<li>Falla si hay disipación fuerte o fuerzas no hamiltonianas.</li>
+<li>Falla si el parámetro cambia de forma impulsiva.</li>
+<li>En esos casos hay que resolver la dinámica real, no usar \(J=cte\).</li>
+</ol>
+<div class="result"><strong>Resultado.</strong>\[Condición básica: \(|\dot\omega|\ll\omega^2\)\]</div>
+<div class="trap"><strong>Error típico.</strong> No usar invariantes adiabáticos por automatismo.</div>
+</div></details></div>
+<div class="variant">
+<div class="meta"><span class="badge">Variante 4</span><span class="badge">Real normalizado · histórico</span><span class="badge">real/semi-real</span></div>
+<h4>Enunciado Variante 4 — Invariante exacto vs adiabático</h4>
+<div class="statement">Distinga invariante exacto, constante de movimiento e invariante adiabático.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>Constante de movimiento: constante a lo largo de la trayectoria para un Hamiltoniano dado.</li>
+<li>Invariante exacto: combinación que permanece constante incluso con cierta variación temporal paramétrica, si satisface ecuaciones auxiliares exactas.</li>
+<li>Invariante adiabático: aproximadamente constante cuando el parámetro cambia lentamente.</li>
+<li>La acción \(J\) suele ser adiabática, no exacta en general.</li>
+<li>En examen conviene decir el orden: exacto > constante dinámica > adiabático aproximado.</li>
+</ol>
+<div class="trap"><strong>Error típico.</strong> No mezclar exactitud con aproximación lenta.</div>
+</div></details></div>
+<div class="variant">
+<div class="meta"><span class="badge">Variante 5</span><span class="badge">Semi-real · síntesis</span><span class="badge">real/semi-real</span></div>
+<h4>Enunciado Variante 5 — Caja y oscilador: analogía</h4>
+<div class="statement">Compare el invariante de caja \(pL\) con el del oscilador \(E/\omega\).</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>Ambos son acciones, equivalentes a área de la órbita en espacio de fases dividida por constantes.</li>
+<li>Caja: \(A=2pL\), luego \(pL\simeq cte\).</li>
+<li>Oscilador: \(A=2\pi E/\omega\), luego \(E/\omega\simeq cte\).</li>
+<li>En ambos, el sistema cambia energía si cambia lentamente un parámetro externo.</li>
+<li>La conservación no es de energía, sino de área/acción.</li>
+</ol>
+<div class="result"><strong>Resultado.</strong>\[Invariante adiabático = acción\]</div>
+<div class="trap"><strong>Error típico.</strong> La lectura común evita memorizar casos sueltos.</div>
+</div></details></div>
+</article>
+</section>
+<section class="page" id="b4"><h2>Bloque 4 — Medios continuos, campos y Noether</h2><p class="block-lead">Bloque III reciente. Repite una plantilla: densidad lagrangiana → Euler-Lagrange de campo → densidad hamiltoniana → conservación local/global.</p>
+<article class="problem" id="b4p1"><div class="meta"><span class="badge">Bloque 4</span><span class="badge">Problema 1</span><span class="badge">5 variantes</span></div><h3>Problema 1 — Cuerda y ecuación de ondas</h3>
+<div class="variant">
+<div class="meta"><span class="badge">Variante 1</span><span class="badge">Real normalizado · histórico/reciente</span><span class="badge">real/semi-real</span></div>
+<h4>Enunciado Variante 1 — Cuerda tensa lineal</h4>
+<div class="statement">Sea \(\mathcal L=\tfrac12\rho y_t^2-\tfrac12T y_x^2\). Obtenga la ecuación de movimiento, velocidad de propagación y densidad hamiltoniana.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>Euler-Lagrange de campo: \(\partial\mathcal L/\partial y-\partial_t(\partial\mathcal L/\partial y_t)-\partial_x(\partial\mathcal L/\partial y_x)=0\).</li>
+<li>\(\partial\mathcal L/\partial y=0\), \(\partial\mathcal L/\partial y_t=\rho y_t\), \(\partial\mathcal L/\partial y_x=-T y_x\).</li>
+<li>Ecuación: \(-\rho y_{tt}+T y_{xx}=0\), o \(y_{tt}=\frac{T}{\rho}y_{xx}\).</li>
+<li>Velocidad: \(c=\sqrt{T/\rho}\).</li>
+<li>Momento conjugado: \(\pi=\rho y_t\).</li>
+<li>Densidad hamiltoniana: \(\mathcal H=\pi y_t-\mathcal L=\tfrac12\rho y_t^2+\tfrac12T y_x^2\).</li>
+</ol>
+<div class="result"><strong>Resultado.</strong> \(y_{tt}=c^2y_{xx},\quad c=\sqrt{T/\rho}\)</div>
+<div class="trap"><strong>Error típico.</strong> Signo de \(\partial_x(-Ty_x)\): revisar siempre.</div>
+</div></details></div>
+<div class="variant">
+<div class="meta"><span class="badge">Variante 2</span><span class="badge">Real normalizado · bloque III</span><span class="badge">real/semi-real</span></div>
+<h4>Enunciado Variante 2 — Conservación de energía</h4>
+<div class="statement">Para la cuerda de la variante 1, exprese la conservación de la energía.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>Usar \(\mathcal H=\tfrac12\rho y_t^2+\tfrac12T y_x^2\).</li>
+<li>Derivar: \(\partial_t\mathcal H=\rho y_t y_{tt}+T y_x y_{xt}\).</li>
+<li>Usar ecuación \(\rho y_{tt}=T y_{xx}\): \(\partial_t\mathcal H=T y_t y_{xx}+T y_x y_{xt}\).</li>
+<li>Reconocer derivada espacial: \(\partial_x(Ty_t y_x)=T y_{tx}y_x+Ty_t y_{xx}\).</li>
+<li>Por tanto \(\partial_t\mathcal H=\partial_x(Ty_t y_x)\), o \(\partial_t\mathcal H+\partial_x j_E=0\) con \(j_E=-Ty_t y_x\).</li>
+</ol>
+<div class="result"><strong>Resultado.</strong> \(\partial_t\mathcal H+\partial_x(-Ty_ty_x)=0\)</div>
+<div class="trap"><strong>Error típico.</strong> La energía total se conserva si el flujo por frontera se anula.</div>
+</div></details></div>
+<div class="variant">
+<div class="meta"><span class="badge">Variante 3</span><span class="badge">Real normalizado · reciente</span><span class="badge">real/semi-real</span></div>
+<h4>Enunciado Variante 3 — Momento de la perturbación</h4>
+<div class="statement">Para la cuerda, demuestre la conservación del momento lineal de la perturbación \(P=\int \rho y_t y_x\,dx\), bajo condiciones de frontera adecuadas.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>Derivar \(P\): \(\dot P=\int \rho y_{tt}y_x+\rho y_t y_{xt}\,dx\).</li>
+<li>Usar \(\rho y_{tt}=Ty_{xx}\).</li>
+<li>\(\dot P=\int Ty_{xx}y_x+\rho y_t y_{xt}\,dx\).</li>
+<li>Ambos términos son derivadas: \(Ty_{xx}y_x=\partial_x(\tfrac12T y_x^2)\), \(\rho y_ty_{xt}=\partial_x(\tfrac12\rho y_t^2)\) si se interpreta sobre soluciones viajeras o con el tensor canónico según convención.</li>
+<li>La integral se reduce a términos de frontera; si las fronteras anulan el flujo, \(P\) se conserva.</li>
+<li>Interpretación: cantidad asociada a traslación espacial de la perturbación/campo.</li>
+</ol>
+<div class="result"><strong>Resultado.</strong> \(\dot P=0\) si no hay flujo neto por la frontera.</div>
+<div class="trap"><strong>Error típico.</strong> Cuidado: hay varias convenciones de signo para el momento canónico de campo.</div>
+</div></details></div>
+<div class="variant">
+<div class="meta"><span class="badge">Variante 4</span><span class="badge">Real normalizado · reciente</span><span class="badge">real/semi-real</span></div>
+<h4>Enunciado Variante 4 — Momento vertical \(P_y\)</h4>
+<div class="statement">Defina \(P_y=\int \rho y_t\,dx\). Determine cuándo se conserva.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>Derivar: \(\dot P_y=\int\rho y_{tt}\,dx\).</li>
+<li>Usar \(\rho y_{tt}=Ty_{xx}\).</li>
+<li>\(\dot P_y=T\int y_{xx}dx=T[y_x]_{x_1}^{x_2}\).</li>
+<li>Se conserva si \(y_x(x_2)=y_x(x_1)\), por ejemplo condiciones periódicas o fronteras con pendiente nula compatible.</li>
+<li>Físicamente es el momento transversal total, no el momento de propagación de la onda.</li>
+</ol>
+<div class="result"><strong>Resultado.</strong> \(\dot P_y=T[y_x]_{x_1}^{x_2}\)</div>
+<div class="trap"><strong>Error típico.</strong> No confundir \(P_y\) con el momento lineal asociado a traslación espacial de la onda.</div>
+</div></details></div>
+<div class="variant">
+<div class="meta"><span class="badge">Variante 5</span><span class="badge">Semi-real · apartado de cierre</span><span class="badge">real/semi-real</span></div>
+<h4>Enunciado Variante 5 — Condiciones de frontera</h4>
+<div class="statement">Explique qué condiciones de frontera aseguran conservación de energía y momento en una cuerda finita.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>La conservación global exige que el flujo correspondiente se anule en los extremos o se cancele entre ellos.</li>
+<li>Energía: flujo \(j_E=-Ty_ty_x\); basta \(y_t=0\) o \(y_x=0\) en extremos, o periodicidad.</li>
+<li>Momento canónico: el flujo del tensor de tensiones debe anularse o ser periódico.</li>
+<li>Condiciones fijas \(y=0\) suelen dar \(y_t=0\) en los extremos y no hay flujo energético.</li>
+<li>Condiciones periódicas conservan las cantidades por cancelación de fronteras.</li>
+</ol>
+<div class="trap"><strong>Error típico.</strong> La conservación local no garantiza conservación global si hay flujo por la frontera.</div>
+</div></details></div>
+</article>
+<article class="problem" id="b4p2"><div class="meta"><span class="badge">Bloque 4</span><span class="badge">Problema 2</span><span class="badge">5 variantes</span></div><h3>Problema 2 — Campo escalar tipo Klein-Gordon</h3>
+<div class="variant">
+<div class="meta"><span class="badge">Variante 1</span><span class="badge">Real normalizado · histórico</span><span class="badge">real/semi-real</span></div>
+<h4>Enunciado Variante 1 — Densidad con término de masa</h4>
+<div class="statement">Sea \(\mathcal L=\tfrac12\rho\phi_t^2-	frac12\rho c^2\phi_x^2-	frac12\rho\omega_0^2\phi^2\). Obtenga la ecuación de movimiento.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>\(\partial\mathcal L/\partial\phi=-\rho\omega_0^2\phi\).</li>
+<li>\(\partial\mathcal L/\partial\phi_t=\rho\phi_t\).</li>
+<li>\(\partial\mathcal L/\partial\phi_x=-\rho c^2\phi_x\).</li>
+<li>Euler-Lagrange: \(-\rho\omega_0^2\phi-\rho\phi_{tt}+\rho c^2\phi_{xx}=0\).</li>
+<li>Equivalente: \(\phi_{tt}-c^2\phi_{xx}+\omega_0^2\phi=0\).</li>
+</ol>
+<div class="result"><strong>Resultado.</strong> \(\phi_{tt}-c^2\phi_{xx}+\omega_0^2\phi=0\)</div>
+<div class="trap"><strong>Error típico.</strong> El término \(\omega_0^2\phi\) entra con signo restaurador.</div>
+</div></details></div>
+<div class="variant">
+<div class="meta"><span class="badge">Variante 2</span><span class="badge">Real normalizado · histórico</span><span class="badge">real/semi-real</span></div>
+<h4>Enunciado Variante 2 — Relación de dispersión</h4>
+<div class="statement">Para la variante 1, use \(\phi=\phi_0e^{i(kx-\Omega t)}\) y obtenga la relación de dispersión.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>Sustituir en la ecuación: \(\phi_{tt}=-\Omega^2\phi\), \(\phi_{xx}=-k^2\phi\).</li>
+<li>\(-\Omega^2+c^2k^2+\omega_0^2=0\).</li>
+<li>Por tanto \(\Omega^2=c^2k^2+\omega_0^2\).</li>
+<li>Velocidad de fase: \(v_f=\Omega/k=\sqrt{c^2+\omega_0^2/k^2}\).</li>
+<li>Velocidad de grupo: \(v_g=d\Omega/dk=c^2k/\Omega\).</li>
+</ol>
+<div class="result"><strong>Resultado.</strong> \(\Omega^2=c^2k^2+\omega_0^2\)</div>
+<div class="trap"><strong>Error típico.</strong> No llamar \(\omega_0\) a la frecuencia de onda; la frecuencia de onda es \(\Omega\).</div>
+</div></details></div>
+<div class="variant">
+<div class="meta"><span class="badge">Variante 3</span><span class="badge">Real normalizado · histórico</span><span class="badge">real/semi-real</span></div>
+<h4>Enunciado Variante 3 — Límites de propagación</h4>
+<div class="statement">Interprete \(v_f\) y \(v_g\) en los límites \(k\to0\) y \(k\to\infty\).</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>Usar la variante 2.</li>
+<li>Cuando \(k\to\infty\), \(\Omega\sim ck\), luego \(v_f\to c\), \(v_g\to c\).</li>
+<li>Cuando \(k\to0\), \(\Omega\to\omega_0\).</li>
+<li>\(v_f=\Omega/k\to\infty\), pero eso no transporta información.</li>
+<li>\(v_g=c^2k/\Omega\to0\): los paquetes largos apenas propagan energía.</li>
+</ol>
+<div class="result"><strong>Resultado.</strong> \(k\to\infty: v_f,v_g\to c;\quad k\to0: v_g\to0\)</div>
+<div class="trap"><strong>Error típico.</strong> Velocidad de fase infinita no viola causalidad; la relevante para paquetes es \(v_g\).</div>
+</div></details></div>
+<div class="variant">
+<div class="meta"><span class="badge">Variante 4</span><span class="badge">Real normalizado · histórico</span><span class="badge">real/semi-real</span></div>
+<h4>Enunciado Variante 4 — Densidad hamiltoniana</h4>
+<div class="statement">Para el campo de la variante 1, obtenga \(\mathcal H\).</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>Momento conjugado: \(\pi=\partial\mathcal L/\partial\phi_t=\rho\phi_t\).</li>
+<li>\(\mathcal H=\pi\phi_t-\mathcal L\).</li>
+<li>Sustitución: \(\mathcal H=\rho\phi_t^2-[\tfrac12\rho\phi_t^2-	frac12\rho c^2\phi_x^2-	frac12\rho\omega_0^2\phi^2]\).</li>
+<li>\(\mathcal H=\tfrac12\rho\phi_t^2+	frac12\rho c^2\phi_x^2+	frac12\rho\omega_0^2\phi^2\).</li>
+<li>Es positiva definida si \(\rho,c^2,\omega_0^2>0\).</li>
+</ol>
+<div class="result"><strong>Resultado.</strong> \(\mathcal H=\frac12\rho\phi_t^2+\frac12\rho c^2\phi_x^2+\frac12\rho\omega_0^2\phi^2\)</div>
+<div class="trap"><strong>Error típico.</strong> No cambiar el signo de los términos espaciales al pasar a Hamiltoniana.</div>
+</div></details></div>
+<div class="variant">
+<div class="meta"><span class="badge">Variante 5</span><span class="badge">Real normalizado · histórico</span><span class="badge">real/semi-real</span></div>
+<h4>Enunciado Variante 5 — Potencial con ruptura de simetría</h4>
+<div class="statement">Sea \(\mathcal H=\tfrac12\pi^2+\tfrac12\phi_x^2+V(\phi)\), con \(V(\phi)=a\phi^2+b\phi^4\), \(a<0\), \(b>0\). Determine mínimos y simetría rota.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>Para mínimo homogéneo, tomar \(\pi=0\), \(\phi_x=0\).</li>
+<li>Minimizar \(V\): \(V'=2a\phi+4b\phi^3=2\phi(a+2b\phi^2)=0\).</li>
+<li>Soluciones: \(\phi=0\) y \(\phi^2=-a/(2b)\).</li>
+<li>Si \(a<0,b>0\), \(\phi=0\) es máximo/inestable y hay dos mínimos \(\phi_0=\pm\sqrt{-a/(2b)}\).</li>
+<li>La densidad es simétrica bajo \(\phi\to-\phi\), pero elegir uno de los mínimos rompe esa simetría.</li>
+</ol>
+<div class="result"><strong>Resultado.</strong> \(\phi_0=\pm\sqrt{-a/(2b)}\)</div>
+<div class="trap"><strong>Error típico.</strong> La ruptura está en el estado mínimo elegido, no en la forma de \(\mathcal L\).</div>
+</div></details></div>
+</article>
+<article class="problem" id="b4p3"><div class="meta"><span class="badge">Bloque 4</span><span class="badge">Problema 3</span><span class="badge">5 variantes</span></div><h3>Problema 3 — Noether y cantidades conservadas</h3>
+<div class="variant">
+<div class="meta"><span class="badge">Variante 1</span><span class="badge">Semi-real · Noether básico</span><span class="badge">real/semi-real</span></div>
+<h4>Enunciado Variante 1 — Traslación temporal</h4>
+<div class="statement">Explique qué conservación produce la invariancia de \(\mathcal L\) bajo traslaciones temporales.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>Si \(\mathcal L\) no depende explícitamente de \(t\), la acción es invariante bajo \(t\to t+\epsilon\).</li>
+<li>La carga conservada asociada es la energía total.</li>
+<li>En campos: \(E=\int\mathcal H\,dx\).</li>
+<li>Localmente: \(\partial_t\mathcal H+\partial_x j_E=0\).</li>
+<li>Globalmente se conserva si el flujo de energía por frontera se anula.</li>
+</ol>
+<div class="result"><strong>Resultado.</strong> \(E=\int\mathcal H dx=cte\)</div>
+<div class="trap"><strong>Error típico.</strong> Noether da conservación local; revisar fronteras.</div>
+</div></details></div>
+<div class="variant">
+<div class="meta"><span class="badge">Variante 2</span><span class="badge">Real/semi-real</span><span class="badge">real/semi-real</span></div>
+<h4>Enunciado Variante 2 — Traslación espacial</h4>
+<div class="statement">Explique qué conservación produce la invariancia de \(\mathcal L\) bajo \(x\to x+\epsilon\).</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>Si \(\mathcal L\) no depende explícitamente de \(x\), hay invariancia por traslación espacial.</li>
+<li>La carga conservada es el momento canónico del campo.</li>
+<li>Con una convención común: \(P=-\int \pi\phi_x\,dx\), donde \(\pi=\partial\mathcal L/\partial\phi_t\).</li>
+<li>Algunos enunciados usan \(P=\int\rho y_t y_xdx\); el signo depende de convención.</li>
+<li>La conservación global exige condiciones de frontera.</li>
+</ol>
+<div class="result"><strong>Resultado.</strong> \(P\sim\int\pi\phi_xdx\)</div>
+<div class="trap"><strong>Error típico.</strong> No identificar este P con \(\int
+ho y_tdx\), que es momento transversal.</div>
+</div></details></div>
+<div class="variant">
+<div class="meta"><span class="badge">Variante 3</span><span class="badge">Real normalizado · reciente</span><span class="badge">real/semi-real</span></div>
+<h4>Enunciado Variante 3 — Traslación del campo</h4>
+<div class="statement">Si \(\mathcal L\) no depende de \(y\), sino solo de \(y_t,y_x\), demuestre la conservación asociada a \(y\to y+\epsilon\).</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>La simetría interna es \(\delta y=\epsilon\), \(\delta x=\delta t=0\).</li>
+<li>La corriente de Noether tiene densidad \(j^0=\pi\delta y=\pi\epsilon\).</li>
+<li>La carga es \(Q=\int\pi dx=\int \partial\mathcal L/\partial y_t\,dx\).</li>
+<li>Para cuerda lineal, \(\pi=\rho y_t\), luego \(Q=P_y=\int\rho y_tdx\).</li>
+<li>Se conserva si no hay flujo de corriente por los extremos.</li>
+</ol>
+<div class="result"><strong>Resultado.</strong> \(Q=\int\pi dx\)</div>
+<div class="trap"><strong>Error típico.</strong> Simetría de campo \(y	o y+\epsilon\) no es traslación espacial.</div>
+</div></details></div>
+<div class="variant">
+<div class="meta"><span class="badge">Variante 4</span><span class="badge">Real normalizado · reciente</span><span class="badge">real/semi-real</span></div>
+<h4>Enunciado Variante 4 — Cantidad \(Q_1=\int f(y_x)y_tdx\)</h4>
+<div class="statement">En \(\mathcal L=\tfrac12 y_t^2-F(y_x)\), determine condiciones para que \(Q_1=\int f(y_x)y_tdx\) sea constante.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>La forma apunta a una carga de Noether asociada a una transformación interna no lineal.</li>
+<li>Derivar: \(\dot Q_1=\int f'(y_x)y_{xt}y_t+f(y_x)y_{tt}\,dx\).</li>
+<li>Usar ecuación de campo \(y_{tt}=\partial_x[F'(y_x)]\).</li>
+<li>Integrar por partes para llevar todo a términos de frontera más términos proporcionales a condiciones sobre \(f\) y \(F\).</li>
+<li>La conservación exige que el término volumétrico se anule y que el flujo de frontera sea cero.</li>
+<li>Si \(f\) coincide con el momento conjugado de una simetría real del lagrangiano, la carga se conserva. En OCR dudoso, contrastar visualmente antes de fijar signos.</li>
+</ol>
+<div class="trap"><strong>Error típico.</strong> Este tipo es de alto riesgo OCR: resolver con el enunciado visual delante.</div>
+</div></details></div>
+<div class="variant">
+<div class="meta"><span class="badge">Variante 5</span><span class="badge">Semi-real · Noether avanzado</span><span class="badge">real/semi-real</span></div>
+<h4>Enunciado Variante 5 — Campo complejo y carga interna</h4>
+<div class="statement">Para \(\mathcal L=\partial_\mu\phi^*\partial^\mu\phi-m^2\phi^*\phi\), identifique la simetría interna y la corriente conservada.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>La simetría es \(\phi\to e^{i\alpha}\phi\), \(\phi^*\to e^{-i\alpha}\phi^*\).</li>
+<li>Variaciones infinitesimales: \(\delta\phi=i\alpha\phi\), \(\delta\phi^*=-i\alpha\phi^*\).</li>
+<li>Corriente de Noether: \(j^\mu=i(\phi\partial^\mu\phi^*-\phi^*\partial^\mu\phi)\), salvo convención de signo.</li>
+<li>Conservación: \(\partial_\mu j^\mu=0\).</li>
+<li>Carga: \(Q=\int j^0d^3x\).</li>
+</ol>
+<div class="result"><strong>Resultado.</strong> \(\partial_\mu j^\mu=0\)</div>
+<div class="trap"><strong>Error típico.</strong> Tema P3: no dedicarlo antes de dominar cuerda y HJ.</div>
+</div></details></div>
+</article>
+<article class="problem" id="b4p4"><div class="meta"><span class="badge">Bloque 4</span><span class="badge">Problema 4</span><span class="badge">5 variantes</span></div><h3>Problema 4 — Modelo discreto, continuo y ondas</h3>
+<div class="variant">
+<div class="meta"><span class="badge">Variante 1</span><span class="badge">Real/semi-real</span><span class="badge">real/semi-real</span></div>
+<h4>Enunciado Variante 1 — Pasar de cadena discreta a continuo</h4>
+<div class="statement">Una cadena de masas \(m\), separación \(a\), y muelles \(K\) tiene \(L=\sum_n[\tfrac12m\dot y_n^2-\tfrac12K(y_{n+1}-y_n)^2]\). Obtenga el límite continuo.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>Tomar \(y_n(t)=y(x_n,t)\), \(x_n=na\).</li>
+<li>Aproximar \(y_{n+1}-y_n\simeq a y_x\).</li>
+<li>Convertir suma en integral: \(\sum_n a\to\int dx\).</li>
+<li>Definir densidad \(\rho=m/a\) y tensión efectiva \(T=Ka\).</li>
+<li>Queda \(\mathcal L=\tfrac12\rho y_t^2-	frac12T y_x^2\).</li>
+</ol>
+<div class="result"><strong>Resultado.</strong> \(\rho=m/a,\quad T=Ka\)</div>
+<div class="trap"><strong>Error típico.</strong> No olvidar el factor \(a\) al pasar de suma a integral.</div>
+</div></details></div>
+<div class="variant">
+<div class="meta"><span class="badge">Variante 2</span><span class="badge">Real normalizado · reciente</span><span class="badge">real/semi-real</span></div>
+<h4>Enunciado Variante 2 — Término no lineal</h4>
+<div class="statement">Interprete físicamente un término no lineal que aparece en la ecuación continua de un medio unidimensional.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>El término no lineal suele proceder de que la energía elástica no es puramente cuadrática en la deformación.</li>
+<li>En el modelo discreto, eso equivale a un potencial entre vecinos con términos de orden superior: \(V(\Delta y)=\tfrac12K\Delta y^2+\lambda\Delta y^3+\cdots\).</li>
+<li>Al pasar al continuo, \(\Delta y\sim ay_x\), y aparecen términos como \(y_x^2\), \(\partial_x(y_x^2)\), etc.</li>
+<li>Físicamente: amplitudes grandes modifican la tensión/fuerza efectiva.</li>
+<li>En examen: identificar origen mecánico, no hacer desarrollo interminable.</li>
+</ol>
+<div class="trap"><strong>Error típico.</strong> El OCR suele romper estos términos; contrastar fórmula exacta antes de resolver.</div>
+</div></details></div>
+<div class="variant">
+<div class="meta"><span class="badge">Variante 3</span><span class="badge">Real normalizado · histórico</span><span class="badge">real/semi-real</span></div>
+<h4>Enunciado Variante 3 — Onda viajera y energía-momento</h4>
+<div class="statement">Para un campo con dispersión \(\Omega^2=c^2k^2+\\omega_0^2\), determine relación cualitativa entre energía y momento de una onda viajera.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>Para una onda plana, energía y momento son proporcionales a frecuencia y número de onda del modo.</li>
+<li>La relación de dispersión fija \(\Omega(k)\).</li>
+<li>En forma relativista análoga: \(E^2=c^2P^2+\text{término de masa}\), con constantes de normalización según lagrangiana.</li>
+<li>Si \(\omega_0=0\), queda relación lineal \(E=c|P|\).</li>
+<li>Si \(\omega_0\neq0\), el medio es dispersivo y hay frecuencia de corte.</li>
+</ol>
+<div class="trap"><strong>Error típico.</strong> No fijar constantes numéricas sin la normalización exacta del enunciado.</div>
+</div></details></div>
+<div class="variant">
+<div class="meta"><span class="badge">Variante 4</span><span class="badge">Semi-real</span><span class="badge">real/semi-real</span></div>
+<h4>Enunciado Variante 4 — Densidad hamiltoniana desde discreto</h4>
+<div class="statement">Dada una cadena discreta, escriba la energía total y su densidad continua.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>Energía discreta: \(E=\sum_n[\tfrac12m\dot y_n^2+\tfrac12K(y_{n+1}-y_n)^2]\).</li>
+<li>Usar \(y_{n+1}-y_n\simeq ay_x\).</li>
+<li>\(\sum_n\to\int dx/a\).</li>
+<li>\(\mathcal H=\tfrac12\rho y_t^2+	frac12T y_x^2\), con \(\rho=m/a\), \(T=Ka\).</li>
+<li>Coincide con Hamiltoniana de cuerda.</li>
+</ol>
+<div class="result"><strong>Resultado.</strong> \(\mathcal H=\frac12\rho y_t^2+\frac12T y_x^2\)</div>
+<div class="trap"><strong>Error típico.</strong> El signo del término espacial cambia entre Lagrangiana y Hamiltoniana.</div>
+</div></details></div>
+<div class="variant">
+<div class="meta"><span class="badge">Variante 5</span><span class="badge">Real/semi-real</span><span class="badge">real/semi-real</span></div>
+<h4>Enunciado Variante 5 — Fronteras y flujo</h4>
+<div class="statement">Explique cómo el flujo de energía en la frontera determina si la energía total se conserva.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>Partir de ley local: \(\partial_t\mathcal H+\partial_x j_E=0\).</li>
+<li>Integrar en \([x_1,x_2]\): \(dE/dt=-[j_E]_{x_1}^{x_2}\).</li>
+<li>Si \(j_E(x_1)=j_E(x_2)\), la energía total se conserva.</li>
+<li>Si \(j_E=0\) en ambos extremos, también se conserva.</li>
+<li>Si hay flujo neto, la energía del medio cambia aunque la ley local sea correcta.</li>
+</ol>
+<div class="result"><strong>Resultado.</strong> \(\dot E=-j_E(x_2)+j_E(x_1)\)</div>
+<div class="trap"><strong>Error típico.</strong> La conservación global depende de fronteras, no solo de la ecuación local.</div>
+</div></details></div>
+</article>
+</section>
+<section class="page" id="b5"><h2>Bloque 5 — Elasticidad y fluidos residual</h2><p class="block-lead">Bloque antiguo. Baja prioridad reciente, pero conviene tener los automatismos mínimos por si aparece una recuperación con estilo viejo.</p>
+<article class="problem" id="b5p1"><div class="meta"><span class="badge">Bloque 5</span><span class="badge">Problema 1</span><span class="badge">5 variantes</span></div><h3>Problema 1 — Función de Airy</h3>
+<div class="variant">
+<div class="meta"><span class="badge">Variante 1</span><span class="badge">Real normalizado · antiguo</span><span class="badge">real/semi-real</span></div>
+<h4>Enunciado Variante 1 — Placa con \(\Phi=px^2y\)</h4>
+<div class="statement">Considere una placa rectangular plana. Para la función de Airy \(\Phi=px^2y\), determine las tensiones.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>Relaciones de Airy: \(\sigma_{xx}=\partial^2\Phi/\partial y^2\), \(\sigma_{yy}=\partial^2\Phi/\partial x^2\), \(\sigma_{xy}=-\partial^2\Phi/(\partial x\partial y)\).</li>
+<li>\(\Phi_y=px^2\), \(\Phi_{yy}=0\), luego \(\sigma_{xx}=0\).</li>
+<li>\(\Phi_x=2pxy\), \(\Phi_{xx}=2py\), luego \(\sigma_{yy}=2py\).</li>
+<li>\(\Phi_{xy}=2px\), luego \(\sigma_{xy}=-2px\).</li>
+<li>Sobre cada frontera se obtiene tracción con \(\vec t=\boldsymbol\sigma\vec n\).</li>
+</ol>
+<div class="result"><strong>Resultado.</strong> \(\sigma_{xx}=0,\quad\sigma_{yy}=2py,\quad\sigma_{xy}=-2px\)</div>
+<div class="trap"><strong>Error típico.</strong> Patrón P4: solo automatismo, no desarrollo largo.</div>
+</div></details></div>
+<div class="variant">
+<div class="meta"><span class="badge">Variante 2</span><span class="badge">Semi-real</span><span class="badge">real/semi-real</span></div>
+<h4>Enunciado Variante 2 — Comprobar equilibrio</h4>
+<div class="statement">Compruebe que las tensiones de la variante 1 satisfacen equilibrio sin fuerzas de volumen.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>Equilibrio 2D: \(\partial_x\sigma_{xx}+\partial_y\sigma_{xy}=0\), \(\partial_x\sigma_{xy}+\partial_y\sigma_{yy}=0\).</li>
+<li>Primera: \(\partial_x0+\partial_y(-2px)=0\).</li>
+<li>Segunda: \(\partial_x(-2px)+\partial_y(2py)=-2p+2p=0\).</li>
+<li>Por tanto el campo de tensiones está equilibrado.</li>
+<li>Esto justifica el uso de Airy.</li>
+</ol>
+<div class="result"><strong>Resultado.</strong>\[Equilibrio satisfecho.\]</div>
+<div class="trap"><strong>Error típico.</strong> No confundir equilibrio con condiciones de contorno.</div>
+</div></details></div>
+<div class="variant">
+<div class="meta"><span class="badge">Variante 3</span><span class="badge">Real/semi-real</span><span class="badge">real/semi-real</span></div>
+<h4>Enunciado Variante 3 — Tracciones en frontera</h4>
+<div class="statement">Para la variante 1, indique cómo dibujar las tensiones en la frontera rectangular.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>En una frontera con normal \(\vec n\), la tracción es \(\vec t=\sigma\vec n\).</li>
+<li>En \(x=0\), \(\sigma_{xy}=0\); solo queda \(\sigma_{yy}=2py\) si la normal lo proyecta según corresponda.</li>
+<li>En \(x=a\), \(\sigma_{xy}=-2pa\), aparece tracción tangencial constante en \(x\).</li>
+<li>En \(y=0\), \(\sigma_{yy}=0\), pero \(\sigma_{xy}=-2px\).</li>
+<li>En \(y=b\), \(\sigma_{yy}=2pb\), \(\sigma_{xy}=-2px\).</li>
+</ol>
+<div class="trap"><strong>Error típico.</strong> Dibujo: usar componentes de \(\vec t\), no dibujar directamente \(\sigma_{ij}\) sin normal.</div>
+</div></details></div>
+<div class="variant">
+<div class="meta"><span class="badge">Variante 4</span><span class="badge">Semi-real</span><span class="badge">real/semi-real</span></div>
+<h4>Enunciado Variante 4 — Función polinómica genérica</h4>
+<div class="statement">Si \(\Phi=A x^2+B y^2+Cxy\), determine tensiones.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>Aplicar las mismas relaciones de la variante 1.</li>
+<li>\(\sigma_{xx}=\Phi_{yy}=2B\).</li>
+<li>\(\sigma_{yy}=\Phi_{xx}=2A\).</li>
+<li>\(\sigma_{xy}=-\Phi_{xy}=-C\).</li>
+<li>Campo uniforme de tensiones.</li>
+</ol>
+<div class="result"><strong>Resultado.</strong> \(\sigma_{xx}=2B,\sigma_{yy}=2A,\sigma_{xy}=-C\)</div>
+</div></details></div>
+<div class="variant">
+<div class="meta"><span class="badge">Variante 5</span><span class="badge">Operativa</span><span class="badge">real/semi-real</span></div>
+<h4>Enunciado Variante 5 — Prioridad de estudio</h4>
+<div class="statement">Cómo entrenar Airy si entra en una recuperación antigua.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>Memorizar solo las tres relaciones de Airy.</li>
+<li>Hacer 3 derivadas polinómicas simples.</li>
+<li>Practicar \(\vec t=\sigma\vec n\) en bordes \(x=0,x=a,y=0,y=b\).</li>
+<li>No estudiar elasticidad completa hasta cerrar HJ/Liouville/continuos.</li>
+<li>Marcar como P4.</li>
+</ol>
+</div></details></div>
+</article>
+<article class="problem" id="b5p2"><div class="meta"><span class="badge">Bloque 5</span><span class="badge">Problema 2</span><span class="badge">5 variantes</span></div><h3>Problema 2 — Reynolds y conservación de masa</h3>
+<div class="variant">
+<div class="meta"><span class="badge">Variante 1</span><span class="badge">Real normalizado · antiguo</span><span class="badge">real/semi-real</span></div>
+<h4>Enunciado Variante 1 — Tanque con dos entradas y una salida</h4>
+<div class="statement">En un tanque cilíndrico entran caudales \(Q_1,Q_2\). El nivel se mantiene constante y sale agua por un conducto de área \(A\). Determine la velocidad media de salida.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>Conservación de masa en régimen de nivel constante: acumulación nula.</li>
+<li>Caudal entrante total: \(Q_1+Q_2\).</li>
+<li>Caudal saliente: \(Q_3=Av\).</li>
+<li>Igualar: \(Q_1+Q_2=Av\).</li>
+<li>Despejar \(v\).</li>
+</ol>
+<div class="result"><strong>Resultado.</strong> \(v=(Q_1+Q_2)/A\)</div>
+<div class="trap"><strong>Error típico.</strong> No meter la altura \(h\): si el nivel es constante, no hace falta para conservación de masa.</div>
+</div></details></div>
+<div class="variant">
+<div class="meta"><span class="badge">Variante 2</span><span class="badge">Real normalizado · antiguo</span><span class="badge">real/semi-real</span></div>
+<h4>Enunciado Variante 2 — Interpretar Reynolds</h4>
+<div class="statement">Identifique los términos del teorema de transporte de Reynolds para una propiedad extensiva.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>Término izquierdo: variación temporal de la propiedad total del sistema material.</li>
+<li>Primer término derecho: variación local dentro del volumen de control.</li>
+<li>Segundo término derecho: flujo neto de la propiedad a través de la superficie de control.</li>
+<li>\(\rho\) es densidad, \(\vec v\cdot\vec n\) es velocidad normal saliente.</li>
+<li>Para masa, la propiedad específica es 1.</li>
+</ol>
+<div class="trap"><strong>Error típico.</strong> Pregunta conceptual: contestar identificando términos, no derivando fluidos completos.</div>
+</div></details></div>
+<div class="variant">
+<div class="meta"><span class="badge">Variante 3</span><span class="badge">Semi-real</span><span class="badge">real/semi-real</span></div>
+<h4>Enunciado Variante 3 — Nivel no constante</h4>
+<div class="statement">Si el nivel del tanque no fuera constante, escriba la ecuación de conservación de masa.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>Acumulación = entrada - salida.</li>
+<li>Si el tanque tiene sección \(S\), volumen \(V=Sh\).</li>
+<li>Para fluido incompresible: \(dV/dt=Q_1+Q_2-Av\).</li>
+<li>Entonces \(S\dot h=Q_1+Q_2-Av\).</li>
+<li>Si \(\dot h=0\), se recupera la variante 1.</li>
+</ol>
+<div class="result"><strong>Resultado.</strong> \(S\dot h=Q_1+Q_2-Av\)</div>
+</div></details></div>
+<div class="variant">
+<div class="meta"><span class="badge">Variante 4</span><span class="badge">Semi-real</span><span class="badge">real/semi-real</span></div>
+<h4>Enunciado Variante 4 — Volumen material vs control</h4>
+<div class="statement">Distinga volumen material y volumen de control.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>Volumen material: se mueve con las mismas partículas de fluido.</li>
+<li>Volumen de control: región fija o prescrita del espacio por la que entra y sale fluido.</li>
+<li>Reynolds conecta la derivada de una propiedad material con acumulación y flujo en el volumen de control.</li>
+<li>En problemas de depósitos se usa volumen de control.</li>
+<li>La superficie de control exige normales y signos coherentes.</li>
+</ol>
+</div></details></div>
+<div class="variant">
+<div class="meta"><span class="badge">Variante 5</span><span class="badge">Operativa</span><span class="badge">real/semi-real</span></div>
+<h4>Enunciado Variante 5 — Prioridad de estudio</h4>
+<div class="statement">Cómo entrenar Reynolds si aparece en examen antiguo.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>Memorizar acumulación = entrada - salida.</li>
+<li>Saber identificar \(\rho\), \(\vec v\cdot\vec n\), volumen de control y superficie.</li>
+<li>Resolver tanque, conducto y flujo estacionario.</li>
+<li>No abrir un tema completo de fluidos antes de cerrar P1.</li>
+<li>Marcar como P4.</li>
+</ol>
+</div></details></div>
+</article>
+</section>
+<section class="page" id="formulario"><h2>Formulario mínimo de reconstrucción</h2><p class="block-lead">Solo lo necesario para reconstruir soluciones en examen. No sustituye a los desarrollos anteriores.</p><div class="grid">
+<div class="formula-card"><strong>Hamilton-Jacobi</strong>
+\[p_i=\frac{\partial S}{\partial q_i}\]
+\[H\left(q,\frac{\partial S}{\partial q},t\right)+\frac{\partial S}{\partial t}=0\]
+\[S=W(q;\alpha)-Et\quad(H\ \text{autónomo})\]
+\[\frac{\partial S}{\partial \alpha_i}=\beta_i\]
+</div>
+<div class="formula-card"><strong>Hamilton</strong>
+\[\dot q_i=\frac{\partial H}{\partial p_i}\]
+\[\dot p_i=-\frac{\partial H}{\partial q_i}\]
+\[H=\sum_i p_i\dot q_i-L\]
+\[p_i=\frac{\partial L}{\partial\dot q_i}\]
+</div>
+<div class="formula-card"><strong>Poisson</strong>
+\[\{F,G\}=\sum_i\left(F_{q_i}G_{p_i}-F_{p_i}G_{q_i}\right)\]
+\[\dot F=\{F,H\}+\frac{\partial F}{\partial t}\]
+\[\{Q_i,P_j\}=\delta_{ij}\]
+\[\{Q_i,Q_j\}=\{P_i,P_j\}=0\]
+</div>
+<div class="formula-card"><strong>Generadoras</strong>
+\[F_1(q,Q):\ p=F_{1q},\ P=-F_{1Q}\]
+\[F_2(q,P):\ p=F_{2q},\ Q=F_{2P}\]
+\[F_3(p,Q):\ q=-F_{3p},\ P=-F_{3Q}\]
+\[K=H+\frac{\partial F}{\partial t}\]
+</div>
+<div class="formula-card"><strong>Liouville</strong>
+\[\nabla_f\cdot(\dot q,\dot p)=0\]
+\[\partial_t\rho+\{\rho,H\}=0\]
+\[\rho=\rho(H)\Rightarrow \{\rho,H\}=0\]
+\[A(t)=A(0)\quad\text{flujo hamiltoniano}\]
+</div>
+<div class="formula-card"><strong>Adiabáticos y acción</strong>
+\[A(E)=\oint p\,dq\]
+\[J=\frac1{2\pi}\oint p\,dq\]
+\[T=\frac{dA}{dE}\]
+\[J_{osc}=E/\omega\]
+\[E L^2=cte\quad\text{caja}\]
+</div>
+<div class="formula-card"><strong>Campos continuos</strong>
+\[\frac{\partial\mathcal L}{\partial\phi}-\partial_t\frac{\partial\mathcal L}{\partial\phi_t}-\partial_x\frac{\partial\mathcal L}{\partial\phi_x}=0\]
+\[\pi=\frac{\partial\mathcal L}{\partial\phi_t}\]
+\[\mathcal H=\pi\phi_t-\mathcal L\]
+\[\partial_t\rho+\partial_x j=0\]
+</div>
+<div class="formula-card"><strong>Cuerda</strong>
+\[\mathcal L=\frac12\rho y_t^2-\frac12T y_x^2\]
+\[y_{tt}=\frac{T}{\rho}y_{xx}\]
+\[c=\sqrt{T/\rho}\]
+\[\mathcal H=\frac12\rho y_t^2+\frac12T y_x^2\]
+</div>
+<div class="formula-card"><strong>Airy/Reynolds</strong>
+\[\sigma_{xx}=\Phi_{yy}\]
+\[\sigma_{yy}=\Phi_{xx}\]
+\[\sigma_{xy}=-\Phi_{xy}\]
+\[\vec t=\boldsymbol\sigma\vec n\]
+\[\text{acumulación}=\text{entrada}-\text{salida}\]
+</div>
+</div></section>
+<footer class="cover"><p class="small">Documento de uso personal. Enunciados reales normalizados cuando el OCR lo permite; enunciados semi-reales cuando la fórmula original aparece dañada pero el patrón está respaldado por el histórico. Soluciones docentes, no oficiales.</p></footer>
+</div></body></html>
