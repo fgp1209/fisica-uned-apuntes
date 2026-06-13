@@ -1,0 +1,989 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Electromagnetismo UNED — patrones de examen resueltos</title>
+<script>
+window.MathJax = { tex: { inlineMath: [['\\(','\\)'], ['$', '$']], displayMath: [['\\[','\\]']] }, svg: { fontCache: 'global' } };
+</script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+<style>
+:root{
+ --bg:#07101e; --panel:#0d1b2e; --panel2:#12243c; --text:#e9f0fb; --muted:#a9b8cd;
+ --line:#27415f; --accent:#78aaff; --accent2:#9bd4ff; --warn:#ffd166; --ok:#7bd88f;
+ --bad:#ff8a8a; --code:#06101d; --shadow:0 14px 38px rgba(0,0,0,.35); --max:1120px;
+}
+body.light{--bg:#eef3fb;--panel:#fff;--panel2:#f6f9ff;--text:#102037;--muted:#52657f;--line:#d3deec;--accent:#1e5dbb;--accent2:#194d8f;--code:#f1f6fb;--shadow:0 12px 32px rgba(20,50,90,.12)}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.56 system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+.wrap{max-width:var(--max);margin:0 auto;padding:24px}
+.cover{background:linear-gradient(135deg,var(--panel),var(--panel2));border:1px solid var(--line);border-radius:24px;padding:30px;box-shadow:var(--shadow);margin-bottom:16px}
+.eyebrow{color:var(--accent2);font-weight:800;text-transform:uppercase;letter-spacing:.09em;font-size:.78rem;margin:0 0 10px}
+h1{font-size:clamp(2rem,5vw,3.6rem);line-height:1.02;margin:0 0 12px}
+h2{font-size:1.8rem;margin:0 0 14px;border-bottom:1px solid var(--line);padding-bottom:10px}
+h3{font-size:1.23rem;margin:0 0 10px}
+h4{font-size:1.06rem;margin:0 0 8px}
+p{margin:0 0 12px}
+.subtitle{color:var(--muted);font-size:1.08rem;max-width:900px}
+.toolbar{position:sticky;top:0;z-index:10;background:rgba(7,16,30,.86);backdrop-filter:blur(10px);border:1px solid var(--line);border-radius:16px;margin:16px 0;padding:10px;display:flex;gap:10px;justify-content:space-between;align-items:center}
+body.light .toolbar{background:rgba(238,243,251,.92)}
+nav{display:flex;gap:8px;flex-wrap:wrap}
+nav a,.btn{border:1px solid var(--line);background:var(--panel2);color:var(--text);border-radius:999px;padding:8px 12px;text-decoration:none;font-weight:800;font-size:.90rem}
+.btn{cursor:pointer}
+.search{border:1px solid var(--line);background:var(--code);color:var(--text);border-radius:999px;padding:9px 13px;min-width:240px}
+.page{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:24px;margin:18px 0;box-shadow:var(--shadow)}
+.block-lead{color:var(--muted);margin-bottom:18px}
+.problem{border:1px solid var(--line);background:linear-gradient(180deg,var(--panel2),rgba(18,36,60,.65));border-radius:18px;padding:18px;margin:18px 0}
+.variant{border:1px solid var(--line);background:var(--panel);border-radius:16px;padding:15px;margin:13px 0}
+.meta{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.badge{font-size:.78rem;border:1px solid var(--line);border-radius:999px;padding:4px 9px;color:var(--accent2);background:var(--code);font-weight:800}
+.badge.warn{color:var(--warn)}
+.statement{background:var(--code);border-left:4px solid var(--accent);border-radius:12px;padding:14px;margin:10px 0;color:var(--text)}
+details{border:1px solid var(--line);border-radius:14px;background:var(--code);margin-top:12px;overflow:hidden}
+summary{cursor:pointer;padding:13px 15px;font-weight:900;color:var(--accent2);background:rgba(120,170,255,.08)}
+.solution{padding:15px 18px}
+ol,ul{margin:0 0 0 1.15rem;padding-left:.85rem}
+li{margin:0 0 10px}
+.result{border:1px solid rgba(123,216,143,.5);background:rgba(123,216,143,.10);border-radius:12px;padding:12px;margin-top:12px}
+.trap{border:1px solid rgba(255,209,102,.45);background:rgba(255,209,102,.10);border-radius:12px;padding:12px;margin-top:12px;color:var(--text)}
+.red{border:1px solid rgba(255,138,138,.45);background:rgba(255,138,138,.09);border-radius:12px;padding:12px;margin-top:12px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px}
+.formula-card{background:var(--panel2);border:1px solid var(--line);border-radius:14px;padding:14px;overflow-x:auto}
+.formula-card strong{color:var(--accent2)}
+.index-list{columns:2;column-gap:30px;color:var(--muted)}
+.index-list li{break-inside:avoid;margin-bottom:7px}
+.small{color:var(--muted);font-size:.94rem}
+hr{border:0;border-top:1px solid var(--line);margin:18px 0}
+.kicker{color:var(--ok);font-weight:800}
+@media(max-width:800px){.wrap{padding:12px}.cover,.page{padding:18px}.toolbar{position:static;display:block}.toolbar div{margin-top:8px}.index-list{columns:1}.search{min-width:100%;margin-top:8px}}
+@media print{.toolbar,.no-print{display:none!important}body{background:white;color:black}.page,.cover,.problem,.variant{box-shadow:none;break-inside:avoid}details{break-inside:avoid}summary{color:black}}
+</style>
+<script>
+function toggleTheme(){document.body.classList.toggle('light');localStorage.setItem('em-theme',document.body.classList.contains('light')?'light':'dark');}
+function openAll(){document.querySelectorAll('details').forEach(d=>d.open=true);}
+function closeAll(){document.querySelectorAll('details').forEach(d=>d.open=false);}
+function filterCards(){
+ const q=document.getElementById('q').value.toLowerCase();
+ document.querySelectorAll('.problem').forEach(p=>{
+   p.style.display = p.innerText.toLowerCase().includes(q) ? '' : 'none';
+ });
+}
+window.addEventListener('DOMContentLoaded',()=>{ if(localStorage.getItem('em-theme')==='light') document.body.classList.add('light'); });
+</script>
+</head>
+<body>
+<div class="wrap">
+<header class="cover">
+<p class="eyebrow">Electromagnetismo I + II · UNED · patrones resueltos</p>
+<h1>Documento final por patrones de examen: enunciado, variante y solución</h1>
+<p class="subtitle">Versión operativa. Cada problema tiene variantes reales o semi-reales normalizadas del histórico. La solución está cerrada en desplegable. Cuando una variante reutiliza una parte ya hecha, se indica explícitamente qué se mantiene y se rehace solo lo distinto.</p>
+</header>
+<div class="toolbar no-print">
+  <nav>
+    <a href="#b1">B1</a><a href="#b2">B2</a><a href="#b3">B3</a><a href="#b4">B4</a><a href="#b5">B5</a><a href="#b6">B6</a><a href="#b7">B7</a><a href="#b8">B8</a><a href="#b9">B9</a><a href="#b10">B10</a><a href="#b11">B11</a><a href="#b12">B12</a><a href="#formulario">Formulario</a>
+  </nav>
+  <div>
+    <input id="q" class="search" oninput="filterCards()" placeholder="Filtrar: Gauss, coaxial, TE10..." />
+    <button class="btn" onclick="toggleTheme()">Noche / día</button>
+    <button class="btn" onclick="openAll()">Abrir soluciones</button>
+    <button class="btn" onclick="closeAll()">Cerrar</button>
+  </div>
+</div>
+<section class="page">
+<h2>Cómo usar este HTML</h2>
+<p>Primero clasifica el enunciado. Después abre la solución. En examen, ganarás puntos si tu primer paso activa el método correcto: simetría y Gauss, contorno conductor, energía, Faraday, modo de guía, impedancia de línea, etc. No estudies leyendo este documento de corrido: tapa la solución y escribe el arranque.</p>
+<div class="red"><strong>Limitación honesta.</strong> Algunas fórmulas del banco proceden de OCR. Por eso los enunciados se han normalizado: son reales o semi-reales, fieles al patrón y resolubles sin depender de una figura ilegible. Si una figura histórica era esencial, la variante se marca como semi-real.</div>
+</section>
+<section class="page"><h2>Índice operativo</h2><ol class="index-list"><li><a href="#b1">Bloque 1</a> · Problema 1 — Reconocer si un campo puede ser electrostático</li><li><a href="#b1">Bloque 1</a> · Problema 2 — Gauss: elegir superficie por simetría</li><li><a href="#b1">Bloque 1</a> · Problema 3 — Potencial a partir de campo o distribución</li><li><a href="#b2">Bloque 2</a> · Problema 1 — Dipolo puntual en campo externo</li><li><a href="#b2">Bloque 2</a> · Problema 2 — Momento dipolar y polarización macroscópica</li><li><a href="#b2">Bloque 2</a> · Problema 3 — Desarrollo multipolar: identificar el primer término no nulo</li><li><a href="#b3">Bloque 3</a> · Problema 1 — Cargas ligadas a partir de la polarización</li><li><a href="#b3">Bloque 3</a> · Problema 2 — Usar \(\mathbf D\), condiciones de contorno y dieléctricos</li><li><a href="#b3">Bloque 3</a> · Problema 3 — Condensador con dieléctrico variable o pérdidas</li><li><a href="#b4">Bloque 4</a> · Problema 1 — Conductores concéntricos y energía electrostática</li><li><a href="#b4">Bloque 4</a> · Problema 2 — Método de imágenes</li><li><a href="#b4">Bloque 4</a> · Problema 3 — Separación de variables en Laplace</li><li><a href="#b4">Bloque 4</a> · Problema 4 — Energía y presión electrostática</li><li><a href="#b5">Bloque 5</a> · Problema 1 — Corriente estacionaria, Ohm local y resistencia</li><li><a href="#b5">Bloque 5</a> · Problema 2 — Continuidad, Kirchhoff y Joule</li><li><a href="#b5">Bloque 5</a> · Problema 3 — F.e.m. y diferencia de potencial</li><li><a href="#b6">Bloque 6</a> · Problema 1 — Campo magnético por Ampère</li><li><a href="#b6">Bloque 6</a> · Problema 2 — Potencial vector magnético</li><li><a href="#b6">Bloque 6</a> · Problema 3 — Biot-Savart y geometrías finitas</li><li><a href="#b6">Bloque 6</a> · Problema 4 — Fuerzas magnéticas</li><li><a href="#b7">Bloque 7</a> · Problema 1 — Imanación y corrientes ligadas</li><li><a href="#b7">Bloque 7</a> · Problema 2 — Condiciones en materiales magnéticos</li><li><a href="#b7">Bloque 7</a> · Problema 3 — Circuitos magnéticos y ferromagnéticos</li><li><a href="#b8">Bloque 8</a> · Problema 1 — Faraday-Lenz: flujo variable</li><li><a href="#b8">Bloque 8</a> · Problema 2 — Circuitos en movimiento</li><li><a href="#b8">Bloque 8</a> · Problema 3 — Inducción mutua y autoinducción</li><li><a href="#b8">Bloque 8</a> · Problema 4 — Energía magnética y fuerza</li><li><a href="#b9">Bloque 9</a> · Problema 1 — Maxwell y corriente de desplazamiento</li><li><a href="#b9">Bloque 9</a> · Problema 2 — Onda plana en medio sin pérdidas</li><li><a href="#b9">Bloque 9</a> · Problema 3 — Medios con pérdidas y reflexión</li><li><a href="#b9">Bloque 9</a> · Problema 4 — Poynting y balance de energía</li><li><a href="#b10">Bloque 10</a> · Problema 1 — Línea de transmisión sin pérdidas: parámetros básicos</li><li><a href="#b10">Bloque 10</a> · Problema 2 — Impedancia de entrada</li><li><a href="#b10">Bloque 10</a> · Problema 3 — Adaptación de impedancias</li><li><a href="#b11">Bloque 11</a> · Problema 1 — Guía rectangular: modos y corte</li><li><a href="#b11">Bloque 11</a> · Problema 2 — Constante de propagación, velocidades e impedancia modal</li><li><a href="#b11">Bloque 11</a> · Problema 3 — Cavidades resonantes</li><li><a href="#b12">Bloque 12</a> · Problema 1 — Radiación de dipolo corto</li><li><a href="#b12">Bloque 12</a> · Problema 2 — Directividad desde patrón de radiación</li><li><a href="#b12">Bloque 12</a> · Problema 3 — Agrupaciones de antenas</li></ol></section>
+<section class="page" id="b1">
+<h2>Bloque 1 — Campo eléctrico, Gauss, potencial y validación de campos</h2>
+<p class="block-lead">Patrones de EM I T02-T03: antes de calcular, decide si hay simetría suficiente o si toca integrar.</p>
+<article class="problem">
+<h3>Problema 1 — Reconocer si un campo puede ser electrostático</h3>
+<div class="variant">
+<div class="meta"><span class="badge">Variante</span><span class="badge ">Semi-real EM1 · cuestión de irrotacionalidad</span></div>
+<h4>V1. Campo cartesiano con parámetro</h4>
+<div class="statement">Sea \(\mathbf E=(ay, bx,0)\). Determinar para qué relación entre \(a\) y \(b\) puede representar un campo electrostático y hallar un potencial.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Un campo electrostático en una región simplemente conexa debe cumplir \(\nabla\times\mathbf E=\mathbf 0\).</li><li>Calculamos: \((\nabla\times\mathbf E)_z=\partial E_y/\partial x-\partial E_x/\partial y=b-a\).</li><li>Por tanto hace falta \(b=a\). Si \(b\ne a\), no hay potencial electrostático global.</li><li>Con \(b=a\), \(\mathbf E=(ay,ax,0)\) y \(\mathbf E=-\nabla V\).</li><li>Entonces \(\partial V/\partial x=-ay\) y \(\partial V/\partial y=-ax\). Integramos: \(V=-axy+C\).</li></ol><div class="result"><strong>Resultado.</strong>\[b=a,\qquad V(x,y,z)=-axy+C\]</div><div class="trap"><strong>Error típico.</strong> No basta con que \(\nabla\cdot\mathbf E\) exista. Para electrostática manda el rotacional.</div></div></details>
+</div><div class="variant">
+<div class="meta"><span class="badge">Variante</span><span class="badge ">Realista EM1 · campo en coordenadas cilíndricas</span></div>
+<h4>V2. Campo radial cilíndrico</h4>
+<div class="statement">Sea \(\mathbf E=\dfrac{k}{\rho}\,\mathbf u_\rho\) para \(\rho>0\). Decidir si puede ser electrostático y hallar \(V\).</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Lo común con V1: se comprueba el rotacional en la región donde el campo está definido.</li><li>En cilíndricas, si solo hay componente \(E_\rho(\rho)\), entonces \(\nabla\times\mathbf E=0\) para \(\rho>0\).</li><li>Por tanto sí puede ser electrostático en cualquier región que no incluya el eje.</li><li>Usamos \(E_\rho=-\partial V/\partial\rho\), luego \(\partial V/\partial\rho=-k/\rho\).</li><li>Integramos: \(V=-k\ln\rho+C\).</li></ol><div class="result"><strong>Resultado.</strong>\[V(\rho)=-k\ln\rho+C\quad (\rho>0)\]</div><div class="trap"><strong>Error típico.</strong> El eje \(\rho=0\) es singular. No lo metas alegremente dentro del dominio.</div></div></details>
+</div><div class="variant">
+<div class="meta"><span class="badge">Variante</span><span class="badge ">Realista EM1 · singularidad</span></div>
+<h4>V3. Campo de carga puntual</h4>
+<div class="statement">Sea \(\mathbf E=\dfrac{q}{4\pi\epsilon_0}\dfrac{\mathbf r}{r^3}\). ¿Es irrotacional? ¿Representa un campo electrostático?</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Lo común con V1: fuera de las fuentes se exige \(\nabla\times\mathbf E=0\).</li><li>Para \(r\ne0\), este campo deriva de \(V=q/(4\pi\epsilon_0r)\), porque \(-\nabla(1/r)=\mathbf r/r^3\) con el signo correcto al incluir \(V\).</li><li>Por tanto es electrostático en \(\mathbb R^3\setminus\{0\}\).</li><li>En el origen hay una singularidad física: una carga puntual. Ahí no puede tratarse como campo regular.</li></ol><div class="result"><strong>Resultado.</strong>\[V(r)=\frac{q}{4\pi\epsilon_0 r}\]</div><div class="trap"><strong>Error típico.</strong> Decir «rotacional cero en todo el espacio» es falso: el origen no pertenece al dominio regular.</div></div></details>
+</div>
+</article><article class="problem">
+<h3>Problema 2 — Gauss: elegir superficie por simetría</h3>
+<div class="variant">
+<div class="meta"><span class="badge">Variante</span><span class="badge ">Semi-real EM1 · Gauss esférico</span></div>
+<h4>V1. Esfera con densidad uniforme</h4>
+<div class="statement">Una esfera de radio \(R\) tiene densidad volumétrica uniforme \(\rho_0\). Hallar \(\mathbf E(r)\) dentro y fuera.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Simetría esférica: \(\mathbf E=E(r)\mathbf u_r\). Superficie gaussiana: esfera de radio \(r\).</li><li>Gauss: \(E(r)4\pi r^2=Q_{enc}(r)/\epsilon_0\).</li><li>Si \(r<R\): \(Q_{enc}=\rho_0(4\pi r^3/3)\), luego \(E=\rho_0r/(3\epsilon_0)\).</li><li>Si \(r>R\): \(Q_{enc}=\rho_0(4\pi R^3/3)=Q\), luego \(E=Q/(4\pi\epsilon_0r^2)\).</li></ol><div class="result"><strong>Resultado.</strong>\[\mathbf E=\begin{cases}\dfrac{\rho_0 r}{3\epsilon_0}\mathbf u_r,&r<R,\\[4pt]\dfrac{\rho_0R^3}{3\epsilon_0r^2}\mathbf u_r,&r>R.\end{cases}\]</div><div class="trap"><strong>Error típico.</strong> No pongas fuera \(Q_{enc}\propto r^3\). Fuera ya está encerrada toda la carga.</div></div></details>
+</div><div class="variant">
+<div class="meta"><span class="badge">Variante</span><span class="badge ">Semi-real EM1 · Gauss cilíndrico</span></div>
+<h4>V2. Cilindro infinito con \(\rho=A\rho\)</h4>
+<div class="statement">Un cilindro infinito de radio \(a\) tiene densidad \(\rho_v=A\rho\). Hallar \(\mathbf E\) dentro y fuera.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Lo común con V1: usar Gauss, pero ahora la superficie es cilíndrica de radio \(\rho\) y longitud \(L\).</li><li>Por simetría \(\mathbf E=E(\rho)\mathbf u_\rho\). Flujo: \(E(2\pi\rho L)\).</li><li>Dentro, \(Q_{enc}=\int_0^\rho A\rho'\,2\pi\rho'L\,d\rho'=2\pi AL\rho^3/3\).</li><li>Luego \(E= A\rho^2/(3\epsilon_0)\) si \(\rho<a\).</li><li>Fuera, \(Q_{enc}=2\pi ALa^3/3\), así que \(E=Aa^3/(3\epsilon_0\rho)\).</li></ol><div class="result"><strong>Resultado.</strong>\[\mathbf E=\begin{cases}\dfrac{A\rho^2}{3\epsilon_0}\mathbf u_\rho,&\rho<a,\\[4pt]\dfrac{Aa^3}{3\epsilon_0\rho}\mathbf u_\rho,&\rho>a.\end{cases}\]</div><div class="trap"><strong>Error típico.</strong> En cilíndricas el elemento de volumen lleva \(\rho' d\rho' d\varphi dz\). Si lo olvidas, sale mal la potencia de \(\rho\).</div></div></details>
+</div><div class="variant">
+<div class="meta"><span class="badge">Variante</span><span class="badge warn">Real EM1 Sep. 2018 normalizado</span></div>
+<h4>V3. Placa con hueco cilíndrico</h4>
+<div class="statement">Una placa infinita de espesor \(2a\) tiene densidad uniforme \(\rho_0\), pero se ha vaciado un hueco cilíndrico infinito. Hallar el campo como superposición.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Este problema no se ataca con una única superficie de Gauss porque el hueco rompe la simetría simple.</li><li>Método: distribución real = placa maciza de densidad \(\rho_0\) + cilindro de densidad \(-\rho_0\) situado donde está el hueco.</li><li>Se calcula \(\mathbf E_{placa}\) por Gauss plano: dentro \(E=\rho_0 x/\epsilon_0\) si el eje normal es \(x\); fuera \(E=\rho_0 a/\epsilon_0\) con signo.</li><li>Se calcula \(\mathbf E_{cilindro}\) por Gauss cilíndrico con densidad \(-\rho_0\) en coordenadas respecto al eje del hueco.</li><li>El campo final es \(\mathbf E=\mathbf E_{placa}+\mathbf E_{cilindro negativo}\), evaluando cada vector en el punto pedido.</li></ol><div class="result"><strong>Resultado.</strong><p>Resultado operativo: no memorices una fórmula cerrada; escribe la superposición con ejes claros y signos.</p></div><div class="trap"><strong>Error típico.</strong> Intentar aplicar Gauss directamente al cuerpo con hueco. Gauss da flujo total, no el campo local si no hay simetría suficiente.</div></div></details>
+</div>
+</article><article class="problem">
+<h3>Problema 3 — Potencial a partir de campo o distribución</h3>
+<div class="variant">
+<div class="meta"><span class="badge">Variante</span><span class="badge ">Semi-real EM1 · conductor</span></div>
+<h4>V1. Potencial de una esfera conductora cargada</h4>
+<div class="statement">Una esfera conductora de radio \(R\) tiene carga \(Q\). Tomando \(V(\infty)=0\), hallar \(V(r)\).</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol><li>En un conductor en equilibrio, \(\mathbf E=0\) en el interior y el potencial es constante.</li><li>Fuera, el campo es el de una carga puntual: \(E=Q/(4\pi\epsilon_0r^2)\).</li><li>Integramos desde infinito: \(V(r)=\int_r^\infty E(r')\,dr'=Q/(4\pi\epsilon_0r)\) para \(r\ge R\).</li><li>Dentro, \(V\) es el valor de la superficie: \(V(R)=Q/(4\pi\epsilon_0R)\).</li></ol><div class="result"><strong>Resultado.</strong>\[V(r)=\begin{cases}\dfrac{Q}{4\pi\epsilon_0R},&r<R,\\[4pt]\dfrac{Q}{4\pi\epsilon_0r},&r\ge R.\end{cases}\]</div><div class="trap"><strong>Error típico.</strong> Dentro del conductor no es \(V=0\). Es \(E=0\); el potencial es constante.</div></div></details>
+</div><div class="variant">
+<div class="meta"><span class="badge">Variante</span><span class="badge ">Semi-real EM1 · logaritmo</span></div>
+<h4>V2. Potencial de línea infinita</h4>
+<div class="statement">Una línea infinita tiene densidad lineal \(\lambda\). Hallar la diferencia de potencial entre \(\rho=a\) y \(\rho=b\).</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Lo común con V1: primero campo por Gauss y luego integrar \(\Delta V=-\int\mathbf E\cdot d\mathbf l\).</li><li>Para una línea infinita, \(E_\rho=\lambda/(2\pi\epsilon_0\rho)\).</li><li>\(V(b)-V(a)=-\int_a^b \lambda/(2\pi\epsilon_0\rho)\,d\rho\).</li><li>Integramos: \(V(b)-V(a)=-(\lambda/(2\pi\epsilon_0))\ln(b/a)\).</li></ol><div class="result"><strong>Resultado.</strong>\[V(a)-V(b)=\frac{\lambda}{2\pi\epsilon_0}\ln\frac{b}{a}\]</div><div class="trap"><strong>Error típico.</strong> Para una línea infinita no tiene sentido imponer \(V(\infty)=0\): el potencial logarítmico diverge.</div></div></details>
+</div><div class="variant">
+<div class="meta"><span class="badge">Variante</span><span class="badge ">Semi-real EM1 · integración directa</span></div>
+<h4>V3. Anillo cargado sobre su eje</h4>
+<div class="statement">Un anillo de radio \(R\) y carga total \(Q\) está en el plano \(z=0\). Hallar \(V(z)\) y \(E_z(z)\) sobre el eje.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Aquí no conviene Gauss para el campo local. Conviene integrar el potencial, que es escalar.</li><li>Todo elemento del anillo está a la misma distancia del punto del eje: \(s=\sqrt{R^2+z^2}\).</li><li>\(V=(1/(4\pi\epsilon_0))\int dq/s = Q/(4\pi\epsilon_0\sqrt{R^2+z^2})\).</li><li>El campo axial sale de \(E_z=-dV/dz\).</li><li>Derivando: \(E_z=Qz/[4\pi\epsilon_0(R^2+z^2)^{3/2}]\).</li></ol><div class="result"><strong>Resultado.</strong>\[V(z)=\frac{Q}{4\pi\epsilon_0\sqrt{R^2+z^2}},\quad E_z=\frac{Qz}{4\pi\epsilon_0(R^2+z^2)^{3/2}}\]</div><div class="trap"><strong>Error típico.</strong> Sumar componentes de campo directamente es más largo; el potencial en el eje es inmediato.</div></div></details>
+</div>
+</article>
+</section>
+<section class="page" id="b2">
+<h2>Bloque 2 — Dipolos, multipolos y polarización</h2>
+<p class="block-lead">Patrones T04: casi siempre preguntan por energía, orientación, momento dipolar o primer término multipolar.</p>
+<article class="problem">
+<h3>Problema 1 — Dipolo puntual en campo externo</h3>
+<div class="variant">
+<div class="meta"><span class="badge">Variante</span><span class="badge ">Real EM1 Sep. 2016 normalizado</span></div>
+<h4>V1. Energía, par y equilibrio</h4>
+<div class="statement">Un dipolo puntual de momento \(\mathbf p\) está en un campo uniforme \(\mathbf E\). Derivar la energía potencial, el par y las posiciones de equilibrio.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Modelo: dipolo puntual en campo externo uniforme. La energía potencial se define como \(U=-\mathbf p\cdot\mathbf E\).</li><li>Si \(\theta\) es el ángulo entre \(\mathbf p\) y \(\mathbf E\), entonces \(U(\theta)=-pE\cos\theta\).</li><li>El par tiende a alinear el dipolo: \(\boldsymbol\tau=\mathbf p\times\mathbf E\), de módulo \(pE\sin\theta\).</li><li>El equilibrio exige \(\sin\theta=0\): \(\theta=0\) o \(\theta=\pi\).</li><li>\(U\) es mínima en \(\theta=0\), máxima en \(\theta=\pi\).</li></ol><div class="result"><strong>Resultado.</strong>\[U=-\mathbf p\cdot\mathbf E=-pE\cos\theta,\qquad \boldsymbol\tau=\mathbf p\times\mathbf E\]</div><div class="trap"><strong>Error típico.</strong> El dipolo estable queda paralelo al campo, no antiparalelo.</div></div></details>
+</div><div class="variant">
+<div class="meta"><span class="badge">Variante</span><span class="badge ">Semi-real EM1/EM2</span></div>
+<h4>V2. Campo no uniforme</h4>
+<div class="statement">Un dipolo \(\mathbf p=p\mathbf u_z\) está en un campo \(\mathbf E=E_0 z\mathbf u_z\). Hallar la fuerza.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Lo común con V1: la energía sigue siendo \(U=-\mathbf p\cdot\mathbf E\) si el dipolo es pequeño frente a la escala de variación del campo.</li><li>Aquí \(U(z)=-pE_0z\).</li><li>La fuerza general es \(\mathbf F=-\nabla U\), o equivalentemente \(\mathbf F=\nabla(\mathbf p\cdot\mathbf E)\) si \(\mathbf p\) es constante.</li><li>Derivando: \(F_z=pE_0\).</li></ol><div class="result"><strong>Resultado.</strong>\[\mathbf F=pE_0\mathbf u_z\]</div><div class="trap"><strong>Error típico.</strong> En campo uniforme hay par pero no fuerza neta. En campo no uniforme sí puede haber fuerza.</div></div></details>
+</div><div class="variant">
+<div class="meta"><span class="badge">Variante</span><span class="badge ">Real EM1 Feb. 2016/2019 normalizado</span></div>
+<h4>V3. Dos dipolos cercanos: paralelo o antiparalelo</h4>
+<div class="statement">Dos dipolos iguales tienen sus momentos sobre la misma recta. Comparar la energía si están paralelos o antiparalelos, separados una distancia \(R\) sobre su eje.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Campo de un dipolo sobre su eje: \(\mathbf E_1=(1/(4\pi\epsilon_0))(2\mathbf p_1/R^3)\).</li><li>La energía del dipolo 2 en el campo del 1 es \(U=-\mathbf p_2\cdot\mathbf E_1\).</li><li>Si están paralelos, \(\mathbf p_2\parallel\mathbf E_1\), así que \(U_{par}<0\).</li><li>Si están antiparalelos, \(\mathbf p_2\) va contra \(\mathbf E_1\), así que \(U_{anti}>0\).</li><li>Por tanto la disposición paralela axial es más favorable.</li></ol><div class="result"><strong>Resultado.</strong>\[U_{par}=-\frac{2p^2}{4\pi\epsilon_0R^3},\qquad U_{anti}=+\frac{2p^2}{4\pi\epsilon_0R^3}\]</div><div class="trap"><strong>Error típico.</strong> Cuidado: para dipolos colocados lado a lado transversalmente, el signo favorable cambia.</div></div></details>
+</div>
+</article><article class="problem">
+<h3>Problema 2 — Momento dipolar y polarización macroscópica</h3>
+<div class="variant">
+<div class="meta"><span class="badge">Variante</span><span class="badge ">Semi-real EM1</span></div>
+<h4>V1. Dos cargas \(+q\) y \(-q\)</h4>
+<div class="statement">Una carga \(+q\) está en \(z=a\) y una carga \(-q\) en \(z=-a\). Hallar el momento dipolar respecto del origen.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Definición para cargas puntuales: \(\mathbf p=\sum_i q_i\mathbf r_i\).</li><li>Aportación de \(+q\): \(q(a\mathbf u_z)\).</li><li>Aportación de \(-q\): \((-q)(-a\mathbf u_z)=qa\mathbf u_z\).</li><li>Sumando: \(\mathbf p=2qa\mathbf u_z\).</li><li>El vector va de la carga negativa a la positiva.</li></ol><div class="result"><strong>Resultado.</strong>\[\mathbf p=2qa\mathbf u_z\]</div><div class="trap"><strong>Error típico.</strong> No pongas el vector de \(+\) a \(-\). Por convención, \(\mathbf p\) apunta de negativa a positiva.</div></div></details>
+</div><div class="variant">
+<div class="meta"><span class="badge">Variante</span><span class="badge ">Realista EM1 · nube electrónica</span></div>
+<h4>V2. Distribución continua neutra</h4>
+<div class="statement">Una distribución electrónica es esféricamente simétrica alrededor de un núcleo positivo en el origen. Justificar que su momento dipolar total es nulo.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Lo común con V1: se usa \(\mathbf p=\int \mathbf r\rho(\mathbf r)dv\).</li><li>Si \(\rho\) solo depende de \(r\), por cada elemento en \(\mathbf r\) existe otro idéntico en \(-\mathbf r\).</li><li>Las contribuciones \(\mathbf r\rho dv\) y \(-\mathbf r\rho dv\) se cancelan.</li><li>El núcleo en el origen no contribuye porque \(q\mathbf r=0\).</li><li>Luego \(\mathbf p=0\).</li></ol><div class="result"><strong>Resultado.</strong>\[\mathbf p=\mathbf 0\]</div><div class="trap"><strong>Error típico.</strong> No hace falta integrar toda la función de onda si la simetría esférica está clara.</div></div></details>
+</div><div class="variant">
+<div class="meta"><span class="badge">Variante</span><span class="badge ">Real EM1 Feb. 2019 normalizado</span></div>
+<h4>V3. Celda cúbica centrada en caras con dipolos</h4>
+<div class="statement">Una celda cúbica de lado \(a\) tiene dipolos \(+p_0\mathbf u_z\) en los 8 vértices y dipolos \(-p_0\mathbf u_z\) en los 6 centros de cara. Hallar la polarización de un cristal formado por repetición de la celda.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol><li>La polarización es momento dipolar neto por volumen: \(\mathbf P=\mathbf p_{celda}/a^3\).</li><li>Cada vértice pertenece a 8 celdas, luego los 8 vértices aportan en total \(8(1/8)p_0\mathbf u_z=p_0\mathbf u_z\).</li><li>Cada centro de cara pertenece a 2 celdas, luego las 6 caras aportan \(6(1/2)(-p_0\mathbf u_z)=-3p_0\mathbf u_z\).</li><li>Momento neto de celda: \(\mathbf p_{celda}=-2p_0\mathbf u_z\).</li><li>Dividimos por el volumen \(a^3\).</li></ol><div class="result"><strong>Resultado.</strong>\[\mathbf P=-\frac{2p_0}{a^3}\mathbf u_z\]</div><div class="trap"><strong>Error típico.</strong> No cuentes los 8 vértices completos ni las 6 caras completas: estás sobredimensionando la celda.</div></div></details>
+</div>
+</article><article class="problem">
+<h3>Problema 3 — Desarrollo multipolar: identificar el primer término no nulo</h3>
+<div class="variant">
+<div class="meta"><span class="badge">Variante</span><span class="badge ">Semi-real EM1</span></div>
+<h4>V1. Sistema con carga total no nula</h4>
+<div class="statement">Un sistema localizado tiene carga total \(Q\ne0\). ¿Cuál es el término dominante del potencial a grandes distancias?</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol><li>El desarrollo multipolar a grandes distancias empieza por el monopolo.</li><li>Si \(Q\ne0\), ningún término superior domina al monopolo.</li><li>El potencial lejano es \(V\simeq Q/(4\pi\epsilon_0 r)\).</li></ol><div class="result"><strong>Resultado.</strong>\[V(r)\simeq\frac{Q}{4\pi\epsilon_0r}\]</div><div class="trap"><strong>Error típico.</strong> No busques dipolo si la carga total no se anula.</div></div></details>
+</div><div class="variant">
+<div class="meta"><span class="badge">Variante</span><span class="badge ">Semi-real EM1</span></div>
+<h4>V2. Sistema neutro con dipolo no nulo</h4>
+<div class="statement">Un sistema localizado tiene \(Q=0\) pero \(\mathbf p\ne0\). Escribir el potencial dominante lejano.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Lo común con V1: se mira el primer momento no nulo.</li><li>Como \(Q=0\), desaparece el monopolo.</li><li>El siguiente término es el dipolar: \(V\simeq(1/(4\pi\epsilon_0))(\mathbf p\cdot\mathbf u_r/r^2)\).</li></ol><div class="result"><strong>Resultado.</strong>\[V(\mathbf r)\simeq\frac{1}{4\pi\epsilon_0}\frac{\mathbf p\cdot\mathbf u_r}{r^2}\]</div><div class="trap"><strong>Error típico.</strong> El potencial dipolar cae como \(1/r^2\); el campo dipolar cae como \(1/r^3\).</div></div></details>
+</div><div class="variant">
+<div class="meta"><span class="badge">Variante</span><span class="badge ">Semi-real EM1</span></div>
+<h4>V3. Sistema con \(Q=0\) y \(\mathbf p=0\)</h4>
+<div class="statement">Una distribución localizada tiene carga total y momento dipolar nulos, pero no tiene simetría esférica. ¿Qué término esperas que domine?</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Lo común con V1 y V2: el primer término no nulo marca la caída lejana.</li><li>Si \(Q=0\) y \(\mathbf p=0\), el término siguiente es cuadrupolar.</li><li>No hace falta calcular todo el tensor salvo que el enunciado lo pida.</li><li>La caída típica del potencial cuadrupolar es \(1/r^3\).</li></ol><div class="result"><strong>Resultado.</strong><p>Dominante: término cuadrupolar, \(V_Q\sim r^{-3}\).</p></div><div class="trap"><strong>Error típico.</strong> No contestes «cero» salvo que todos los multipolos relevantes se anulen por simetría.</div></div></details>
+</div>
+</article>
+</section>
+<section class="page" id="b3">
+<h2>Bloque 3 — Dieléctricos, polarización y condiciones de contorno</h2>
+<p class="block-lead">Patrones T05: distinguir carga libre/ligada, \(\mathbf D\)/\(\mathbf E\), normal/tangencial.</p>
+<article class="problem">
+<h3>Problema 1 — Cargas ligadas a partir de la polarización</h3>
+<div class="variant">
+<div class="meta"><span class="badge">Variante</span><span class="badge ">Semi-real EM1 T05</span></div>
+<h4>V1. Esfera con polarización uniforme</h4>
+<div class="statement">Una esfera de radio \(R\) tiene polarización uniforme \(\mathbf P=P_0\mathbf u_z\). Hallar \(\rho_b\) y \(\sigma_b\).</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Las cargas ligadas son \(\rho_b=-\nabla\cdot\mathbf P\) y \(\sigma_b=\mathbf P\cdot\mathbf n\).</li><li>Como \(\mathbf P\) es uniforme, \(\nabla\cdot\mathbf P=0\), luego \(\rho_b=0\).</li><li>En la superficie esférica, \(\mathbf n=\mathbf u_r\).</li><li>\(\sigma_b=P_0\mathbf u_z\cdot\mathbf u_r=P_0\cos\theta\).</li></ol><div class="result"><strong>Resultado.</strong>\[\rho_b=0,\qquad \sigma_b=P_0\cos\theta\]</div><div class="trap"><strong>Error típico.</strong> No confundas cargas libres con cargas ligadas. Aquí todo sale de \(\mathbf P\).</div></div></details>
+</div><div class="variant">
+<div class="meta"><span class="badge">Variante</span><span class="badge ">Semi-real EM1</span></div>
+<h4>V2. Cilindro con \(\mathbf P=A\rho\mathbf u_\rho\)</h4>
+<div class="statement">Un cilindro largo de radio \(a\) tiene \(\mathbf P=A\rho\mathbf u_\rho\). Hallar las cargas ligadas en volumen y superficie lateral.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Lo común con V1: \(\rho_b=-\nabla\cdot\mathbf P\), \(\sigma_b=\mathbf P\cdot\mathbf n\).</li><li>En cilíndricas, \(\nabla\cdot(A\rho\mathbf u_\rho)=\frac1\rho\frac{\partial}{\partial\rho}(\rho A\rho)=2A\).</li><li>Por tanto \(\rho_b=-2A\).</li><li>En la superficie lateral \(\rho=a\), \(\mathbf n=\mathbf u_\rho\), luego \(\sigma_b=Aa\).</li><li>Si se consideran tapas, habría que proyectar allí \(\mathbf P\cdot\mathbf n\); para cilindro largo se suelen ignorar o no existen.</li></ol><div class="result"><strong>Resultado.</strong>\[\rho_b=-2A,\qquad \sigma_b(\rho=a)=Aa\]</div><div class="trap"><strong>Error típico.</strong> En cilíndricas la divergencia no es \(\partial P_\rho/\partial\rho\) a secas.</div></div></details>
+</div><div class="variant">
+<div class="meta"><span class="badge">Variante</span><span class="badge ">Realista EM1 · ferroeléctricos</span></div>
+<h4>V3. Dos placas con polarizaciones opuestas</h4>
+<div class="statement">Dos láminas dieléctricas planas tienen polarizaciones uniformes \(\mathbf P_1=P_0\mathbf u_z\) y \(\mathbf P_2=-P_0\mathbf u_z\). Determinar el signo de la carga ligada en la interfaz.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Lo común con V1: en una frontera, la carga ligada superficial de cada material se obtiene con la normal saliente del material.</li><li>Si la interfaz es perpendicular a \(z\), para la placa inferior con \(\mathbf P_1=P_0\mathbf u_z\), la normal saliente superior es \(+\mathbf u_z\), luego \(\sigma_{b1}=+P_0\).</li><li>Para la placa superior con \(\mathbf P_2=-P_0\mathbf u_z\), su normal saliente inferior es \(-\mathbf u_z\), luego \(\sigma_{b2}=(-P_0\mathbf u_z)\cdot(-\mathbf u_z)=+P_0\).</li><li>La interfaz acumula \(2P_0\) de carga ligada positiva si se cuentan ambas superficies materiales.</li></ol><div class="result"><strong>Resultado.</strong>\[\sigma_{b,interfaz}=2P_0\]</div><div class="trap"><strong>Error típico.</strong> El signo se pierde si no dibujas la normal saliente de cada medio.</div></div></details>
+</div>
+</article><article class="problem">
+<h3>Problema 2 — Usar \(\mathbf D\), condiciones de contorno y dieléctricos</h3>
+<div class="variant">
+<div class="meta"><span class="badge">Variante</span><span class="badge ">Real EM1 Feb. 2016/2017 cuestión</span></div>
+<h4>V1. Condición normal de \(\mathbf D\)</h4>
+<div class="statement">Derivar la condición de contorno para la componente normal de \(\mathbf D\) en una interfaz con densidad de carga libre superficial \(\sigma_f\).</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Se aplica Gauss a una píldora que corta la interfaz.</li><li>Al hacer tender la altura de la píldora a cero, el flujo lateral desaparece.</li><li>Queda \((\mathbf D_2-\mathbf D_1)\cdot\mathbf n=\sigma_f\), con \(\mathbf n\) dirigida del medio 1 al 2.</li><li>Si no hay carga libre superficial, la componente normal de \(\mathbf D\) es continua.</li></ol><div class="result"><strong>Resultado.</strong>\[(\mathbf D_2-\mathbf D_1)\cdot\mathbf n=\sigma_f\]</div><div class="trap"><strong>Error típico.</strong> La componente normal continua es la de \(\mathbf D\) si \(\sigma_f=0\), no necesariamente la de \(\mathbf E\).</div></div></details>
+</div><div class="variant">
+<div class="meta"><span class="badge">Variante</span><span class="badge ">Realista EM1</span></div>
+<h4>V2. Condición tangencial de \(\mathbf E\)</h4>
+<div class="statement">En una frontera dieléctrico-dieléctrico sin campo variable, hallar la condición para las componentes tangenciales de \(\mathbf E\).</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Lo común con V1: se aplica una ley integral en una geometría que atraviesa la frontera.</li><li>Ahora usamos la circulación electrostática: \(\oint\mathbf E\cdot d\mathbf l=0\).</li><li>Con un rectángulo estrecho que cruza la interfaz, los lados normales no contribuyen al tender la altura a cero.</li><li>Queda \((\mathbf E_2-\mathbf E_1)\times\mathbf n=0\).</li><li>Es decir, \(E_{t1}=E_{t2}\).</li></ol><div class="result"><strong>Resultado.</strong>\[\mathbf E_{2t}=\mathbf E_{1t}\]</div><div class="trap"><strong>Error típico.</strong> No mezcles: normal de \(\mathbf D\), tangencial de \(\mathbf E\).</div></div></details>
+</div><div class="variant">
+<div class="meta"><span class="badge">Variante</span><span class="badge ">Real EM1 Feb. 2019 normalizado</span></div>
+<h4>V3. Cable coaxial con dos dieléctricos</h4>
+<div class="statement">Un coaxial tiene conductor interior \(a\), exterior \(c\), dos capas dieléctricas \(a<r<b\) y \(b<r<c\) con \(\epsilon_1,\epsilon_2\). Hallar \(E_1(r),E_2(r)\) en función de la carga libre lineal \(\lambda\).</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Por simetría, \(\mathbf D=D_r(r)\mathbf u_r\).</li><li>Gauss para \(\mathbf D\): \(D_r(2\pi rL)=\lambda L\), luego \(D_r=\lambda/(2\pi r)\).</li><li>En cada dieléctrico, \(\mathbf E_i=\mathbf D/\epsilon_i\).</li><li>Por tanto \(E_1=\lambda/(2\pi\epsilon_1r)\), \(E_2=\lambda/(2\pi\epsilon_2r)\).</li><li>La diferencia de potencial es \(V=\int_a^b E_1dr+\int_b^cE_2dr\).</li></ol><div class="result"><strong>Resultado.</strong>\[V=\frac{\lambda}{2\pi}\left(\frac{1}{\epsilon_1}\ln\frac ba+\frac{1}{\epsilon_2}\ln\frac cb\right)\]</div><div class="trap"><strong>Error típico.</strong> No impongas continuidad de \(E_r\). Es \(D_r\) el que queda fijado por la carga libre.</div></div></details>
+</div>
+</article><article class="problem">
+<h3>Problema 3 — Condensador con dieléctrico variable o pérdidas</h3>
+<div class="variant">
+<div class="meta"><span class="badge">Variante</span><span class="badge ">Real EM1 Feb. 2016 normalizado</span></div>
+<h4>V1. Placas con \(\epsilon(r)\)</h4>
+<div class="statement">Un condensador de placas circulares de radio \(a\) y separación \(d\) tiene \(\epsilon(r)=\epsilon_0(2-r/a)\) y está a tensión \(V\). Hallar \(\mathbf E\) y la capacidad.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Si \(d\ll a\), el campo es aproximadamente normal a las placas: \(\mathbf E=(V/d)\mathbf u_z\) salvo signo según polaridad.</li><li>Como la batería fija \(V\), \(E\) no depende de \(r\) en esta aproximación de placas paralelas.</li><li>\(\mathbf D(r)=\epsilon(r)\mathbf E\).</li><li>La carga libre total es \(Q=\int D_z\,dS=(V/d)\int_0^a \epsilon_0(2-r/a)2\pi r\,dr\).</li><li>La integral da \(2\pi\epsilon_0\int_0^a(2r-r^2/a)dr=2\pi\epsilon_0(a^2-a^2/3)=\frac{4\pi}{3}\epsilon_0a^2\).</li><li>Luego \(C=Q/V=\frac{4\pi\epsilon_0a^2}{3d}\).</li></ol><div class="result"><strong>Resultado.</strong>\[\mathbf E=\frac Vd\mathbf u_z,\quad \mathbf D=\epsilon_0(2-r/a)\frac Vd\mathbf u_z,\quad C=\frac{4\pi\epsilon_0a^2}{3d}\]</div><div class="trap"><strong>Error típico.</strong> No sustituyas \(\epsilon\) por un valor medio a ojo sin integrar sobre el área.</div></div></details>
+</div><div class="variant">
+<div class="meta"><span class="badge">Variante</span><span class="badge ">Real EM1 Feb. 2016 normalizado</span></div>
+<h4>V2. Conductividad variable en el mismo condensador</h4>
+<div class="statement">El mismo condensador tiene \(\gamma(r)=\gamma_0(1+r/a)\). Hallar la resistencia de fuga equivalente entre placas.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Lo común con V1: el campo entre placas es \(E=V/d\) y la corriente local es normal a las placas.</li><li>\(\mathbf J(r)=\gamma(r)\mathbf E=\gamma_0(1+r/a)(V/d)\mathbf u_z\).</li><li>La corriente total es \(I=\int J_z\,dS=(V/d)2\pi\gamma_0\int_0^a(1+r/a)r\,dr\).</li><li>La integral da \(a^2/2+a^2/3=5a^2/6\).</li><li>Así \(I=V(5\pi\gamma_0a^2)/(3d)\), y \(R=V/I\).</li></ol><div class="result"><strong>Resultado.</strong>\[R=\frac{3d}{5\pi\gamma_0a^2}\]</div><div class="trap"><strong>Error típico.</strong> Resistencia y capacidad se integran de forma análoga, pero con \(\gamma\) y \(\epsilon\), respectivamente.</div></div></details>
+</div><div class="variant">
+<div class="meta"><span class="badge">Variante</span><span class="badge ">Real EM1 Feb. 2016 normalizado</span></div>
+<h4>V3. Circuito equivalente</h4>
+<div class="statement">Para el condensador con \(\epsilon(r)\) y \(\gamma(r)\) anteriores, dibujar el circuito equivalente.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Lo común con V1 y V2: hay almacenamiento eléctrico y fuga conductiva entre las mismas placas.</li><li>La rama capacitiva representa \(C=\frac{4\pi\epsilon_0a^2}{3d}\).</li><li>La rama resistiva representa la fuga \(R=\frac{3d}{5\pi\gamma_0a^2}\).</li><li>Como ambas ven la misma tensión entre placas, están en paralelo.</li><li>La corriente total sería \(I(t)=V/R+C\,dV/dt\) si la tensión variase.</li></ol><div class="result"><strong>Resultado.</strong><p>Circuito equivalente: \(R\parallel C\).</p></div><div class="trap"><strong>Error típico.</strong> No lo pongas en serie: el campo de conducción y el desplazamiento atraviesan la misma diferencia de potencial.</div></div></details>
+</div>
+</article>
+</section>
+<section class="page" id="b4">
+<h2>Bloque 4 — Conductores, condensadores, energía, imágenes y Laplace</h2>
+<p class="block-lead">Patrones T06-T09: aquí se pierden más puntos por condición física que por cálculo.</p>
+<article class="problem">
+<h3>Problema 1 — Conductores concéntricos y energía electrostática</h3>
+<div class="variant">
+<div class="meta"><span class="badge">Variante</span><span class="badge ">Real EM1 Feb. 2016 normalizado</span></div>
+<h4>V1. Esfera conductora + corteza conductora neutra</h4>
+<div class="statement">Una esfera conductora de radio \(R\) y carga \(Q\) está rodeada por una corteza conductora concéntrica de radios \(3R\) y \(5R\), inicialmente neutra. Hallar la energía electrostática.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol><li>En equilibrio, el campo en el metal de la corteza es cero. Por tanto la superficie interior de la corteza lleva \(-Q\) y la exterior \(+Q\).</li><li>Campos no nulos: entre \(R<r<3R\) y fuera de \(r>5R\). En ambos casos \(E=Q/(4\pi\epsilon_0r^2)\).</li><li>No hay campo para \(r<R\) ni para \(3R<r<5R\).</li><li>La energía es \(U=\frac{\epsilon_0}{2}\int E^2\,dv\).</li><li>Para una región esférica \([a,b]\), \(U_{a,b}=\frac{Q^2}{8\pi\epsilon_0}\left(\frac1a-\frac1b\right)\).</li><li>Sumamos \([R,3R]\) y \([5R,\infty]\).</li></ol><div class="result"><strong>Resultado.</strong>\[U=\frac{Q^2}{8\pi\epsilon_0R}\left(1-\frac13+\frac15\right)=\frac{13Q^2}{120\pi\epsilon_0R}\]</div><div class="trap"><strong>Error típico.</strong> No metas energía dentro del metal. Allí \(E=0\).</div></div></details>
+</div><div class="variant">
+<div class="meta"><span class="badge">Variante</span><span class="badge ">Real EM1 Feb. 2016 normalizado</span></div>
+<h4>V2. Trabajo para llevar \(q\) hasta \(r=3R\)</h4>
+<div class="statement">En el sistema anterior, calcular el trabajo realizado por el campo al traer lentamente una carga \(q\) desde infinito hasta \(r=3R\).</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Lo común con V1: el potencial en la corteza metálica es constante desde \(r=5R\) hasta \(r=3R\).</li><li>Tomando \(V(\infty)=0\), el potencial en \(r=5R\) es \(V(5R)=Q/(4\pi\epsilon_0\,5R)\).</li><li>Como en el metal \(E=0\), \(V(3R)=V(5R)\).</li><li>El trabajo del campo es \(W_{campo}=q[V_i-V_f]=q[0-V(3R)]\).</li><li>Por tanto es negativo para \(qQ>0\). El trabajo externo cuasiestático sería el opuesto.</li></ol><div class="result"><strong>Resultado.</strong>\[W_{campo}=-\frac{qQ}{20\pi\epsilon_0R},\qquad W_{ext}=+\frac{qQ}{20\pi\epsilon_0R}\]</div><div class="trap"><strong>Error típico.</strong> Pregunta exactamente quién hace el trabajo. Campo y agente externo tienen signos opuestos.</div></div></details>
+</div><div class="variant">
+<div class="meta"><span class="badge">Variante</span><span class="badge ">Semi-real EM1 · modificación</span></div>
+<h4>V3. Corteza conectada a tierra</h4>
+<div class="statement">Mismo sistema, pero la corteza exterior está conectada a tierra. Determinar las cargas inducidas y el campo exterior.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Lo común con V1: en el metal de la corteza debe cumplirse \(E=0\), así que la cara interior lleva \(-Q\).</li><li>Al estar conectada a tierra, puede intercambiar carga con la Tierra para imponer \(V=0\) en la corteza.</li><li>Para una esfera conductora a tierra que encierra la carga \(Q\), la carga en la superficie exterior se anula si no hay fuentes externas.</li><li>Así, la corteza tiene carga total \(-Q\): \(-Q\) en la cara interior y \(0\) en la exterior.</li><li>El campo exterior es nulo, porque una superficie gaussiana exterior encierra \(Q-Q=0\).</li></ol><div class="result"><strong>Resultado.</strong>\[Q_{int.corteza}=-Q,\quad Q_{ext.corteza}=0,\quad \mathbf E(r>5R)=0\]</div><div class="trap"><strong>Error típico.</strong> Conectado a tierra no significa carga nula; significa potencial fijado a cero.</div></div></details>
+</div>
+</article><article class="problem">
+<h3>Problema 2 — Método de imágenes</h3>
+<div class="variant">
+<div class="meta"><span class="badge">Variante</span><span class="badge ">Clásico EM1 T08</span></div>
+<h4>V1. Carga frente a plano conductor a tierra</h4>
+<div class="statement">Una carga \(q\) está a distancia \(a\) de un plano conductor infinito conectado a tierra. Hallar el potencial en el semiespacio de la carga y la fuerza sobre \(q\).</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Se sustituye el plano a tierra por una carga imagen \(-q\) situada simétricamente al otro lado del plano.</li><li>Si el plano es \(z=0\) y la carga real está en \(z=a\), la imagen está en \(z=-a\).</li><li>El potencial en \(z>0\) es suma de ambas cargas: \(V=(1/(4\pi\epsilon_0))[q/|\mathbf r-a\mathbf u_z|-q/|\mathbf r+a\mathbf u_z|]\).</li><li>En \(z=0\), ambas distancias son iguales y \(V=0\), por tanto se cumple el contorno.</li><li>La fuerza sobre la carga real es la fuerza debida a la imagen a distancia \(2a\): atractiva hacia el plano.</li></ol><div class="result"><strong>Resultado.</strong>\[F=\frac{1}{4\pi\epsilon_0}\frac{q^2}{(2a)^2}=\frac{q^2}{16\pi\epsilon_0a^2}\quad\text{hacia el plano}\]</div><div class="trap"><strong>Error típico.</strong> No incluyas la fuerza de la carga real sobre sí misma; solo actúa el campo imagen.</div></div></details>
+</div><div class="variant">
+<div class="meta"><span class="badge">Variante</span><span class="badge ">Clásico EM1 T08</span></div>
+<h4>V2. Carga exterior a esfera conductora a tierra</h4>
+<div class="statement">Una carga \(q\) está a distancia \(d>a\) del centro de una esfera conductora de radio \(a\) conectada a tierra. Hallar la carga imagen.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Lo común con V1: se reemplaza el conductor por una imagen que haga \(V=0\) en la superficie.</li><li>Para esfera a tierra, la imagen está sobre la recta centro-carga, dentro de la esfera.</li><li>Posición de la imagen: \(d'=a^2/d\) desde el centro.</li><li>Valor de la imagen: \(q'=-(a/d)q\).</li><li>El potencial exterior se obtiene sumando la carga real y la imagen; solo es válido fuera de la esfera.</li></ol><div class="result"><strong>Resultado.</strong>\[q'=-\frac ad q,\qquad d'=\frac{a^2}{d}\]</div><div class="trap"><strong>Error típico.</strong> No uses esta imagen para el interior físico del conductor; es una herramienta matemática para la región exterior.</div></div></details>
+</div><div class="variant">
+<div class="meta"><span class="badge">Variante</span><span class="badge ">Semi-real EM1 · variante de examen</span></div>
+<h4>V3. Esfera aislada y descargada</h4>
+<div class="statement">Misma carga \(q\) a distancia \(d>a\), pero la esfera conductora está aislada y tiene carga total cero. Construir el sistema imagen.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Lo común con V2: la imagen \(q'=-(a/d)q\) en \(d'=a^2/d\) hace equipotencial la esfera, pero no garantiza carga total cero.</li><li>Para anular la carga neta inducida, se añade una segunda imagen en el centro.</li><li>La carga central debe ser \(q_0=-q'=(a/d)q\).</li><li>La suma de imágenes es cero: \(q'+q_0=0\), compatible con esfera descargada.</li><li>El potencial de la esfera ya no es cero necesariamente: la carga central desplaza el potencial a una constante.</li></ol><div class="result"><strong>Resultado.</strong>\[q'= -\frac ad q\text{ en }d'=a^2/d,\qquad q_0=+\frac ad q\text{ en el centro}\]</div><div class="trap"><strong>Error típico.</strong> Esfera descargada no es esfera a tierra. A tierra fija potencial; aislada fija carga total.</div></div></details>
+</div>
+</article><article class="problem">
+<h3>Problema 3 — Separación de variables en Laplace</h3>
+<div class="variant">
+<div class="meta"><span class="badge">Variante</span><span class="badge ">Clásico EM1 T09</span></div>
+<h4>V1. Rectángulo con tres lados a cero</h4>
+<div class="statement">Resolver \(\nabla^2V=0\) en \(0<x<a\), \(0<y<b\), con \(V=0\) en \(x=0\), \(x=a\), \(y=0\), y \(V(x,b)=V_0\).</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Se intenta \(V=X(x)Y(y)\).</li><li>Las condiciones \(V(0,y)=V(a,y)=0\) activan senos: \(X_n=\sin(n\pi x/a)\).</li><li>La parte en \(y\) satisface \(Y_n''-(n\pi/a)^2Y_n=0\).</li><li>Como \(V(x,0)=0\), se toma \(Y_n=\sinh(n\pi y/a)\).</li><li>Solución: \(V=\sum A_n\sin(n\pi x/a)\sinh(n\pi y/a)\).</li><li>Imponemos \(V(x,b)=V_0\) expandiendo la constante en serie de senos.</li></ol><div class="result"><strong>Resultado.</strong>\[A_n=\frac{2}{a\sinh(n\pi b/a)}\int_0^a V_0\sin\frac{n\pi x}{a}\,dx\]</div><div class="trap"><strong>Error típico.</strong> La constante \(V_0\) no es un solo modo; hay que expandirla en la base de senos.</div></div></details>
+</div><div class="variant">
+<div class="meta"><span class="badge">Variante</span><span class="badge ">Semi-real EM1</span></div>
+<h4>V2. Mismo rectángulo con tapa arbitraria \(f(x)\)</h4>
+<div class="statement">Cambiar en V1 la condición superior por \(V(x,b)=f(x)\). Escribir la solución.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Lo común con V1: mismas funciones propias en \(x\) y mismo \(\sinh\) en \(y\).</li><li>Solo cambian los coeficientes de Fourier.</li><li>La solución es \(V=\sum B_n\sin(n\pi x/a)\sinh(n\pi y/a)/\sinh(n\pi b/a)\).</li><li>Los coeficientes son los de la serie seno de \(f\): \(B_n=(2/a)\int_0^a f(x)\sin(n\pi x/a)dx\).</li></ol><div class="result"><strong>Resultado.</strong>\[V(x,y)=\sum_{n=1}^\infty B_n\sin\frac{n\pi x}{a}\frac{\sinh(n\pi y/a)}{\sinh(n\pi b/a)}\]</div><div class="trap"><strong>Error típico.</strong> No repitas toda la separación: la variante solo cambia la proyección del contorno.</div></div></details>
+</div><div class="variant">
+<div class="meta"><span class="badge">Variante</span><span class="badge ">Real EM1 cuestión Poisson/Laplace</span></div>
+<h4>V3. Región con carga: Poisson</h4>
+<div class="statement">En una región hay densidad \(\rho\ne0\). ¿Se resuelve con la ecuación de Laplace o Poisson? ¿Cuándo serviría imágenes?</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Laplace vale solo en regiones sin carga: \(\nabla^2V=0\).</li><li>Si hay carga volumétrica, la ecuación correcta es Poisson: \(\nabla^2V=-\rho/\epsilon\).</li><li>El método de imágenes se usa para reemplazar conductores por cargas ficticias en una región donde se resuelve el potencial con las fuentes reales más imágenes.</li><li>No es un método general para cualquier Poisson: funciona cuando las imágenes reproducen exactamente el contorno conductor.</li><li>Si hay \(\rho(\mathbf r)\) extendida, hay que integrar con Green o separar variables con término fuente.</li></ol><div class="result"><strong>Resultado.</strong>\[\nabla^2V=-\rho/\epsilon\quad\text{si hay carga en la región}\]</div><div class="trap"><strong>Error típico.</strong> Aplicar Laplace dentro de una región cargada rompe el problema desde el primer renglón.</div></div></details>
+</div>
+</article><article class="problem">
+<h3>Problema 4 — Energía y presión electrostática</h3>
+<div class="variant">
+<div class="meta"><span class="badge">Variante</span><span class="badge ">Semi-real EM1 T07</span></div>
+<h4>V1. Condensador aislado al introducir dieléctrico</h4>
+<div class="statement">Un condensador de capacidad inicial \(C_0\) tiene carga fija \(Q\). Se llena con dieléctrico \(\epsilon_r\). Hallar el cambio de energía.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Carga fija implica usar \(U=Q^2/(2C)\).</li><li>La nueva capacidad es \(C=\epsilon_r C_0\).</li><li>Energía inicial: \(U_i=Q^2/(2C_0)\).</li><li>Energía final: \(U_f=Q^2/(2\epsilon_r C_0)\).</li><li>La energía disminuye; la diferencia puede aparecer como trabajo mecánico al atraer el dieléctrico.</li></ol><div class="result"><strong>Resultado.</strong>\[\Delta U=U_f-U_i=-\frac{Q^2}{2C_0}\left(1-\frac1{\epsilon_r}\right)\]</div><div class="trap"><strong>Error típico.</strong> No uses \(\frac12CV^2\) manteniendo \(V\) si el condensador está aislado.</div></div></details>
+</div><div class="variant">
+<div class="meta"><span class="badge">Variante</span><span class="badge ">Semi-real EM1 T07</span></div>
+<h4>V2. Condensador conectado a batería</h4>
+<div class="statement">Mismo condensador, pero conectado a una batería que mantiene \(V\) constante. Hallar el cambio de energía almacenada.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Lo común con V1: cambia la capacidad a \(C=\epsilon_rC_0\).</li><li>Ahora la magnitud fija es \(V\), así que conviene \(U=\frac12CV^2\).</li><li>Inicialmente \(U_i=\frac12C_0V^2\).</li><li>Finalmente \(U_f=\frac12\epsilon_rC_0V^2\).</li><li>La energía del campo aumenta, pero la batería realiza trabajo; no confundas energía del campo con trabajo mecánico neto.</li></ol><div class="result"><strong>Resultado.</strong>\[\Delta U=\frac12C_0V^2(\epsilon_r-1)\]</div><div class="trap"><strong>Error típico.</strong> El signo cambia respecto a V1 porque cambió la condición física: carga fija frente a tensión fija.</div></div></details>
+</div><div class="variant">
+<div class="meta"><span class="badge">Variante</span><span class="badge ">Real EM1 Feb. 2016/2019 cuestión</span></div>
+<h4>V3. Presión electrostática sobre conductor</h4>
+<div class="statement">Definir la presión electrostática sobre un conductor y decidir si depende del signo de la carga superficial.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol><li>En la superficie de un conductor, el campo justo fuera es normal y vale \(E=\sigma/\epsilon_0\) en vacío.</li><li>La densidad de energía del campo es \(u=\frac12\epsilon_0E^2\).</li><li>La presión electrostática sobre la superficie resulta \(p=\frac12\epsilon_0E^2=\sigma^2/(2\epsilon_0)\).</li><li>Depende de \(E^2\) o \(\sigma^2\), por tanto no depende del signo de \(\sigma\).</li><li>Su sentido es hacia fuera del conductor: tiende a separar cargas de igual signo.</li></ol><div class="result"><strong>Resultado.</strong>\[p=\frac12\epsilon_0E^2=\frac{\sigma^2}{2\epsilon_0}\]</div><div class="trap"><strong>Error típico.</strong> No pongas presión negativa para carga negativa. La presión depende del cuadrado.</div></div></details>
+</div>
+</article>
+</section>
+<section class="page" id="b5">
+<h2>Bloque 5 — Corriente eléctrica, Ohm, Kirchhoff y Joule</h2>
+<p class="block-lead">Patrones T10: continuidad para nudos, Ohm local para resistencias continuas, Joule para potencia.</p>
+<article class="problem">
+<h3>Problema 1 — Corriente estacionaria, Ohm local y resistencia</h3>
+<div class="variant">
+<div class="meta"><span class="badge">Variante</span><span class="badge ">Semi-real EM1 T10</span></div>
+<h4>V1. Conductor cilíndrico uniforme</h4>
+<div class="statement">Un hilo cilíndrico de radio \(a\), longitud \(L\) y conductividad \(\gamma\) conduce corriente axial estacionaria \(I\). Hallar \(\mathbf J\), \(\mathbf E\), \(R\).</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol><li>En régimen estacionario y material uniforme, \(J=I/A=I/(\pi a^2)\).</li><li>\(\mathbf J=J\mathbf u_z\).</li><li>Ley de Ohm local: \(\mathbf J=\gamma\mathbf E\), luego \(E=J/\gamma\).</li><li>La caída de potencial es \(V=EL=IL/(\gamma\pi a^2)\).</li><li>Por tanto \(R=V/I=L/(\gamma\pi a^2)\).</li></ol><div class="result"><strong>Resultado.</strong>\[\mathbf J=\frac{I}{\pi a^2}\mathbf u_z,\quad \mathbf E=\frac{I}{\gamma\pi a^2}\mathbf u_z,\quad R=\frac{L}{\gamma\pi a^2}\]</div><div class="trap"><strong>Error típico.</strong> No uses resistencia de geometría radial en un problema axial.</div></div></details>
+</div><div class="variant">
+<div class="meta"><span class="badge">Variante</span><span class="badge ">Semi-real EM1 T10</span></div>
+<h4>V2. Resistencia radial cilíndrica</h4>
+<div class="statement">Dos cilindros coaxiales de radios \(a\) y \(b\), longitud \(L\), están separados por un conductor de conductividad \(\gamma\). Hallar la resistencia radial.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Lo común con V1: usar \(\mathbf J=\gamma\mathbf E\) y \(R=V/I\), pero la sección cambia con \(r\).</li><li>Para corriente radial, el área atravesada por la corriente a radio \(r\) es \(A(r)=2\pi rL\).</li><li>Entonces \(J_r=I/(2\pi rL)\).</li><li>\(E_r=J_r/\gamma=I/(2\pi\gamma Lr)\).</li><li>La diferencia de potencial es \(V=\int_a^bE_rdr=I\ln(b/a)/(2\pi\gamma L)\).</li></ol><div class="result"><strong>Resultado.</strong>\[R=\frac{1}{2\pi\gamma L}\ln\frac ba\]</div><div class="trap"><strong>Error típico.</strong> La sección no es \(\pi b^2-\pi a^2\); la corriente atraviesa cilindros concéntricos.</div></div></details>
+</div><div class="variant">
+<div class="meta"><span class="badge">Variante</span><span class="badge ">Real EM1 Feb. 2016 normalizado</span></div>
+<h4>V3. Conductividad \(\gamma(r)=\gamma_0(1+r/a)\)</h4>
+<div class="statement">En un condensador de placas circulares la conductividad entre placas varía como \(\gamma(r)=\gamma_0(1+r/a)\). Determinar \(I\) para una tensión \(V\).</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Lo común con V1: \(\mathbf J=\gamma\mathbf E\).</li><li>La tensión fija \(E=V/d\) entre placas.</li><li>La corriente diferencial por un anillo de radio \(r\) es \(dI=J\,dS=\gamma_0(1+r/a)(V/d)2\pi r\,dr\).</li><li>Integramos de \(0\) a \(a\): \(I=(2\pi\gamma_0V/d)\int_0^a(r+r^2/a)dr\).</li><li>La integral vale \(5a^2/6\).</li></ol><div class="result"><strong>Resultado.</strong>\[I=\frac{5\pi\gamma_0a^2}{3d}V\]</div><div class="trap"><strong>Error típico.</strong> Aquí las coronas están en paralelo eléctrico, no en serie.</div></div></details>
+</div>
+</article><article class="problem">
+<h3>Problema 2 — Continuidad, Kirchhoff y Joule</h3>
+<div class="variant">
+<div class="meta"><span class="badge">Variante</span><span class="badge ">Real EM1 Feb. 2016 cuestión</span></div>
+<h4>V1. Primera ley de Kirchhoff</h4>
+<div class="statement">Justificar de qué ley fundamental es consecuencia la primera ley de Kirchhoff.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol><li>La primera ley de Kirchhoff dice que la suma algebraica de corrientes en un nudo es cero.</li><li>Su origen es la conservación de la carga.</li><li>Forma local: \(\partial\rho/\partial t+\nabla\cdot\mathbf J=0\).</li><li>En régimen estacionario, \(\partial\rho/\partial t=0\), luego \(\nabla\cdot\mathbf J=0\).</li><li>Integrando en un pequeño volumen que rodea el nudo: \(\oint\mathbf J\cdot d\mathbf S=0\), que es suma de corrientes entrantes y salientes.</li></ol><div class="result"><strong>Resultado.</strong>\[\sum I_k=0\quad\Longleftrightarrow\quad \nabla\cdot\mathbf J=0\text{ en estacionario}\]</div><div class="trap"><strong>Error típico.</strong> No la deduzcas de la ley de Ohm: la ley de Ohm relaciona \(\mathbf J\) y \(\mathbf E\), no conserva carga.</div></div></details>
+</div><div class="variant">
+<div class="meta"><span class="badge">Variante</span><span class="badge ">Real EM1 Feb. 2019 cuestión</span></div>
+<h4>V2. Potencia disipada en volumen</h4>
+<div class="statement">Obtener la potencia disipada en un conductor en función de los vectores de campo.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol><li>La potencia elemental entregada a las cargas en un volumen es \(dP=\mathbf J\cdot\mathbf E\,dv\).</li><li>Por tanto \(P=\int_V\mathbf J\cdot\mathbf E\,dv\).</li><li>Si el medio es óhmico, \(\mathbf J=\gamma\mathbf E\), entonces \(P=\int\gamma E^2\,dv\).</li><li>Equivalente: \(P=\int J^2/\gamma\,dv\).</li><li>En corriente estacionaria con generador, el campo que mantiene la corriente no tiene por qué ser puramente electrostático en todo el circuito.</li></ol><div class="result"><strong>Resultado.</strong>\[P=\int_V\mathbf J\cdot\mathbf E\,dv=\int_V\gamma E^2\,dv\]</div><div class="trap"><strong>Error típico.</strong> No confundas potencia disipada con energía almacenada. Joule es irreversible.</div></div></details>
+</div><div class="variant">
+<div class="meta"><span class="badge">Variante</span><span class="badge ">Semi-real EM1 T10</span></div>
+<h4>V3. Tiempo de relajación</h4>
+<div class="statement">En un medio óhmico homogéneo de permitividad \(\epsilon\) y conductividad \(\gamma\), hallar cómo decae una densidad de carga libre.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Usamos continuidad: \(\partial\rho/\partial t+\nabla\cdot\mathbf J=0\).</li><li>Ohm local: \(\mathbf J=\gamma\mathbf E\).</li><li>Gauss: \(\nabla\cdot\mathbf E=\rho/\epsilon\).</li><li>Entonces \(\nabla\cdot\mathbf J=\gamma\rho/\epsilon\).</li><li>Queda \(\partial\rho/\partial t+(\gamma/\epsilon)\rho=0\).</li></ol><div class="result"><strong>Resultado.</strong>\[\rho(t)=\rho(0)e^{-t/\tau},\qquad \tau=\frac{\epsilon}{\gamma}\]</div><div class="trap"><strong>Error típico.</strong> En buenos conductores \(\tau\) es muy pequeño: no esperes carga volumétrica persistente.</div></div></details>
+</div>
+</article><article class="problem">
+<h3>Problema 3 — F.e.m. y diferencia de potencial</h3>
+<div class="variant">
+<div class="meta"><span class="badge">Variante</span><span class="badge ">Real EM1 Feb. 2019 cuestión</span></div>
+<h4>V1. Generador en circuito abierto</h4>
+<div class="statement">Razonar si la f.e.m. de un generador es igual a la diferencia de potencial entre sus bornes en circuito abierto.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol><li>La f.e.m. es el trabajo por unidad de carga de las fuerzas no electrostáticas dentro del generador.</li><li>En circuito abierto no circula corriente, por tanto no hay caída interna resistiva.</li><li>En esas condiciones, la diferencia de potencial entre bornes coincide con la f.e.m.</li><li>Si hubiera corriente, aparecería caída interna \(Ir\) y la tensión en bornes sería menor en descarga.</li></ol><div class="result"><strong>Resultado.</strong>\[V_{bornes}=\mathcal E\quad\text{solo en circuito abierto ideal}\]</div><div class="trap"><strong>Error típico.</strong> No lo generalices a cualquier circuito con corriente.</div></div></details>
+</div><div class="variant">
+<div class="meta"><span class="badge">Variante</span><span class="badge ">Semi-real EM1 T10</span></div>
+<h4>V2. Segunda ley de Kirchhoff</h4>
+<div class="statement">Explicar la segunda ley de Kirchhoff en una malla con resistencias y generadores.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol><li>En una vuelta cerrada, el balance energético por unidad de carga exige que subidas de f.e.m. y caídas óhmicas se compensen.</li><li>Se escribe \(\sum \mathcal E_i-\sum I_jR_j=0\), con signos según el sentido recorrido.</li><li>Si solo hubiese campo electrostático, \(\oint\mathbf E\cdot d\mathbf l=0\).</li><li>Los generadores introducen fuerzas no electrostáticas, por eso aparecen f.e.m.</li></ol><div class="result"><strong>Resultado.</strong>\[\sum\mathcal E=\sum IR\]</div><div class="trap"><strong>Error típico.</strong> La segunda ley no es «siempre \(\oint\mathbf E\cdot dl=0\)» cuando hay inducción o generadores.</div></div></details>
+</div><div class="variant">
+<div class="meta"><span class="badge">Variante</span><span class="badge ">Real EM1 Feb. 2019 normalizado</span></div>
+<h4>V3. Campo conservativo o no en conductor con corriente</h4>
+<div class="statement">En un conductor disipativo con corriente estacionaria, ¿el campo eléctrico que aparece en \(P=\int\mathbf J\cdot\mathbf E\,dv\) es conservativo?</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol><li>En una resistencia pasiva de corriente continua, localmente puede describirse por un campo electrostático asociado a cargas superficiales, y \(\nabla\times\mathbf E=0\).</li><li>Pero en el circuito completo que incluye el generador, debe haber fuerzas no electrostáticas para cerrar el ciclo energético.</li><li>Por eso conviene distinguir campo electrostático en la resistencia y campo efectivo/f.e.m. dentro del generador.</li><li>En régimen variable con inducción, \(\nabla\times\mathbf E=-\partial\mathbf B/\partial t\) y el campo ya no es conservativo.</li></ol><div class="result"><strong>Resultado.</strong><p>Respuesta de examen: en la resistencia DC puede tratarse como conservativo; en el circuito completo con f.e.m. o inducción no basta un potencial electrostático global.</p></div><div class="trap"><strong>Error típico.</strong> Contestar sí/no sin aclarar región y régimen es ambiguo.</div></div></details>
+</div>
+</article>
+</section>
+<section class="page" id="b6">
+<h2>Bloque 6 — Magnetostática, Ampère, Biot-Savart, potencial vector y fuerzas</h2>
+<p class="block-lead">Patrones T11-T12: si hay simetría, Ampère; si no, Biot-Savart o potencial vector.</p>
+<article class="problem">
+<h3>Problema 1 — Campo magnético por Ampère</h3>
+<div class="variant">
+<div class="meta"><span class="badge">Variante</span><span class="badge ">Clásico EM1 T11</span></div>
+<h4>V1. Hilo rectilíneo infinito</h4>
+<div class="statement">Un hilo infinito conduce corriente \(I\) en dirección \(z\). Hallar \(\mathbf B\).</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Simetría cilíndrica: \(\mathbf B=B_\varphi(\rho)\mathbf u_\varphi\).</li><li>Elegimos circunferencia amperiana de radio \(\rho\).</li><li>Ampère: \(\oint\mathbf B\cdot d\mathbf l=B_\varphi2\pi\rho=\mu_0I\).</li><li>Despejamos \(B_\varphi\).</li></ol><div class="result"><strong>Resultado.</strong>\[\mathbf B=\frac{\mu_0I}{2\pi\rho}\mathbf u_\varphi\]</div><div class="trap"><strong>Error típico.</strong> El campo no es radial; rodea la corriente.</div></div></details>
+</div><div class="variant">
+<div class="meta"><span class="badge">Variante</span><span class="badge ">Real EM1 Feb. 2016/2019 normalizado</span></div>
+<h4>V2. Cilindro macizo con corriente uniforme</h4>
+<div class="statement">Un conductor cilíndrico infinito de radio \(a\) conduce densidad uniforme \(\mathbf J=J_0\mathbf u_z\). Hallar \(\mathbf B\).</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Lo común con V1: simetría cilíndrica y camino amperiano circular.</li><li>Para \(\rho<a\), la corriente encerrada es \(I_{enc}=J_0\pi\rho^2\).</li><li>Ampère: \(B_\varphi2\pi\rho=\mu_0J_0\pi\rho^2\), luego \(B_\varphi=\mu_0J_0\rho/2\).</li><li>Para \(\rho>a\), \(I_{enc}=J_0\pi a^2\).</li><li>Entonces \(B_\varphi=\mu_0J_0a^2/(2\rho)\).</li></ol><div class="result"><strong>Resultado.</strong>\[\mathbf B=\begin{cases}\dfrac{\mu_0J_0\rho}{2}\mathbf u_\varphi,&\rho<a,\\[4pt]\dfrac{\mu_0J_0a^2}{2\rho}\mathbf u_\varphi,&\rho>a.\end{cases}\]</div><div class="trap"><strong>Error típico.</strong> Dentro no se encierra toda la corriente del cilindro, solo la del radio \(\rho\).</div></div></details>
+</div><div class="variant">
+<div class="meta"><span class="badge">Variante</span><span class="badge ">Semi-real EM1/EM2</span></div>
+<h4>V3. Cable coaxial con corrientes opuestas</h4>
+<div class="statement">Un coaxial tiene corriente \(+I\) por el conductor interior y \(-I\) por el exterior. Hallar \(\mathbf B\) fuera del cable.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Lo común con V1: usamos Ampère con una circunferencia exterior que encierra todo.</li><li>La corriente total encerrada fuera del conductor exterior es \(I+(-I)=0\).</li><li>Por Ampère, \(B_\varphi2\pi\rho=0\).</li><li>Luego el campo exterior ideal es nulo.</li></ol><div class="result"><strong>Resultado.</strong>\[\mathbf B=0\quad\text{fuera del coaxial ideal}\]</div><div class="trap"><strong>Error típico.</strong> No sumes módulos de corriente: en Ampère cuentan signos y sentidos.</div></div></details>
+</div>
+</article><article class="problem">
+<h3>Problema 2 — Potencial vector magnético</h3>
+<div class="variant">
+<div class="meta"><span class="badge">Variante</span><span class="badge ">Real EM1 Feb. 2016/2019</span></div>
+<h4>V1. Cilindro con \(J_0\mathbf u_z\)</h4>
+<div class="statement">Para el cilindro de radio \(a\) con \(\mathbf J=J_0\mathbf u_z\), calcular \(\mathbf A=A_z(\rho)\mathbf u_z\) con \(A_z(a)=0\).</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Por simetría elegimos \(\mathbf A=A_z(\rho)\mathbf u_z\).</li><li>En cilíndricas, \((\nabla\times\mathbf A)_\varphi=-dA_z/d\rho\).</li><li>Usamos el campo de la variante anterior: dentro \(B_\varphi=\mu_0J_0\rho/2\).</li><li>Dentro: \(dA_z/d\rho=-\mu_0J_0\rho/2\). Integrando y usando \(A_z(a)=0\): \(A_z=\mu_0J_0(a^2-\rho^2)/4\).</li><li>Fuera: \(B_\varphi=\mu_0J_0a^2/(2\rho)\). Integramos \(dA_z/d\rho=-\mu_0J_0a^2/(2\rho)\).</li><li>Con \(A_z(a)=0\): \(A_z=-(\mu_0J_0a^2/2)\ln(\rho/a)\).</li></ol><div class="result"><strong>Resultado.</strong>\[A_z=\begin{cases}\dfrac{\mu_0J_0}{4}(a^2-\rho^2),&\rho<a,\\[4pt]-\dfrac{\mu_0J_0a^2}{2}\ln(\rho/a),&\rho>a.\end{cases}\]</div><div class="trap"><strong>Error típico.</strong> El signo sale de \(B_\varphi=-dA_z/d\rho\), no de \(+dA_z/d\rho\).</div></div></details>
+</div><div class="variant">
+<div class="meta"><span class="badge">Variante</span><span class="badge ">Real EM1 Feb. 2017 cuestión</span></div>
+<h4>V2. Flujo de \(\mathbf B\) y \(\mathbf A\)</h4>
+<div class="statement">Usando Stokes, relacionar el flujo magnético a través de una superficie con el potencial vector en su contorno.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Por definición, \(\mathbf B=\nabla\times\mathbf A\).</li><li>El flujo es \(\Phi_B=\int_S\mathbf B\cdot d\mathbf S=\int_S(\nabla\times\mathbf A)\cdot d\mathbf S\).</li><li>Aplicamos Stokes: \(\int_S(\nabla\times\mathbf A)\cdot d\mathbf S=\oint_{\partial S}\mathbf A\cdot d\mathbf l\).</li><li>La orientación del contorno debe ser compatible con la normal de la superficie.</li></ol><div class="result"><strong>Resultado.</strong>\[\Phi_B=\oint_{\partial S}\mathbf A\cdot d\mathbf l\]</div><div class="trap"><strong>Error típico.</strong> No olvides que \(\mathbf A\) no es único; pero su circulación cerrada sí da el flujo.</div></div></details>
+</div><div class="variant">
+<div class="meta"><span class="badge">Variante</span><span class="badge ">Real EM1 Feb. 2016 cuestión</span></div>
+<h4>V3. Condición de contorno normal de \(\mathbf B\)</h4>
+<div class="statement">Derivar la condición de contorno para las componentes normales de \(\mathbf B\) en una frontera.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Se usa \(\nabla\cdot\mathbf B=0\) o su forma integral \(\oint\mathbf B\cdot d\mathbf S=0\).</li><li>Aplicamos una píldora que atraviesa la interfaz.</li><li>Al reducir la altura, el flujo lateral desaparece.</li><li>Queda \((\mathbf B_2-\mathbf B_1)\cdot\mathbf n=0\).</li><li>Por tanto la componente normal de \(\mathbf B\) es continua.</li></ol><div class="result"><strong>Resultado.</strong>\[B_{2n}=B_{1n}\]</div><div class="trap"><strong>Error típico.</strong> No puede haber salto normal de \(\mathbf B\) porque no hay monopolos magnéticos.</div></div></details>
+</div>
+</article><article class="problem">
+<h3>Problema 3 — Biot-Savart y geometrías finitas</h3>
+<div class="variant">
+<div class="meta"><span class="badge">Variante</span><span class="badge ">Clásico EM1 T11</span></div>
+<h4>V1. Espira circular sobre su eje</h4>
+<div class="statement">Una espira de radio \(R\) conduce corriente \(I\). Hallar \(B_z\) sobre el eje a distancia \(z\).</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Por simetría, solo sobrevive la componente axial.</li><li>Biot-Savart: \(d\mathbf B=(\mu_0I/4\pi)d\mathbf l\times\mathbf R/R^3\).</li><li>Todos los elementos están a distancia \(s=\sqrt{R^2+z^2}\).</li><li>La componente axial integrada da \(B_z=\mu_0IR^2/[2(R^2+z^2)^{3/2}]\).</li></ol><div class="result"><strong>Resultado.</strong>\[\mathbf B(z)=\frac{\mu_0IR^2}{2(R^2+z^2)^{3/2}}\mathbf u_z\]</div><div class="trap"><strong>Error típico.</strong> En el centro \(z=0\) debe quedar \(B=\mu_0I/(2R)\). Úsalo como control.</div></div></details>
+</div><div class="variant">
+<div class="meta"><span class="badge">Variante</span><span class="badge ">Semi-real EM1</span></div>
+<h4>V2. Arco de circunferencia</h4>
+<div class="statement">Un arco de radio \(R\) y ángulo \(\alpha\) conduce corriente \(I\). Hallar \(B\) en el centro.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Lo común con V1: Biot-Savart y todos los elementos a distancia \(R\).</li><li>En el centro, \(d\mathbf l\perp\mathbf R\), así que \(dB=\mu_0I dl/(4\pi R^2)\).</li><li>Como \(dl=R d\varphi\), integramos \(dB=\mu_0I d\varphi/(4\pi R)\).</li><li>De \(0\) a \(\alpha\): \(B=\mu_0I\alpha/(4\pi R)\), con \(\alpha\) en radianes.</li></ol><div class="result"><strong>Resultado.</strong>\[B=\frac{\mu_0I\alpha}{4\pi R}\]</div><div class="trap"><strong>Error típico.</strong> El ángulo va en radianes. Si usas grados, revientas el resultado.</div></div></details>
+</div><div class="variant">
+<div class="meta"><span class="badge">Variante</span><span class="badge ">Semi-real EM1</span></div>
+<h4>V3. Segmento recto finito</h4>
+<div class="statement">Un conductor recto finito se ve desde un punto a distancia perpendicular \(d\), con ángulos \(\theta_1\), \(\theta_2\) respecto a la perpendicular. Hallar \(B\).</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Lo común con V1: Biot-Savart, pero no hay simetría de circunferencia.</li><li>El resultado estándar para un segmento recto es \(B=\mu_0I(\sin\theta_1+\sin\theta_2)/(4\pi d)\).</li><li>El sentido se obtiene con la regla de la mano derecha.</li><li>Si el hilo es infinito, \(\theta_1=\theta_2=90^\circ\) y se recupera \(\mu_0I/(2\pi d)\).</li></ol><div class="result"><strong>Resultado.</strong>\[B=\frac{\mu_0I}{4\pi d}(\sin\theta_1+\sin\theta_2)\]</div><div class="trap"><strong>Error típico.</strong> No confundas los ángulos medidos desde el hilo con los medidos desde la perpendicular; cambia seno/coseno.</div></div></details>
+</div>
+</article><article class="problem">
+<h3>Problema 4 — Fuerzas magnéticas</h3>
+<div class="variant">
+<div class="meta"><span class="badge">Variante</span><span class="badge ">Clásico EM1</span></div>
+<h4>V1. Carga móvil</h4>
+<div class="statement">Una partícula de carga \(q\) entra con velocidad \(\mathbf v\perp\mathbf B\) en un campo uniforme. Hallar radio y frecuencia angular.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol><li>La fuerza magnética es \(\mathbf F=q\mathbf v\times\mathbf B\), perpendicular a \(\mathbf v\).</li><li>No realiza trabajo, por tanto la rapidez se mantiene constante.</li><li>La fuerza actúa como centrípeta: \(|q|vB=mv^2/R\).</li><li>De ahí \(R=mv/(|q|B)\).</li><li>La frecuencia angular ciclotrón es \(\omega=v/R=|q|B/m\).</li></ol><div class="result"><strong>Resultado.</strong>\[R=\frac{mv}{|q|B},\qquad \omega_c=\frac{|q|B}{m}\]</div><div class="trap"><strong>Error típico.</strong> El signo de \(q\) cambia el sentido de giro, no el radio.</div></div></details>
+</div><div class="variant">
+<div class="meta"><span class="badge">Variante</span><span class="badge ">Semi-real EM1</span></div>
+<h4>V2. Fuerza entre hilos paralelos</h4>
+<div class="statement">Dos hilos paralelos largos separados \(d\) conducen corrientes \(I_1\), \(I_2\) en el mismo sentido. Hallar fuerza por unidad de longitud.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Lo común con V1: fuerza magnética sobre corriente en campo.</li><li>El hilo 1 crea en el 2 un campo \(B_1=\mu_0I_1/(2\pi d)\).</li><li>La fuerza sobre longitud \(L\) del hilo 2 es \(F=I_2LB_1\).</li><li>Por unidad de longitud: \(F/L=\mu_0I_1I_2/(2\pi d)\).</li><li>Mismo sentido: atracción. Sentidos opuestos: repulsión.</li></ol><div class="result"><strong>Resultado.</strong>\[\frac FL=\frac{\mu_0I_1I_2}{2\pi d}\]</div><div class="trap"><strong>Error típico.</strong> No olvides indicar si atrae o repele; en examen conceptual cuenta.</div></div></details>
+</div><div class="variant">
+<div class="meta"><span class="badge">Variante</span><span class="badge ">Semi-real EM1</span></div>
+<h4>V3. Par sobre espira</h4>
+<div class="statement">Una espira de área \(S\), corriente \(I\), en campo uniforme \(\mathbf B\), forma ángulo \(\theta\) entre su normal y \(\mathbf B\). Hallar el par.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol><li>El momento dipolar magnético de una espira es \(\mathbf m=IS\mathbf n\).</li><li>El par es \(\boldsymbol\tau=\mathbf m\times\mathbf B\).</li><li>Su módulo es \(\tau=ISB\sin\theta\).</li><li>La energía asociada es \(U=-\mathbf m\cdot\mathbf B\).</li></ol><div class="result"><strong>Resultado.</strong>\[\boldsymbol\tau=\mathbf m\times\mathbf B,\qquad \mathbf m=IS\mathbf n\]</div><div class="trap"><strong>Error típico.</strong> El ángulo es entre la normal de la espira y \(\mathbf B\), no entre el plano de la espira y \(\mathbf B\).</div></div></details>
+</div>
+</article>
+</section>
+<section class="page" id="b7">
+<h2>Bloque 7 — Campo magnético en materiales</h2>
+<p class="block-lead">Patrones EM II T13: corrientes ligadas, condiciones de contorno y circuitos magnéticos.</p>
+<article class="problem">
+<h3>Problema 1 — Imanación y corrientes ligadas</h3>
+<div class="variant">
+<div class="meta"><span class="badge">Variante</span><span class="badge ">EM2 T13 clásico</span></div>
+<h4>V1. Cilindro uniformemente imanado axialmente</h4>
+<div class="statement">Un cilindro largo de radio \(a\) tiene \(\mathbf M=M_0\mathbf u_z\). Hallar corrientes de imanación.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Las corrientes ligadas son \(\mathbf J_m=\nabla\times\mathbf M\) y \(\mathbf K_m=\mathbf M\times\mathbf n\).</li><li>Como \(\mathbf M\) es uniforme, \(\mathbf J_m=0\).</li><li>En la superficie lateral, \(\mathbf n=\mathbf u_\rho\).</li><li>\(\mathbf K_m=M_0\mathbf u_z\times\mathbf u_\rho=M_0\mathbf u_\varphi\).</li><li>Es equivalente a una corriente superficial solenoidal.</li></ol><div class="result"><strong>Resultado.</strong>\[\mathbf J_m=0,\qquad \mathbf K_m=M_0\mathbf u_\varphi\]</div><div class="trap"><strong>Error típico.</strong> El producto para corriente superficial es \(\mathbf M\times\mathbf n\), no \(\mathbf n\times\mathbf M\).</div></div></details>
+</div><div class="variant">
+<div class="meta"><span class="badge">Variante</span><span class="badge ">Semi-real EM2</span></div>
+<h4>V2. Imanación azimutal \(\mathbf M=A\rho\mathbf u_\varphi\)</h4>
+<div class="statement">Un cilindro largo tiene \(\mathbf M=A\rho\mathbf u_\varphi\). Hallar \(\mathbf J_m\) en el volumen.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Lo común con V1: \(\mathbf J_m=\nabla\times\mathbf M\).</li><li>En cilíndricas, si \(M_\varphi=A\rho\), entonces \((\nabla\times\mathbf M)_z=(1/\rho)\partial(\rho M_\varphi)/\partial\rho\).</li><li>\(\rho M_\varphi=A\rho^2\), derivada \(2A\rho\).</li><li>Por tanto \(J_{m,z}=2A\).</li></ol><div class="result"><strong>Resultado.</strong>\[\mathbf J_m=2A\mathbf u_z\]</div><div class="trap"><strong>Error típico.</strong> Otra vez: en cilíndricas hay factores métricos. No derives \(A\rho\) sin el \(1/\rho\partial(\rho M_\varphi)\).</div></div></details>
+</div><div class="variant">
+<div class="meta"><span class="badge">Variante</span><span class="badge ">EM2 T13</span></div>
+<h4>V3. Momento magnético de cuerpo imanado</h4>
+<div class="statement">Un volumen \(V\) está uniformemente imanado con \(\mathbf M\). Hallar su momento dipolar magnético total.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol><li>La imanación es momento magnético por unidad de volumen.</li><li>El momento total es \(\mathbf m=\int_V\mathbf M\,dv\).</li><li>Si \(\mathbf M\) es uniforme, sale de la integral.</li><li>Entonces \(\mathbf m=\mathbf M V\).</li></ol><div class="result"><strong>Resultado.</strong>\[\mathbf m=\int\mathbf M\,dv=\mathbf M V\]</div><div class="trap"><strong>Error típico.</strong> No multipliques por \(\mu_0\); \(\mathbf m\) tiene unidades de A·m².</div></div></details>
+</div>
+</article><article class="problem">
+<h3>Problema 2 — Condiciones en materiales magnéticos</h3>
+<div class="variant">
+<div class="meta"><span class="badge">Variante</span><span class="badge ">Real EM1/EM2 cuestión</span></div>
+<h4>V1. Normal de \(\mathbf B\)</h4>
+<div class="statement">En una frontera entre dos medios magnéticos, deducir la condición sobre las componentes normales de \(\mathbf B\).</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Se aplica \(\nabla\cdot\mathbf B=0\) en forma integral.</li><li>Con una píldora atravesando la interfaz, el flujo lateral desaparece al hacer la altura pequeña.</li><li>Queda \(B_{2n}-B_{1n}=0\).</li><li>Así, la componente normal de \(\mathbf B\) es continua.</li></ol><div class="result"><strong>Resultado.</strong>\[B_{2n}=B_{1n}\]</div><div class="trap"><strong>Error típico.</strong> Aunque cambie \(\mu\), lo que es continuo en normal es \(B\), no \(H\).</div></div></details>
+</div><div class="variant">
+<div class="meta"><span class="badge">Variante</span><span class="badge ">EM2 T13</span></div>
+<h4>V2. Tangencial de \(\mathbf H\)</h4>
+<div class="statement">En la misma frontera, deducir la condición de contorno para \(\mathbf H_t\) si existe corriente libre superficial \(\mathbf K_f\).</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Lo común con V1: usar una ley integral en una geometría de contorno.</li><li>Ahora aplicamos Ampère para \(\mathbf H\): \(\oint\mathbf H\cdot d\mathbf l=I_{libre}\).</li><li>Con un rectángulo estrecho cruzando la interfaz, quedan solo las componentes tangenciales.</li><li>La condición vectorial es \(\mathbf n\times(\mathbf H_2-\mathbf H_1)=\mathbf K_f\).</li><li>Si \(\mathbf K_f=0\), la componente tangencial de \(\mathbf H\) es continua.</li></ol><div class="result"><strong>Resultado.</strong>\[\mathbf n\times(\mathbf H_2-\mathbf H_1)=\mathbf K_f\]</div><div class="trap"><strong>Error típico.</strong> El salto tangencial lo produce corriente libre superficial, no la corriente ligada ya absorbida en \(\mathbf H\).</div></div></details>
+</div><div class="variant">
+<div class="meta"><span class="badge">Variante</span><span class="badge ">Semi-real EM2</span></div>
+<h4>V3. Refracción de líneas en medios lineales</h4>
+<div class="statement">Dos medios lineales sin corriente libre superficial tienen permeabilidades \(\mu_1\), \(\mu_2\). Relacionar los ángulos que \(\mathbf B\) forma con la normal.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Lo común con V1 y V2: \(B_{1n}=B_{2n}\) y \(H_{1t}=H_{2t}\).</li><li>Como \(\mathbf B=\mu\mathbf H\), la continuidad tangencial de \(H\) implica \(B_{1t}/\mu_1=B_{2t}/\mu_2\).</li><li>Si \(\tan\theta=B_t/B_n\), entonces \(\tan\theta_1/\mu_1=\tan\theta_2/\mu_2\).</li><li>Equivalente: \(\tan\theta_2/\tan\theta_1=\mu_2/\mu_1\).</li></ol><div class="result"><strong>Resultado.</strong>\[\frac{\tan\theta_2}{\tan\theta_1}=\frac{\mu_2}{\mu_1}\]</div><div class="trap"><strong>Error típico.</strong> Usa ángulo respecto a la normal. Si lo defines respecto a la superficie, se invierte la tangente.</div></div></details>
+</div>
+</article><article class="problem">
+<h3>Problema 3 — Circuitos magnéticos y ferromagnéticos</h3>
+<div class="variant">
+<div class="meta"><span class="badge">Variante</span><span class="badge ">EM2 T13 clásico</span></div>
+<h4>V1. Núcleo con entrehierro</h4>
+<div class="statement">Un núcleo ferromagnético de longitud media \(l_c\), sección \(S\), permeabilidad \(\mu\), tiene entrehierro \(g\). Una bobina de \(N\) espiras lleva corriente \(I\). Hallar el flujo despreciando fugas.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Se usa el circuito magnético: \(NI=\oint\mathbf H\cdot d\mathbf l\).</li><li>El flujo es \(\Phi=BS\), y \(B\) se toma aproximadamente igual en núcleo y entrehierro.</li><li>En el núcleo \(H_c=B/\mu\); en el aire \(H_g=B/\mu_0\).</li><li>Por tanto \(NI=B(l_c/\mu+g/\mu_0)\).</li><li>Despejamos \(B\) y luego \(\Phi=BS\).</li></ol><div class="result"><strong>Resultado.</strong>\[\Phi=\frac{NI\,S}{l_c/\mu+g/\mu_0}\]</div><div class="trap"><strong>Error típico.</strong> El entrehierro suele dominar la reluctancia aunque sea pequeño, porque \(\mu_0\ll\mu\).</div></div></details>
+</div><div class="variant">
+<div class="meta"><span class="badge">Variante</span><span class="badge ">Semi-real EM2</span></div>
+<h4>V2. Reluctancias en serie</h4>
+<div class="statement">Un circuito magnético tiene dos tramos de longitudes \(l_1,l_2\), secciones \(S_1,S_2\), permeabilidades \(\mu_1,\mu_2\). Hallar la reluctancia equivalente.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Lo común con V1: se identifica \(\mathcal F=NI\), flujo \(\Phi\), reluctancia \(\mathcal R\).</li><li>Cada tramo tiene \(\mathcal R_i=l_i/(\mu_iS_i)\).</li><li>Si el flujo es el mismo por ambos tramos, están en serie.</li><li>La reluctancia equivalente es la suma.</li></ol><div class="result"><strong>Resultado.</strong>\[\mathcal R_{eq}=\frac{l_1}{\mu_1S_1}+\frac{l_2}{\mu_2S_2},\qquad \Phi=\frac{NI}{\mathcal R_{eq}}\]</div><div class="trap"><strong>Error típico.</strong> No sumes permeabilidades; se suman reluctancias si el flujo es común.</div></div></details>
+</div><div class="variant">
+<div class="meta"><span class="badge">Variante</span><span class="badge ">Real EM2 cuestión</span></div>
+<h4>V3. Ferromagnético: duro/blando e histéresis</h4>
+<div class="statement">Comparar material ferromagnético duro y blando desde el punto de vista de la curva de histéresis.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Un material blando se imana y desimana con facilidad: ciclo estrecho, baja coercitividad y bajas pérdidas por histéresis.</li><li>Se usa en núcleos de transformadores, electroimanes y circuitos donde conviene cambiar el flujo.</li><li>Un material duro tiene alta coercitividad y remanencia: ciclo ancho.</li><li>Se usa para imanes permanentes.</li><li>La energía perdida por ciclo es proporcional al área del ciclo \(B-H\).</li></ol><div class="result"><strong>Resultado.</strong><p>Blando: baja coercitividad. Duro: alta coercitividad y remanencia.</p></div><div class="trap"><strong>Error típico.</strong> No confundas «duro» con mecánicamente duro: aquí es magnético.</div></div></details>
+</div>
+</article>
+</section>
+<section class="page" id="b8">
+<h2>Bloque 8 — Inducción electromagnética y energía magnética</h2>
+<p class="block-lead">Patrones EM II T14-T15: Faraday, Lenz, inductancias y energía. Aquí el signo físico importa.</p>
+<article class="problem">
+<h3>Problema 1 — Faraday-Lenz: flujo variable</h3>
+<div class="variant">
+<div class="meta"><span class="badge">Variante</span><span class="badge ">Real EM2 cuestión normalizada</span></div>
+<h4>V1. Espira en campo uniforme variable</h4>
+<div class="statement">Una espira de área \(S\) y resistencia \(R\) está perpendicular a un campo \(B(t)=B_0\cos\omega t\). Hallar la f.e.m. e intensidad inducida.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Flujo: \(\Phi_B=B(t)S\), tomando la normal fija de la espira.</li><li>Faraday: \(\mathcal E=-d\Phi_B/dt\).</li><li>Derivando: \(d\Phi_B/dt=-B_0\omega S\sin\omega t\).</li><li>Luego \(\mathcal E=B_0\omega S\sin\omega t\).</li><li>Si la resistencia total es \(R\), \(I=\mathcal E/R\), con signo según la orientación elegida.</li></ol><div class="result"><strong>Resultado.</strong>\[\mathcal E(t)=B_0\omega S\sin\omega t,\qquad I(t)=\frac{B_0\omega S}{R}\sin\omega t\]</div><div class="trap"><strong>Error típico.</strong> El signo de Lenz no es decoración: fija el sentido de la corriente frente al aumento/disminución de flujo.</div></div></details>
+</div><div class="variant">
+<div class="meta"><span class="badge">Variante</span><span class="badge ">Semi-real EM2 T14</span></div>
+<h4>V2. Espira que gira</h4>
+<div class="statement">Una espira de área \(S\) gira con velocidad angular \(\omega\) en un campo uniforme \(B\). Hallar la f.e.m.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Lo común con V1: usar \(\mathcal E=-d\Phi/dt\).</li><li>Si \(\theta=\omega t\) es el ángulo entre la normal y \(\mathbf B\), \(\Phi=BS\cos\omega t\).</li><li>Derivamos: \(\mathcal E=BS\omega\sin\omega t\).</li><li>Es la base del generador alterno ideal.</li></ol><div class="result"><strong>Resultado.</strong>\[\mathcal E=BS\omega\sin\omega t\]</div><div class="trap"><strong>Error típico.</strong> El área no cambia; cambia el ángulo entre \(\mathbf B\) y la normal.</div></div></details>
+</div><div class="variant">
+<div class="meta"><span class="badge">Variante</span><span class="badge ">Real EM2 Sep. 2017/2019 cuestión</span></div>
+<h4>V3. Signo de Lenz</h4>
+<div class="statement">Explicar qué aporta la ley de Lenz a la ley de Faraday.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Faraday da la magnitud y signo algebraico: \(\mathcal E=-d\Phi_B/dt\).</li><li>Lenz interpreta el signo menos: la corriente inducida se opone a la variación del flujo que la produce.</li><li>Si el flujo saliente aumenta, la corriente inducida crea campo entrante.</li><li>Si el flujo saliente disminuye, la corriente inducida crea campo saliente.</li><li>Esto asegura la conservación de la energía.</li></ol><div class="result"><strong>Resultado.</strong>\[\mathcal E=-\frac{d\Phi_B}{dt}\]</div><div class="trap"><strong>Error típico.</strong> No digas que se opone al campo; se opone al cambio de flujo.</div></div></details>
+</div>
+</article><article class="problem">
+<h3>Problema 2 — Circuitos en movimiento</h3>
+<div class="variant">
+<div class="meta"><span class="badge">Variante</span><span class="badge ">Clásico EM2 T14</span></div>
+<h4>V1. Barra móvil sobre raíles</h4>
+<div class="statement">Una barra de longitud \(l\) se mueve con velocidad \(v\) sobre raíles en un campo uniforme \(\mathbf B\) perpendicular al circuito. Hallar \(\mathcal E\), \(I\) y la fuerza de frenado si la resistencia es \(R\).</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol><li>El área del circuito cambia como \(A=lx\), por tanto \(dA/dt=lv\).</li><li>Flujo: \(\Phi=BA\). F.e.m. en módulo: \(|\mathcal E|=Blv\).</li><li>Corriente: \(I=Blv/R\).</li><li>La barra con corriente en \(\mathbf B\) sufre fuerza \(F=IlB\).</li><li>La dirección se opone al movimiento por Lenz.</li></ol><div class="result"><strong>Resultado.</strong>\[\mathcal E=Blv,\qquad I=\frac{Blv}{R},\qquad F=\frac{B^2l^2v}{R}\]</div><div class="trap"><strong>Error típico.</strong> Si la fuerza no frena, el signo está mal.</div></div></details>
+</div><div class="variant">
+<div class="meta"><span class="badge">Variante</span><span class="badge ">Semi-real EM2</span></div>
+<h4>V2. Potencia mecánica y Joule</h4>
+<div class="statement">En la barra móvil anterior, comprobar el balance de potencia.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Lo común con V1: \(F=B^2l^2v/R\).</li><li>La potencia mecánica necesaria para mantener velocidad constante es \(P_{mec}=Fv\).</li><li>Sustituyendo: \(P_{mec}=B^2l^2v^2/R\).</li><li>La potencia Joule es \(P_J=I^2R=(Blv/R)^2R\).</li><li>Coinciden: la energía mecánica suministrada se disipa en la resistencia.</li></ol><div class="result"><strong>Resultado.</strong>\[P_{mec}=P_J=\frac{B^2l^2v^2}{R}\]</div><div class="trap"><strong>Error típico.</strong> No hay energía magnética acumulándose si el régimen es estacionario y la velocidad constante.</div></div></details>
+</div><div class="variant">
+<div class="meta"><span class="badge">Variante</span><span class="badge ">Semi-real EM2</span></div>
+<h4>V3. Espira que entra en una zona con campo</h4>
+<div class="statement">Una espira rectangular de ancho \(l\) entra con velocidad \(v\) en una región de campo uniforme \(B\). Hallar la f.e.m. mientras está entrando.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Lo común con V1: el flujo cambia porque cambia el área dentro del campo.</li><li>Mientras entra, el área dentro del campo crece a ritmo \(dA/dt=lv\).</li><li>Por tanto \(|\mathcal E|=B\,dA/dt=Blv\).</li><li>Cuando la espira está completamente dentro de una región uniforme, el flujo ya no cambia y \(\mathcal E=0\).</li></ol><div class="result"><strong>Resultado.</strong>\[|\mathcal E|=Blv\text{ al entrar o salir};\qquad \mathcal E=0\text{ completamente dentro}\]</div><div class="trap"><strong>Error típico.</strong> No hay inducción por estar dentro de \(B\); hay inducción por cambiar el flujo.</div></div></details>
+</div>
+</article><article class="problem">
+<h3>Problema 3 — Inducción mutua y autoinducción</h3>
+<div class="variant">
+<div class="meta"><span class="badge">Variante</span><span class="badge ">Semi-real EM2 T14</span></div>
+<h4>V1. Solenoide largo</h4>
+<div class="statement">Un solenoide largo de longitud \(l\), sección \(S\), \(N\) espiras y permeabilidad \(\mu\) conduce corriente \(I\). Hallar su autoinducción.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Campo interior ideal: \(B=\mu nI=\mu(N/l)I\).</li><li>Flujo por una espira: \(\Phi=B S=\mu(N/l)IS\).</li><li>Enlace de flujo: \(N\Phi=LI\).</li><li>Por tanto \(L=N\Phi/I=\mu N^2S/l\).</li></ol><div class="result"><strong>Resultado.</strong>\[L=\frac{\mu N^2S}{l}\]</div><div class="trap"><strong>Error típico.</strong> Autoinducción usa enlace de flujo total \(N\Phi\), no solo el flujo de una espira.</div></div></details>
+</div><div class="variant">
+<div class="meta"><span class="badge">Variante</span><span class="badge ">Clásico EM2</span></div>
+<h4>V2. Mutua entre hilo largo y espira rectangular</h4>
+<div class="statement">Un hilo rectilíneo largo conduce corriente \(I\). Una espira rectangular de longitud \(L\) está en el mismo plano, con lados paralelos al hilo a distancias \(a\) y \(b\). Hallar \(M\).</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Lo común con V1: \(M=\Phi_{21}/I_1\).</li><li>Campo del hilo: \(B(r)=\mu_0I/(2\pi r)\).</li><li>El flujo a través de la espira es \(\Phi=\int_a^bB(r)L\,dr\).</li><li>\(\Phi=(\mu_0IL/(2\pi))\ln(b/a)\).</li><li>Dividiendo por \(I\): \(M=\mu_0L\ln(b/a)/(2\pi)\).</li></ol><div class="result"><strong>Resultado.</strong>\[M=\frac{\mu_0L}{2\pi}\ln\frac ba\]</div><div class="trap"><strong>Error típico.</strong> El resultado debe tener henrios. Si queda con dependencia lineal \(b-a\) sin logaritmo, revisa el campo \(1/r\).</div></div></details>
+</div><div class="variant">
+<div class="meta"><span class="badge">Variante</span><span class="badge ">Real EM2 Jun. 2015 cuestión</span></div>
+<h4>V3. Reciprocidad</h4>
+<div class="statement">Justificar la relación entre \(M_{12}\) y \(M_{21}\).</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol><li>En medios lineales, estacionarios y recíprocos, el coeficiente de inducción mutua es simétrico.</li><li>La fórmula de Neumann muestra esa simetría: el integrando depende de \(d\mathbf l_1\cdot d\mathbf l_2/|\mathbf r_1-\mathbf r_2|\).</li><li>Intercambiar los circuitos 1 y 2 no cambia el valor de la doble integral.</li><li>Por tanto \(M_{12}=M_{21}\).</li></ol><div class="result"><strong>Resultado.</strong>\[M_{12}=M_{21}\]</div><div class="trap"><strong>Error típico.</strong> La igualdad es de coeficientes con una convención coherente de sentidos de corriente y flujo.</div></div></details>
+</div>
+</article><article class="problem">
+<h3>Problema 4 — Energía magnética y fuerza</h3>
+<div class="variant">
+<div class="meta"><span class="badge">Variante</span><span class="badge ">EM2 T15 básico</span></div>
+<h4>V1. Energía de un inductor</h4>
+<div class="statement">Un inductor de autoinducción \(L\) transporta corriente \(I\). Hallar la energía magnética almacenada.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol><li>La potencia de entrada al inductor es \(P=VI\).</li><li>Como \(V=L\,dI/dt\), \(P=LI\,dI/dt\).</li><li>La energía acumulada al subir la corriente de 0 a \(I\) es \(U=\int_0^I LI' dI'\).</li><li>Integrando: \(U=\frac12LI^2\).</li></ol><div class="result"><strong>Resultado.</strong>\[U_m=\frac12LI^2\]</div><div class="trap"><strong>Error típico.</strong> No uses \(LI^2\). Falta el factor \(1/2\).</div></div></details>
+</div><div class="variant">
+<div class="meta"><span class="badge">Variante</span><span class="badge ">EM2 T15</span></div>
+<h4>V2. Energía en función de campos</h4>
+<div class="statement">Escribir la energía magnética en un medio lineal en función de \(\mathbf B\) y \(\mathbf H\).</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Lo común con V1: es energía almacenada en el campo.</li><li>Para medio lineal, la densidad de energía es \(u_m=\frac12\mathbf B\cdot\mathbf H\).</li><li>Si \(\mathbf B=\mu\mathbf H\), también \(u_m=B^2/(2\mu)=\frac12\mu H^2\).</li><li>La energía total se obtiene integrando en el volumen.</li></ol><div class="result"><strong>Resultado.</strong>\[U_m=\frac12\int_V\mathbf B\cdot\mathbf H\,dv\]</div><div class="trap"><strong>Error típico.</strong> En medios no lineales no puedes poner automáticamente \(\frac12BH\).</div></div></details>
+</div><div class="variant">
+<div class="meta"><span class="badge">Variante</span><span class="badge ">EM2 T15</span></div>
+<h4>V3. Fuerza con corriente constante</h4>
+<div class="statement">Un sistema tiene inductancia \(L(x)\) dependiente de una coordenada mecánica \(x\) y corriente constante \(I\). Hallar la fuerza generalizada.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Lo común con V1: \(U_m=\frac12L(x)I^2\).</li><li>Si la fuente mantiene \(I\) constante, la fuerza magnética se obtiene como \(F_x=\frac12I^2\,dL/dx\).</li><li>El signo indica hacia dónde aumenta la inductancia.</li><li>Físicamente, los sistemas tienden a moverse para aumentar \(L\) si la corriente está fijada.</li></ol><div class="result"><strong>Resultado.</strong>\[F_x=\frac12 I^2\frac{dL}{dx}\quad (I\text{ constante})\]</div><div class="trap"><strong>Error típico.</strong> Con flujo constante el signo/función energética cambia. No mezcles condiciones.</div></div></details>
+</div>
+</article>
+</section>
+<section class="page" id="b9">
+<h2>Bloque 9 — Maxwell, Poynting y ondas planas</h2>
+<p class="block-lead">Patrones EM II T16-T17: ecuaciones, onda plana, polarización, pérdidas y reflexión.</p>
+<article class="problem">
+<h3>Problema 1 — Maxwell y corriente de desplazamiento</h3>
+<div class="variant">
+<div class="meta"><span class="badge">Variante</span><span class="badge ">Real EM2 cuestión</span></div>
+<h4>V1. Por qué Maxwell añade corriente de desplazamiento</h4>
+<div class="statement">Explicar por qué se introduce la corriente de desplazamiento en la ley de Ampère-Maxwell.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol><li>La ley de Ampère magnetostática \(\nabla\times\mathbf H=\mathbf J\) es incompatible con continuidad si las cargas varían en el tiempo.</li><li>Tomando divergencia: \(\nabla\cdot(\nabla\times\mathbf H)=0\), luego exigiría \(\nabla\cdot\mathbf J=0\).</li><li>Pero la continuidad general dice \(\nabla\cdot\mathbf J=-\partial\rho/\partial t\).</li><li>Maxwell añade \(\partial\mathbf D/\partial t\). Con Gauss \(\nabla\cdot\mathbf D=\rho\), se obtiene divergencia total nula.</li><li>La ley queda \(\nabla\times\mathbf H=\mathbf J+\partial\mathbf D/\partial t\).</li></ol><div class="result"><strong>Resultado.</strong>\[\nabla\times\mathbf H=\mathbf J+\frac{\partial\mathbf D}{\partial t}\]</div><div class="trap"><strong>Error típico.</strong> No es una corriente de cargas atravesando el dieléctrico; es un término de campo.</div></div></details>
+</div><div class="variant">
+<div class="meta"><span class="badge">Variante</span><span class="badge ">Semi-real EM2</span></div>
+<h4>V2. Condensador cargándose</h4>
+<div class="statement">En un condensador de placas, entra corriente \(I\) por los cables. Hallar la corriente de desplazamiento entre placas.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Lo común con V1: entre placas no hay corriente de conducción ideal, pero cambia \(\mathbf D\).</li><li>La carga libre en la placa cumple \(I=dQ/dt\).</li><li>El flujo de \(\mathbf D\) entre placas es \(\int\mathbf D\cdot d\mathbf S=Q\).</li><li>Entonces \(I_d=d/dt\int\mathbf D\cdot d\mathbf S=dQ/dt=I\).</li><li>Así se mantiene la continuidad de la corriente en el circuito.</li></ol><div class="result"><strong>Resultado.</strong>\[I_d=\frac{d}{dt}\int_S\mathbf D\cdot d\mathbf S=I\]</div><div class="trap"><strong>Error típico.</strong> No digas que no hay campo magnético entre las placas; la corriente de desplazamiento lo produce.</div></div></details>
+</div><div class="variant">
+<div class="meta"><span class="badge">Variante</span><span class="badge ">Semi-real EM2</span></div>
+<h4>V3. Maxwell en vacío</h4>
+<div class="statement">Escribir las ecuaciones de Maxwell en vacío sin fuentes.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Sin fuentes: \(\rho=0\), \(\mathbf J=0\).</li><li>Gauss eléctrica: \(\nabla\cdot\mathbf E=0\).</li><li>Gauss magnética: \(\nabla\cdot\mathbf B=0\).</li><li>Faraday: \(\nabla\times\mathbf E=-\partial\mathbf B/\partial t\).</li><li>Ampère-Maxwell: \(\nabla\times\mathbf B=\mu_0\epsilon_0\partial\mathbf E/\partial t\).</li></ol><div class="result"><strong>Resultado.</strong>\[\nabla\cdot\mathbf E=0,\quad \nabla\cdot\mathbf B=0,\quad \nabla\times\mathbf E=-\partial_t\mathbf B,\quad \nabla\times\mathbf B=\mu_0\epsilon_0\partial_t\mathbf E\]</div><div class="trap"><strong>Error típico.</strong> En vacío sin fuentes no significa campos nulos: permite ondas electromagnéticas.</div></div></details>
+</div>
+</article><article class="problem">
+<h3>Problema 2 — Onda plana en medio sin pérdidas</h3>
+<div class="variant">
+<div class="meta"><span class="badge">Variante</span><span class="badge ">Real EM2 Jun. 2016 normalizado</span></div>
+<h4>V1. Dado \(\mathbf E\), hallar \(\mathbf H\)</h4>
+<div class="statement">Una onda plana se propaga en \(+z\) en un medio no magnético con \(\epsilon=4\epsilon_0\). Su campo es \(\mathbf E=20\cos(\omega t-\beta z)\mathbf u_x\). Hallar \(v\), \(\eta\), \(\mathbf H\).</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Medio no magnético: \(\mu=\mu_0\).</li><li>Velocidad de fase: \(v=1/\sqrt{\mu\epsilon}=c/2\).</li><li>Impedancia intrínseca: \(\eta=\sqrt{\mu/\epsilon}=\eta_0/2\).</li><li>Para propagación \(+z\), \(\mathbf E\times\mathbf H\) debe apuntar en \(+z\). Si \(\mathbf E\parallel\mathbf u_x\), entonces \(\mathbf H\parallel\mathbf u_y\).</li><li>Módulo: \(H=E/\eta\).</li></ol><div class="result"><strong>Resultado.</strong>\[\mathbf H=\frac{20}{\eta_0/2}\cos(\omega t-\beta z)\mathbf u_y=\frac{40}{\eta_0}\cos(\omega t-\beta z)\mathbf u_y\]</div><div class="trap"><strong>Error típico.</strong> El sentido de \(\mathbf H\) se decide con Poynting: \(\mathbf E\times\mathbf H\).</div></div></details>
+</div><div class="variant">
+<div class="meta"><span class="badge">Variante</span><span class="badge ">Semi-real EM2</span></div>
+<h4>V2. Vector de Poynting medio</h4>
+<div class="statement">Para la onda de V1, hallar el vector de Poynting medio.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Lo común con V1: \(\eta=\eta_0/2\), amplitud \(E_0=20\).</li><li>Para onda armónica sin pérdidas, \(\langle S\rangle=E_0^2/(2\eta)\).</li><li>La dirección es la de propagación, \(+\mathbf u_z\).</li><li>Sustituyendo \(\eta=\eta_0/2\): \(\langle S\rangle=400/(\eta_0)\mathbf u_z\).</li></ol><div class="result"><strong>Resultado.</strong>\[\langle\mathbf S\rangle=\frac{E_0^2}{2\eta}\mathbf u_z=\frac{400}{\eta_0}\mathbf u_z\]</div><div class="trap"><strong>Error típico.</strong> No uses el valor instantáneo si te piden potencia media.</div></div></details>
+</div><div class="variant">
+<div class="meta"><span class="badge">Variante</span><span class="badge ">Real EM2 Jun. 2015 cuestión</span></div>
+<h4>V3. Polarización</h4>
+<div class="statement">Determinar la polarización de \(\mathbf E=E_0[\mathbf u_x\cos(\omega t-kz)+\mathbf u_y\sin(\omega t-kz)]\).</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Las componentes tienen igual amplitud.</li><li>Hay un desfase de \(\pi/2\) entre \(x\) e \(y\).</li><li>La punta de \(\mathbf E\) describe una circunferencia en el plano transversal.</li><li>Por tanto la polarización es circular.</li><li>El sentido de giro depende del convenio y de mirar en la dirección de propagación o contra ella; hay que especificarlo si el examen lo pide.</li></ol><div class="result"><strong>Resultado.</strong><p>Polarización circular.</p></div><div class="trap"><strong>Error típico.</strong> No digas elíptica genérica si amplitudes iguales y desfase exacto de \(90^\circ\).</div></div></details>
+</div>
+</article><article class="problem">
+<h3>Problema 3 — Medios con pérdidas y reflexión</h3>
+<div class="variant">
+<div class="meta"><span class="badge">Variante</span><span class="badge ">EM2 T17</span></div>
+<h4>V1. Clasificar conductor/dieléctrico con pérdidas</h4>
+<div class="statement">Un medio tiene \(\epsilon,\mu,\sigma\) y una onda de frecuencia angular \(\omega\). ¿Cómo decidir si se comporta como buen conductor?</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Se compara corriente de conducción con corriente de desplazamiento.</li><li>El cociente es \(\sigma/(\omega\epsilon)\).</li><li>Si \(\sigma\gg\omega\epsilon\), domina conducción: buen conductor.</li><li>Si \(\sigma\ll\omega\epsilon\), dieléctrico de bajas pérdidas.</li><li>En régimen intermedio no conviene usar aproximaciones extremas.</li></ol><div class="result"><strong>Resultado.</strong>\[\text{buen conductor: }\frac{\sigma}{\omega\epsilon}\gg1\]</div><div class="trap"><strong>Error típico.</strong> No clasifiques por \(\sigma\) sola: depende de la frecuencia.</div></div></details>
+</div><div class="variant">
+<div class="meta"><span class="badge">Variante</span><span class="badge ">Real EM2 T17</span></div>
+<h4>V2. Incidencia normal en conductor perfecto</h4>
+<div class="statement">Una onda plana incide normalmente sobre un conductor perfecto. Hallar el coeficiente de reflexión del campo eléctrico.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol><li>En un conductor perfecto, el campo eléctrico tangencial en la superficie debe anularse.</li><li>En la frontera, \(E_i+E_r=0\).</li><li>Por tanto \(E_r=-E_i\).</li><li>El coeficiente de reflexión para el campo eléctrico es \(\Gamma=-1\).</li></ol><div class="result"><strong>Resultado.</strong>\[\Gamma_E=-1\]</div><div class="trap"><strong>Error típico.</strong> Para el campo magnético reflejado el signo relativo no es el mismo; cuidado con las condiciones de contorno.</div></div></details>
+</div><div class="variant">
+<div class="meta"><span class="badge">Variante</span><span class="badge ">Semi-real EM2</span></div>
+<h4>V3. Incidencia normal entre dieléctricos</h4>
+<div class="statement">Una onda incide normalmente desde un medio de impedancia \(\eta_1\) a otro de \(\eta_2\). Hallar \(\Gamma\) y \(T_E\).</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Lo común con V2: imponer continuidad de campos tangenciales en la interfaz.</li><li>Para campo eléctrico, \(\Gamma=(\eta_2-\eta_1)/(\eta_2+\eta_1)\).</li><li>El coeficiente de transmisión de amplitud eléctrica es \(T_E=1+\Gamma=2\eta_2/(\eta_2+\eta_1)\).</li><li>Estos coeficientes son de amplitud, no de potencia.</li></ol><div class="result"><strong>Resultado.</strong>\[\Gamma=\frac{\eta_2-\eta_1}{\eta_2+\eta_1},\qquad T_E=\frac{2\eta_2}{\eta_2+\eta_1}\]</div><div class="trap"><strong>Error típico.</strong> No confundas coeficiente de campo con reflectancia de potencia.</div></div></details>
+</div>
+</article><article class="problem">
+<h3>Problema 4 — Poynting y balance de energía</h3>
+<div class="variant">
+<div class="meta"><span class="badge">Variante</span><span class="badge ">Real EM2 cuestión</span></div>
+<h4>V1. Teorema de Poynting integral</h4>
+<div class="statement">Escribir e interpretar el teorema de Poynting en forma integral.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol><li>La densidad de energía electromagnética en medio lineal es \(u=\frac12(\mathbf E\cdot\mathbf D+\mathbf B\cdot\mathbf H)\).</li><li>El vector de Poynting es \(\mathbf S=\mathbf E\times\mathbf H\).</li><li>El balance integral es \(-d/dt\int_Vu\,dv=\oint_{\partial V}\mathbf S\cdot d\mathbf S+\int_V\mathbf J\cdot\mathbf E\,dv\), según convención de signos.</li><li>La idea: la disminución de energía de campo se reparte en flujo saliente y trabajo/disipación sobre cargas.</li></ol><div class="result"><strong>Resultado.</strong>\[\mathbf S=\mathbf E\times\mathbf H\]</div><div class="trap"><strong>Error típico.</strong> El signo del flujo depende de si tomas normal saliente; explícitalo.</div></div></details>
+</div><div class="variant">
+<div class="meta"><span class="badge">Variante</span><span class="badge ">Semi-real EM2</span></div>
+<h4>V2. Potencia que atraviesa una superficie</h4>
+<div class="statement">Una onda plana tiene \(\langle\mathbf S\rangle=S_0\mathbf u_z\). Hallar la potencia media que atraviesa un área \(A\) perpendicular a \(z\).</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Lo común con V1: la potencia se obtiene integrando \(\mathbf S\cdot d\mathbf S\).</li><li>Si el área es perpendicular a \(z\) y la normal es \(+\mathbf u_z\), \(P=S_0A\).</li><li>Si la normal se elige en sentido contrario, el signo cambia.</li><li>Para potencia transportada se suele dar el módulo positivo.</li></ol><div class="result"><strong>Resultado.</strong>\[P=S_0A\]</div><div class="trap"><strong>Error típico.</strong> No integres el campo eléctrico; se integra Poynting.</div></div></details>
+</div><div class="variant">
+<div class="meta"><span class="badge">Variante</span><span class="badge ">Semi-real EM2</span></div>
+<h4>V3. Medio con pérdidas</h4>
+<div class="statement">En un volumen con conductividad \(\sigma\), expresar la potencia disipada por una onda armónica.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Lo común con V1: el término disipativo es \(\mathbf J\cdot\mathbf E\).</li><li>En medio óhmico, \(\mathbf J=\sigma\mathbf E\).</li><li>Instantáneamente, \(p=\sigma E^2\).</li><li>Para fasores con amplitud compleja, la potencia media disipada es \(\langle p\rangle=\frac12\sigma |\mathbf E_0|^2\).</li></ol><div class="result"><strong>Resultado.</strong>\[\langle P\rangle=\frac12\int_V\sigma |\mathbf E_0|^2\,dv\]</div><div class="trap"><strong>Error típico.</strong> El factor \(1/2\) aparece si \(E_0\) es amplitud fasorial pico.</div></div></details>
+</div>
+</article>
+</section>
+<section class="page" id="b10">
+<h2>Bloque 10 — Líneas de transmisión</h2>
+<p class="block-lead">Patrones EM II T18: todo gira alrededor de \(Z_0\), \(\Gamma\), ROE y \(Z_{in}\).</p>
+<article class="problem">
+<h3>Problema 1 — Línea de transmisión sin pérdidas: parámetros básicos</h3>
+<div class="variant">
+<div class="meta"><span class="badge">Variante</span><span class="badge ">Real EM2 Jun. 2016 normalizado</span></div>
+<h4>V1. Dados \(L'\) y \(C'\)</h4>
+<div class="statement">Una línea sin pérdidas tiene \(L'=0.2\,\mu H/m\), \(C'=0.50\,nF/m\). Hallar \(Z_0\) y velocidad de fase.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol><li>En línea sin pérdidas: \(Z_0=\sqrt{L'/C'}\).</li><li>La velocidad de fase es \(v_p=1/\sqrt{L'C'}\).</li><li>Convertimos: \(L'=0.2\times10^{-6}\,H/m\), \(C'=0.50\times10^{-9}\,F/m\).</li><li>\(Z_0=\sqrt{0.2\times10^{-6}/(0.50\times10^{-9})}=\sqrt{400}=20\,\Omega\).</li><li>\(v_p=1/\sqrt{10^{-16}}=10^8\,m/s\).</li></ol><div class="result"><strong>Resultado.</strong>\[Z_0=20\,\Omega,\qquad v_p=10^8\,\mathrm{m/s}\]</div><div class="trap"><strong>Error típico.</strong> Usa parámetros por unidad de longitud; no son inductancia y capacidad totales.</div></div></details>
+</div><div class="variant">
+<div class="meta"><span class="badge">Variante</span><span class="badge ">Real EM2 Jun. 2016 normalizado</span></div>
+<h4>V2. Coeficiente de reflexión en carga</h4>
+<div class="statement">La línea anterior termina en \(Z_L=150+j100\,\Omega\). Hallar \(\Gamma_L\).</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Lo común con V1: ya sabemos \(Z_0=20\,\Omega\).</li><li>El coeficiente de reflexión en la carga es \(\Gamma_L=(Z_L-Z_0)/(Z_L+Z_0)\).</li><li>Sustituimos: \(\Gamma_L=(130+j100)/(170+j100)\).</li><li>Multiplicando por el conjugado: \(\Gamma_L=((130+j100)(170-j100))/(170^2+100^2)\).</li><li>Numerador: \(32100+j4000\). Denominador: \(38900\).</li><li>Entonces \(\Gamma_L\approx0.825+j0.103\), \(|\Gamma_L|\approx0.831\).</li></ol><div class="result"><strong>Resultado.</strong>\[\Gamma_L\approx0.825+j0.103,\qquad |\Gamma_L|\approx0.831\]</div><div class="trap"><strong>Error típico.</strong> No uses \((Z_0-Z_L)/(Z_0+Z_L)\) salvo que cambies explícitamente el convenio.</div></div></details>
+</div><div class="variant">
+<div class="meta"><span class="badge">Variante</span><span class="badge ">Semi-real EM2</span></div>
+<h4>V3. ROE</h4>
+<div class="statement">Con \(|\Gamma|=0.831\), hallar la razón de onda estacionaria.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Lo común con V2: la ROE depende del módulo de \(\Gamma\).</li><li>Definición: \(S=(1+|\Gamma|)/(1-|\Gamma|)\).</li><li>Sustituimos \(0.831\): \(S=1.831/0.169\approx10.8\).</li><li>Una ROE alta indica mala adaptación.</li></ol><div class="result"><strong>Resultado.</strong>\[S\approx10.8\]</div><div class="trap"><strong>Error típico.</strong> La ROE es real y positiva. Si te sale compleja, estás usando \(\Gamma\) sin módulo.</div></div></details>
+</div>
+</article><article class="problem">
+<h3>Problema 2 — Impedancia de entrada</h3>
+<div class="variant">
+<div class="meta"><span class="badge">Variante</span><span class="badge ">EM2 T18</span></div>
+<h4>V1. Línea sin pérdidas de longitud \(l\)</h4>
+<div class="statement">Una línea sin pérdidas de impedancia \(Z_0\), constante \(\beta\), longitud \(l\), termina en \(Z_L\). Hallar \(Z_{in}\).</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol><li>La fórmula estándar para línea sin pérdidas es \(Z_{in}=Z_0\frac{Z_L+jZ_0\tan\beta l}{Z_0+jZ_L\tan\beta l}\).</li><li>Se mide \(l\) desde la carga hacia el generador.</li><li>Primero calcula \(\beta=2\pi/\lambda\) si te dan frecuencia y velocidad.</li><li>Después sustituye \(Z_L\).</li></ol><div class="result"><strong>Resultado.</strong>\[Z_{in}=Z_0\frac{Z_L+jZ_0\tan(\beta l)}{Z_0+jZ_L\tan(\beta l)}\]</div><div class="trap"><strong>Error típico.</strong> No confundas \(l\) con distancia desde el generador si el enunciado toma el origen en la carga.</div></div></details>
+</div><div class="variant">
+<div class="meta"><span class="badge">Variante</span><span class="badge ">Semi-real EM2</span></div>
+<h4>V2. Cuarto de onda</h4>
+<div class="statement">Particularizar V1 para \(l=\lambda/4\).</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Lo común con V1: usamos la fórmula de \(Z_{in}\).</li><li>Si \(l=\lambda/4\), entonces \(\beta l=\pi/2\) y \(\tan\beta l\to\infty\).</li><li>Tomando el límite, domina el término con tangente en numerador y denominador.</li><li>Queda \(Z_{in}=Z_0^2/Z_L\).</li></ol><div class="result"><strong>Resultado.</strong>\[Z_{in}=\frac{Z_0^2}{Z_L}\]</div><div class="trap"><strong>Error típico.</strong> El cuarto de onda invierte impedancias; no es simplemente \(Z_0\).</div></div></details>
+</div><div class="variant">
+<div class="meta"><span class="badge">Variante</span><span class="badge ">Semi-real EM2</span></div>
+<h4>V3. Media onda</h4>
+<div class="statement">Particularizar V1 para \(l=\lambda/2\).</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Lo común con V1: \(\beta l=\pi\).</li><li>\(\tan\pi=0\).</li><li>La fórmula se reduce a \(Z_{in}=Z_0(Z_L)/(Z_0)=Z_L\).</li><li>Una media onda repite la impedancia de carga.</li></ol><div class="result"><strong>Resultado.</strong>\[Z_{in}=Z_L\]</div><div class="trap"><strong>Error típico.</strong> No confundas cuarto de onda y media onda: uno invierte, el otro repite.</div></div></details>
+</div>
+</article><article class="problem">
+<h3>Problema 3 — Adaptación de impedancias</h3>
+<div class="variant">
+<div class="meta"><span class="badge">Variante</span><span class="badge ">Real EM2 Sep. 2016 cuestión</span></div>
+<h4>V1. Objetivo de adaptar</h4>
+<div class="statement">¿Cuál es el objetivo de realizar una adaptación en una línea de transmisión?</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Adaptar significa hacer que la carga vista por la línea sea igual a \(Z_0\).</li><li>Así \(\Gamma=0\), no hay onda reflejada.</li><li>Se maximiza la potencia entregada a la carga en régimen de línea.</li><li>También se evita una ROE alta y tensiones/corrientes máximas indeseadas.</li></ol><div class="result"><strong>Resultado.</strong>\[Z_L^{adaptada}=Z_0\quad\Rightarrow\quad\Gamma=0\]</div><div class="trap"><strong>Error típico.</strong> Adaptar no significa necesariamente que la carga física cambie; puede añadirse una red adaptadora.</div></div></details>
+</div><div class="variant">
+<div class="meta"><span class="badge">Variante</span><span class="badge ">Semi-real EM2</span></div>
+<h4>V2. Transformador de cuarto de onda</h4>
+<div class="statement">Una carga real \(R_L\) debe adaptarse a una línea real \(Z_0\) usando una sección de \(\lambda/4\). Hallar la impedancia característica \(Z_t\) de la sección.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Lo común con V1: se busca que la impedancia de entrada sea \(Z_0\).</li><li>Para una sección de cuarto de onda, \(Z_{in}=Z_t^2/R_L\).</li><li>Imponemos \(Z_t^2/R_L=Z_0\).</li><li>Por tanto \(Z_t=\sqrt{Z_0R_L}\).</li></ol><div class="result"><strong>Resultado.</strong>\[Z_t=\sqrt{Z_0R_L}\]</div><div class="trap"><strong>Error típico.</strong> Esto solo sirve directamente si \(R_L\) es real. Con carga compleja hay que compensar reactancia antes o usar stub/Smith.</div></div></details>
+</div><div class="variant">
+<div class="meta"><span class="badge">Variante</span><span class="badge ">Semi-real EM2</span></div>
+<h4>V3. Carga ya adaptada</h4>
+<div class="statement">Una línea con \(Z_0=50\,\Omega\) termina en \(Z_L=50\,\Omega\). Hallar \(\Gamma\), ROE y potencia reflejada.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Lo común con V1: \(Z_L=Z_0\) implica adaptación perfecta.</li><li>\(\Gamma=(Z_L-Z_0)/(Z_L+Z_0)=0\).</li><li>ROE \(S=(1+0)/(1-0)=1\).</li><li>La potencia reflejada es proporcional a \(|\Gamma|^2\), luego es cero.</li></ol><div class="result"><strong>Resultado.</strong>\[\Gamma=0,\qquad S=1,\qquad P_r=0\]</div><div class="trap"><strong>Error típico.</strong> ROE mínima es 1, no 0.</div></div></details>
+</div>
+</article>
+</section>
+<section class="page" id="b11">
+<h2>Bloque 11 — Guías de ondas y cavidades</h2>
+<p class="block-lead">Patrones EM II T19: corte, modo dominante, \(\beta\), velocidades, impedancia modal y resonancia.</p>
+<article class="problem">
+<h3>Problema 1 — Guía rectangular: modos y corte</h3>
+<div class="variant">
+<div class="meta"><span class="badge">Variante</span><span class="badge ">Real EM2 cuestión</span></div>
+<h4>V1. Modo fundamental</h4>
+<div class="statement">Una guía rectangular de dimensiones \(a\times b\), con \(a>b\), está vacía. Indicar el modo fundamental y su frecuencia de corte.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol><li>En guía rectangular, los modos TE/TM tienen frecuencias de corte \(f_{c,mn}=\frac{1}{2\sqrt{\mu\epsilon}}\sqrt{(m/a)^2+(n/b)^2}\).</li><li>El modo dominante es el de menor frecuencia de corte permitido.</li><li>Para guía rectangular con \(a>b\), el dominante es \(TE_{10}\).</li><li>Su frecuencia de corte es \(f_c=c/(2a)\) en vacío.</li></ol><div class="result"><strong>Resultado.</strong>\[TE_{10},\qquad f_c=\frac{c}{2a}\]</div><div class="trap"><strong>Error típico.</strong> El modo TEM no existe en una guía hueca de un solo conductor.</div></div></details>
+</div><div class="variant">
+<div class="meta"><span class="badge">Variante</span><span class="badge ">Real EM2 Jun. 2016 cuestión</span></div>
+<h4>V2. Intervalo monomodo</h4>
+<div class="statement">Para la guía anterior, ¿entre qué frecuencias debe transmitirse para que solo propague el modo fundamental?</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Lo común con V1: el modo fundamental empieza a propagar por encima de \(f_{c,10}\).</li><li>Para que no propague el siguiente modo, la frecuencia debe ser menor que el segundo corte.</li><li>Los candidatos típicos son \(TE_{20}\) con \(f_{c,20}=c/a\) y \(TE_{01}\) con \(f_{c,01}=c/(2b)\).</li><li>El segundo corte es \(f_{2}=\min(c/a,c/(2b))\).</li><li>Intervalo monomodo: \(c/(2a)<f<f_2\).</li></ol><div class="result"><strong>Resultado.</strong>\[\frac{c}{2a}<f<\min\left(\frac ca,\frac{c}{2b}\right)\]</div><div class="trap"><strong>Error típico.</strong> Si \(a=2b\), \(TE_{20}\) y \(TE_{01}\) tienen el mismo corte.</div></div></details>
+</div><div class="variant">
+<div class="meta"><span class="badge">Variante</span><span class="badge ">Real EM2 Sep. 2017 normalizado</span></div>
+<h4>V3. Guía rellena de dieléctrico</h4>
+<div class="statement">La guía se rellena con dieléctrico de permitividad \(\epsilon_r\). ¿Cómo cambia \(f_c\)?</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Lo común con V1: la fórmula de corte usa la velocidad \(1/\sqrt{\mu\epsilon}\).</li><li>Si \(\mu_r=1\), la velocidad baja a \(c/\sqrt{\epsilon_r}\).</li><li>Todas las frecuencias de corte se dividen por \(\sqrt{\epsilon_r}\).</li><li>Para \(TE_{10}\): \(f_c=c/(2a\sqrt{\epsilon_r})\).</li></ol><div class="result"><strong>Resultado.</strong>\[f_{c,10}=\frac{c}{2a\sqrt{\epsilon_r}}\]</div><div class="trap"><strong>Error típico.</strong> Rellenar con dieléctrico baja la frecuencia de corte; no la sube.</div></div></details>
+</div>
+</article><article class="problem">
+<h3>Problema 2 — Constante de propagación, velocidades e impedancia modal</h3>
+<div class="variant">
+<div class="meta"><span class="badge">Variante</span><span class="badge ">EM2 T19</span></div>
+<h4>V1. Calcular \(\beta\)</h4>
+<div class="statement">En una guía rectangular, para un modo con frecuencia de corte \(f_c\), hallar \(\beta\) a frecuencia \(f>f_c\).</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol><li>En guía, \(k=\omega\sqrt{\mu\epsilon}\).</li><li>La constante de corte es \(k_c=\omega_c\sqrt{\mu\epsilon}\).</li><li>La constante de propagación longitudinal cumple \(\beta=\sqrt{k^2-k_c^2}\).</li><li>En términos de frecuencia: \(\beta=k\sqrt{1-(f_c/f)^2}\).</li></ol><div class="result"><strong>Resultado.</strong>\[\beta=\omega\sqrt{\mu\epsilon}\sqrt{1-\left(\frac{f_c}{f}\right)^2}\]</div><div class="trap"><strong>Error típico.</strong> Si \(f<f_c\), \(\beta\) es imaginaria: el modo no propaga, se atenúa.</div></div></details>
+</div><div class="variant">
+<div class="meta"><span class="badge">Variante</span><span class="badge ">EM2 T19</span></div>
+<h4>V2. Velocidad de fase y grupo</h4>
+<div class="statement">A partir de V1, escribir \(v_f\) y \(v_g\) en una guía sin pérdidas.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Lo común con V1: \(\beta=k\sqrt{1-(f_c/f)^2}\).</li><li>Velocidad de fase: \(v_f=\omega/\beta=v/\sqrt{1-(f_c/f)^2}\), donde \(v=1/\sqrt{\mu\epsilon}\).</li><li>Velocidad de grupo: \(v_g=v\sqrt{1-(f_c/f)^2}\).</li><li>Se cumple \(v_fv_g=v^2\).</li></ol><div class="result"><strong>Resultado.</strong>\[v_f=\frac{v}{\sqrt{1-(f_c/f)^2}},\qquad v_g=v\sqrt{1-(f_c/f)^2}\]</div><div class="trap"><strong>Error típico.</strong> \(v_f\) puede superar \(c\) sin violar relatividad; la información va con \(v_g\).</div></div></details>
+</div><div class="variant">
+<div class="meta"><span class="badge">Variante</span><span class="badge ">EM2 T19</span></div>
+<h4>V3. Impedancia TE</h4>
+<div class="statement">Escribir la impedancia modal de un modo TE en guía.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Para modos TE, la impedancia modal se define como cociente entre campos transversales.</li><li>En medio sin pérdidas: \(Z_{TE}=\omega\mu/\beta\).</li><li>Usando \(\eta=\sqrt{\mu/\epsilon}\), también \(Z_{TE}=\eta/\sqrt{1-(f_c/f)^2}\).</li><li>Diverge al acercarse al corte desde arriba.</li></ol><div class="result"><strong>Resultado.</strong>\[Z_{TE}=\frac{\omega\mu}{\beta}=\frac{\eta}{\sqrt{1-(f_c/f)^2}}\]</div><div class="trap"><strong>Error típico.</strong> Para TM no es la misma: \(Z_{TM}=\beta/(\omega\epsilon)\).</div></div></details>
+</div>
+</article><article class="problem">
+<h3>Problema 3 — Cavidades resonantes</h3>
+<div class="variant">
+<div class="meta"><span class="badge">Variante</span><span class="badge ">EM2 T19</span></div>
+<h4>V1. Frecuencia de cavidad rectangular</h4>
+<div class="statement">Una cavidad rectangular conductora de dimensiones \(a,b,d\) está llena de medio \(\mu,\epsilon\). Escribir la frecuencia resonante de modo \((m,n,p)\).</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol><li>En una cavidad, las tres direcciones quedan cuantizadas por condiciones de contorno.</li><li>El número de onda total cumple \(k^2=(m\pi/a)^2+(n\pi/b)^2+(p\pi/d)^2\).</li><li>Como \(\omega=k/\sqrt{\mu\epsilon}\), se obtiene la frecuencia.</li><li>Los índices permitidos dependen de si el modo es TE o TM; no todos pueden ser cero a la vez.</li></ol><div class="result"><strong>Resultado.</strong>\[f_{mnp}=\frac{1}{2\sqrt{\mu\epsilon}}\sqrt{\left(\frac ma\right)^2+\left(\frac nb\right)^2+\left(\frac pd\right)^2}\]</div><div class="trap"><strong>Error típico.</strong> No uses frecuencia de corte de guía como si la cavidad estuviera abierta longitudinalmente.</div></div></details>
+</div><div class="variant">
+<div class="meta"><span class="badge">Variante</span><span class="badge ">EM2 T19</span></div>
+<h4>V2. Factor de calidad</h4>
+<div class="statement">Definir el factor de calidad \(Q\) de una cavidad resonante.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol><li>El factor de calidad mide cuántas oscilaciones mantiene la cavidad respecto a sus pérdidas.</li><li>Definición energética: \(Q=\omega\,U/P_{perdida}\).</li><li>También se relaciona con el ancho de banda: \(Q=f_0/\Delta f\).</li><li>Alto \(Q\): poca pérdida y resonancia estrecha.</li></ol><div class="result"><strong>Resultado.</strong>\[Q=\omega\frac{U}{P_{perdida}}=\frac{f_0}{\Delta f}\]</div><div class="trap"><strong>Error típico.</strong> No confundas este \(Q\) con carga eléctrica.</div></div></details>
+</div><div class="variant">
+<div class="meta"><span class="badge">Variante</span><span class="badge ">Semi-real EM2</span></div>
+<h4>V3. Modo transmitido o evanescente</h4>
+<div class="statement">Una guía tiene \(f_c=8\,GHz\). Decidir si una señal de \(6\,GHz\) propaga.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Lo común con V1 de guías: un modo solo propaga si \(f>f_c\).</li><li>Aquí \(6<8\,GHz\).</li><li>Por tanto \(\beta\) no es real; la señal asociada a ese modo es evanescente.</li><li>No hay transporte de potencia propagante a larga distancia en ese modo ideal.</li></ol><div class="result"><strong>Resultado.</strong><p>No propaga: modo por debajo del corte.</p></div><div class="trap"><strong>Error típico.</strong> No basta con que haya campo cerca de la entrada; por debajo de corte decae exponencialmente.</div></div></details>
+</div>
+</article>
+</section>
+<section class="page" id="b12">
+<h2>Bloque 12 — Radiación electromagnética, antenas y agrupaciones</h2>
+<p class="block-lead">Patrones EM II T20: zona lejana, patrón angular, directividad y factor de agrupación.</p>
+<article class="problem">
+<h3>Problema 1 — Radiación de dipolo corto</h3>
+<div class="variant">
+<div class="meta"><span class="badge">Variante</span><span class="badge ">EM2 T20</span></div>
+<h4>V1. Campo lejano y patrón angular</h4>
+<div class="statement">Un dipolo eléctrico corto oscilante está orientado según \(z\). Indicar la dependencia angular del campo radiado lejano.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol><li>En zona lejana solo importan términos que caen como \(1/r\).</li><li>Para un dipolo corto orientado en \(z\), el campo eléctrico radiado es transversal y tiene componente \(E_\theta\).</li><li>La dependencia angular es \(E_\theta\propto\sin\theta/r\).</li><li>La intensidad radiada es proporcional a \(\sin^2\theta\).</li><li>No radia sobre el eje del dipolo y radia máximo en el plano perpendicular.</li></ol><div class="result"><strong>Resultado.</strong>\[E_\theta\propto\frac{\sin\theta}{r},\qquad U(\theta)\propto\sin^2\theta\]</div><div class="trap"><strong>Error típico.</strong> No pongas máximo sobre el eje: allí \(\sin\theta=0\).</div></div></details>
+</div><div class="variant">
+<div class="meta"><span class="badge">Variante</span><span class="badge ">EM2 T20</span></div>
+<h4>V2. Potencia de dipolo corto</h4>
+<div class="statement">Un dipolo corto de longitud \(l\ll\lambda\) conduce corriente sinusoidal de amplitud \(I_0\). Escribir la resistencia de radiación aproximada.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Lo común con V1: dipolo corto y zona de radiación.</li><li>La potencia media radiada puede escribirse como \(P=\frac12R_rI_0^2\) si \(I_0\) es amplitud de corriente.</li><li>Para dipolo corto de corriente uniforme, la resistencia de radiación aproximada es \(R_r=80\pi^2(l/\lambda)^2\).</li><li>La fórmula cambia con la distribución de corriente; para dipolo Hertziano se usa esta aproximación estándar.</li></ol><div class="result"><strong>Resultado.</strong>\[R_r\simeq80\pi^2\left(\frac{l}{\lambda}\right)^2\]</div><div class="trap"><strong>Error típico.</strong> No la confundas con resistencia óhmica: es potencia que se va en radiación.</div></div></details>
+</div><div class="variant">
+<div class="meta"><span class="badge">Variante</span><span class="badge ">Real EM2 cuestión normalizada</span></div>
+<h4>V3. Zonas de campo</h4>
+<div class="statement">Explicar qué distingue zona cercana y zona lejana en la radiación de un dipolo.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol><li>En la zona cercana aparecen términos que caen como \(1/r^3\) y \(1/r^2\); almacenan energía reactiva cerca de la antena.</li><li>En la zona lejana domina el término \(1/r\).</li><li>Solo el término \(1/r\) contribuye a potencia media radiada neta a grandes distancias, porque \(S\sim1/r^2\) y el área crece como \(r^2\).</li><li>En zona lejana, \(\mathbf E\), \(\mathbf H\) y dirección de propagación son mutuamente perpendiculares.</li></ol><div class="result"><strong>Resultado.</strong><p>Radiación efectiva: términos \(1/r\) en zona lejana.</p></div><div class="trap"><strong>Error típico.</strong> No todos los campos alrededor de la antena son potencia radiada.</div></div></details>
+</div>
+</article><article class="problem">
+<h3>Problema 2 — Directividad desde patrón de radiación</h3>
+<div class="variant">
+<div class="meta"><span class="badge">Variante</span><span class="badge ">Semi-real EM2 T20</span></div>
+<h4>V1. Patrón \(F(\theta)=\sin\theta\)</h4>
+<div class="statement">Una antena radia con intensidad normalizada \(F(\theta)=\sin^2\theta\) independiente de \(\varphi\). Hallar la directividad.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol><li>La directividad es \(D=4\pi U_{max}/P_{rad}\). Si \(F=U/U_{max}\), entonces \(D=4\pi/\int F\,d\Omega\).</li><li>Aquí \(F=\sin^2\theta\).</li><li>\(d\Omega=\sin\theta\,d\theta d\varphi\).</li><li>\(\int F\,d\Omega=2\pi\int_0^\pi\sin^3\theta\,d\theta=2\pi(4/3)=8\pi/3\).</li><li>Por tanto \(D=4\pi/(8\pi/3)=3/2\).</li></ol><div class="result"><strong>Resultado.</strong>\[D=\frac32\]</div><div class="trap"><strong>Error típico.</strong> Integra sobre ángulo sólido, no sobre \(d\theta\) a secas.</div></div></details>
+</div><div class="variant">
+<div class="meta"><span class="badge">Variante</span><span class="badge ">Real EM2 Jun. 2015 normalizado</span></div>
+<h4>V2. Antena que solo radia al hemisferio superior</h4>
+<div class="statement">Una antena solo radia en \(0\le\theta\le\pi/2\) con patrón normalizado \(F(\theta)=\cos^2\theta\). Hallar la directividad.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Lo común con V1: \(D=4\pi/\int F\,d\Omega\).</li><li>La integral solo va sobre el hemisferio superior.</li><li>\(\int F\,d\Omega=2\pi\int_0^{\pi/2}\cos^2\theta\sin\theta\,d\theta\).</li><li>Con \(u=\cos\theta\), la integral angular vale \(1/3\).</li><li>Entonces \(\int Fd\Omega=2\pi/3\) y \(D=4\pi/(2\pi/3)=6\).</li></ol><div class="result"><strong>Resultado.</strong>\[D=6\]</div><div class="trap"><strong>Error típico.</strong> Si la antena no radia en medio espacio, no integres de \(0\) a \(\pi\).</div></div></details>
+</div><div class="variant">
+<div class="meta"><span class="badge">Variante</span><span class="badge ">Real EM2 Jun. 2015 normalizado</span></div>
+<h4>V3. Dirección de máxima radiación</h4>
+<div class="statement">Dado un patrón normalizado \(F(\theta)=\sin^2(2\theta)\) en un hemisferio, hallar las direcciones de máximo.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Lo común con V1: el máximo de radiación se obtiene maximizando \(F\), no integrando.</li><li>\(F\) es máxima cuando \(\sin^2(2\theta)=1\).</li><li>Entonces \(2\theta=\pi/2,3\pi/2,...\).</li><li>En \(0\le\theta\le\pi/2\), el máximo está en \(\theta=\pi/4\).</li><li>Si el patrón no depende de \(\varphi\), hay simetría azimutal.</li></ol><div class="result"><strong>Resultado.</strong>\[\theta_{max}=45^\circ\]</div><div class="trap"><strong>Error típico.</strong> No confundas máximo de campo con máximo de potencia si el patrón ya es de radiación normalizada.</div></div></details>
+</div>
+</article><article class="problem">
+<h3>Problema 3 — Agrupaciones de antenas</h3>
+<div class="variant">
+<div class="meta"><span class="badge">Variante</span><span class="badge ">EM2 T20</span></div>
+<h4>V1. Factor de agrupación de dos radiadores</h4>
+<div class="statement">Dos radiadores iguales separados \(d\) en el eje \(z\), alimentados en fase. Escribir el factor de agrupación normalizado.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol><li>La diferencia de fase geométrica en dirección \(\theta\) es \(\psi=kd\cos\theta\).</li><li>Para dos radiadores en fase, el factor de campo es proporcional a \(1+e^{j\psi}\).</li><li>Normalizando: \(AF=\cos(\psi/2)\).</li><li>Por tanto \(AF(\theta)=\cos[(kd\cos\theta)/2]\).</li></ol><div class="result"><strong>Resultado.</strong>\[AF(\theta)=\cos\left(\frac{kd\cos\theta}{2}\right)\]</div><div class="trap"><strong>Error típico.</strong> Si hay fase progresiva de alimentación, hay que sumarla a \(kd\cos\theta\).</div></div></details>
+</div><div class="variant">
+<div class="meta"><span class="badge">Variante</span><span class="badge ">Semi-real EM2</span></div>
+<h4>V2. Condición de máximo principal</h4>
+<div class="statement">Para una agrupación uniforme con fase progresiva \(\alpha\), dar la condición de máximo principal.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Lo común con V1: la fase total entre elementos es \(\psi=kd\cos\theta+\alpha\).</li><li>El máximo principal ocurre cuando todos los campos suman en fase.</li><li>Eso exige \(\psi=2m\pi\).</li><li>Para el lóbulo principal normalmente se toma el entero que da una dirección física.</li></ol><div class="result"><strong>Resultado.</strong>\[kd\cos\theta+\alpha=2m\pi\]</div><div class="trap"><strong>Error típico.</strong> No olvides la fase de alimentación \(\alpha\). Sin ella no puedes orientar el haz.</div></div></details>
+</div><div class="variant">
+<div class="meta"><span class="badge">Variante</span><span class="badge ">Real EM2 Jun. 2016 cuestión normalizada</span></div>
+<h4>V3. Agrupación vertical y diagrama</h4>
+<div class="statement">Una agrupación vertical tiene factor \(AF=\dfrac{\sin(N\psi/2)}{N\sin(\psi/2)}\). Interpretar máximos y nulos.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Los máximos principales aparecen cuando \(\psi=2m\pi\), porque todos los términos están en fase.</li><li>Los nulos aparecen cuando \(\sin(N\psi/2)=0\) pero \(\sin(\psi/2)\ne0\).</li><li>Por tanto \(N\psi/2=p\pi\), con \(p\) entero no múltiplo de \(N\).</li><li>Al aumentar \(N\), el lóbulo principal se estrecha y aumenta la directividad.</li><li>El patrón total de antena es patrón de elemento por factor de agrupación.</li></ol><div class="result"><strong>Resultado.</strong>\[AF=\frac{\sin(N\psi/2)}{N\sin(\psi/2)}\]</div><div class="trap"><strong>Error típico.</strong> El factor de agrupación no siempre es el diagrama total: hay que multiplicar por el patrón del elemento.</div></div></details>
+</div>
+</article>
+</section>
+<section class="page" id="formulario">
+<h2>Formulario final de reconstrucción</h2>
+<p class="block-lead">Solo lo que permite arrancar soluciones. No es una chuleta teórica completa.</p>
+<div class="grid">
+<div class="formula-card"><strong>Electrostática</strong>
+\[
+\mathbf E=-\nabla V,\quad \nabla\times\mathbf E=0,\quad \nabla\cdot\mathbf E=\rho/\epsilon_0
+\]
+\[
+\oint\mathbf E\cdot d\mathbf S=Q_{enc}/\epsilon_0,\quad
+V(\mathbf r)=\frac{1}{4\pi\epsilon_0}\int\frac{\rho(\mathbf r')}{|\mathbf r-\mathbf r'|}dv'
+\]
+</div>
+<div class="formula-card"><strong>Dieléctricos</strong>
+\[
+\mathbf D=\epsilon_0\mathbf E+\mathbf P,\quad \rho_b=-\nabla\cdot\mathbf P,\quad \sigma_b=\mathbf P\cdot\mathbf n
+\]
+\[
+(\mathbf D_2-\mathbf D_1)\cdot\mathbf n=\sigma_f,\quad \mathbf E_{2t}=\mathbf E_{1t}
+\]
+</div>
+<div class="formula-card"><strong>Conductores / energía</strong>
+\[
+E_{int}=0,\quad V=\text{cte},\quad U=\frac12\int\epsilon E^2dv
+\]
+\[
+U=\frac12CV^2=\frac{Q^2}{2C},\quad p=\frac12\epsilon_0E^2
+\]
+</div>
+<div class="formula-card"><strong>Corriente</strong>
+\[
+\partial_t\rho+\nabla\cdot\mathbf J=0,\quad \mathbf J=\gamma\mathbf E,\quad I=\int\mathbf J\cdot d\mathbf S
+\]
+\[
+P=\int\mathbf J\cdot\mathbf E\,dv,\quad R=V/I
+\]
+</div>
+<div class="formula-card"><strong>Magnetostática</strong>
+\[
+\nabla\cdot\mathbf B=0,\quad \nabla\times\mathbf B=\mu_0\mathbf J,\quad \oint\mathbf B\cdot d\mathbf l=\mu_0I_{enc}
+\]
+\[
+\mathbf B=\nabla\times\mathbf A,\quad d\mathbf B=\frac{\mu_0I}{4\pi}\frac{d\mathbf l\times\mathbf R}{R^3}
+\]
+</div>
+<div class="formula-card"><strong>Materiales magnéticos</strong>
+\[
+\mathbf J_m=\nabla\times\mathbf M,\quad \mathbf K_m=\mathbf M\times\mathbf n,\quad \mathbf B=\mu_0(\mathbf H+\mathbf M)
+\]
+\[
+B_{2n}=B_{1n},\quad \mathbf n\times(\mathbf H_2-\mathbf H_1)=\mathbf K_f
+\]
+</div>
+<div class="formula-card"><strong>Inducción / energía magnética</strong>
+\[
+\mathcal E=-\frac{d\Phi_B}{dt},\quad \Phi_{21}=M_{21}I_1,\quad U_m=\frac12LI^2
+\]
+\[
+U_m=\frac12\int\mathbf B\cdot\mathbf H\,dv,\quad F_x=\frac12I^2\frac{dL}{dx}\ (I\ \text{cte})
+\]
+</div>
+<div class="formula-card"><strong>Maxwell / ondas</strong>
+\[
+\nabla\times\mathbf H=\mathbf J+\partial_t\mathbf D,\quad \nabla\times\mathbf E=-\partial_t\mathbf B
+\]
+\[
+\eta=\sqrt{\mu/\epsilon},\quad v=1/\sqrt{\mu\epsilon},\quad \langle S\rangle=E_0^2/(2\eta)
+\]
+</div>
+<div class="formula-card"><strong>Líneas</strong>
+\[
+Z_0=\sqrt{L'/C'},\quad v_p=1/\sqrt{L'C'},\quad \Gamma_L=\frac{Z_L-Z_0}{Z_L+Z_0}
+\]
+\[
+Z_{in}=Z_0\frac{Z_L+jZ_0\tan\beta l}{Z_0+jZ_L\tan\beta l},\quad S=\frac{1+|\Gamma|}{1-|\Gamma|}
+\]
+</div>
+<div class="formula-card"><strong>Guías</strong>
+\[
+f_{c,mn}=\frac{1}{2\sqrt{\mu\epsilon}}\sqrt{(m/a)^2+(n/b)^2},\quad \beta=\omega\sqrt{\mu\epsilon}\sqrt{1-(f_c/f)^2}
+\]
+\[
+TE_{10}\ \text{dominante si }a>b,\quad Z_{TE}=\omega\mu/\beta,\quad Z_{TM}=\beta/(\omega\epsilon)
+\]
+</div>
+<div class="formula-card"><strong>Radiación</strong>
+\[
+D=\frac{4\pi}{\int F(\theta,\varphi)d\Omega},\quad d\Omega=\sin\theta\,d\theta d\varphi
+\]
+\[
+AF=\frac{\sin(N\psi/2)}{N\sin(\psi/2)},\quad \psi=kd\cos\theta+\alpha
+\]
+</div>
+</div>
+<div class="trap"><strong>Regla final.</strong> En cada problema escribe antes de calcular: región, simetría, ley, contorno, signo y unidades. Si no puedes escribir eso, no abras el álgebra.</div>
+</section>
+
+<section class="page">
+<h2>Checklist de uso real</h2>
+<ul>
+<li>He resuelto cada variante con soluciones cerradas, no leyéndolas.</li>
+<li>Distingo conductor a tierra, conductor aislado y dieléctrico.</li>
+<li>Sé elegir entre Gauss, imágenes, Laplace/separación, Ampère, Biot-Savart, Faraday, línea o guía.</li>
+<li>Compruebo signo físico: Lenz frena; presión va con cuadrado; campo exterior de coaxial ideal puede anularse.</li>
+<li>En ondas/líneas/guías no mezclo impedancia de medio, impedancia característica e impedancia modal.</li>
+</ul>
+</section>
+</div>
+</body>
+</html>
