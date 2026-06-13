@@ -1,0 +1,650 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Biología UNED — patrones reales resueltos por variantes</title>
+<script>
+window.MathJax = { tex: { inlineMath: [['\\(','\\)'], ['$', '$']], displayMath: [['\\[','\\]']] }, svg: { fontCache: 'global' } };
+</script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+<style>
+:root {
+  --bg:#08111f; --panel:#0d1b2e; --panel2:#12243c; --text:#e7edf7; --muted:#aab7ca;
+  --line:#28415f; --accent:#74a7ff; --accent2:#9bd4ff; --warn:#ffd166; --ok:#7bd88f;
+  --code:#06101d; --shadow:0 14px 40px rgba(0,0,0,.35); --max:1120px;
+}
+body.light { --bg:#eef3fb; --panel:#ffffff; --panel2:#f6f9ff; --text:#122033; --muted:#52657f; --line:#d4deec; --accent:#1f5fbf; --accent2:#164789; --warn:#8a5a00; --ok:#136f32; --code:#f2f6fb; --shadow:0 12px 32px rgba(25,55,95,.12); }
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.55 system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+a{color:var(--accent)}
+.wrap{max-width:var(--max);margin:0 auto;padding:24px}
+.cover{background:linear-gradient(135deg,var(--panel),var(--panel2));border:1px solid var(--line);border-radius:22px;padding:28px;box-shadow:var(--shadow);margin-bottom:18px}
+.eyebrow{color:var(--accent2);font-weight:800;text-transform:uppercase;letter-spacing:.08em;font-size:.78rem;margin:0 0 10px}
+h1{font-size:clamp(2rem,5vw,3.55rem);line-height:1.03;margin:0 0 12px}
+h2{font-size:1.7rem;margin:0 0 14px;border-bottom:1px solid var(--line);padding-bottom:10px}
+h3{font-size:1.24rem;margin:0 0 10px}
+h4{font-size:1.05rem;margin:0 0 8px;color:var(--accent2)}
+p{margin:0 0 12px}
+.subtitle{color:var(--muted);font-size:1.08rem;max-width:900px}
+.toolbar{position:sticky;top:0;z-index:10;background:rgba(8,17,31,.86);backdrop-filter:blur(10px);border:1px solid var(--line);border-radius:16px;margin:16px 0;padding:10px;display:flex;gap:10px;justify-content:space-between;align-items:center}
+body.light .toolbar{background:rgba(238,243,251,.9)}
+nav{display:flex;gap:8px;flex-wrap:wrap}
+nav a,.btn{border:1px solid var(--line);background:var(--panel2);color:var(--text);border-radius:999px;padding:8px 12px;text-decoration:none;font-weight:750;font-size:.9rem}
+.btn{cursor:pointer}
+.page{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:24px;margin:18px 0;box-shadow:var(--shadow)}
+.block-lead{color:var(--muted);margin-bottom:18px}
+.card{border:1px solid var(--line);background:var(--panel2);border-radius:18px;padding:18px;margin:18px 0}
+.variant{border:1px solid var(--line);background:rgba(0,0,0,.08);border-radius:16px;padding:14px;margin:14px 0}
+body.light .variant{background:#f8fbff}
+.meta{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.badge{font-size:.78rem;border:1px solid var(--line);border-radius:999px;padding:4px 9px;color:var(--accent2);background:var(--code);font-weight:800}
+.statement{background:var(--code);border-left:4px solid var(--accent);border-radius:12px;padding:14px;margin:10px 0;color:var(--text)}
+details{border:1px solid var(--line);border-radius:14px;background:var(--code);margin-top:12px;overflow:hidden}
+summary{cursor:pointer;padding:13px 15px;font-weight:850;color:var(--accent2);background:rgba(116,167,255,.08)}
+.solution{padding:15px 18px}
+ol{margin:0;padding-left:1.25rem}
+li{margin:0 0 10px}
+.result{border:1px solid rgba(123,216,143,.5);background:rgba(123,216,143,.10);border-radius:12px;padding:12px;margin-top:12px}
+.trap{border:1px solid rgba(255,209,102,.45);background:rgba(255,209,102,.10);border-radius:12px;padding:12px;margin-top:12px;color:var(--text)}
+.note{border:1px solid rgba(116,167,255,.45);background:rgba(116,167,255,.10);border-radius:12px;padding:12px;margin-top:12px;color:var(--text)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+.formula-card{background:var(--panel2);border:1px solid var(--line);border-radius:14px;padding:14px;overflow-x:auto}
+.formula-card strong{color:var(--accent2)}
+.index-list{columns:2;column-gap:30px;color:var(--muted)}
+.index-list li{break-inside:avoid;margin-bottom:8px}
+.small{color:var(--muted);font-size:.95rem}
+hr{border:0;border-top:1px solid var(--line);margin:18px 0}
+.pill{display:inline-block;margin:3px 6px 3px 0;padding:3px 8px;border-radius:999px;border:1px solid var(--line);background:var(--code);color:var(--muted);font-size:.82rem}
+@media(max-width:720px){.wrap{padding:12px}.cover,.page{padding:18px}.toolbar{position:static;display:block}.toolbar div{margin-top:8px}.index-list{columns:1}}
+@media print{.toolbar,.no-print{display:none!important}body{background:white;color:black}.page,.cover,.card,.variant{box-shadow:none;break-inside:avoid}details{break-inside:avoid}summary{color:black}.statement,.solution{color:black}}
+</style>
+<script>
+function toggleTheme(){document.body.classList.toggle('light');localStorage.setItem('bio-theme',document.body.classList.contains('light')?'light':'dark');}
+function openAll(){document.querySelectorAll('details').forEach(d=>d.open=true);}
+function closeAll(){document.querySelectorAll('details').forEach(d=>d.open=false);}
+window.addEventListener('DOMContentLoaded',()=>{ if(localStorage.getItem('bio-theme')==='light') document.body.classList.add('light'); });
+</script>
+</head>
+<body>
+<div class="wrap">
+<header class="cover">
+<p class="eyebrow">Biología UNED · Física · patrones reales resueltos</p>
+<h1>Patrones de examen con 5 variantes resueltas</h1>
+<p class="subtitle">Banco operativo: Bloque → Problema → Variante → solución paso a paso. Cada variante reproduce o normaliza enunciados históricos; las variantes semi-reales mezclan formulaciones repetidas para entrenar el mismo patrón.</p>
+<p>
+<span class="pill">Modo noche por defecto</span>
+<span class="pill">Soluciones en desplegable</span>
+<span class="pill">Enunciados reales/semi-reales</span>
+<span class="pill">Formulario final</span>
+</p>
+</header>
+<div class="toolbar no-print">
+<nav>
+<a href="#b1">B1</a><a href="#b2">B2</a><a href="#b3">B3</a><a href="#b4">B4</a><a href="#b5">B5</a><a href="#b6">B6</a><a href="#b7">B7</a><a href="#b8">B8</a>
+<a href="#chuleta">Formulario</a>
+</nav>
+<div><button class="btn" onclick="toggleTheme()">Noche / día</button> <button class="btn" onclick="openAll()">Abrir soluciones</button> <button class="btn" onclick="closeAll()">Cerrar</button> <button class="btn" onclick="window.print()">Imprimir</button></div>
+</div>
+<section class="page"><h2>Índice operativo</h2><p class="block-lead">Cada problema tiene 5 variantes. Las soluciones están cerradas por defecto para entrenar recuerdo activo.</p><ol class="index-list"><li><a href="#b1p1">B1.P1</a> — Biomoléculas, ácidos nucleicos, proteínas y enzimas · Problema 1 — Ácidos nucleicos, nucleótidos, DNA/RNA y propiedades</li>
+<li><a href="#b1p2">B1.P2</a> — Biomoléculas, ácidos nucleicos, proteínas y enzimas · Problema 2 — Proteínas, enlaces, estructura, enzimas y proteínas especiales</li>
+<li><a href="#b2p1">B2.P1</a> — Membranas, transporte, célula y localización · Problema 1 — Membrana plasmática y transporte</li>
+<li><a href="#b2p2">B2.P2</a> — Membranas, transporte, célula y localización · Problema 2 — Orgánulos, funciones y localización celular</li>
+<li><a href="#b3p1">B3.P1</a> — Metabolismo, respiración, fermentación y fotosíntesis · Problema 1 — Glucólisis, respiración, Krebs y fermentación</li>
+<li><a href="#b3p2">B3.P2</a> — Metabolismo, respiración, fermentación y fotosíntesis · Problema 2 — Fotosíntesis, pigmentos, cloroplasto y Calvin</li>
+<li><a href="#b4p1">B4.P1</a> — Ciclo celular, mitosis, meiosis, cromosomas y cáncer · Problema 1 — Ciclo celular, fases, puntos de control y p53</li>
+<li><a href="#b4p2">B4.P2</a> — Ciclo celular, mitosis, meiosis, cromosomas y cáncer · Problema 2 — Mitosis, meiosis, cariotipo, telómeros y mutaciones cromosómicas</li>
+<li><a href="#b5p1">B5.P1</a> — Replicación del DNA y mutaciones · Problema 1 — Horquilla de replicación, enzimas y fragmentos de Okazaki</li>
+<li><a href="#b5p2">B5.P2</a> — Replicación del DNA y mutaciones · Problema 2 — Mutaciones puntuales, proteína y genotipo/fenotipo</li>
+<li><a href="#b6p1">B6.P1</a> — Dogma central, código genético, transcripción, traducción y maduración · Problema 1 — Dogma central, código genético y codones</li>
+<li><a href="#b6p2">B6.P2</a> — Dogma central, código genético, transcripción, traducción y maduración · Problema 2 — Transcripción, traducción y maduración del mRNA</li>
+<li><a href="#b7p1">B7.P1</a> — Ingeniería genética, PCR, electroforesis, restricción, vectores y cDNA · Problema 1 — PCR, ciclos, desnaturalización y electroforesis</li>
+<li><a href="#b7p2">B7.P2</a> — Ingeniería genética, PCR, electroforesis, restricción, vectores y cDNA · Problema 2 — Clonación, plásmidos, enzimas de restricción, transcriptasa inversa y cDNA</li>
+<li><a href="#b8p1">B8.P1</a> — Regulación génica, cromatina, degradación proteica, evolución y raros · Problema 1 — Regulación, cromatina, metilación, proteasoma y mRNA estable</li>
+<li><a href="#b8p2">B8.P2</a> — Regulación génica, cromatina, degradación proteica, evolución y raros · Problema 2 — Evolución, teoría celular, eficacia biológica, ecosistemas y ciclos</li></ol></section><section class="page" id="b1"><h2>Bloque 1 — Biomoléculas, ácidos nucleicos, proteínas y enzimas</h2><p class="block-lead">Patrón de respuesta: definición → componentes → enlace/estructura → función → ejemplo si lo pide.</p><article class="card" id="b1p1"><div class="meta"><span class="badge">B1</span><span class="badge">Problema 1</span><span class="badge">5 variantes</span></div><h3>Problema 1 — Ácidos nucleicos, nucleótidos, DNA/RNA y propiedades</h3>
+<div class="variant">
+  <div class="meta"><span class="badge">Variante 1 — Bases, estructura primaria y horquilla de RNA</span><span class="badge">Exámenes 01 y 19</span></div>
+  <div class="statement"><strong>Enunciado.</strong><br>Conteste sobre las propiedades de los ácidos nucleicos: bases del RNA, bases del DNA, qué determina la estructura primaria de una molécula de RNA y cuándo se forma una horquilla en el RNA.</div>
+  
+  <details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Identificar primero si se habla de DNA o RNA: el cambio crítico es timina/uracilo y ribosa/desoxirribosa.</li><li>RNA: adenina, guanina, citosina y uracilo. DNA: adenina, guanina, citosina y timina.</li><li>La estructura primaria de un RNA la determina la secuencia lineal de ribonucleótidos unidos por enlaces fosfodiéster en dirección 5’→3’.</li><li>La horquilla aparece cuando una misma molécula de RNA contiene regiones complementarias internas que se aparean por puentes de hidrógeno.</li><li>El resultado es una estructura secundaria con tallo apareado y bucle no apareado.</li></ol><div class="result"><strong>Respuesta de examen.</strong><br>RNA: A, G, C, U. DNA: A, G, C, T. Primaria = secuencia 5’→3’. Horquilla = apareamiento intramolecular complementario en RNA.</div><div class="trap"><strong>Error típico.</strong> Confundir uracilo con timina o decir que la estructura primaria depende de la doble hélice.</div></div></details>
+</div>
+<div class="variant">
+  <div class="meta"><span class="badge">Variante 2 — Esquema general de un nucleótido</span><span class="badge">Exámenes 13, 17, 21, 22, 24, 26, 28</span></div>
+  <div class="statement"><strong>Enunciado.</strong><br>Realice el esquema general de un nucleótido indicando los elementos que lo componen. ¿En qué tipo de macromoléculas podemos encontrarlo?</div>
+  
+  <details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Esto está en la variante 1: seguimos dentro de ácidos nucleicos. Ahora se pide la unidad estructural, no las bases sueltas.</li><li>Un nucleótido está formado por una base nitrogenada, una pentosa y uno o más grupos fosfato.</li><li>En DNA la pentosa es desoxirribosa; en RNA es ribosa.</li><li>Base + pentosa = nucleósido. Nucleósido + fosfato = nucleótido.</li><li>Los nucleótidos polimerizan para formar ácidos nucleicos: DNA y RNA.</li></ol><div class="result"><strong>Respuesta de examen.</strong><br>Nucleótido = base nitrogenada + pentosa + fosfato. Forma DNA y RNA.</div><div class="trap"><strong>Error típico.</strong> Responder solo “base + azúcar” y olvidar el fosfato.</div></div></details>
+</div>
+<div class="variant">
+  <div class="meta"><span class="badge">Variante 3 — Enlace fosfodiéster y polimerización</span><span class="badge">Exámenes 10 y 22</span></div>
+  <div class="statement"><strong>Enunciado.</strong><br>Explique cómo polimerizan los nucleótidos para formar ácidos nucleicos. ¿En qué consiste un enlace fosfodiéster?</div>
+  
+  <details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Esto está en la variante 1: la cadena tiene polaridad 5’→3’. Aquí hay que explicar el enlace.</li><li>El grupo fosfato unido al carbono 5’ de un nucleótido enlaza con el grupo hidroxilo 3’ del nucleótido anterior.</li><li>El enlace resultante es fosfodiéster porque el fosfato queda unido por dos enlaces éster a dos azúcares.</li><li>La cadena crece añadiendo nucleótidos al extremo 3’ libre.</li><li>La secuencia de bases queda como información primaria del ácido nucleico.</li></ol><div class="result"><strong>Respuesta de examen.</strong><br>Enlace fosfodiéster = unión 3’–5’ entre azúcares consecutivos mediante un fosfato; da polaridad 5’→3’.</div><div class="trap"><strong>Error típico.</strong> Decir que las bases se unen entre sí para formar la cadena. Las bases se aparean; el esqueleto lo forman azúcar-fosfato.</div></div></details>
+</div>
+<div class="variant">
+  <div class="meta"><span class="badge">Variante 4 — Diferencias DNA/RNA y estructura secundaria del DNA</span><span class="badge">Exámenes 04, 06, 22</span></div>
+  <div class="statement"><strong>Enunciado.</strong><br>Explique las diferencias de estructura y composición entre DNA y RNA. Haga un esquema que relacione la estructura primaria del DNA con su estructura secundaria.</div>
+  
+  <details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Esto está en variantes 1–3: bases, pentosa, polaridad y enlaces fosfodiéster.</li><li>DNA: desoxirribosa, timina, normalmente doble cadena antiparalela y complementaria.</li><li>RNA: ribosa, uracilo, normalmente monocatenario aunque puede formar estructuras secundarias.</li><li>La estructura primaria del DNA es la secuencia de nucleótidos en cada hebra.</li><li>La estructura secundaria aparece por apareamiento complementario A-T y G-C entre dos hebras antiparalelas, formando doble hélice.</li></ol><div class="result"><strong>Respuesta de examen.</strong><br>DNA: desoxirribosa + T + doble hélice. RNA: ribosa + U + cadena simple funcional. Primaria DNA = secuencia; secundaria = doble hélice complementaria antiparalela.</div><div class="trap"><strong>Error típico.</strong> Escribir que el RNA no puede tener estructura secundaria. Sí puede formar horquillas y plegamientos.</div></div></details>
+</div>
+<div class="variant">
+  <div class="meta"><span class="badge">Variante 5 — Porcentaje de bases en DNA bicatenario</span><span class="badge">Examen 05</span></div>
+  <div class="statement"><strong>Enunciado.</strong><br>Una molécula de DNA de doble cadena presenta un 30% de adenina. Indique el porcentaje de las demás bases.</div>
+  
+  <details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Esto está en la variante 4: en DNA bicatenario hay complementariedad A-T y G-C.</li><li>Si A = 30%, entonces T = 30%.</li><li>A + T = 60%, por tanto queda 40% para G + C.</li><li>Como G = C, cada una vale 20%.</li><li>La regla usada es Chargaff: en DNA de doble cadena A=T y G=C.</li></ol><div class="result"><strong>Respuesta de examen.</strong><br>A = 30%, T = 30%, G = 20%, C = 20%.</div><div class="trap"><strong>Error típico.</strong> Aplicar la regla a RNA monocatenario o olvidar que la suma total debe ser 100%.</div></div></details>
+</div></article><article class="card" id="b1p2"><div class="meta"><span class="badge">B1</span><span class="badge">Problema 2</span><span class="badge">5 variantes</span></div><h3>Problema 2 — Proteínas, enlaces, estructura, enzimas y proteínas especiales</h3>
+<div class="variant">
+  <div class="meta"><span class="badge">Variante 1 — Monómeros y enlace peptídico</span><span class="badge">Exámenes 03 y 18</span></div>
+  <div class="statement"><strong>Enunciado.</strong><br>¿Cuáles son los monómeros de las proteínas? Explique cómo se unen entre sí estos monómeros para formar el polímero.</div>
+  
+  <details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Los monómeros de las proteínas son los aminoácidos.</li><li>Cada aminoácido tiene un carbono α unido a un grupo amino, un grupo carboxilo, un hidrógeno y una cadena lateral R.</li><li>Los aminoácidos se unen por enlace peptídico entre el grupo carboxilo de uno y el grupo amino del siguiente.</li><li>Es una reacción de condensación: se libera una molécula de agua.</li><li>El producto es una cadena polipeptídica con extremo amino y extremo carboxilo.</li></ol><div class="result"><strong>Respuesta de examen.</strong><br>Aminoácidos unidos por enlaces peptídicos; la secuencia forma la estructura primaria de la proteína.</div><div class="trap"><strong>Error típico.</strong> Decir que el enlace peptídico une grupos R. Une carboxilo y amino.</div></div></details>
+</div>
+<div class="variant">
+  <div class="meta"><span class="badge">Variante 2 — Estructuras secundaria, terciaria y cuaternaria</span><span class="badge">Exámenes 04, 07, 08, 10, 11, 12, 20, 21, 25</span></div>
+  <div class="statement"><strong>Enunciado.</strong><br>Comente brevemente qué es la estructura secundaria de las proteínas y qué tipos conoce. Añada qué son la estructura terciaria y la cuaternaria con un ejemplo.</div>
+  
+  <details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Esto está en variante 1: primero existe una estructura primaria, la secuencia de aminoácidos.</li><li>La estructura secundaria son plegamientos locales estabilizados por puentes de hidrógeno del esqueleto peptídico.</li><li>Tipos principales: hélice α y lámina β.</li><li>La estructura terciaria es el plegamiento tridimensional completo de una cadena polipeptídica por interacciones entre grupos R.</li><li>La estructura cuaternaria aparece cuando una proteína funcional tiene varias cadenas polipeptídicas. Ejemplo clásico: hemoglobina.</li></ol><div class="result"><strong>Respuesta de examen.</strong><br>Secundaria = hélice α/lámina β; terciaria = forma 3D de una cadena; cuaternaria = asociación de varias cadenas.</div><div class="trap"><strong>Error típico.</strong> Definir cuaternaria como “cuarta forma” sin indicar subunidades.</div></div></details>
+</div>
+<div class="variant">
+  <div class="meta"><span class="badge">Variante 3 — Enzima, centro activo, temperatura y pH</span><span class="badge">Exámenes 03, 09, 13, 18, 23</span></div>
+  <div class="statement"><strong>Enunciado.</strong><br>¿Qué es una enzima? ¿Qué es el centro activo? Explique por qué temperatura y pH afectan a la función enzimática.</div>
+  
+  <details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Una enzima es un catalizador biológico, normalmente proteico, que aumenta la velocidad de una reacción sin consumirse.</li><li>El centro activo es la región de la enzima donde se une el sustrato y ocurre la catálisis.</li><li>La unión depende de la conformación tridimensional y de interacciones químicas específicas.</li><li>Temperatura y pH alteran esas interacciones; si se salen del rango óptimo, cambia la conformación y baja la actividad.</li><li>En condiciones extremas puede haber desnaturalización, pérdida de estructura y pérdida de función.</li></ol><div class="result"><strong>Respuesta de examen.</strong><br>Enzima = catalizador biológico; centro activo = zona de unión y catálisis; temperatura/pH afectan por alterar estructura e interacciones.</div><div class="trap"><strong>Error típico.</strong> Responder solo “la enzima se muere”. En examen: se desnaturaliza o cambia su conformación.</div></div></details>
+</div>
+<div class="variant">
+  <div class="meta"><span class="badge">Variante 4 — Chaperonas, priones y proteasoma</span><span class="badge">Exámenes 02, 06, 08, 11, 14, 25, 28</span></div>
+  <div class="statement"><strong>Enunciado.</strong><br>Defina chaperonas moleculares, priones y proteasoma. Indique la función de cada uno.</div>
+  
+  <details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Esto está en variantes 1–3: todas son preguntas sobre relación estructura-función proteica.</li><li>Las chaperonas ayudan al plegamiento correcto de otras proteínas y evitan agregados, sin formar parte de la proteína final.</li><li>Los priones son proteínas mal plegadas capaces de inducir el mal plegamiento de otras copias de la misma proteína.</li><li>El proteasoma es un complejo proteico que degrada proteínas marcadas, generalmente con ubiquitina.</li><li>Funcionalmente: chaperona = plegar; prión = propagar conformación patológica; proteasoma = degradar.</li></ol><div class="result"><strong>Respuesta de examen.</strong><br>Chaperonas pliegan, priones inducen mal plegamiento, proteasoma degrada proteínas marcadas.</div><div class="trap"><strong>Error típico.</strong> Tratar los priones como virus con DNA/RNA. No contienen ácido nucleico.</div></div></details>
+</div>
+<div class="variant">
+  <div class="meta"><span class="badge">Variante 5 — Funciones de proteínas y proteína G</span><span class="badge">Exámenes 25 y 27</span></div>
+  <div class="statement"><strong>Enunciado.</strong><br>Las proteínas tienen numerosas funciones. Enumere funciones principales y explique qué es una proteína G en señalización celular.</div>
+  
+  <details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Esto está en variantes anteriores: la función depende de estructura y del plegamiento correcto.</li><li>Funciones típicas: catalítica, estructural, transporte, señalización, defensa, movimiento y regulación.</li><li>Una proteína G es una proteína de señalización que une nucleótidos de guanina: GDP o GTP.</li><li>Se activa al intercambiar GDP por GTP y transmite señales desde receptores de membrana a efectores intracelulares.</li><li>Al hidrolizar GTP a GDP vuelve al estado inactivo.</li></ol><div class="result"><strong>Respuesta de examen.</strong><br>Proteína G = interruptor molecular GDP/GTP que transmite señales celulares.</div><div class="trap"><strong>Error típico.</strong> Decir que proteína G significa “proteína con glicina”. Aquí G se refiere a guanina/GTP.</div></div></details>
+</div></article></section><section class="page" id="b2"><h2>Bloque 2 — Membranas, transporte, célula y localización</h2><p class="block-lead">Patrón de respuesta: estructura → propiedad → consecuencia funcional → localización si procede.</p><article class="card" id="b2p1"><div class="meta"><span class="badge">B2</span><span class="badge">Problema 1</span><span class="badge">5 variantes</span></div><h3>Problema 1 — Membrana plasmática y transporte</h3>
+<div class="variant">
+  <div class="meta"><span class="badge">Variante 1 — Agua y membrana semipermeable</span><span class="badge">Examen 01</span></div>
+  <div class="statement"><strong>Enunciado.</strong><br>¿Cómo se transporta el agua a través de una membrana semipermeable?</div>
+  
+  <details><summary>Solución paso a paso</summary><div class="solution"><ol><li>El proceso se llama ósmosis.</li><li>El agua se desplaza a través de una membrana semipermeable desde la zona con menor concentración de solutos hacia la zona con mayor concentración de solutos.</li><li>El movimiento tiende a equilibrar el potencial hídrico o la concentración efectiva de solutos.</li><li>Puede ocurrir a través de la bicapa en pequeña medida y, sobre todo, mediante acuaporinas.</li><li>Es un transporte pasivo: no consume ATP.</li></ol><div class="result"><strong>Respuesta de examen.</strong><br>Ósmosis: movimiento pasivo de agua hacia el medio más concentrado en solutos a través de membrana semipermeable.</div><div class="trap"><strong>Error típico.</strong> Decir que el agua va “de más soluto a menos soluto”. Es al revés.</div></div></details>
+</div>
+<div class="variant">
+  <div class="meta"><span class="badge">Variante 2 — Entrada de oxígeno en la célula</span><span class="badge">Examen 02</span></div>
+  <div class="statement"><strong>Enunciado.</strong><br>Explique qué tipo de transporte a través de la membrana plasmática utiliza el oxígeno para entrar en las células.</div>
+  
+  <details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Esto comparte base con variante 1: transporte pasivo, sin ATP.</li><li>El oxígeno es una molécula pequeña y apolar.</li><li>Por eso atraviesa directamente la bicapa lipídica por difusión simple.</li><li>Se mueve a favor de gradiente de concentración: desde donde hay más O₂ hacia donde hay menos.</li><li>No requiere canal, transportador ni ATP.</li></ol><div class="result"><strong>Respuesta de examen.</strong><br>El O₂ entra por difusión simple a favor de gradiente.</div><div class="trap"><strong>Error típico.</strong> Responder “transporte activo” porque la célula lo necesita. La necesidad funcional no implica gasto de ATP en el paso de membrana.</div></div></details>
+</div>
+<div class="variant">
+  <div class="meta"><span class="badge">Variante 3 — Fosfolípidos, colesterol y moléculas anfipáticas</span><span class="badge">Exámenes 13, 15, 16, 26</span></div>
+  <div class="statement"><strong>Enunciado.</strong><br>Refiriéndonos a una molécula, ¿qué significa que es anfipática? Si colesterol y fosfolípidos están en solución, ¿qué parte interactúa con el agua?</div>
+  
+  <details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Una molécula anfipática tiene una región hidrofílica y una región hidrofóbica.</li><li>En fosfolípidos, la cabeza polar interactúa con el agua y las colas hidrocarbonadas evitan el agua.</li><li>En colesterol, el grupo hidroxilo polar se orienta hacia las cabezas polares; el núcleo esteroide queda en la zona hidrofóbica.</li><li>Esta propiedad explica que los fosfolípidos formen bicapas en agua.</li><li>Así se genera una barrera selectiva con interior hidrofóbico.</li></ol><div class="result"><strong>Respuesta de examen.</strong><br>Anfipática = parte polar + parte apolar. En agua, cabezas polares hacia fuera y colas apolares hacia dentro.</div><div class="trap"><strong>Error típico.</strong> Decir que todo el fosfolípido es soluble en agua. Solo la cabeza polar interactúa favorablemente con agua.</div></div></details>
+</div>
+<div class="variant">
+  <div class="meta"><span class="badge">Variante 4 — Transporte con ATP</span><span class="badge">Exámenes 17 y 22</span></div>
+  <div class="statement"><strong>Enunciado.</strong><br>¿Qué tipos de transporte a través de membrana que empleen ATP conoce?</div>
+  
+  <details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Esto se diferencia de variantes 1–2: ahora sí hay gasto energético.</li><li>El transporte activo primario usa ATP directamente en bombas, por ejemplo Na⁺/K⁺-ATPasa o bombas de protones.</li><li>El transporte activo secundario usa gradientes generados previamente con ATP: simporte o antiporte acoplado.</li><li>El transporte vesicular también consume energía: endocitosis y exocitosis.</li><li>La clave es indicar que se mueve contra gradiente o requiere remodelación de membrana.</li></ol><div class="result"><strong>Respuesta de examen.</strong><br>ATP: bombas primarias, transporte secundario acoplado a gradientes y transporte vesicular.</div><div class="trap"><strong>Error típico.</strong> Confundir difusión facilitada con transporte activo. La difusión facilitada usa proteínas, pero no ATP.</div></div></details>
+</div>
+<div class="variant">
+  <div class="meta"><span class="badge">Variante 5 — Pinocitosis, fagocitosis y medio hipotónico</span><span class="badge">Exámenes 14, 15, 21, 24</span></div>
+  <div class="statement"><strong>Enunciado.</strong><br>Explique pinocitosis y fagocitosis. ¿Por qué una célula animal puede morir en un medio hipotónico?</div>
+  
+  <details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Esto usa la idea de membrana y agua de la variante 1, pero añade endocitosis.</li><li>Pinocitosis: entrada de líquido extracelular y solutos en vesículas pequeñas.</li><li>Fagocitosis: incorporación de partículas grandes o células mediante vesículas grandes.</li><li>En medio hipotónico, el exterior tiene menor concentración de solutos que el interior celular.</li><li>El agua entra por ósmosis. Una célula animal, sin pared celular rígida, puede hincharse y lisarse.</li></ol><div class="result"><strong>Respuesta de examen.</strong><br>Pinocitosis = líquidos; fagocitosis = partículas grandes. Medio hipotónico → entrada de agua → lisis en célula animal.</div><div class="trap"><strong>Error típico.</strong> Decir que en hipotónico sale agua. Sale agua en medio hipertónico, no hipotónico.</div></div></details>
+</div></article><article class="card" id="b2p2"><div class="meta"><span class="badge">B2</span><span class="badge">Problema 2</span><span class="badge">5 variantes</span></div><h3>Problema 2 — Orgánulos, funciones y localización celular</h3>
+<div class="variant">
+  <div class="meta"><span class="badge">Variante 1 — Localización de funciones eucariotas</span><span class="badge">Exámenes 01, 02, 05, 10, 17, 22, 23</span></div>
+  <div class="statement"><strong>Enunciado.</strong><br>Indique dónde se localizan en una célula eucariota: síntesis de proteínas, síntesis de ARNr, ciclo de Krebs, ciclo de Calvin, replicación y transcripción.</div>
+  
+  <details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Síntesis de proteínas: ribosomas, libres o asociados al retículo endoplasmático rugoso.</li><li>Síntesis de ARNr: nucléolo, dentro del núcleo.</li><li>Ciclo de Krebs: matriz mitocondrial.</li><li>Ciclo de Calvin: estroma del cloroplasto.</li><li>Replicación del DNA y transcripción nuclear: núcleo. En mitocondrias y cloroplastos también hay DNA propio, pero la respuesta estándar es núcleo para genes nucleares.</li></ol><div class="result"><strong>Respuesta de examen.</strong><br>Ribosomas; nucléolo; matriz mitocondrial; estroma; núcleo; núcleo.</div><div class="trap"><strong>Error típico.</strong> Contestar “mitocondria” para toda respiración. Glucólisis no ocurre en mitocondria.</div></div></details>
+</div>
+<div class="variant">
+  <div class="meta"><span class="badge">Variante 2 — Nucléolo, nucleoide y clorofilas</span><span class="badge">Exámenes 04, 10, 23, 27</span></div>
+  <div class="statement"><strong>Enunciado.</strong><br>¿Qué es el nucléolo? ¿Qué es el nucleoide? ¿Dónde se encuentran las clorofilas?</div>
+  
+  <details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Esto está relacionado con localización de variante 1.</li><li>Nucléolo: región nuclear no membranosa donde se sintetiza y procesa ARNr y se ensamblan subunidades ribosómicas.</li><li>Nucleoide: región de células procariotas donde se localiza el cromosoma bacteriano, sin membrana nuclear.</li><li>Clorofilas: pigmentos fotosintéticos localizados en las membranas de los tilacoides del cloroplasto.</li><li>En respuesta de examen conviene separar procariota/eucariota.</li></ol><div class="result"><strong>Respuesta de examen.</strong><br>Nucléolo = ARNr/ribosomas en núcleo; nucleoide = DNA procariota; clorofilas = membranas tilacoidales.</div><div class="trap"><strong>Error típico.</strong> Decir que el nucleoide está dentro del núcleo. Las procariotas no tienen núcleo.</div></div></details>
+</div>
+<div class="variant">
+  <div class="meta"><span class="badge">Variante 3 — Componentes del citoesqueleto</span><span class="badge">Examen 03</span></div>
+  <div class="statement"><strong>Enunciado.</strong><br>Explique brevemente cuáles son los componentes del citoesqueleto en la célula eucariota.</div>
+  
+  <details><summary>Solución paso a paso</summary><div class="solution"><ol><li>El citoesqueleto es una red dinámica de filamentos proteicos que organiza la célula, permite movimiento y participa en división.</li><li>Microfilamentos de actina: forma celular, contracción, movimiento y citocinesis.</li><li>Filamentos intermedios: resistencia mecánica y estabilidad.</li><li>Microtúbulos: organización intracelular, transporte vesicular, cilios/flagelos y huso mitótico.</li><li>Una respuesta completa debe nombrar los tres y asociar función.</li></ol><div class="result"><strong>Respuesta de examen.</strong><br>Actina, filamentos intermedios y microtúbulos.</div><div class="trap"><strong>Error típico.</strong> Responder solo “microtúbulos”. Es incompleto.</div></div></details>
+</div>
+<div class="variant">
+  <div class="meta"><span class="badge">Variante 4 — Mitocondrias y cloroplastos</span><span class="badge">Exámenes 16 y 20</span></div>
+  <div class="statement"><strong>Enunciado.</strong><br>Conteste si son verdaderas o falsas afirmaciones sobre mitocondrias y cloroplastos y justifique: tienen doble membrana, DNA propio y participan en metabolismo energético.</div>
+  
+  <details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Esto amplía la localización de la variante 1.</li><li>Mitocondrias: doble membrana, DNA propio, ribosomas propios y función principal en respiración celular aerobia.</li><li>Cloroplastos: doble membrana, DNA propio, tilacoides con clorofila y función en fotosíntesis.</li><li>Ambos se explican por origen endosimbiótico.</li><li>Diferencia clave: mitocondria oxida combustibles y produce ATP; cloroplasto capta luz y fija CO₂.</li></ol><div class="result"><strong>Respuesta de examen.</strong><br>Ambos tienen doble membrana y DNA propio; mitocondria = respiración; cloroplasto = fotosíntesis.</div><div class="trap"><strong>Error típico.</strong> Decir que solo los cloroplastos tienen DNA propio.</div></div></details>
+</div>
+<div class="variant">
+  <div class="meta"><span class="badge">Variante 5 — Microscopía electrónica</span><span class="badge">Exámenes 09 y 11</span></div>
+  <div class="statement"><strong>Enunciado.</strong><br>¿Qué es la microscopía electrónica de barrido? ¿Qué es la microscopía electrónica de transmisión?</div>
+  
+  <details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Esto aparece como pregunta corta de prácticas/estructura celular.</li><li>Microscopía electrónica de barrido: explora la superficie de la muestra con electrones y ofrece imagen tridimensional aparente de la superficie.</li><li>Microscopía electrónica de transmisión: los electrones atraviesan cortes ultrafinos y permiten observar la ultraestructura interna.</li><li>Ambas usan electrones, no luz visible, por lo que tienen mayor resolución que la microscopía óptica.</li><li>La clave de examen es distinguir superficie frente a interior.</li></ol><div class="result"><strong>Respuesta de examen.</strong><br>Barrido = superficie; transmisión = interior en cortes ultrafinos.</div><div class="trap"><strong>Error típico.</strong> Confundir ambas y decir que las dos muestran exactamente lo mismo.</div></div></details>
+</div></article></section><section class="page" id="b3"><h2>Bloque 3 — Metabolismo, respiración, fermentación y fotosíntesis</h2><p class="block-lead">Patrón de respuesta: ruta → localización → entradas/salidas → función energética → comparación.</p><article class="card" id="b3p1"><div class="meta"><span class="badge">B3</span><span class="badge">Problema 1</span><span class="badge">5 variantes</span></div><h3>Problema 1 — Glucólisis, respiración, Krebs y fermentación</h3>
+<div class="variant">
+  <div class="meta"><span class="badge">Variante 1 — Fermentación del yogur</span><span class="badge">Examen 01</span></div>
+  <div class="statement"><strong>Enunciado.</strong><br>Las bacterias que forman el yogur realizan un tipo de fermentación. ¿Cuál es? Explíquela y haga un esquema de esta vía metabólica.</div>
+  
+  <details><summary>Solución paso a paso</summary><div class="solution"><ol><li>El yogur se produce por fermentación láctica.</li><li>Primero la glucosa se degrada por glucólisis hasta piruvato, produciendo ATP y NADH.</li><li>En ausencia de respiración aerobia suficiente, el piruvato se reduce a lactato.</li><li>El NADH se oxida a NAD⁺, permitiendo que continúe la glucólisis.</li><li>Esquema: glucosa → 2 piruvato → 2 lactato; se regenera NAD⁺.</li></ol><div class="result"><strong>Respuesta de examen.</strong><br>Fermentación láctica: glucosa → piruvato → lactato; función = regenerar NAD⁺ para mantener glucólisis.</div><div class="trap"><strong>Error típico.</strong> Decir fermentación alcohólica. Esa produce etanol y CO₂, no yogur.</div></div></details>
+</div>
+<div class="variant">
+  <div class="meta"><span class="badge">Variante 2 — Glucólisis, productos y localización</span><span class="badge">Exámenes 01, 02, 07</span></div>
+  <div class="statement"><strong>Enunciado.</strong><br>Indique la localización intracelular de la glucólisis. ¿De qué moléculas se parte y qué moléculas se obtienen al final?</div>
+  
+  <details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Esto está en variante 1: la glucólisis es el paso previo a la fermentación y a la respiración.</li><li>La glucólisis ocurre en el citosol.</li><li>Parte de una molécula de glucosa.</li><li>Produce dos moléculas de piruvato, ATP neto y NADH.</li><li>Balance básico: glucosa + 2 ADP + 2 Pi + 2 NAD⁺ → 2 piruvato + 2 ATP netos + 2 NADH.</li></ol><div class="result"><strong>Respuesta de examen.</strong><br>Glucólisis en citosol: glucosa → 2 piruvato + 2 ATP netos + 2 NADH.</div><div class="trap"><strong>Error típico.</strong> Ubicar la glucólisis en la mitocondria.</div></div></details>
+</div>
+<div class="variant">
+  <div class="meta"><span class="badge">Variante 3 — Ciclo de Krebs y respiración aerobia</span><span class="badge">Exámenes 01, 03, 17, 22</span></div>
+  <div class="statement"><strong>Enunciado.</strong><br>¿Qué es el ciclo de Krebs? ¿Dónde ocurre? Realice un esquema del proceso de obtención de energía en presencia de oxígeno.</div>
+  
+  <details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Esto continúa la variante 2 si hay oxígeno y mitocondria funcional.</li><li>El piruvato se transforma en acetil-CoA antes de entrar en Krebs.</li><li>El ciclo de Krebs oxida el acetil-CoA a CO₂ y genera NADH, FADH₂ y GTP/ATP.</li><li>En eucariotas ocurre en la matriz mitocondrial.</li><li>Esquema respiración aerobia: glucólisis → oxidación del piruvato → ciclo de Krebs → cadena de transporte de electrones y fosforilación oxidativa.</li><li>El O₂ actúa como aceptor final de electrones en la cadena respiratoria.</li></ol><div class="result"><strong>Respuesta de examen.</strong><br>Krebs = oxidación de acetil-CoA en matriz mitocondrial; respiración aerobia completa termina en cadena electrónica con O₂.</div><div class="trap"><strong>Error típico.</strong> Decir que Krebs es el paso final. El paso final energético es la fosforilación oxidativa.</div></div></details>
+</div>
+<div class="variant">
+  <div class="meta"><span class="badge">Variante 4 — Fermentación frente a respiración celular</span><span class="badge">Examen 04</span></div>
+  <div class="statement"><strong>Enunciado.</strong><br>¿En qué se diferencia la fermentación y la respiración celular? Explíquelo brevemente.</div>
+  
+  <details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Esto compara variantes 1 y 3.</li><li>En fermentación, el aceptor final de electrones es una molécula orgánica derivada del piruvato.</li><li>En respiración aerobia, el aceptor final es el oxígeno.</li><li>La fermentación produce mucho menos ATP y no requiere cadena de transporte de electrones.</li><li>La respiración aerobia oxida más completamente la glucosa a CO₂ y H₂O y produce más ATP.</li></ol><div class="result"><strong>Respuesta de examen.</strong><br>Fermentación = regenerar NAD⁺ sin O₂ y poco ATP; respiración aerobia = oxidación completa con O₂ y mucho ATP.</div><div class="trap"><strong>Error típico.</strong> Decir que fermentación no produce ATP. Sí produce ATP en la glucólisis asociada.</div></div></details>
+</div>
+<div class="variant">
+  <div class="meta"><span class="badge">Variante 5 — Metabolismo, anabolismo y catabolismo</span><span class="badge">Exámenes 05 y 10</span></div>
+  <div class="statement"><strong>Enunciado.</strong><br>Defina metabolismo y diferencie anabolismo y catabolismo. Ponga un ejemplo de cada uno.</div>
+  
+  <details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Metabolismo es el conjunto de reacciones químicas de una célula u organismo.</li><li>Catabolismo: rutas degradativas que liberan energía y generan moléculas más simples. Ejemplo: glucólisis o respiración celular.</li><li>Anabolismo: rutas biosintéticas que consumen energía para formar moléculas complejas. Ejemplo: síntesis de proteínas, síntesis de glucógeno o ciclo de Calvin.</li><li>Las rutas metabólicas suelen organizarse en pasos catalizados por enzimas.</li><li>La respuesta debe incluir dirección energética: catabolismo libera; anabolismo consume.</li></ol><div class="result"><strong>Respuesta de examen.</strong><br>Metabolismo = reacciones celulares; catabolismo degrada/libera energía; anabolismo sintetiza/consume energía.</div><div class="trap"><strong>Error típico.</strong> Confundir fotosíntesis completa con catabolismo porque produce ATP; la fijación de carbono es anabólica.</div></div></details>
+</div></article><article class="card" id="b3p2"><div class="meta"><span class="badge">B3</span><span class="badge">Problema 2</span><span class="badge">5 variantes</span></div><h3>Problema 2 — Fotosíntesis, pigmentos, cloroplasto y Calvin</h3>
+<div class="variant">
+  <div class="meta"><span class="badge">Variante 1 — Reacción global y localización</span><span class="badge">Exámenes 09, 10, 11, 12</span></div>
+  <div class="statement"><strong>Enunciado.</strong><br>¿Dónde se produce la fotosíntesis? ¿Cuál es la reacción global de la fotosíntesis? ¿Es endergónica o exergónica?</div>
+  
+  <details><summary>Solución paso a paso</summary><div class="solution"><ol><li>La fotosíntesis ocurre en los cloroplastos de células vegetales y algas.</li><li>Las reacciones luminosas ocurren en las membranas de los tilacoides.</li><li>El ciclo de Calvin ocurre en el estroma.</li><li>Reacción global aproximada: \(6CO_2+6H_2O+energía\ lumínica\rightarrow C_6H_{12}O_6+6O_2\).</li><li>Es un proceso globalmente endergónico: almacena energía luminosa en enlaces químicos.</li></ol><div class="result"><strong>Respuesta de examen.</strong><br>Fotosíntesis en cloroplasto; tilacoides + estroma; \(6CO_2+6H_2O\to C_6H_{12}O_6+6O_2\); endergónica.</div><div class="trap"><strong>Error típico.</strong> Decir que es exergónica porque libera oxígeno. La síntesis de glucosa requiere energía.</div></div></details>
+</div>
+<div class="variant">
+  <div class="meta"><span class="badge">Variante 2 — Pigmentos fotosintéticos y complejo antena</span><span class="badge">Exámenes 02, 05, 13, 15, 27</span></div>
+  <div class="statement"><strong>Enunciado.</strong><br>¿Cuál es la función de los pigmentos fotosintéticos? ¿Dónde se localizan en la célula vegetal? Defina complejo antena y clorofilas.</div>
+  
+  <details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Esto está en variante 1: la fase luminosa ocurre en tilacoides.</li><li>Los pigmentos fotosintéticos absorben luz y transfieren energía a los centros de reacción.</li><li>Se localizan en las membranas tilacoidales de los cloroplastos.</li><li>El complejo antena es un conjunto de pigmentos y proteínas que captura fotones y canaliza la energía hacia el centro de reacción.</li><li>Las clorofilas son pigmentos principales que absorben luz, especialmente en azul y rojo, y participan en la conversión energética.</li></ol><div class="result"><strong>Respuesta de examen.</strong><br>Pigmentos = captan luz; localización = membrana tilacoidal; complejo antena = captura y transfiere energía.</div><div class="trap"><strong>Error típico.</strong> Ubicar clorofilas en el estroma. El estroma contiene Calvin; las clorofilas están en tilacoides.</div></div></details>
+</div>
+<div class="variant">
+  <div class="meta"><span class="badge">Variante 3 — Ciclo de Calvin y síntesis de glucosa</span><span class="badge">Exámenes 01 y 10</span></div>
+  <div class="statement"><strong>Enunciado.</strong><br>Defina monosacáridos y explique dos funciones. ¿En qué proceso metabólico se sintetiza la glucosa?</div>
+  
+  <details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Monosacáridos son azúcares simples, unidades básicas de los hidratos de carbono.</li><li>Funciones: fuente inmediata de energía y precursores de polisacáridos o de otros compuestos.</li><li>En organismos fotosintéticos, la glucosa se sintetiza a partir de CO₂ en el ciclo de Calvin.</li><li>El ciclo de Calvin usa ATP y NADPH procedentes de las reacciones luminosas.</li><li>Ocurre en el estroma del cloroplasto.</li></ol><div class="result"><strong>Respuesta de examen.</strong><br>La glucosa se sintetiza por fijación de CO₂ en el ciclo de Calvin, en el estroma.</div><div class="trap"><strong>Error típico.</strong> Responder “glucólisis”. La glucólisis degrada glucosa, no la sintetiza.</div></div></details>
+</div>
+<div class="variant">
+  <div class="meta"><span class="badge">Variante 4 — Dibujo de cloroplasto</span><span class="badge">Examen 16</span></div>
+  <div class="statement"><strong>Enunciado.</strong><br>Dibuje un cloroplasto indicando cada una de sus partes y la función que desempeña.</div>
+  
+  <details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Esto está en variantes 1–2, pero exige esquema.</li><li>Partes mínimas: doble membrana externa/interna, estroma, tilacoides, grana y lumen tilacoidal.</li><li>Tilacoides/grana: reacciones luminosas, transporte electrónico, formación de ATP y NADPH.</li><li>Estroma: ciclo de Calvin, fijación de CO₂ y síntesis de azúcares.</li><li>También puede indicarse DNA y ribosomas propios como rasgos de origen endosimbiótico.</li></ol><div class="result"><strong>Respuesta de examen.</strong><br>Dibujo correcto si separa membranas, estroma, tilacoides/grana y asigna luz a tilacoides y Calvin a estroma.</div><div class="trap"><strong>Error típico.</strong> Un dibujo sin funciones puntúa poco si el enunciado pide partes y función.</div></div></details>
+</div>
+<div class="variant">
+  <div class="meta"><span class="badge">Variante 5 — Comparación respiración/fotosíntesis por localización</span><span class="badge">Semi-real entrenable basado en exámenes 01, 02, 04, 08</span></div>
+  <div class="statement"><strong>Enunciado.</strong><br>Empareje procesos con localización: glucólisis, ciclo de Krebs, cadena de transporte electrónico respiratoria, reacciones luminosas y ciclo de Calvin.</div>
+  
+  <details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Esto mezcla variantes del problema de metabolismo y fotosíntesis.</li><li>Glucólisis: citosol.</li><li>Ciclo de Krebs: matriz mitocondrial.</li><li>Cadena de transporte electrónico respiratoria: membrana interna mitocondrial.</li><li>Reacciones luminosas: membrana tilacoidal.</li><li>Ciclo de Calvin: estroma del cloroplasto.</li></ol><div class="result"><strong>Respuesta de examen.</strong><br>Citosol; matriz; membrana interna mitocondrial; tilacoides; estroma.</div><div class="trap"><strong>Error típico.</strong> Contestar “mitocondria” o “cloroplasto” de forma genérica cuando piden compartimento concreto.</div></div></details>
+</div></article></section><section class="page" id="b4"><h2>Bloque 4 — Ciclo celular, mitosis, meiosis, cromosomas y cáncer</h2><p class="block-lead">Patrón de respuesta: fase → evento → cromosoma/cromátida → resultado biológico.</p><article class="card" id="b4p1"><div class="meta"><span class="badge">B4</span><span class="badge">Problema 1</span><span class="badge">5 variantes</span></div><h3>Problema 1 — Ciclo celular, fases, puntos de control y p53</h3>
+<div class="variant">
+  <div class="meta"><span class="badge">Variante 1 — Esquema del ciclo celular</span><span class="badge">Exámenes 07, 10, 14, 15, 16, 17, 18, 22</span></div>
+  <div class="statement"><strong>Enunciado.</strong><br>Realice un esquema del ciclo celular comentando brevemente lo que ocurre en cada fase.</div>
+  
+  <details><summary>Solución paso a paso</summary><div class="solution"><ol><li>El ciclo celular se divide en interfase y fase M.</li><li>Interfase: G1, S y G2.</li><li>G1: crecimiento celular, actividad metabólica y preparación para replicar DNA.</li><li>S: replicación del DNA; cada cromosoma queda formado por dos cromátidas hermanas.</li><li>G2: preparación para mitosis y control de daños.</li><li>Fase M: mitosis, reparto de cromosomas, y citocinesis, división del citoplasma.</li></ol><div class="result"><strong>Respuesta de examen.</strong><br>G1 crecimiento; S replicación; G2 preparación; M mitosis + citocinesis.</div><div class="trap"><strong>Error típico.</strong> Olvidar que la mayor parte del ciclo es interfase, no mitosis.</div></div></details>
+</div>
+<div class="variant">
+  <div class="meta"><span class="badge">Variante 2 — Puntos de control e intervalos gap</span><span class="badge">Exámenes 13 y 24</span></div>
+  <div class="statement"><strong>Enunciado.</strong><br>Enumere las fases del ciclo celular indicando dónde se encuentran los puntos de control. ¿Por qué existen las fases gap entre S y M?</div>
+  
+  <details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Esto está en variante 1; aquí se pide control.</li><li>Control G1/S: decide si la célula entra en replicación, verifica tamaño, señales y daño en DNA.</li><li>Control G2/M: comprueba que la replicación se completó y que el DNA no está dañado.</li><li>Control del huso en metafase: verifica que los cromosomas están unidos correctamente al huso antes de separarse.</li><li>Las fases gap permiten crecimiento, síntesis de componentes y comprobación antes de pasos irreversibles.</li></ol><div class="result"><strong>Respuesta de examen.</strong><br>Puntos: G1/S, G2/M y metafase. Gap = crecimiento, preparación y control.</div><div class="trap"><strong>Error típico.</strong> Decir que las fases gap son tiempos muertos. Son fases activas de control y síntesis.</div></div></details>
+</div>
+<div class="variant">
+  <div class="meta"><span class="badge">Variante 3 — Verdadero/falso de ciclo celular</span><span class="badge">Exámenes 06 y 25</span></div>
+  <div class="statement"><strong>Enunciado.</strong><br>Indique si es verdadera o falsa: la interfase comprende G1, S y G2; las cromátidas hermanas son copias de la misma información genética; al terminar la anafase los cromosomas están en el plano ecuatorial.</div>
+  
+  <details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Interfase = G1 + S + G2: verdadero.</li><li>Las cromátidas hermanas proceden de la replicación del mismo cromosoma: verdadero, salvo mutaciones o recombinación en contexto meiótico.</li><li>Al terminar la anafase mitótica los cromosomas ya se han separado hacia polos opuestos: falso.</li><li>El plano ecuatorial corresponde a la metafase.</li><li>En examen se justifica cada V/F con una frase, no con una palabra.</li></ol><div class="result"><strong>Respuesta de examen.</strong><br>V, V, F. La anafase separa cromátidas hacia polos.</div><div class="trap"><strong>Error típico.</strong> Marcar V/F sin justificar cuando el enunciado pide explicar errores.</div></div></details>
+</div>
+<div class="variant">
+  <div class="meta"><span class="badge">Variante 4 — p53 y división celular</span><span class="badge">Examen 15</span></div>
+  <div class="statement"><strong>Enunciado.</strong><br>¿Qué función tiene la proteína p53 en la división celular?</div>
+  
+  <details><summary>Solución paso a paso</summary><div class="solution"><ol><li>p53 es una proteína reguladora del ciclo celular y supresora tumoral.</li><li>Se activa ante daño en el DNA u otras señales de estrés celular.</li><li>Puede detener el ciclo celular para permitir reparación del DNA.</li><li>Si el daño es grave, puede inducir apoptosis.</li><li>Su pérdida favorece proliferación de células con mutaciones y contribuye al cáncer.</li></ol><div class="result"><strong>Respuesta de examen.</strong><br>p53 detiene ciclo ante daño, activa reparación o apoptosis; es supresora tumoral.</div><div class="trap"><strong>Error típico.</strong> Decir solo “p53 produce cáncer”. La pérdida de función de p53 favorece cáncer.</div></div></details>
+</div>
+<div class="variant">
+  <div class="meta"><span class="badge">Variante 5 — Relación entre replicación y mitosis</span><span class="badge">Examen 08</span></div>
+  <div class="statement"><strong>Enunciado.</strong><br>Explique la relación que existe entre la replicación del DNA y la división celular por mitosis.</div>
+  
+  <details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Esto conecta ciclo celular con replicación.</li><li>La replicación ocurre en fase S, antes de la mitosis.</li><li>Convierte cada cromosoma en dos cromátidas hermanas idénticas unidas por el centrómero.</li><li>Durante mitosis, esas cromátidas se separan y se distribuyen a células hijas.</li><li>Así, cada célula hija recibe una copia completa del genoma.</li></ol><div class="result"><strong>Respuesta de examen.</strong><br>Replicación duplica DNA en S; mitosis reparte cromátidas hermanas a dos células hijas genéticamente iguales.</div><div class="trap"><strong>Error típico.</strong> Decir que la replicación ocurre durante la mitosis.</div></div></details>
+</div></article><article class="card" id="b4p2"><div class="meta"><span class="badge">B4</span><span class="badge">Problema 2</span><span class="badge">5 variantes</span></div><h3>Problema 2 — Mitosis, meiosis, cariotipo, telómeros y mutaciones cromosómicas</h3>
+<div class="variant">
+  <div class="meta"><span class="badge">Variante 1 — Identificar etapa de mitosis en figura</span><span class="badge">Exámenes 03, 21, 24, 26</span></div>
+  <div class="statement"><strong>Enunciado.</strong><br>El esquema representa una etapa de la mitosis. Identifique la etapa, nombre las partes señaladas y diga la función de este proceso en organismos unicelulares.</div>
+  <div class="note"><strong>Aviso.</strong> Pendiente de contraste visual si se usa figura concreta</div>
+  <details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Si los cromosomas están alineados en el plano ecuatorial, la etapa es metafase.</li><li>Si las cromátidas se separan hacia polos, es anafase.</li><li>Si se condensa cromatina y se forma huso, es profase/prometafase.</li><li>Partes típicas señaladas: cromosoma, cromátidas hermanas, centrómero/cinetocoro, huso mitótico y polos.</li><li>En organismos unicelulares, la mitosis sirve para reproducción asexual.</li></ol><div class="result"><strong>Respuesta de examen.</strong><br>Respuesta correcta depende de la figura; hay que nombrar fase por evento visible y función: reparto genético/reproducción asexual.</div><div class="trap"><strong>Error típico.</strong> Nombrar la fase sin justificar con lo que se ve en el dibujo.</div></div></details>
+</div>
+<div class="variant">
+  <div class="meta"><span class="badge">Variante 2 — Cromátidas distintas en mitosis y meiosis</span><span class="badge">Examen 05</span></div>
+  <div class="statement"><strong>Enunciado.</strong><br>¿Podría encontrarse en algún momento de la mitosis un cromosoma con cromátidas distintas? ¿Y durante la meiosis?</div>
+  
+  <details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Esto usa la base de variante 1: qué son cromátidas y cuándo se separan.</li><li>En mitosis, las cromátidas hermanas proceden de la replicación del DNA y son iguales salvo mutación.</li><li>Por tanto, en condiciones normales no se esperan cromátidas distintas en mitosis.</li><li>En meiosis I ocurre recombinación entre cromosomas homólogos durante profase I.</li><li>Esa recombinación puede hacer que las cromátidas ya no sean genéticamente idénticas, especialmente antes de meiosis II.</li></ol><div class="result"><strong>Respuesta de examen.</strong><br>Mitosis: no, salvo mutación. Meiosis: sí, por sobrecruzamiento/recombinación.</div><div class="trap"><strong>Error típico.</strong> Confundir cromátidas hermanas con cromosomas homólogos.</div></div></details>
+</div>
+<div class="variant">
+  <div class="meta"><span class="badge">Variante 3 — Cariotipo y telómeros</span><span class="badge">Exámenes 01, 13, 15</span></div>
+  <div class="statement"><strong>Enunciado.</strong><br>¿Qué es un cariotipo? ¿Qué función desempeñan los telómeros en los cromosomas?</div>
+  
+  <details><summary>Solución paso a paso</summary><div class="solution"><ol><li>El cariotipo es la representación ordenada del conjunto de cromosomas de una célula, normalmente por tamaño, forma y patrón de bandas.</li><li>Permite detectar número cromosómico, sexo cromosómico y alteraciones cromosómicas grandes.</li><li>Los telómeros son secuencias repetitivas en los extremos de cromosomas lineales.</li><li>Protegen los extremos del DNA de degradación y de ser reconocidos como roturas.</li><li>También amortiguan el acortamiento progresivo asociado a la replicación de extremos.</li></ol><div class="result"><strong>Respuesta de examen.</strong><br>Cariotipo = conjunto ordenado de cromosomas. Telómeros = protección y mantenimiento de extremos cromosómicos.</div><div class="trap"><strong>Error típico.</strong> Definir cariotipo como genotipo. No es lo mismo.</div></div></details>
+</div>
+<div class="variant">
+  <div class="meta"><span class="badge">Variante 4 — Telomerasa y problema de los extremos</span><span class="badge">Exámenes 16, 25</span></div>
+  <div class="statement"><strong>Enunciado.</strong><br>Describa el mecanismo que mantiene intactos los extremos de los cromosomas durante la replicación. ¿Por qué la telomerasa impide que se acorten?</div>
+  
+  <details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Esto continúa variante 3: el problema aparece en cromosomas lineales.</li><li>La DNA polimerasa necesita un cebador y sintetiza solo 5’→3’.</li><li>En la hebra retrasada, al eliminar el último cebador queda un extremo que no puede rellenarse completamente.</li><li>La telomerasa es una ribonucleoproteína con actividad transcriptasa inversa.</li><li>Usa su RNA interno como molde para añadir repeticiones teloméricas al extremo 3’.</li><li>Así permite completar la replicación sin perder secuencia codificante.</li></ol><div class="result"><strong>Respuesta de examen.</strong><br>Telomerasa alarga telómeros usando RNA interno; evita pérdida progresiva de extremos tras eliminar cebadores.</div><div class="trap"><strong>Error típico.</strong> Decir que la telomerasa corrige todas las mutaciones. Su función aquí es alargar telómeros.</div></div></details>
+</div>
+<div class="variant">
+  <div class="meta"><span class="badge">Variante 5 — Mutaciones cromosómicas</span><span class="badge">Exámenes 18 y 28</span></div>
+  <div class="statement"><strong>Enunciado.</strong><br>Comente los diferentes tipos de mutaciones cromosómicas.</div>
+  
+  <details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Esto ya no trata de mutación puntual, sino de cambios en segmentos o estructura cromosómica.</li><li>Deleción: pérdida de un fragmento cromosómico.</li><li>Duplicación: repetición de un fragmento.</li><li>Inversión: un segmento cambia de orientación dentro del cromosoma.</li><li>Translocación: un fragmento se mueve a otro cromosoma, a menudo no homólogo.</li><li>También pueden existir alteraciones numéricas como aneuploidías, por no disyunción.</li></ol><div class="result"><strong>Respuesta de examen.</strong><br>Deleción, duplicación, inversión, translocación; si procede, aneuploidía como cambio numérico.</div><div class="trap"><strong>Error típico.</strong> Mezclar mutaciones cromosómicas con sustituciones de una base sin distinguir escala.</div></div></details>
+</div></article></section><section class="page" id="b5"><h2>Bloque 5 — Replicación del DNA y mutaciones</h2><p class="block-lead">Patrón de respuesta: dirección 5’→3’ → molde antiparalelo → enzima → consecuencia.</p><article class="card" id="b5p1"><div class="meta"><span class="badge">B5</span><span class="badge">Problema 1</span><span class="badge">5 variantes</span></div><h3>Problema 1 — Horquilla de replicación, enzimas y fragmentos de Okazaki</h3>
+<div class="variant">
+  <div class="meta"><span class="badge">Variante 1 — Primasa, DNA polimerasa y fragmentos de Okazaki</span><span class="badge">Exámenes 07, 08, 13, 21, 27</span></div>
+  <div class="statement"><strong>Enunciado.</strong><br>¿Cuál es la función de la primasa? ¿Puede la DNA polimerasa empezar a copiar directamente el DNA? ¿En qué proceso aparecen los fragmentos de Okazaki?</div>
+  
+  <details><summary>Solución paso a paso</summary><div class="solution"><ol><li>El proceso es la replicación del DNA.</li><li>La DNA polimerasa no puede iniciar de novo: necesita un extremo 3’-OH libre.</li><li>La primasa sintetiza un cebador corto de RNA complementario al molde.</li><li>A partir del cebador, la DNA polimerasa alarga la nueva hebra en dirección 5’→3’.</li><li>Los fragmentos de Okazaki aparecen en la hebra retrasada durante la replicación.</li><li>Después se eliminan cebadores, se rellenan huecos y la DNA ligasa une fragmentos.</li></ol><div class="result"><strong>Respuesta de examen.</strong><br>Primasa = cebador de RNA. DNA polimerasa necesita 3’-OH. Okazaki = hebra retrasada en replicación.</div><div class="trap"><strong>Error típico.</strong> Decir que la primasa sintetiza DNA. Sintetiza RNA cebador.</div></div></details>
+</div>
+<div class="variant">
+  <div class="meta"><span class="badge">Variante 2 — Hebra conductora y hebra retrasada</span><span class="badge">Examen 26</span></div>
+  <div class="statement"><strong>Enunciado.</strong><br>¿Por qué es discontinua la síntesis de la hebra retrasada del DNA? ¿Cómo es posible que la hebra conductora se sintetice de forma continua?</div>
+  
+  <details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Esto está en variante 1: la polimerasa solo sintetiza 5’→3’.</li><li>Las dos hebras molde son antiparalelas.</li><li>En una hebra molde, la polimerasa avanza en el mismo sentido que se abre la horquilla: hebra conductora continua.</li><li>En la otra, la síntesis debe hacerse en dirección opuesta al avance global de la horquilla.</li><li>Por eso se generan fragmentos de Okazaki, cada uno iniciado por un cebador.</li><li>El resultado final es continuo tras acción de nucleasas/polimerasa y ligasa.</li></ol><div class="result"><strong>Respuesta de examen.</strong><br>Retrasada = discontinua por antiparalelismo y síntesis 5’→3’; conductora = continua hacia la horquilla.</div><div class="trap"><strong>Error típico.</strong> Explicar la discontinuidad como falta de nucleótidos; no es eso, es geometría 5’→3’.</div></div></details>
+</div>
+<div class="variant">
+  <div class="meta"><span class="badge">Variante 3 — Enzimas de replicación</span><span class="badge">Exámenes 08, 13, 16, 25</span></div>
+  <div class="statement"><strong>Enunciado.</strong><br>Defina en un máximo de dos líneas las enzimas principales de la replicación: helicasa, topoisomerasa, primasa, DNA polimerasa, ligasa y telomerasa.</div>
+  
+  <details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Esto amplía variantes 1–2.</li><li>Helicasa: separa las dos hebras rompiendo puentes de hidrógeno.</li><li>Topoisomerasa: alivia el superenrollamiento por delante de la horquilla.</li><li>Primasa: sintetiza cebadores de RNA.</li><li>DNA polimerasa: sintetiza DNA 5’→3’ usando molde y corrige pruebas en muchos casos.</li><li>Ligasa: une fragmentos sellando enlaces fosfodiéster.</li><li>Telomerasa: alarga extremos teloméricos en cromosomas lineales.</li></ol><div class="result"><strong>Respuesta de examen.</strong><br>Cada enzima debe asociarse a una acción concreta en la horquilla.</div><div class="trap"><strong>Error típico.</strong> Nombrar enzimas sin función. En examen corto hay que poner verbo.</div></div></details>
+</div>
+<div class="variant">
+  <div class="meta"><span class="badge">Variante 4 — Características generales de la replicación</span><span class="badge">Examen 28</span></div>
+  <div class="statement"><strong>Enunciado.</strong><br>Las principales características de la replicación son: explíquelas brevemente.</div>
+  
+  <details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Semiconservativa: cada molécula hija conserva una hebra parental y contiene una hebra nueva.</li><li>Bidireccional: desde los orígenes se forman horquillas que avanzan en dos direcciones.</li><li>Antiparalela: las hebras de DNA tienen orientaciones opuestas.</li><li>Sintetiza siempre 5’→3’, por eso aparecen hebra conductora y retrasada.</li><li>Requiere molde, cebador, desoxirribonucleótidos y enzimas específicas.</li></ol><div class="result"><strong>Respuesta de examen.</strong><br>Semiconservativa, bidireccional, antiparalela, 5’→3’ y dependiente de cebador.</div><div class="trap"><strong>Error típico.</strong> Confundir semiconservativa con conservativa: no queda una molécula vieja intacta y otra nueva.</div></div></details>
+</div>
+<div class="variant">
+  <div class="meta"><span class="badge">Variante 5 — Replicación y desnaturalización del DNA</span><span class="badge">Exámenes 06, 14, 15, 27</span></div>
+  <div class="statement"><strong>Enunciado.</strong><br>¿Qué es la desnaturalización del DNA? ¿En qué técnica de biología molecular se desnaturaliza el DNA?</div>
+  
+  <details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Desnaturalizar DNA significa separar sus dos hebras rompiendo puentes de hidrógeno entre bases.</li><li>No se rompen los enlaces fosfodiéster del esqueleto azúcar-fosfato.</li><li>Puede lograrse por aumento de temperatura, pH extremo u otros tratamientos.</li><li>En PCR se desnaturaliza el DNA al inicio de cada ciclo, típicamente alrededor de 94–95 °C.</li><li>Después se permite la unión de cebadores y la extensión por polimerasa termoestable.</li></ol><div class="result"><strong>Respuesta de examen.</strong><br>Desnaturalización = separación de hebras; técnica: PCR.</div><div class="trap"><strong>Error típico.</strong> Decir que se destruye la secuencia. La secuencia primaria permanece si no se rompen enlaces covalentes.</div></div></details>
+</div></article><article class="card" id="b5p2"><div class="meta"><span class="badge">B5</span><span class="badge">Problema 2</span><span class="badge">5 variantes</span></div><h3>Problema 2 — Mutaciones puntuales, proteína y genotipo/fenotipo</h3>
+<div class="variant">
+  <div class="meta"><span class="badge">Variante 1 — Genotipo y fenotipo en mutaciones puntuales</span><span class="badge">Exámenes 03, 14, 16, 19</span></div>
+  <div class="statement"><strong>Enunciado.</strong><br>Explique por qué todas las mutaciones puntuales producen un cambio en el genotipo, pero solo algunas producen un cambio en el fenotipo.</div>
+  
+  <details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Una mutación puntual cambia un nucleótido o un par de bases en el DNA.</li><li>Por definición, eso modifica la secuencia genética: cambia el genotipo.</li><li>El fenotipo puede no cambiar porque el código genético es degenerado y distintas tripletas pueden codificar el mismo aminoácido.</li><li>También puede ocurrir en una región no codificante o no afectar a la función de la proteína.</li><li>Si cambia un aminoácido crítico, introduce un stop o altera el marco de lectura, sí puede cambiar el fenotipo.</li></ol><div class="result"><strong>Respuesta de examen.</strong><br>Toda mutación puntual cambia genotipo; el fenotipo solo cambia si altera función o expresión relevante.</div><div class="trap"><strong>Error típico.</strong> Confundir genotipo con fenotipo y decir que toda mutación se observa externamente.</div></div></details>
+</div>
+<div class="variant">
+  <div class="meta"><span class="badge">Variante 2 — Posibles efectos sobre una proteína</span><span class="badge">Exámenes 17, 22, 23</span></div>
+  <div class="statement"><strong>Enunciado.</strong><br>Una secuencia de DNA codificante sufre una mutación. ¿Qué puede ocurrirle a la proteína para la que codifica?</div>
+  
+  <details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Esto está en variante 1, pero ahora se pide clasificar efectos.</li><li>Mutación silenciosa: cambia el codón pero no el aminoácido.</li><li>Cambio de sentido: cambia un aminoácido por otro; puede ser neutro o alterar función.</li><li>Sin sentido: aparece un codón de parada prematuro y la proteína se acorta.</li><li>Inserciones/deleciones no múltiplos de tres pueden cambiar el marco de lectura.</li><li>También puede afectar a señales de inicio, terminación o procesamiento.</li></ol><div class="result"><strong>Respuesta de examen.</strong><br>Efectos: silenciosa, cambio de sentido, sin sentido, desplazamiento del marco y alteración de señales.</div><div class="trap"><strong>Error típico.</strong> Responder solo “sale otra proteína”. Hay que distinguir posibilidades.</div></div></details>
+</div>
+<div class="variant">
+  <div class="meta"><span class="badge">Variante 3 — Tipos de mutación puntual</span><span class="badge">Examen 27</span></div>
+  <div class="statement"><strong>Enunciado.</strong><br>¿Qué es una mutación puntual? Indique sus tipos.</div>
+  
+  <details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Mutación puntual: cambio que afecta a un nucleótido o a un par de bases.</li><li>Por sustitución: una base se reemplaza por otra.</li><li>Por inserción: se añade una base o pocas bases.</li><li>Por deleción: se pierde una base o pocas bases.</li><li>En región codificante, sustituciones pueden ser silenciosas, cambio de sentido o sin sentido; inserciones/deleciones pueden causar desplazamiento de marco.</li></ol><div class="result"><strong>Respuesta de examen.</strong><br>Puntual = cambio pequeño de base; tipos: sustitución, inserción, deleción; efectos: silenciosa/missense/nonsense/frameshift.</div><div class="trap"><strong>Error típico.</strong> Usar solo la clasificación cromosómica.</div></div></details>
+</div>
+<div class="variant">
+  <div class="meta"><span class="badge">Variante 4 — Codón de inicio y número de aminoácidos</span><span class="badge">Exámenes 09, 21, 23, 24</span></div>
+  <div class="statement"><strong>Enunciado.</strong><br>Sabiendo que el codón de iniciación es ATG, ¿podemos deducir el número de aminoácidos que se producirán a partir de una secuencia de DNA?</div>
+  
+  <details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Esto conecta mutación con traducción.</li><li>No basta con saber dónde está ATG si no se conoce el marco completo hasta un codón de parada.</li><li>ATG marca el inicio de traducción si está en contexto funcional y en la hebra codificante.</li><li>El número de aminoácidos se obtiene contando tripletes desde ATG hasta antes del codón stop.</li><li>Si hay intrones, mutaciones o secuencia incompleta, el cálculo directo puede ser incorrecto.</li></ol><div class="result"><strong>Respuesta de examen.</strong><br>Solo puede deducirse si se conoce la secuencia codificante completa, el marco de lectura y el codón de parada.</div><div class="trap"><strong>Error típico.</strong> Contar bases antes de confirmar marco y stop.</div></div></details>
+</div>
+<div class="variant">
+  <div class="meta"><span class="badge">Variante 5 — Mutaciones cromosómicas frente a puntuales</span><span class="badge">Semi-real entrenable basado en exámenes 18, 27, 28</span></div>
+  <div class="statement"><strong>Enunciado.</strong><br>Compare mutaciones puntuales y cromosómicas usando un ejemplo de cada una.</div>
+  
+  <details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Esto contrasta variantes 1–3 con el bloque de cromosomas.</li><li>Mutación puntual: afecta a una base o pocas bases. Ejemplo: sustitución que convierte un codón en otro.</li><li>Mutación cromosómica: afecta a segmentos grandes o al número/estructura de cromosomas.</li><li>Ejemplos cromosómicos: deleción, duplicación, inversión, translocación o aneuploidía.</li><li>La diferencia esencial es la escala: nucleótido frente a estructura cromosómica.</li></ol><div class="result"><strong>Respuesta de examen.</strong><br>Puntual = base; cromosómica = segmento/cromosoma. Ejemplos concretos obligatorios.</div><div class="trap"><strong>Error típico.</strong> Decir que son lo mismo porque ambas cambian DNA.</div></div></details>
+</div></article></section><section class="page" id="b6"><h2>Bloque 6 — Dogma central, código genético, transcripción, traducción y maduración</h2><p class="block-lead">Patrón de respuesta: flujo de información → molécula → lugar → enzima/proceso → producto.</p><article class="card" id="b6p1"><div class="meta"><span class="badge">B6</span><span class="badge">Problema 1</span><span class="badge">5 variantes</span></div><h3>Problema 1 — Dogma central, código genético y codones</h3>
+<div class="variant">
+  <div class="meta"><span class="badge">Variante 1 — Dogma central y excepciones</span><span class="badge">Exámenes 04, 05, 07, 09, 10, 11, 12, 14, 15</span></div>
+  <div class="statement"><strong>Enunciado.</strong><br>¿Qué es el dogma central de la biología molecular? Comente una excepción.</div>
+  
+  <details><summary>Solución paso a paso</summary><div class="solution"><ol><li>El dogma central describe el flujo de información genética: DNA → RNA → proteína.</li><li>DNA se replica para transmitir información.</li><li>DNA se transcribe a RNA.</li><li>El RNA mensajero se traduce en proteína en los ribosomas.</li><li>Una excepción/ampliación clásica es la transcriptasa inversa: RNA → DNA, como en retrovirus.</li><li>También existen virus de RNA que replican RNA a partir de RNA.</li></ol><div class="result"><strong>Respuesta de examen.</strong><br>Dogma central = DNA → RNA → proteína; excepción: transcripción inversa RNA → DNA.</div><div class="trap"><strong>Error típico.</strong> Presentar la replicación como DNA → proteína directamente.</div></div></details>
+</div>
+<div class="variant">
+  <div class="meta"><span class="badge">Variante 2 — Propiedades del código genético</span><span class="badge">Examen 01</span></div>
+  <div class="statement"><strong>Enunciado.</strong><br>Complete: el código es no ambiguo, degenerado, casi universal y se lee en un marco de lectura. Explique cada propiedad.</div>
+  
+  <details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Esto parte del dogma: el código traduce tripletes de mRNA a aminoácidos.</li><li>No ambiguo: un codón concreto especifica un solo aminoácido o señal de parada.</li><li>Degenerado o redundante: varios codones pueden codificar el mismo aminoácido.</li><li>Casi universal: la mayoría de organismos asignan los mismos codones a los mismos aminoácidos, con pocas excepciones.</li><li>Continuo/no solapado en marco de lectura: desde el codón de inicio se leen tripletes sucesivos.</li></ol><div class="result"><strong>Respuesta de examen.</strong><br>No ambiguo = un codón un significado; degenerado = varios codones un aminoácido; casi universal; lectura por tripletes en marco.</div><div class="trap"><strong>Error típico.</strong> Confundir degenerado con ambiguo. Degenerado no significa que un codón tenga varios significados.</div></div></details>
+</div>
+<div class="variant">
+  <div class="meta"><span class="badge">Variante 3 — Traducir una secuencia de mRNA</span><span class="badge">Exámenes 01 y 02</span></div>
+  <div class="statement"><strong>Enunciado.</strong><br>Subraye los codones de inicio y de fin en la secuencia de mRNA 5’-UAUCCAUGGCACUUUAAAC-3’. ¿Qué aminoácidos codifica?</div>
+  <div class="note"><strong>Aviso.</strong> Pendiente de contraste visual por OCR en la primera letra</div>
+  <details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Primero buscar AUG, codón de inicio.</li><li>En la secuencia: 5’-UAUCC AUG GCA CUU UAA AC-3’.</li><li>Desde AUG se lee en tripletes: AUG | GCA | CUU | UAA.</li><li>AUG codifica Metionina; GCA codifica Alanina; CUU codifica Leucina; UAA es stop.</li><li>El fragmento antes de AUG no se traduce en esta lectura; las bases posteriores al stop tampoco.</li></ol><div class="result"><strong>Respuesta de examen.</strong><br>Péptido: Met–Ala–Leu. Inicio: AUG. Fin: UAA.</div><div class="trap"><strong>Error típico.</strong> Traducir desde el primer nucleótido de la secuencia en lugar de desde AUG. Nota OCR: en el PDF contrastado la primera base es U, no V.</div></div></details>
+</div>
+<div class="variant">
+  <div class="meta"><span class="badge">Variante 4 — Número de mRNA posibles para una proteína</span><span class="badge">Exámenes 01 y 02</span></div>
+  <div class="statement"><strong>Enunciado.</strong><br>Indique cuántas secuencias de mRNA diferentes podrían codificar Met-Ser-Cys-(Fin). Repita para Met-Trp-Cys-(Fin).</div>
+  
+  <details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Esto usa degeneración del código genético de la variante 2.</li><li>Metionina tiene 1 codón: AUG.</li><li>Serina tiene 6 codones. Cisteína tiene 2. Stop tiene 3.</li><li>Para Met-Ser-Cys-Fin: \(1\times6\times2\times3=36\).</li><li>Triptófano tiene 1 codón. Para Met-Trp-Cys-Fin: \(1\times1\times2\times3=6\).</li></ol><div class="result"><strong>Respuesta de examen.</strong><br>Met-Ser-Cys-Fin = 36 secuencias. Met-Trp-Cys-Fin = 6 secuencias.</div><div class="trap"><strong>Error típico.</strong> Olvidar multiplicar por los codones de parada.</div></div></details>
+</div>
+<div class="variant">
+  <div class="meta"><span class="badge">Variante 5 — ATG, T/U y hebra codificante</span><span class="badge">Exámenes 09, 21, 23, 24</span></div>
+  <div class="statement"><strong>Enunciado.</strong><br>Sabiendo que el codón de iniciación es ATG en DNA, explique cómo se relaciona con AUG en mRNA y qué cuidado hay que tener al traducir.</div>
+  
+  <details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Esto conecta las variantes 3–4 con DNA/RNA.</li><li>ATG en la hebra codificante de DNA corresponde a AUG en mRNA, porque en RNA se usa U en lugar de T.</li><li>Si se da la hebra molde, primero hay que obtener la secuencia complementaria y antiparalela de mRNA.</li><li>La traducción se hace sobre mRNA, no directamente sobre DNA.</li><li>Se lee desde AUG hasta un codón stop en tripletes.</li></ol><div class="result"><strong>Respuesta de examen.</strong><br>DNA codificante ATG → mRNA AUG. Si dan molde, transcribir complementario. Traducir mRNA 5’→3’.</div><div class="trap"><strong>Error típico.</strong> Usar T en la secuencia de mRNA.</div></div></details>
+</div></article><article class="card" id="b6p2"><div class="meta"><span class="badge">B6</span><span class="badge">Problema 2</span><span class="badge">5 variantes</span></div><h3>Problema 2 — Transcripción, traducción y maduración del mRNA</h3>
+<div class="variant">
+  <div class="meta"><span class="badge">Variante 1 — Inicio de transcripción en bacterias</span><span class="badge">Examen 09</span></div>
+  <div class="statement"><strong>Enunciado.</strong><br>Explique brevemente cómo comienza la transcripción en bacterias y nombre las enzimas y secuencias que participan.</div>
+  
+  <details><summary>Solución paso a paso</summary><div class="solution"><ol><li>En bacterias, la RNA polimerasa se une al promotor con ayuda del factor sigma.</li><li>El promotor contiene secuencias reconocibles aguas arriba del sitio de inicio.</li><li>La RNA polimerasa abre localmente el DNA y usa una hebra como molde.</li><li>Sintetiza RNA en dirección 5’→3’ complementario al molde.</li><li>Tras la iniciación, sigma puede liberarse y continúa la elongación hasta una señal de terminación.</li></ol><div class="result"><strong>Respuesta de examen.</strong><br>Bacterias: RNA polimerasa + factor sigma + promotor → apertura DNA → RNA 5’→3’.</div><div class="trap"><strong>Error típico.</strong> Decir que interviene DNA polimerasa. En transcripción actúa RNA polimerasa.</div></div></details>
+</div>
+<div class="variant">
+  <div class="meta"><span class="badge">Variante 2 — Maduración del mRNA eucariota</span><span class="badge">Exámenes 16, 19, 20, 21, 22, 26, 27, 28</span></div>
+  <div class="statement"><strong>Enunciado.</strong><br>Comente brevemente el proceso de maduración del mRNA en células eucariotas.</div>
+  
+  <details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Esto se diferencia de variante 1: en eucariotas el transcrito primario se procesa antes de traducirse.</li><li>Se añade caperuza 5’, que protege el RNA y ayuda al inicio de traducción.</li><li>Se añade cola poli(A) en el extremo 3’, que aumenta estabilidad y exportación.</li><li>Se eliminan intrones y se unen exones mediante corte y empalme.</li><li>El mRNA maduro se exporta al citoplasma para ser traducido.</li></ol><div class="result"><strong>Respuesta de examen.</strong><br>Maduración = cap 5’ + cola poli(A) + splicing intrones/exones + exportación.</div><div class="trap"><strong>Error típico.</strong> Olvidar que ocurre en núcleo antes de la traducción.</div></div></details>
+</div>
+<div class="variant">
+  <div class="meta"><span class="badge">Variante 3 — snRNP, intrones y exones</span><span class="badge">Exámenes 06, 08, 24</span></div>
+  <div class="statement"><strong>Enunciado.</strong><br>¿Qué función tienen las snRNP en el proceso de corte y empalme? Los fragmentos de RNA eliminados en la maduración, ¿cómo se llaman?</div>
+  
+  <details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Esto está en variante 2: se pregunta por el mecanismo del splicing.</li><li>Las snRNP son ribonucleoproteínas nucleares pequeñas que forman parte del espliceosoma.</li><li>Reconocen secuencias en los límites intrón-exón y participan en el corte y empalme.</li><li>Los fragmentos eliminados se llaman intrones.</li><li>Los segmentos que permanecen en el mRNA maduro se llaman exones.</li></ol><div class="result"><strong>Respuesta de examen.</strong><br>snRNP = componentes del espliceosoma; eliminan intrones y unen exones.</div><div class="trap"><strong>Error típico.</strong> Decir que se eliminan exones. Se eliminan intrones.</div></div></details>
+</div>
+<div class="variant">
+  <div class="meta"><span class="badge">Variante 4 — Transcribir una secuencia de DNA</span><span class="badge">Examen 23</span></div>
+  <div class="statement"><strong>Enunciado.</strong><br>Una RNA polimerasa transcribe un segmento de DNA. Explique cómo obtener la secuencia de RNA a partir de la hebra molde.</div>
+  <div class="note"><strong>Aviso.</strong> Secuencias concretas con OCR deben contrastarse visualmente</div>
+  <details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Esto aplica variante 1 a una secuencia concreta.</li><li>Identificar si la secuencia dada es hebra molde o codificante.</li><li>Si es hebra molde, el RNA es complementario y antiparalelo: A-U, T-A, C-G, G-C.</li><li>El RNA se escribe en dirección 5’→3’.</li><li>Si la secuencia dada es codificante, el mRNA coincide con ella salvo que U sustituye a T.</li></ol><div class="result"><strong>Respuesta de examen.</strong><br>Molde DNA → mRNA complementario antiparalelo; codificante DNA → igual salvo T→U.</div><div class="trap"><strong>Error típico.</strong> Copiar la hebra molde cambiando T por U sin complementar.</div></div></details>
+</div>
+<div class="variant">
+  <div class="meta"><span class="badge">Variante 5 — Traducción: componentes y localización</span><span class="badge">Semi-real entrenable basado en exámenes 05, 07, 10, 22</span></div>
+  <div class="statement"><strong>Enunciado.</strong><br>Describa brevemente la traducción indicando componentes principales y localización celular.</div>
+  
+  <details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Esto cierra el flujo del dogma de variante 1 del problema anterior.</li><li>La traducción ocurre en ribosomas, libres en citosol o asociados al RER.</li><li>Participan mRNA, ribosoma, tRNA cargados con aminoácidos, aminoacil-tRNA sintetasas y factores de traducción.</li><li>Inicio: el ribosoma reconoce el mRNA y el codón AUG.</li><li>Elongación: entran tRNA según codón-anticodón y se forman enlaces peptídicos.</li><li>Terminación: un codón stop recluta factores de liberación y se libera el polipéptido.</li></ol><div class="result"><strong>Respuesta de examen.</strong><br>Traducción = ribosoma lee mRNA 5’→3’ y sintetiza proteína con tRNA; inicio AUG, elongación, stop.</div><div class="trap"><strong>Error típico.</strong> Decir que la traducción ocurre en el núcleo.</div></div></details>
+</div></article></section><section class="page" id="b7"><h2>Bloque 7 — Ingeniería genética, PCR, electroforesis, restricción, vectores y cDNA</h2><p class="block-lead">Patrón de respuesta: objetivo técnico → moléculas necesarias → pasos → resultado interpretable.</p><article class="card" id="b7p1"><div class="meta"><span class="badge">B7</span><span class="badge">Problema 1</span><span class="badge">5 variantes</span></div><h3>Problema 1 — PCR, ciclos, desnaturalización y electroforesis</h3>
+<div class="variant">
+  <div class="meta"><span class="badge">Variante 1 — Elementos necesarios para PCR</span><span class="badge">Exámenes 03, 07, 10, 17, 21, 22, 25</span></div>
+  <div class="statement"><strong>Enunciado.</strong><br>Enumere los elementos necesarios para realizar una reacción en cadena de la polimerasa (PCR) y explique su función.</div>
+  
+  <details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Molde de DNA con la región que se quiere amplificar.</li><li>Dos cebadores específicos, directo e inverso, que delimitan el fragmento.</li><li>DNA polimerasa termoestable, por ejemplo Taq polimerasa.</li><li>Desoxirribonucleótidos trifosfato, dATP, dCTP, dGTP y dTTP.</li><li>Tampón, sales y Mg²⁺ para condiciones adecuadas de actividad enzimática.</li><li>Termociclador para repetir cambios de temperatura.</li></ol><div class="result"><strong>Respuesta de examen.</strong><br>PCR necesita DNA molde, dos cebadores, polimerasa termoestable, dNTPs, tampón/Mg²⁺ y ciclos de temperatura.</div><div class="trap"><strong>Error típico.</strong> Olvidar los dos cebadores. Sin dos cebadores no se amplifica de forma exponencial un fragmento definido.</div></div></details>
+</div>
+<div class="variant">
+  <div class="meta"><span class="badge">Variante 2 — Pasos de un ciclo de PCR</span><span class="badge">Exámenes 16 y 24</span></div>
+  <div class="statement"><strong>Enunciado.</strong><br>Explique los pasos que tienen lugar en un ciclo de PCR. Represente dos ciclos indicando en qué consiste la amplificación.</div>
+  
+  <details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Esto usa los elementos de variante 1.</li><li>Desnaturalización: alta temperatura, aproximadamente 94–95 °C, separa las hebras de DNA.</li><li>Alineamiento o hibridación: baja la temperatura para que los cebadores se unan a sus secuencias complementarias.</li><li>Extensión: a unos 72 °C la polimerasa termoestable sintetiza nuevas hebras desde los cebadores.</li><li>Cada ciclo duplica aproximadamente el número de moléculas diana; tras \(n\) ciclos idealmente hay \(2^n\) copias.</li><li>En los primeros ciclos se generan productos de longitudes variables; después predomina el fragmento delimitado por los cebadores.</li></ol><div class="result"><strong>Respuesta de examen.</strong><br>PCR = desnaturalización → alineamiento → extensión; amplificación ideal \(2^n\).</div><div class="trap"><strong>Error típico.</strong> Decir que la ligasa une fragmentos en PCR. En PCR estándar no se necesita ligasa.</div></div></details>
+</div>
+<div class="variant">
+  <div class="meta"><span class="badge">Variante 3 — Desnaturalización del DNA en PCR</span><span class="badge">Exámenes 06, 14, 15, 27</span></div>
+  <div class="statement"><strong>Enunciado.</strong><br>Explique qué le sucede al DNA cuando se somete a 94 °C. ¿En qué técnica de biología molecular es necesario?</div>
+  
+  <details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Esto está en bloque 5, pero aquí se aplica a PCR.</li><li>A 94 °C se rompen puentes de hidrógeno entre bases complementarias.</li><li>Las dos hebras de DNA se separan: esto es desnaturalización.</li><li>No se rompe la secuencia primaria si las condiciones no degradan el DNA.</li><li>Es necesario al inicio de cada ciclo de PCR para que los cebadores puedan unirse en la fase siguiente.</li></ol><div class="result"><strong>Respuesta de examen.</strong><br>94 °C separa hebras de DNA; técnica: PCR.</div><div class="trap"><strong>Error típico.</strong> Decir que se rompen enlaces fosfodiéster.</div></div></details>
+</div>
+<div class="variant">
+  <div class="meta"><span class="badge">Variante 4 — Electroforesis</span><span class="badge">Examen 07</span></div>
+  <div class="statement"><strong>Enunciado.</strong><br>Explique qué es la electroforesis y para qué se utiliza.</div>
+  
+  <details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Electroforesis es una técnica para separar moléculas cargadas aplicando un campo eléctrico en un gel.</li><li>El DNA tiene carga negativa por sus grupos fosfato y migra hacia el polo positivo.</li><li>En gel de agarosa, los fragmentos pequeños migran más lejos que los grandes.</li><li>Se utiliza para comprobar tamaño de fragmentos, productos de PCR, digestiones de restricción y genotipos.</li><li>Se compara con un marcador de tamaño.</li></ol><div class="result"><strong>Respuesta de examen.</strong><br>Electroforesis separa DNA por tamaño; DNA negativo migra al ánodo; fragmentos pequeños avanzan más.</div><div class="trap"><strong>Error típico.</strong> Decir que los fragmentos grandes migran más porque pesan más. En gel ocurre lo contrario.</div></div></details>
+</div>
+<div class="variant">
+  <div class="meta"><span class="badge">Variante 5 — Detectar enfermedad genética</span><span class="badge">Examen 26</span></div>
+  <div class="statement"><strong>Enunciado.</strong><br>Explique brevemente un método para detectar una enfermedad genética en humanos.</div>
+  
+  <details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Esto combina PCR y electroforesis.</li><li>Se toma DNA del paciente y se amplifica por PCR la región del gen donde se sospecha la mutación.</li><li>Después se analiza el producto: por secuenciación, digestión con restricción o electroforesis si cambia tamaño.</li><li>Se compara con una muestra control o con la secuencia normal.</li><li>Si el patrón coincide con el alelo mutado, se puede diagnosticar o estimar riesgo según la enfermedad.</li></ol><div class="result"><strong>Respuesta de examen.</strong><br>Método válido: PCR de región diana + análisis por secuenciación/restricción/electroforesis + comparación con control.</div><div class="trap"><strong>Error típico.</strong> Responder solo “mirar el DNA” sin procedimiento.</div></div></details>
+</div></article><article class="card" id="b7p2"><div class="meta"><span class="badge">B7</span><span class="badge">Problema 2</span><span class="badge">5 variantes</span></div><h3>Problema 2 — Clonación, plásmidos, enzimas de restricción, transcriptasa inversa y cDNA</h3>
+<div class="variant">
+  <div class="meta"><span class="badge">Variante 1 — Transcriptasa inversa</span><span class="badge">Exámenes 02, 18, 25</span></div>
+  <div class="statement"><strong>Enunciado.</strong><br>Comente brevemente qué es la transcriptasa inversa y cuál es su utilidad en ingeniería genética.</div>
+  
+  <details><summary>Solución paso a paso</summary><div class="solution"><ol><li>La transcriptasa inversa es una enzima que sintetiza DNA usando RNA como molde.</li><li>Realiza el flujo RNA → DNA, una excepción/ampliación del dogma central.</li><li>En ingeniería genética se usa para obtener DNA complementario, cDNA, a partir de mRNA.</li><li>El cDNA representa genes expresados y no contiene intrones eucariotas si procede de mRNA maduro.</li><li>Es útil para clonar genes eucariotas en bacterias o estudiar expresión génica.</li></ol><div class="result"><strong>Respuesta de examen.</strong><br>Transcriptasa inversa: RNA → cDNA; útil para clonar genes expresados y construir bibliotecas de cDNA.</div><div class="trap"><strong>Error típico.</strong> Decir que traduce RNA a proteína. Eso lo hacen ribosomas.</div></div></details>
+</div>
+<div class="variant">
+  <div class="meta"><span class="badge">Variante 2 — Insertar un gen en un plásmido</span><span class="badge">Exámenes 11, 23, 28</span></div>
+  <div class="statement"><strong>Enunciado.</strong><br>¿Cómo consiguen los investigadores insertar un gen en un plásmido?</div>
+  
+  <details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Esto aplica herramientas de clonación.</li><li>Se aísla o amplifica el gen de interés.</li><li>Se corta el gen y el plásmido con la misma enzima de restricción para generar extremos compatibles.</li><li>Se mezclan inserto y vector y se unen con DNA ligasa.</li><li>El plásmido recombinante se introduce en bacterias por transformación.</li><li>Se seleccionan bacterias que contienen el plásmido mediante marcador, por ejemplo resistencia a antibiótico.</li></ol><div class="result"><strong>Respuesta de examen.</strong><br>Cortar inserto/vector con restricción → ligar → transformar bacterias → seleccionar.</div><div class="trap"><strong>Error típico.</strong> Olvidar que el vector debe tener origen de replicación y marcador seleccionable.</div></div></details>
+</div>
+<div class="variant">
+  <div class="meta"><span class="badge">Variante 3 — Endonucleasas de restricción</span><span class="badge">Exámenes 19 y 20</span></div>
+  <div class="statement"><strong>Enunciado.</strong><br>¿Qué son las endonucleasas de restricción? ¿Cómo funcionan y qué aplicaciones tienen?</div>
+  
+  <details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Son enzimas bacterianas que cortan DNA en secuencias específicas.</li><li>Reconocen a menudo secuencias palindrómicas.</li><li>Pueden generar extremos cohesivos o romos.</li><li>Funcionan rompiendo enlaces fosfodiéster dentro de la molécula de DNA.</li><li>Aplicaciones: clonación, construcción de plásmidos recombinantes, mapas de restricción y análisis de fragmentos por electroforesis.</li></ol><div class="result"><strong>Respuesta de examen.</strong><br>Restricción = corte específico de DNA; aplicaciones: clonación y análisis de fragmentos.</div><div class="trap"><strong>Error típico.</strong> Decir que cortan proteínas. Cortan ácidos nucleicos.</div></div></details>
+</div>
+<div class="variant">
+  <div class="meta"><span class="badge">Variante 4 — Biblioteca de cDNA de tiroides</span><span class="badge">Examen 12</span></div>
+  <div class="statement"><strong>Enunciado.</strong><br>¿Cómo crearía una biblioteca de cDNA del tiroides?</div>
+  
+  <details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Esto combina variante 1 y 2.</li><li>Extraer RNA mensajero de células del tiroides.</li><li>Aislar mRNA, por ejemplo usando cola poli(A).</li><li>Usar transcriptasa inversa para sintetizar cDNA a partir del mRNA.</li><li>Generar doble cadena de cDNA y ligarla en vectores.</li><li>Introducir vectores en bacterias o células hospedadoras.</li><li>La biblioteca contiene copias de genes expresados en tiroides en ese momento.</li></ol><div class="result"><strong>Respuesta de examen.</strong><br>mRNA de tiroides → transcriptasa inversa → cDNA → vector → hospedador. Representa genes expresados.</div><div class="trap"><strong>Error típico.</strong> Decir que incluye todos los genes del genoma. Una biblioteca de cDNA refleja expresión, no todo el genoma.</div></div></details>
+</div>
+<div class="variant">
+  <div class="meta"><span class="badge">Variante 5 — Bacteria que expresa un gen humano</span><span class="badge">Examen 05</span></div>
+  <div class="statement"><strong>Enunciado.</strong><br>Una bacteria puede sintetizar proteínas codificadas por genes humanos introducidos mediante ingeniería genética. Explique cómo es posible.</div>
+  
+  <details><summary>Solución paso a paso</summary><div class="solution"><ol><li>El código genético es casi universal, por eso una bacteria puede traducir una secuencia codificante humana.</li><li>El gen humano debe introducirse en un vector adecuado, normalmente un plásmido con promotor bacteriano.</li><li>Si el gen procede de eucariotas, conviene usar cDNA sin intrones, porque las bacterias no hacen splicing eucariota.</li><li>Tras transformación, la bacteria replica el plásmido y transcribe/traduce el gen.</li><li>Se seleccionan clones productores y se purifica la proteína si procede.</li></ol><div class="result"><strong>Respuesta de examen.</strong><br>Es posible por código casi universal + vector bacteriano + promotor adecuado + cDNA sin intrones.</div><div class="trap"><strong>Error típico.</strong> Introducir un gen eucariota con intrones esperando que la bacteria los elimine.</div></div></details>
+</div></article></section><section class="page" id="b8"><h2>Bloque 8 — Regulación génica, cromatina, degradación proteica, evolución y raros</h2><p class="block-lead">Patrón de respuesta: identificar si es regulación, herencia, práctica o pregunta residual; contestar corto y con términos precisos.</p><article class="card" id="b8p1"><div class="meta"><span class="badge">B8</span><span class="badge">Problema 1</span><span class="badge">5 variantes</span></div><h3>Problema 1 — Regulación, cromatina, metilación, proteasoma y mRNA estable</h3>
+<div class="variant">
+  <div class="meta"><span class="badge">Variante 1 — Metilación del DNA</span><span class="badge">Exámenes 01 y 02</span></div>
+  <div class="statement"><strong>Enunciado.</strong><br>¿Cómo se metila el DNA?</div>
+  
+  <details><summary>Solución paso a paso</summary><div class="solution"><ol><li>La metilación del DNA consiste en añadir grupos metilo a bases del DNA.</li><li>En eucariotas suele ocurrir sobre citosinas, especialmente en dinucleótidos CpG.</li><li>La reacción la catalizan DNA metiltransferasas usando donadores de metilo como S-adenosilmetionina.</li><li>La metilación puede modificar la expresión génica sin cambiar la secuencia de bases.</li><li>En general, en regiones promotoras se asocia a represión de la transcripción.</li></ol><div class="result"><strong>Respuesta de examen.</strong><br>Metilación = adición enzimática de grupos metilo al DNA, típicamente citosinas CpG; regula expresión sin cambiar secuencia.</div><div class="trap"><strong>Error típico.</strong> Decir que metilar cambia A por G o altera el código. No cambia la secuencia.</div></div></details>
+</div>
+<div class="variant">
+  <div class="meta"><span class="badge">Variante 2 — Cromatina</span><span class="badge">Exámenes 07 y 16</span></div>
+  <div class="statement"><strong>Enunciado.</strong><br>Explique la composición y la estructura de la cromatina.</div>
+  
+  <details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Esto continúa variante 1: regulación por empaquetamiento del DNA.</li><li>La cromatina es DNA asociado a proteínas, principalmente histonas.</li><li>La unidad básica es el nucleosoma: DNA enrollado alrededor de un octámero de histonas.</li><li>El empaquetamiento regula accesibilidad del DNA a transcripción, replicación y reparación.</li><li>Eucromatina: más laxa y generalmente más activa. Heterocromatina: más compacta y menos activa.</li></ol><div class="result"><strong>Respuesta de examen.</strong><br>Cromatina = DNA + histonas; nucleosoma; grado de compactación regula accesibilidad génica.</div><div class="trap"><strong>Error típico.</strong> Definir cromatina como sinónimo de cromosoma sin explicar nucleosomas.</div></div></details>
+</div>
+<div class="variant">
+  <div class="meta"><span class="badge">Variante 3 — Caperuza 5’ y cola poli(A)</span><span class="badge">Examen 14</span></div>
+  <div class="statement"><strong>Enunciado.</strong><br>La caperuza 5’ y la cola poli(A) en los mRNA eucarióticos protegen el mensaje. Explique su función.</div>
+  
+  <details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Esto conecta regulación postranscripcional y maduración del mRNA.</li><li>La caperuza 5’ protege frente a degradación y participa en exportación nuclear e inicio de traducción.</li><li>La cola poli(A) en 3’ aumenta la estabilidad del mRNA y favorece exportación y traducción.</li><li>Ambas marcas ayudan a que el transcrito sea reconocido como mRNA maduro.</li><li>Su ausencia suele reducir estabilidad y eficiencia de traducción.</li></ol><div class="result"><strong>Respuesta de examen.</strong><br>Cap 5’ y poli(A) protegen, estabilizan, facilitan exportación e inicio de traducción.</div><div class="trap"><strong>Error típico.</strong> Pensar que cap y cola codifican aminoácidos. Son regiones/modificaciones no traducidas directamente.</div></div></details>
+</div>
+<div class="variant">
+  <div class="meta"><span class="badge">Variante 4 — Proteasoma</span><span class="badge">Examen 02</span></div>
+  <div class="statement"><strong>Enunciado.</strong><br>¿Qué es el proteasoma?</div>
+  
+  <details><summary>Solución paso a paso</summary><div class="solution"><ol><li>El proteasoma es un complejo proteico grande encargado de degradar proteínas celulares.</li><li>Muchas proteínas destinadas a degradación se marcan con ubiquitina.</li><li>El proteasoma reconoce proteínas poliubiquitinadas y las degrada en péptidos pequeños.</li><li>Participa en control de calidad proteico y regulación de niveles de proteínas.</li><li>Consume energía en el proceso de desplegado y degradación.</li></ol><div class="result"><strong>Respuesta de examen.</strong><br>Proteasoma = complejo que degrada proteínas marcadas con ubiquitina.</div><div class="trap"><strong>Error típico.</strong> Confundir proteasoma con lisosoma. Ambos degradan, pero el proteasoma degrada proteínas citosólicas/nucleares marcadas.</div></div></details>
+</div>
+<div class="variant">
+  <div class="meta"><span class="badge">Variante 5 — Regulación eucariota: respuesta semi-real integradora</span><span class="badge">Semi-real entrenable basado en exámenes 01, 02, 07, 14, 16</span></div>
+  <div class="statement"><strong>Enunciado.</strong><br>Explique dos mecanismos por los que una célula eucariota puede regular la expresión de un gen sin cambiar su secuencia.</div>
+  
+  <details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Esto combina variantes 1–3.</li><li>Puede regular por metilación del DNA: promotores metilados suelen transcribirse menos.</li><li>Puede regular por modificación de histonas y compactación de cromatina: cromatina abierta facilita transcripción.</li><li>Puede regular tras la transcripción: splicing alternativo, estabilidad del mRNA por cap/cola poli(A) o degradación.</li><li>También puede regular la proteína final mediante degradación por ubiquitina-proteasoma.</li></ol><div class="result"><strong>Respuesta de examen.</strong><br>Mecanismos válidos: metilación, cromatina/histonas, procesamiento/estabilidad de mRNA, degradación proteica.</div><div class="trap"><strong>Error típico.</strong> Confundir regulación epigenética con mutación de la secuencia.</div></div></details>
+</div></article><article class="card" id="b8p2"><div class="meta"><span class="badge">B8</span><span class="badge">Problema 2</span><span class="badge">5 variantes</span></div><h3>Problema 2 — Evolución, teoría celular, eficacia biológica, ecosistemas y ciclos</h3>
+<div class="variant">
+  <div class="meta"><span class="badge">Variante 1 — Eficacia biológica</span><span class="badge">Examen 02</span></div>
+  <div class="statement"><strong>Enunciado.</strong><br>Defina qué es la eficacia biológica.</div>
+  
+  <details><summary>Solución paso a paso</summary><div class="solution"><ol><li>La eficacia biológica o fitness es la contribución reproductiva de un individuo o genotipo a la siguiente generación.</li><li>No equivale a fuerza física ni supervivencia aislada.</li><li>Incluye supervivencia hasta reproducirse y éxito reproductivo.</li><li>Se mide de forma relativa respecto a otros genotipos en un ambiente.</li><li>Un rasgo aumenta fitness si aumenta descendencia viable y fértil.</li></ol><div class="result"><strong>Respuesta de examen.</strong><br>Eficacia biológica = éxito reproductivo relativo.</div><div class="trap"><strong>Error típico.</strong> Definirla como “estar sano” o “ser fuerte”.</div></div></details>
+</div>
+<div class="variant">
+  <div class="meta"><span class="badge">Variante 2 — Selección natural</span><span class="badge">Examen 25</span></div>
+  <div class="statement"><strong>Enunciado.</strong><br>¿En qué consiste la teoría de la evolución por selección natural?</div>
+  
+  <details><summary>Solución paso a paso</summary><div class="solution"><ol><li>En una población existe variación heredable entre individuos.</li><li>Algunas variantes producen diferencias en supervivencia y reproducción.</li><li>Los individuos con rasgos ventajosos dejan más descendencia en un ambiente concreto.</li><li>Con generaciones, aumenta la frecuencia de los rasgos heredables asociados a mayor eficacia biológica.</li><li>La selección natural actúa sobre fenotipos, pero cambia frecuencias genéticas en poblaciones.</li></ol><div class="result"><strong>Respuesta de examen.</strong><br>Selección natural = variación heredable + éxito reproductivo diferencial + cambio de frecuencias en poblaciones.</div><div class="trap"><strong>Error típico.</strong> Decir que los individuos cambian porque lo necesitan. Eso es teleológico y no es selección natural.</div></div></details>
+</div>
+<div class="variant">
+  <div class="meta"><span class="badge">Variante 3 — Teoría celular y experimento</span><span class="badge">Exámenes 18 y 26</span></div>
+  <div class="statement"><strong>Enunciado.</strong><br>¿Cómo enunciaría la teoría celular y qué experimento llevaría a cabo para demostrar su validez?</div>
+  
+  <details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Teoría celular: todos los seres vivos están formados por una o más células.</li><li>La célula es la unidad básica de estructura y función de los seres vivos.</li><li>Toda célula procede de otra célula preexistente.</li><li>Para demostrarlo experimentalmente, puede plantearse observación microscópica de tejidos y microorganismos para comprobar su composición celular.</li><li>Para la procedencia celular, un experimento clásico es comparar medio estéril cerrado frente a expuesto/inoculado, mostrando que nuevas células aparecen por crecimiento de células previas, no por generación espontánea.</li></ol><div class="result"><strong>Respuesta de examen.</strong><br>Teoría celular en tres puntos: composición, unidad funcional y origen por células preexistentes.</div><div class="trap"><strong>Error típico.</strong> Contestar solo “todos los seres vivos tienen células” y olvidar el origen celular.</div></div></details>
+</div>
+<div class="variant">
+  <div class="meta"><span class="badge">Variante 4 — Ecosistemas terrestres</span><span class="badge">Exámenes 17, 18, 23, 28</span></div>
+  <div class="statement"><strong>Enunciado.</strong><br>Enumere los tipos de ecosistemas terrestres. Comente brevemente cómo son las precipitaciones en uno de ellos.</div>
+  
+  <details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Esta es una pregunta residual del histórico; contestar con lista corta.</li><li>Ecosistemas terrestres típicos: tundra, taiga, bosque templado, bosque lluvioso tropical, pradera/sabana, desierto y matorral/chaparral.</li><li>Ejemplo: en bosques lluviosos tropicales las precipitaciones son muy abundantes y relativamente constantes.</li><li>Ejemplo alternativo: en desiertos las precipitaciones son muy escasas e irregulares.</li><li>Si se pide uno concreto, describir clima, precipitación y vegetación dominante.</li></ol><div class="result"><strong>Respuesta de examen.</strong><br>Lista de biomas + precipitación de uno. Bosque lluvioso: alta; desierto: baja; sabana: estacional.</div><div class="trap"><strong>Error típico.</strong> Perder tiempo con fauna; el enunciado pide precipitación.</div></div></details>
+</div>
+<div class="variant">
+  <div class="meta"><span class="badge">Variante 5 — Ciclos biogeoquímicos y estacionalidad</span><span class="badge">Exámenes 13, 25, 26</span></div>
+  <div class="statement"><strong>Enunciado.</strong><br>¿Qué son los ciclos biogeoquímicos? ¿Cuáles son los mayores ciclos conocidos a escala planetaria? ¿Qué provoca la estacionalidad del tiempo atmosférico?</div>
+  
+  <details><summary>Solución paso a paso</summary><div class="solution"><ol><li>Los ciclos biogeoquímicos son movimientos y transformaciones de elementos químicos entre biosfera, atmósfera, hidrosfera y geosfera.</li><li>Ciclos mayores: agua, carbono, nitrógeno, fósforo y azufre.</li><li>La estacionalidad del tiempo atmosférico se debe a la inclinación del eje terrestre respecto al plano orbital.</li><li>Esa inclinación cambia el ángulo de incidencia solar y la duración del día a lo largo del año.</li><li>No se debe principalmente a que la Tierra esté más cerca o más lejos del Sol.</li></ol><div class="result"><strong>Respuesta de examen.</strong><br>Ciclos: agua, C, N, P, S. Estaciones: inclinación del eje terrestre.</div><div class="trap"><strong>Error típico.</strong> Decir que las estaciones se deben a la distancia Tierra-Sol.</div></div></details>
+</div></article></section><section class="page" id="chuleta"><h2>Formulario final / chuleta de reconstrucción</h2><p class="block-lead">Solo lo mínimo para reconstruir respuestas de examen. No sustituye practicar las variantes.</p><div class="grid"><div class="formula-card"><strong>Ácidos nucleicos</strong><br>
+Nucleósido = base + pentosa<br>
+Nucleótido = base + pentosa + fosfato<br>
+DNA: A, T, G, C · desoxirribosa · doble hélice<br>
+RNA: A, U, G, C · ribosa · cadena simple funcional<br>
+Enlace fosfodiéster: 3’–5’ · crecimiento 5’→3’
+</div><div class="formula-card"><strong>Código genético</strong><br>
+Inicio: AUG en mRNA / ATG en DNA codificante<br>
+Stop: UAA, UAG, UGA<br>
+Met = 1 codón · Trp = 1 · Cys = 2 · Ser = 6 · Stop = 3<br>
+Número de secuencias posibles = producto de degeneraciones
+</div><div class="formula-card"><strong>Replicación</strong><br>
+Semiconservativa · bidireccional · antiparalela<br>
+DNA polimerasa: sintetiza 5’→3’ y necesita 3’-OH<br>
+Primasa: cebador RNA<br>
+Helicasa: separa hebras · Topoisomerasa: alivia tensión<br>
+Ligasa: une fragmentos · Okazaki: hebra retrasada
+</div><div class="formula-card"><strong>Expresión génica</strong><br>
+Dogma: DNA → RNA → proteína<br>
+Transcripción: RNA polimerasa, molde DNA, RNA 5’→3’<br>
+Maduración eucariota: cap 5’ + cola poli(A) + splicing<br>
+Traducción: mRNA + ribosoma + tRNA → proteína
+</div><div class="formula-card"><strong>PCR y técnicas</strong><br>
+PCR: molde + 2 cebadores + Taq + dNTPs + Mg²⁺ + tampón<br>
+Ciclo: 94–95 °C desnaturalización → alineamiento → 72 °C extensión<br>
+Copias ideales: \(2^n\)<br>
+Electroforesis: DNA negativo migra al polo +; fragmentos pequeños avanzan más<br>
+Restricción: endonucleasas cortan secuencias específicas
+</div><div class="formula-card"><strong>Metabolismo</strong><br>
+Glucólisis: citosol · glucosa → 2 piruvato + 2 ATP netos + 2 NADH<br>
+Krebs: matriz mitocondrial · acetil-CoA → CO₂ + NADH/FADH₂<br>
+Cadena respiratoria: membrana interna mitocondrial · O₂ aceptor final<br>
+Fermentación láctica: piruvato → lactato · regenera NAD⁺
+</div><div class="formula-card"><strong>Fotosíntesis</strong><br>
+Reacción global: \(6CO_2+6H_2O+luz\rightarrow C_6H_{12}O_6+6O_2\)<br>
+Tilacoides: fase luminosa, clorofilas, ATP/NADPH<br>
+Estroma: ciclo de Calvin, fijación de CO₂<br>
+Pigmentos: captan luz; complejo antena transfiere energía
+</div><div class="formula-card"><strong>Ciclo celular</strong><br>
+G1: crecimiento · S: replicación · G2: preparación · M: mitosis/citocinesis<br>
+Checkpoints: G1/S, G2/M, metafase-huso<br>
+Mitosis: profase → metafase → anafase → telofase<br>
+Meiosis: recombinación en profase I; reducción cromosómica
+</div><div class="formula-card"><strong>Membranas y transporte</strong><br>
+Ósmosis: agua hacia mayor concentración de solutos<br>
+O₂: difusión simple<br>
+Transporte activo: ATP directo o gradiente acoplado<br>
+Endocitosis: pinocitosis líquidos · fagocitosis partículas<br>
+Anfipático = región hidrofílica + hidrofóbica
+</div><div class="formula-card"><strong>Localizaciones rápidas</strong><br>
+Proteínas: ribosomas/RER<br>
+ARNr: nucléolo<br>
+Transcripción/replicación nuclear: núcleo<br>
+Glucólisis: citosol<br>
+Krebs: matriz mitocondrial<br>
+Calvin: estroma<br>
+Clorofilas: tilacoides
+</div></div></section>
+<footer class="cover">
+<p class="small">Documento de uso personal. Enunciados reales normalizados y semi-reales entrenables construidos a partir del histórico transcrito de Biología UNED cargado en el proyecto. Las soluciones no son oficiales: son respuestas docentes para entrenar patrón, redacción y corrección.</p>
+<p class="small">Aviso OCR: toda pregunta con figura, gráfica, tabla, cebadores o secuencia debe contrastarse visualmente con el PDF antes de memorizar una solución literal.</p>
+</footer>
+
+</div>
+</body>
+</html>

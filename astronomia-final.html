@@ -1,0 +1,754 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Astronomía UNED — patrones reales resueltos</title>
+<script>
+window.MathJax = { tex: { inlineMath: [['\\(','\\)'], ['$', '$']], displayMath: [['\\[','\\]']] }, svg: { fontCache: 'global' } };
+</script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+<style>
+:root{--bg:#07111f;--panel:#0d1b2e;--panel2:#12243c;--text:#e7edf7;--muted:#aab7ca;--line:#28415f;--accent:#74a7ff;--accent2:#9bd4ff;--warn:#ffd166;--ok:#7bd88f;--code:#06101d;--shadow:0 14px 40px rgba(0,0,0,.35);--max:1120px}
+body.light{--bg:#eef3fb;--panel:#fff;--panel2:#f6f9ff;--text:#122033;--muted:#52657f;--line:#d4deec;--accent:#1f5fbf;--accent2:#164789;--warn:#8a5a00;--ok:#136f32;--code:#f2f6fb;--shadow:0 12px 32px rgba(25,55,95,.12)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);font:16px/1.55 system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}a{color:var(--accent);text-decoration:none}
+.wrap{max-width:var(--max);margin:0 auto;padding:24px}.cover{background:linear-gradient(135deg,var(--panel),var(--panel2));border:1px solid var(--line);border-radius:22px;padding:28px;box-shadow:var(--shadow);margin-bottom:18px}
+.eyebrow{color:var(--accent2);font-weight:800;text-transform:uppercase;letter-spacing:.08em;font-size:.78rem;margin:0 0 10px}h1{font-size:clamp(2rem,5vw,3.5rem);line-height:1.03;margin:0 0 12px}
+h2{font-size:1.7rem;margin:0 0 14px;border-bottom:1px solid var(--line);padding-bottom:10px}h3{font-size:1.28rem;margin:24px 0 10px;color:var(--accent2)}h4{font-size:1.08rem;margin:0 0 10px}p{margin:0 0 12px}.subtitle{color:var(--muted);font-size:1.08rem;max-width:900px}
+.toolbar{position:sticky;top:0;z-index:10;background:rgba(8,17,31,.86);backdrop-filter:blur(10px);border:1px solid var(--line);border-radius:16px;margin:16px 0;padding:10px;display:flex;gap:10px;justify-content:space-between;align-items:center}body.light .toolbar{background:rgba(238,243,251,.9)}
+nav{display:flex;gap:8px;flex-wrap:wrap}nav a,.btn{border:1px solid var(--line);background:var(--panel2);color:var(--text);border-radius:999px;padding:8px 12px;text-decoration:none;font-weight:700;font-size:.92rem}.btn{cursor:pointer}
+.page{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:24px;margin:18px 0;box-shadow:var(--shadow)}.block-lead{color:var(--muted);margin-bottom:18px}
+.card{border:1px solid var(--line);background:var(--panel2);border-radius:18px;padding:18px;margin:16px 0}.variant-card{break-inside:avoid}.meta{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}.badge{font-size:.8rem;border:1px solid var(--line);border-radius:999px;padding:4px 9px;color:var(--accent2);background:var(--code);font-weight:700}
+.statement{background:var(--code);border-left:4px solid var(--accent);border-radius:12px;padding:14px;margin:12px 0;color:var(--text)}details{border:1px solid var(--line);border-radius:14px;background:var(--code);margin-top:12px;overflow:hidden}summary{cursor:pointer;padding:13px 15px;font-weight:800;color:var(--accent2);background:rgba(116,167,255,.08)}.solution{padding:15px 18px}
+ol{margin:0;padding-left:1.25rem}li{margin:0 0 10px}.result{border:1px solid rgba(123,216,143,.5);background:rgba(123,216,143,.10);border-radius:12px;padding:12px;margin-top:12px}.trap{border:1px solid rgba(255,209,102,.45);background:rgba(255,209,102,.10);border-radius:12px;padding:12px;margin-top:12px;color:var(--text)}.formula{background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin:10px 0;overflow-x:auto}
+.index-list{columns:2;column-gap:30px;color:var(--muted)}.index-list li{break-inside:avoid}.form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}.form-card{border:1px solid var(--line);background:var(--panel2);border-radius:14px;padding:14px;overflow-x:auto}.form-card strong{color:var(--accent2)}
+@media(max-width:720px){.wrap{padding:12px}.cover,.page{padding:18px}.toolbar{position:static}.index-list{columns:1}}
+@media print{.toolbar,.no-print{display:none!important}body{background:white;color:black}.page,.cover,.card{box-shadow:none;break-inside:avoid}details{break-inside:avoid}}
+</style>
+<script>
+function toggleTheme(){document.body.classList.toggle('light');localStorage.setItem('astro-theme',document.body.classList.contains('light')?'light':'dark');}
+function openAll(){document.querySelectorAll('details').forEach(d=>d.open=true);}
+function closeAll(){document.querySelectorAll('details').forEach(d=>d.open=false);}
+window.addEventListener('DOMContentLoaded',()=>{ if(localStorage.getItem('astro-theme')==='light') document.body.classList.add('light'); });
+</script>
+</head>
+<body>
+<div class="wrap">
+<header class="cover">
+<p class="eyebrow">Introducción a la Astronomía UNED · patrones reales resueltos</p>
+<h1>Patrones de examen con variantes resueltas paso a paso</h1>
+<p class="subtitle">Documento operativo completo: cada bloque agrupa temas que se solapan en los exámenes, cada problema contiene variantes reales o semi-reales, y cada solución está en desplegable cerrado por defecto.</p>
+</header>
+<div class="toolbar no-print"><nav><a href="#indice">Índice</a><a href="#b1">B1</a><a href="#b2">B2</a><a href="#b3">B3</a><a href="#b4">B4</a><a href="#b5">B5</a><a href="#b6">B6</a><a href="#b7">B7</a><a href="#formulario">Formulario</a></nav><div><button class="btn" onclick="toggleTheme()">Noche / día</button> <button class="btn" onclick="openAll()">Abrir soluciones</button> <button class="btn" onclick="closeAll()">Cerrar</button> <button class="btn" onclick="window.print()">Imprimir</button></div></div>
+<section class="page" id="uso"><h2>Uso correcto</h2><div class="statement"><strong>Regla.</strong> No empieces calculando. Primero identifica bloque, problema y variante. Después escribe la primera ecuación estructural. Solo entonces sustituyes datos.</div><ol><li>Lee el enunciado y clasifícalo en el árbol.</li><li>Intenta escribir el primer paso antes de abrir el desplegable.</li><li>Si tu primer paso no coincide, anótalo en lista roja.</li><li>Entrena mezclando bloques, no por capítulos.</li></ol></section>
+<section class="page" id="indice"><h2>Índice operativo</h2><ol class="index-list"><li><a href="#b1_p1">Bloque 1 · Problema 1 — Culminación, meridiano y cenit</a></li>
+<li><a href="#b1_p2">Bloque 1 · Problema 2 — Primer vertical Este/Oeste</a></li>
+<li><a href="#b1_p3">Bloque 1 · Problema 3 — Orto, ocaso y circumpolaridad</a></li>
+<li><a href="#b1_p4">Bloque 1 · Problema 4 — Tiempo sidéreo y longitud</a></li>
+<li><a href="#b2_p1">Bloque 2 · Problema 1 — Polo norte de la eclíptica</a></li>
+<li><a href="#b2_p2">Bloque 2 · Problema 2 — Estrella exactamente en la eclíptica</a></li>
+<li><a href="#b2_p3">Bloque 2 · Problema 3 — Relación solar entre \(\alpha\), \(\delta\), \(\varepsilon\)</a></li>
+<li><a href="#b2_p4">Bloque 2 · Problema 4 — Latitud eclíptica para correcciones</a></li>
+<li><a href="#b3_p1">Bloque 3 · Problema 1 — Elementos desde perihelio y afelio</a></li>
+<li><a href="#b3_p2">Bloque 3 · Problema 2 — Distancia con anomalía verdadera</a></li>
+<li><a href="#b3_p3">Bloque 3 · Problema 3 — Anomalía excéntrica</a></li>
+<li><a href="#b3_p4">Bloque 3 · Problema 4 — Excentricidad mínima</a></li>
+<li><a href="#b4_p1">Bloque 4 · Problema 1 — Razón de velocidades</a></li>
+<li><a href="#b4_p2">Bloque 4 · Problema 2 — Componentes radial y transversal</a></li>
+<li><a href="#b4_p3">Bloque 4 · Problema 3 — Masa del planeta por tercera ley</a></li>
+<li><a href="#b5_p1">Bloque 5 · Problema 1 — Máxima elongación</a></li>
+<li><a href="#b5_p2">Bloque 5 · Problema 2 — Fase y elongación</a></li>
+<li><a href="#b5_p3">Bloque 5 · Problema 3 — Periodo sinódico y oposiciones</a></li>
+<li><a href="#b5_p4">Bloque 5 · Problema 4 — Puntos estacionarios</a></li>
+<li><a href="#b6_p1">Bloque 6 · Problema 1 — Refracción</a></li>
+<li><a href="#b6_p2">Bloque 6 · Problema 2 — Aberración anual</a></li>
+<li><a href="#b6_p3">Bloque 6 · Problema 3 — Paralaje</a></li>
+<li><a href="#b6_p4">Bloque 6 · Problema 4 — Movimiento propio</a></li>
+<li><a href="#b7_p1">Bloque 7 · Problema 1 — Derivada temporal de anomalías</a></li>
+<li><a href="#b7_p2">Bloque 7 · Problema 2 — Demostraciones reutilizables</a></li>
+<li><a href="#b7_p3">Bloque 7 · Problema 3 — OCR dudoso</a></li></ol></section>
+<section class="page" id="b1"><h2>Bloque 1 — Coordenadas, tiempo y visibilidad</h2><p class="block-lead">Culminación, primer vertical, orto/ocaso, tiempo sidéreo y localización del observatorio. En examen suelen venir mezclados.</p><section class="problem" id="b1_p1"><h3>Problema 1 — Culminación, meridiano y cenit</h3>
+<article class="card variant-card">
+<div class="meta"><span class="badge">E03.1 / E08.1</span><span class="badge">Variante 1</span></div>
+<h4>Variante 1 — \(\delta=\varepsilon\) en el trópico de Cáncer</h4>
+<div class="statement"><strong>Enunciado real/semi-real.</strong><br>Halle la altura de una estrella de declinación \(\delta=\varepsilon\) en el momento de su culminación superior, para un observador situado en el trópico de Cáncer.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>En culminación superior el astro está en el meridiano: \(H=0\).</li>
+<li>En el meridiano, la distancia cenital es \(z=|\varphi-\delta|\).</li>
+<li>En el trópico de Cáncer, \(\varphi=\varepsilon\). El enunciado da \(\delta=\varepsilon\).</li>
+<li>Entonces \(z=0\) y \(h=90^\circ-z\).</li>
+</ol><div class="result"><strong>Resultado.</strong> \(h=90^\circ\). La estrella culmina en el cenit.</div><div class="trap"><strong>Error típico.</strong> No abras trigonometría general si el paso por meridiano reduce el problema a \(z=|\varphi-\delta|\).</div></div></details>
+</article>
+
+<article class="card variant-card">
+<div class="meta"><span class="badge">E04.1 / E06.1 / E26.1</span><span class="badge">Variante 2</span></div>
+<h4>Variante 2 — Estrella de declinación positiva en el ecuador</h4>
+<div class="statement"><strong>Enunciado real/semi-real.</strong><br>Halle la altura de una estrella de declinación \(\delta>0\) en el paso por el meridiano superior para un observador situado en el ecuador.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>Esto es lo mismo que la variante 1 hasta \(z=|\varphi-\delta|\).</li>
+<li>Ahora \(\varphi=0^\circ\), luego \(z=|0-\delta|=\delta\).</li>
+<li>Por tanto \(h=90^\circ-\delta\).</li>
+</ol><div class="result"><strong>Resultado.</strong> \(h=90^\circ-\delta\).</div><div class="trap"><strong>Error típico.</strong> El signo de la declinación entra dentro del valor absoluto.</div></div></details>
+</article>
+
+<article class="card variant-card">
+<div class="meta"><span class="badge">E04.4 / E06.5 / E26.4</span><span class="badge">Variante 3</span></div>
+<h4>Variante 3 — Observatorio donde Rigel pasa por el cenit</h4>
+<div class="statement"><strong>Enunciado real/semi-real.</strong><br>Calcule las coordenadas geográficas de un observatorio para el cual Rigel, de coordenadas \(\alpha=5^\mathrm h15^\mathrm m13^\mathrm s\), \(\delta=-8^\circ12'06''\), se observa en el cenit en un instante con \(TSG\) conocido.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>En el cenit se cumple \(z=0\), por tanto \(\varphi=\delta\).</li>
+<li>En el cenit también el astro está en el meridiano: \(H=0\).</li>
+<li>Como \(H=TSL-\alpha\), se obtiene \(TSL=\alpha\).</li>
+<li>Con longitud Este positiva: \(TSL=TSG+\lambda\), luego \(\lambda=\alpha-TSG\).</li>
+<li>Si \(\lambda\) queda en horas, conviértela a grados multiplicando por \(15^\circ/\mathrm h\).</li>
+</ol><div class="result"><strong>Resultado estructural.</strong> \(\varphi=\delta_\star\), \(\lambda=\alpha_\star-TSG\).</div><div class="trap"><strong>Error típico.</strong> La ascensión recta no da latitud; sirve para la longitud vía tiempo sidéreo.</div></div></details>
+</article></section>
+<section class="problem" id="b1_p2"><h3>Problema 2 — Primer vertical Este/Oeste</h3>
+<article class="card variant-card">
+<div class="meta"><span class="badge">E02.1 / E08.5 / E10.1 / E11.1 / E28.1 / E29.1</span><span class="badge">Variante 1</span></div>
+<h4>Variante 1 — Dada \(h\) y \(\varphi\), hallar \(\delta\)</h4>
+<div class="statement"><strong>Enunciado real/semi-real.</strong><br>En un punto de latitud \(\varphi=30^\circ\) observamos que una estrella cruza el primer vertical con altura \(h=60^\circ\). Calcule la declinación.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>Primer vertical significa azimut Este/Oeste.</li>
+<li>La condición característica es:</li>
+</ol><div class="formula">\[\sin\delta=\sin\varphi\,\sin h\]</div>
+<ol start="3">
+<li>Sustituimos: \(\sin\delta=\sin30^\circ\sin60^\circ=\sqrt3/4\).</li>
+<li>Luego \(\delta=\arcsin(\sqrt3/4)\).</li>
+</ol><div class="result"><strong>Resultado.</strong> \(\delta\simeq25.659^\circ\).</div><div class="trap"><strong>Error típico.</strong> En primer vertical no se usa \(\sin h=\sin\varphi\sin\delta\) sin más; falta la condición geométrica.</div></div></details>
+</article>
+
+<article class="card variant-card">
+<div class="meta"><span class="badge">E02.1 / E08.5</span><span class="badge">Variante 2</span></div>
+<h4>Variante 2 — Dada \(\delta\) y \(h\), hallar \(\varphi\)</h4>
+<div class="statement"><strong>Enunciado real/semi-real.</strong><br>Una estrella cruza el primer vertical al Este con altura \(h=73^\circ22'20''\). Si \(\delta=60^\circ\), calcule la latitud del lugar.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>Parte común: \(\sin\delta=\sin\varphi\sin h\).</li>
+<li>Ahora se despeja la latitud:</li>
+</ol><div class="formula">\[\sin\varphi=\frac{\sin\delta}{\sin h}\]</div>
+<ol start="3">
+<li>Con \(\delta=60^\circ\), \(h=73^\circ22'20''\), se obtiene \(\varphi\simeq64.718^\circ\).</li>
+</ol><div class="result"><strong>Resultado.</strong> \(\varphi\simeq64.718^\circ\).</div><div class="trap"><strong>Error típico.</strong> Si el cociente sale mayor que 1, la configuración es imposible.</div></div></details>
+</article>
+
+<article class="card variant-card">
+<div class="meta"><span class="badge">E02.1 / E08.5 / E11.1</span><span class="badge">Variante 3</span></div>
+<h4>Variante 3 — Hallar \(H\) en el primer vertical</h4>
+<div class="statement"><strong>Enunciado real/semi-real.</strong><br>Con \(\delta=60^\circ\) y la latitud obtenida, exprese en tiempo el ángulo horario \(H\) cuando la estrella cruza el primer vertical al Este.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>La parte nueva es el ángulo horario. En primer vertical:</li>
+</ol><div class="formula">\[\cos H=\frac{\tan\delta}{\tan\varphi}\]</div>
+<ol start="2">
+<li>Calcule \(H_0=\arccos(\tan\delta/\tan\varphi)\).</li>
+<li>Convierta grados a horas dividiendo entre \(15^\circ/\mathrm h\).</li>
+<li>Al Este del meridiano, \(H=-H_0\); al Oeste, \(H=+H_0\).</li>
+</ol><div class="result"><strong>Resultado estructural.</strong> \(H_E=-\arccos(\tan\delta/\tan\varphi)\).</div><div class="trap"><strong>Error típico.</strong> El signo de \(H\) es parte de la respuesta si el enunciado dice Este u Oeste.</div></div></details>
+</article></section>
+<section class="problem" id="b1_p3"><h3>Problema 3 — Orto, ocaso y circumpolaridad</h3>
+<article class="card variant-card">
+<div class="meta"><span class="badge">E06.2</span><span class="badge">Variante 1</span></div>
+<h4>Variante 1 — Estrella con \(\delta=\varphi\)</h4>
+<div class="statement"><strong>Enunciado real/semi-real.</strong><br>Sea una estrella de declinación \(\delta=\varphi\), donde \(\varphi\) es la latitud del lugar. ¿Cuál es su ángulo horario en el orto? ¿Cuál es su acimut en el ocaso?</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>En orto y ocaso, \(h=0^\circ\).</li>
+<li>La fórmula de altura da:</li>
+</ol><div class="formula">\[\cos H_0=-\tan\varphi\tan\delta\]</div>
+<ol start="3">
+<li>Como \(\delta=\varphi\), \(\cos H_0=-\tan^2\varphi\).</li>
+<li>Orto: \(H=-H_0\). Ocaso: \(H=+H_0\).</li>
+<li>Si el azimut se mide desde el Norte, en horizonte: \(\cos A=\sin\delta/\cos\varphi\).</li>
+</ol><div class="result"><strong>Resultado.</strong> \(H_\mathrm{orto}=-\arccos(-\tan^2\varphi)\); el azimut de ocaso se toma en el cuadrante Oeste.</div><div class="trap"><strong>Error típico.</strong> Comprueba que \(|\tan^2\varphi|\le1\); si no, no hay orto/ocaso.</div></div></details>
+</article>
+
+<article class="card variant-card">
+<div class="meta"><span class="badge">E28.2</span><span class="badge">Variante 2</span></div>
+<h4>Variante 2 — Sol en equinoccio</h4>
+<div class="statement"><strong>Enunciado real/semi-real.</strong><br>Calcule el azimut y el ángulo horario de salida y puesta del Sol en el equinoccio de primavera para \(\varphi=-30^\circ\).</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>En equinoccio, \(\delta_\odot=0^\circ\).</li>
+<li>Entonces \(\cos H_0=-\tan\varphi\tan0=0\), luego \(H_0=90^\circ=6^\mathrm h\).</li>
+<li>Salida: \(H=-6^\mathrm h\). Puesta: \(H=+6^\mathrm h\).</li>
+<li>Azimut desde el Norte: \(\cos A=\sin0/\cos\varphi=0\). Sale por el Este y se pone por el Oeste.</li>
+</ol><div class="result"><strong>Resultado.</strong> Orto: Este, \(H=-6^\mathrm h\). Ocaso: Oeste, \(H=+6^\mathrm h\).</div><div class="trap"><strong>Error típico.</strong> La latitud no cambia el Este/Oeste exacto en equinoccio.</div></div></details>
+</article></section>
+<section class="problem" id="b1_p4"><h3>Problema 4 — Tiempo sidéreo y longitud</h3>
+<article class="card variant-card">
+<div class="meta"><span class="badge">E09.4</span><span class="badge">Variante 1</span></div>
+<h4>Variante 1 — Ángulo horario de la Luna con TU</h4>
+<div class="statement"><strong>Enunciado real/semi-real.</strong><br>Las coordenadas de la Luna a \(0^\mathrm h\) TU son \(\alpha,\delta\). Se observa desde longitud \(\lambda\) a una hora TU posterior. Calcule su ángulo horario aproximado.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>Calcule el tiempo sidéreo de Greenwich a la hora de observación:</li>
+</ol><div class="formula">\[TSG(TU)=TSG_0+1.002737909\,TU\]</div>
+<ol start="2">
+<li>Obtenga el sidéreo local: \(TSL=TSG+\lambda\), con \(\lambda\) Este positiva.</li>
+<li>Use \(H=TSL-\alpha\).</li>
+<li>Reduzca \(H\) al intervalo que pida el problema.</li>
+</ol><div class="result"><strong>Resultado estructural.</strong> \(H=TSG_0+1.002737909\,TU+\lambda-\alpha\).</div><div class="trap"><strong>Error típico.</strong> No uses TU como si ya fuera tiempo sidéreo.</div></div></details>
+</article>
+
+<article class="card variant-card">
+<div class="meta"><span class="badge">E03.4 / E05.4</span><span class="badge">Variante 2</span></div>
+<h4>Variante 2 — Aldebarán culmina en Lleida y se observa desde otro lugar</h4>
+<div class="statement"><strong>Enunciado real/semi-real.</strong><br>Aldebarán culmina en Lleida. En ese mismo instante se observa desde otro lugar de latitud \(\varphi_2\) y longitud \(\lambda_2\). Calcule su altura.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>En Lleida culmina: \(H_1=0\), luego \(TSL_1=\alpha\).</li>
+<li>El mismo instante tiene \(TSG=TSL_1-\lambda_1=\alpha-\lambda_1\).</li>
+<li>En el segundo lugar: \(TSL_2=TSG+\lambda_2=\alpha-\lambda_1+\lambda_2\).</li>
+<li>Entonces \(H_2=TSL_2-\alpha=\lambda_2-\lambda_1\).</li>
+<li>Altura:</li>
+</ol><div class="formula">\[\sin h=\sin\varphi_2\sin\delta+\cos\varphi_2\cos\delta\cos H_2\]</div>
+<div class="result"><strong>Resultado estructural.</strong> \(H_2=\lambda_2-\lambda_1\), y después fórmula de altura.</div><div class="trap"><strong>Error típico.</strong> En un mismo instante no se igualan los ángulos horarios; cambia la longitud.</div></div></details>
+</article></section></section>
+<section class="page" id="b2"><h2>Bloque 2 — Eclíptica, ecuatorial y geometría esférica</h2><p class="block-lead">Transformaciones, oblicuidad, puntos especiales y relaciones del Sol sobre la eclíptica.</p><section class="problem" id="b2_p1"><h3>Problema 1 — Polo norte de la eclíptica</h3>
+<article class="card variant-card">
+<div class="meta"><span class="badge">E01.1</span><span class="badge">Variante 1</span></div>
+<h4>Variante 1 — Coordenadas ecuatoriales del polo eclíptico</h4>
+<div class="statement"><strong>Enunciado real/semi-real.</strong><br>Exprese las coordenadas ecuatoriales del Polo Norte de la eclíptica en función de \(\varepsilon=23^\circ26'17''\).</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>El Polo Norte de la eclíptica está a \(90^\circ\) de la eclíptica.</li>
+<li>Su declinación es \(\delta_P=90^\circ-\varepsilon\).</li>
+<li>Su ascensión recta es \(\alpha_P=18^\mathrm h=270^\circ\).</li>
+</ol><div class="result"><strong>Resultado.</strong> \(\alpha_P=18^\mathrm h\), \(\delta_P=66^\circ33'43''\).</div><div class="trap"><strong>Error típico.</strong> El punto \(6^\mathrm h\) corresponde al polo opuesto según el convenio de giro.</div></div></details>
+</article>
+
+<article class="card variant-card">
+<div class="meta"><span class="badge">semi-real</span><span class="badge">Variante 2</span></div>
+<h4>Variante 2 — Distancia cenital del polo eclíptico</h4>
+<div class="statement"><strong>Enunciado real/semi-real.</strong><br>Demuestre la expresión de la distancia cenital del Polo Norte de la eclíptica para latitud \(\varphi\) y tiempo sidéreo local \(T\).</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>Parte común: \(\alpha_P=18^\mathrm h\), \(\delta_P=90^\circ-\varepsilon\).</li>
+<li>Su ángulo horario es \(H_P=T-18^\mathrm h\).</li>
+<li>Use \(\cos z=\sin\varphi\sin\delta+\cos\varphi\cos\delta\cos H\).</li>
+<li>Sustituya \(\sin(90^\circ-\varepsilon)=\cos\varepsilon\) y \(\cos(90^\circ-\varepsilon)=\sin\varepsilon\).</li>
+</ol><div class="result"><strong>Resultado.</strong> \(\cos z_P=\sin\varphi\cos\varepsilon+\cos\varphi\sin\varepsilon\cos(T-18^\mathrm h)\).</div><div class="trap"><strong>Error típico.</strong> No dejar \(H\) sin definir.</div></div></details>
+</article></section>
+<section class="problem" id="b2_p2"><h3>Problema 2 — Estrella exactamente en la eclíptica</h3>
+<article class="card variant-card">
+<div class="meta"><span class="badge">E07.1 / E23.1 / E25.1 / E29.2</span><span class="badge">Variante 1</span></div>
+<h4>Variante 1 — \(\delta=-\varepsilon\)</h4>
+<div class="statement"><strong>Enunciado real/semi-real.</strong><br>Si una estrella de declinación \(\delta=-\varepsilon\) está situada exactamente en la eclíptica, ¿cuál es su ascensión recta y su longitud eclíptica?</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>Estar en la eclíptica implica \(\beta=0\).</li>
+<li>Entonces \(\sin\delta=\sin\varepsilon\sin\lambda\).</li>
+<li>Si \(\delta=-\varepsilon\), \(\sin\lambda=-1\), luego \(\lambda=270^\circ\).</li>
+<li>En ese punto especial, \(\alpha=270^\circ=18^\mathrm h\).</li>
+</ol><div class="result"><strong>Resultado.</strong> \(\lambda=270^\circ\), \(\alpha=18^\mathrm h\).</div><div class="trap"><strong>Error típico.</strong> No confundas oblicuidad con ascensión recta.</div></div></details>
+</article>
+
+<article class="card variant-card">
+<div class="meta"><span class="badge">semi-real</span><span class="badge">Variante 2</span></div>
+<h4>Variante 2 — \(\delta=+\varepsilon\)</h4>
+<div class="statement"><strong>Enunciado real/semi-real.</strong><br>Si una estrella de declinación \(\delta=+\varepsilon\) está situada en la eclíptica, halle \(\alpha\) y \(\lambda\).</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>Parte común: \(\beta=0\), \(\sin\delta=\sin\varepsilon\sin\lambda\).</li>
+<li>Si \(\delta=+\varepsilon\), \(\sin\lambda=1\), luego \(\lambda=90^\circ\).</li>
+<li>En ese punto, \(\alpha=90^\circ=6^\mathrm h\).</li>
+</ol><div class="result"><strong>Resultado.</strong> \(\lambda=90^\circ\), \(\alpha=6^\mathrm h\).</div><div class="trap"><strong>Error típico.</strong> Es el caso simétrico del anterior.</div></div></details>
+</article></section>
+<section class="problem" id="b2_p3"><h3>Problema 3 — Relación solar entre \(\alpha\), \(\delta\), \(\varepsilon\)</h3>
+<article class="card variant-card">
+<div class="meta"><span class="badge">semi-real histórico</span><span class="badge">Variante 1</span></div>
+<h4>Variante 1 — Demostrar \(\sin\alpha=\tan\delta\cot\varepsilon\)</h4>
+<div class="statement"><strong>Enunciado real/semi-real.</strong><br>Demuestre que para el Sol entre el equinoccio de primavera y el solsticio de verano se cumple \(\sin\alpha=\tan\delta\cot\varepsilon\).</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>El Sol está en la eclíptica: \(\beta=0\).</li>
+<li>Use:</li>
+</ol><div class="formula">\[\sin\delta=\sin\varepsilon\sin\lambda,\qquad \cos\delta\sin\alpha=\cos\varepsilon\sin\lambda\]</div>
+<ol start="3">
+<li>De la primera: \(\sin\lambda=\sin\delta/\sin\varepsilon\).</li>
+<li>Sustituya en la segunda y divida por \(\cos\delta\).</li>
+</ol><div class="result"><strong>Resultado.</strong> \(\sin\alpha=\tan\delta\cot\varepsilon\).</div><div class="trap"><strong>Error típico.</strong> Hay que fijar cuadrante: entre equinoccio y solsticio, \(0\le\alpha\le90^\circ\).</div></div></details>
+</article></section>
+<section class="problem" id="b2_p4"><h3>Problema 4 — Latitud eclíptica para correcciones</h3>
+<article class="card variant-card">
+<div class="meta"><span class="badge">E01.4 / E10.4</span><span class="badge">Variante 1</span></div>
+<h4>Variante 1 — Obtener \(\beta\) desde \(\alpha,\delta\)</h4>
+<div class="statement"><strong>Enunciado real/semi-real.</strong><br>Dada una estrella de coordenadas ecuatoriales \(\alpha,\delta\), calcule su latitud eclíptica \(\beta\) para estudiar aberración o paralaje.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>Use la transformación inversa:</li>
+</ol><div class="formula">\[\sin\beta=\sin\delta\cos\varepsilon-\cos\delta\sin\varepsilon\sin\alpha\]</div>
+<ol start="2">
+<li>Calcule \(\beta=\arcsin(\sin\beta)\).</li>
+<li>Con \(\beta\) ya se activan los patrones de aberración/paralaje.</li>
+</ol><div class="result"><strong>Resultado estructural.</strong> \(\beta=\arcsin(\sin\delta\cos\varepsilon-\cos\delta\sin\varepsilon\sin\alpha)\).</div><div class="trap"><strong>Error típico.</strong> En aberración, el primer paso real suele ser hallar \(\beta\), no usar \(k\).</div></div></details>
+</article></section></section>
+<section class="page" id="b3"><h2>Bloque 3 — Órbitas elípticas, anomalías y tiempos</h2><p class="block-lead">Cuerpos menores, satélites y planetas enanos. Mismo núcleo: \(q,Q,a,e,p,b,E,f,M\).</p><section class="problem" id="b3_p1"><h3>Problema 1 — Elementos desde perihelio y afelio</h3>
+<article class="card variant-card">
+<div class="meta"><span class="badge">E28.3 / E29.3</span><span class="badge">Variante 1</span></div>
+<h4>Variante 1 — Dados \(q\) y \(Q\)</h4>
+<div class="statement"><strong>Enunciado real/semi-real.</strong><br>Las distancias al Sol en perihelio y afelio de un cuerpo son \(q\) y \(Q\). Halle \(a,e,b,p\).</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>Relaciones básicas: \(q=a(1-e)\), \(Q=a(1+e)\).</li>
+<li>Sumando: \(a=(q+Q)/2\).</li>
+<li>Restando: \(e=(Q-q)/(Q+q)\).</li>
+<li>Después: \(b=a\sqrt{1-e^2}\), \(p=a(1-e^2)\).</li>
+</ol><div class="result"><strong>Resultado.</strong> \(a=(q+Q)/2\), \(e=(Q-q)/(Q+q)\), \(b=a\sqrt{1-e^2}\), \(p=a(1-e^2)\).</div><div class="trap"><strong>Error típico.</strong> \(p\) no es el semieje menor.</div></div></details>
+</article>
+
+<article class="card variant-card">
+<div class="meta"><span class="badge">E07.4 / E10.2 / E23.4</span><span class="badge">Variante 2</span></div>
+<h4>Variante 2 — Dados \(q\) y \(e\)</h4>
+<div class="statement"><strong>Enunciado real/semi-real.</strong><br>La distancia al Sol en el perihelio de un asteroide es \(q\) y su excentricidad \(e\). Halle periodo y semieje menor.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>Parte común: \(q=a(1-e)\), por tanto \(a=q/(1-e)\).</li>
+<li>Semieje menor: \(b=a\sqrt{1-e^2}\).</li>
+<li>Si orbita alrededor del Sol y \(a\) está en UA: \(T^2=a^3\), luego \(T=a^{3/2}\) años.</li>
+</ol><div class="result"><strong>Resultado.</strong> \(a=q/(1-e)\), \(b=a\sqrt{1-e^2}\), \(T=a^{3/2}\) años.</div><div class="trap"><strong>Error típico.</strong> No uses \(T^2=a^3\) fuera de órbitas solares en años/UA.</div></div></details>
+</article>
+
+<article class="card variant-card">
+<div class="meta"><span class="badge">E03.2 / E08.3</span><span class="badge">Variante 3</span></div>
+<h4>Variante 3 — Dado \(p\) con \(q\) o \(Q\)</h4>
+<div class="statement"><strong>Enunciado real/semi-real.</strong><br>Sean \(Q\) o \(q\) y el semilatus rectum \(p\). Exprese \(e,a,b\).</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>Identidad común: \(p=a(1-e^2)=Q(1-e)=q(1+e)\).</li>
+<li>Si se da \(Q\): \(e=1-p/Q\), \(a=Q/(1+e)\).</li>
+<li>Si se da \(q\): \(e=p/q-1\), \(a=q/(1-e)\).</li>
+<li>En ambos casos: \(b=\sqrt{ap}\).</li>
+</ol><div class="result"><strong>Resultado.</strong> Con \(Q\): \(e=1-p/Q\). Con \(q\): \(e=p/q-1\). Siempre \(b=\sqrt{ap}\).</div><div class="trap"><strong>Error típico.</strong> Elegir mal \(Q(1-e)\) o \(q(1+e)\) cambia el signo de \(e\).</div></div></details>
+</article></section>
+<section class="problem" id="b3_p2"><h3>Problema 2 — Distancia con anomalía verdadera</h3>
+<article class="card variant-card">
+<div class="meta"><span class="badge">E04.2 / E05.2 / E12.2</span><span class="badge">Variante 1</span></div>
+<h4>Variante 1 — Demostrar \(e\) con \(q,r_1,f_1\)</h4>
+<div class="statement"><strong>Enunciado real/semi-real.</strong><br>Sea \(q\) la distancia en el perihelio. Conocida \(r_1\) cuando la anomalía verdadera es \(f_1\), demuestre una expresión para \(e\).</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>Ecuación polar: \(r=p/(1+e\cos f)\).</li>
+<li>Como \(p=q(1+e)\): \(r_1=q(1+e)/(1+e\cos f_1)\).</li>
+<li>Multiplique en cruz y agrupe en \(e\): \(r_1+r_1e\cos f_1=q+qe\).</li>
+<li>Despeje.</li>
+</ol><div class="result"><strong>Resultado.</strong> \(\displaystyle e=\frac{r_1-q}{q-r_1\cos f_1}\).</div><div class="trap"><strong>Error típico.</strong> Comprueba al final que \(0<e<1\).</div></div></details>
+</article>
+
+<article class="card variant-card">
+<div class="meta"><span class="badge">E03.2</span><span class="badge">Variante 2</span></div>
+<h4>Variante 2 — Demostrar \(e\) con \(Q,r_1,f_1\)</h4>
+<div class="statement"><strong>Enunciado real/semi-real.</strong><br>Sea \(Q\) la distancia en el afelio. Conocida \(r_1\) cuando la anomalía verdadera es \(f_1\), demuestre \(e\).</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>Esto es igual que la variante 1 hasta la ecuación polar.</li>
+<li>Ahora \(p=Q(1-e)\).</li>
+<li>Entonces \(r_1=Q(1-e)/(1+e\cos f_1)\).</li>
+<li>Multiplique: \(r_1+r_1e\cos f_1=Q-Qe\).</li>
+<li>Despeje.</li>
+</ol><div class="result"><strong>Resultado.</strong> \(\displaystyle e=\frac{Q-r_1}{Q+r_1\cos f_1}\).</div><div class="trap"><strong>Error típico.</strong> No mezcles la fórmula de \(q\) con la de \(Q\).</div></div></details>
+</article>
+
+<article class="card variant-card">
+<div class="meta"><span class="badge">semi-real</span><span class="badge">Variante 3</span></div>
+<h4>Variante 3 — Caso \(f=90^\circ\)</h4>
+<div class="statement"><strong>Enunciado real/semi-real.</strong><br>Un cuerpo tiene \(a,e\). Halle su distancia cuando \(f=90^\circ\).</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>Use \(r=a(1-e^2)/(1+e\cos f)\).</li>
+<li>Para \(f=90^\circ\), \(\cos f=0\).</li>
+</ol><div class="result"><strong>Resultado.</strong> \(r=a(1-e^2)=p\).</div><div class="trap"><strong>Error típico.</strong> Este valor aparece dentro de problemas de velocidades.</div></div></details>
+</article></section>
+<section class="problem" id="b3_p3"><h3>Problema 3 — Anomalía excéntrica</h3>
+<article class="card variant-card">
+<div class="meta"><span class="badge">E01.2</span><span class="badge">Variante 1</span></div>
+<h4>Variante 1 — Un dato con \(E\) y otro con \(f\)</h4>
+<div class="statement"><strong>Enunciado real/semi-real.</strong><br>Un asteroide está a \(r_1=2.864\,\mathrm{UA}\) cuando \(E_1=30^\circ\), y a \(r_2=3.5923\,\mathrm{UA}\) cuando \(f_2=135^\circ\). Calcule \(a,e\).</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>Dato con anomalía excéntrica: \(r_1=a(1-e\cos E_1)\).</li>
+<li>Dato con anomalía verdadera: \(r_2=a(1-e^2)/(1+e\cos f_2)\).</li>
+<li>Sustituya:</li>
+</ol><div class="formula">\[2.864=a(1-e\cos30^\circ),\qquad 3.5923=\frac{a(1-e^2)}{1+e\cos135^\circ}\]</div>
+<ol start="4"><li>Resuelva el sistema y escoja la solución elíptica.</li></ol>
+<div class="result"><strong>Resultado.</strong> \(a\simeq3.287\,\mathrm{UA}\), \(e\simeq0.149\).</div><div class="trap"><strong>Error típico.</strong> Si el OCR muestra \(e<5\), marcar duda: para elipse debe ser \(e<1\).</div></div></details>
+</article>
+
+<article class="card variant-card">
+<div class="meta"><span class="badge">semi-real</span><span class="badge">Variante 2</span></div>
+<h4>Variante 2 — \(M\) desde \(E\)</h4>
+<div class="statement"><strong>Enunciado real/semi-real.</strong><br>Dada una anomalía excéntrica \(E\), halle la anomalía media y el tiempo desde perihelio.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>Ecuación de Kepler:</li>
+</ol><div class="formula">\[M=E-e\sin E\]</div>
+<ol start="2">
+<li>Con \(n=2\pi/T\), \(M=n(t-\tau)\).</li>
+<li>Luego \(t-\tau=M/n\).</li>
+</ol><div class="result"><strong>Resultado.</strong> \(M=E-e\sin E\), \(t-\tau=M/n\).</div><div class="trap"><strong>Error típico.</strong> Para evaluar \(M\), \(E\) debe estar en radianes.</div></div></details>
+</article></section>
+<section class="problem" id="b3_p4"><h3>Problema 4 — Excentricidad mínima</h3>
+<article class="card variant-card">
+<div class="meta"><span class="badge">E07.2 / E23.2 / E25.2 / E29.4</span><span class="badge">Variante 1</span></div>
+<h4>Variante 1 — \(r=7a/5\)</h4>
+<div class="statement"><strong>Enunciado real/semi-real.</strong><br>Calcule el valor mínimo posible de la excentricidad si en algún punto de la órbita se cumple \(r=7a/5\).</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>En una elipse, \(a(1-e)\le r\le a(1+e)\).</li>
+<li>Como \(7a/5=1.4a>a\), debe cumplirse \(a(1+e)\ge1.4a\).</li>
+<li>Por tanto \(e\ge0.4\).</li>
+</ol><div class="result"><strong>Resultado.</strong> \(e_\mathrm{min}=2/5=0.4\).</div><div class="trap"><strong>Error típico.</strong> En el mínimo, ese punto coincide con el afelio.</div></div></details>
+</article>
+
+<article class="card variant-card">
+<div class="meta"><span class="badge">semi-real</span><span class="badge">Variante 2</span></div>
+<h4>Variante 2 — \(r=7a/6\) o \(r=5a/3\)</h4>
+<div class="statement"><strong>Enunciado real/semi-real.</strong><br>Repita el cálculo para \(r=7a/6\) y \(r=5a/3\).</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>Esto es lo mismo que la variante 1 con \(r=\kappa a\), \(\kappa>1\).</li>
+<li>La regla es \(e_\mathrm{min}=\kappa-1\).</li>
+<li>Para \(7a/6\): \(e_\mathrm{min}=1/6\).</li>
+<li>Para \(5a/3\): \(e_\mathrm{min}=2/3\).</li>
+</ol><div class="result"><strong>Resultado.</strong> \(1/6\) y \(2/3\).</div><div class="trap"><strong>Error típico.</strong> No hace falta resolver toda la órbita.</div></div></details>
+</article></section></section>
+<section class="page" id="b4"><h2>Bloque 4 — Velocidades orbitales, tercera ley y masas</h2><p class="block-lead">Cuando el enunciado menciona velocidad, masa del planeta, periodo o semieje de satélite, cambia el primer paso: entra \(\mu=GM\).</p><section class="problem" id="b4_p1"><h3>Problema 1 — Razón de velocidades</h3>
+<article class="card variant-card">
+<div class="meta"><span class="badge">E08.2</span><span class="badge">Variante 1</span></div>
+<h4>Variante 1 — \(v_p=7v_A\)</h4>
+<div class="statement"><strong>Enunciado real/semi-real.</strong><br>Calcule la excentricidad de un satélite para que la velocidad en el periastro sea 7 veces la del apoastro.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>En periastro y apoastro la velocidad es transversal.</li>
+<li>Conservación del momento angular específico: \(qv_p=Qv_A\).</li>
+<li>Entonces:</li>
+</ol><div class="formula">\[\frac{v_p}{v_A}=\frac{Q}{q}=\frac{1+e}{1-e}\]</div>
+<ol start="4"><li>Imponga \((1+e)/(1-e)=7\), luego \(e=3/4\).</li></ol>
+<div class="result"><strong>Resultado.</strong> \(e=0.75\).</div><div class="trap"><strong>Error típico.</strong> Este subtipo se resuelve mejor con momento angular que con vis-viva.</div></div></details>
+</article>
+
+<article class="card variant-card">
+<div class="meta"><span class="badge">E09.2</span><span class="badge">Variante 2</span></div>
+<h4>Variante 2 — \(v_p=nv_A\)</h4>
+<div class="statement"><strong>Enunciado real/semi-real.</strong><br>Calcule \(e\) si \(v_p=n v_A\).</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>Parte común: \((1+e)/(1-e)=n\).</li>
+<li>Despeje: \(1+e=n-ne\), luego \(e(n+1)=n-1\).</li>
+</ol><div class="result"><strong>Resultado.</strong> \(\displaystyle e=\frac{n-1}{n+1}\).</div><div class="trap"><strong>Error típico.</strong> Si \(n=1\), debe salir \(e=0\).</div></div></details>
+</article></section>
+<section class="problem" id="b4_p2"><h3>Problema 2 — Componentes radial y transversal</h3>
+<article class="card variant-card">
+<div class="meta"><span class="badge">E01.3 / E10.3</span><span class="badge">Variante 1</span></div>
+<h4>Variante 1 — \(f=\pi/2\)</h4>
+<div class="statement"><strong>Enunciado real/semi-real.</strong><br>Calcule \(v_r\) y \(v_t\) de un satélite cuando la anomalía verdadera es \(f=\pi/2\), expresándolas en función de \(\mu\).</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>Primero \(p=a(1-e^2)\).</li>
+<li>Fórmulas:</li>
+</ol><div class="formula">\[v_r=\sqrt{\frac{\mu}{p}}e\sin f,\qquad v_t=\sqrt{\frac{\mu}{p}}(1+e\cos f)\]</div>
+<ol start="3">
+<li>Para \(f=\pi/2\): \(\sin f=1\), \(\cos f=0\).</li>
+</ol><div class="result"><strong>Resultado.</strong> \(v_r=e\sqrt{\mu/p}\), \(v_t=\sqrt{\mu/p}\).</div><div class="trap"><strong>Error típico.</strong> \(v_t\) no es la velocidad total.</div></div></details>
+</article>
+
+<article class="card variant-card">
+<div class="meta"><span class="badge">semi-real</span><span class="badge">Variante 2</span></div>
+<h4>Variante 2 — Velocidad total por vis-viva</h4>
+<div class="statement"><strong>Enunciado real/semi-real.</strong><br>Dado \(a\) y la distancia instantánea \(r\), halle la velocidad orbital total.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>Use la ecuación vis-viva:</li>
+</ol><div class="formula">\[v^2=\mu\left(\frac2r-\frac1a\right)\]</div>
+<ol start="2"><li>Si \(r=q\) o \(r=Q\), sustituya esas distancias.</li></ol>
+<div class="result"><strong>Resultado.</strong> \(v=\sqrt{\mu(2/r-1/a)}\).</div><div class="trap"><strong>Error típico.</strong> Solo vale para problema kepleriano de dos cuerpos.</div></div></details>
+</article></section>
+<section class="problem" id="b4_p3"><h3>Problema 3 — Masa del planeta por tercera ley</h3>
+<article class="card variant-card">
+<div class="meta"><span class="badge">E01.3 / E10.3 / E28.4</span><span class="badge">Variante 1</span></div>
+<h4>Variante 1 — Satélite despreciable</h4>
+<div class="statement"><strong>Enunciado real/semi-real.</strong><br>Un satélite tiene periodo \(T\) y semieje \(a\). La masa del satélite es despreciable. Calcule la masa del planeta.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>Tercera ley gravitatoria:</li>
+</ol><div class="formula">\[T^2=\frac{4\pi^2a^3}{G(M+m)}\]</div>
+<ol start="2">
+<li>Si \(m\ll M\): \(M=4\pi^2a^3/(GT^2)\).</li>
+<li>Antes de sustituir: \(a\) en metros, \(T\) en segundos.</li>
+</ol><div class="result"><strong>Resultado.</strong> \(\displaystyle M=\frac{4\pi^2a^3}{GT^2}\).</div><div class="trap"><strong>Error típico.</strong> Kilómetros y días no son compatibles con \(G\) en SI.</div></div></details>
+</article>
+
+<article class="card variant-card">
+<div class="meta"><span class="badge">semi-real Plutón-Caronte</span><span class="badge">Variante 2</span></div>
+<h4>Variante 2 — Masa secundaria no despreciable</h4>
+<div class="statement"><strong>Enunciado real/semi-real.</strong><br>Dos cuerpos orbitan con periodo \(T\) y semieje relativo \(a\). Calcule la masa total del sistema.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>No se desprecia ninguna masa. Use:</li>
+</ol><div class="formula">\[M_1+M_2=\frac{4\pi^2a^3}{GT^2}\]</div>
+<ol start="2">
+<li>Si además se da una razón \(M_2/M_1=\eta\), reparta: \(M_1=M_\mathrm{tot}/(1+\eta)\), \(M_2=\eta M_1\).</li>
+</ol><div class="result"><strong>Resultado estructural.</strong> Primero masa total; después reparto si dan razón.</div><div class="trap"><strong>Error típico.</strong> No usar la fórmula de masa de un planeta aislado si el secundario no es despreciable.</div></div></details>
+</article></section></section>
+<section class="page" id="b5"><h2>Bloque 5 — Geometría geocéntrica: elongación, fase, estacionarios y oposiciones</h2><p class="block-lead">Dibujo obligatorio: triángulo Sol–observador–objeto. Cambian nombres; no cambia el método.</p><section class="problem" id="b5_p1"><h3>Problema 1 — Máxima elongación</h3>
+<article class="card variant-card">
+<div class="meta"><span class="badge">E03.3 / E06.4 / E09.3</span><span class="badge">Variante 1</span></div>
+<h4>Variante 1 — Objeto interior visto desde exterior</h4>
+<div class="statement"><strong>Enunciado real/semi-real.</strong><br>Suponiendo órbitas circulares y coplanarias, halle la máxima elongación de la Tierra vista desde Júpiter, o de Júpiter visto desde Urano.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>La máxima elongación de un objeto interior visto desde uno exterior ocurre cuando la visual es tangente a la órbita interior.</li>
+<li>El triángulo es rectángulo en el objeto interior.</li>
+<li>Si \(r\) es el radio orbital interior y \(R\) el exterior:</li>
+</ol><div class="formula">\[\sin E_\mathrm{max}=\frac{r}{R},\qquad \Delta=\sqrt{R^2-r^2}\]</div>
+<div class="result"><strong>Resultado estructural.</strong> \(E_\mathrm{max}=\arcsin(r/R)\), \(\Delta=\sqrt{R^2-r^2}\).</div><div class="trap"><strong>Error típico.</strong> No pongas el ángulo de elongación en el Sol; está en el observador.</div></div></details>
+</article>
+
+<article class="card variant-card">
+<div class="meta"><span class="badge">E08 / semi-real</span><span class="badge">Variante 2</span></div>
+<h4>Variante 2 — Distancia en máxima elongación</h4>
+<div class="statement"><strong>Enunciado real/semi-real.</strong><br>Además de \(E_\mathrm{max}\), halle la distancia observador–objeto en ese momento.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>Esto está casi todo en la variante 1.</li>
+<li>Al ser triángulo rectángulo, la distancia visual es el cateto:</li>
+</ol><div class="formula">\[\Delta=\sqrt{R^2-r^2}\]</div>
+<div class="result"><strong>Resultado.</strong> \(\Delta=\sqrt{R^2-r^2}\).</div><div class="trap"><strong>Error típico.</strong> Usar ley del coseno general aquí es posible, pero más largo.</div></div></details>
+</article></section>
+<section class="problem" id="b5_p2"><h3>Problema 2 — Fase y elongación</h3>
+<article class="card variant-card">
+<div class="meta"><span class="badge">E02.3</span><span class="badge">Variante 1</span></div>
+<h4>Variante 1 — \(i=60^\circ\), \(E=60^\circ\)</h4>
+<div class="statement"><strong>Enunciado real/semi-real.</strong><br>Un objeto circular y coplanario tiene ángulo de fase \(i=60^\circ\) y elongación \(E=60^\circ\). Determine su distancia al Sol y si es interior o exterior.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>Triángulo Sol–Tierra–objeto.</li>
+<li>Ángulo en la Tierra: elongación \(E\). Ángulo en el objeto: fase \(i\).</li>
+<li>Por ley de senos, con \(R=1\,\mathrm{UA}\):</li>
+</ol><div class="formula">\[\frac{r}{\sin E}=\frac{R}{\sin i}\Rightarrow r=\frac{\sin E}{\sin i}\]</div>
+<ol start="4"><li>Con \(E=i=60^\circ\), \(r=1\,\mathrm{UA}\).</li></ol>
+<div class="result"><strong>Resultado.</strong> \(r=1\,\mathrm{UA}\). Caso frontera.</div><div class="trap"><strong>Error típico.</strong> Comprueba que \(E+i<180^\circ\).</div></div></details>
+</article>
+
+<article class="card variant-card">
+<div class="meta"><span class="badge">E02.3</span><span class="badge">Variante 2</span></div>
+<h4>Variante 2 — \(i=90^\circ\), \(E=30^\circ\)</h4>
+<div class="statement"><strong>Enunciado real/semi-real.</strong><br>El objeto tiene fase \(90^\circ\) y elongación \(30^\circ\). Determine distancia y tipo.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>Parte común: \(r=\sin E/\sin i\).</li>
+<li>\(r=\sin30^\circ/\sin90^\circ=0.5\,\mathrm{UA}\).</li>
+<li>Como \(r<1\), es interior.</li>
+</ol><div class="result"><strong>Resultado.</strong> \(r=0.5\,\mathrm{UA}\), objeto interior.</div><div class="trap"><strong>Error típico.</strong> Fase \(90^\circ\) no equivale siempre a máxima elongación.</div></div></details>
+</article>
+
+<article class="card variant-card">
+<div class="meta"><span class="badge">E02.3</span><span class="badge">Variante 3</span></div>
+<h4>Variante 3 — \(i=30^\circ\), \(E=90^\circ\)</h4>
+<div class="statement"><strong>Enunciado real/semi-real.</strong><br>El objeto tiene fase \(30^\circ\) y elongación \(90^\circ\). Determine distancia y tipo.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>Parte común: \(r=\sin E/\sin i\).</li>
+<li>\(r=\sin90^\circ/\sin30^\circ=2\,\mathrm{UA}\).</li>
+<li>Como \(r>1\), es exterior.</li>
+</ol><div class="result"><strong>Resultado.</strong> \(r=2\,\mathrm{UA}\), objeto exterior.</div><div class="trap"><strong>Error típico.</strong> Una elongación de \(90^\circ\) no implica planeta interior.</div></div></details>
+</article></section>
+<section class="problem" id="b5_p3"><h3>Problema 3 — Periodo sinódico y oposiciones</h3>
+<article class="card variant-card">
+<div class="meta"><span class="badge">E11.4 / E27.3</span><span class="badge">Variante 1</span></div>
+<h4>Variante 1 — Oposiciones vistas desde Júpiter</h4>
+<div class="statement"><strong>Enunciado real/semi-real.</strong><br>Desde Júpiter se observa otro planeta exterior en oposición. Hasta la siguiente oposición transcurre \(S\). Calcule el periodo orbital del segundo planeta.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>Las oposiciones se repiten con el periodo sinódico:</li>
+</ol><div class="formula">\[\frac1S=\left|\frac1{T_1}-\frac1{T_2}\right|\]</div>
+<ol start="2">
+<li>Si el observado es exterior a Júpiter, \(T_2>T_J\):</li>
+</ol><div class="formula">\[\frac1S=\frac1{T_J}-\frac1{T_2}\]</div>
+<ol start="3"><li>Despeje \(T_2=1/(1/T_J-1/S)\).</li></ol>
+<div class="result"><strong>Resultado.</strong> \(T_2=\frac{1}{1/T_J-1/S}\).</div><div class="trap"><strong>Error típico.</strong> El valor absoluto no sustituye la decisión física interior/exterior.</div></div></details>
+</article>
+
+<article class="card variant-card">
+<div class="meta"><span class="badge">semi-real</span><span class="badge">Variante 2</span></div>
+<h4>Variante 2 — Tierra y Marte</h4>
+<div class="statement"><strong>Enunciado real/semi-real.</strong><br>Calcule el tiempo entre oposiciones consecutivas de Marte vistas desde la Tierra.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>Parte común: \(1/S=|1/T_T-1/T_M|\).</li>
+<li>Con \(T_T=1\) y \(T_M>1\): \(1/S=1-1/T_M\).</li>
+</ol><div class="result"><strong>Resultado.</strong> \(S=1/(1-1/T_M)\) años.</div><div class="trap"><strong>Error típico.</strong> Periodo sinódico no es periodo orbital.</div></div></details>
+</article></section>
+<section class="problem" id="b5_p4"><h3>Problema 4 — Puntos estacionarios</h3>
+<article class="card variant-card">
+<div class="meta"><span class="badge">E05.3 / E12.3</span><span class="badge">Variante 1</span></div>
+<h4>Variante 1 — Semieje dado</h4>
+<div class="statement"><strong>Enunciado real/semi-real.</strong><br>Halle el ángulo de los puntos estacionarios de un planeta exterior de semieje \(a\), suponiendo órbitas circulares y coplanarias.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>Es un problema de velocidad angular aparente nula, no de máxima elongación.</li>
+<li>Con unidades solares, el movimiento medio del planeta es \(n=a^{-3/2}\).</li>
+<li>Una forma operativa de la condición estacionaria para planeta exterior es:</li>
+</ol><div class="formula">\[\cos\theta_e=\frac{a^2n+1}{a(1+n)},\qquad n=a^{-3/2}\]</div>
+<ol start="4">
+<li>Luego \(\theta_e=\arccos(\cdots)\).</li>
+<li>La distancia Tierra-planeta sale por ley del coseno: \(\Delta=\sqrt{a^2+1-2a\cos\theta_e}\).</li>
+</ol><div class="result"><strong>Resultado estructural.</strong> \(\theta_e\) por la condición estacionaria; \(\Delta\) por triángulo.</div><div class="trap"><strong>Error típico.</strong> Este subtipo conviene verificar con el libro si el enunciado usa otra definición de \(\theta_e\).</div></div></details>
+</article></section></section>
+<section class="page" id="b6"><h2>Bloque 6 — Correcciones: refracción, aberración, paralaje y movimiento propio</h2><p class="block-lead">Primero decide qué coordenada tienes: observada, verdadera, aparente, media o topocéntrica.</p><section class="problem" id="b6_p1"><h3>Problema 1 — Refracción</h3>
+<article class="card variant-card">
+<div class="meta"><span class="badge">semi-real histórico</span><span class="badge">Variante 1</span></div>
+<h4>Variante 1 — Corregir altura observada</h4>
+<div class="statement"><strong>Enunciado real/semi-real.</strong><br>Una estrella se observa con altura \(h_\mathrm{obs}\). Con refracción \(R=k\tan z\), halle la altura verdadera aproximada.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>La refracción eleva aparentemente el astro.</li>
+<li>Por tanto \(h_\mathrm{obs}=h_\mathrm{true}+R\).</li>
+<li>Con \(z_\mathrm{obs}=90^\circ-h_\mathrm{obs}\), use \(R\simeq k\tan z_\mathrm{obs}\).</li>
+</ol><div class="result"><strong>Resultado.</strong> \(h_\mathrm{true}\simeq h_\mathrm{obs}-k\tan z_\mathrm{obs}\).</div><div class="trap"><strong>Error típico.</strong> Para recuperar altura verdadera, se resta la refracción.</div></div></details>
+</article>
+
+<article class="card variant-card">
+<div class="meta"><span class="badge">semi-real primer vertical</span><span class="badge">Variante 2</span></div>
+<h4>Variante 2 — Primer vertical con refracción</h4>
+<div class="statement"><strong>Enunciado real/semi-real.</strong><br>Una estrella cruza el primer vertical con altura observada \(h_\mathrm{obs}\). Calcule \(\delta\) corrigiendo refracción.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>Primero corrija: \(h=h_\mathrm{obs}-k\tan(90^\circ-h_\mathrm{obs})\).</li>
+<li>Después use primer vertical: \(\sin\delta=\sin\varphi\sin h\).</li>
+</ol><div class="result"><strong>Resultado estructural.</strong> Refracción primero; coordenadas después.</div><div class="trap"><strong>Error típico.</strong> No uses altura observada si el enunciado pide coordenada verdadera.</div></div></details>
+</article></section>
+<section class="problem" id="b6_p2"><h3>Problema 2 — Aberración anual</h3>
+<article class="card variant-card">
+<div class="meta"><span class="badge">E01.4</span><span class="badge">Variante 1</span></div>
+<h4>Variante 1 — Semiejes desde \(\alpha,\delta\)</h4>
+<div class="statement"><strong>Enunciado real/semi-real.</strong><br>Calcule los semiejes y la excentricidad de la elipse de aberración de una estrella de coordenadas \(\alpha,\delta\).</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>Primero halle la latitud eclíptica:</li>
+</ol><div class="formula">\[\sin\beta=\sin\delta\cos\varepsilon-\cos\delta\sin\varepsilon\sin\alpha\]</div>
+<ol start="2">
+<li>La elipse de aberración tiene semieje mayor \(k\).</li>
+<li>Semieje menor: \(k|\sin\beta|\).</li>
+<li>Excentricidad geométrica: \(|\cos\beta|\).</li>
+</ol><div class="result"><strong>Resultado.</strong> \(a=k\), \(b=k|\sin\beta|\), \(e_\mathrm{ab}=|\cos\beta|\).</div><div class="trap"><strong>Error típico.</strong> Excentricidad de la elipse de aberración no es excentricidad orbital.</div></div></details>
+</article>
+
+<article class="card variant-card">
+<div class="meta"><span class="badge">E07.5 / E10.4</span><span class="badge">Variante 2</span></div>
+<h4>Variante 2 — Latitud doble o mitad</h4>
+<div class="statement"><strong>Enunciado real/semi-real.</strong><br>Sea \(e\) la excentricidad de la elipse de aberración para latitud \(\beta\). Halle la de latitud \(2\beta\) o \(\beta/2\).</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>Parte común: \(e=|\cos\beta|\).</li>
+<li>Para \(2\beta\): \(e_2=|\cos2\beta|=|2e^2-1|\).</li>
+<li>Para \(\beta/2\), si \(|\beta|\le90^\circ\): \(e_{1/2}=\sqrt{(1+e)/2}\).</li>
+</ol><div class="result"><strong>Resultado.</strong> \(e_2=|2e^2-1|\), \(e_{1/2}=\sqrt{(1+e)/2}\).</div><div class="trap"><strong>Error típico.</strong> No olvides el valor absoluto en \(e_2\).</div></div></details>
+</article></section>
+<section class="problem" id="b6_p3"><h3>Problema 3 — Paralaje</h3>
+<article class="card variant-card">
+<div class="meta"><span class="badge">semi-real histórico</span><span class="badge">Variante 1</span></div>
+<h4>Variante 1 — Elipse de paralaje anual</h4>
+<div class="statement"><strong>Enunciado real/semi-real.</strong><br>Una estrella tiene paralaje anual \(\pi\) y latitud eclíptica \(\beta\). Determine semiejes y excentricidad de su elipse de paralaje.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>La forma es análoga a la aberración, cambiando \(k\) por \(\pi\).</li>
+<li>Semieje mayor: \(\pi\).</li>
+<li>Semieje menor: \(\pi|\sin\beta|\).</li>
+<li>Excentricidad: \(|\cos\beta|\).</li>
+</ol><div class="result"><strong>Resultado.</strong> \(a_\pi=\pi\), \(b_\pi=\pi|\sin\beta|\), \(e_\pi=|\cos\beta|\).</div><div class="trap"><strong>Error típico.</strong> No confundas constante de aberración con paralaje.</div></div></details>
+</article>
+
+<article class="card variant-card">
+<div class="meta"><span class="badge">E27.4</span><span class="badge">Variante 2</span></div>
+<h4>Variante 2 — Paralaje horizontal con dos observatorios</h4>
+<div class="statement"><strong>Enunciado real/semi-real.</strong><br>Desde dos puntos del mismo meridiano de un cuerpo planetario, con latitudes conocidas, se observa simultáneamente un objeto. Las alturas ya están corregidas. Halle distancia o paralaje horizontal.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>Dibuje la sección meridiana: centro del cuerpo, dos observadores y objeto.</li>
+<li>El ángulo central entre observadores es \(\gamma=|\varphi_1-\varphi_2|\).</li>
+<li>La base de triangulación es \(B=2R\sin(\gamma/2)\).</li>
+<li>Convierta alturas a distancias cenitales: \(z_i=90^\circ-h_i\).</li>
+<li>Con los ángulos del triángulo observador 1–objeto–observador 2, aplique ley de senos.</li>
+<li>Si se pide paralaje horizontal: \(\sin\pi_h=R/\Delta\).</li>
+</ol><div class="result"><strong>Resultado operativo.</strong> Base + visuales + ley de senos; después \(\Delta=R/\sin\pi_h\).</div><div class="trap"><strong>Error típico.</strong> No volver a corregir refracción si el enunciado dice que ya está corregida.</div></div></details>
+</article></section>
+<section class="problem" id="b6_p4"><h3>Problema 4 — Movimiento propio</h3>
+<article class="card variant-card">
+<div class="meta"><span class="badge">E02.4</span><span class="badge">Variante 1</span></div>
+<h4>Variante 1 — Nueva \(\alpha\) desde nueva \(\delta\)</h4>
+<div class="statement"><strong>Enunciado real/semi-real.</strong><br>Una estrella tiene \(\alpha_0,\delta_0\), movimientos anuales \(\mu_\alpha,\mu_\delta\), y en el futuro \(\delta\) conocida. Calcule \(\alpha\).</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>La declinación da el intervalo temporal:</li>
+</ol><div class="formula">\[\Delta t=\frac{\delta-\delta_0}{\mu_\delta}\]</div>
+<ol start="2">
+<li>Luego \(\alpha=\alpha_0+\mu_\alpha\Delta t\).</li>
+<li>Si \(\alpha\) se da en tiempo, convierte arco a tiempo: \(15''=1^\mathrm s\).</li>
+</ol><div class="result"><strong>Resultado estructural.</strong> Primero \(\Delta t\), después \(\alpha\).</div><div class="trap"><strong>Error típico.</strong> No calcules \(\Delta t\) con \(\alpha\) si el dato futuro dado es \(\delta\).</div></div></details>
+</article>
+
+<article class="card variant-card">
+<div class="meta"><span class="badge">E02.4</span><span class="badge">Variante 2</span></div>
+<h4>Variante 2 — Movimiento propio total</h4>
+<div class="statement"><strong>Enunciado real/semi-real.</strong><br>Calcule el movimiento propio total \(\mu\) a partir de \(\mu_\alpha\) y \(\mu_\delta\).</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>Si el enunciado trata \(\mu_\alpha\) y \(\mu_\delta\) como variaciones anuales de coordenadas:</li>
+</ol><div class="formula">\[\mu=\sqrt{\mu_\alpha^2+\mu_\delta^2}\]</div>
+<ol start="2">
+<li>Si la notación del libro exige componente física en ascensión recta, use \(\mu_\alpha\cos\delta\).</li>
+</ol><div class="result"><strong>Resultado.</strong> \(\mu=\sqrt{\mu_\alpha^2+\mu_\delta^2}\), salvo convención explícita con \(\cos\delta\).</div><div class="trap"><strong>Error típico.</strong> Respetar la convención del enunciado.</div></div></details>
+</article></section></section>
+<section class="page" id="b7"><h2>Bloque 7 — Raros, demostraciones y OCR dudoso</h2><p class="block-lead">Bloque de protección: anomalías hiperbólicas, demostraciones puras y símbolos mal leídos.</p><section class="problem" id="b7_p1"><h3>Problema 1 — Derivada temporal de anomalías</h3>
+<article class="card variant-card">
+<div class="meta"><span class="badge">semi-real histórico</span><span class="badge">Variante 1</span></div>
+<h4>Variante 1 — Elipse: máximos y mínimos de \(\dot E\)</h4>
+<div class="statement"><strong>Enunciado real/semi-real.</strong><br>Halle los puntos de una órbita elíptica para los que \(\dot E\) es máxima y mínima.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>Ecuación de Kepler: \(M=E-e\sin E\).</li>
+<li>Derive: \(n=\dot E(1-e\cos E)\).</li>
+<li>Luego \(\dot E=n/(1-e\cos E)\).</li>
+<li>Máximo: denominador mínimo, \(E=0\), perihelio.</li>
+<li>Mínimo: denominador máximo, \(E=\pi\), afelio.</li>
+</ol><div class="result"><strong>Resultado.</strong> Máximo en perihelio; mínimo en afelio.</div><div class="trap"><strong>Error típico.</strong> No derivar anomalía verdadera si piden anomalía excéntrica.</div></div></details>
+</article>
+
+<article class="card variant-card">
+<div class="meta"><span class="badge">E02.2</span><span class="badge">Variante 2</span></div>
+<h4>Variante 2 — Hipérbola: máximos y mínimos de \(\dot F\)</h4>
+<div class="statement"><strong>Enunciado real/semi-real.</strong><br>Hállense los puntos de una órbita kepleriana hiperbólica para los que la variación temporal de la anomalía hiperbólica es máxima y mínima.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>Ecuación hiperbólica: \(M=e\sinh F-F\).</li>
+<li>Derive: \(n=\dot F(e\cosh F-1)\).</li>
+<li>Entonces \(\dot F=n/(e\cosh F-1)\).</li>
+<li>Como \(\cosh F\ge1\), el máximo está en \(F=0\), periastro.</li>
+<li>Cuando \(|F|\to\infty\), \(\dot F\to0\). Es un mínimo límite, no un punto finito.</li>
+</ol><div class="result"><strong>Resultado.</strong> Máximo en \(F=0\); mínimo asintótico en el infinito.</div><div class="trap"><strong>Error típico.</strong> Si el enunciado exige “punto” mínimo, hay que aclarar que no es finito.</div></div></details>
+</article></section>
+<section class="problem" id="b7_p2"><h3>Problema 2 — Demostraciones reutilizables</h3>
+<article class="card variant-card">
+<div class="meta"><span class="badge">E04.2 / E05.2 / E12.2</span><span class="badge">Variante 1</span></div>
+<h4>Variante 1 — Demostración orbital</h4>
+<div class="statement"><strong>Enunciado real/semi-real.</strong><br>Demuestre una fórmula de \(e\) usando \(q\) o \(Q\), \(r_1\) y \(f_1\).</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>Empiece siempre por \(r=p/(1+e\cos f)\).</li>
+<li>Si el dato es perihelio, use \(p=q(1+e)\).</li>
+<li>Si el dato es afelio, use \(p=Q(1-e)\).</li>
+<li>Sustituya \(r_1,f_1\), multiplique y agrupe en \(e\).</li>
+</ol><div class="result"><strong>Resultado.</strong> Con \(q\): \(e=(r_1-q)/(q-r_1\cos f_1)\). Con \(Q\): \(e=(Q-r_1)/(Q+r_1\cos f_1)\).</div><div class="trap"><strong>Error típico.</strong> En demostración, el punto de partida vale más que la fórmula memorizada.</div></div></details>
+</article>
+
+<article class="card variant-card">
+<div class="meta"><span class="badge">E31 / E01.1</span><span class="badge">Variante 2</span></div>
+<h4>Variante 2 — Demostración de transformación</h4>
+<div class="statement"><strong>Enunciado real/semi-real.</strong><br>Demuestre una relación entre \(\alpha,\delta,\varepsilon\) para un astro en la eclíptica.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>Astro en eclíptica: \(\beta=0\).</li>
+<li>Escriba las transformaciones:</li>
+</ol><div class="formula">\[\sin\delta=\sin\varepsilon\sin\lambda,\qquad \cos\delta\sin\alpha=\cos\varepsilon\sin\lambda\]</div>
+<ol start="3"><li>Elimine \(\lambda\) y fije cuadrante.</li></ol>
+<div class="result"><strong>Resultado operativo.</strong> Transformación + eliminación + cuadrante.</div><div class="trap"><strong>Error típico.</strong> Sin cuadrante, una relación trigonométrica puede tener dos soluciones.</div></div></details>
+</article></section>
+<section class="problem" id="b7_p3"><h3>Problema 3 — OCR dudoso</h3>
+<article class="card variant-card">
+<div class="meta"><span class="badge">E01.3</span><span class="badge">Variante 1</span></div>
+<h4>Variante 1 — \(f=\pi/2\) leído como \(7/2\)</h4>
+<div class="statement"><strong>Enunciado real/semi-real.</strong><br>Un OCR muestra anomalía verdadera \(f=7/2\), pero el PDF visual indica \(f=\pi/2\).</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>Si el ejercicio pide velocidades radial/transversal, \(f=\pi/2\) es un caso natural porque \(\sin f=1\), \(\cos f=0\).</li>
+<li>Resolver con \(7/2\) radianes da un problema distinto.</li>
+<li>En el documento de estudio, marca “pendiente de contraste visual” si no se ve el símbolo.</li>
+</ol><div class="result"><strong>Decisión.</strong> Usar \(\pi/2\) solo si se ha contrastado visualmente.</div><div class="trap"><strong>Error típico.</strong> Una \(\pi\) perdida cambia todo el cálculo.</div></div></details>
+</article>
+
+<article class="card variant-card">
+<div class="meta"><span class="badge">control general</span><span class="badge">Variante 2</span></div>
+<h4>Variante 2 — \(\mu,p,\varepsilon,e\) confundidos</h4>
+<div class="statement"><strong>Enunciado real/semi-real.</strong><br>El OCR confunde \(\mu\) con \(p\), \(\varepsilon\) con \(e\), o constantes mal leídas.</div>
+<details><summary>Solución paso a paso</summary><div class="solution"><ol>
+<li>\(\mu\): parámetro gravitatorio en dinámica orbital.</li>
+<li>\(p\): semilatus rectum.</li>
+<li>\(\varepsilon\): oblicuidad de la eclíptica.</li>
+<li>\(e\): excentricidad.</li>
+<li>Si el símbolo cambia la familia de fórmulas, contraste visual obligatorio.</li>
+</ol><div class="result"><strong>Regla.</strong> Símbolo dudoso = no archivar solución hasta contrastar.</div><div class="trap"><strong>Error típico.</strong> El OCR puede convertir un problema de coordenadas en uno orbital.</div></div></details>
+</article></section></section>
+<section class="page" id="formulario"><h2>Formulario final mínimo</h2><p class="block-lead">Solo lo necesario para reconstruir soluciones. Si no sabes cuándo usar una fórmula, vuelve al patrón correspondiente.</p>
+<div class="form-grid">
+<div class="form-card"><strong>Meridiano</strong><br>\(z=|\varphi-\delta|\), \(h=90^\circ-z\), \(H=0\).</div>
+<div class="form-card"><strong>Altura general</strong><br>\(\sin h=\sin\varphi\sin\delta+\cos\varphi\cos\delta\cos H\).</div>
+<div class="form-card"><strong>Primer vertical</strong><br>\(\sin\delta=\sin\varphi\sin h\), \(\cos H=\tan\delta/\tan\varphi\).</div>
+<div class="form-card"><strong>Orto/ocaso</strong><br>\(\cos H_0=-\tan\varphi\tan\delta\).</div>
+<div class="form-card"><strong>Tiempo sidéreo</strong><br>\(H=TSL-\alpha\), \(TSL=TSG+\lambda\), \(TSG=TSG_0+1.002737909\,TU\).</div>
+<div class="form-card"><strong>Eclíptica</strong><br>\(\sin\delta=\sin\beta\cos\varepsilon+\cos\beta\sin\varepsilon\sin\lambda\).</div>
+<div class="form-card"><strong>Latitud eclíptica</strong><br>\(\sin\beta=\sin\delta\cos\varepsilon-\cos\delta\sin\varepsilon\sin\alpha\).</div>
+<div class="form-card"><strong>Elipse</strong><br>\(q=a(1-e)\), \(Q=a(1+e)\), \(p=a(1-e^2)\), \(b=a\sqrt{1-e^2}\).</div>
+<div class="form-card"><strong>Anomalías</strong><br>\(r=a(1-e\cos E)\), \(r=p/(1+e\cos f)\), \(M=E-e\sin E\).</div>
+<div class="form-card"><strong>Velocidades</strong><br>\(v_r=\sqrt{\mu/p}e\sin f\), \(v_t=\sqrt{\mu/p}(1+e\cos f)\), \(v^2=\mu(2/r-1/a)\).</div>
+<div class="form-card"><strong>Tercera ley</strong><br>\(T^2=4\pi^2a^3/[G(M+m)]\).</div>
+<div class="form-card"><strong>Fase-elongación</strong><br>\(r/R=\sin E/\sin i\).</div>
+<div class="form-card"><strong>Máxima elongación</strong><br>\(\sin E_\mathrm{max}=r/R\), \(\Delta=\sqrt{R^2-r^2}\).</div>
+<div class="form-card"><strong>Sinódico</strong><br>\(1/S=|1/T_1-1/T_2|\).</div>
+<div class="form-card"><strong>Refracción</strong><br>\(h_\mathrm{true}\simeq h_\mathrm{obs}-k\tan z_\mathrm{obs}\).</div>
+<div class="form-card"><strong>Aberración/paralaje</strong><br>Mayor \(=k\) o \(\pi\); menor \(=k|\sin\beta|\) o \(\pi|\sin\beta|\); excentricidad \(=|\cos\beta|\).</div>
+</div></section>
+<section class="page" id="cierre"><h2>Cierre de cobertura</h2><div class="result"><strong>Cobertura entrenable.</strong> Coordenadas-tiempo, eclíptica, órbitas elípticas, dinámica orbital, geometría geocéntrica y correcciones. Riesgo residual: estacionarios con convenio distinto, hipérbolas, OCR dudoso y azimut según convención del libro.</div></section>
+</div></body></html>
