@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="robots" content="noindex, nofollow" />
+<meta name="color-scheme" content="light dark" />
+<title>Fundamentos de Física 3 — T5 — Sólidos, conducción, bandas y superconductividad</title>
+<link rel="icon" type="image/png" sizes="32x32" href="assets/icons/icon-32.png" />
+<link rel="icon" type="image/png" sizes="50x50" href="assets/icons/icon-50.png" />
+<link rel="apple-touch-icon" sizes="100x100" href="assets/icons/icon-100.png" />
+<meta name="theme-color" content="#3f4f75" />
+<script>
+window.MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] }, svg: { fontCache: 'global' } };
+</script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+<link rel="stylesheet" href="assets/styles.css" />
+<script defer src="assets/app.js"></script>
+</head>
+<body class="subject-general">
+<div class="wrap">
+<header class="cover">
+<div class="top-actions"><a class="back-link" href="index.html">← Volver al índice</a></div>
+<p class="eyebrow">UNED Física · Fundamentos de Física 3 · Tema 5</p>
+<h1>Fundamentos de Física 3 — T5 — Sólidos, conducción, bandas y superconductividad</h1>
+<p class="subtitle">Sólidos, conducción, energía de Fermi, bandas, semiconductores y superconductividad · Tipler-Mosca, capítulo 38</p>
+<div class="chips"><span class="chip">FF3</span><span class="chip">T5</span><span class="chip">Cap. 38</span><span class="chip">HTML responsive</span><span class="chip">estado: maquetado</span></div>
+</header>
+<div class="toolbar no-print"><nav><a href="#mapa">Mapa</a><a href="#prerrequisitos-minimos">Prerrequisitos</a><a href="#desarrollo-completo-del-capitulo">Desarrollo</a><a href="#conceptos-clave">Conceptos</a><a href="#errores-habituales">Errores</a><a href="#preguntas-orientadas-a-examen">Preguntas</a><a href="#respuestas-modelo">Respuestas</a><a href="#resumen-final-de-repaso">Resumen</a><a href="#checklist-de-dominio">Checklist</a></nav><div class="toolbar-actions"><button class="btn" onclick="printReady()">Imprimir / guardar PDF</button><button class="btn secondary" onclick="openAllDetails()">Abrir todo</button><button class="btn secondary" onclick="closeAllDetails()">Cerrar acordeones</button></div></div>
+<main>
+<section class="page map-page" id="mapa"><div class="page-head"><h2>Mapa clicable</h2><p class="section-lead">Ruta de lectura del tema 5 de Fundamentos de Física 3.</p></div><div class="concept-map">
+<a class="map-node" href="#prerrequisitos-minimos"><span>Prerrequisitos</span><small>Pauli · bandas · Fermi</small></a>
+<a class="map-node" href="#idea-central-del-capitulo"><span>Idea central</span><small>electrones en sólidos</small></a>
+<a class="map-node" href="#desarrollo-completo-del-capitulo"><span>Desarrollo</span><small>Drude · bandas · superconductividad</small></a>
+<a class="map-node" href="#conceptos-clave"><span>Conceptos</span><small>Fermi · semiconductores</small></a>
+<a class="map-node" href="#relaciones-entre-ideas"><span>Relaciones</span><small>red · bandas · portadores</small></a>
+<a class="map-node" href="#errores-habituales"><span>Errores</span><small>deriva · bandas · huecos</small></a>
+<a class="map-node" href="#preguntas-orientadas-a-examen"><span>Preguntas</span><small>práctica de examen</small></a>
+<a class="map-node" href="#respuestas-modelo"><span>Respuestas</span><small>soluciones guía</small></a>
+<a class="map-node" href="#resumen-final-de-repaso"><span>Resumen</span><small>síntesis</small></a>
+<a class="map-node" href="#checklist-de-dominio"><span>Checklist</span><small>autoevaluación</small></a>
+</div></section>
+<section class="page" id="ficha"><div class="page-head"><h2>Ficha del tema</h2></div>
+<div class="reading-block"><p>Fuente principal: Tipler &amp; Mosca, Physics for Scientists and Engineers, 6th ed., Chapter 38, “Solids”.</p></div>
+<div class="reading-block"><p>Asignatura: Fundamentos de Física III.</p></div>
+<div class="reading-block"><p>Tema: T5 — Sólidos, conducción, energía de Fermi, bandas, semiconductores y superconductividad.</p></div>
+</section>
+<section class="page" id="prerrequisitos-minimos">
+<div class="page-head"><h2>1. Prerrequisitos mínimos</h2></div>
+<div class="grid cards-grid">
+<article class="definition-card">
+<h3>Mecánica cuántica básica</h3>
+<p>Definición breve: descripción de sistemas microscópicos mediante estados, funciones de onda, cuantización de energía y probabilidades.</p>
+<p>Por qué es necesario: el capítulo insiste en que la conducción real en metales no se entiende bien con una imagen clásica de electrones como bolitas que chocan; se necesita cuantización y estadística cuántica.</p>
+<p>Ejemplo mínimo: un electrón confinado no puede tener cualquier energía, sino ciertos niveles permitidos.</p>
+</article>
+<article class="definition-card">
+<h3>Principio de exclusión de Pauli</h3>
+<p>Definición breve: dos electrones no pueden ocupar exactamente el mismo estado cuántico.</p>
+<p>Por qué es necesario: explica por qué los electrones llenan niveles hasta una energía máxima, la energía de Fermi, incluso a temperatura cero.</p>
+<p>Ejemplo mínimo: en un mismo estado espacial caben dos electrones si tienen espines opuestos, pero no tres.</p>
+</article>
+<article class="definition-card">
+<h3>Distribución de Fermi-Dirac</h3>
+<p>Definición breve: función que da la probabilidad de ocupación de un estado de energía E por un fermión a temperatura T.</p>
+<p>Por qué es necesario: permite distinguir entre electrones térmicos clásicos y electrones de conducción en un metal real.</p>
+<p>Ejemplo mínimo: a T = 0 K, los estados por debajo de E_F están ocupados y los estados por encima están vacíos.</p>
+</article>
+<article class="definition-card">
+<h3>Energía potencial eléctrica</h3>
+<p>Definición breve: energía asociada a la interacción entre cargas eléctricas.</p>
+<p>Por qué es necesario: la estructura de cristales iónicos, como NaCl, se explica mediante atracción Coulombiana y repulsión a corta distancia.</p>
+<p>Ejemplo mínimo: dos iones de signos opuestos tienen energía potencial atractiva proporcional a -1/r.</p>
+</article>
+<article class="definition-card">
+<h3>Corriente, resistencia y resistividad</h3>
+<p>Definición breve: la corriente mide flujo de carga; la resistencia mide oposición al paso de corriente; la resistividad es una propiedad material.</p>
+<p>Por qué es necesario: el capítulo parte de la ley de Ohm y pregunta qué ocurre microscópicamente dentro de un sólido.</p>
+<p>Ejemplo mínimo: dos cables con la misma geometría pueden conducir distinto si sus resistividades son distintas.</p>
+</article>
+<article class="definition-card">
+<h3>Velocidad de deriva</h3>
+<p>Definición breve: velocidad media muy pequeña con la que avanzan los electrones bajo un campo eléctrico aplicado.</p>
+<p>Por qué es necesario: permite separar el movimiento microscópico rápido de los electrones de la corriente macroscópica.</p>
+<p>Ejemplo mínimo: en un metal los electrones se mueven deprisa, pero la velocidad neta asociada a la corriente es muy pequeña.</p>
+</article>
+<article class="definition-card">
+<h3>Modelo de partícula en una caja</h3>
+<p>Definición breve: sistema cuántico en el que una partícula confinada en una región solo admite ciertos niveles de energía.</p>
+<p>Por qué es necesario: el gas de electrones libres en un sólido se modela como electrones confinados en una caja tridimensional.</p>
+<p>Ejemplo mínimo: en una caja de longitud L aparecen números cuánticos n_x, n_y, n_z.</p>
+</article>
+<article class="definition-card">
+<h3>Bandas de energía</h3>
+<p>Definición breve: conjuntos de niveles energéticos permitidos que aparecen al juntar muchos átomos en un sólido.</p>
+<p>Por qué es necesario: son la clave para distinguir conductor, aislante y semiconductor.</p>
+<p>Ejemplo mínimo: si la banda de valencia está llena y la banda de conducción está muy separada, el material es aislante.</p>
+</article>
+<article class="definition-card">
+<h3>Temperatura y energía térmica kT</h3>
+<p>Definición breve: kT mide la escala energética asociada a la agitación térmica.</p>
+<p>Por qué es necesario: permite comparar la energía térmica disponible con la separación entre bandas o con E_F.</p>
+<p>Ejemplo mínimo: a temperatura ambiente, kT ≈ 0,026 eV.</p>
+</article>
+<article class="definition-card">
+<h3>Túnel cuántico</h3>
+<p>Definición breve: posibilidad de que una partícula atraviese una barrera aunque clásicamente no tenga energía suficiente.</p>
+<p>Por qué es necesario: aparece en diodos túnel, en uniones superconductor-aislante y en el efecto Josephson.</p>
+<p>Ejemplo mínimo: un electrón puede atravesar una capa aislante muy fina entre dos conductores.</p>
+</article>
+</div>
+</section>
+<section class="page" id="idea-central-del-capitulo">
+<div class="page-head"><h2>2. Idea central del capítulo</h2></div>
+<div class="reading-block"><p>El capítulo estudia cómo se comportan los electrones cuando los átomos dejan de estar aislados y forman un sólido. La pregunta física central es esta: por qué algunos materiales conducen bien la electricidad, otros casi no conducen, otros conducen de forma intermedia y controlable, y algunos pierden completamente su resistencia por debajo de cierta temperatura.</p></div>
+<div class="reading-block"><p>El punto de partida es la limitación del modelo clásico de Drude-Lorentz. Ese modelo imagina los electrones de conducción como partículas libres que se mueven entre choques con los iones de la red. Sirve para obtener una forma de la ley de Ohm y para relacionar la resistividad con la velocidad media y el recorrido libre medio. Pero falla cuando intenta calcular valores reales de resistividad y su dependencia con la temperatura. El fallo no está en que la imagen microscópica sea inútil, sino en interpretar clásicamente la velocidad de los electrones y sus colisiones.</p></div>
+<div class="reading-block"><p>La corrección decisiva es cuántica. En un metal, los electrones no se reparten las energías según Maxwell-Boltzmann, como un gas clásico, sino según Fermi-Dirac. A temperatura cero, los estados electrónicos se llenan hasta una energía máxima llamada energía de Fermi. A temperatura ordinaria, solo una pequeña fracción de electrones cerca de E_F puede cambiar de estado. Esto explica por qué los electrones de conducción tienen velocidades muy altas, por qué su contribución al calor específico es pequeña y por qué la resistividad no sigue la predicción clásica simple.</p></div>
+<div class="reading-block"><p>Después el capítulo da un salto conceptual: de electrones libres en metales a bandas de energía en sólidos. Cuando muchos átomos se aproximan para formar un cristal, los niveles atómicos individuales se desdoblan en muchísimos niveles muy próximos. En la práctica, aparecen bandas permitidas separadas por bandas prohibidas. La ocupación de esas bandas determina el tipo de sólido. Un conductor tiene estados disponibles muy cerca de los ocupados. Un aislante tiene una banda de valencia llena y una brecha grande hasta la banda de conducción. Un semiconductor tiene una brecha pequeña, de modo que la temperatura o el dopaje pueden crear portadores móviles.</p></div>
+<div class="reading-block"><p>El capítulo termina con superconductividad. Aquí el fenómeno ya no consiste en reducir la resistividad, sino en hacerla exactamente cero por debajo de una temperatura crítica. La explicación moderna que presenta el texto es la teoría BCS: los electrones se agrupan en pares de Cooper y aparece una brecha energética superconductora. Si los electrones no pueden dispersarse individualmente por los iones de la red, desaparece la resistencia eléctrica. El túnel y el efecto Josephson muestran que la superconductividad no es solo “muy buena conducción”, sino un estado cuántico colectivo con efectos macroscópicos.</p></div>
+<div class="reading-block"><p>Dentro de FF3, este capítulo actúa como puente entre cuántica básica y física de materiales. Reutiliza conceptos de partículas cuánticas, niveles de energía, espín, estadística y función de onda para explicar propiedades macroscópicas: estructura cristalina, resistividad, semiconductores, diodos, transistores, superconductores y distribución de electrones.</p></div>
+</section>
+<section class="page" id="desarrollo-completo-del-capitulo">
+<div class="page-head"><h2>3. Desarrollo completo del capítulo</h2></div>
+<h3 id="3-1-estructura-de-los-solidos">3.1. Estructura de los sólidos</h3>
+<div class="reading-block"><p>El capítulo empieza diferenciando gas, líquido y sólido por la relación entre energía térmica y fuerzas de interacción. En un gas, las partículas tienen suficiente energía cinética térmica para moverse casi libremente; las interacciones importan sobre todo durante choques breves. En un líquido, las partículas están más próximas y puede aparecer orden de corto alcance. En un sólido, la energía térmica es menor frente a las interacciones, y las partículas quedan en posiciones relativamente estables.</p></div>
+<div class="reading-block"><p>La diferencia importante no es solo “estar fijo” o “moverse”, sino el tipo de orden. Un cristal posee orden de largo alcance: una celda unidad se repite a través del sólido. Un sólido amorfo, como el vidrio, conserva cierto orden local pero no repite una estructura periódica a larga distancia. Por eso un cristal tiene un punto de fusión definido, mientras que un sólido amorfo tiende a ablandarse de forma más gradual al calentarse.</p></div>
+<div class="reading-block"><p>En un cristal, la celda unidad depende del tipo de enlace y del tamaño relativo de los átomos o iones. El texto menciona estructuras como cúbica centrada en las caras, cúbica centrada en el cuerpo y hexagonal compacta. En NaCl, los iones Na+ y Cl- no forman moléculas aisladas de NaCl; forman una red iónica donde cada ion está rodeado por iones de carga opuesta.</p></div>
+<div class="reading-block"><p>La estabilidad del cristal resulta de una competencia energética. A distancias grandes domina la atracción eléctrica entre iones de signos opuestos. A distancias demasiado pequeñas aparece repulsión por solapamiento de orbitales y por el principio de exclusión. El modelo total se escribe como una energía potencial con un término atractivo proporcional a -1/r y un término repulsivo de corto alcance:</p></div>
+<div class="formula-block">\[
+U(r) = -\alpha k e^2/r + A/r^n
+\]</div>
+<div class="reading-block"><p>Aquí α es la constante de Madelung, que resume la geometría de la red; A y n parametrizan la repulsión; r es la distancia entre vecinos. El equilibrio aparece cuando dU/dr = 0. Esta forma explica por qué hay una distancia interiónica estable: si r es demasiado grande, la atracción baja la energía; si r es demasiado pequeño, la repulsión sube la energía.</p></div>
+<div class="reading-block"><p>Ejemplo fijador: en un cristal iónico, no basta con mirar un par de iones aislados. La energía de un ion depende de muchos vecinos: los próximos de carga opuesta atraen, los de la misma carga repelen, y así sucesivamente. La constante de Madelung condensa esa suma geométrica.</p></div>
+<h3 id="3-2-imagen-microscopica-clasica-de-la-conduccion">3.2. Imagen microscópica clásica de la conducción</h3>
+<div class="reading-block"><p>La conducción eléctrica en metales se introduce mediante el modelo de electrones libres. Los electrones de conducción se mueven por el metal y, bajo un campo eléctrico, adquieren una pequeña velocidad de deriva. Al chocar con la red, pierden esa deriva y transfieren energía al sólido. Esa energía aparece macroscópicamente como calentamiento Joule.</p></div>
+<div class="reading-block"><p>El modelo lleva a una expresión de la resistividad:</p></div>
+<div class="formula-block">\[
+\rho = \frac{m_e v_{av}}{n_e e^2 \ell}
+\]</div>
+<div class="reading-block"><p>n_e es la densidad de electrones de conducción, v_av una velocidad media, e la carga elemental y ℓ el recorrido libre medio. La idea cualitativa es directa: más electrones libres reducen la resistividad; más recorrido libre medio también; mayor dispersión por la red aumenta la resistividad.</p></div>
+<div class="reading-block"><p>El recorrido libre medio puede estimarse clásicamente como</p></div>
+<div class="formula-block">\[
+\ell = \frac{1}{n_{ion} A}
+\]</div>
+<div class="reading-block"><p>donde n_ion es la densidad de iones de la red y A una sección eficaz de colisión. Esta imagen trata los iones como obstáculos geométricos. El problema es que, si se introducen velocidades térmicas clásicas y radios iónicos reales, salen valores incompatibles con la resistividad observada.</p></div>
+<div class="reading-block"><p>La consecuencia es importante: la ley de Ohm puede obtenerse en un modelo clásico, pero los parámetros microscópicos reales no son clásicos. El capítulo usa este fracaso como puerta de entrada a la corrección cuántica.</p></div>
+<div class="reading-block"><p>Ejemplo fijador: si se duplica la densidad de electrones libres y todo lo demás permanece igual, la expresión sugiere que la resistividad se reduce a la mitad. Pero el valor absoluto de ρ no puede calcularse bien sin interpretar cuánticamente v_av y ℓ.</p></div>
+<h3 id="3-3-interpretacion-cuantica-de-la-conduccion">3.3. Interpretación cuántica de la conducción</h3>
+<div class="reading-block"><p>La interpretación cuántica cambia dos elementos. Primero, la velocidad característica de los electrones no viene dada por una distribución clásica de velocidades térmicas. Viene ligada a la energía de Fermi. Segundo, la dispersión de electrones no se describe como choques de bolitas contra iones rígidos. Se describe como dispersión de ondas electrónicas por imperfecciones, vibraciones de la red y desviaciones respecto de una periodicidad perfecta.</p></div>
+<div class="reading-block"><p>En una red perfectamente periódica, una onda electrónica puede propagarse sin dispersarse. La resistencia aparece porque la red real no es perfecta: hay vibraciones térmicas, defectos, impurezas y fronteras de grano. Esto explica por qué la resistividad depende de la temperatura y por qué las impurezas producen resistividad residual incluso a bajas temperaturas.</p></div>
+<div class="reading-block"><p>El texto distingue así entre el éxito formal del modelo de Drude y el contenido físico correcto. La ecuación de resistividad sigue siendo útil, pero v_av y ℓ deben interpretarse con mecánica cuántica.</p></div>
+<div class="reading-block"><p>Ejemplo fijador: un cristal puro a temperatura baja puede tener resistividad muy pequeña porque hay pocas vibraciones térmicas que dispersen las ondas electrónicas. Una aleación puede mantener una resistividad apreciable porque las impurezas rompen la periodicidad aunque la temperatura sea baja.</p></div>
+<h3 id="3-4-electrones-libres-en-un-solido-y-energia-de-fermi">3.4. Electrones libres en un sólido y energía de Fermi</h3>
+<div class="reading-block"><p>El modelo de electrones libres trata los electrones de conducción como partículas cuánticas confinadas en una caja tridimensional del tamaño del sólido. Cada estado permitido se caracteriza por números cuánticos. Por el principio de Pauli, los electrones no pueden apilarse todos en el estado de mínima energía. Van llenando estados sucesivos.</p></div>
+<div class="reading-block"><p>A T = 0 K, todos los estados hasta cierta energía están ocupados y todos los superiores están vacíos. Esa energía límite es la energía de Fermi, E_F. Para la mayoría de metales está en el orden de varios electronvoltios, típicamente entre 5 eV y 10 eV. Esto es mucho mayor que kT a temperatura ambiente, lo que significa que la mayoría de electrones no puede cambiar de energía por agitación térmica ordinaria.</p></div>
+<div class="reading-block"><p>La dependencia de E_F con la densidad de electrones libres es:</p></div>
+<div class="formula-block">\[
+E_F = \frac{h^2}{8m_e}\left(\frac{3N}{\pi V}\right)^{2/3}
+\]</div>
+<div class="reading-block"><p>Lo que importa físicamente es la dependencia E_F ∝ (N/V)^(2/3). Cuanto mayor es la densidad de electrones libres, mayor es la energía hasta la que deben llenarse los estados. No porque los electrones “quieran” tener más energía, sino porque Pauli impide que ocupen todos los estados bajos.</p></div>
+<div class="reading-block"><p>La energía media a \(T = 0\) es:</p></div>
+<div class="formula-block">\[
+E_{av} = \frac{3}{5} E_F
+\]</div>
+<div class="reading-block"><p>La velocidad de Fermi es:</p></div>
+<div class="formula-block">\[
+u_F = \sqrt{\frac{2E_F}{m_e}}
+\]</div>
+<div class="reading-block"><p>La temperatura de Fermi es:</p></div>
+<div class="formula-block">\[
+T_F = \frac{E_F}{k}
+\]</div>
+<div class="reading-block"><p>Como T_F suele ser enorme frente a la temperatura ambiente, el gas de electrones está fuertemente degenerado. Esto explica por qué el tratamiento clásico falla: no se trata de un gas clásico caliente, sino de un gas cuántico lleno hasta E_F.</p></div>
+<div class="reading-block"><p>Ejemplo fijador: si E_F = 5,5 eV, entonces la velocidad de Fermi es del orden de 10^6 m/s. Esa velocidad no es la velocidad de deriva de la corriente. La deriva puede ser milímetros por segundo o menos; la velocidad de Fermi es la velocidad microscópica cuántica característica.</p></div>
+<h3 id="3-5-potencial-de-contacto-y-calor-especifico-electronico">3.5. Potencial de contacto y calor específico electrónico</h3>
+<div class="reading-block"><p>Cuando dos metales distintos se ponen en contacto, sus electrones no permanecen indiferentes. Si sus energías de Fermi son distintas, los electrones fluyen inicialmente del metal con mayor energía de Fermi hacia el de menor energía de Fermi hasta alcanzar equilibrio. En equilibrio, aparece una diferencia de potencial de contacto relacionada con las funciones de trabajo:</p></div>
+<div class="formula-block">\[
+V_{contact} = \frac{\phi_1 - \phi_2}{e}
+\]</div>
+<div class="reading-block"><p>La idea importante es que el equilibrio no significa “misma energía potencial eléctrica local”, sino igualdad del nivel de Fermi efectivo. La redistribución de carga crea un potencial que compensa la diferencia inicial.</p></div>
+<div class="reading-block"><p>El capítulo también corrige otra predicción clásica: el calor específico de los electrones de conducción. Si todos los electrones se comportaran como un gas clásico, deberían contribuir mucho al calor específico. Experimentalmente no ocurre. La razón es que solo los electrones cercanos a E_F pueden excitarse térmicamente; los más profundos no tienen estados libres cercanos a los que saltar. Por eso la contribución electrónica al calor específico es pequeña y proporcional a T/T_F.</p></div>
+<div class="reading-block"><p>Ejemplo fijador: aunque un metal tenga muchísimos electrones libres, no todos absorben energía térmica al calentar ligeramente el metal. Solo participa una capa estrecha de electrones alrededor de E_F.</p></div>
+<h3 id="3-6-teoria-de-bandas">3.6. Teoría de bandas</h3>
+<div class="reading-block"><p>La teoría de bandas es el núcleo conceptual del capítulo. Cuando dos átomos se acercan, sus niveles de energía se desdoblan por interacción y por el principio de exclusión. Si se juntan N átomos, cada nivel atómico da lugar a N niveles muy próximos. Para N enorme, esos niveles forman una banda casi continua.</p></div>
+<div class="reading-block"><p>Las bandas relevantes son la banda de valencia y la banda de conducción. La banda de valencia es la banda de mayor energía que contiene electrones en el estado fundamental. La banda de conducción es una banda superior con estados disponibles que permiten movimiento eléctrico. Entre ambas puede haber una brecha prohibida, E_g.</p></div>
+<div class="reading-block"><p>Un conductor tiene una banda parcialmente llena o bandas solapadas. Eso significa que hay estados vacíos disponibles con energías muy próximas. Un campo eléctrico puede cambiar ligeramente el estado de los electrones y generar corriente.</p></div>
+<div class="reading-block"><p>Un aislante tiene la banda de valencia llena y una gran brecha hasta la banda de conducción. Un campo eléctrico ordinario no puede promover electrones a la banda superior. La banda llena, por sí sola, no conduce: aunque haya electrones, no hay estados vacíos próximos que permitan reorganización neta.</p></div>
+<div class="reading-block"><p>Un semiconductor también tiene banda de valencia llena a baja temperatura, pero la brecha es pequeña. A temperatura ordinaria, algunos electrones pueden saltar a la banda de conducción. Al hacerlo dejan huecos en la banda de valencia. Tanto los electrones de conducción como los huecos pueden transportar corriente.</p></div>
+<div class="reading-block"><p>Ejemplo fijador: el silicio puro no conduce como un metal, pero tampoco es un aislante fuerte. Su brecha permite que temperatura, luz o dopaje modifiquen mucho su conductividad.</p></div>
+<h3 id="3-7-semiconductores">3.7. Semiconductores</h3>
+<div class="reading-block"><p>En un semiconductor intrínseco, los portadores aparecen por excitación térmica: electrones pasan de la banda de valencia a la banda de conducción, dejando huecos. La corriente puede verse como movimiento de electrones en la banda de conducción y movimiento efectivo de huecos en la banda de valencia.</p></div>
+<div class="reading-block"><p>El dopaje cambia radicalmente la conductividad. Añadir pequeñas cantidades de impurezas introduce niveles energéticos dentro de la brecha. Si la impureza aporta electrones débilmente ligados, se habla de semiconductor tipo n. Los niveles donadores quedan justo por debajo de la banda de conducción; con poca energía, esos electrones pasan a la banda de conducción.</p></div>
+<div class="reading-block"><p>Si la impureza acepta electrones, deja huecos móviles en la banda de valencia. Es un semiconductor tipo p. Los niveles aceptores quedan justo por encima de la banda de valencia. El transporte dominante se describe mediante huecos.</p></div>
+<div class="reading-block"><p>La clave es que el dopaje no tiene que ser grande. Una concentración muy pequeña de impurezas puede aumentar la densidad de portadores en muchos órdenes de magnitud. Por eso la electrónica de semiconductores se basa en controlar impurezas de forma precisa.</p></div>
+<div class="reading-block"><p>Ejemplo fijador: silicio dopado con un elemento pentavalente puede ser tipo n porque el quinto electrón queda débilmente ligado y puede actuar como portador. Silicio dopado con un elemento trivalente puede ser tipo p porque falta un electrón en los enlaces y aparece un hueco móvil.</p></div>
+<h3 id="3-8-uniones-y-dispositivos-semiconductores">3.8. Uniones y dispositivos semiconductores</h3>
+<div class="reading-block"><p>La sección sobre uniones está marcada como opcional en el capítulo, pero conviene dominarla a nivel conceptual porque conecta la teoría de bandas con dispositivos reales. Una unión pn se forma al tener una región tipo p y otra tipo n en el mismo cristal. Al ponerse en contacto, electrones y huecos se recombinan cerca de la frontera, dejando una zona de agotamiento con carga fija. Esa zona crea una barrera de potencial.</p></div>
+<div class="reading-block"><p>Un diodo conduce preferentemente en un sentido porque la polarización directa reduce la barrera de la unión pn, mientras que la polarización inversa la aumenta. Un diodo Zener aprovecha la ruptura en inversa a una tensión bien definida. Un diodo túnel usa dopaje fuerte para que el túnel cuántico sea relevante. Un transistor combina regiones p y n para que una pequeña señal de control produzca una variación grande de corriente.</p></div>
+<div class="reading-block"><p>El objetivo físico no es memorizar cada dispositivo, sino entender que la ingeniería electrónica surge de manipular bandas, brechas, niveles dopantes y barreras de potencial.</p></div>
+<div class="reading-block"><p>Ejemplo fijador: en una célula solar, la luz crea pares electrón-hueco y el campo interno de la unión separa las cargas, generando corriente.</p></div>
+<h3 id="3-9-superconductividad">3.9. Superconductividad</h3>
+<div class="reading-block"><p>La superconductividad aparece cuando la resistencia de ciertos materiales cae bruscamente a cero por debajo de una temperatura crítica T_c. No es una simple extrapolación de “menor resistividad al enfriar”. Es una transición a un estado cuántico colectivo distinto.</p></div>
+<div class="reading-block"><p>La teoría BCS explica el fenómeno mediante pares de Cooper. Dos electrones, a pesar de repelerse eléctricamente, pueden formar un estado ligado efectivo por interacción con la red cristalina. Cuando los electrones relevantes se organizan en pares, se abre una brecha energética E_g. Para dispersar un electrón individual habría que romper el par, lo que exige energía. Si las excitaciones disponibles no bastan para romper pares, no hay dispersión resistiva ordinaria y la resistencia es cero.</p></div>
+<div class="reading-block"><p>El capítulo menciona también el túnel en sistemas superconductor-aislante-conductor. Si una capa aislante muy fina separa un conductor normal y un superconductor, los electrones pueden tunelar si el voltaje aplicado proporciona la energía necesaria para romper un par de Cooper. Midiendo la corriente de túnel frente al voltaje se puede determinar la brecha superconductora.</p></div>
+<div class="reading-block"><p>En una unión Josephson, dos superconductores separados por una fina barrera aislante muestran corriente de túnel incluso sin voltaje aplicado: efecto Josephson dc. Si se aplica un voltaje constante, aparece una corriente alterna con frecuencia:</p></div>
+<div class="formula-block">\[
+f = \frac{2eV}{h}
+\]</div>
+<div class="reading-block"><p>Este resultado muestra que la superconductividad tiene coherencia cuántica macroscópica: una fase cuántica colectiva produce un efecto eléctrico medible.</p></div>
+<div class="reading-block"><p>Ejemplo fijador: resistencia cero significa que una corriente puede persistir sin disiparse. Pero el fenómeno exige estar por debajo de T_c y mantener condiciones que no destruyan el estado superconductor.</p></div>
+<h3 id="3-10-distribucion-de-fermi-dirac">3.10. Distribución de Fermi-Dirac</h3>
+<div class="reading-block"><p>La última sección formaliza la ocupación de estados electrónicos. El número de electrones entre \(E\) y \(E + dE\) se escribe como:</p></div>
+<div class="formula-block">\[
+n(E)\,dE=f(E)g(E)\,dE
+\]</div>
+<div class="reading-block"><p>Aquí g(E) es la densidad de estados: cuántos estados existen por intervalo de energía. f(E) es el factor de Fermi: qué probabilidad tiene cada estado de estar ocupado.</p></div>
+<div class="reading-block"><p>La densidad de estados para electrones libres crece como raíz de la energía:</p></div>
+<div class="formula-block">\[
+g(E) \propto V E^{1/2}
+\]</div>
+<div class="reading-block"><p>La función de Fermi-Dirac a T &gt; 0 es:</p></div>
+<div class="formula-block">\[
+f(E)=\frac{1}{\exp\left((E-E_F)/(kT)\right)+1}
+\]</div>
+<div class="reading-block"><p>A E = E_F, la probabilidad vale 1/2. Por debajo de E_F, la ocupación es cercana a 1; por encima, cercana a 0, salvo en una región de anchura energética del orden de kT. Esta función sustituye la intuición clásica: no todos los electrones cambian suavemente de energía con la temperatura; solo se difumina la frontera alrededor del nivel de Fermi.</p></div>
+<div class="reading-block"><p>Ejemplo fijador: a 300 K, kT ≈ 0,026 eV. Un estado 0,10 eV por debajo de E_F tiene una probabilidad de ocupación muy alta; uno 0,10 eV por encima tiene una probabilidad baja. La transición no es abrupta como a T = 0, pero sigue siendo estrecha comparada con E_F.</p></div>
+</section>
+<section class="page" id="conceptos-clave">
+<div class="page-head"><h2>4. Conceptos clave</h2></div>
+<div class="grid cards-grid">
+<article class="definition-card">
+<h3>Celda unidad</h3>
+<p>Definición precisa: unidad estructural mínima que, repetida periódicamente, genera la red cristalina.</p>
+<p>Explicación desarrollada: permite describir un cristal sin enumerar todos sus átomos. La simetría de la celda condiciona propiedades físicas como planos cristalinos, direcciones de conducción, difracción y empaquetamiento.</p>
+<p>Ejemplo: NaCl tiene estructura cúbica centrada en las caras.</p>
+<p>Relación con otros conceptos: conecta con red cristalina, enlace iónico, constante de Madelung y bandas.</p>
+<p>Posible examen: “Explique qué es una celda unidad y por qué es relevante en la descripción de un cristal.”</p>
+</article>
+<article class="definition-card">
+<h3>Sólido cristalino</h3>
+<p>Definición precisa: sólido con orden periódico de largo alcance.</p>
+<p>Explicación desarrollada: sus átomos, iones o moléculas se organizan repitiendo un patrón. Esa periodicidad permite tratar los electrones como ondas en una red y da origen a bandas de energía.</p>
+<p>Ejemplo: sal común, diamante, silicio cristalino.</p>
+<p>Relación: opuesto a sólido amorfo; base de la teoría de bandas.</p>
+<p>Posible examen: “Compare sólido cristalino y amorfo.”</p>
+</article>
+<article class="definition-card">
+<h3>Sólido amorfo</h3>
+<p>Definición precisa: sólido sin orden periódico de largo alcance, aunque pueda tener orden local.</p>
+<p>Explicación desarrollada: se forma a menudo cuando el enfriamiento impide que las partículas alcancen la configuración cristalina regular. No presenta un punto de fusión tan definido como un cristal.</p>
+<p>Ejemplo: vidrio.</p>
+<p>Relación: contrasta con cristal; afecta a propiedades térmicas y electrónicas.</p>
+<p>Posible examen: “Por qué el vidrio no se comporta como un cristal ideal al calentarse.”</p>
+</article>
+<article class="definition-card">
+<h3>Constante de Madelung</h3>
+<p>Definición precisa: factor geométrico que resume la contribución electrostática de la red iónica al potencial atractivo.</p>
+<p>Explicación desarrollada: en un cristal iónico, un ion interacciona no solo con sus vecinos inmediatos, sino con toda la red. La constante de Madelung condensa la suma alternante de atracciones y repulsiones Coulombianas.</p>
+<p>Ejemplo: en estructura fcc tipo NaCl, su valor es del orden de 1,75.</p>
+<p>Relación: entra en U(r) = -αke^2/r + A/r^n.</p>
+<p>Posible examen: “Qué representa α en la energía potencial de un cristal iónico.”</p>
+</article>
+<article class="definition-card">
+<h3>Energía de enlace cristalina</h3>
+<p>Definición precisa: energía asociada a la formación o separación de los constituyentes de un cristal.</p>
+<p>Explicación desarrollada: resulta de la competencia entre atracción eléctrica y repulsión a corta distancia. El mínimo de U(r) fija la distancia interiónica estable.</p>
+<p>Ejemplo: NaCl tiene distancia de equilibrio determinada por densidad y energía de disociación.</p>
+<p>Relación: depende de constante de Madelung, repulsión y geometría.</p>
+<p>Posible examen: “Justifique por qué existe una distancia de equilibrio en un cristal iónico.”</p>
+</article>
+<article class="definition-card">
+<h3>Modelo de Drude-Lorentz</h3>
+<p>Definición precisa: modelo clásico de conducción que trata los electrones libres como partículas que se aceleran entre colisiones con la red.</p>
+<p>Explicación desarrollada: explica cualitativamente la ley de Ohm y permite escribir la resistividad en función de densidad de electrones, velocidad media y recorrido libre medio, pero falla cuantitativamente.</p>
+<p>Ejemplo: ρ = m_e v_av/(n_e e^2 ℓ).</p>
+<p>Relación: antecedente del modelo cuántico de conducción.</p>
+<p>Posible examen: “Qué acierta y qué falla en el modelo clásico de conducción.”</p>
+</article>
+<article class="definition-card">
+<h3>Recorrido libre medio</h3>
+<p>Definición precisa: distancia media recorrida por un electrón entre dos eventos de dispersión.</p>
+<p>Explicación desarrollada: cuanto mayor es ℓ, menor es la resistividad. En la interpretación cuántica no es solo distancia entre choques geométricos, sino longitud entre procesos de dispersión de la onda electrónica.</p>
+<p>Ejemplo: impurezas reducen ℓ y aumentan ρ.</p>
+<p>Relación: aparece en resistividad, dispersión, impurezas y temperatura.</p>
+<p>Posible examen: “Cómo afecta el recorrido libre medio a la resistividad.”</p>
+</article>
+<article class="definition-card">
+<h3>Energía de Fermi</h3>
+<p>Definición precisa: a T = 0 K, energía del estado ocupado más alto por los electrones; a T &gt; 0, energía con probabilidad de ocupación 1/2.</p>
+<p>Explicación desarrollada: surge por el principio de Pauli. Los electrones llenan estados hasta E_F. No es energía térmica ordinaria; refleja la densidad de estados y la densidad de electrones.</p>
+<p>Ejemplo: en muchos metales E_F está entre 5 eV y 10 eV.</p>
+<p>Relación: conecta con velocidad de Fermi, temperatura de Fermi, distribución de Fermi-Dirac y conducción.</p>
+<p>Posible examen: “Explique el significado físico de la energía de Fermi.”</p>
+</article>
+<article class="definition-card">
+<h3>Temperatura de Fermi</h3>
+<p>Definición precisa: T_F = \frac{E_F}{k}.</p>
+<p>Explicación desarrollada: escala de temperatura equivalente a la energía de Fermi. Como T_F suele ser muy superior a la temperatura ambiente, el gas de electrones en un metal está degenerado.</p>
+<p>Ejemplo: E_F = 5 eV corresponde a una T_F enorme frente a 300 K.</p>
+<p>Relación: explica la pequeña contribución electrónica al calor específico.</p>
+<p>Posible examen: “Por qué a temperatura ambiente los electrones de un metal no se comportan como un gas clásico.”</p>
+</article>
+<article class="definition-card">
+<h3>Velocidad de Fermi</h3>
+<p>Definición precisa: velocidad asociada a la energía de Fermi, u_F = sqrt(2E_F/m_e).</p>
+<p>Explicación desarrollada: es una velocidad microscópica característica de los electrones cerca del nivel de Fermi. No debe confundirse con la velocidad de deriva.</p>
+<p>Ejemplo: del orden de 10^6 m/s para metales típicos.</p>
+<p>Relación: aparece en conducción cuántica y recorrido libre medio.</p>
+<p>Posible examen: “Diferencie velocidad de Fermi y velocidad de deriva.”</p>
+</article>
+<article class="definition-card">
+<h3>Densidad de estados</h3>
+<p>Definición precisa: número de estados cuánticos disponibles por intervalo de energía.</p>
+<p>Explicación desarrollada: permite pasar de niveles discretos a una descripción continua en sólidos. Para electrones libres tridimensionales crece como E^(1/2).</p>
+<p>Ejemplo: g(E)dE cuenta estados entre E y E + dE.</p>
+<p>Relación: n(E)dE = f(E)g(E)dE.</p>
+<p>Posible examen: “Qué papel desempeña g(E) en la distribución de electrones.”</p>
+</article>
+<article class="definition-card">
+<h3>Factor de Fermi</h3>
+<p>Definición precisa: probabilidad de que un estado de energía E esté ocupado por un electrón.</p>
+<p>Explicación desarrollada: a T = 0 es un escalón; a T &gt; 0 se suaviza alrededor de E_F. Es la parte estadística de la distribución electrónica.</p>
+<p>Ejemplo: f(E_F) = 1/2.</p>
+<p>Relación: se multiplica por densidad de estados para obtener número de electrones.</p>
+<p>Posible examen: “Interprete la función f(E) de Fermi-Dirac.”</p>
+</article>
+<article class="definition-card">
+<h3>Banda de valencia</h3>
+<p>Definición precisa: banda energética más alta que contiene electrones en el estado fundamental.</p>
+<p>Explicación desarrollada: sus electrones están ligados a la estructura del sólido. Si está completamente llena y separada de la banda de conducción, no permite conducción ordinaria.</p>
+<p>Ejemplo: en un semiconductor a baja T la banda de valencia está casi llena.</p>
+<p>Relación: se compara con banda de conducción y brecha prohibida.</p>
+<p>Posible examen: “Qué es la banda de valencia y qué ocurre si está llena.”</p>
+</article>
+<article class="definition-card">
+<h3>Banda de conducción</h3>
+<p>Definición precisa: banda de energía superior con estados disponibles en los que los electrones pueden contribuir a la corriente.</p>
+<p>Explicación desarrollada: para conducir hace falta que haya electrones en una banda con estados vacíos cercanos o que puedan entrar en ella desde la banda de valencia.</p>
+<p>Ejemplo: electrones excitados térmicamente en silicio pasan a la banda de conducción.</p>
+<p>Relación: separada de la banda de valencia por E_g.</p>
+<p>Posible examen: “Por qué los electrones en la banda de conducción son móviles.”</p>
+</article>
+<article class="definition-card">
+<h3>Brecha prohibida</h3>
+<p>Definición precisa: intervalo de energías no permitidas entre dos bandas.</p>
+<p>Explicación desarrollada: su tamaño determina si un sólido se comporta como conductor, semiconductor o aislante.</p>
+<p>Ejemplo: brecha grande en aislantes; brecha pequeña en semiconductores.</p>
+<p>Relación: clave para clasificación de sólidos.</p>
+<p>Posible examen: “Relacione tamaño de brecha prohibida con conductividad.”</p>
+</article>
+<article class="definition-card">
+<h3>Semiconductor intrínseco</h3>
+<p>Definición precisa: semiconductor puro cuya conducción se debe a excitación térmica de electrones desde valencia a conducción.</p>
+<p>Explicación desarrollada: produce pares electrón-hueco. Su conductividad aumenta con la temperatura.</p>
+<p>Ejemplo: silicio puro ideal.</p>
+<p>Relación: se diferencia de semiconductores dopados tipo n y tipo p.</p>
+<p>Posible examen: “Qué portadores existen en un semiconductor intrínseco.”</p>
+</article>
+<article class="definition-card">
+<h3>Semiconductor tipo n</h3>
+<p>Definición precisa: semiconductor dopado con impurezas donadoras que aportan electrones como portadores mayoritarios.</p>
+<p>Explicación desarrollada: los niveles donadores están cerca de la banda de conducción; poca energía libera electrones.</p>
+<p>Ejemplo: silicio con arsénico.</p>
+<p>Relación: opuesto complementario del tipo p; forma uniones pn.</p>
+<p>Posible examen: “Explique cómo el dopaje tipo n aumenta la conductividad.”</p>
+</article>
+<article class="definition-card">
+<h3>Semiconductor tipo p</h3>
+<p>Definición precisa: semiconductor dopado con impurezas aceptadoras que crean huecos como portadores mayoritarios.</p>
+<p>Explicación desarrollada: los niveles aceptores facilitan que electrones de la banda de valencia dejen huecos móviles.</p>
+<p>Ejemplo: silicio dopado con boro.</p>
+<p>Relación: complementario del tipo n; esencial en diodos y transistores.</p>
+<p>Posible examen: “Qué es un hueco y por qué se comporta como portador positivo.”</p>
+</article>
+<article class="definition-card">
+<h3>Unión pn</h3>
+<p>Definición precisa: frontera entre una región tipo p y una región tipo n en un semiconductor.</p>
+<p>Explicación desarrollada: aparece una zona de agotamiento y una barrera interna que permite rectificación.</p>
+<p>Ejemplo: diodo.</p>
+<p>Relación: base de células solares, LEDs, detectores y transistores.</p>
+<p>Posible examen: “Por qué un diodo conduce preferentemente en un sentido.”</p>
+</article>
+<article class="definition-card">
+<h3>Superconductividad</h3>
+<p>Definición precisa: estado en el que la resistencia eléctrica cae a cero por debajo de una temperatura crítica.</p>
+<p>Explicación desarrollada: no es conducción perfecta clásica, sino un fenómeno cuántico colectivo con pares de Cooper y brecha energética.</p>
+<p>Ejemplo: corriente persistente en un anillo superconductor.</p>
+<p>Relación: BCS, pares de Cooper, efecto Josephson.</p>
+<p>Posible examen: “Qué diferencia hay entre un conductor ideal y un superconductor.”</p>
+</article>
+<article class="definition-card">
+<h3>Par de Cooper</h3>
+<p>Definición precisa: par correlacionado de electrones que se comporta colectivamente en el estado superconductor.</p>
+<p>Explicación desarrollada: la interacción efectiva mediada por la red permite formar pares. Romper un par exige energía, lo que bloquea la dispersión resistiva ordinaria.</p>
+<p>Ejemplo: dos electrones correlacionados con momentos y espines opuestos en el marco BCS simple.</p>
+<p>Relación: causa microscópica de la brecha superconductora.</p>
+<p>Posible examen: “Explique el papel de los pares de Cooper en la resistencia cero.”</p>
+</article>
+<article class="definition-card">
+<h3>Brecha superconductora</h3>
+<p>Definición precisa: energía necesaria para romper un par de Cooper.</p>
+<p>Explicación desarrollada: si las excitaciones térmicas no superan esta brecha, el estado superconductor se mantiene sin dispersión resistiva.</p>
+<p>Ejemplo: se mide mediante túnel a través de una barrera aislante.</p>
+<p>Relación: BCS, túnel, T_c.</p>
+<p>Posible examen: “Cómo puede medirse la brecha superconductora mediante túnel.”</p>
+</article>
+<article class="definition-card">
+<h3>Efecto Josephson</h3>
+<p>Definición precisa: túnel coherente de pares de Cooper entre dos superconductores separados por una fina barrera aislante.</p>
+<p>Explicación desarrollada: en ausencia de voltaje puede haber corriente continua; con voltaje constante aparece corriente alterna de frecuencia f = \frac{2eV}{h}.</p>
+<p>Ejemplo: unión superconductor-aislante-superconductor.</p>
+<p>Relación: demuestra coherencia cuántica macroscópica.</p>
+<p>Posible examen: “Qué predice el efecto Josephson ac.”</p>
+</article>
+</div>
+</section>
+<section class="page" id="relaciones-entre-ideas">
+<div class="page-head"><h2>5. Relaciones entre ideas</h2></div>
+<div class="reading-block"><p>La primera relación fuerte es estructura → energía → estabilidad. Un sólido no es una colección arbitraria de átomos inmóviles. Su estructura depende de la minimización de energía potencial bajo restricciones geométricas y cuánticas. La atracción Coulombiana favorece la unión; la repulsión por solapamiento impide el colapso; el mínimo fija la distancia de equilibrio y la forma cristalina.</p></div>
+<div class="reading-block"><p>La segunda relación es periodicidad cristalina → estados electrónicos → bandas. La repetición de una celda unidad transforma los niveles discretos de los átomos aislados en bandas. La estructura no solo determina “dónde están los átomos”, sino qué energías electrónicas son posibles. Por eso la física del sólido no puede separarse de la cuántica.</p></div>
+<div class="reading-block"><p>La tercera relación es Pauli → energía de Fermi → conducción metálica. Los electrones llenan estados hasta E_F. A temperatura ordinaria no todos participan en la conducción ni en el calor específico; solo importan los estados cercanos a E_F. La imagen clásica falla porque presupone que todos los electrones responden térmicamente como un gas ordinario.</p></div>
+<div class="reading-block"><p>La cuarta relación es dispersión → resistividad. En una red ideal periódica, la onda electrónica no se dispersa como una partícula clásica chocando contra iones. La resistividad real nace de vibraciones, impurezas, defectos y desorden. Esto conecta temperatura, pureza cristalina y recorrido libre medio.</p></div>
+<div class="reading-block"><p>La quinta relación es ocupación de bandas → clasificación de materiales. Si hay estados vacíos cercanos, el sólido conduce. Si la banda llena está separada por una brecha grande, el sólido es aislante. Si la brecha es pequeña, puede ser semiconductor. Por tanto, conductor/aislante/semiconductor no se decide por “tener electrones” sino por tener estados disponibles accesibles.</p></div>
+<div class="reading-block"><p>La sexta relación es dopaje → niveles en la brecha → portadores. Una impureza no solo añade “átomos extra”; introduce niveles energéticos estratégicos. Los donadores crean electrones móviles; los aceptores crean huecos móviles. La conductividad se controla modificando la estructura de estados.</p></div>
+<div class="reading-block"><p>La séptima relación es unión pn → barrera interna → dispositivo. Al unir regiones tipo p y n aparece una zona de agotamiento y un campo interno. Esa barrera convierte la física de bandas en electrónica funcional: diodos, LEDs, fotodetectores, células solares y transistores.</p></div>
+<div class="reading-block"><p>La octava relación es interacción colectiva → superconductividad. En un conductor normal, la dispersión produce resistencia. En un superconductor, los electrones se organizan en pares de Cooper y aparece una brecha energética. El sistema completo actúa como un estado cuántico colectivo, no como electrones independientes.</p></div>
+<div class="reading-block"><p>La evolución histórica del capítulo sigue una línea clara: modelo clásico de Drude-Lorentz → fracaso cuantitativo → corrección cuántica con Fermi-Dirac → teoría de bandas → semiconductores tecnológicos → superconductividad como fenómeno cuántico colectivo.</p></div>
+<div class="reading-block"><p>Oposición importante: velocidad de deriva frente a velocidad de Fermi. La velocidad de deriva es la componente neta lenta que produce corriente. La velocidad de Fermi es una velocidad microscópica enorme asociada al llenado cuántico de estados.</p></div>
+<div class="reading-block"><p>Oposición importante: conductor frente a semiconductor. Un conductor ya tiene estados disponibles próximos al nivel ocupado. Un semiconductor necesita excitar portadores o introducir dopaje.</p></div>
+<div class="reading-block"><p>Oposición importante: resistencia pequeña frente a resistencia cero. En un metal puro frío la resistencia puede ser muy baja, pero no nula por impurezas y defectos. En un superconductor, por debajo de T_c, el mecanismo resistivo ordinario desaparece.</p></div>
+</section>
+<section class="page" id="errores-habituales">
+<div class="page-head"><h2>6. Errores habituales</h2></div>
+<details class="accordion accordion-error"><summary>Error: “Un metal conduce porque sus electrones se mueven rápido.”</summary>
+<p>Por qué está mal: todos los electrones microscópicos pueden tener velocidades grandes, pero la conducción requiere respuesta neta a un campo y estados disponibles.</p>
+<p>Corrección: un metal conduce porque tiene electrones cerca de estados vacíos accesibles y una banda parcialmente ocupada o solapada.</p>
+<p>Respuesta incorrecta: “Conduce porque los electrones tienen mucha velocidad térmica.”</p>
+<p>Respuesta correcta: “Conduce porque hay estados electrónicos disponibles próximos al nivel de Fermi, de modo que un campo puede redistribuir la ocupación y producir corriente.”</p>
+</details>
+<details class="accordion accordion-error"><summary>Error: “La velocidad de Fermi es la velocidad de la corriente.”</summary>
+<p>Por qué está mal: la corriente se asocia a la velocidad de deriva, que es mucho menor.</p>
+<p>Corrección: la velocidad de Fermi es una velocidad microscópica debida al llenado cuántico de estados.</p>
+<p>Respuesta incorrecta: “Los electrones avanzan por el cable a 10^6 m/s.”</p>
+<p>Respuesta correcta: “Los electrones tienen velocidades microscópicas del orden de la velocidad de Fermi, pero la deriva neta que produce corriente es mucho menor.”</p>
+</details>
+<details class="accordion accordion-error"><summary>Error: “A T = 0 los electrones no tienen energía.”</summary>
+<p>Por qué está mal: por Pauli, los electrones llenan estados hasta E_F aunque no haya energía térmica.</p>
+<p>Corrección: a T = 0 se elimina la excitación térmica, no la energía cuántica de ocupación.</p>
+<p>Respuesta incorrecta: “E_F vale cero a 0 K.”</p>
+<p>Respuesta correcta: “A 0 K los estados están ocupados hasta E_F; esa energía suele ser de varios eV en metales.”</p>
+</details>
+<details class="accordion accordion-error"><summary>Error: “Todos los electrones de un metal contribuyen al calor específico.”</summary>
+<p>Por qué está mal: solo los electrones cerca de E_F pueden excitarse térmicamente.</p>
+<p>Corrección: la contribución electrónica es pequeña y proporcional a T/T_F.</p>
+<p>Respuesta incorrecta: “El calor específico electrónico debe ser enorme porque hay muchos electrones libres.”</p>
+<p>Respuesta correcta: “Solo una fracción de orden T/T_F puede absorber energía térmica.”</p>
+</details>
+<details class="accordion accordion-error"><summary>Error: “Una banda llena conduce mucho porque tiene muchos electrones.”</summary>
+<p>Por qué está mal: una banda completamente llena no permite corriente neta si no hay estados vacíos cercanos.</p>
+<p>Corrección: la conducción requiere estados ocupados y vacíos accesibles.</p>
+<p>Respuesta incorrecta: “La banda de valencia llena conduce porque está llena de electrones.”</p>
+<p>Respuesta correcta: “Una banda llena no conduce en condiciones ordinarias; hacen falta estados vacíos próximos o excitación a la banda de conducción.”</p>
+</details>
+<details class="accordion accordion-error"><summary>Error: “Un aislante no tiene electrones.”</summary>
+<p>Por qué está mal: tiene electrones, pero están en bandas llenas separadas por una gran brecha.</p>
+<p>Corrección: el problema no es ausencia de electrones, sino ausencia de estados accesibles para conducción.</p>
+<p>Respuesta incorrecta: “No conduce porque no hay cargas.”</p>
+<p>Respuesta correcta: “No conduce porque la banda de valencia está llena y la brecha hasta conducción es grande.”</p>
+</details>
+<details class="accordion accordion-error"><summary>Error: “Un semiconductor es simplemente un mal conductor.”</summary>
+<p>Por qué está mal: su conductividad se controla por temperatura, luz y dopaje debido a su brecha pequeña.</p>
+<p>Corrección: es un material con estructura de bandas específica y portadores controlables.</p>
+<p>Respuesta incorrecta: “Es como un metal, pero con más resistencia.”</p>
+<p>Respuesta correcta: “Tiene una brecha pequeña entre valencia y conducción, lo que permite generar portadores de forma controlada.”</p>
+</details>
+<details class="accordion accordion-error"><summary>Error: “El dopaje tipo p añade cargas positivas reales libres.”</summary>
+<p>Por qué está mal: los portadores positivos son huecos, no protones ni iones positivos móviles.</p>
+<p>Corrección: un hueco es una vacante electrónica móvil en una banda casi llena.</p>
+<p>Respuesta incorrecta: “El boro mete protones que se mueven.”</p>
+<p>Respuesta correcta: “El dopaje aceptador crea huecos móviles en la banda de valencia.”</p>
+</details>
+<details class="accordion accordion-error"><summary>Error: “Un diodo conduce en un sentido por tener un lado positivo y otro negativo permanentemente.”</summary>
+<p>Por qué está mal: la rectificación depende de la barrera de la unión y de cómo la polarización externa la modifica.</p>
+<p>Corrección: polarización directa reduce barrera; inversa la aumenta.</p>
+<p>Respuesta incorrecta: “La corriente pasa porque el lado p atrae electrones siempre.”</p>
+<p>Respuesta correcta: “La unión pn tiene una barrera interna; el sesgo directo facilita el paso de portadores y el inverso lo dificulta.”</p>
+</details>
+<details class="accordion accordion-error"><summary>Error: “Superconductividad significa resistividad muy pequeña.”</summary>
+<p>Por qué está mal: la propiedad distintiva es resistencia cero bajo condiciones críticas.</p>
+<p>Corrección: es una fase cuántica colectiva con pares de Cooper y brecha energética.</p>
+<p>Respuesta incorrecta: “Un superconductor es un metal excelente.”</p>
+<p>Respuesta correcta: “Por debajo de T_c entra en un estado con resistencia nula y propiedades cuánticas colectivas.”</p>
+</details>
+<details class="accordion accordion-error"><summary>Error: “Los pares de Cooper son electrones pegados por atracción eléctrica directa.”</summary>
+<p>Por qué está mal: los electrones se repelen eléctricamente; el acoplamiento efectivo aparece mediado por la red.</p>
+<p>Corrección: la teoría BCS describe una atracción efectiva asociada a la interacción electrón-red.</p>
+<p>Respuesta incorrecta: “Dos electrones se atraen porque tienen cargas opuestas.”</p>
+<p>Respuesta correcta: “Dos electrones pueden correlacionarse mediante interacción con la red formando un par de Cooper.”</p>
+</details>
+<details class="accordion accordion-error"><summary>Error: “f(E) es el número de estados.”</summary>
+<p>Por qué está mal: f(E) es probabilidad de ocupación; g(E) es densidad de estados.</p>
+<p>Corrección: n(E)dE = f(E)g(E)dE.</p>
+<p>Respuesta incorrecta: “La función de Fermi dice cuántos estados hay.”</p>
+<p>Respuesta correcta: “La función de Fermi dice qué fracción de estados está ocupada.”</p>
+</details>
+</section>
+<section class="page" id="preguntas-orientadas-a-examen">
+<div class="page-head"><h2>7. Preguntas orientadas a examen</h2></div>
+<h3 id="10-preguntas-faciles">10 preguntas fáciles</h3>
+<div class="reading-block"><ol>
+<li value="1">¿Qué diferencia hay entre un sólido cristalino y un sólido amorfo?</li>
+<li value="2">¿Qué es una celda unidad?</li>
+<li value="3">¿Qué representa la constante de Madelung?</li>
+<li value="4">Escriba la forma cualitativa de la energía potencial de un cristal iónico y explique sus dos términos.</li>
+<li value="5">¿Qué es el recorrido libre medio de un electrón?</li>
+<li value="6">¿Qué es la energía de Fermi a T = 0 K?</li>
+<li value="7">¿Qué diferencia hay entre velocidad de deriva y velocidad de Fermi?</li>
+<li value="8">¿Qué es una banda de valencia?</li>
+<li value="9">¿Qué es un semiconductor tipo n?</li>
+<li value="10">¿Qué significa que un material sea superconductor?</li>
+</ol></div>
+<h3 id="10-preguntas-medias">10 preguntas medias</h3>
+<div class="reading-block"><ol>
+<li value="11">Explique por qué el modelo clásico de Drude-Lorentz predice cualitativamente la ley de Ohm, pero falla cuantitativamente.</li>
+<li value="12">Deduzca cualitativamente cómo afecta n_e, v_av y ℓ a la resistividad ρ = m_e v_av/(n_e e^2ℓ).</li>
+<li value="13">Por qué una red cristalina perfectamente periódica no dispersaría electrones como en el modelo clásico.</li>
+<li value="14">Explique por qué los electrones de conducción no siguen una distribución Maxwell-Boltzmann ordinaria.</li>
+<li value="15">Interprete la relación E_F ∝ (N/V)^(2/3).</li>
+<li value="16">Por qué la contribución electrónica al calor específico de un metal es mucho menor que la predicción clásica.</li>
+<li value="17">Compare conductor, aislante y semiconductor usando bandas de energía.</li>
+<li value="18">Explique cómo el dopaje tipo p aumenta la conductividad.</li>
+<li value="19">Describa qué ocurre al formar una unión pn.</li>
+<li value="20">Explique el papel de la brecha energética superconductora en la resistencia cero.</li>
+</ol></div>
+<h3 id="5-preguntas-dificiles">5 preguntas difíciles</h3>
+<div class="reading-block"><ol>
+<li value="21">Un metal tiene E_F = 5,52 eV. Calcule la velocidad de Fermi del electrón y explique por qué no debe identificarse con la velocidad de deriva.</li>
+<li value="22">A partir de la función de Fermi-Dirac, calcule la probabilidad de ocupación de un estado situado 0,10 eV por encima de E_F a 300 K. Use kT ≈ 0,026 eV.</li>
+<li value="23">Un metal monovalente tiene densidad ρ_m y masa molar M. Obtenga la densidad de electrones de conducción y explique cómo entraría en el cálculo de E_F.</li>
+<li value="24">Razone por qué una pequeña concentración de impurezas donadoras puede aumentar enormemente la conductividad de un semiconductor, mientras que una pequeña concentración de impurezas en un metal suele aumentar su resistividad.</li>
+<li value="25">Explique por qué el efecto Josephson ac tiene frecuencia proporcional al voltaje aplicado y qué constante física aparece en esa relación.</li>
+</ol></div>
+<h3 id="5-preguntas-de-desarrollo-largo">5 preguntas de desarrollo largo</h3>
+<div class="reading-block"><ol>
+<li value="26">Desarrolle la evolución conceptual desde el modelo clásico de conducción hasta la teoría cuántica de la conducción en metales.</li>
+<li value="27">Explique la teoría de bandas y úsela para clasificar conductores, aislantes y semiconductores.</li>
+<li value="28">Desarrolle el papel del dopaje en semiconductores y explique los tipos n y p.</li>
+<li value="29">Explique la superconductividad desde el punto de vista de la teoría BCS, incluyendo pares de Cooper, brecha energética y túnel.</li>
+<li value="30">Explique cómo la distribución de Fermi-Dirac permite calcular el número de electrones en un intervalo de energías y por qué es esencial para sólidos.</li>
+</ol></div>
+<h3 id="5-preguntas-de-relacion-entre-conceptos">5 preguntas de relación entre conceptos</h3>
+<div class="reading-block"><ol>
+<li value="31">Relacione estructura cristalina, periodicidad y formación de bandas de energía.</li>
+<li value="32">Relacione principio de exclusión de Pauli, energía de Fermi y calor específico electrónico.</li>
+<li value="33">Relacione impurezas, recorrido libre medio y resistividad en metales.</li>
+<li value="34">Relacione brecha prohibida, temperatura y portadores en semiconductores.</li>
+<li value="35">Relacione túnel cuántico, superconductividad y efecto Josephson.</li>
+</ol></div>
+</section>
+<section class="page" id="respuestas-modelo">
+<div class="page-head"><h2>8. Respuestas modelo</h2></div>
+<h3 id="respuestas-faciles">Respuestas fáciles</h3>
+<div class="reading-block"><ol>
+<li value="1">Un sólido cristalino tiene orden periódico de largo alcance: una celda unidad se repite en todo el material. Un sólido amorfo solo presenta orden local o de corto alcance, sin periodicidad global. Por eso los cristales suelen tener puntos de fusión bien definidos, mientras que los amorfos se ablandan gradualmente.</li>
+<li value="2">Una celda unidad es la estructura mínima que, repetida mediante traslaciones, reproduce el cristal. Resume la geometría básica de la red y depende del tipo de enlace y del tamaño relativo de los átomos o iones.</li>
+<li value="3">La constante de Madelung es un factor geométrico que resume la suma de interacciones Coulombianas entre un ion y el resto de iones de una red. No depende solo del vecino más próximo, sino de la estructura completa del cristal.</li>
+<li value="4">La energía potencial se escribe como U(r) = -αke^2/r + A/r^n. El primer término es atractivo y procede de la interacción electrostática entre iones de signos opuestos. El segundo es repulsivo y domina a distancias cortas por solapamiento de orbitales y principio de exclusión. El equilibrio aparece en el mínimo de U(r).</li>
+<li value="5">El recorrido libre medio es la distancia media entre dos procesos de dispersión de un electrón. En un metal real depende de vibraciones de la red, impurezas y defectos. Cuanto mayor es, menor es la resistividad.</li>
+<li value="6">A T = 0 K, la energía de Fermi es la energía del estado electrónico ocupado de mayor energía. Todos los estados por debajo están ocupados y los de arriba vacíos, idealmente.</li>
+<li value="7">La velocidad de deriva es la velocidad neta lenta asociada a la corriente bajo un campo eléctrico. La velocidad de Fermi es la velocidad microscópica asociada a E_F, normalmente del orden de 10^6 m/s. No son la misma magnitud.</li>
+<li value="8">La banda de valencia es la banda energética más alta que contiene electrones en el estado fundamental. Si está llena y separada por una brecha grande de la banda de conducción, el material no conduce bien.</li>
+<li value="9">Un semiconductor tipo n es un semiconductor dopado con impurezas donadoras que aportan electrones como portadores mayoritarios. Los niveles donadores están cerca de la banda de conducción.</li>
+<li value="10">Un superconductor es un material que, por debajo de una temperatura crítica, presenta resistencia eléctrica nula. El capítulo lo interpreta como un estado cuántico colectivo descrito por pares de Cooper y una brecha energética.</li>
+</ol></div>
+<h3 id="respuestas-medias">Respuestas medias</h3>
+<div class="reading-block"><ol>
+<li value="11">El modelo de Drude-Lorentz acierta al imaginar que un campo eléctrico produce una velocidad de deriva y que las colisiones limitan la corriente, de modo que obtiene una relación compatible con la ley de Ohm. Falla porque interpreta clásicamente la velocidad media y el recorrido libre medio. Los electrones reales obedecen Fermi-Dirac y se dispersan como ondas en una red, no como partículas clásicas contra obstáculos rígidos.</li>
+<li value="12">En ρ = m_e v_av/(n_e e^2ℓ), aumentar n_e reduce ρ porque hay más portadores disponibles. Aumentar ℓ también reduce ρ porque los electrones se dispersan menos. La dependencia con v_av debe interpretarse con cuidado: en el tratamiento clásico no da valores correctos, mientras que en el cuántico se relaciona con velocidades próximas a la de Fermi y con procesos de dispersión reales.</li>
+<li value="13">En una red perfectamente periódica, los electrones se describen como ondas adaptadas a esa periodicidad. Una onda en un potencial periódico ideal no se dispersa del modo clásico; la dispersión aparece cuando se rompe la periodicidad por vibraciones térmicas, defectos, impurezas o fronteras de grano.</li>
+<li value="14">Porque los electrones son fermiones y obedecen el principio de exclusión de Pauli. No pueden repartirse libremente como partículas clásicas entre estados de baja energía. A T = 0 llenan estados hasta E_F y a T &gt; 0 solo cambia apreciablemente la ocupación cerca del nivel de Fermi.</li>
+<li value="15">La relación E_F ∝ (N/V)^(2/3) indica que al aumentar la densidad de electrones libres aumenta la energía hasta la que deben llenarse los estados disponibles. Es una consecuencia de Pauli y de la densidad de estados en tres dimensiones.</li>
+<li value="16">Clásicamente todos los electrones libres absorberían energía al calentar el metal. Cuánticamente, casi todos los estados por debajo de E_F están bloqueados porque no hay estados libres cercanos. Solo los electrones en una franja de anchura del orden de kT alrededor de E_F pueden excitarse. Por eso la contribución electrónica es pequeña.</li>
+<li value="17">En un conductor hay una banda parcialmente llena o bandas solapadas, por lo que existen estados vacíos próximos. En un aislante, la banda de valencia está llena y separada de la conducción por una brecha grande. En un semiconductor, la brecha es pequeña y puede haber excitación térmica o dopaje que cree portadores.</li>
+<li value="18">En el dopaje tipo p se introducen impurezas aceptadoras que generan niveles próximos a la banda de valencia. Al aceptar electrones, dejan huecos móviles. Estos huecos se comportan como portadores positivos y permiten corriente en la banda de valencia.</li>
+<li value="19">Al formar una unión pn, electrones del lado n y huecos del lado p se recombinan cerca de la frontera. Quedan iones fijos que generan una zona de agotamiento y una barrera interna de potencial. Esa barrera permite rectificación: el sesgo directo facilita la corriente y el inverso la dificulta.</li>
+<li value="20">La brecha superconductora es la energía necesaria para romper un par de Cooper. Si las excitaciones disponibles no pueden romper pares, los electrones no se dispersan individualmente por la red. Así desaparece el mecanismo de resistencia y la corriente puede mantenerse sin disipación.</li>
+</ol></div>
+<h3 id="respuestas-dificiles">Respuestas difíciles</h3>
+<div class="reading-block"><ol>
+<li value="21">Dado E_F = 5,52 eV, se convierte a julios:</li>
+</ol></div>
+<div class="formula-block">\[
+E_F = 5,52 · 1,602·10^-19 J = 8,84·10^-19 J
+\]</div>
+<div class="reading-block"><p>La velocidad de Fermi es:</p></div>
+<div class="formula-block">\[
+u_F = \sqrt{\frac{2E_F}{m_e}}
+\]</div>
+<div class="formula-block">\[
+= \\sqrt{2·8,84·10^-19 / 9,11·10^-31}
+\]</div>
+<div class="reading-block"><p>≈ 1,39·10^6 m/s.</p></div>
+<div class="reading-block"><p>Esta velocidad caracteriza el movimiento microscópico de los electrones cerca de E_F. No es la velocidad de deriva, que es la pequeña velocidad neta producida por el campo eléctrico y responsable de la corriente macroscópica.</p></div>
+<div class="reading-block"><ol>
+<li value="22">Para un estado 0,10 eV por encima de E_F:</li>
+</ol></div>
+<div class="formula-block">\[
+f(E) = 1/[exp((E - E_F)/kT) + 1]
+\]</div>
+<div class="reading-block"><p>Con kT ≈ 0,026 eV:</p></div>
+<div class="formula-block">\[
+(E - E_F)/kT = 0,10/0,026 \approx 3,85
+\]</div>
+<div class="reading-block"><p>Entonces:</p></div>
+<div class="reading-block"><p>f ≈ 1/(e^3,85 + 1) ≈ 1/(47 + 1) ≈ 0,021.</p></div>
+<div class="reading-block"><p>La probabilidad de ocupación es aproximadamente 2,1 %. El resultado expresa que por encima de E_F la ocupación cae rápidamente, aunque a T &gt; 0 no es exactamente nula.</p></div>
+<div class="reading-block"><ol>
+<li value="23">En un metal monovalente, cada átomo aporta aproximadamente un electrón de conducción. Si la densidad de masa es ρ_m y la masa molar M, el número de átomos por unidad de volumen es:</li>
+</ol></div>
+<div class="formula-block">\[
+n = \rho_m N_A/M
+\]</div>
+<div class="reading-block"><p>Para metal monovalente:</p></div>
+<div class="formula-block">\[
+n_e = \rho_m N_A/M
+\]</div>
+<div class="reading-block"><p>Esa densidad entra en:</p></div>
+<div class="formula-block">\[
+E_F = h^2/(8m_e) · (3n_e/\pi)^(2/3),
+\]</div>
+<div class="formula-block">\[
+si se toma n_e = N/V. La física de la expresión es que mayor densidad electrónica obliga a llenar estados hasta energías más altas
+\]</div>
+<div class="reading-block"><ol>
+<li value="24">En un semiconductor, una impureza donadora introduce niveles muy próximos a la banda de conducción. Con poca energía térmica esos electrones se convierten en portadores, de modo que una concentración pequeña puede multiplicar enormemente la conductividad. En un metal, ya hay muchos portadores; una impureza adicional no aumenta mucho n_e, pero sí rompe la periodicidad de la red y aumenta la dispersión, reduciendo ℓ y aumentando la resistividad.</li>
+<li value="25">En el efecto Josephson ac, dos superconductores separados por una barrera aislante presentan túnel coherente de pares de Cooper. Si se aplica un voltaje V, la diferencia de energía por par es 2eV. Esa energía se relaciona con una frecuencia mediante E = hf. Por tanto:</li>
+</ol></div>
+<div class="formula-block">\[
+f = \frac{2eV}{h}
+\]</div>
+<div class="reading-block"><p>Aparecen la carga elemental e y la constante de Planck h. La relación permite medir con precisión e/h.</p></div>
+<h3 id="respuestas-de-desarrollo-largo">Respuestas de desarrollo largo</h3>
+<div class="reading-block"><ol>
+<li value="26">El modelo clásico de conducción empieza tratando los electrones de un metal como partículas libres que se aceleran bajo un campo eléctrico y chocan con los iones de la red. Entre choques adquieren velocidad de deriva; al dispersarse, transfieren energía al cristal. Así se obtiene una corriente proporcional al campo y una resistividad dependiente de la densidad de portadores, la velocidad media y el recorrido libre medio.</li>
+</ol></div>
+<div class="reading-block"><p>El problema es que, al introducir velocidades térmicas clásicas y radios iónicos como sección de choque, los valores calculados no coinciden con los experimentos. También falla la dependencia térmica. El metal real no se comporta como un gas clásico de electrones.</p></div>
+<div class="reading-block"><p>La corrección cuántica introduce el principio de exclusión y la estadística de Fermi-Dirac. Los electrones llenan estados hasta la energía de Fermi, y a temperatura ordinaria solo los estados próximos a E_F pueden cambiar de ocupación. Además, los electrones en una red periódica se comportan como ondas; no se dispersan por cada ion como una bolita clásica. La resistencia se debe a desviaciones de la periodicidad: vibraciones, impurezas, defectos y límites del cristal.</p></div>
+<div class="reading-block"><p>La conclusión es que el modelo clásico conserva una estructura útil para relacionar resistividad con portadores y dispersión, pero la interpretación correcta de sus parámetros es cuántica.</p></div>
+<div class="reading-block"><ol>
+<li value="27">Cuando los átomos están aislados, tienen niveles de energía discretos. Al acercarlos para formar un sólido, esos niveles se desdoblan por interacción y por el principio de exclusión. Para un número macroscópico de átomos, el conjunto de niveles muy próximos forma bandas de energía permitida. Entre bandas puede haber brechas prohibidas.</li>
+</ol></div>
+<div class="reading-block"><p>La banda de valencia es la banda ocupada de mayor energía. La banda de conducción es una banda superior en la que los electrones pueden moverse contribuyendo a la corriente. Si hay una banda parcialmente ocupada o bandas solapadas, el material es conductor. Si la banda de valencia está llena y la brecha hasta la conducción es grande, el material es aislante. Si la brecha es pequeña, el material es semiconductor.</p></div>
+<div class="reading-block"><p>Esta teoría explica algo que el modelo clásico no podía: por qué sustancias con electrones pueden comportarse de forma radicalmente distinta. La clave no es solo cuántos electrones hay, sino qué estados energéticos están permitidos y ocupados.</p></div>
+<div class="reading-block"><ol>
+<li value="28">El dopaje consiste en introducir impurezas controladas en un semiconductor para modificar su densidad de portadores. En un semiconductor intrínseco, los portadores aparecen cuando electrones saltan térmicamente desde la banda de valencia a la de conducción, dejando huecos. En un semiconductor dopado, las impurezas introducen niveles dentro de la brecha y facilitan la creación de portadores.</li>
+</ol></div>
+<div class="reading-block"><p>En un semiconductor tipo n, las impurezas donadoras aportan electrones débilmente ligados. Sus niveles están justo por debajo de la banda de conducción, por lo que una pequeña energía térmica basta para liberar electrones a esa banda. Los electrones son portadores mayoritarios.</p></div>
+<div class="reading-block"><p>En un semiconductor tipo p, las impurezas aceptadoras crean niveles próximos a la banda de valencia. Al aceptar electrones, dejan huecos móviles en la banda de valencia. Los huecos actúan como portadores positivos mayoritarios.</p></div>
+<div class="reading-block"><p>El dopaje es potente porque no necesita alterar mucho la composición. Una cantidad pequeña de impurezas puede crear muchos más portadores que la excitación térmica natural del semiconductor puro.</p></div>
+<div class="reading-block"><ol>
+<li value="29">La superconductividad es una transición a un estado de resistencia nula por debajo de una temperatura crítica. En la teoría BCS, los electrones relevantes no se comportan como partículas independientes, sino que forman pares de Cooper mediante una interacción efectiva asociada a la red cristalina.</li>
+</ol></div>
+<div class="reading-block"><p>La formación de pares abre una brecha energética. Para producir dispersión resistiva ordinaria habría que romper pares y crear excitaciones. Si la temperatura es suficientemente baja, no hay energía térmica disponible para romperlos en cantidad apreciable. Por eso el estado puede transportar corriente sin pérdida resistiva.</p></div>
+<div class="reading-block"><p>El túnel permite medir esa brecha. En una unión conductor normal-aislante-superconductor, los electrones pueden atravesar la barrera si el voltaje aplicado proporciona la energía necesaria para romper un par. En una unión Josephson, dos superconductores separados por una fina barrera aislante permiten túnel coherente de pares. Sin voltaje puede existir corriente continua; con voltaje constante aparece una corriente alterna de frecuencia f = \frac{2eV}{h}.</p></div>
+<div class="reading-block"><p>La superconductividad, por tanto, no es un metal con menos choques. Es un estado cuántico colectivo macroscópico.</p></div>
+<div class="reading-block"><ol>
+<li value="30">La distribución de Fermi-Dirac combina dos factores. Primero, la densidad de estados g(E), que indica cuántos estados cuánticos existen en un intervalo de energía. Segundo, el factor de Fermi f(E), que indica la probabilidad de que cada estado esté ocupado. El número de electrones entre E y E + dE es:</li>
+</ol></div>
+<div class="formula-block">\[
+n(E)dE = f(E)g(E)dE
+\]</div>
+<div class="reading-block"><p>A T = 0, f(E) vale 1 por debajo de E_F y 0 por encima. A temperatura finita, la transición se suaviza en una zona de anchura del orden de kT alrededor de E_F. Esta descripción es esencial porque los electrones son fermiones y obedecen Pauli. Sin Fermi-Dirac no se puede explicar correctamente la energía de Fermi, la conducción metálica, el bajo calor específico electrónico ni la ocupación de bandas.</p></div>
+<h3 id="respuestas-de-relacion-entre-conceptos">Respuestas de relación entre conceptos</h3>
+<div class="reading-block"><ol>
+<li value="31">La estructura cristalina proporciona una periodicidad espacial. Los electrones en un potencial periódico no tienen los mismos niveles que en átomos aislados; los niveles se desdoblan y forman bandas. Por tanto, la periodicidad de la red es la causa estructural de la aparición de bandas de energía.</li>
+<li value="32">El principio de Pauli impide que todos los electrones ocupen el estado de menor energía. Por eso llenan estados hasta E_F. Como a temperatura ordinaria solo pueden excitarse los electrones cercanos a E_F, la contribución electrónica al calor específico es pequeña. Pauli produce E_F; E_F produce degeneración; la degeneración reduce los electrones térmicamente activos.</li>
+<li value="33">Las impurezas rompen la periodicidad de la red. Esa ruptura dispersa las ondas electrónicas, reduce el recorrido libre medio ℓ y aumenta la resistividad ρ. En metales, donde ya hay muchos portadores, el efecto dominante de impurezas suele ser aumentar la dispersión, no aportar conducción útil.</li>
+<li value="34">La brecha prohibida determina la energía necesaria para crear portadores. Si E_g es pequeña, la energía térmica puede promover algunos electrones a la banda de conducción, dejando huecos en la valencia. Al aumentar la temperatura, aumenta la concentración de pares electrón-hueco y con ello la conductividad.</li>
+<li value="35">El túnel cuántico permite atravesar barreras aislantes finas. En superconductores, los pares de Cooper pueden tunelar coherentemente entre dos superconductores separados por una barrera: efecto Josephson. Con voltaje nulo aparece corriente dc; con voltaje constante aparece una corriente ac de frecuencia f = \frac{2eV}{h}.</li>
+</ol></div>
+</section>
+<section class="page" id="resumen-final-de-repaso">
+<div class="page-head"><h2>9. Resumen final de repaso</h2></div>
+<div class="reading-block"><p>Ideas principales:</p></div>
+<div class="reading-block"><ul>
+<li>Los sólidos se explican por estructura atómica, enlaces y energía potencial.</li>
+<li>Los cristales tienen celda unidad y orden de largo alcance; los amorfos no.</li>
+<li>El modelo clásico de conducción da una forma útil de la resistividad, pero falla sin cuántica.</li>
+<li>Los electrones de metales obedecen Fermi-Dirac, no Maxwell-Boltzmann.</li>
+<li>La energía de Fermi marca el límite de ocupación a T = 0.</li>
+<li>Las bandas de energía explican conductor, aislante y semiconductor.</li>
+<li>El dopaje controla portadores en semiconductores tipo n y tipo p.</li>
+<li>Las uniones pn permiten diodos, células solares, LEDs y transistores.</li>
+<li>La superconductividad es un estado cuántico colectivo con resistencia cero.</li>
+<li>La distribución de Fermi-Dirac combina densidad de estados y probabilidad de ocupación.<br/>Conceptos imprescindibles:</li>
+<li>celda unidad</li>
+<li>red cristalina</li>
+<li>sólido amorfo</li>
+<li>constante de Madelung</li>
+<li>energía potencial iónica</li>
+<li>modelo de Drude</li>
+<li>resistividad</li>
+<li>recorrido libre medio</li>
+<li>energía de Fermi</li>
+<li>temperatura de Fermi</li>
+<li>velocidad de Fermi</li>
+<li>densidad de estados</li>
+<li>factor de Fermi</li>
+<li>banda de valencia</li>
+<li>banda de conducción</li>
+<li>brecha prohibida</li>
+<li>semiconductor intrínseco</li>
+<li>dopaje tipo n</li>
+<li>dopaje tipo p</li>
+<li>unión pn</li>
+<li>par de Cooper</li>
+<li>brecha superconductora</li>
+<li>efecto Josephson<br/>Relaciones clave:</li>
+<li>red periódica → bandas de energía</li>
+<li>Pauli → llenado hasta E_F</li>
+<li>E_F grande frente a kT → gas electrónico degenerado</li>
+<li>estados disponibles próximos → conducción</li>
+<li>brecha grande → aislante</li>
+<li>brecha pequeña → semiconductor</li>
+<li>dopaje → portadores controlados</li>
+<li>impurezas en metal → más dispersión → más resistividad</li>
+<li>pares de Cooper → brecha superconductora → resistencia cero</li>
+<li>f(E)g(E)dE → número de electrones en un intervalo energético<br/>Errores que evitar:</li>
+<li>Confundir velocidad de Fermi con velocidad de deriva.</li>
+<li>Creer que una banda llena conduce por tener muchos electrones.</li>
+<li>Decir que un aislante no tiene electrones.</li>
+<li>Tratar semiconductores como simples malos conductores.</li>
+<li>Confundir huecos con partículas positivas reales libres.</li>
+<li>Pensar que superconductividad es solo resistividad muy baja.</li>
+<li>Confundir f(E) con g(E).</li>
+<li>Usar Maxwell-Boltzmann para electrones de conducción en metales.</li>
+</ul></div>
+</section>
+<section class="page" id="checklist-de-dominio">
+<div class="page-head"><h2>10. Checklist de dominio</h2></div>
+<div class="reading-block"><ul>
+<li>Si no puedes explicar la diferencia entre sólido cristalino y amorfo, falta repasar estructura de sólidos.</li>
+<li>Si no puedes explicar por qué U(r) tiene un mínimo, falta repasar atracción Coulombiana y repulsión a corta distancia.</li>
+<li>Si confundes constante de Madelung con una constante universal, revisar redes iónicas.</li>
+<li>Si no puedes interpretar ρ = m_e v_av/(n_e e^2ℓ), falta repasar modelo microscópico de conducción.</li>
+<li>Si crees que el modelo clásico de Drude basta para valores reales de resistividad, revisar interpretación cuántica.</li>
+<li>Si confundes velocidad de deriva con velocidad de Fermi, revisar conducción metálica.</li>
+<li>Si no puedes definir E_F a T = 0 y a T &gt; 0, falta repasar Fermi-Dirac.</li>
+<li>Si no puedes explicar por qué E_F depende de (N/V)^(2/3), falta repasar electrones libres en caja tridimensional.</li>
+<li>Si no puedes justificar por qué el calor específico electrónico es pequeño, revisar Pauli y T/T_F.</li>
+<li>Si no puedes distinguir banda de valencia y banda de conducción, falta repasar teoría de bandas.</li>
+<li>Si dices que una banda llena conduce, revisar el papel de estados vacíos accesibles.</li>
+<li>Si confundes aislante con ausencia de electrones, revisar brecha prohibida.</li>
+<li>Si no puedes clasificar conductor, aislante y semiconductor con un diagrama de bandas, el capítulo no está dominado.</li>
+<li>Si no puedes explicar electrones y huecos en un semiconductor intrínseco, falta repasar portadores.</li>
+<li>Si confundes dopaje n con dopaje p, revisar donadores y aceptores.</li>
+<li>Si no puedes explicar por qué una pequeña cantidad de dopante cambia mucho la conductividad, revisar niveles en la brecha.</li>
+<li>Si no puedes describir una unión pn sin memorizar dispositivos, falta repasar zona de agotamiento y barrera interna.</li>
+<li>Si no puedes explicar resistencia cero sin decir “menos choques”, falta repasar superconductividad BCS.</li>
+<li>Si no puedes relacionar par de Cooper y brecha superconductora, falta repasar teoría BCS.</li>
+<li>Si no puedes escribir f = \frac{2eV}{h} y decir qué significa, falta repasar efecto Josephson.</li>
+<li>Si puedes resolver un problema de velocidad de Fermi a partir de E_F, el bloque de electrones libres está asentado.</li>
+<li>Si puedes calcular una probabilidad con Fermi-Dirac para E - E_F dado, la estadística básica está asentada.</li>
+<li>Si puedes explicar con bandas por qué el silicio dopado conduce mucho más que el silicio puro, el bloque de semiconductores está asentado.</li>
+<li>Si puedes comparar impurezas en metales e impurezas en semiconductores, el capítulo está suficientemente asentado.</li>
+<li>Si puedes responder una pregunta larga conectando Drude, Fermi, bandas, dopaje y superconductividad, el tema está dominado para examen.</li>
+</ul></div>
+</section>
+</main>
+</div>
+</body>
+</html>
