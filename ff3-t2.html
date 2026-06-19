@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="robots" content="noindex, nofollow" />
+<meta name="color-scheme" content="light dark" />
+<title>Fundamentos de Física 3 — T2 — Aplicaciones de la ecuación de Schrödinger</title>
+<link rel="icon" type="image/png" sizes="32x32" href="assets/icons/icon-32.png" />
+<link rel="icon" type="image/png" sizes="50x50" href="assets/icons/icon-50.png" />
+<link rel="apple-touch-icon" sizes="100x100" href="assets/icons/icon-100.png" />
+<meta name="theme-color" content="#3f4f75" />
+<script>
+window.MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] }, svg: { fontCache: 'global' } };
+</script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+<link rel="stylesheet" href="assets/styles.css" />
+<script defer src="assets/app.js"></script>
+</head>
+<body class="subject-general">
+<div class="wrap">
+<header class="cover">
+<div class="top-actions"><a class="back-link" href="index.html">← Volver al índice</a></div>
+<p class="eyebrow">UNED Física · Fundamentos de Física 3 · Tema 2</p>
+<h1>Fundamentos de Física 3 — T2 — Aplicaciones de la ecuación de Schrödinger</h1>
+<p class="subtitle">Schrödinger, caja, pozo, oscilador y túnel · Tipler-Mosca, capítulo 35</p>
+<div class="chips"><span class="chip">FF3</span><span class="chip">T2</span><span class="chip">Cap. 35</span><span class="chip">HTML responsive</span><span class="chip">estado: maquetado</span></div>
+</header>
+<div class="toolbar no-print"><nav><a href="#mapa">Mapa</a><a href="#prerrequisitos-minimos">Prerrequisitos</a><a href="#desarrollo-completo-del-capitulo">Desarrollo</a><a href="#conceptos-clave">Conceptos</a><a href="#errores-habituales">Errores</a><a href="#preguntas-orientadas-a-examen">Preguntas</a><a href="#respuestas-modelo">Respuestas</a><a href="#resumen-final-de-repaso">Resumen</a><a href="#checklist-de-dominio">Checklist</a></nav><div class="toolbar-actions"><button class="btn" onclick="printReady()">Imprimir / guardar PDF</button><button class="btn secondary" onclick="openAllDetails()">Abrir todo</button><button class="btn secondary" onclick="closeAllDetails()">Cerrar acordeones</button></div></div>
+<main>
+<section class="page map-page" id="mapa"><div class="page-head"><h2>Mapa clicable</h2><p class="section-lead">Ruta de lectura del tema 2 de Fundamentos de Física 3.</p></div><div class="concept-map">
+<a class="map-node" href="#prerrequisitos-minimos"><span>Prerrequisitos</span><small>función de onda · normalización · fronteras</small></a>
+<a class="map-node" href="#idea-central-del-capitulo"><span>Idea central</span><small>Schrödinger como herramienta</small></a>
+<a class="map-node" href="#desarrollo-completo-del-capitulo"><span>Desarrollo</span><small>pozos · oscilador · túnel · 3D</small></a>
+<a class="map-node" href="#conceptos-clave"><span>Conceptos</span><small>definiciones y examen</small></a>
+<a class="map-node" href="#relaciones-entre-ideas"><span>Relaciones</span><small>potencial · cuantización · simetría</small></a>
+<a class="map-node" href="#errores-habituales"><span>Errores</span><small>trampas típicas</small></a>
+<a class="map-node" href="#preguntas-orientadas-a-examen"><span>Preguntas</span><small>bloques de práctica</small></a>
+<a class="map-node" href="#respuestas-modelo"><span>Respuestas</span><small>soluciones razonadas</small></a>
+<a class="map-node" href="#resumen-final-de-repaso"><span>Resumen</span><small>fórmulas e ideas</small></a>
+<a class="map-node" href="#checklist-de-dominio"><span>Checklist</span><small>autoevaluación</small></a>
+</div></section>
+<section class="page" id="ficha"><div class="page-head"><h2>Ficha del tema</h2></div>
+<div class="reading-block"><p>Fuente principal: Tipler y Mosca, Physics for Scientists and Engineers, capítulo 35, "Applications of the Schrödinger Equation".</p></div>
+<div class="reading-block"><p>Alcance: ecuación de Schrödinger, pozo cuadrado infinito y finito, oscilador armónico cuántico, reflexión y transmisión en escalones de potencial, penetración de barreras, extensión tridimensional y partículas idénticas.</p></div>
+</section>
+<section class="page" id="prerrequisitos-minimos">
+<div class="page-head"><h2>1. Prerrequisitos mínimos</h2></div>
+<div class="grid cards-grid">
+<article class="definition-card">
+<h3>Función de onda</h3>
+<p>Definición breve: función matemática que describe el estado cuántico de una partícula. En una dimensión puede escribirse como \(\psi(x,t)\) si depende del tiempo, o como \(\psi(x)\) en estados estacionarios.</p>
+<p>Por qué es necesaria: la ecuación de Schrödinger no calcula directamente una trayectoria, sino una función de onda. La información física se extrae de ella mediante probabilidades.</p>
+<p>Ejemplo mínimo: si \(|\psi(x)|^2\) es grande cerca de cierto \(x\), allí hay mayor probabilidad de encontrar la partícula.</p>
+</article>
+<article class="definition-card">
+<h3>Densidad de probabilidad</h3>
+<p>Definición breve: \(|\psi(x,t)|^2\) mide la probabilidad por unidad de longitud de hallar la partícula cerca de \(x\).</p>
+<p>Por qué es necesaria: la función de onda puede ser compleja y no observable directamente; la probabilidad sí debe ser real y positiva.</p>
+<p>Ejemplo mínimo: la probabilidad entre \(a\) y \(b\) es \(\int_a^b |\psi(x)|^2 dx\).</p>
+</article>
+<article class="definition-card">
+<h3>Normalización</h3>
+<p>Definición breve: condición que exige que la probabilidad total de encontrar la partícula en algún punto sea 1.</p>
+<p>Por qué es necesaria: descarta soluciones matemáticas que satisfacen la ecuación diferencial pero no representan estados físicos.</p>
+<p>Ejemplo mínimo: en una caja unidimensional, la constante de la función \(A\sin(n\pi x/L)\) se fija exigiendo \(\int_0^L |\psi|^2 dx=1\).</p>
+</article>
+<article class="definition-card">
+<h3>Números complejos</h3>
+<p>Definición breve: números de la forma \(a+bi\), con \(i^2=-1\).</p>
+<p>Por qué es necesaria: la ecuación de Schrödinger dependiente del tiempo contiene \(i\), por lo que sus soluciones no tienen por qué ser reales.</p>
+<p>Ejemplo mínimo: si \(\psi=a+bi\), entonces \(|\psi|^2=\psi^*\psi=a^2+b^2\).</p>
+</article>
+<article class="definition-card">
+<h3>Ecuaciones diferenciales lineales</h3>
+<p>Definición breve: ecuaciones donde aparece una función desconocida y sus derivadas, sin potencias ni productos no lineales de la función.</p>
+<p>Por qué es necesaria: la ecuación de Schrödinger independiente del tiempo es una ecuación diferencial lineal de segundo orden en problemas unidimensionales.</p>
+<p>Ejemplo mínimo: \(\psi''+k^2\psi=0\) tiene soluciones sinusoidales; \(\psi''-\alpha^2\psi=0\) tiene soluciones exponenciales.</p>
+</article>
+<article class="definition-card">
+<h3>Energía total y energía potencial</h3>
+<p>Definición breve: en mecánica clásica, \(E=K+U\). En el tratamiento de Schrödinger, \(U(x)\) define el entorno físico y condiciona las soluciones.</p>
+<p>Por qué es necesaria: la forma de \(U(x)\) determina si la partícula está confinada, si hay regiones permitidas o prohibidas y si la energía queda cuantizada.</p>
+<p>Ejemplo mínimo: en una caja infinita, \(U=0\) dentro y \(U=\infty\) fuera.</p>
+</article>
+<article class="definition-card">
+<h3>Región clásicamente permitida y prohibida</h3>
+<p>Definición breve: una región es clásicamente permitida si \(E&gt;U(x)\); es prohibida si \(E&lt;U(x)\), porque la energía cinética clásica \(K=E-U\) sería negativa.</p>
+<p>Por qué es necesaria: en cuántica, la función de onda puede penetrar en regiones prohibidas, aunque no oscile allí como en las regiones permitidas.</p>
+<p>Ejemplo mínimo: en un pozo finito, la partícula tiene cierta probabilidad fuera del pozo.</p>
+</article>
+<article class="definition-card">
+<h3>Condiciones de frontera</h3>
+<p>Definición breve: restricciones que debe cumplir la función de onda en los bordes de una región.</p>
+<p>Por qué es necesaria: son la causa matemática directa de la cuantización en sistemas confinados.</p>
+<p>Ejemplo mínimo: en una caja de \(0\) a \(L\), la condición \(\psi(0)=\psi(L)=0\) selecciona \(k=n\pi/L\).</p>
+</article>
+<article class="definition-card">
+<h3>Ondas estacionarias</h3>
+<p>Definición breve: ondas con nodos fijos, resultado de imponer que ciertas longitudes de onda encajen en una región limitada.</p>
+<p>Por qué es necesaria: los estados ligados bien comportados se interpretan como ondas estacionarias.</p>
+<p>Ejemplo mínimo: en la caja infinita caben \(n\) semilongitudes de onda: \(L=n\lambda/2\).</p>
+</article>
+<article class="definition-card">
+<h3>Hipótesis de de Broglie</h3>
+<p>Definición breve: una partícula con momento \(p\) tiene longitud de onda \(\lambda=h/p\).</p>
+<p>Por qué es necesaria: conecta el comportamiento ondulatorio con el momento y permite entender cambios de longitud de onda al cambiar la energía cinética.</p>
+<p>Ejemplo mínimo: al subir un escalón de potencial, baja la energía cinética y aumenta la longitud de onda.</p>
+</article>
+<article class="definition-card">
+<h3>Oscilador armónico clásico</h3>
+<p>Definición breve: sistema con energía potencial \(U(x)=\frac12kx^2=\frac12m\omega_0^2x^2\).</p>
+<p>Por qué es necesaria: el capítulo aplica Schrödinger a este potencial y obtiene niveles igualmente espaciados.</p>
+<p>Ejemplo mínimo: una molécula diatómica vibrando cerca del equilibrio se aproxima por un oscilador armónico.</p>
+</article>
+<article class="definition-card">
+<h3>Probabilidad conjunta e independencia</h3>
+<p>Definición breve: si dos sucesos son independientes, la probabilidad conjunta es el producto de probabilidades.</p>
+<p>Por qué es necesaria: la función de onda tridimensional de una caja se construye como producto de funciones en \(x\), \(y\), \(z\).</p>
+<p>Ejemplo mínimo: \(\psi(x,y,z)=A\sin(k_xx)\sin(k_yy)\sin(k_zz)\).</p>
+</article>
+</div>
+</section>
+<section class="page" id="idea-central-del-capitulo">
+<div class="page-head"><h2>2. Idea central del capítulo</h2></div>
+<div class="reading-block"><p>El capítulo transforma la idea cualitativa de la mecánica ondulatoria en una herramienta de cálculo. En el tema anterior ya aparecían la dualidad onda-partícula, la función de onda, la interpretación probabilística y la cuantización en una caja. Este capítulo introduce la ecuación que permite obtener esas funciones de onda y esas energías permitidas a partir de una energía potencial concreta.</p></div>
+<div class="reading-block"><p>El problema físico de fondo es este: en mecánica clásica, conocer la fuerza o el potencial permite calcular trayectorias. En mecánica cuántica, conocer \(U(x)\) permite calcular funciones de onda y niveles de energía. La partícula deja de representarse por una posición exacta que evoluciona en el tiempo y pasa a describirse mediante una amplitud de probabilidad cuya forma depende del potencial.</p></div>
+<div class="reading-block"><p>El capítulo insiste en una idea decisiva: no toda solución matemática de la ecuación de Schrödinger es una solución física. La función de onda debe ser normalizable, continua y, salvo casos ideales como paredes infinitas, tener derivada continua. Esa exigencia elimina casi todos los valores posibles de la energía en sistemas ligados. La cuantización no se impone desde fuera: aparece al pedir que la onda sea físicamente aceptable.</p></div>
+<div class="reading-block"><p>La estructura del capítulo avanza desde modelos unidimensionales simples hasta consecuencias más generales. Primero se formula la ecuación de Schrödinger dependiente e independiente del tiempo. Después se revisa la partícula en una caja infinita y se compara con el pozo finito. Luego se estudia el oscilador armónico cuántico. A continuación se aborda el fenómeno más característico del tema: la reflexión parcial y el efecto túnel. Al final, el capítulo extiende la ecuación a tres dimensiones y muestra que las partículas idénticas obligan a clasificar las funciones de onda como simétricas o antisimétricas.</p></div>
+<div class="reading-block"><p>Dentro de FF3, este capítulo es el puente entre la cuántica elemental y la física atómica, molecular y de sólidos. La caja explica confinamiento y cuantización; el oscilador explica vibraciones moleculares; el túnel explica procesos nucleares y microscopía de efecto túnel; las partículas idénticas preparan el principio de exclusión de Pauli, esencial para átomos, tabla periódica y electrones en sólidos.</p></div>
+</section>
+<section class="page" id="desarrollo-completo-del-capitulo">
+<div class="page-head"><h2>3. Desarrollo completo del capítulo</h2></div>
+<h3 id="3-1-la-ecuacion-de-schrodinger">3.1. La ecuación de Schrödinger</h3>
+<div class="reading-block"><p>La ecuación de Schrödinger cumple en mecánica cuántica un papel parecido al de la segunda ley de Newton en mecánica clásica. No se deduce dentro del propio formalismo elemental: se acepta porque sus predicciones concuerdan con el experimento. En una dimensión, la ecuación dependiente del tiempo relaciona la curvatura espacial de la función de onda con su variación temporal y con la energía potencial del entorno.</p></div>
+<div class="reading-block"><p>Su forma conceptual es:</p></div>
+<div class="formula-block">\[
+-\frac{\hbar^2}{2m}\frac{\partial^2\psi(x,t)}{\partial x^2}+U(x)\psi(x,t)=i\hbar\frac{\partial\psi(x,t)}{\partial t}.
+\]</div>
+<div class="reading-block"><p>El primer término está asociado a la contribución cinética, el segundo al potencial y el término de la derecha a la evolución temporal. La presencia de \(i\) marca una diferencia fuerte respecto a las ondas clásicas: la función de onda no tiene por qué ser real. Lo observable no es \(\psi\), sino \(|\psi|^2=\psi^*\psi\), que da densidad de probabilidad.</p></div>
+<div class="reading-block"><p>Cuando el potencial no depende del tiempo, pueden buscarse soluciones estacionarias de la forma:</p></div>
+<div class="formula-block">\[
+\psi(x,t)=\psi(x)e^{-i\omega t}.
+\]</div>
+<div class="reading-block"><p>La dependencia temporal queda separada y aparece la relación \(E=\hbar\omega\). Al sustituir esta forma en la ecuación dependiente del tiempo se obtiene la ecuación independiente del tiempo:</p></div>
+<div class="formula-block">\[
+-\frac{\hbar^2}{2m}\frac{d^2\psi(x)}{dx^2}+U(x)\psi(x)=E\psi(x).
+\]</div>
+<div class="reading-block"><p>Esta es la ecuación central del capítulo. Permite calcular los niveles permitidos de energía de estados estacionarios. Para el nivel de FF3, lo importante no es resolver ecuaciones diferenciales complicadas, sino entender cómo la forma de \(U(x)\) decide la forma de \(\psi(x)\) y qué valores de \(E\) son admisibles.</p></div>
+<div class="reading-block"><p>La conexión con lo anterior es directa: en el capítulo previo, la partícula en una caja se entendía por ondas estacionarias. Ahora esa misma cuantización se obtiene como consecuencia de una ecuación diferencial y sus condiciones de frontera.</p></div>
+<h3 id="3-2-particula-en-un-pozo-cuadrado-infinito">3.2. Partícula en un pozo cuadrado infinito</h3>
+<div class="reading-block"><p>El primer modelo concreto es la caja unidimensional de longitud \(L\). El potencial vale cero en \(0&lt;x&lt;L\) e infinito fuera. Esto fuerza a la partícula a estar dentro: fuera, la función de onda debe ser cero. Además, en los bordes se impone:</p></div>
+<div class="formula-block">\[
+\psi(0)=0, \qquad \psi(L)=0.
+\]</div>
+<div class="reading-block"><p>Dentro de la caja, como \(U=0\), la ecuación queda:</p></div>
+<div class="formula-block">\[
+\frac{d^2\psi}{dx^2}+k^2\psi=0,
+\qquad
+k^2=\frac{2mE}{\hbar^2}.
+\]</div>
+<div class="reading-block"><p>La solución general es:</p></div>
+<div class="formula-block">\[
+\psi(x)=A\sin(kx)+B\cos(kx).
+\]</div>
+<div class="reading-block"><p>La condición \(\psi(0)=0\) obliga a \(B=0\). La condición \(\psi(L)=0\) obliga a \(\sin(kL)=0\), por tanto:</p></div>
+<div class="formula-block">\[
+kL=n\pi,\qquad k_n=\frac{n\pi}{L},\qquad n=1,2,3,\ldots
+\]</div>
+<div class="reading-block"><p>El valor \(n=0\) no describe una partícula: haría \(\psi=0\) en toda la caja y no se podría normalizar. Al sustituir \(k_n\) en la expresión de la energía:</p></div>
+<div class="formula-block">\[
+E_n=\frac{\hbar^2 k_n^2}{2m}=\frac{n^2h^2}{8mL^2}=n^2E_1.
+\]</div>
+<div class="reading-block"><p>La consecuencia física es clara: una partícula confinada no puede tener cualquier energía. El confinamiento obliga a que la onda encaje en la caja. A menor \(L\), mayor energía fundamental. A mayor masa, menor separación entre niveles.</p></div>
+<div class="reading-block"><p>El ejemplo fija un patrón que se repite en todo el capítulo: se plantea \(U(x)\), se resuelve la ecuación en cada región, se imponen condiciones de frontera, se eliminan las soluciones no normalizables y aparecen valores discretos de energía.</p></div>
+<h3 id="3-3-pozo-cuadrado-finito">3.3. Pozo cuadrado finito</h3>
+<div class="reading-block"><p>El pozo finito conserva la idea de confinamiento, pero elimina la pared ideal infinita. El potencial vale \(0\) dentro de \(0&lt;x&lt;L\) y \(U_0\) fuera. El caso de interés es \(0&lt;E&lt;U_0\), porque la partícula está ligada: tiene energía suficiente para moverse dentro del pozo, pero no para escapar clásicamente.</p></div>
+<div class="reading-block"><p>Dentro del pozo la ecuación es la misma que en el pozo infinito:</p></div>
+<div class="formula-block">\[
+\psi''+k^2\psi=0,
+\qquad k^2=\frac{2mE}{\hbar^2}.
+\]</div>
+<div class="reading-block"><p>Por eso la función de onda oscila dentro del pozo. Fuera del pozo, como \(E&lt;U_0\), la ecuación toma la forma:</p></div>
+<div class="formula-block">\[
+\psi''-\alpha^2\psi=0,
+\qquad
+\alpha^2=\frac{2m(U_0-E)}{\hbar^2}.
+\]</div>
+<div class="reading-block"><p>La solución fuera ya no es sinusoidal, sino exponencial. Para que la función sea física, debe decrecer al alejarse del pozo. Las soluciones que crecen hacia infinito se descartan porque no son normalizables.</p></div>
+<div class="reading-block"><p>La diferencia conceptual con el pozo infinito es fundamental. En el pozo infinito, la función de onda se anula exactamente en las paredes. En el pozo finito, la función penetra fuera del pozo y decrece exponencialmente. Eso significa que hay una probabilidad no nula de encontrar la partícula en una región donde, clásicamente, \(E&lt;U\) y la energía cinética sería negativa.</p></div>
+<div class="reading-block"><p>Esta penetración no significa que pueda medirse una energía cinética negativa. El capítulo conecta esta cuestión con el principio de incertidumbre: intentar localizar la partícula en la región prohibida introduce una incertidumbre de momento suficiente para impedir esa contradicción clásica.</p></div>
+<div class="reading-block"><p>Las energías permitidas del pozo finito son menores que las correspondientes del pozo infinito, porque la onda efectiva se extiende más allá de \(0\) y \(L\), como si la caja fuese algo más ancha. Además, a diferencia del pozo infinito, el pozo finito solo posee un número finito de estados ligados. Si \(U_0\) es pequeño, puede quedar solo un estado ligado.</p></div>
+<h3 id="3-4-oscilador-armonico-cuantico">3.4. Oscilador armónico cuántico</h3>
+<div class="reading-block"><p>El siguiente sistema ligado es el oscilador armónico. Su potencial es:</p></div>
+<div class="formula-block">\[
+U(x)=\frac12kx^2=\frac12m\omega_0^2x^2.
+\]</div>
+<div class="reading-block"><p>Clásicamente, si la energía total es \(E\), la partícula oscila entre dos puntos de retorno \(-A\) y \(A\), definidos por \(E=U(A)\). Entre esos puntos, \(E&gt;U\); fuera, \(E&lt;U\). En mecánica cuántica, eso implica que la función de onda oscila principalmente en la zona clásicamente permitida y decrece en la zona prohibida.</p></div>
+<div class="reading-block"><p>La ecuación de Schrödinger queda:</p></div>
+<div class="formula-block">\[
+-\frac{\hbar^2}{2m}\frac{d^2\psi}{dx^2}+\frac12m\omega_0^2x^2\psi=E\psi.
+\]</div>
+<div class="reading-block"><p>El libro no desarrolla la solución general completa, sino que presenta los resultados relevantes. El estado fundamental tiene forma gaussiana:</p></div>
+<div class="formula-block">\[
+\psi_0(x)=A_0e^{-\alpha x^2},
+\qquad
+\alpha=\frac{m\omega_0}{2\hbar}.
+\]</div>
+<div class="reading-block"><p>El cálculo mostrado verifica que esta función satisface la ecuación de Schrödinger si:</p></div>
+<div class="formula-block">\[
+E_0=\frac12\hbar\omega_0.
+\]</div>
+<div class="reading-block"><p>La primera consecuencia importante es que el oscilador cuántico no puede tener energía cero. Incluso en el estado fundamental queda una energía de punto cero. La segunda consecuencia es que los niveles están igualmente espaciados:</p></div>
+<div class="formula-block">\[
+E_n=\left(n+\frac12\right)\hbar\omega_0,
+\qquad n=0,1,2,\ldots
+\]</div>
+<div class="reading-block"><p>La primera función excitada tiene un nodo en el centro y puede escribirse proporcionalmente a:</p></div>
+<div class="formula-block">\[
+\psi_1(x)=A_1xe^{-\alpha x^2}.
+\]</div>
+<div class="reading-block"><p>Cada estado excitado añade nodos. Esta relación entre nodos y energía aparece también en la caja: más nodos implican más curvatura, mayor número de onda efectivo y mayor energía.</p></div>
+<div class="reading-block"><p>El oscilador armónico es importante porque muchos sistemas físicos se aproximan por un potencial parabólico cerca de un equilibrio estable. Una molécula diatómica, por ejemplo, puede modelarse como dos átomos vibrando alrededor de su distancia de equilibrio. Por eso el resultado \(\Delta E=\hbar\omega_0\) se convierte en una base para entender espectros vibracionales.</p></div>
+<h3 id="3-5-reflexion-y-transmision-en-un-escalon-de-potencial">3.5. Reflexión y transmisión en un escalón de potencial</h3>
+<div class="reading-block"><p>Hasta aquí, el capítulo se ha centrado en estados ligados. Después pasa a estados no ligados, donde la partícula puede venir desde lejos y enfrentarse a una discontinuidad de potencial.</p></div>
+<div class="reading-block"><p>El escalón de potencial vale:</p></div>
+<div class="formula-block">\[
+U(x)=0 \quad (x&lt;0),
+\qquad
+U(x)=U_0 \quad (x&gt;0).
+\]</div>
+<div class="reading-block"><p>Clásicamente, si \(E&lt;U_0\), la partícula rebota. Si \(E&gt;U_0\), la partícula pasa al otro lado con menor energía cinética y menor velocidad. En cuántica, si \(E&lt;U_0\), la onda penetra un poco en la región prohibida y acaba reflejándose totalmente. Si \(E&gt;U_0\), aparece una diferencia esencial: aunque la partícula tiene energía suficiente para pasar, existe probabilidad de reflexión.</p></div>
+<div class="reading-block"><p>La razón física es ondulatoria. Al cambiar bruscamente el potencial, cambia la energía cinética y, por tanto, cambia el momento y la longitud de onda de de Broglie. Cuando una onda encuentra un cambio abrupto de longitud de onda, una parte se transmite y otra se refleja. La partícula se comporta como una onda: no pasa siempre como predeciría la mecánica clásica.</p></div>
+<div class="reading-block"><p>El coeficiente de reflexión para un escalón, en el caso \(E&gt;U_0\), se escribe:</p></div>
+<div class="formula-block">\[
+R=\left(\frac{k_1-k_2}{k_1+k_2}\right)^2,
+\]</div>
+<div class="reading-block"><p>con \(k_1\) el número de onda antes del escalón y \(k_2\) después. La conservación de probabilidad exige:</p></div>
+<div class="formula-block">\[
+T+R=1.
+\]</div>
+<div class="reading-block"><p>Si el escalón es pequeño comparado con la energía de la partícula, \(k_1\) y \(k_2\) son parecidos, y \(R\) es pequeño. Si el cambio de potencial es brusco y grande, la reflexión puede ser significativa.</p></div>
+<div class="reading-block"><p>La conexión con óptica es directa: el capítulo compara este resultado con la reflexión de luz al pasar entre medios de distinto índice de refracción. La materia ondulatoria no es una analogía superficial; las ecuaciones producen fenómenos de reflexión y transmisión propios de ondas.</p></div>
+<h3 id="3-6-penetracion-de-barreras-y-efecto-tunel">3.6. Penetración de barreras y efecto túnel</h3>
+<div class="reading-block"><p>El fenómeno más característico del capítulo aparece al estudiar una barrera rectangular de altura \(U_0\) y anchura \(a\). Para una partícula con \(E&lt;U_0\), la física clásica predice reflexión total: la partícula no puede entrar en una región donde \(K=E-U_0&lt;0\).</p></div>
+<div class="reading-block"><p>Cuánticamente, la función de onda no se anula en el borde de la barrera. Dentro de la barrera decrece exponencialmente. Si la barrera no es demasiado ancha, la amplitud al otro lado sigue siendo distinta de cero. Entonces puede unirse a una onda transmitida y aparece una probabilidad no nula de encontrar la partícula al otro lado.</p></div>
+<div class="reading-block"><p>Para el caso \(\alpha a\gg1\), el capítulo da la aproximación:</p></div>
+<div class="formula-block">\[
+T=e^{-2\alpha a},
+\qquad
+\alpha^2=\frac{2m(U_0-E)}{\hbar^2}.
+\]</div>
+<div class="reading-block"><p>La dependencia exponencial es lo importante. Pequeños cambios en la anchura de la barrera o en la diferencia \(U_0-E\) pueden producir cambios enormes en la probabilidad de transmisión. Esto explica por qué el túnel es despreciable en escalas macroscópicas y decisivo en escalas atómicas y nucleares.</p></div>
+<div class="reading-block"><p>El capítulo ilustra la idea con tres contextos. Primero, con ondas ópticas en reflexión total interna: una segunda pieza de vidrio situada muy cerca puede permitir la transferencia de parte de la onda. Segundo, con ondas de agua en una cubeta, que pueden penetrar una separación estrecha. Tercero, con dos aplicaciones físicas cuánticas: la desintegración alfa y el microscopio de efecto túnel.</p></div>
+<div class="reading-block"><p>En la desintegración alfa, una partícula alfa queda atrapada por la interacción nuclear pero puede escapar atravesando la barrera coulombiana. Como \(T\) depende exponencialmente de la barrera, ligeras diferencias en la energía de emisión producen vidas medias muy distintas. En el microscopio de efecto túnel, una corriente de túnel entre punta y muestra depende de forma muy sensible de la separación, lo que permite mapear superficies con resolución atómica.</p></div>
+<h3 id="3-7-ecuacion-de-schrodinger-en-tres-dimensiones">3.7. Ecuación de Schrödinger en tres dimensiones</h3>
+<div class="reading-block"><p>La extensión tridimensional sustituye la segunda derivada respecto a \(x\) por la suma de segundas derivadas respecto a \(x\), \(y\), \(z\):</p></div>
+<div class="formula-block">\[
+-\frac{\hbar^2}{2m}\left(
+\frac{\partial^2\psi}{\partial x^2}+
+\frac{\partial^2\psi}{\partial y^2}+
+\frac{\partial^2\psi}{\partial z^2}
+\right)+U\psi=E\psi.
+\]</div>
+<div class="reading-block"><p>Para una caja cúbica infinita de lado \(L\), la función de onda se separa como producto de tres soluciones unidimensionales:</p></div>
+<div class="formula-block">\[
+\psi(x,y,z)=A\sin(k_1x)\sin(k_2y)\sin(k_3z).
+\]</div>
+<div class="reading-block"><p>Las condiciones de frontera imponen:</p></div>
+<div class="formula-block">\[
+k_1=\frac{n_1\pi}{L},\quad
+k_2=\frac{n_2\pi}{L},\quad
+k_3=\frac{n_3\pi}{L},
+\]</div>
+<div class="reading-block"><p>con \(n_1,n_2,n_3\) enteros positivos. La energía queda:</p></div>
+<div class="formula-block">\[
+E_{n_1n_2n_3}=\frac{\hbar^2\pi^2}{2mL^2}(n_1^2+n_2^2+n_3^2).
+\]</div>
+<div class="reading-block"><p>Aquí aparece una idea nueva: degeneración. Puede ocurrir que distintas funciones de onda tengan la misma energía. Por ejemplo, en una caja cúbica, los estados \((2,1,1)\), \((1,2,1)\) y \((1,1,2)\) tienen la misma energía. Son estados diferentes, pero energéticamente equivalentes.</p></div>
+<div class="reading-block"><p>La degeneración está ligada a la simetría espacial. Si la caja deja de ser cúbica y sus lados son distintos \(L_1,L_2,L_3\), la energía pasa a ser:</p></div>
+<div class="formula-block">\[
+E_{n_1n_2n_3}=\frac{\hbar^2\pi^2}{2m}
+\left(
+\frac{n_1^2}{L_1^2}+\frac{n_2^2}{L_2^2}+\frac{n_3^2}{L_3^2}
+\right).
+\]</div>
+<div class="reading-block"><p>Al romperse la simetría, niveles antes degenerados se separan. Esta idea anticipa fenómenos posteriores: simetría, degeneración y ruptura de degeneración son conceptos centrales en átomos, moléculas y sólidos.</p></div>
+<h3 id="3-8-dos-particulas-identicas">3.8. Dos partículas idénticas</h3>
+<div class="reading-block"><p>La última parte del capítulo trata una consecuencia que no tiene equivalente clásico: la indistinguibilidad de partículas idénticas. En mecánica clásica, dos partículas idénticas pueden seguirse por sus trayectorias. En cuántica, por el principio de incertidumbre y la naturaleza ondulatoria, no siempre tiene sentido decir cuál partícula es cuál.</p></div>
+<div class="reading-block"><p>Para dos partículas no interactuantes en una caja, una solución simple puede escribirse como producto:</p></div>
+<div class="formula-block">\[
+\psi_{nm}(x_1,x_2)=\psi_n(x_1)\psi_m(x_2).
+\]</div>
+<div class="reading-block"><p>Pero si las partículas son idénticas, intercambiar \(x_1\) y \(x_2\) no puede cambiar la densidad de probabilidad. Por tanto, debe cumplirse:</p></div>
+<div class="formula-block">\[
+|\psi(x_1,x_2)|^2=|\psi(x_2,x_1)|^2.
+\]</div>
+<div class="reading-block"><p>Esto permite dos posibilidades:</p></div>
+<div class="formula-block">\[
+\psi(x_2,x_1)=\psi(x_1,x_2) \quad \text{simétrica},
+\]</div>
+<div class="formula-block">\[
+\psi(x_2,x_1)=-\psi(x_1,x_2) \quad \text{antisimétrica}.
+\]</div>
+<div class="reading-block"><p>Las combinaciones físicas se construyen sumando o restando productos:</p></div>
+<div class="formula-block">\[
+\psi_S=A[\psi_n(x_1)\psi_m(x_2)+\psi_n(x_2)\psi_m(x_1)],
+\]</div>
+<div class="formula-block">\[
+\psi_A=A[\psi_n(x_1)\psi_m(x_2)-\psi_n(x_2)\psi_m(x_1)].
+\]</div>
+<div class="reading-block"><p>La diferencia es decisiva. Si \(n=m\), la función antisimétrica se anula exactamente. Eso significa que dos partículas descritas por una función antisimétrica no pueden ocupar el mismo estado cuántico. Esta es la base del principio de exclusión de Pauli.</p></div>
+<div class="reading-block"><p>Las partículas de espín semientero, como electrones, protones y neutrones, son fermiones y se describen con funciones antisimétricas. Obedecen el principio de exclusión de Pauli. Las partículas de espín entero, como fotones y partículas alfa, son bosones y se describen mediante funciones simétricas; no tienen esa prohibición de ocupación múltiple.</p></div>
+<div class="reading-block"><p>La consecuencia posterior es enorme: la estructura electrónica de los átomos y la tabla periódica dependen de que los electrones no puedan compartir todos los mismos números cuánticos.</p></div>
+</section>
+<section class="page" id="conceptos-clave">
+<div class="page-head"><h2>4. Conceptos clave</h2></div>
+<div class="grid cards-grid">
+<article class="definition-card">
+<h3>Ecuación de Schrödinger dependiente del tiempo</h3>
+<p>Definición precisa: ecuación diferencial parcial que gobierna la evolución temporal de la función de onda.</p>
+<p>Explicación desarrollada: relaciona la curvatura espacial, el potencial y el cambio temporal de \(\psi\). Su validez se justifica por comparación experimental.</p>
+<p>Ejemplo: una partícula sometida a un potencial \(U(x)\) se describe mediante \(\psi(x,t)\), no mediante una trayectoria \(x(t)\).</p>
+<p>Relación con otros conceptos: de ella se obtiene la ecuación independiente del tiempo cuando \(U\) no depende de \(t\).</p>
+<p>Posible forma de examen: explicar por qué \(\psi\) puede ser compleja pero \(|\psi|^2\) debe ser real.</p>
+</article>
+<article class="definition-card">
+<h3>Ecuación de Schrödinger independiente del tiempo</h3>
+<p>Definición precisa: \(-\frac{\hbar^2}{2m}\psi''+U\psi=E\psi\) en una dimensión.</p>
+<p>Explicación desarrollada: determina los estados estacionarios y sus energías permitidas.</p>
+<p>Ejemplo: en una caja infinita conduce a \(E_n=n^2h^2/(8mL^2)\).</p>
+<p>Relación con otros conceptos: depende de separación de variables y de la condición \(E=\hbar\omega\).</p>
+<p>Posible forma de examen: dada una \(U(x)\), escribir la ecuación en cada región.</p>
+</article>
+<article class="definition-card">
+<h3>Estado estacionario</h3>
+<p>Definición precisa: solución separable \(\psi(x,t)=\psi(x)e^{-iEt/\hbar}\) cuya densidad de probabilidad no cambia con el tiempo.</p>
+<p>Explicación desarrollada: aunque la fase temporal cambia, \(|e^{-iEt/\hbar}|^2=1\), por lo que \(|\psi(x,t)|^2=|\psi(x)|^2\).</p>
+<p>Ejemplo: un electrón en el estado \(n=1\) de una caja.</p>
+<p>Relación con otros conceptos: permite trabajar con la ecuación independiente del tiempo.</p>
+<p>Posible forma de examen: justificar por qué la probabilidad de un estado estacionario no depende del tiempo.</p>
+</article>
+<article class="definition-card">
+<h3>Normalización</h3>
+<p>Definición precisa: \(\int |\psi|^2 dV=1\).</p>
+<p>Explicación desarrollada: garantiza que la partícula esté en algún lugar del espacio accesible.</p>
+<p>Ejemplo: descarta funciones que divergen al infinito.</p>
+<p>Relación con otros conceptos: es una condición física adicional a la ecuación diferencial.</p>
+<p>Posible forma de examen: explicar por qué una solución que crece exponencialmente no es aceptable.</p>
+</article>
+<article class="definition-card">
+<h3>Pozo cuadrado infinito</h3>
+<p>Definición precisa: potencial ideal con \(U=0\) dentro de una región y \(U=\infty\) fuera.</p>
+<p>Explicación desarrollada: confina totalmente a la partícula y fuerza nodos en las paredes.</p>
+<p>Ejemplo: \(\psi_n=A\sin(n\pi x/L)\).</p>
+<p>Relación con otros conceptos: modelo base de cuantización por condiciones de frontera.</p>
+<p>Posible forma de examen: derivar \(E_n=n^2h^2/(8mL^2)\).</p>
+</article>
+<article class="definition-card">
+<h3>Número cuántico \(n\)</h3>
+<p>Definición precisa: entero positivo que etiqueta los estados permitidos en sistemas confinados.</p>
+<p>Explicación desarrollada: cuenta cómo encaja la onda en la región y está asociado al número de nodos.</p>
+<p>Ejemplo: en la caja, \(n=1\) es el estado fundamental; \(n=2\) tiene más curvatura y mayor energía.</p>
+<p>Relación con otros conceptos: aparece por condiciones de frontera.</p>
+<p>Posible forma de examen: explicar por qué \(n=0\) no es un estado físico en la caja.</p>
+</article>
+<article class="definition-card">
+<h3>Pozo cuadrado finito</h3>
+<p>Definición precisa: potencial con \(U=0\) en una región y \(U=U_0\) fuera.</p>
+<p>Explicación desarrollada: permite estados ligados con \(E&lt;U_0\), pero la función de onda penetra fuera.</p>
+<p>Ejemplo: una partícula en un pozo molecular aproximado.</p>
+<p>Relación con otros conceptos: introduce regiones prohibidas y decaimiento exponencial.</p>
+<p>Posible forma de examen: comparar cualitativamente pozo infinito y pozo finito.</p>
+</article>
+<article class="definition-card">
+<h3>Región clásicamente prohibida</h3>
+<p>Definición precisa: zona donde \(E&lt;U(x)\).</p>
+<p>Explicación desarrollada: clásicamente implicaría \(K&lt;0\), pero cuánticamente puede existir amplitud de onda decreciente.</p>
+<p>Ejemplo: exterior de un pozo finito para un estado ligado.</p>
+<p>Relación con otros conceptos: base del túnel cuántico.</p>
+<p>Posible forma de examen: explicar por qué \(\psi\) no se anula inmediatamente al entrar en una barrera.</p>
+</article>
+<article class="definition-card">
+<h3>Oscilador armónico cuántico</h3>
+<p>Definición precisa: sistema con potencial \(U=\frac12m\omega_0^2x^2\) tratado mediante Schrödinger.</p>
+<p>Explicación desarrollada: posee energía de punto cero y niveles igualmente espaciados.</p>
+<p>Ejemplo: vibración de una molécula diatómica.</p>
+<p>Relación con otros conceptos: aproximación universal cerca de equilibrios estables.</p>
+<p>Posible forma de examen: escribir \(E_n=(n+1/2)\hbar\omega_0\) e interpretar \(E_0\).</p>
+</article>
+<article class="definition-card">
+<h3>Energía de punto cero</h3>
+<p>Definición precisa: energía mínima no nula \(E_0=\frac12\hbar\omega_0\) del oscilador armónico.</p>
+<p>Explicación desarrollada: el oscilador no puede estar simultáneamente con posición y momento perfectamente definidos.</p>
+<p>Ejemplo: incluso en el estado fundamental, la función de onda tiene anchura finita.</p>
+<p>Relación con otros conceptos: ligada a incertidumbre y confinamiento.</p>
+<p>Posible forma de examen: comparar el mínimo clásico \(E=0\) con el mínimo cuántico.</p>
+</article>
+<article class="definition-card">
+<h3>Escalón de potencial</h3>
+<p>Definición precisa: potencial que cambia bruscamente de \(0\) a \(U_0\).</p>
+<p>Explicación desarrollada: muestra reflexión parcial incluso cuando \(E&gt;U_0\).</p>
+<p>Ejemplo: electrón que cruza una interfaz material.</p>
+<p>Relación con otros conceptos: analogía con reflexión de ondas en cambios de medio.</p>
+<p>Posible forma de examen: calcular \(R=((k_1-k_2)/(k_1+k_2))^2\).</p>
+</article>
+<article class="definition-card">
+<h3>Coeficientes de reflexión y transmisión</h3>
+<p>Definición precisa: \(R\) y \(T\) son probabilidades de que una partícula incidente sea reflejada o transmitida.</p>
+<p>Explicación desarrollada: satisfacen \(R+T=1\) si no hay absorción ni pérdidas.</p>
+<p>Ejemplo: un escalón pequeño produce \(R\ll1\).</p>
+<p>Relación con otros conceptos: conservación de probabilidad.</p>
+<p>Posible forma de examen: interpretar físicamente \(R\) y \(T\).</p>
+</article>
+<article class="definition-card">
+<h3>Efecto túnel</h3>
+<p>Definición precisa: transmisión cuántica a través de una región donde \(E&lt;U\).</p>
+<p>Explicación desarrollada: la función de onda decae dentro de la barrera, pero puede salir al otro lado con amplitud no nula.</p>
+<p>Ejemplo: desintegración alfa o microscopio de efecto túnel.</p>
+<p>Relación con otros conceptos: extensión de la penetración en regiones prohibidas.</p>
+<p>Posible forma de examen: explicar la dependencia exponencial \(T\sim e^{-2\alpha a}\).</p>
+</article>
+<article class="definition-card">
+<h3>Degeneración</h3>
+<p>Definición precisa: existencia de varios estados distintos con la misma energía.</p>
+<p>Explicación desarrollada: aparece cuando el sistema tiene simetrías espaciales.</p>
+<p>Ejemplo: en una caja cúbica, \((2,1,1)\), \((1,2,1)\), \((1,1,2)\) son degenerados.</p>
+<p>Relación con otros conceptos: la ruptura de simetría elimina o reduce degeneración.</p>
+<p>Posible forma de examen: identificar degeneración en una caja tridimensional.</p>
+</article>
+<article class="definition-card">
+<h3>Partículas idénticas</h3>
+<p>Definición precisa: partículas del mismo tipo que no pueden distinguirse por etiquetas físicas en mecánica cuántica.</p>
+<p>Explicación desarrollada: el intercambio de coordenadas no debe cambiar la densidad de probabilidad.</p>
+<p>Ejemplo: dos electrones en una caja.</p>
+<p>Relación con otros conceptos: conduce a funciones simétricas o antisimétricas.</p>
+<p>Posible forma de examen: explicar por qué \(|\psi(x_1,x_2)|^2=|\psi(x_2,x_1)|^2\).</p>
+</article>
+<article class="definition-card">
+<h3>Fermiones y bosones</h3>
+<p>Definición precisa: fermiones tienen espín semientero y funciones antisimétricas; bosones tienen espín entero y funciones simétricas.</p>
+<p>Explicación desarrollada: los fermiones obedecen Pauli; los bosones no tienen límite de ocupación del mismo estado espacial.</p>
+<p>Ejemplo: electrones son fermiones; fotones son bosones.</p>
+<p>Relación con otros conceptos: base de la estructura atómica y de la ocupación de estados.</p>
+<p>Posible forma de examen: formular el principio de exclusión de Pauli.</p>
+</article>
+</div>
+</section>
+<section class="page" id="relaciones-entre-ideas">
+<div class="page-head"><h2>5. Relaciones entre ideas</h2></div>
+<div class="reading-block"><p>La primera dependencia conceptual es: función de onda -&gt; densidad de probabilidad -&gt; normalización. La ecuación de Schrödinger no basta por sí sola. Hay que exigir que la solución represente una probabilidad total finita e igual a uno. Por eso se descartan soluciones que divergen o funciones que no cumplen las condiciones de frontera.</p></div>
+<div class="reading-block"><p>La segunda dependencia es: potencial \(U(x)\) -&gt; forma local de la ecuación -&gt; forma local de la función de onda. Si \(E&gt;U\), la función tiende a oscilar, como seno o coseno. Si \(E&lt;U\), la función tiende a crecer o decrecer exponencialmente. La solución física elige las partes que no divergen.</p></div>
+<div class="reading-block"><p>La tercera dependencia es: confinamiento -&gt; condiciones de frontera -&gt; cuantización. En la caja infinita, los nodos en \(0\) y \(L\) seleccionan \(k=n\pi/L\). En el pozo finito, la exigencia de continuidad y normalización selecciona solo ciertos valores de energía. En el oscilador armónico, la exigencia de que la función no diverja al infinito produce niveles discretos.</p></div>
+<div class="reading-block"><p>La cuarta relación es una oposición: clásico frente a cuántico. Clásicamente, una partícula con \(E&lt;U\) no entra en la región. Cuánticamente, la función de onda puede penetrarla. Clásicamente, una partícula con \(E&gt;U_0\) atraviesa siempre un escalón. Cuánticamente, puede reflejarse parcialmente. Clásicamente, el oscilador puede tener \(E=0\). Cuánticamente, el estado fundamental vale \(\frac12\hbar\omega_0\).</p></div>
+<div class="reading-block"><p>La quinta relación es: simetría -&gt; degeneración. En una caja cúbica, las tres direcciones son equivalentes; intercambiar \(n_x\), \(n_y\), \(n_z\) puede dejar la energía igual. Si los lados son distintos, esa equivalencia desaparece y los niveles se separan.</p></div>
+<div class="reading-block"><p>La sexta relación es: indistinguibilidad -&gt; simetría de la función de onda -&gt; principio de exclusión. La imposibilidad de etiquetar partículas idénticas obliga a que la función de onda cambie de forma controlada al intercambiar coordenadas. Si es antisimétrica y dos partículas intentan ocupar el mismo estado, la función se anula. Esa anulación es la forma matemática del principio de Pauli.</p></div>
+<div class="reading-block"><p>Históricamente, el capítulo conecta tres avances: la idea ondulatoria de de Broglie, la formulación de Schrödinger y la interpretación probabilística. Además, enlaza con Pauli al final. La secuencia conceptual es: materia como onda -&gt; ecuación de onda cuántica -&gt; estados ligados cuantizados -&gt; túnel -&gt; estructura de sistemas con muchas partículas.</p></div>
+</section>
+<section class="page" id="errores-habituales">
+<div class="page-head"><h2>6. Errores habituales</h2></div>
+<details class="accordion accordion-error"><summary>Error: interpretar \(\psi\) como una onda material directamente observable.</summary>
+<p>Por qué está mal: la magnitud observable es \(|\psi|^2\), no \(\psi\) en sí.</p>
+<p>Corrección: \(\psi\) es amplitud de probabilidad; \(|\psi|^2\) es densidad de probabilidad.</p>
+<p>Respuesta incorrecta: "La función de onda es la posición real del electrón extendida por el espacio".</p>
+<p>Respuesta correcta: "La función de onda permite calcular probabilidades; su módulo cuadrado da la densidad de probabilidad".</p>
+</details>
+<details class="accordion accordion-error"><summary>Error: pensar que cualquier solución de Schrödinger es física.</summary>
+<p>Por qué está mal: debe ser normalizable y cumplir condiciones de frontera.</p>
+<p>Corrección: las soluciones divergentes o no normalizables se descartan.</p>
+<p>Respuesta incorrecta: "Si satisface la ecuación diferencial, vale como estado".</p>
+<p>Respuesta correcta: "Además de satisfacer la ecuación, debe representar una probabilidad total finita".</p>
+</details>
+<details class="accordion accordion-error"><summary>Error: admitir \(n=0\) en la caja infinita.</summary>
+<p>Por qué está mal: da \(\psi=0\) en todo el intervalo, luego no describe una partícula.</p>
+<p>Corrección: los números cuánticos de la caja empiezan en \(n=1\).</p>
+<p>Respuesta incorrecta: "El nivel fundamental de la caja tiene \(n=0\) y energía cero".</p>
+<p>Respuesta correcta: "El estado fundamental tiene \(n=1\); la energía mínima es \(h^2/(8mL^2)\)".</p>
+</details>
+<details class="accordion accordion-error"><summary>Error: confundir pozo infinito y pozo finito.</summary>
+<p>Por qué está mal: en el pozo finito la función no se anula en los bordes.</p>
+<p>Corrección: en el pozo finito penetra fuera y decae exponencialmente.</p>
+<p>Respuesta incorrecta: "En ambos pozos la función vale cero en las paredes".</p>
+<p>Respuesta correcta: "En el infinito se anula en las paredes; en el finito es continua y se extiende fuera".</p>
+</details>
+<details class="accordion accordion-error"><summary>Error: creer que una región prohibida implica probabilidad cero.</summary>
+<p>Por qué está mal: cuánticamente la función puede ser exponencial decreciente.</p>
+<p>Corrección: prohibida significa no oscilatoria y clásicamente inaccesible, no amplitud nula.</p>
+<p>Respuesta incorrecta: "Si \(E&lt;U\), la partícula no puede estar allí de ningún modo".</p>
+<p>Respuesta correcta: "Si \(E&lt;U\), la función decrece, pero puede haber probabilidad no nula".</p>
+</details>
+<details class="accordion accordion-error"><summary>Error: decir que el túnel viola la conservación de la energía.</summary>
+<p>Por qué está mal: la energía total se conserva; lo que cambia es la descripción de la presencia en la barrera.</p>
+<p>Corrección: el estado se describe por una función de onda que atraviesa con probabilidad no nula.</p>
+<p>Respuesta incorrecta: "La partícula toma energía prestada para pasar".</p>
+<p>Respuesta correcta: "La función de onda penetra y puede transmitirse; la energía total del estado sigue siendo \(E\)".</p>
+</details>
+<details class="accordion accordion-error"><summary>Error: interpretar \(T=e^{-2\alpha a}\) como una amplitud.</summary>
+<p>Por qué está mal: el capítulo la usa como coeficiente de transmisión, es decir, probabilidad aproximada.</p>
+<p>Corrección: la amplitud decae como exponencial; la probabilidad involucra el cuadrado de la amplitud.</p>
+<p>Respuesta incorrecta: "La amplitud transmitida es exactamente \(e^{-2\alpha a}\)".</p>
+<p>Respuesta correcta: "En el régimen indicado, la probabilidad de transmisión se aproxima por \(e^{-2\alpha a}\)".</p>
+</details>
+<details class="accordion accordion-error"><summary>Error: olvidar la dependencia exponencial del túnel.</summary>
+<p>Por qué está mal: la sensibilidad extrema a \(a\) y \(U_0-E\) es la clave física del fenómeno.</p>
+<p>Corrección: una pequeña variación de distancia o energía puede cambiar mucho \(T\).</p>
+<p>Respuesta incorrecta: "Si se duplica la anchura, la transmisión se reduce más o menos a la mitad".</p>
+<p>Respuesta correcta: "Si aumenta la anchura, la transmisión cae exponencialmente".</p>
+</details>
+<details class="accordion accordion-error"><summary>Error: pensar que todos los niveles cuánticos están igualmente espaciados.</summary>
+<p>Por qué está mal: eso es una propiedad especial del oscilador armónico.</p>
+<p>Corrección: la caja tiene \(E_n\propto n^2\); el oscilador tiene \(E_n=(n+1/2)\hbar\omega_0\).</p>
+<p>Respuesta incorrecta: "La separación de niveles siempre es constante".</p>
+<p>Respuesta correcta: "La separación depende del potencial; solo el oscilador armónico tiene separación constante".</p>
+</details>
+<details class="accordion accordion-error"><summary>Error: creer que la degeneración es casual.</summary>
+<p>Por qué está mal: suele estar ligada a simetrías del potencial.</p>
+<p>Corrección: al romper la simetría, la degeneración puede desaparecer.</p>
+<p>Respuesta incorrecta: "Dos estados degenerados tienen la misma energía por coincidencia sin significado".</p>
+<p>Respuesta correcta: "En la caja cúbica, la degeneración se debe a la equivalencia de las direcciones espaciales".</p>
+</details>
+<details class="accordion accordion-error"><summary>Error: permitir números cuánticos cero en una caja tridimensional.</summary>
+<p>Por qué está mal: si alguno es cero, el seno correspondiente es cero en toda la dimensión y la función completa se anula.</p>
+<p>Corrección: \(n_1,n_2,n_3\) son enteros positivos.</p>
+<p>Respuesta incorrecta: "El estado \((0,1,1)\) es válido".</p>
+<p>Respuesta correcta: "\((0,1,1)\) no es válido porque la función de onda se anula en todo el espacio".</p>
+</details>
+<details class="accordion accordion-error"><summary>Error: tratar partículas idénticas como distinguibles con etiquetas permanentes.</summary>
+<p>Por qué está mal: en cuántica no hay trayectoria definida que permita seguir cuál es cuál.</p>
+<p>Corrección: la densidad de probabilidad debe ser invariante bajo intercambio.</p>
+<p>Respuesta incorrecta: "El electrón 1 queda siempre identificado por su camino".</p>
+<p>Respuesta correcta: "Para electrones idénticos, intercambiar coordenadas no cambia las probabilidades físicas".</p>
+</details>
+<details class="accordion accordion-error"><summary>Error: confundir función simétrica con antisimétrica.</summary>
+<p>Por qué está mal: solo la antisimetría produce exclusión automática para dos partículas en el mismo estado.</p>
+<p>Corrección: fermiones -&gt; antisimétrica; bosones -&gt; simétrica.</p>
+<p>Respuesta incorrecta: "Los electrones tienen función simétrica".</p>
+<p>Respuesta correcta: "Los electrones son fermiones y se describen con funciones antisimétricas".</p>
+</details>
+<details class="accordion accordion-error"><summary>Error: formular mal el principio de Pauli.</summary>
+<p>Por qué está mal: Pauli no prohíbe que dos electrones estén en la misma región espacial; prohíbe que tengan todos los números cuánticos iguales.</p>
+<p>Corrección: dos fermiones idénticos no pueden ocupar el mismo estado cuántico completo.</p>
+<p>Respuesta incorrecta: "Dos electrones no pueden estar cerca".</p>
+<p>Respuesta correcta: "Dos electrones no pueden compartir simultáneamente el mismo conjunto completo de números cuánticos".</p>
+</details>
+</section>
+<section class="page" id="preguntas-orientadas-a-examen">
+<div class="page-head"><h2>7. Preguntas orientadas a examen</h2></div>
+<h3 id="10-preguntas-faciles">10 preguntas fáciles</h3>
+<div class="reading-block"><ol start="1">
+<li value="1">¿Qué magnitud física se obtiene a partir de \(|\psi(x,t)|^2\)?</li>
+<li value="2">¿Qué diferencia hay entre la ecuación de Schrödinger dependiente e independiente del tiempo?</li>
+<li value="3">¿Qué condición de frontera cumple la partícula en una caja infinita en \(x=0\) y \(x=L\)?</li>
+<li value="4">¿Por qué \(n=0\) no es válido en la caja infinita?</li>
+<li value="5">¿Qué significa que una función de onda esté normalizada?</li>
+<li value="6">¿Qué forma tiene la energía potencial del oscilador armónico?</li>
+<li value="7">¿Cuál es la energía del estado fundamental del oscilador armónico cuántico?</li>
+<li value="8">¿Qué es una región clásicamente prohibida?</li>
+<li value="9">¿Qué significa que un nivel energético sea degenerado?</li>
+<li value="10">¿Qué tipo de partículas obedecen el principio de exclusión de Pauli?</li>
+</ol></div>
+<h3 id="10-preguntas-medias">10 preguntas medias</h3>
+<div class="reading-block"><ol start="11">
+<li value="11">Deriva los valores permitidos de \(k\) para una partícula en una caja infinita de longitud \(L\).</li>
+<li value="12">Explica por qué las energías de una caja infinita son proporcionales a \(n^2\).</li>
+<li value="13">Compara cualitativamente las funciones de onda del pozo infinito y del pozo finito.</li>
+<li value="14">Explica por qué en el pozo finito hay un número finito de estados ligados.</li>
+<li value="15">Justifica por qué el oscilador armónico cuántico no tiene energía mínima cero.</li>
+<li value="16">Explica el origen de la reflexión parcial en un escalón de potencial cuando \(E&gt;U_0\).</li>
+<li value="17">Interpreta físicamente la relación \(T+R=1\).</li>
+<li value="18">Explica por qué la probabilidad de túnel depende exponencialmente de la anchura de la barrera.</li>
+<li value="19">En una caja cúbica 3D, identifica si los estados \((2,1,1)\), \((1,2,1)\), \((1,1,2)\) son degenerados.</li>
+<li value="20">Explica por qué una función de onda de dos partículas idénticas debe ser simétrica o antisimétrica.</li>
+</ol></div>
+<h3 id="5-preguntas-dificiles">5 preguntas difíciles</h3>
+<div class="reading-block"><ol start="21">
+<li value="21">Dada una barrera rectangular con \(E&lt;U_0\), explica cómo cambia \(T\) si se duplica la anchura \(a\).</li>
+<li value="22">Justifica matemáticamente por qué una solución exponencial creciente fuera de un pozo finito no puede aceptarse.</li>
+<li value="23">En una caja rectangular con lados \(L_1,L_2,L_3\), razona cuándo se elimina la degeneración de una caja cúbica.</li>
+<li value="24">Explica por qué una función antisimétrica de dos partículas se anula si ambas ocupan el mismo estado.</li>
+<li value="25">Relaciona la penetración de la función de onda en regiones prohibidas con el principio de incertidumbre, sin decir que se mide energía cinética negativa.</li>
+</ol></div>
+<h3 id="5-preguntas-de-desarrollo-largo">5 preguntas de desarrollo largo</h3>
+<div class="reading-block"><ol start="26">
+<li value="26">Desarrolla el paso de la ecuación de Schrödinger dependiente del tiempo a la ecuación independiente del tiempo para potenciales independientes del tiempo.</li>
+<li value="27">Explica de forma completa la partícula en una caja infinita: potencial, ecuación, condiciones de frontera, funciones de onda y energía.</li>
+<li value="28">Explica el pozo finito y su diferencia con el pozo infinito, incluyendo regiones permitidas, prohibidas, normalización y número de estados.</li>
+<li value="29">Explica el efecto túnel y dos aplicaciones físicas presentes en el capítulo.</li>
+<li value="30">Explica la extensión tridimensional de Schrödinger y el concepto de degeneración.</li>
+</ol></div>
+<h3 id="5-preguntas-de-relacion-entre-conceptos">5 preguntas de relación entre conceptos</h3>
+<div class="reading-block"><ol start="31">
+<li value="31">Relaciona confinamiento, condiciones de frontera y cuantización.</li>
+<li value="32">Relaciona curvatura de \(\psi\), signo de \(E-U\) y tipo de solución.</li>
+<li value="33">Relaciona simetría espacial y degeneración energética.</li>
+<li value="34">Relaciona indistinguibilidad, simetría de la función de onda y principio de Pauli.</li>
+<li value="35">Relaciona el pozo finito, el túnel y el microscopio de efecto túnel.</li>
+</ol></div>
+</section>
+<section class="page" id="respuestas-modelo">
+<div class="page-head"><h2>8. Respuestas modelo</h2></div>
+<div class="reading-block"><ol start="1">
+<li value="1">\(|\psi(x,t)|^2\) da la densidad de probabilidad. Multiplicada por \(dx\), da la probabilidad de encontrar la partícula entre \(x\) y \(x+dx\). Si la función depende de tres coordenadas, \(|\psi(x,y,z)|^2dV\) da la probabilidad en el elemento de volumen.</li>
+<li value="2">La ecuación dependiente del tiempo describe la evolución completa de \(\psi(x,t)\). La independiente del tiempo se obtiene cuando el potencial no depende del tiempo y permite calcular estados estacionarios y energías permitidas. En el capítulo se trabaja principalmente con la independiente del tiempo.</li>
+<li value="3">En una caja infinita, la función de onda debe anularse en las paredes: \(\psi(0)=0\) y \(\psi(L)=0\). Fuera de la caja también vale cero, porque el potencial infinito impide encontrar allí la partícula.</li>
+<li value="4">Para \(n=0\), la solución \(\psi=A\sin(0)=0\) se anula en todos los puntos. Eso no representa una partícula y no puede normalizarse. Por tanto, el primer estado físico es \(n=1\).</li>
+<li value="5">Significa que la integral de la densidad de probabilidad en todo el espacio vale uno. En una dimensión, \(\int |\psi(x)|^2dx=1\). La normalización fija constantes multiplicativas y descarta soluciones que divergen.</li>
+<li value="6">El potencial del oscilador armónico es parabólico: \(U(x)=\frac12kx^2=\frac12m\omega_0^2x^2\). Es el potencial típico cerca de un equilibrio estable cuando las oscilaciones son pequeñas.</li>
+<li value="7">La energía fundamental es \(E_0=\frac12\hbar\omega_0\). No es cero; esta energía mínima se llama energía de punto cero.</li>
+<li value="8">Es una región donde \(E&lt;U(x)\). En mecánica clásica, allí la energía cinética \(K=E-U\) sería negativa, por lo que la partícula no podría entrar. En mecánica cuántica, la función de onda puede penetrar con forma exponencial decreciente.</li>
+<li value="9">Un nivel es degenerado cuando existen dos o más funciones de onda o estados distintos con la misma energía. En la caja cúbica, la degeneración aparece por la simetría entre las tres direcciones espaciales.</li>
+<li value="10">Lo obedecen los fermiones idénticos, como electrones, protones y neutrones. No pueden ocupar simultáneamente el mismo estado cuántico completo.</li>
+<li value="11">Dentro de la caja infinita, \(\psi=A\sin(kx)+B\cos(kx)\). La condición \(\psi(0)=0\) da \(B=0\). La condición \(\psi(L)=0\) exige \(A\sin(kL)=0\). Para una función no nula, \(\sin(kL)=0\), luego \(kL=n\pi\) y \(k_n=n\pi/L\), con \(n=1,2,3,\ldots\).</li>
+<li value="12">La energía dentro de la caja es \(E=\hbar^2k^2/(2m)\). Como las condiciones de frontera imponen \(k_n=n\pi/L\), al sustituir queda \(E_n=\hbar^2\pi^2n^2/(2mL^2)=n^2h^2/(8mL^2)\). Por eso crece como \(n^2\).</li>
+<li value="13">En el pozo infinito, la función de onda se anula exactamente en los bordes y fuera de la caja. En el pozo finito, la función es continua en los bordes y penetra fuera del pozo con decaimiento exponencial. Las energías del pozo finito son algo menores porque la onda ocupa una región efectiva más amplia.</li>
+<li value="14">En un pozo finito solo hay estados ligados para ciertas energías con \(E&lt;U_0\). Al aumentar la energía se llega al umbral de escape; por encima de \(U_0\) la partícula ya no está confinada y la energía no queda discretizada del mismo modo. Como la profundidad disponible es finita, solo caben un número finito de estados ligados.</li>
+<li value="15">El estado fundamental del oscilador cuántico tiene función de onda gaussiana de anchura finita. Si tuviera energía cero, la partícula estaría simultáneamente en reposo y en el mínimo exacto del potencial, incompatible con la descripción cuántica. La solución de Schrödinger da \(E_0=\frac12\hbar\omega_0\).</li>
+<li value="16">Cuando \(E&gt;U_0\), la partícula clásica atraviesa el escalón. Cuánticamente, al cambiar el potencial cambia la energía cinética, cambia \(k\) y cambia la longitud de onda. Una discontinuidad de medio para una onda produce reflexión parcial. Por eso aparece un coeficiente \(R\), aunque la partícula tenga energía suficiente para pasar.</li>
+<li value="17">\(T+R=1\) expresa conservación de probabilidad. Si la partícula incidente no se pierde ni se absorbe, la probabilidad total se reparte entre transmisión y reflexión.</li>
+<li value="18">En la barrera con \(E&lt;U_0\), la función de onda decrece como exponencial. La transmisión depende del cuadrado de la amplitud al otro lado, por eso aparece una forma \(T\sim e^{-2\alpha a}\). Al aumentar \(a\), la amplitud tiene más distancia para decaer y la transmisión cae de forma exponencial.</li>
+<li value="19">Sí. En una caja cúbica, la energía depende de \(n_1^2+n_2^2+n_3^2\). Los tres estados tienen suma \(4+1+1=6\), solo con los números cuánticos permutados. Como la caja trata igual a las tres direcciones, son estados distintos con la misma energía.</li>
+<li value="20">Al intercambiar dos partículas idénticas, no debe cambiar la densidad de probabilidad. Eso exige \(|\psi(x_1,x_2)|^2=|\psi(x_2,x_1)|^2\). Esta igualdad se satisface si la función permanece igual —simétrica— o cambia solo de signo —antisimétrica—.</li>
+<li value="21">Si \(T=e^{-2\alpha a}\), al duplicar la anchura queda \(T'=e^{-4\alpha a}=(e^{-2\alpha a})^2=T^2\). Por tanto, la transmisión no se reduce linealmente: se reduce exponencialmente. Si \(T\) ya era pequeña, \(T^2\) será muchísimo menor.</li>
+<li value="22">Una solución exponencial creciente fuera del pozo haría que \(|\psi|^2\) creciera sin límite al alejarse. Entonces la integral \(\int |\psi|^2dx\) divergiría y no podría normalizarse a 1. Aunque satisfaga localmente la ecuación diferencial, no representa un estado físico.</li>
+<li value="23">En una caja cúbica, varias permutaciones de \((n_1,n_2,n_3)\) dan la misma energía porque los tres lados son iguales. En una caja rectangular general, la energía contiene \(n_1^2/L_1^2+n_2^2/L_2^2+n_3^2/L_3^2\). Si \(L_1,L_2,L_3\) son distintos, permutar números cuánticos cambia la energía y se elimina la degeneración asociada a la simetría cúbica.</li>
+<li value="24">La función antisimétrica se construye como \(\psi_A=A[\psi_n(x_1)\psi_m(x_2)-\psi_n(x_2)\psi_m(x_1)]\). Si \(n=m\), los dos términos son iguales y su diferencia vale cero. Por tanto, no existe estado físico antisimétrico con ambas partículas en el mismo estado. Esa es la base matemática del principio de exclusión.</li>
+<li value="25">En una región prohibida, la función de onda puede ser no nula, pero intentar localizar la partícula allí aumenta la incertidumbre de momento. Esa incertidumbre impide interpretar la medición como una observación directa de energía cinética negativa. La región es prohibida clásicamente, no inexistente para la amplitud cuántica.</li>
+<li value="26">Si \(U\) no depende del tiempo, se buscan soluciones separables \(\psi(x,t)=\psi(x)e^{-i\omega t}\). Al derivar respecto al tiempo, aparece \(-i\omega\), y el término temporal se convierte en \(\hbar\omega\psi(x)e^{-i\omega t}=E\psi(x)e^{-i\omega t}\). Al sustituir en la ecuación dependiente del tiempo, el factor temporal común se cancela. Queda \(-\frac{\hbar^2}{2m}\psi''+U(x)\psi=E\psi\). Esta ecuación calcula los estados estacionarios.</li>
+<li value="27">En una caja infinita, el potencial es cero entre \(0\) y \(L\), e infinito fuera. Por tanto, fuera la función de onda es cero y en los bordes debe cumplirse \(\psi(0)=\psi(L)=0\). Dentro, Schrödinger queda \(\psi''+k^2\psi=0\), con solución \(A\sin(kx)+B\cos(kx)\). La primera frontera da \(B=0\); la segunda da \(k=n\pi/L\). Al sustituir en \(E=\hbar^2k^2/(2m)\), aparece \(E_n=n^2h^2/(8mL^2)\). Las funciones permitidas son senos normalizados y los niveles son discretos.</li>
+<li value="28">En el pozo finito, el potencial fuera no es infinito, sino \(U_0\). Para \(0&lt;E&lt;U_0\), la partícula está ligada. Dentro, la función oscila; fuera, en la región \(E&lt;U_0\), decae exponencialmente. La función no se anula en los bordes: debe ser continua y con derivada continua. Las energías permitidas son menores que en el pozo infinito equivalente, porque la onda penetra fuera. Además, solo existe un número finito de estados ligados, ya que el pozo tiene profundidad finita.</li>
+<li value="29">El efecto túnel es la transmisión a través de una barrera donde \(E&lt;U_0\). Clásicamente habría reflexión total, pero cuánticamente la función de onda penetra en la barrera y puede salir al otro lado. En el caso de barrera ancha, \(T\sim e^{-2\alpha a}\), por lo que la transmisión depende fuertemente de la anchura y de la altura relativa. El capítulo lo aplica a la desintegración alfa, donde una partícula alfa escapa atravesando una barrera coulombiana, y al microscopio de efecto túnel, donde la corriente entre punta y muestra depende de la distancia con sensibilidad atómica.</li>
+<li value="30">En tres dimensiones, la ecuación contiene la suma de segundas derivadas espaciales. Para una caja cúbica, la solución se separa como producto de senos en \(x\), \(y\), \(z\). Las condiciones de frontera producen tres números cuánticos positivos. La energía depende de \(n_1^2+n_2^2+n_3^2\). Como distintas ternas pueden dar la misma suma, aparecen estados distintos con igual energía: degeneración. Esta degeneración está asociada a la simetría de la caja.</li>
+<li value="31">El confinamiento limita espacialmente la función de onda. Esa limitación impone condiciones de frontera. Solo ciertas longitudes de onda encajan cumpliendo esas condiciones. Como energía y número de onda están relacionados, solo ciertos valores de energía son posibles. Esa cadena explica la cuantización en sistemas ligados.</li>
+<li value="32">Si \(E&gt;U\), la ecuación adopta forma oscilatoria y \(\psi\) tiende a curvar hacia el eje, como seno o coseno. Si \(E&lt;U\), la ecuación adopta forma exponencial y \(\psi\) tiende a curvarse alejándose del eje; la solución física elige la rama decreciente. Así se distinguen regiones permitidas y prohibidas.</li>
+<li value="33">La simetría hace que varias configuraciones sean equivalentes energéticamente. En una caja cúbica, intercambiar las direcciones espaciales no cambia el sistema, por lo que permutar los números cuánticos puede dejar la energía igual. Al romper la simetría, por ejemplo usando lados distintos, la degeneración desaparece o se reduce.</li>
+<li value="34">Las partículas idénticas no pueden distinguirse por etiquetas físicas permanentes. Por eso intercambiar sus coordenadas no debe cambiar \(|\psi|^2\). Esta condición permite funciones simétricas o antisimétricas. Los fermiones usan funciones antisimétricas; si dos intentan ocupar el mismo estado, la función se anula. Esa es la forma matemática del principio de exclusión de Pauli.</li>
+<li value="35">En el pozo finito, la función de onda penetra en una región donde \(E&lt;U\). El túnel generaliza esa penetración a una barrera de anchura finita: si la amplitud no se ha extinguido al otro lado, hay transmisión. En el microscopio de efecto túnel, la corriente depende de esa transmisión y cambia exponencialmente con la distancia punta-muestra, permitiendo resolución atómica.</li>
+</ol></div>
+</section>
+<section class="page" id="resumen-final-de-repaso">
+<div class="page-head"><h2>9. Resumen final de repaso</h2></div>
+<div class="reading-block"><ul>
+<li>Ideas principales:<br/>- La ecuación de Schrödinger sustituye a la trayectoria clásica por una función de onda.<br/>- La magnitud física directamente probabilística es \(|\psi|^2\).<br/>- En sistemas ligados, normalización y condiciones de frontera producen cuantización.<br/>- El pozo infinito da \(E_n\propto n^2\).<br/>- El pozo finito permite penetración fuera del pozo y solo tiene un número finito de estados ligados.<br/>- El oscilador armónico tiene \(E_n=(n+1/2)\hbar\omega_0\).<br/>- En un escalón puede haber reflexión parcial aunque \(E&gt;U_0\).<br/>- En una barrera puede haber túnel aunque \(E&lt;U_0\).<br/>- En 3D aparecen tres números cuánticos y puede aparecer degeneración.<br/>- Las partículas idénticas exigen funciones simétricas o antisimétricas.</li>
+<li>Conceptos imprescindibles:<br/>- \(\psi\), \(|\psi|^2\), normalización.<br/>- Ecuación independiente del tiempo.<br/>- Condiciones de frontera.<br/>- Región permitida y región prohibida.<br/>- Pozo infinito, pozo finito, oscilador armónico.<br/>- Coeficientes \(R\) y \(T\).<br/>- Túnel cuántico.<br/>- Degeneración.<br/>- Fermión, bosón, Pauli.</li>
+<li>Relaciones clave:<br/>- \(U(x)\) decide la forma de la ecuación.<br/>- \(E&gt;U\) produce soluciones oscilatorias.<br/>- \(E&lt;U\) produce soluciones exponenciales.<br/>- Normalización elimina soluciones divergentes.<br/>- Simetría produce degeneración.<br/>- Antisimetría produce exclusión.</li>
+<li>Errores que evitar:<br/>- Confundir \(\psi\) con probabilidad.<br/>- Aceptar soluciones no normalizables.<br/>- Usar \(n=0\) en la caja.<br/>- Anular la función en los bordes del pozo finito.<br/>- Decir que el túnel viola energía.<br/>- Pensar que todos los niveles tienen separación constante.<br/>- Confundir degeneración con igualdad de funciones de onda.<br/>- Formular Pauli como prohibición de cercanía espacial.</li>
+</ul></div>
+</section>
+<section class="page" id="checklist-de-dominio">
+<div class="page-head"><h2>10. Checklist de dominio</h2></div>
+<div class="reading-block"><ul>
+<li>Si no puedes explicar por qué \(|\psi|^2\) es probabilidad, falta repasar interpretación de la función de onda.</li>
+<li>Si confundes \(\psi\) con \(|\psi|^2\), revisar números complejos y conjugado complejo.</li>
+<li>Si no puedes escribir la ecuación independiente del tiempo, falta repasar la separación \(\psi(x,t)=\psi(x)e^{-iEt/\hbar}\).</li>
+<li>Si no puedes derivar \(k_n=n\pi/L\), falta repasar condiciones de frontera en la caja infinita.</li>
+<li>Si usas \(n=0\) como estado físico, revisar normalización y función nula.</li>
+<li>Si no puedes explicar por qué \(E_n\propto n^2\), falta conectar \(E\propto k^2\) con \(k_n\propto n\).</li>
+<li>Si haces cero la función en los bordes del pozo finito, revisar continuidad y penetración exponencial.</li>
+<li>Si no distingues región permitida de prohibida, revisar el signo de \(E-U(x)\).</li>
+<li>Si no sabes explicar por qué el oscilador tiene energía de punto cero, repasar \(E_n=(n+1/2)\hbar\omega_0\).</li>
+<li>Si crees que toda barrera con \(E&lt;U_0\) refleja al 100 %, revisar efecto túnel.</li>
+<li>Si no puedes interpretar \(T=e^{-2\alpha a}\), falta repasar dependencia exponencial y significado de \(\alpha\).</li>
+<li>Si confundes reflexión cuántica con choque clásico, revisar escalón de potencial y cambio de longitud de onda.</li>
+<li>Si no puedes calcular degeneraciones simples en una caja cúbica, repasar \(E\propto n_1^2+n_2^2+n_3^2\).</li>
+<li>Si permites números cuánticos cero en 3D, revisar la forma producto de senos.</li>
+<li>Si no puedes explicar qué cambia al pasar de caja cúbica a rectangular, repasar simetría y ruptura de degeneración.</li>
+<li>Si no puedes construir una función simétrica o antisimétrica de dos partículas, falta repasar intercambio \(x_1\leftrightarrow x_2\).</li>
+<li>Si confundes fermiones con bosones, revisar espín, simetría de onda y Pauli.</li>
+<li>Si puedes derivar la caja infinita, comparar pozo finito, explicar el túnel y justificar Pauli, el capítulo está suficientemente asentado.</li>
+</ul></div>
+</section>
+</main>
+</div>
+</body>
+</html>
