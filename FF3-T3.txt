@@ -1,0 +1,805 @@
+# Guía de estudio — Tipler-Mosca / Fundamentos de Física III
+
+Tema: T3 — Átomos, modelo de Bohr, átomo de hidrógeno, números cuánticos
+Fuente principal: Tipler & Mosca, Physics for Scientists and Engineers, cap. 36, “Atoms”.
+
+## 1. Prerrequisitos mínimos
+
+- Carga eléctrica y ley de Coulomb
+
+Una carga positiva y una carga negativa se atraen con una fuerza proporcional al producto de las cargas e inversamente proporcional al cuadrado de la distancia. Para un electrón alrededor de un núcleo de carga +Ze, la fuerza atractiva tiene módulo kZe^2/r^2. Es necesaria porque el modelo de Bohr parte de una órbita circular mantenida por la atracción electrostática. Ejemplo mínimo: si Z aumenta, la atracción nuclear sobre un electrón también aumenta.
+
+- Energía potencial electrostática
+
+La energía potencial entre dos cargas puntuales q1 y q2 separadas por una distancia r es U = k q1 q2 / r. Para electrón y núcleo, U(r) = -kZe^2/r. Es necesaria porque los niveles de energía del hidrógeno se obtienen a partir de la suma K + U. Ejemplo mínimo: una energía negativa indica un estado ligado; para ionizar hay que aportar energía hasta E = 0.
+
+- Movimiento circular uniforme
+
+En una órbita circular de radio r y velocidad v, la aceleración centrípeta vale v^2/r. Es necesario para escribir kZe^2/r^2 = mv^2/r en el modelo de Bohr. Ejemplo mínimo: si la fuerza central aumenta, para el mismo radio la velocidad orbital debe aumentar.
+
+- Momento angular
+
+El momento angular orbital de una partícula en una órbita circular tiene módulo L = mvr. Es necesario porque Bohr impone la condición cuántica L = n hbar. Ejemplo mínimo: un electrón en una órbita más amplia puede tener mayor momento angular si cambia v o r.
+
+- Fotón y relación energía-frecuencia
+
+Un fotón tiene energía E = hf = hc/lambda. Es necesario porque las líneas espectrales se interpretan como fotones emitidos o absorbidos cuando el átomo cambia de nivel. Ejemplo mínimo: si una transición libera 10,2 eV, la longitud de onda emitida es lambda = hc/10,2 eV.
+
+- Espectro electromagnético
+
+La luz visible, ultravioleta, infrarroja y los rayos X son radiación electromagnética con distintas longitudes de onda y energías. Es necesario para distinguir espectros ópticos y espectros de rayos X. Ejemplo mínimo: un fotón visible tiene energía del orden de unos eV; un fotón de rayos X suele estar en keV.
+
+- Ondas estacionarias y longitud de onda de de Broglie
+
+Una partícula material tiene longitud de onda lambda = h/p. En una órbita circular, la condición de onda estacionaria exige que quepa un número entero de longitudes de onda en la circunferencia. Es necesaria porque conecta el postulado de Bohr con la imagen ondulatoria del electrón. Ejemplo mínimo: n lambda = 2 pi r implica pr = n hbar.
+
+- Función de onda y densidad de probabilidad
+
+En mecánica cuántica, el electrón no se describe como una bolita con trayectoria definida, sino mediante una función de onda psi. La probabilidad de encontrarlo en un volumen dV es |psi|^2 dV. Es necesaria porque el capítulo sustituye las órbitas de Bohr por soluciones de Schrödinger. Ejemplo mínimo: |psi|^2 puede ser máximo en el núcleo, pero la probabilidad radial máxima puede estar a r = a0 por el factor de volumen 4 pi r^2.
+
+- Ecuación de Schrödinger independiente del tiempo
+
+Para estados estacionarios, la energía y la función de onda se obtienen resolviendo una ecuación diferencial donde aparecen la energía cinética, el potencial y la energía total. Es necesaria porque los niveles del hidrógeno salen de esta ecuación, no de una condición añadida a mano. Ejemplo mínimo: en el hidrógeno, el potencial es central y depende solo de r.
+
+- Coordenadas esféricas
+
+Un punto del espacio puede describirse por r, theta y phi. Es necesario porque el átomo aislado tiene simetría esférica: el potencial depende de la distancia al núcleo, no de una dirección cartesiana concreta. Ejemplo mínimo: una función esféricamente simétrica depende de r, pero no de theta ni de phi.
+
+## 2. Idea central del capítulo
+
+El capítulo estudia cómo se pasa de la imagen clásica del átomo a la descripción cuántica de la estructura atómica. El punto de partida es experimental: los gases excitados no emiten cualquier longitud de onda, sino conjuntos discretos de líneas. Cada elemento tiene un patrón propio. Esa regularidad exige una explicación física: si la luz emitida aparece solo en ciertas longitudes de onda, las energías internas del átomo no pueden variar de forma continua.
+
+El primer intento eficaz es el modelo de Bohr del hidrógeno. Bohr conserva parte de la mecánica clásica —un electrón moviéndose bajo la atracción de Coulomb—, pero introduce condiciones cuánticas: solo ciertas órbitas son permitidas, no radian, y la radiación aparece únicamente cuando el electrón cambia entre estados estacionarios. Esta mezcla semiclasica consigue reproducir las energías del hidrógeno y la fórmula de Rydberg, pero no explica por qué sus postulados deben cumplirse ni funciona bien para átomos multielectrónicos.
+
+La parte fuerte del capítulo es la sustitución del modelo orbital por el modelo cuántico. El electrón queda descrito por una función de onda. Las condiciones de contorno y la simetría esférica del potencial producen números cuánticos. Estos números no son etiquetas arbitrarias: determinan energía, momento angular orbital, orientación espacial y spin. En el hidrógeno, la ecuación de Schrödinger puede resolverse exactamente y reproduce los mismos niveles de energía de Bohr, pero con una interpretación radicalmente distinta.
+
+El capítulo cierra conectando la estructura cuántica con la tabla periódica y los espectros. El principio de exclusión de Pauli obliga a distribuir los electrones en estados distintos; de ahí salen configuraciones electrónicas, capas, subcapas, gases nobles, alcalinos y elementos de transición. Los espectros ópticos se deben normalmente a transiciones de electrones de valencia. Los rayos X característicos aparecen cuando se excitan electrones internos y otros electrones caen para ocupar la vacante. La estructura atómica deja de ser una imagen conceptual y pasa a ser una herramienta para identificar elementos.
+
+## 3. Desarrollo completo del capítulo
+
+### 3.1. El átomo y el problema de los espectros
+
+El capítulo comienza describiendo el átomo como un sistema formado por un núcleo pequeño, masivo y positivo, rodeado de electrones. El número de protones Z define el número atómico. En un átomo neutro hay Z electrones. Casi toda la masa está concentrada en el núcleo, cuyo tamaño es del orden de femtómetros, mientras que el tamaño atómico típico es del orden de décimas de nanómetro. Esta separación de escalas importa porque muestra que el átomo es casi todo espacio vacío desde el punto de vista geométrico, pero no desde el punto de vista de campos y probabilidades.
+
+El dato experimental central es el espectro de líneas. Cuando los átomos de un gas se excitan mediante una descarga eléctrica, emiten luz en longitudes de onda discretas. No aparece un continuo, sino líneas concretas. El hidrógeno muestra un espectro sencillo; el mercurio, uno diferente. Las líneas y sus intensidades son características de cada elemento.
+
+Balmer encontró una regularidad para las líneas visibles del hidrógeno. Después, Rydberg y Ritz generalizaron la relación mediante una fórmula para el inverso de la longitud de onda:
+
+1/lambda = R (1/n_f^2 - 1/n_i^2), con n_i > n_f.
+
+Esto significa que las frecuencias emitidas pueden organizarse como diferencias entre términos discretos. La consecuencia conceptual es fuerte: antes de tener una teoría cuántica completa, el espectro ya sugería que el átomo posee estados internos discretos.
+
+El modelo de Thomson intentó explicar estos espectros suponiendo electrones incrustados en una distribución positiva. Según la física clásica, cargas oscilantes emiten radiación con la frecuencia de oscilación. Thomson buscó configuraciones estables cuyos modos normales coincidieran con las líneas observadas. El problema es doble: las fuerzas eléctricas solas no dan estabilidad clásica adecuada y el modelo no reproduce los espectros.
+
+Los experimentos de Geiger y Marsden, interpretados por Rutherford, descartaron la idea de carga positiva extendida. La dispersión de partículas alfa a grandes ángulos exigía concentrar carga positiva y masa en una región minúscula: el núcleo. Con Rutherford aparece el átomo nuclear, pero también un problema nuevo: si el electrón orbita como una carga acelerada, debería radiar y caer rápidamente al núcleo. La estabilidad atómica queda sin explicar en física clásica.
+
+### 3.2. El modelo de Bohr del hidrógeno
+
+Bohr propone un modelo semiclasico para el hidrógeno. Mantiene la órbita circular y la fuerza de Coulomb, pero introduce postulados cuánticos. El electrón se mueve en ciertos estados estacionarios que no emiten radiación. La radiación solo aparece cuando el electrón salta entre dos estados permitidos. La frecuencia del fotón emitido obedece a conservación de energía:
+
+f = (E_i - E_f)/h.
+
+Para una órbita circular bajo una fuerza 1/r^2, se escribe:
+
+kZe^2/r^2 = mv^2/r.
+
+De ahí se obtiene la energía cinética:
+
+K = (1/2)mv^2 = (1/2)kZe^2/r.
+
+La energía potencial electrostática es:
+
+U = -kZe^2/r.
+
+Por tanto:
+
+E = K + U = - (1/2) kZe^2/r.
+
+Esta relación ya muestra que cuanto menor es el radio, más negativa es la energía y más ligado está el electrón. También muestra que la energía total aumenta cuando el electrón pasa a una órbita mayor, aunque la energía cinética disminuya.
+
+La condición cuántica de Bohr impone:
+
+m v_n r_n = n hbar, con n = 1, 2, 3, ...
+
+Al combinar esta condición con la dinámica circular, aparecen los radios permitidos:
+
+r_n = n^2 a_0 / Z,
+
+donde
+
+a_0 = hbar^2/(mke^2) = 0,0529 nm.
+
+Para hidrógeno, Z = 1, así que r_1 = a_0, r_2 = 4a_0, r_3 = 9a_0. El radio crece como n^2.
+
+Sustituyendo los radios permitidos en la energía se obtienen los niveles:
+
+E_n = -Z^2 E_0/n^2,
+
+con
+
+E_0 = 13,6 eV.
+
+En el hidrógeno, E_1 = -13,6 eV. El nivel n = infinito corresponde a E = 0, que es el electrón libre en el límite de ionización. La energía de ionización desde el estado fundamental es 13,6 eV.
+
+Las líneas espectrales se entienden como transiciones. Si el electrón cae desde n_i hasta n_f, se emite un fotón de energía E_i - E_f. La longitud de onda vale:
+
+lambda = hc/(E_i - E_f).
+
+Las series espectrales se clasifican por el nivel final: Lyman termina en n_f = 1 y está en ultravioleta; Balmer termina en n_f = 2 y contiene las líneas visibles; Paschen termina en n_f = 3 y cae en infrarrojo.
+
+El éxito de Bohr es reproducir el espectro del hidrógeno. Su límite es que los postulados se introducen para salvar el modelo, no se deducen de una teoría más profunda. Además, el modelo falla al intentar describir con precisión átomos con varios electrones. Su valor en FF3 es operativo: da fórmulas de radios, energías y longitudes de onda, y sirve de puente hacia Schrödinger.
+
+### 3.3. De Bohr a la teoría cuántica de los átomos
+
+La teoría cuántica sustituye las órbitas por funciones de onda. El electrón en el átomo no tiene una trayectoria circular definida. Está descrito por psi, y |psi|^2 da densidad de probabilidad. La cuantización ya no se impone como postulado externo: aparece al resolver la ecuación de Schrödinger con condiciones de contorno aceptables.
+
+Para un electrón en tres dimensiones, la ecuación de Schrödinger independiente del tiempo contiene derivadas respecto a x, y, z y el potencial U(x,y,z). En un átomo aislado, el potencial depende solo de r, porque la fuerza electrostática del núcleo es central. Por eso se usan coordenadas esféricas.
+
+La función de onda se puede separar como producto de una parte radial y partes angulares:
+
+psi(r,theta,phi) = R(r) f(theta) g(phi).
+
+Esta separación conduce a tres números cuánticos espaciales:
+
+n = 1, 2, 3, ...
+
+l = 0, 1, 2, ..., n - 1
+
+m_l = -l, -l+1, ..., 0, ..., l-1, l
+
+El número n es el número cuántico principal y está asociado al nivel energético y al tamaño típico del estado. El número l es el número cuántico orbital y determina el módulo del momento angular orbital:
+
+L = sqrt[l(l+1)] hbar.
+
+El número m_l determina la componente z del momento angular:
+
+L_z = m_l hbar.
+
+Este resultado introduce la cuantización espacial: para un l dado, no todas las orientaciones del momento angular son posibles. Solo hay 2l + 1 valores de m_l.
+
+Además aparece el spin del electrón. El electrón tiene momento angular intrínseco con número cuántico de spin s = 1/2 y proyección m_s = +1/2 o -1/2. Para describir completamente el estado de un electrón en un átomo multielectrónico se necesitan cuatro números cuánticos: n, l, m_l y m_s.
+
+### 3.4. Teoría cuántica del átomo de hidrógeno
+
+El hidrógeno es el átomo central porque tiene un protón y un electrón. El potencial electrostático es proporcional a -1/r y la ecuación de Schrödinger puede resolverse exactamente. Los niveles de energía obtenidos son:
+
+E_n = -Z^2 E_0/n^2.
+
+Son los mismos que los de Bohr para sistemas hidrogenoides. La diferencia no está en la fórmula energética, sino en la interpretación. En Bohr hay órbitas; en Schrödinger hay estados estacionarios y distribuciones de probabilidad.
+
+En el hidrógeno, la energía depende solo de n. Eso provoca degeneración: estados con el mismo n pero distinto l y m_l tienen la misma energía, si se ignoran correcciones finas y campos externos. Esta degeneración es especial del potencial 1/r. En átomos multielectrónicos, las repulsiones electrón-electrón rompen esa igualdad y la energía depende también de l.
+
+El estado fundamental del hidrógeno tiene n = 1, l = 0, m_l = 0. Se llama 1s. Su función de onda es esféricamente simétrica y decrece exponencialmente con r. La densidad |psi|^2 es máxima en r = 0, pero la probabilidad radial no lo es. La probabilidad de encontrar el electrón entre r y r + dr se calcula multiplicando |psi|^2 por el volumen de la capa esférica:
+
+P(r) = 4 pi r^2 |psi|^2.
+
+Esta probabilidad radial es máxima en r = a_0 para el estado fundamental. Esto reconcilia la imagen de Bohr con la cuántica: el radio de Bohr no es una órbita real, sino el radio más probable en el estado 1s.
+
+En el primer estado excitado, n = 2. Puede haber l = 0 o l = 1. Para l = 0 hay simetría esférica; para l = 1 aparecen distribuciones angulares direccionales. Estos estados se asocian a orbitales s y p. En el lenguaje del capítulo, las formas de las densidades electrónicas son relevantes porque las distribuciones angulares de los electrones de valencia influyen en el enlace químico.
+
+### 3.5. Spin-órbita y estructura fina
+
+El electrón posee momento angular orbital y spin. Ambos contribuyen al momento angular total:
+
+J = L + S.
+
+En mecánica cuántica, el módulo de J también está cuantizado. Para un electrón con l y s = 1/2, los valores permitidos del número cuántico total j son:
+
+j = l + 1/2 o j = l - 1/2, si l > 0.
+
+Si l = 0, solo j = 1/2.
+
+La interacción entre el momento magnético asociado al movimiento orbital y el momento magnético asociado al spin produce una pequeña diferencia de energía entre estados con el mismo n y l pero distinto j. Ese desdoblamiento se llama estructura fina.
+
+La idea física puede verse de forma semiclasica. Desde el sistema del electrón, el protón parece moverse y genera un campo magnético. El spin del electrón tiene un momento magnético que puede acoplarse con ese campo. Según la orientación relativa, la energía cambia ligeramente. El resultado observable es que algunas líneas espectrales que parecían únicas se desdoblan en líneas muy próximas.
+
+Este apartado no debe confundirse con el modelo básico de Bohr. Bohr explica niveles gruesos del hidrógeno; la estructura fina introduce correcciones pequeñas que requieren spin, relatividad y acoplamiento magnético.
+
+### 3.6. Tabla periódica y configuraciones electrónicas
+
+El capítulo usa los números cuánticos para explicar la tabla periódica. Un átomo de número atómico Z tiene Z electrones. En el estado fundamental, los electrones ocupan los estados disponibles de menor energía respetando el principio de exclusión de Pauli:
+
+No dos electrones de un mismo átomo pueden tener el mismo conjunto de cuatro números cuánticos n, l, m_l y m_s.
+
+Para una subcapa con un l dado hay 2l + 1 valores de m_l. Para cada uno caben dos electrones por los dos valores de m_s. Por tanto, la capacidad de una subcapa es:
+
+2(2l + 1).
+
+Así:
+
+s: l = 0 -> 2 electrones
+p: l = 1 -> 6 electrones
+d: l = 2 -> 10 electrones
+f: l = 3 -> 14 electrones
+
+En hidrógeno, los estados con el mismo n tienen la misma energía. En átomos con varios electrones esto cambia por apantallamiento y repulsión electrónica. Un electrón externo no siente toda la carga +Ze del núcleo porque los electrones internos la apantallan parcialmente. Se habla entonces de carga nuclear efectiva.
+
+El litio ilustra el mecanismo. Sus dos primeros electrones llenan la capa n = 1. El tercero entra en n = 2, pero está parcialmente apantallado por los dos internos; por eso está débilmente ligado y el litio es químicamente activo. El sodio reproduce el patrón: tiene una configuración cerrada interna similar al neón más un electrón 3s externo, débilmente ligado. De ahí el comportamiento alcalino.
+
+Los gases nobles tienen capas o subcapas cerradas. Helio, neón y argón presentan energías de ionización altas y baja reactividad porque sus electrones ocupan configuraciones especialmente estables. Los elementos de transición aparecen cuando empiezan a llenarse subcapas d, con algunas irregularidades por diferencias energéticas pequeñas entre subcapas próximas.
+
+La tabla periódica no se memoriza aquí como lista química. Se entiende como consecuencia de tres reglas: restricciones de los números cuánticos, principio de Pauli y orden relativo de energías modificado por apantallamiento.
+
+### 3.7. Espectros ópticos y espectros de rayos X
+
+Cuando un átomo excitado pasa a un estado de menor energía, emite radiación. Como los niveles son discretos, las longitudes de onda emitidas también lo son. Esto da el espectro de emisión.
+
+Los espectros ópticos suelen deberse a transiciones de electrones de valencia. Sus energías son del orden de unos electronvoltios y por eso la radiación cae en visible, infrarrojo o ultravioleta cercano. En metales alcalinos, el modelo de un electrón externo moviéndose alrededor de un núcleo apantallado funciona razonablemente bien. El sodio, por ejemplo, muestra un doblete amarillo alrededor de 589 nm debido al desdoblamiento spin-órbita.
+
+Los espectros de rayos X tienen otro origen. En un tubo de rayos X, electrones de alta energía bombardean un blanco. El espectro resultante combina una parte continua, ligada a la energía de los electrones incidentes, y picos característicos del elemento del blanco. Esos picos aparecen cuando se arranca o excita un electrón interno, queda una vacante en una capa profunda y un electrón de una capa superior cae para ocuparla.
+
+Las líneas K terminan en la capa K, n = 1. La línea K_alpha corresponde a una transición desde n = 2 hasta n = 1. La línea K_beta corresponde a una transición desde n = 3 hasta n = 1. Como intervienen electrones internos y grandes diferencias de energía, los fotones resultantes están en rayos X.
+
+Moseley midió las líneas K_alpha de muchos elementos y encontró una relación regular entre la longitud de onda y el número atómico. La forma aproximada se entiende corrigiendo Bohr con apantallamiento: para la transición K_alpha se usa una carga efectiva aproximada Z - 1. Así, el análisis de rayos X permite identificar el elemento por su número atómico.
+
+## 4. Conceptos clave
+
+- Espectro de líneas
+
+Definición precisa: conjunto discreto de longitudes de onda emitidas o absorbidas por un átomo.
+
+Explicación desarrollada: un átomo excitado no emite todas las frecuencias posibles. Emite solo aquellas asociadas a diferencias entre niveles de energía permitidos. Esto demuestra que la energía interna del átomo está cuantizada.
+
+Ejemplo: el hidrógeno emite líneas agrupadas en series como Lyman, Balmer y Paschen.
+
+Relación con otros conceptos: conecta directamente con niveles de energía, fotones y transiciones atómicas.
+
+Posible pregunta de examen: explicar por qué un gas excitado produce un espectro de líneas y no un espectro continuo.
+
+- Fórmula de Rydberg-Ritz
+
+Definición precisa: relación empírica que expresa el inverso de la longitud de onda como diferencia de términos proporcionales a 1/n^2.
+
+Explicación desarrollada: anticipa la estructura de niveles discretos. En hidrógeno se escribe 1/lambda = R_H(1/n_f^2 - 1/n_i^2), con n_i > n_f.
+
+Ejemplo: para la serie de Balmer, n_f = 2 y n_i = 3, 4, 5...
+
+Relación con otros conceptos: Bohr deduce esta forma al imponer cuantización del momento angular.
+
+Posible pregunta de examen: calcular la longitud de onda de una transición del hidrógeno usando Rydberg o usando energías.
+
+- Estado estacionario de Bohr
+
+Definición precisa: órbita permitida en la que el electrón no radia energía.
+
+Explicación desarrollada: contradice la predicción clásica de radiación por cargas aceleradas. Bohr lo introduce como postulado para explicar la estabilidad atómica.
+
+Ejemplo: el electrón en n = 1 del hidrógeno permanece ligado sin caer al núcleo.
+
+Relación con otros conceptos: se sustituye en teoría cuántica por una solución estacionaria de Schrödinger.
+
+Posible pregunta de examen: indicar los postulados de Bohr y su función física.
+
+- Radio de Bohr
+
+Definición precisa: radio de la primera órbita de Bohr para el hidrógeno, a0 = 0,0529 nm.
+
+Explicación desarrollada: aparece al combinar Coulomb, movimiento circular y cuantización del momento angular. En cuántica no es una órbita, sino el radio más probable del estado fundamental 1s.
+
+Ejemplo: en hidrógeno, r_n = n^2 a0.
+
+Relación con otros conceptos: conecta el modelo de Bohr con la probabilidad radial cuántica.
+
+Posible pregunta de examen: calcular el radio de la órbita n = 4 de un ion hidrogenoide.
+
+- Nivel de energía hidrogenoide
+
+Definición precisa: energía permitida de un electrón ligado a un núcleo +Ze en un sistema de un solo electrón: E_n = -Z^2 E0/n^2.
+
+Explicación desarrollada: los valores negativos indican estados ligados. Al crecer n, E se acerca a cero y el electrón está menos ligado.
+
+Ejemplo: para hidrógeno, E1 = -13,6 eV y E2 = -3,4 eV.
+
+Relación con otros conceptos: determina longitudes de onda emitidas y energía de ionización.
+
+Posible pregunta de examen: hallar la energía emitida en la transición n = 3 a n = 2.
+
+- Función de onda
+
+Definición precisa: función psi que describe el estado cuántico del electrón; |psi|^2 dV da la probabilidad de encontrarlo en dV.
+
+Explicación desarrollada: sustituye la trayectoria clásica. No dice dónde está el electrón con certeza, sino cómo se distribuyen sus probabilidades.
+
+Ejemplo: el estado 1s del hidrógeno es esféricamente simétrico.
+
+Relación con otros conceptos: de ella salen densidad de probabilidad, probabilidad radial y orbitales.
+
+Posible pregunta de examen: distinguir entre |psi|^2 y P(r).
+
+- Probabilidad radial
+
+Definición precisa: probabilidad por intervalo radial de encontrar el electrón entre r y r + dr: P(r) = 4 pi r^2 |psi|^2 para estados esféricamente simétricos.
+
+Explicación desarrollada: incluye el volumen de la capa esférica. Por eso puede ser máxima a distancia no nula aunque |psi|^2 sea máxima en el origen.
+
+Ejemplo: para el estado fundamental del hidrógeno, P(r) es máxima en r = a0.
+
+Relación con otros conceptos: permite interpretar el radio de Bohr dentro de la teoría cuántica.
+
+Posible pregunta de examen: explicar por qué el radio más probable no coincide necesariamente con el máximo de |psi|^2.
+
+- Número cuántico principal n
+
+Definición precisa: número entero positivo n = 1, 2, 3... que etiqueta niveles principales.
+
+Explicación desarrollada: en hidrógeno determina la energía. También está relacionado con el tamaño típico del estado.
+
+Ejemplo: n = 1 es el estado fundamental; n = 2 es el primer nivel excitado.
+
+Relación con otros conceptos: limita los valores posibles de l.
+
+Posible pregunta de examen: enumerar los valores posibles de l y m_l para n = 3.
+
+- Número cuántico orbital l
+
+Definición precisa: número entero l = 0, 1, ..., n - 1 que determina el módulo del momento angular orbital.
+
+Explicación desarrollada: l fija la forma angular del orbital. Las letras s, p, d, f corresponden a l = 0, 1, 2, 3.
+
+Ejemplo: un estado 3d tiene n = 3 y l = 2.
+
+Relación con otros conceptos: determina los valores permitidos de m_l y la capacidad de subcapas.
+
+Posible pregunta de examen: explicar qué significa el símbolo 2p.
+
+- Número cuántico magnético m_l
+
+Definición precisa: número entero entre -l y +l que determina L_z = m_l hbar.
+
+Explicación desarrollada: representa la cuantización de la orientación espacial del momento angular respecto a un eje elegido.
+
+Ejemplo: para l = 2, m_l = -2, -1, 0, 1, 2.
+
+Relación con otros conceptos: cada valor de m_l admite dos electrones por spin.
+
+Posible pregunta de examen: calcular cuántos orbitales hay en una subcapa d.
+
+- Spin y número m_s
+
+Definición precisa: grado de libertad intrínseco del electrón con s = 1/2 y m_s = +1/2 o -1/2.
+
+Explicación desarrollada: no es una rotación clásica literal. Es necesario para describir estados electrónicos y aplicar Pauli.
+
+Ejemplo: dos electrones pueden compartir n, l y m_l si tienen m_s opuesto.
+
+Relación con otros conceptos: explica la capacidad de dos electrones por orbital.
+
+Posible pregunta de examen: justificar por qué una subcapa s admite dos electrones.
+
+- Principio de exclusión de Pauli
+
+Definición precisa: no dos electrones en el mismo átomo pueden tener los mismos cuatro números cuánticos.
+
+Explicación desarrollada: obliga a llenar estados sucesivos y genera la estructura de capas de la tabla periódica.
+
+Ejemplo: el helio tiene configuración 1s^2; un tercer electrón no puede entrar en 1s.
+
+Relación con otros conceptos: conecta números cuánticos, configuraciones y propiedades químicas.
+
+Posible pregunta de examen: explicar por qué el litio tiene configuración 1s^2 2s.
+
+- Apantallamiento y carga nuclear efectiva
+
+Definición precisa: reducción parcial de la carga nuclear sentida por un electrón externo debido a los electrones internos.
+
+Explicación desarrollada: un electrón de valencia no siente +Ze completo. Esto altera el orden energético de subcapas en átomos multielectrónicos.
+
+Ejemplo: en sodio, el electrón 3s está débilmente ligado porque el núcleo queda apantallado por electrones internos.
+
+Relación con otros conceptos: explica ionización baja de alcalinos y diferencias entre s, p, d.
+
+Posible pregunta de examen: comparar 3s y 3p en hidrógeno y sodio.
+
+- Estructura fina
+
+Definición precisa: pequeño desdoblamiento de niveles y líneas espectrales por acoplamiento spin-órbita.
+
+Explicación desarrollada: el momento angular orbital y el spin se acoplan, dando diferentes valores de j y energías ligeramente distintas.
+
+Ejemplo: el doblete amarillo del sodio se asocia a niveles separados por spin-órbita.
+
+Relación con otros conceptos: requiere L, S, J y momento magnético.
+
+Posible pregunta de examen: explicar por qué una línea espectral puede desdoblarse.
+
+- Espectro de rayos X característico
+
+Definición precisa: conjunto de líneas de rayos X propio de un elemento, producido por transiciones hacia vacantes internas.
+
+Explicación desarrollada: al arrancar un electrón de una capa profunda, otro electrón cae desde una capa superior y emite un fotón de alta energía.
+
+Ejemplo: K_alpha corresponde a una transición L -> K, es decir, n = 2 a n = 1.
+
+Relación con otros conceptos: conecta estructura de capas, energía de ligadura y número atómico.
+
+Posible pregunta de examen: identificar un elemento a partir de la longitud de onda K_alpha.
+
+## 5. Relaciones entre ideas
+
+La primera relación esencial es experimental: espectros de líneas implican energías discretas. No se empieza por una teoría abstracta, sino por el hecho de que cada átomo emite longitudes de onda características. La fórmula de Balmer y la de Rydberg-Ritz ordenan los datos, pero no los explican por sí solas.
+
+El modelo de Rutherford resuelve la dispersión alfa, pero crea el problema de estabilidad. Si los electrones orbitan clásicamente, deberían radiar y caer. Bohr resuelve parcialmente el problema introduciendo estados estacionarios. Así, la estabilidad y las líneas espectrales quedan conectadas: los átomos son estables porque solo ciertos estados son permitidos, y emiten luz cuando saltan entre ellos.
+
+La cuantización de Bohr se conecta con de Broglie mediante ondas estacionarias. La condición mvr = n hbar equivale a exigir que la onda electrónica cierre sobre sí misma alrededor de la órbita. Esta conexión prepara el salto a Schrödinger: la cuantización no es una regla externa, sino una consecuencia de soluciones ondulatorias aceptables.
+
+La teoría cuántica reorganiza el capítulo. En Bohr, n etiqueta órbitas. En Schrödinger, n, l y m_l etiquetan estados. El radio de Bohr deja de ser trayectoria y pasa a ser radio más probable. La energía del hidrógeno coincide con Bohr, pero el significado físico cambia.
+
+Los números cuánticos se jerarquizan. Primero va n; para cada n hay valores permitidos de l; para cada l hay valores permitidos de m_l; para cada combinación espacial hay dos valores de m_s. Esa jerarquía determina la capacidad de subcapas y, mediante Pauli, la tabla periódica.
+
+La oposición más importante es “hidrógeno frente a átomos multielectrónicos”. En hidrógeno, la energía depende solo de n. En átomos con más electrones, la repulsión y el apantallamiento hacen que la energía dependa también de l. De ahí surgen configuraciones reales como 1s^2 2s, 1s^2 2s^2 2p^6, etc.
+
+La evolución histórica del capítulo es clara: espectros observados -> modelo de Thomson -> núcleo de Rutherford -> Bohr -> Schrödinger -> Pauli -> tabla periódica -> espectros ópticos y de rayos X como aplicaciones.
+
+La relación final es práctica: la estructura interna del átomo determina tanto la química como la espectroscopia. Los electrones de valencia explican reactividad y espectros ópticos; los electrones internos explican rayos X característicos e identificación elemental.
+
+## 6. Errores habituales
+
+- Error 1: pensar que el electrón de Bohr “realmente” gira en una órbita clásica.
+
+Por qué está mal: el modelo de Bohr es semiclasico y queda superado por Schrödinger. En la teoría cuántica no hay trayectoria definida.
+
+Corrección: usar Bohr como herramienta de cálculo para niveles hidrogenoides, pero interpretar los estados como funciones de onda.
+
+Respuesta incorrecta: “El electrón del hidrógeno se mueve en círculos reales de radio a0”.
+
+Respuesta correcta: “En Bohr se modela como órbita de radio a0; en la teoría cuántica, a0 es el radio más probable del estado 1s”.
+
+- Error 2: confundir |psi|^2 con P(r).
+
+Por qué está mal: |psi|^2 es probabilidad por unidad de volumen; P(r) incluye el volumen de la capa esférica.
+
+Corrección: para probabilidad radial hay que multiplicar por 4 pi r^2.
+
+Respuesta incorrecta: “Como |psi|^2 es máxima en r = 0, el electrón está más probablemente en el núcleo”.
+
+Respuesta correcta: “La densidad es máxima en r = 0, pero la probabilidad radial del estado 1s es máxima en r = a0”.
+
+- Error 3: creer que energía más negativa significa electrón menos ligado.
+
+Por qué está mal: una energía negativa indica estado ligado. Cuanto más negativa es, más energía hay que aportar para ionizar.
+
+Corrección: E = 0 es el límite de electrón libre; E1 = -13,6 eV es más ligado que E2 = -3,4 eV.
+
+Respuesta incorrecta: “El nivel n = 2 está más ligado porque su energía está más cerca de cero”.
+
+Respuesta correcta: “El nivel n = 1 está más ligado; requiere 13,6 eV para ionizar desde él”.
+
+- Error 4: pensar que al subir de órbita aumentan siempre todas las energías.
+
+Por qué está mal: en Bohr, al aumentar r aumenta la energía total, pero disminuye la energía cinética.
+
+Corrección: K proporcional a 1/r; U = -2K; E = -K.
+
+Respuesta incorrecta: “Si el electrón pasa a una órbita mayor, su velocidad y su energía cinética aumentan”.
+
+Respuesta correcta: “Al pasar a una órbita mayor, la energía total aumenta hacia cero, pero la cinética disminuye”.
+
+- Error 5: escribir valores de l imposibles.
+
+Por qué está mal: para un n dado, l solo puede valer 0, 1, ..., n - 1.
+
+Corrección: comprobar siempre la jerarquía n -> l -> m_l.
+
+Respuesta incorrecta: “Para n = 2 puede existir un estado 2d”.
+
+Respuesta correcta: “Para n = 2 solo existen 2s y 2p; el primer d posible es 3d”.
+
+- Error 6: escribir valores de m_l fuera de rango.
+
+Por qué está mal: m_l solo puede ir de -l a +l en pasos enteros.
+
+Corrección: si l = 1, m_l = -1, 0, +1; no hay m_l = 2.
+
+Respuesta incorrecta: “Un electrón 2p puede tener m_l = 2”.
+
+Respuesta correcta: “Un electrón 2p tiene l = 1, luego m_l = -1, 0 o +1”.
+
+- Error 7: olvidar el spin al contar electrones.
+
+Por qué está mal: cada combinación n, l, m_l admite dos electrones por m_s = ±1/2.
+
+Corrección: capacidad de subcapa = 2(2l+1).
+
+Respuesta incorrecta: “Una subcapa p admite tres electrones”.
+
+Respuesta correcta: “Una subcapa p tiene tres valores de m_l y dos spins por cada uno: admite seis electrones”.
+
+- Error 8: creer que todos los estados con el mismo n tienen siempre la misma energía.
+
+Por qué está mal: eso es cierto para hidrógeno ideal, pero no para átomos multielectrónicos.
+
+Corrección: en multielectrónicos, apantallamiento e interacción electrón-electrón hacen depender la energía de l.
+
+Respuesta incorrecta: “3s y 3p tienen la misma energía en sodio porque tienen n = 3”.
+
+Respuesta correcta: “En sodio, 3s y 3p no tienen la misma energía; el solapamiento y el apantallamiento rompen la degeneración”.
+
+- Error 9: confundir espectro óptico con espectro de rayos X.
+
+Por qué está mal: los espectros ópticos suelen venir de electrones de valencia; los rayos X característicos, de transiciones hacia capas internas.
+
+Corrección: identificar qué electrón cambia de estado y qué escala energética aparece.
+
+Respuesta incorrecta: “La línea K_alpha es una transición óptica de valencia”.
+
+Respuesta correcta: “K_alpha es una transición hacia la capa K, típicamente de rayos X”.
+
+- Error 10: aplicar las reglas de selección de forma incompleta.
+
+Por qué está mal: una transición permitida debe respetar simultáneamente Delta l = ±1 y Delta m_l = 0, ±1.
+
+Corrección: comprobar ambos cambios.
+
+Respuesta incorrecta: “Una transición 2p -> 3p está permitida porque cambia n”.
+
+Respuesta correcta: “2p -> 3p tiene Delta l = 0, por tanto no cumple la regla indicada”.
+
+## 7. Preguntas orientadas a examen
+
+### 10 preguntas fáciles
+
+F1. ¿Qué es el número atómico Z?
+
+F2. ¿Por qué los espectros atómicos de gases excitados son espectros de líneas?
+
+F3. Escribe la relación entre energía del fotón y frecuencia.
+
+F4. ¿Cuál es la energía del estado fundamental del hidrógeno según Bohr?
+
+F5. ¿Qué representa el radio de Bohr a0?
+
+F6. ¿Qué valores puede tomar l si n = 3?
+
+F7. ¿Qué valores puede tomar m_l si l = 2?
+
+F8. ¿Cuántos electrones caben en una subcapa p?
+
+F9. ¿Qué afirma el principio de exclusión de Pauli?
+
+F10. ¿Qué transición define una línea K_alpha de rayos X?
+
+### 10 preguntas medias
+
+M1. Deduce la relación E = -(1/2)kZe^2/r para una órbita circular de Bohr.
+
+M2. Calcula el radio de la órbita n = 3 del hidrógeno en unidades de a0.
+
+M3. Calcula la energía del nivel n = 2 del hidrógeno.
+
+M4. Explica por qué la serie de Lyman está en el ultravioleta.
+
+M5. Distingue entre densidad de probabilidad |psi|^2 y probabilidad radial P(r).
+
+M6. Para n = 4, ¿cuántas combinaciones distintas de l y m_l existen?
+
+M7. Explica por qué el litio tiene configuración 1s^2 2s y no 1s^3.
+
+M8. ¿Por qué el sodio se comporta de forma parecida al litio?
+
+M9. ¿Por qué una línea espectral puede desdoblarse en estructura fina?
+
+M10. ¿Por qué el espectro de rayos X característico permite identificar elementos?
+
+### 5 preguntas difíciles
+
+D1. Explica por qué el modelo de Bohr reproduce los niveles del hidrógeno pero no constituye una teoría cuántica completa.
+
+D2. Justifica, usando de Broglie, que la condición de onda estacionaria en una órbita circular lleva a mvr = n hbar.
+
+D3. Para un ion hidrogenoide con Z = 2, calcula E1 y r1 en función de los valores del hidrógeno.
+
+D4. Explica por qué en hidrógeno los estados 3s, 3p y 3d tienen la misma energía, pero en sodio no.
+
+D5. A partir de lambda = hc/[(Z-1)^2 E0(1 - 1/4)], explica cómo se estima Z desde una línea K_alpha.
+
+### 5 preguntas de desarrollo largo
+
+L1. Desarrolla el paso histórico y conceptual desde los espectros de líneas hasta el modelo de Bohr.
+
+L2. Expón el modelo de Bohr del hidrógeno: hipótesis, deducción de radios, deducción de energías y emisión de fotones.
+
+L3. Explica la descripción cuántica del hidrógeno mediante función de onda, números cuánticos y probabilidad radial.
+
+L4. Explica cómo el principio de exclusión de Pauli y los números cuánticos permiten comprender la tabla periódica.
+
+L5. Compara espectros ópticos y espectros de rayos X: origen físico, escala energética y utilidad.
+
+### 5 preguntas de relación entre conceptos
+
+R1. Relaciona la fórmula de Rydberg-Ritz con los niveles de energía de Bohr.
+
+R2. Relaciona el radio de Bohr con la probabilidad radial del estado fundamental.
+
+R3. Relaciona spin, Pauli y capacidad de las subcapas.
+
+R4. Relaciona apantallamiento, carga nuclear efectiva e ionización de los alcalinos.
+
+R5. Relaciona estructura fina, momento angular total y dobletes espectrales.
+
+## 8. Respuestas modelo
+
+### Respuestas fáciles
+
+F1. El número atómico Z es el número de protones del núcleo. En un átomo neutro coincide con el número de electrones. Determina la identidad química del elemento.
+
+F2. Porque los átomos solo tienen ciertos estados de energía permitidos. Al pasar de un estado excitado a otro inferior emiten fotones con energías concretas, no con cualquier energía. Por eso aparecen longitudes de onda discretas.
+
+F3. E = hf. Como f = c/lambda, también puede escribirse E = hc/lambda.
+
+F4. E1 = -13,6 eV para hidrógeno. Es una energía negativa porque el electrón está ligado al protón.
+
+F5. En el modelo de Bohr es el radio de la primera órbita permitida del hidrógeno. En la teoría cuántica coincide con el radio más probable para encontrar el electrón en el estado fundamental 1s.
+
+F6. Si n = 3, entonces l = 0, 1, 2.
+
+F7. Si l = 2, entonces m_l = -2, -1, 0, +1, +2.
+
+F8. Una subcapa p tiene l = 1, por tanto tres valores de m_l. Como cada uno admite dos spins, caben 6 electrones.
+
+F9. Afirma que no puede haber dos electrones en el mismo átomo con los cuatro números cuánticos iguales: n, l, m_l y m_s.
+
+F10. Una línea K_alpha corresponde a una transición de un electrón desde la capa L, n = 2, hacia una vacante en la capa K, n = 1.
+
+### Respuestas medias
+
+M1. En una órbita circular, la fuerza de Coulomb proporciona la aceleración centrípeta: kZe^2/r^2 = mv^2/r. Multiplicando por r/2 se obtiene K = (1/2)mv^2 = (1/2)kZe^2/r. La energía potencial es U = -kZe^2/r. Por tanto, E = K + U = (1/2)kZe^2/r - kZe^2/r = -(1/2)kZe^2/r.
+
+M2. En hidrógeno, r_n = n^2 a0. Para n = 3, r_3 = 9a0.
+
+M3. En hidrógeno, E_n = -13,6 eV/n^2. Para n = 2, E_2 = -13,6/4 = -3,4 eV.
+
+M4. La serie de Lyman termina en n_f = 1. Las diferencias de energía hacia el estado fundamental son grandes. La transición más larga de Lyman, n = 2 -> n = 1, libera 10,2 eV, que corresponde a ultravioleta. Las demás liberan aún más energía y tienen menor longitud de onda.
+
+M5. |psi|^2 es densidad de probabilidad por unidad de volumen. P(r) es probabilidad por intervalo radial e incluye el volumen de una capa esférica: P(r) = 4 pi r^2 |psi|^2. Por eso el máximo de |psi|^2 y el máximo de P(r) no tienen por qué coincidir.
+
+M6. Para n = 4: l = 0, 1, 2, 3. Para cada l hay 2l + 1 valores de m_l. Total: 1 + 3 + 5 + 7 = 16 combinaciones.
+
+M7. El estado 1s admite solo dos electrones, porque l = 0 da un único m_l y hay dos valores de spin. El tercer electrón no puede tener los mismos cuatro números cuánticos que los anteriores, así que debe ocupar el siguiente estado disponible: 2s.
+
+M8. Litio y sodio tienen una capa interna cerrada más un único electrón externo débilmente ligado. Ese electrón de valencia domina la química y se pierde con relativa facilidad. Por eso ambos son alcalinos y químicamente activos.
+
+M9. Por el acoplamiento entre el momento angular orbital y el spin del electrón. Estados con el mismo n y l pueden separarse ligeramente según el valor de j. Esa pequeña diferencia energética produce líneas muy próximas: estructura fina.
+
+M10. Porque las energías de las transiciones internas dependen fuertemente de la carga nuclear, y por tanto del número atómico Z. Las longitudes de onda K_alpha, K_beta, etc., son características del elemento del blanco.
+
+### Respuestas difíciles
+
+D1. Bohr reproduce los niveles del hidrógeno porque combina correctamente la energía de una órbita coulombiana con una condición de cuantización que produce radios proporcionales a n^2. Eso lleva a E_n proporcional a -1/n^2 y reproduce Rydberg. Pero el modelo no deduce sus postulados, no explica por qué una carga acelerada no radia en estados estacionarios, usa órbitas clásicas incompatibles con la descripción ondulatoria y falla en átomos multielectrónicos. La teoría cuántica corrige esto: los estados estacionarios son soluciones de Schrödinger y la cuantización sale de las condiciones de contorno.
+
+D2. Para una onda electrónica de de Broglie, lambda = h/p. Si la onda forma una onda estacionaria alrededor de una circunferencia de radio r, debe cumplirse n lambda = 2 pi r. Sustituyendo lambda = h/p queda n h/p = 2 pi r. Luego pr = n h/(2 pi) = n hbar. En una órbita circular p = mv, así que mvr = n hbar. Es exactamente la condición de cuantización de Bohr.
+
+D3. Para un sistema hidrogenoide, E_n = -Z^2 E0/n^2 y r_n = n^2 a0/Z. Si Z = 2 y n = 1, E1 = -4E0 = -54,4 eV. El radio fundamental es r1 = a0/2. La carga nuclear mayor liga más fuertemente al electrón y reduce el tamaño del estado.
+
+D4. En hidrógeno, el potencial es exactamente proporcional a -1/r y hay un solo electrón. La energía depende solo de n, así que 3s, 3p y 3d son degenerados si se ignoran correcciones finas. En sodio hay muchos electrones. Los internos apantallan el núcleo y la penetración de los orbitales cambia con l. Los estados s penetran más cerca del núcleo y sienten mayor carga efectiva, por lo que tienen menor energía que p o d con el mismo n.
+
+D5. La línea K_alpha corresponde aproximadamente a una transición n = 2 -> n = 1 hacia una vacante interna. En un átomo multielectrónico, el electrón que cae no siente Z completo, sino una carga efectiva aproximada Z - 1 por apantallamiento de otro electrón interno. La expresión lambda = hc/[(Z-1)^2 E0(1 - 1/4)] permite despejar (Z - 1)^2 = hc/[lambda E0(3/4)]. Con lambda medida se calcula Z y se redondea al entero más cercano para identificar el elemento.
+
+### Respuestas de desarrollo largo
+
+L1. Los espectros de líneas muestran que un gas excitado emite longitudes de onda concretas. Balmer encontró una fórmula para el visible del hidrógeno y Rydberg-Ritz la generalizó. Esto sugería que las frecuencias emitidas procedían de diferencias entre cantidades discretas. Thomson intentó explicar el fenómeno con electrones incrustados en carga positiva, pero no obtuvo estabilidad ni frecuencias correctas. Rutherford mostró que la carga positiva y la masa están concentradas en un núcleo pequeño. Ese modelo explicaba la dispersión alfa, pero según la física clásica un electrón en órbita debería radiar y caer. Bohr introdujo estados estacionarios no radiantes y transiciones entre ellos. Así conectó estabilidad atómica, cuantización y espectros.
+
+L2. El modelo de Bohr considera un electrón de carga -e orbitando un núcleo +Ze bajo la fuerza de Coulomb. Para una órbita circular, kZe^2/r^2 = mv^2/r. De ahí K = (1/2)kZe^2/r y, como U = -kZe^2/r, la energía total es E = -(1/2)kZe^2/r. Bohr añade que el momento angular está cuantizado: mvr = n hbar. Combinando ambas relaciones se obtiene r_n = n^2 a0/Z. Al sustituir en E(r) se obtiene E_n = -Z^2E0/n^2. La radiación aparece cuando el electrón pasa de un nivel inicial a otro final: hf = E_i - E_f y lambda = hc/(E_i - E_f). El modelo reproduce las series del hidrógeno, pero sus postulados no se deducen de la mecánica clásica.
+
+L3. En la descripción cuántica, el electrón del hidrógeno se describe por una función de onda psi que satisface la ecuación de Schrödinger con potencial coulombiano. Como el potencial depende solo de r, se usan coordenadas esféricas y las soluciones se separan en parte radial y angular. Aparecen los números cuánticos n, l y m_l, junto al spin m_s. El número n determina la energía en hidrógeno; l determina el módulo del momento angular orbital; m_l determina su componente z; m_s distingue los dos estados de spin. El estado fundamental 1s es esféricamente simétrico. Su densidad |psi|^2 es máxima en el origen, pero la probabilidad radial P(r) = 4 pi r^2 |psi|^2 es máxima en a0. Así, el radio de Bohr se reinterpreta como radio más probable, no como trayectoria.
+
+L4. Los números cuánticos fijan qué estados electrónicos existen. Para cada n, l va de 0 a n-1; para cada l hay 2l+1 valores de m_l; para cada estado espacial hay dos valores de spin. Pauli prohíbe que dos electrones tengan los mismos cuatro números cuánticos. De ahí salen las capacidades: s admite 2, p admite 6, d admite 10, f admite 14. Los electrones llenan los estados de menor energía disponibles. En átomos multielectrónicos, el apantallamiento modifica el orden energético y diferencia subcapas con el mismo n. Las configuraciones cerradas producen gases nobles, mientras que un único electrón externo débilmente ligado produce alcalinos como litio y sodio. La tabla periódica refleja la repetición de configuraciones de valencia.
+
+L5. Los espectros ópticos suelen proceder de transiciones de electrones de valencia. Sus energías están en la escala de electronvoltios, por lo que las longitudes de onda caen en visible, infrarrojo o ultravioleta cercano. Son muy importantes para estudiar niveles externos y propiedades químicas. Los espectros de rayos X característicos proceden de capas internas. Un electrón energético puede crear una vacante en la capa K o L; cuando otro electrón cae para ocuparla, se emite un fotón de gran energía. Las líneas K_alpha y K_beta dependen del número atómico del blanco. Por eso los rayos X característicos sirven para identificar elementos.
+
+### Respuestas de relación entre conceptos
+
+R1. Rydberg-Ritz expresa 1/lambda como diferencia de términos 1/n^2. Bohr obtiene energías E_n = -E0/n^2. Al calcular la energía del fotón E_i - E_f y usar E = hc/lambda, aparece la misma estructura matemática. La fórmula empírica queda explicada como diferencia entre niveles cuantizados.
+
+R2. En Bohr, a0 es el radio de la primera órbita. En Schrödinger, no hay órbita. Para el estado 1s, la densidad de probabilidad radial P(r) tiene su máximo en r = a0. Por eso a0 conserva significado físico, pero cambia de interpretación: de trayectoria circular a distancia más probable.
+
+R3. El spin añade dos estados posibles para cada combinación espacial n, l, m_l. Pauli impide que dos electrones tengan los cuatro números iguales. Por tanto, cada orbital espacial admite dos electrones con spins opuestos. De ahí salen las capacidades 2, 6, 10 y 14 para s, p, d y f.
+
+R4. Los electrones internos reducen la carga nuclear efectiva sentida por un electrón externo. En alcalinos como Li o Na, hay una configuración interna cerrada y un único electrón de valencia apantallado. Ese electrón está débilmente ligado, por lo que la primera energía de ionización es baja y la reactividad química alta.
+
+R5. El electrón tiene momento angular orbital L y spin S. Su suma da el momento angular total J, caracterizado por j. El acoplamiento spin-órbita produce pequeñas diferencias de energía entre estados con distinto j. Esas diferencias generan desdoblamientos de líneas espectrales, observables como dobletes o estructura fina.
+
+## 9. Resumen final de repaso
+
+- Ideas principales
+
+Los espectros atómicos son discretos porque las energías atómicas son discretas.
+
+Rutherford introduce el núcleo, pero no explica la estabilidad clásica del átomo.
+
+Bohr explica el hidrógeno con órbitas estacionarias, momento angular cuantizado y emisión por saltos energéticos.
+
+Schrödinger sustituye órbitas por funciones de onda y obtiene niveles, orbitales y números cuánticos.
+
+El hidrógeno ideal tiene energía dependiente solo de n.
+
+Los átomos multielectrónicos requieren Pauli, spin, apantallamiento y configuraciones electrónicas.
+
+Los espectros ópticos vienen de electrones de valencia; los rayos X característicos, de electrones internos.
+
+- Conceptos imprescindibles
+
+Z: número atómico.
+
+E = hf = hc/lambda.
+
+E_n = -Z^2 E0/n^2.
+
+r_n = n^2 a0/Z.
+
+a0 = 0,0529 nm.
+
+n = 1, 2, 3...
+
+l = 0, ..., n-1.
+
+m_l = -l, ..., +l.
+
+m_s = ±1/2.
+
+L = sqrt[l(l+1)] hbar.
+
+L_z = m_l hbar.
+
+P(r) = 4 pi r^2 |psi|^2.
+
+Pauli: no dos electrones con los mismos cuatro números cuánticos.
+
+- Relaciones clave
+
+Rydberg-Ritz <-> diferencias de niveles E_n.
+
+Bohr <-> puente semiclasico hacia Schrödinger.
+
+a0 <-> radio orbital en Bohr <-> radio más probable en 1s.
+
+n,l,m_l,m_s <-> estructura de capas y subcapas.
+
+Pauli + spin <-> capacidad electrónica.
+
+Apantallamiento <-> química de alcalinos y gases nobles.
+
+Spin-órbita <-> estructura fina.
+
+Vacantes internas <-> rayos X característicos.
+
+- Errores que evitar
+
+No convertir orbitales en órbitas reales.
+
+No confundir |psi|^2 con P(r).
+
+No olvidar que energía negativa más grande en módulo significa mayor ligadura.
+
+No permitir valores imposibles de l o m_l.
+
+No contar subcapas sin spin.
+
+No aplicar degeneración del hidrógeno a todos los átomos.
+
+No mezclar espectros ópticos de valencia con rayos X de capas internas.
+
+## 10. Checklist de dominio
+
+- Si no puedes explicar por qué los espectros son discretos, falta repasar niveles de energía y transiciones.
+
+- Si confundes modelo de Rutherford con modelo de Bohr, revisar estabilidad clásica y estados estacionarios.
+
+- Si no puedes deducir E = -(1/2)kZe^2/r, falta repasar Coulomb, movimiento circular y energía potencial.
+
+- Si no puedes obtener r_n = n^2 a0/Z, falta repasar la condición mvr = n hbar.
+
+- Si no sabes calcular lambda = hc/(E_i - E_f), falta repasar fotones y conservación de energía.
+
+- Si confundes a0 con una órbita real, revisar interpretación cuántica del estado 1s.
+
+- Si no puedes enumerar l y m_l para un n dado, falta repasar jerarquía de números cuánticos.
+
+- Si confundes s, p, d, f, revisar correspondencia l = 0, 1, 2, 3.
+
+- Si no puedes justificar que p admite 6 electrones, falta repasar m_l, spin y Pauli.
+
+- Si aplicas degeneración de hidrógeno a sodio, revisar apantallamiento y carga nuclear efectiva.
+
+- Si no distingues espectro óptico y rayos X característicos, falta repasar electrones de valencia frente a electrones internos.
+
+- Si puedes resolver transiciones del hidrógeno, contar estados cuánticos, escribir configuraciones sencillas y explicar K_alpha, el capítulo está suficientemente asentado.
