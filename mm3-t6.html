@@ -1,0 +1,1308 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="color-scheme" content="light dark" />
+  <title>MM3 — Tema 6: Separación de variables y series de Fourier</title>
+  <meta name="description" content="Guía de estudio de Métodos Matemáticos III sobre separación de variables, problemas de autovalores, ortogonalidad y series de Fourier aplicadas a calor, ondas y Laplace." />
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/icon-32.png" />
+  <link rel="icon" type="image/png" sizes="50x50" href="assets/icons/icon-50.png" />
+  <link rel="apple-touch-icon" sizes="100x100" href="assets/icons/icon-100.png" />
+  <link rel="stylesheet" href="assets/styles.css" />
+  <script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(', '\\)'], ['$', '$']], displayMath: [['\\[', '\\]']], processEscapes: true },
+  svg: { fontCache: 'global' },
+  options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+};
+</script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+  <script defer src="assets/app.js"></script>
+</head>
+<body class="subject-mm1">
+  <div class="wrap">
+    <header class="cover">
+      <a class="back-link" href="index.html">← Índice</a>
+      <p class="eyebrow">Métodos Matemáticos III</p>
+      <h1>Separación de variables y series de Fourier</h1>
+      <p class="subtitle">Tema 6 · EDP lineales, autovalores, ortogonalidad y desarrollos de Fourier</p>
+      <div class="lesson-meta"><span>Asignatura: MM3</span><span>Tema 6</span><span>Estado: completo</span><span>Enfoque: examen UNED</span></div>
+    </header>
+    <div class="toolbar no-print" aria-label="Navegación del tema">
+      <nav><a href="#mapa">Mapa</a><a href="#prerrequisitos">Prerrequisitos</a><a href="#idea-central">Idea</a><a href="#desarrollo">Desarrollo</a><a href="#conceptos">Conceptos</a><a href="#errores">Errores</a><a href="#preguntas">Preguntas</a><a href="#respuestas">Respuestas</a><a href="#resumen">Resumen</a><a href="#checklist">Checklist</a></nav>
+      <div class="toolbar-actions"><button class="btn secondary" onclick="document.querySelectorAll('details').forEach(d=>d.open=true)">Abrir todo</button><button class="btn secondary" onclick="document.querySelectorAll('details').forEach(d=>d.open=false)">Modo repaso</button><button class="btn" onclick="window.print()">Imprimir / PDF</button></div>
+    </div>
+    <main>
+      <section id="mapa" class="page map-page">
+        <header class="section-header"><p class="section-kicker">00</p><h2>Mapa conceptual</h2></header>
+        <div class="concept-map">
+          <a class="map-card" href="#desarrollo"><span>Separación</span><small>ensayo producto y constante de separación</small></a>
+          <a class="map-card" href="#desarrollo"><span>Autovalores</span><small>condiciones de contorno y modos permitidos</small></a>
+          <a class="map-card" href="#desarrollo"><span>Superposición</span><small>sumas de soluciones separadas</small></a>
+          <a class="map-card" href="#desarrollo"><span>Fourier</span><small>series trigonométricas, senos y cosenos</small></a>
+          <a class="map-card" href="#desarrollo"><span>Calor y ondas</span><small>modos amortiguados frente a modos oscilatorios</small></a>
+          <a class="map-card" href="#desarrollo"><span>Laplace</span><small>problemas estacionarios en rectángulos</small></a>
+          <a class="map-card" href="#preguntas"><span>Examen</span><small>procedimiento, preguntas y respuestas</small></a>
+        </div>
+        <div class="reading-block source-block"><p>Capítulo trabajado: MM3 T6 — Separación de variables y series de Fourier.</p></div>
+      </section>
+
+    <section id="prerrequisitos" class="page">
+      <header class="section-header">
+        <p class="section-kicker">01</p>
+        <h2>1. Prerrequisitos mínimos</h2>
+      </header>
+      <div class="card-grid">
+<article class="definition-card">
+<h3>Ecuación diferencial ordinaria lineal.</h3>
+<p>Definición breve: una EDO lineal es una ecuación donde la función incógnita y sus derivadas aparecen de forma lineal, por ejemplo \(X''+\lambda X=0\).</p>
+<p>Por qué es necesaria: al separar variables en una EDP, el problema se transforma en varias EDO. Si no se sabe resolver \(X''+\lambda X=0\), \(T'+aT=0\) o \(T''+\omega^2T=0\), el método se bloquea.</p>
+<p>Ejemplo mínimo: si \(X''+\lambda X=0\) y \(\lambda=\mu^2&gt;0\), entonces</p>
+<div class="formula-block">\[
+X(x)=A\cos(\mu x)+B\sin(\mu x).
+\]</div>
+</article>
+<article class="definition-card">
+<h3>Condiciones iniciales y de contorno.</h3>
+<p>Definición breve: una condición inicial fija el estado de la solución en un instante, normalmente \(u(x,0)=f(x)\) o \(u_t(x,0)=g(x)\). Una condición de contorno fija el comportamiento en la frontera espacial, como \(u(0,t)=0\), \(u(L,t)=0\), \(u_x(0,t)=0\).</p>
+<p>Por qué es necesaria: la EDP sola no determina una solución única. Las condiciones seleccionan los modos permitidos y los coeficientes de la serie.</p>
+<p>Ejemplo mínimo: para una barra \(0&lt;x&lt;L\), las condiciones \(u(0,t)=u(L,t)=0\) obligan a usar senos \(\sin(n\pi x/L)\), porque se anulan en ambos extremos.</p>
+</article>
+<article class="definition-card">
+<h3>Linealidad y principio de superposición.</h3>
+<p>Definición breve: un operador es lineal si \(L(au+bv)=aL(u)+bL(v)\). En una EDP lineal homogénea, la suma de soluciones vuelve a ser solución.</p>
+<p>Por qué es necesaria: la separación de variables suele dar soluciones producto aisladas. La solución general útil se obtiene sumando infinitas soluciones producto.</p>
+<p>Ejemplo mínimo: si cada</p>
+<div class="formula-block">\[
+u_n(x,t)=b_n e^{-\alpha^2(n\pi/L)^2t}\sin(n\pi x/L)
+\]</div>
+<p>resuelve la ecuación del calor con contorno homogéneo, entonces también puede resolverla la serie</p>
+<div class="formula-block">\[
+u(x,t)=\sum_{n=1}^{\infty}u_n(x,t),
+\]</div>
+<p>si converge adecuadamente.</p>
+</article>
+<article class="definition-card">
+<h3>Ortogonalidad trigonométrica.</h3>
+<p>Definición breve: dos funciones son ortogonales en un intervalo si la integral de su producto en ese intervalo es cero.</p>
+<p>Por qué es necesaria: la ortogonalidad permite calcular los coeficientes de Fourier aislando un modo cada vez.</p>
+<p>Ejemplo mínimo:</p>
+<div class="formula-block">\[
+\int_0^L \sin\left(\frac{n\pi x}{L}\right)\sin\left(\frac{m\pi x}{L}\right)\,dx=0
+\quad\text{si }n\ne m.
+\]</div>
+</article>
+<article class="definition-card">
+<h3>Funciones pares e impares.</h3>
+<p>Definición breve: \(f\) es par si \(f(-x)=f(x)\), e impar si \(f(-x)=-f(x)\).</p>
+<p>Por qué es necesaria: determina si conviene una serie de cosenos, una serie de senos o una serie completa de senos y cosenos.</p>
+<p>Ejemplo mínimo: \(x^2\) es par y su serie de Fourier en \([-L,L]\) contiene solo cosenos; \(x\) es impar y su serie contiene solo senos.</p>
+</article>
+<article class="definition-card">
+<h3>Integrales definidas elementales.</h3>
+<p>Definición breve: cálculo de integrales en intervalos finitos, especialmente productos con senos y cosenos.</p>
+<p>Por qué es necesaria: los coeficientes de Fourier se calculan mediante integrales.</p>
+<p>Ejemplo mínimo:</p>
+<div class="formula-block">\[
+b_n=\frac{2}{L}\int_0^L f(x)\sin\left(\frac{n\pi x}{L}\right)\,dx.
+\]</div>
+</article>
+<article class="definition-card">
+<h3>EDP lineales básicas.</h3>
+<p>Definición breve: una ecuación en derivadas parciales relaciona una función de varias variables y sus derivadas parciales. En este tema aparecen principalmente calor, ondas y Laplace.</p>
+<p>Por qué es necesaria: la separación de variables se aplica a EDP concretas. Cada una da una ecuación temporal distinta.</p>
+<p>Ejemplo mínimo:</p>
+<div class="formula-block">\[
+u_t=\alpha^2u_{xx}
+\]</div>
+<p>es la ecuación del calor unidimensional sin fuentes.</p>
+</article>
+<article class="definition-card">
+<h3>Autovalores y autofunciones.</h3>
+<p>Definición breve: en un problema diferencial con condiciones de contorno, ciertos valores de un parámetro \(\lambda\) permiten soluciones no triviales. Esos valores son autovalores y las soluciones asociadas son autofunciones.</p>
+<p>Por qué es necesaria: los modos \(\sin(n\pi x/L)\) aparecen porque las condiciones de contorno solo permiten ciertos valores discretos de \(\lambda\).</p>
+<p>Ejemplo mínimo:</p>
+<div class="formula-block">\[
+X''+\lambda X=0,\quad X(0)=X(L)=0
+\]</div>
+<p>tiene soluciones no nulas solo para</p>
+<div class="formula-block">\[
+\lambda_n=\left(\frac{n\pi}{L}\right)^2,\quad X_n(x)=\sin\left(\frac{n\pi x}{L}\right).
+\]</div>
+</article>
+</div>
+    </section>
+    <section id="idea-central" class="page">
+      <header class="section-header">
+        <p class="section-kicker">02</p>
+        <h2>2. Idea central del capítulo</h2>
+      </header>
+      <div class="reading-block">
+<p>El capítulo estudia cómo resolver ciertos problemas lineales de valores iniciales y de contorno mediante dos herramientas que trabajan juntas: la separación de variables y las series de Fourier. La idea básica es transformar una ecuación en derivadas parciales, que depende de varias variables, en varias ecuaciones diferenciales ordinarias más simples. Después, como una sola solución separada rara vez satisface todos los datos del problema, se combinan muchas soluciones separadas mediante una serie.</p>
+<p>El procedimiento empieza suponiendo que la solución puede escribirse como producto de funciones de una sola variable. En un problema con variables \(x\) y \(t\), se ensaya</p>
+<div class="formula-block">\[
+u(x,t)=X(x)T(t).
+\]</div>
+<p>Al sustituir en la EDP y dividir por \(XT\), queda una igualdad entre una expresión que depende solo de \(x\) y otra que depende solo de \(t\). Como las variables son independientes, ambas expresiones deben ser constantes. Esa constante de separación genera dos EDO: una espacial y otra temporal.</p>
+<p>La ecuación espacial, junto con las condiciones de contorno, produce un problema de autovalores. En el caso clásico \(u(0,t)=u(L,t)=0\), los modos espaciales son senos. En otros casos aparecen cosenos, funciones hiperbólicas o combinaciones trigonométricas. El punto importante es que las condiciones de contorno seleccionan los modos permitidos.</p>
+<p>La parte de Fourier entra cuando hay que ajustar la condición inicial o una condición de frontera no homogénea. Si la solución queda como</p>
+<div class="formula-block">\[
+u(x,t)=\sum_{n=1}^{\infty}c_n T_n(t)X_n(x),
+\]</div>
+<p>entonces los coeficientes \(c_n\) se eligen para que, en el instante inicial o en la frontera indicada, la serie reproduzca la función dada \(f(x)\). Este es el papel de las series de Fourier: expresar una función como combinación de senos, cosenos o ambos.</p>
+<p>Dentro de MM3, este bloque es central porque conecta EDP, autovalores, ortogonalidad y desarrollo en series. Es el puente entre la clasificación formal de EDP y la resolución efectiva de problemas de calor, ondas y Laplace. En examen no basta con recordar fórmulas: hay que reconocer qué tipo de contorno lleva a qué base de funciones, separar correctamente, justificar la constante, calcular coeficientes y escribir la solución con sentido físico y matemático.</p>
+</div>
+    </section>
+    <section id="desarrollo" class="page">
+      <header class="section-header">
+        <p class="section-kicker">03</p>
+        <h2>3. Desarrollo completo del capítulo</h2>
+      </header>
+      <div class="reading-block">
+<h3>3.1. El punto de partida: EDP lineales y datos del problema</h3>
+<p>Una EDP lineal de segundo orden se estudia junto con datos adicionales. En problemas físicos, esos datos suelen representar valores impuestos en la frontera o valores iniciales. Por ejemplo, en una barra de longitud \(L\), la temperatura puede venir dada inicialmente por \(u(x,0)=f(x)\), mientras que los extremos se mantienen a temperatura cero mediante</p>
+<div class="formula-block">\[
+u(0,t)=0,\qquad u(L,t)=0.
+\]</div>
+<p>La ecuación por sí sola describe una ley local; los datos determinan el caso concreto.</p>
+<p>Las tres ecuaciones modelo del tema son la ecuación del calor, la ecuación de ondas y la ecuación de Laplace. En una dimensión espacial, la ecuación del calor se escribe</p>
+<div class="formula-block">\[
+u_t=\alpha^2u_{xx},
+\]</div>
+<p>y describe una evolución disipativa: los modos se amortiguan con el tiempo. La ecuación de ondas se escribe</p>
+<div class="formula-block">\[
+u_{tt}=c^2u_{xx},
+\]</div>
+<p>y describe oscilaciones: los modos no decaen, sino que vibran con frecuencias determinadas. La ecuación de Laplace,</p>
+<div class="formula-block">\[
+u_{xx}+u_{yy}=0,
+\]</div>
+<p>no contiene tiempo; suele describir estados estacionarios, como temperaturas de equilibrio o potenciales.</p>
+<p>La conexión con lo anterior está en que estos problemas son lineales. Por tanto, si encontramos varias soluciones compatibles con las condiciones homogéneas, podemos sumarlas. Esa propiedad permite pasar de una solución producto a una solución en serie.</p>
+<p>Ejemplo orientativo: en la ecuación del calor con extremos a cero, una solución como</p>
+<div class="formula-block">\[
+e^{-\alpha^2(n\pi/L)^2t}\sin(n\pi x/L)
+\]</div>
+<p>satisface tanto la EDP como las condiciones \(u(0,t)=u(L,t)=0\). Pero una condición inicial general \(f(x)\) no suele coincidir con un solo seno. Por eso se necesita una suma de modos.</p>
+<h3>3.2. Separación de variables</h3>
+<p>El método empieza con una hipótesis formal:</p>
+<div class="formula-block">\[
+u(x,t)=X(x)T(t).
+\]</div>
+<p>No se afirma que toda solución sea inicialmente de esa forma. Se busca una familia de soluciones simples. Después, por linealidad, se combinan.</p>
+<p>Para la ecuación del calor,</p>
+<div class="formula-block">\[
+u_t=\alpha^2u_{xx},
+\]</div>
+<p>sustituimos \(u=XT\):</p>
+<div class="formula-block">\[
+XT'=\alpha^2X''T.
+\]</div>
+<p>Dividiendo por \(\alpha^2XT\), se obtiene</p>
+<div class="formula-block">\[
+\frac{X''}{X}=\frac{T'}{\alpha^2T}.
+\]</div>
+<p>El lado izquierdo depende solo de \(x\) y el derecho solo de \(t\). Para que la igualdad sea válida para toda pareja \((x,t)\), ambos lados deben ser una constante. En problemas con contorno de Dirichlet homogéneo se toma</p>
+<div class="formula-block">\[
+\frac{X''}{X}=-\lambda,\qquad \frac{T'}{\alpha^2T}=-\lambda.
+\]</div>
+<p>Así aparecen las EDO</p>
+<div class="formula-block">\[
+X''+\lambda X=0,\qquad T'+\alpha^2\lambda T=0.
+\]</div>
+<p>La elección del signo no es decorativa. Si \(\lambda&gt;0\), la parte espacial da senos y cosenos, que pueden anularse en dos extremos distintos, y la parte temporal da un factor exponencial decreciente. Si se escogiera el signo contrario para este problema, las condiciones de contorno homogéneas llevarían normalmente a la solución trivial.</p>
+<p>Ejemplo: con \(X(0)=X(L)=0\), la ecuación \(X''+\lambda X=0\) tiene soluciones no nulas para</p>
+<div class="formula-block">\[
+\lambda_n=\left(\frac{n\pi}{L}\right)^2,\qquad X_n(x)=\sin\left(\frac{n\pi x}{L}\right).
+\]</div>
+<p>La ecuación temporal asociada da</p>
+<div class="formula-block">\[
+T_n(t)=e^{-\alpha^2(n\pi/L)^2t}.
+\]</div>
+<h3>3.3. El problema espacial como problema de autovalores</h3>
+<p>Una vez separada la EDP, la ecuación espacial no se resuelve aislada, sino junto con las condiciones de contorno. Esta pareja forma un problema de autovalores.</p>
+<p>En el caso</p>
+<div class="formula-block">\[
+X''+\lambda X=0,\quad X(0)=X(L)=0,
+\]</div>
+<p>se analizan tres posibilidades. Si \(\lambda=0\), entonces \(X=Ax+B\); las dos condiciones fuerzan \(A=B=0\). Si \(\lambda&lt;0\), escribiendo \(\lambda=-\mu^2\), se obtiene \(X=Ae^{\mu x}+Be^{-\mu x}\) o combinación hiperbólica; de nuevo las condiciones fuerzan la solución trivial. Si \(\lambda&gt;0\), escribiendo \(\lambda=\mu^2\),</p>
+<div class="formula-block">\[
+X=A\cos(\mu x)+B\sin(\mu x).
+\]</div>
+<p>La condición \(X(0)=0\) impone \(A=0\). La condición \(X(L)=0\) exige</p>
+<div class="formula-block">\[
+B\sin(\mu L)=0.
+\]</div>
+<p>Para que \(B\ne0\), debe cumplirse</p>
+<div class="formula-block">\[
+\mu L=n\pi,\quad n=1,2,3,\ldots
+\]</div>
+<p>Así se obtienen los autovalores y autofunciones:</p>
+<div class="formula-block">\[
+\lambda_n=\left(\frac{n\pi}{L}\right)^2,\qquad X_n(x)=\sin\left(\frac{n\pi x}{L}\right).
+\]</div>
+<p>Esta es una de las derivaciones que conviene dominar. En examen se penaliza saltar directamente a los senos sin justificar por qué aparecen. El método no consiste en “poner senos” por costumbre, sino en resolver el problema de autovalores que imponen la EDP y el contorno.</p>
+<p>Si las condiciones cambian, también cambia la base. Con condiciones de Neumann homogéneas,</p>
+<div class="formula-block">\[
+X'(0)=X'(L)=0,
+\]</div>
+<p>aparecen cosenos, incluyendo el modo constante \(n=0\). Con una condición mixta, puede aparecer una familia como</p>
+<div class="formula-block">\[
+\cos\left(\frac{(n+\frac12)\pi x}{L}\right)
+\]</div>
+<p>o un conjunto análogo, según qué extremo esté fijo y cuál esté libre o aislado.</p>
+<h3>3.4. Superposición e introducción de la serie</h3>
+<p>Cada par \(X_n,T_n\) da una solución separada. En el calor con Dirichlet homogéneo,</p>
+<div class="formula-block">\[
+u_n(x,t)=b_n e^{-\alpha^2(n\pi/L)^2t}\sin\left(\frac{n\pi x}{L}\right).
+\]</div>
+<p>Como la ecuación y las condiciones de contorno homogéneas son lineales, se propone</p>
+<div class="formula-block">\[
+u(x,t)=\sum_{n=1}^{\infty}b_n e^{-\alpha^2(n\pi/L)^2t}\sin\left(\frac{n\pi x}{L}\right).
+\]</div>
+<p>Esta suma no es un adorno formal: es la forma que permite satisfacer una condición inicial general.</p>
+<p>Al imponer \(t=0\),</p>
+<div class="formula-block">\[
+u(x,0)=\sum_{n=1}^{\infty}b_n\sin\left(\frac{n\pi x}{L}\right)=f(x).
+\]</div>
+<p>El problema se ha transformado: ya no hay que resolver una EDP, sino desarrollar \(f(x)\) en serie de senos. Ese paso es la entrada natural de Fourier.</p>
+<p>La consecuencia es importante: el método separa la dificultad dinámica y la dificultad geométrica. La dinámica de cada modo se conoce; queda descomponer el dato inicial en esos modos.</p>
+<p>Ejemplo: si</p>
+<div class="formula-block">\[
+f(x)=3\sin\left(\frac{2\pi x}{L}\right),
+\]</div>
+<p>entonces solo hay un modo, \(b_2=3\), y la solución del calor es</p>
+<div class="formula-block">\[
+u(x,t)=3e^{-\alpha^2(2\pi/L)^2t}\sin\left(\frac{2\pi x}{L}\right).
+\]</div>
+<p>Si \(f\) no es un seno puro, habrá varios o infinitos coeficientes.</p>
+<h3>3.5. Series trigonométricas de Fourier en \([-L,L]\)</h3>
+<p>Una serie trigonométrica de Fourier representa una función mediante senos y cosenos:</p>
+<div class="formula-block">\[
+f(x)\sim \frac{a_0}{2}+\sum_{n=1}^{\infty}\left[
+a_n\cos\left(\frac{n\pi x}{L}\right)+
+b_n\sin\left(\frac{n\pi x}{L}\right)
+\right].
+\]</div>
+<p>Los coeficientes vienen dados por</p>
+<div class="formula-block">\[
+a_0=\frac1L\int_{-L}^{L}f(x)\,dx,
+\]</div>
+<div class="formula-block">\[
+a_n=\frac1L\int_{-L}^{L}f(x)\cos\left(\frac{n\pi x}{L}\right)\,dx,
+\]</div>
+<div class="formula-block">\[
+b_n=\frac1L\int_{-L}^{L}f(x)\sin\left(\frac{n\pi x}{L}\right)\,dx.
+\]</div>
+<p>Estas fórmulas son consecuencia de la ortogonalidad. Al multiplicar la serie por un coseno concreto e integrar, todos los términos desaparecen salvo el correspondiente. Lo mismo ocurre con los senos.</p>
+<p>La utilidad práctica es doble. Primero, permite calcular coeficientes. Segundo, permite entender qué términos no pueden aparecer. Si \(f\) es par, todos los \(b_n\) son cero. Si \(f\) es impar, todos los \(a_n\) son cero. Este criterio ahorra cálculo y evita errores.</p>
+<p>Ejemplo: si \(f(x)=x\) en \([-\pi,\pi]\), la función es impar. Por tanto su serie contiene solo senos. No tiene sentido calcular \(a_n\), salvo para comprobar que se anulan.</p>
+<h3>3.6. Series de senos y de cosenos en \([0,L]\)</h3>
+<p>En problemas de contorno, la función inicial suele estar definida solo en \(0&lt;x&lt;L\). Para expresar \(f\) con senos o cosenos, se usa una extensión al intervalo \([-L,L]\). Si se quiere una serie de senos, se toma la extensión impar; si se quiere una serie de cosenos, la extensión par.</p>
+<p>La serie de senos en \([0,L]\) es</p>
+<div class="formula-block">\[
+f(x)\sim\sum_{n=1}^{\infty}b_n\sin\left(\frac{n\pi x}{L}\right),
+\]</div>
+<p>con</p>
+<div class="formula-block">\[
+b_n=\frac2L\int_0^L f(x)\sin\left(\frac{n\pi x}{L}\right)\,dx.
+\]</div>
+<p>Aparece de forma natural cuando las condiciones son \(u(0,t)=u(L,t)=0\).</p>
+<p>La serie de cosenos es</p>
+<div class="formula-block">\[
+f(x)\sim \frac{a_0}{2}+\sum_{n=1}^{\infty}a_n\cos\left(\frac{n\pi x}{L}\right),
+\]</div>
+<p>con</p>
+<div class="formula-block">\[
+a_n=\frac2L\int_0^L f(x)\cos\left(\frac{n\pi x}{L}\right)\,dx,\quad n\ge1,
+\]</div>
+<p>y</p>
+<div class="formula-block">\[
+a_0=\frac2L\int_0^L f(x)\,dx.
+\]</div>
+<p>Aparece con condiciones de derivada nula, por ejemplo extremos aislados en calor o extremos libres en ondas.</p>
+<p>Ejemplo: para resolver el calor en \([0,1]\) con \(u(0,t)=u(1,t)=0\) y \(u(x,0)=1\), se usan senos, no cosenos, porque los modos deben anularse en los extremos. Los coeficientes son</p>
+<div class="formula-block">\[
+b_n=2\int_0^1\sin(n\pi x)\,dx=\frac{2(1-(-1)^n)}{n\pi}.
+\]</div>
+<p>Solo aparecen los \(n\) impares.</p>
+<h3>3.7. Convergencia y significado de la igualdad de Fourier</h3>
+<p>La notación \(f(x)\sim\) serie de Fourier no debe leerse siempre como igualdad punto a punto sin condiciones. En funciones suficientemente regulares para los usos habituales —por ejemplo continuas a trozos, con número finito de discontinuidades de salto y comportamiento no patológico—, la serie converge a \(f(x)\) en los puntos de continuidad. En un salto, converge al valor medio de los límites laterales.</p>
+<p>Esto importa porque en EDP se imponen datos iniciales que pueden no cumplir las condiciones de contorno en los extremos. Por ejemplo, \(f(x)=1\) en \([0,1]\) no vale cero en \(x=0\) ni en \(x=1\), pero su serie de senos sí se anula en los extremos. La serie representa a \(f\) dentro del intervalo y toma valores compatibles con la extensión impar en la frontera. Este detalle aparece a menudo en exámenes al pedir explicar por qué se usa serie de senos y cómo se comporta fuera del intervalo.</p>
+<p>Ejemplo: la serie de senos de \(f(x)=1\) en \([0,1]\) reproduce \(1\) para \(0&lt;x&lt;1\), pero se anula en \(x=0\) y \(x=1\). La extensión periódica impar alterna valores \(1\) y \(-1\), con saltos en los enteros.</p>
+<h3>3.8. Ecuación del calor con extremos a temperatura cero</h3>
+<p>El problema clásico es</p>
+<div class="formula-block">\[
+u_t=\alpha^2u_{xx},\quad 0&lt;x&lt;L,\quad t&gt;0,
+\]</div>
+<div class="formula-block">\[
+u(0,t)=u(L,t)=0,
+\]</div>
+<div class="formula-block">\[
+u(x,0)=f(x).
+\]</div>
+<p>La separación da</p>
+<div class="formula-block">\[
+X''+\lambda X=0,\qquad T'+\alpha^2\lambda T=0.
+\]</div>
+<p>El contorno da</p>
+<div class="formula-block">\[
+\lambda_n=\left(\frac{n\pi}{L}\right)^2,\quad X_n=\sin(n\pi x/L).
+\]</div>
+<p>La parte temporal es</p>
+<div class="formula-block">\[
+T_n(t)=e^{-\alpha^2(n\pi/L)^2t}.
+\]</div>
+<p>Por tanto,</p>
+<div class="formula-block">\[
+u(x,t)=\sum_{n=1}^{\infty}b_n e^{-\alpha^2(n\pi/L)^2t}\sin\left(\frac{n\pi x}{L}\right),
+\]</div>
+<p>donde</p>
+<div class="formula-block">\[
+b_n=\frac2L\int_0^L f(x)\sin\left(\frac{n\pi x}{L}\right)\,dx.
+\]</div>
+<p>La consecuencia física-matemática es que los modos altos decaen más rápido, porque el exponente contiene \(n^2\). La solución se suaviza con el tiempo. En examen, este rasgo ayuda a detectar signos incorrectos: si aparece \(e^{+\alpha^2(n\pi/L)^2t}\), el resultado no corresponde al calor disipativo.</p>
+<p>Ejemplo: si \(f(x)=2\sin(2\pi x/L)+6\sin(8\pi x/L)\), entonces</p>
+<div class="formula-block">\[
+u(x,t)=2e^{-\alpha^2(2\pi/L)^2t}\sin(2\pi x/L)
++6e^{-\alpha^2(8\pi/L)^2t}\sin(8\pi x/L).
+\]</div>
+<h3>3.9. Ecuación de ondas con extremos fijos</h3>
+<p>El problema clásico es</p>
+<div class="formula-block">\[
+u_{tt}=c^2u_{xx},\quad 0&lt;x&lt;L,\quad t&gt;0,
+\]</div>
+<div class="formula-block">\[
+u(0,t)=u(L,t)=0,
+\]</div>
+<div class="formula-block">\[
+u(x,0)=f(x),\qquad u_t(x,0)=g(x).
+\]</div>
+<p>La separación da</p>
+<div class="formula-block">\[
+X''+\lambda X=0,\qquad T''+c^2\lambda T=0.
+\]</div>
+<p>El contorno vuelve a dar</p>
+<div class="formula-block">\[
+X_n(x)=\sin(n\pi x/L),\qquad \lambda_n=(n\pi/L)^2.
+\]</div>
+<p>La parte temporal es oscilatoria:</p>
+<div class="formula-block">\[
+T_n(t)=A_n\cos(cn\pi t/L)+B_n\sin(cn\pi t/L).
+\]</div>
+<p>La solución es</p>
+<div class="formula-block">\[
+u(x,t)=\sum_{n=1}^{\infty}
+\left[
+A_n\cos\left(\frac{cn\pi t}{L}\right)+
+B_n\sin\left(\frac{cn\pi t}{L}\right)
+\right]\sin\left(\frac{n\pi x}{L}\right).
+\]</div>
+<p>Los \(A_n\) son los coeficientes de la serie de senos de \(f\):</p>
+<div class="formula-block">\[
+A_n=\frac2L\int_0^L f(x)\sin(n\pi x/L)\,dx.
+\]</div>
+<p>Si</p>
+<div class="formula-block">\[
+g(x)=\sum_{n=1}^{\infty}G_n\sin(n\pi x/L),
+\]</div>
+<p>entonces</p>
+<div class="formula-block">\[
+B_n=\frac{G_n}{cn\pi/L}=\frac{L}{cn\pi}G_n.
+\]</div>
+<p>La diferencia con el calor es esencial. En calor hay decaimiento exponencial. En ondas hay oscilación. El mismo problema espacial puede aparecer en ambos casos, pero la EDO temporal cambia.</p>
+<p>Ejemplo: si \(f(x)=\frac14\sin(\pi x)+\frac14\sin(3\pi x)\), \(g(x)=0\), \(L=1\), \(c=1\), entonces</p>
+<div class="formula-block">\[
+u(x,t)=\frac14\sin(\pi x)\cos(\pi t)+
+\frac14\sin(3\pi x)\cos(3\pi t).
+\]</div>
+<h3>3.10. Ecuación de Laplace en rectángulos</h3>
+<p>Para un estado estacionario en una placa rectangular se estudia</p>
+<div class="formula-block">\[
+u_{xx}+u_{yy}=0.
+\]</div>
+<p>Con un ensayo \(u(x,y)=X(x)Y(y)\),</p>
+<div class="formula-block">\[
+X''Y+XY''=0.
+\]</div>
+<p>Dividiendo por \(XY\),</p>
+<div class="formula-block">\[
+\frac{X''}{X}=-\frac{Y''}{Y}.
+\]</div>
+<p>Se toma una constante de separación y se obtienen dos EDO. La elección de qué variable lleva senos y cuál lleva exponenciales o funciones hiperbólicas depende de las condiciones.</p>
+<p>En un rectángulo \(0&lt;x&lt;L\), \(0&lt;y&lt;H\), si se imponen condiciones nulas en \(x=0\), \(x=L\), y una condición no nula en \(y=H\), los modos en \(x\) suelen ser</p>
+<div class="formula-block">\[
+\sin(n\pi x/L).
+\]</div>
+<p>La parte en \(y\) se escribe con funciones hiperbólicas para ajustar los datos en \(y=0\) y \(y=H\). Un caso típico es</p>
+<div class="formula-block">\[
+u(x,0)=0,\quad u(0,y)=u(L,y)=0,\quad u(x,H)=f(x),
+\]</div>
+<p>cuya solución toma la forma</p>
+<div class="formula-block">\[
+u(x,y)=\sum_{n=1}^{\infty}b_n
+\frac{\sinh(n\pi y/L)}{\sinh(n\pi H/L)}
+\sin(n\pi x/L),
+\]</div>
+<p>donde</p>
+<div class="formula-block">\[
+b_n=\frac2L\int_0^L f(x)\sin(n\pi x/L)\,dx.
+\]</div>
+<p>Aquí no hay condición inicial ni evolución temporal. La serie ajusta una condición de frontera. El papel de Fourier es el mismo: descomponer el dato impuesto en los modos adecuados.</p>
+<h3>3.11. Condiciones de Dirichlet, Neumann y Robin</h3>
+<p>Las condiciones de Dirichlet fijan el valor de la función:</p>
+<div class="formula-block">\[
+u=g \quad\text{en la frontera}.
+\]</div>
+<p>En calor, representan temperatura impuesta. En ondas, extremo fijo si \(u=0\).</p>
+<p>Las condiciones de Neumann fijan la derivada normal:</p>
+<div class="formula-block">\[
+\frac{\partial u}{\partial n}=g.
+\]</div>
+<p>En calor, \(\partial u/\partial n=0\) representa aislamiento; en ondas, puede representar un extremo libre en la cuerda idealizada.</p>
+<p>Las condiciones de Robin mezclan valor y derivada:</p>
+<div class="formula-block">\[
+Au+B\frac{\partial u}{\partial n}=g.
+\]</div>
+<p>Pueden modelizar intercambio con el exterior u otros acoplamientos de frontera.</p>
+<p>La conexión con Fourier es directa: cada tipo de condición cambia el problema de autovalores. Dirichlet homogéneo en ambos extremos da senos. Neumann homogéneo da cosenos. Robin da ecuaciones trascendentes para los autovalores en casos más generales.</p>
+<p>Ejemplo: en calor con extremos aislados,</p>
+<div class="formula-block">\[
+u_x(0,t)=u_x(L,t)=0,
+\]</div>
+<p>aparece una serie de cosenos:</p>
+<div class="formula-block">\[
+u(x,t)=\frac{a_0}{2}+\sum_{n=1}^{\infty}a_n e^{-\alpha^2(n\pi/L)^2t}\cos(n\pi x/L).
+\]</div>
+<p>El término constante no decae porque representa la temperatura media conservada.</p>
+<h3>3.12. Lo que se espera en un examen</h3>
+<p>Un ejercicio típico no pide solo la fórmula final. Suele pedir deducir las EDO separadas, clasificar el tipo de condiciones, obtener los modos espaciales, escribir la solución general en serie y calcular coeficientes si el dato es sencillo.</p>
+<p>El orden correcto es: plantear el producto, sustituir, dividir, introducir la constante, resolver el problema espacial, resolver el temporal, superponer, imponer datos restantes y calcular coeficientes. Saltarse el problema de autovalores o elegir la serie por memoria suele producir errores.</p>
+<p>Ejemplo de respuesta sólida: “Como \(u(0,t)=u(L,t)=0\), el problema espacial es \(X''+\lambda X=0\), \(X(0)=X(L)=0\). Los únicos modos no triviales son \(X_n=\sin(n\pi x/L)\). Por tanto la condición inicial debe desarrollarse en serie de senos.”</p>
+</div>
+    </section>
+    <section id="conceptos" class="page">
+      <header class="section-header">
+        <p class="section-kicker">04</p>
+        <h2>4. Conceptos clave</h2>
+      </header>
+      <div class="card-grid">
+<article class="definition-card">
+<h3>Separación de variables.</h3>
+<p>Definición precisa: método que busca soluciones de una EDP como producto de funciones de una sola variable, por ejemplo \(u(x,t)=X(x)T(t)\).</p>
+<p>Explicación desarrollada: al sustituir el producto en la EDP, se divide por el producto y se obtiene una igualdad entre términos dependientes de variables distintas. Esa igualdad solo puede mantenerse si ambos términos son constantes. Así la EDP se transforma en EDO.</p>
+<p>Ejemplo:</p>
+<div class="formula-block">\[
+u_t=\alpha^2u_{xx},\quad u=XT
+\]</div>
+<p>lleva a</p>
+<div class="formula-block">\[
+X''/X=T'/(\alpha^2T)=-\lambda.
+\]</div>
+<p>Relación con otros conceptos: produce la constante de separación y los problemas de autovalores.</p>
+<p>Posible forma de preguntarlo en examen: “Deduzca las ecuaciones diferenciales ordinarias resultantes de aplicar separación de variables.”</p>
+</article>
+<article class="definition-card">
+<h3>Constante de separación.</h3>
+<p>Definición precisa: número introducido al igualar dos expresiones dependientes de variables independientes distintas.</p>
+<p>Explicación desarrollada: no se escoge arbitrariamente; su signo se adapta al tipo de problema para obtener modos compatibles con las condiciones de contorno.</p>
+<p>Ejemplo:</p>
+<div class="formula-block">\[
+\frac{X''}{X}=\frac{T'}{\alpha^2T}=-\lambda.
+\]</div>
+<p>Relación con otros conceptos: sus valores permitidos se convierten en autovalores.</p>
+<p>Posible forma de preguntarlo en examen: “Justifique por qué ambas partes deben ser constantes y elija el signo adecuado.”</p>
+</article>
+<article class="definition-card">
+<h3>Problema de autovalores.</h3>
+<p>Definición precisa: problema formado por una ecuación diferencial con parámetro y condiciones de contorno que solo admite soluciones no triviales para ciertos valores del parámetro.</p>
+<p>Explicación desarrollada: en separación de variables, el problema espacial decide qué funciones forman la base de expansión.</p>
+<p>Ejemplo:</p>
+<div class="formula-block">\[
+X''+\lambda X=0,\quad X(0)=X(L)=0
+\]</div>
+<p>da</p>
+<div class="formula-block">\[
+\lambda_n=(n\pi/L)^2.
+\]</div>
+<p>Relación con otros conceptos: determina los modos normales y las frecuencias.</p>
+<p>Posible forma de preguntarlo en examen: “Obtenga los autovalores y autofunciones del problema espacial.”</p>
+</article>
+<article class="definition-card">
+<h3>Modo normal.</h3>
+<p>Definición precisa: solución elemental asociada a un autovalor, normalmente una función espacial multiplicada por una evolución temporal.</p>
+<p>Explicación desarrollada: cada modo evoluciona de manera independiente en problemas lineales homogéneos.</p>
+<p>Ejemplo:</p>
+<div class="formula-block">\[
+u_n=e^{-\alpha^2(n\pi/L)^2t}\sin(n\pi x/L)
+\]</div>
+<p>en calor.</p>
+<p>Relación con otros conceptos: los modos se suman mediante superposición y sus coeficientes se calculan por Fourier.</p>
+<p>Posible forma de preguntarlo en examen: “Escriba el modo general \(n\).”</p>
+</article>
+<article class="definition-card">
+<h3>Serie de Fourier completa.</h3>
+<p>Definición precisa: expansión de una función en \([-L,L]\) mediante senos y cosenos:</p>
+<div class="formula-block">\[
+f\sim a_0/2+\sum_{n=1}^\infty(a_n\cos(n\pi x/L)+b_n\sin(n\pi x/L)).
+\]</div>
+<p>Explicación desarrollada: representa funciones periódicas o extensiones periódicas de funciones definidas en un intervalo.</p>
+<p>Ejemplo: en \([-\pi,\pi]\), \(f(x)=x\) se representa solo con senos.</p>
+<p>Relación con otros conceptos: es la herramienta para imponer datos en las soluciones separadas.</p>
+<p>Posible forma de preguntarlo en examen: “Desarrolle \(f(x)\) en serie de Fourier en \([-\pi,\pi]\).”</p>
+</article>
+<article class="definition-card">
+<h3>Serie de senos.</h3>
+<p>Definición precisa: expansión en \([0,L]\) de la forma</p>
+<div class="formula-block">\[
+f(x)\sim \sum_{n=1}^{\infty}b_n\sin(n\pi x/L).
+\]</div>
+<p>Explicación desarrollada: equivale a tomar la extensión impar de \(f\). Se adapta a condiciones de Dirichlet homogéneas.</p>
+<p>Ejemplo:</p>
+<div class="formula-block">\[
+b_n=\frac2L\int_0^L f(x)\sin(n\pi x/L)\,dx.
+\]</div>
+<p>Relación con otros conceptos: aparece en calor y ondas con extremos fijos.</p>
+<p>Posible forma de preguntarlo en examen: “¿Por qué se usa serie de senos en este problema?”</p>
+</article>
+<article class="definition-card">
+<h3>Serie de cosenos.</h3>
+<p>Definición precisa: expansión en \([0,L]\) de la forma</p>
+<div class="formula-block">\[
+f(x)\sim a_0/2+\sum_{n=1}^{\infty}a_n\cos(n\pi x/L).
+\]</div>
+<p>Explicación desarrollada: equivale a tomar la extensión par de \(f\). Se adapta a condiciones de Neumann homogéneas.</p>
+<p>Ejemplo:</p>
+<div class="formula-block">\[
+a_n=\frac2L\int_0^L f(x)\cos(n\pi x/L)\,dx.
+\]</div>
+<p>Relación con otros conceptos: incluye el modo constante, importante en calor con extremos aislados.</p>
+<p>Posible forma de preguntarlo en examen: “Escriba la solución cuando los extremos están aislados.”</p>
+</article>
+<article class="definition-card">
+<h3>Ortogonalidad.</h3>
+<p>Definición precisa: propiedad por la cual la integral del producto de dos modos distintos es cero.</p>
+<p>Explicación desarrollada: permite calcular coeficientes por proyección, aislando la contribución de cada modo.</p>
+<p>Ejemplo:</p>
+<div class="formula-block">\[
+\int_0^L \sin(n\pi x/L)\sin(m\pi x/L)\,dx=0,\quad n\ne m.
+\]</div>
+<p>Relación con otros conceptos: es la base de las fórmulas de Euler-Fourier.</p>
+<p>Posible forma de preguntarlo en examen: “Demuestre cómo se obtiene \(b_n\).”</p>
+</article>
+<article class="definition-card">
+<h3>Condición de Dirichlet.</h3>
+<p>Definición precisa: condición que fija el valor de la función en la frontera.</p>
+<p>Explicación desarrollada: si es homogénea y aparece en ambos extremos de un intervalo, suele llevar a autofunciones senoidales.</p>
+<p>Ejemplo:</p>
+<div class="formula-block">\[
+u(0,t)=u(L,t)=0.
+\]</div>
+<p>Relación con otros conceptos: conecta con serie de senos y extremos fijos.</p>
+<p>Posible forma de preguntarlo en examen: “Identifique el tipo de condición de contorno y la base adecuada.”</p>
+</article>
+<article class="definition-card">
+<h3>Condición de Neumann.</h3>
+<p>Definición precisa: condición que fija la derivada normal en la frontera.</p>
+<p>Explicación desarrollada: si es homogénea en ambos extremos de un intervalo, suele llevar a cosenos y a un modo constante.</p>
+<p>Ejemplo:</p>
+<div class="formula-block">\[
+u_x(0,t)=u_x(L,t)=0.
+\]</div>
+<p>Relación con otros conceptos: conecta con aislamiento, extremos libres y conservación del valor medio.</p>
+<p>Posible forma de preguntarlo en examen: “Resuelva el problema con extremos aislados.”</p>
+</article>
+<article class="definition-card">
+<h3>Condición de Robin.</h3>
+<p>Definición precisa: condición lineal que combina el valor de la función y su derivada normal.</p>
+<p>Explicación desarrollada: es más general que Dirichlet y Neumann. En separación de variables altera la ecuación que determina los autovalores.</p>
+<p>Ejemplo:</p>
+<div class="formula-block">\[
+Au(0,t)+Bu_x(0,t)=0.
+\]</div>
+<p>Relación con otros conceptos: genera problemas de autovalores más complejos.</p>
+<p>Posible forma de preguntarlo en examen: “Plantee, sin resolver completamente, el problema de autovalores con condición Robin.”</p>
+</article>
+<article class="definition-card">
+<h3>Convergencia de Fourier.</h3>
+<p>Definición precisa: comportamiento límite de la serie de Fourier respecto a la función representada.</p>
+<p>Explicación desarrollada: bajo condiciones regulares usuales, la serie converge a la función en puntos de continuidad y al promedio lateral en saltos.</p>
+<p>Ejemplo: una onda cuadrada toma en el salto el valor medio de los dos lados.</p>
+<p>Relación con otros conceptos: explica por qué las series pueden no coincidir en los extremos aunque sí sirvan dentro del intervalo.</p>
+<p>Posible forma de preguntarlo en examen: “Explique qué valor toma la serie en una discontinuidad.”</p>
+</article>
+<article class="definition-card">
+<h3>Solución estacionaria.</h3>
+<p>Definición precisa: solución que no depende del tiempo.</p>
+<p>Explicación desarrollada: aparece en Laplace o como estado límite de algunos problemas de calor con fronteras no homogéneas.</p>
+<p>Ejemplo: si \(u_t=0\) en calor, queda \(u_{xx}=0\), luego \(u=Ax+B\).</p>
+<p>Relación con otros conceptos: a veces conviene restarla para convertir condiciones no homogéneas en homogéneas.</p>
+<p>Posible forma de preguntarlo en examen: “Halle primero la solución de equilibrio y después resuelva el transitorio.”</p>
+</article>
+<article class="definition-card">
+<h3>Modo temporal disipativo.</h3>
+<p>Definición precisa: factor temporal exponencial decreciente asociado a la ecuación del calor.</p>
+<p>Explicación desarrollada: refleja que los modos de mayor frecuencia espacial se amortiguan más rápido.</p>
+<p>Ejemplo:</p>
+<div class="formula-block">\[
+T_n(t)=e^{-\alpha^2(n\pi/L)^2t}.
+\]</div>
+<p>Relación con otros conceptos: distingue calor de ondas.</p>
+<p>Posible forma de preguntarlo en examen: “Explique por qué los modos altos desaparecen antes.”</p>
+</article>
+<article class="definition-card">
+<h3>Modo temporal oscilatorio.</h3>
+<p>Definición precisa: factor temporal trigonométrico asociado a la ecuación de ondas.</p>
+<p>Explicación desarrollada: cada modo vibra con frecuencia proporcional a \(n\).</p>
+<p>Ejemplo:</p>
+<div class="formula-block">\[
+T_n(t)=A_n\cos(cn\pi t/L)+B_n\sin(cn\pi t/L).
+\]</div>
+<p>Relación con otros conceptos: determina modos normales y frecuencias propias.</p>
+<p>Posible forma de preguntarlo en examen: “Obtenga la frecuencia del modo \(n\).”</p>
+</article>
+</div>
+    </section>
+    <section id="relaciones" class="page">
+      <header class="section-header">
+        <p class="section-kicker">05</p>
+        <h2>5. Relaciones entre ideas</h2>
+      </header>
+      <div class="reading-block">
+<p>La separación de variables depende de la linealidad y de la independencia de variables. La hipótesis \(u=XT\) no resuelve por sí sola el problema completo, pero genera soluciones elementales. La linealidad permite sumar esas soluciones, y la ortogonalidad permite elegir los coeficientes adecuados. Por eso el método no es una receta aislada: forma una cadena conceptual.</p>
+<p>La cadena principal es:</p>
+<div class="formula-block">\[
+\text{EDP lineal}
+\rightarrow
+\text{ensayo producto}
+\rightarrow
+\text{constante de separación}
+\rightarrow
+\text{problema de autovalores}
+\rightarrow
+\text{modos}
+\rightarrow
+\text{serie de Fourier}
+\rightarrow
+\text{solución del problema}.
+\]</div>
+<p>Si falla uno de estos pasos, el resultado queda incompleto.</p>
+<p>Las condiciones de contorno mandan sobre la base de Fourier. Dirichlet homogéneo suele producir senos; Neumann homogéneo, cosenos; condiciones mixtas, familias desplazadas o combinaciones. Por tanto, no se elige la serie por la forma de \(f(x)\), sino por el problema espacial. La función \(f\) determina los coeficientes, no la base.</p>
+<p>La ecuación del calor y la ecuación de ondas pueden tener el mismo problema espacial. Con extremos fijos en \([0,L]\), ambas usan \(\sin(n\pi x/L)\). La diferencia está en el tiempo: calor produce exponenciales decrecientes; ondas produce senos y cosenos temporales. La consecuencia es física y matemática: en calor hay suavizado y pérdida de modos altos; en ondas hay oscilación modal.</p>
+<p>La ecuación de Laplace se relaciona con las anteriores porque también usa separación y Fourier, pero no contiene evolución temporal. En ella, la serie no ajusta una condición inicial, sino una condición de frontera. Las funciones hiperbólicas o exponenciales sustituyen a los factores temporales.</p>
+<p>La ortogonalidad es la razón por la que el cálculo de coeficientes es posible. Sin ortogonalidad, imponer \(f(x)\) como suma de infinitos modos sería difícil. Con ortogonalidad, cada coeficiente se obtiene proyectando \(f\) sobre el modo correspondiente.</p>
+<p>La convergencia de Fourier conecta el resultado formal con el significado real de la solución. En problemas de examen se aceptan desarrollos para funciones continuas a trozos, pero hay que recordar que en discontinuidades la serie no tiene por qué devolver el valor declarado de la función, sino el promedio de los límites laterales.</p>
+<p>La oposición más importante es entre condiciones homogéneas y no homogéneas. Si las condiciones de contorno son homogéneas, los modos suelen ajustarse directamente. Si son no homogéneas, a menudo se resta una solución estacionaria o auxiliar para convertir el problema en otro con contorno homogéneo. Esta técnica evita forzar una serie que no respeta el contorno.</p>
+</div>
+    </section>
+    <section id="errores" class="page">
+      <header class="section-header">
+        <p class="section-kicker">06</p>
+        <h2>6. Errores habituales</h2>
+      </header>
+      <div class="card-grid">
+<article class="definition-card">
+<h3>Elegir senos o cosenos mirando solo la función inicial.</h3>
+<p>Por qué está mal: la base viene impuesta por las condiciones de contorno, no por la comodidad del dato.</p>
+<p>Corrección: primero resolver el problema espacial con sus condiciones.</p>
+<p>Respuesta incorrecta: “Como \(f(x)=1\) es par, uso cosenos en \(0&lt;x&lt;L\).”</p>
+<p>Respuesta correcta: “Como \(u(0,t)=u(L,t)=0\), uso senos aunque \(f(x)=1\).”</p>
+</article>
+<article class="definition-card">
+<h3>Olvidar analizar \(\lambda=0\) y \(\lambda&lt;0\).</h3>
+<p>Por qué está mal: el problema de autovalores debe justificar qué valores producen soluciones no triviales.</p>
+<p>Corrección: estudiar los tres casos o explicar de forma suficiente por qué solo \(\lambda&gt;0\) sirve.</p>
+<p>Respuesta incorrecta: “Tomamos \(\lambda=(n\pi/L)^2\) directamente.”</p>
+<p>Respuesta correcta: “Para \(\lambda=0\) y \(\lambda&lt;0\) solo hay solución trivial; para \(\lambda&gt;0\) se obtiene \(\sin(\mu L)=0\).”</p>
+</article>
+<article class="definition-card">
+<h3>Poner el signo temporal del calor al revés.</h3>
+<p>Por qué está mal: \(e^{+\alpha^2\lambda t}\) crece y no corresponde al calor sin fuentes con contorno homogéneo.</p>
+<p>Corrección: para \(u_t=\alpha^2u_{xx}\) y \(\lambda_n&gt;0\),</p>
+<div class="formula-block">\[
+T_n=e^{-\alpha^2\lambda_n t}.
+\]</div>
+<p>Respuesta incorrecta:</p>
+<div class="formula-block">\[
+u=\sum b_ne^{+\alpha^2(n\pi/L)^2t}\sin(n\pi x/L).
+\]</div>
+<p>Respuesta correcta:</p>
+<div class="formula-block">\[
+u=\sum b_ne^{-\alpha^2(n\pi/L)^2t}\sin(n\pi x/L).
+\]</div>
+</article>
+<article class="definition-card">
+<h3>Confundir \(u_t\) con \(u_{tt}\).</h3>
+<p>Por qué está mal: calor y ondas tienen ecuaciones temporales distintas.</p>
+<p>Corrección: calor da \(T'\); ondas da \(T''\).</p>
+<p>Respuesta incorrecta: “En ondas \(T'+c^2\lambda T=0\).”</p>
+<p>Respuesta correcta: “En ondas \(T''+c^2\lambda T=0\).”</p>
+</article>
+<article class="definition-card">
+<h3>No incluir el modo constante en Neumann.</h3>
+<p>Por qué está mal: con \(X'(0)=X'(L)=0\), \(\lambda=0\) da \(X=\text{constante}\), que es un modo válido.</p>
+<p>Corrección: escribir</p>
+<div class="formula-block">\[
+u=a_0/2+\sum_{n=1}^\infty a_n e^{-\alpha^2(n\pi/L)^2t}\cos(n\pi x/L).
+\]</div>
+<p>Respuesta incorrecta: empezar la suma en \(n=1\) y perder el promedio.</p>
+<p>Respuesta correcta: incluir \(a_0/2\).</p>
+</article>
+<article class="definition-card">
+<h3>Calcular mal el coeficiente de velocidad inicial en ondas.</h3>
+<p>Por qué está mal: \(B_n\) no es directamente el coeficiente de \(g(x)\), sino que se divide por la frecuencia angular.</p>
+<p>Corrección: si \(g(x)=\sum G_n\sin(n\pi x/L)\), entonces</p>
+<div class="formula-block">\[
+B_n=\frac{L}{cn\pi}G_n.
+\]</div>
+<p>Respuesta incorrecta: \(B_n=G_n\).</p>
+<p>Respuesta correcta: \(B_n=G_n/(cn\pi/L)\).</p>
+</article>
+<article class="definition-card">
+<h3>Usar superposición en una ecuación no lineal.</h3>
+<p>Por qué está mal: la suma de soluciones solo es solución garantizada en problemas lineales homogéneos.</p>
+<p>Corrección: comprobar linealidad antes de sumar modos.</p>
+<p>Respuesta incorrecta: “Si \(u_1\) y \(u_2\) resuelven \(u_x+uu_y=0\), entonces \(u_1+u_2\) también.”</p>
+<p>Respuesta correcta: “Esa ecuación es no lineal; la superposición no vale en general.”</p>
+</article>
+<article class="definition-card">
+<h3>No adaptar el intervalo en los coeficientes.</h3>
+<p>Por qué está mal: las fórmulas cambian entre \([-L,L]\), \([0,L]\), \([-\pi,\pi]\) y \([0,1]\).</p>
+<p>Corrección: escribir primero el intervalo y la base.</p>
+<p>Respuesta incorrecta:</p>
+<div class="formula-block">\[
+b_n=\int_0^L f(x)\sin(nx)\,dx.
+\]</div>
+<p>Respuesta correcta:</p>
+<div class="formula-block">\[
+b_n=\frac2L\int_0^L f(x)\sin(n\pi x/L)\,dx.
+\]</div>
+</article>
+<article class="definition-card">
+<h3>Confundir extensión impar con función impar original.</h3>
+<p>Por qué está mal: una función definida en \([0,L]\) no es par ni impar hasta que se extiende.</p>
+<p>Corrección: decir “tomamos la extensión impar” si usamos serie de senos.</p>
+<p>Respuesta incorrecta: “\(f(x)=1\) es impar en \([0,1]\).”</p>
+<p>Respuesta correcta: “Para usar senos, extendemos \(f(x)=1\) de forma impar a \([-1,1]\).”</p>
+</article>
+<article class="definition-card">
+<h3>Olvidar que la serie puede no coincidir en los saltos.</h3>
+<p>Por qué está mal: en discontinuidades la serie converge al promedio lateral bajo las condiciones usuales.</p>
+<p>Corrección: distinguir interior, frontera y puntos de salto.</p>
+<p>Respuesta incorrecta: “La serie de senos de \(1\) vale \(1\) también en \(x=0\).”</p>
+<p>Respuesta correcta: “Dentro de \((0,1)\) representa \(1\); en el extremo toma el valor compatible con la extensión y el contorno.”</p>
+</article>
+<article class="definition-card">
+<h3>No separar la solución estacionaria en contornos no homogéneos.</h3>
+<p>Por qué está mal: los modos homogéneos no pueden satisfacer por sí solos un contorno no homogéneo permanente.</p>
+<p>Corrección: escribir \(u=v+w\), con \(w\) estacionaria que ajusta la frontera, y resolver \(v\) con contorno homogéneo.</p>
+<p>Respuesta incorrecta: “Uso senos aunque \(u(L,t)=100\).”</p>
+<p>Respuesta correcta: “Primero tomo \(w(x)=100x/L\); luego resuelvo \(v=u-w\) con extremos nulos.”</p>
+</article>
+<article class="definition-card">
+<h3>Escribir una solución de Laplace con exponenciales crecientes sin controlar la frontera.</h3>
+<p>Por qué está mal: en dominios semiinfinitos hay que descartar términos que crecen al infinito.</p>
+<p>Corrección: usar \(e^{-ky}\) o cocientes hiperbólicos según la geometría.</p>
+<p>Respuesta incorrecta:</p>
+<div class="formula-block">\[
+u=\sum b_ne^{+n\pi y/L}\sin(n\pi x/L).
+\]</div>
+<p>Respuesta correcta:</p>
+<div class="formula-block">\[
+u=\sum b_ne^{-n\pi y/L}\sin(n\pi x/L)
+\]</div>
+<p>en una placa semiinfinita con decaimiento al infinito.</p>
+</article>
+</div>
+    </section>
+    <section id="preguntas" class="page">
+      <header class="section-header">
+        <p class="section-kicker">07</p>
+        <h2>7. Preguntas orientadas a examen</h2>
+      </header>
+      <details class="accordion" open>
+<summary>10 preguntas fáciles</summary>
+<div class="reading-block">
+<p>F1. ¿Qué significa separar variables en una EDP?</p>
+<p>F2. Escribe la forma producto que se ensaya para una función \(u(x,t)\).</p>
+<p>F3. ¿Qué condición de contorno conduce normalmente a una serie de senos en \([0,L]\)?</p>
+<p>F4. ¿Qué condición de contorno conduce normalmente a una serie de cosenos en \([0,L]\)?</p>
+<p>F5. Escribe la fórmula de los coeficientes \(b_n\) de la serie de senos en \([0,L]\).</p>
+<p>F6. ¿Cuál es la diferencia básica entre la ecuación del calor y la ecuación de ondas en la parte temporal?</p>
+<p>F7. ¿Qué son los autovalores en el problema \(X''+\lambda X=0\) con contorno?</p>
+<p>F8. ¿Qué ocurre con la serie de Fourier en una discontinuidad de salto?</p>
+<p>F9. ¿Qué significa que una función sea impar?</p>
+<p>F10. ¿Por qué la suma de soluciones separadas puede ser solución?</p>
+</div>
+</details>
+<details class="accordion" open>
+<summary>10 preguntas medias</summary>
+<div class="reading-block">
+<p>M1. Deduce las EDO obtenidas al separar \(u_t=\alpha^2u_{xx}\).</p>
+<p>M2. Resuelve el problema espacial \(X''+\lambda X=0\), \(X(0)=X(L)=0\).</p>
+<p>M3. Escribe la solución del calor en \([0,L]\) con \(u(0,t)=u(L,t)=0\), \(u(x,0)=f(x)\).</p>
+<p>M4. Calcula los coeficientes de la serie de senos de \(f(x)=1\) en \([0,1]\).</p>
+<p>M5. Deduce las EDO obtenidas al separar \(u_{tt}=c^2u_{xx}\).</p>
+<p>M6. Escribe la solución de ondas con extremos fijos y datos \(f(x)\), \(g(x)\).</p>
+<p>M7. Explica por qué en calor los modos altos decaen más rápido.</p>
+<p>M8. Plantea la solución de Laplace en un rectángulo con \(u(0,y)=u(L,y)=u(x,0)=0\) y \(u(x,H)=f(x)\).</p>
+<p>M9. ¿Por qué se incluye el modo constante con condiciones de Neumann homogéneas?</p>
+<p>M10. Explica la diferencia entre una serie de Fourier completa y una serie de senos.</p>
+</div>
+</details>
+<details class="accordion" open>
+<summary>5 preguntas difíciles</summary>
+<div class="reading-block">
+<p>D1. Justifica rigurosamente por qué \(\lambda=0\) y \(\lambda&lt;0\) no dan modos no triviales en Dirichlet homogéneo.</p>
+<p>D2. Resuelve el calor en \([0,1]\) con \(u_t=50u_{xx}\), extremos nulos y</p>
+<div class="formula-block">\[
+u(x,0)=2\sin(2\pi x)+6\sin(8\pi x).
+\]</div>
+<p>D3. Para la cuerda \(u_{tt}=u_{xx}\), \(0&lt;x&lt;1\), extremos fijos,</p>
+<div class="formula-block">\[
+u(x,0)=\frac14\sin(\pi x)+\frac14\sin(3\pi x),\quad u_t(x,0)=0,
+\]</div>
+<p>halla \(u(x,t)\).</p>
+<p>D4. En el calor con extremos aislados, explica por qué el valor medio se conserva y cómo aparece en la serie.</p>
+<p>D5. Resuelve formalmente Laplace en \(0&lt;x&lt;L\), \(0&lt;y&lt;H\) con</p>
+<div class="formula-block">\[
+u_x(0,y)=u_x(L,y)=0,\quad u(x,0)=0,\quad u(x,H)=f(x).
+\]</div>
+</div>
+</details>
+<details class="accordion" open>
+<summary>5 preguntas de desarrollo largo</summary>
+<div class="reading-block">
+<p>L1. Expón el método de separación de variables aplicado a la ecuación del calor con extremos a cero.</p>
+<p>L2. Expón el método de separación de variables aplicado a la cuerda vibrante con extremos fijos.</p>
+<p>L3. Desarrolla la teoría mínima de series de Fourier necesaria para resolver problemas de EDP en \([0,L]\).</p>
+<p>L4. Explica cómo se resuelve un problema de Laplace en un rectángulo por separación de variables.</p>
+<p>L5. Compara Dirichlet, Neumann y Robin en el contexto de separación de variables.</p>
+</div>
+</details>
+<details class="accordion" open>
+<summary>5 preguntas de relación entre conceptos</summary>
+<div class="reading-block">
+<p>R1. Relaciona autovalores, modos normales y series de Fourier.</p>
+<p>R2. Relaciona condiciones de contorno y elección de senos o cosenos.</p>
+<p>R3. Relaciona calor y ondas: mismo problema espacial, distinta evolución temporal.</p>
+<p>R4. Relaciona convergencia de Fourier y condiciones iniciales discontinuas.</p>
+<p>R5. Relaciona linealidad y superposición en la construcción de soluciones.</p>
+</div>
+</details>
+    </section>
+    <section id="respuestas" class="page">
+      <header class="section-header">
+        <p class="section-kicker">08</p>
+        <h2>8. Respuestas modelo</h2>
+      </header>
+      <div class="reading-block">
+<h3>Respuestas a las preguntas fáciles</h3>
+<p>F1. Separar variables significa buscar soluciones particulares de una EDP como producto de funciones de una sola variable. En \(u(x,t)\), se prueba \(u=X(x)T(t)\). Al sustituir, la EDP se transforma en EDO para \(X\) y \(T\). Después se combinan las soluciones producto mediante una serie.</p>
+<p>F2. Para una función de espacio y tiempo se ensaya</p>
+<div class="formula-block">\[
+u(x,t)=X(x)T(t),
+\]</div>
+<p>donde \(X\) depende solo de \(x\) y \(T\) solo de \(t\).</p>
+<p>F3. Las condiciones de Dirichlet homogéneas en ambos extremos,</p>
+<div class="formula-block">\[
+u(0,t)=u(L,t)=0,
+\]</div>
+<p>conducen normalmente a una serie de senos, porque \(\sin(n\pi x/L)\) se anula en \(x=0\) y \(x=L\).</p>
+<p>F4. Las condiciones de Neumann homogéneas,</p>
+<div class="formula-block">\[
+u_x(0,t)=u_x(L,t)=0,
+\]</div>
+<p>conducen normalmente a una serie de cosenos, porque la derivada de \(\cos(n\pi x/L)\) se anula en ambos extremos.</p>
+<p>F5. La fórmula es</p>
+<div class="formula-block">\[
+b_n=\frac2L\int_0^L f(x)\sin\left(\frac{n\pi x}{L}\right)\,dx,\quad n=1,2,\ldots
+\]</div>
+<p>F6. En calor aparece una ecuación temporal de primer orden,</p>
+<div class="formula-block">\[
+T'+\alpha^2\lambda T=0,
+\]</div>
+<p>con soluciones exponenciales decrecientes. En ondas aparece una ecuación temporal de segundo orden,</p>
+<div class="formula-block">\[
+T''+c^2\lambda T=0,
+\]</div>
+<p>con soluciones oscilatorias.</p>
+<p>F7. Son los valores de \(\lambda\) para los que el problema espacial con condiciones de contorno tiene soluciones no triviales. En Dirichlet homogéneo,</p>
+<div class="formula-block">\[
+\lambda_n=(n\pi/L)^2.
+\]</div>
+<p>F8. Bajo condiciones regulares usuales, en una discontinuidad de salto la serie converge al promedio de los límites laterales:</p>
+<div class="formula-block">\[
+\frac{f(x^-)+f(x^+)}{2}.
+\]</div>
+<p>F9. Una función es impar si</p>
+<div class="formula-block">\[
+f(-x)=-f(x).
+\]</div>
+<p>Su gráfica es simétrica respecto al origen y su serie de Fourier completa contiene solo senos.</p>
+<p>F10. Porque la EDP y las condiciones homogéneas son lineales. Si \(u_1\) y \(u_2\) son soluciones, entonces \(au_1+bu_2\) también lo es.</p>
+<h3>Respuestas a las preguntas medias</h3>
+<p>M1. Tomamos \(u=XT\). Entonces \(u_t=XT'\) y \(u_{xx}=X''T\). Sustituyendo:</p>
+<div class="formula-block">\[
+XT'=\alpha^2X''T.
+\]</div>
+<p>Dividiendo por \(\alpha^2XT\):</p>
+<div class="formula-block">\[
+\frac{X''}{X}=\frac{T'}{\alpha^2T}=-\lambda.
+\]</div>
+<p>Por tanto:</p>
+<div class="formula-block">\[
+X''+\lambda X=0,\qquad T'+\alpha^2\lambda T=0.
+\]</div>
+<p>M2. Si \(\lambda=0\), \(X=Ax+B\); las condiciones dan \(B=0\) y \(A=0\). Si \(\lambda=-\mu^2&lt;0\), \(X=Ae^{\mu x}+Be^{-\mu x}\), y las condiciones fuerzan la solución trivial. Si \(\lambda=\mu^2&gt;0\),</p>
+<div class="formula-block">\[
+X=A\cos(\mu x)+B\sin(\mu x).
+\]</div>
+<p>De \(X(0)=0\) se obtiene \(A=0\). De \(X(L)=0\), \(B\sin(\mu L)=0\). Para \(B\ne0\):</p>
+<div class="formula-block">\[
+\mu L=n\pi.
+\]</div>
+<p>Así,</p>
+<div class="formula-block">\[
+\lambda_n=(n\pi/L)^2,\quad X_n=\sin(n\pi x/L).
+\]</div>
+<p>M3. La solución es</p>
+<div class="formula-block">\[
+u(x,t)=\sum_{n=1}^{\infty}b_n e^{-\alpha^2(n\pi/L)^2t}\sin(n\pi x/L),
+\]</div>
+<p>donde</p>
+<div class="formula-block">\[
+b_n=\frac2L\int_0^L f(x)\sin(n\pi x/L)\,dx.
+\]</div>
+<p>M4. Para \(L=1\),</p>
+<div class="formula-block">\[
+b_n=2\int_0^1\sin(n\pi x)\,dx
+=2\left[\frac{-\cos(n\pi x)}{n\pi}\right]_0^1
+=\frac{2(1-(-1)^n)}{n\pi}.
+\]</div>
+<p>Si \(n\) es par, \(b_n=0\). Si \(n\) es impar,</p>
+<div class="formula-block">\[
+b_n=\frac4{n\pi}.
+\]</div>
+<p>Por tanto,</p>
+<div class="formula-block">\[
+1\sim \frac4\pi\left(\sin\pi x+\frac13\sin3\pi x+\frac15\sin5\pi x+\cdots\right)
+\]</div>
+<p>en \(0&lt;x&lt;1\).</p>
+<p>M5. Tomamos \(u=XT\). Entonces \(u_{tt}=XT''\) y \(u_{xx}=X''T\). Sustituyendo:</p>
+<div class="formula-block">\[
+XT''=c^2X''T.
+\]</div>
+<p>Dividiendo por \(c^2XT\):</p>
+<div class="formula-block">\[
+\frac{X''}{X}=\frac{T''}{c^2T}=-\lambda.
+\]</div>
+<p>Quedan</p>
+<div class="formula-block">\[
+X''+\lambda X=0,\qquad T''+c^2\lambda T=0.
+\]</div>
+<p>M6. Con extremos fijos,</p>
+<div class="formula-block">\[
+u(x,t)=\sum_{n=1}^{\infty}
+\left[
+A_n\cos(cn\pi t/L)+B_n\sin(cn\pi t/L)
+\right]\sin(n\pi x/L).
+\]</div>
+<p>Los \(A_n\) son los coeficientes de senos de \(f\):</p>
+<div class="formula-block">\[
+A_n=\frac2L\int_0^L f(x)\sin(n\pi x/L)\,dx.
+\]</div>
+<p>Si</p>
+<div class="formula-block">\[
+G_n=\frac2L\int_0^L g(x)\sin(n\pi x/L)\,dx,
+\]</div>
+<p>entonces</p>
+<div class="formula-block">\[
+B_n=\frac{L}{cn\pi}G_n.
+\]</div>
+<p>M7. En la ecuación del calor, el modo \(n\) lleva el factor</p>
+<div class="formula-block">\[
+e^{-\alpha^2(n\pi/L)^2t}.
+\]</div>
+<p>Como el exponente contiene \(n^2\), los modos con \(n\) grande se amortiguan más rápido. Esto refleja el carácter disipativo del calor.</p>
+<p>M8. Se busca una solución</p>
+<div class="formula-block">\[
+u(x,y)=\sum_{n=1}^{\infty}C_n\sinh(n\pi y/L)\sin(n\pi x/L).
+\]</div>
+<p>Para ajustar \(u(x,H)=f(x)\), conviene escribir</p>
+<div class="formula-block">\[
+u(x,y)=\sum_{n=1}^{\infty}b_n
+\frac{\sinh(n\pi y/L)}{\sinh(n\pi H/L)}
+\sin(n\pi x/L),
+\]</div>
+<p>donde</p>
+<div class="formula-block">\[
+b_n=\frac2L\int_0^L f(x)\sin(n\pi x/L)\,dx.
+\]</div>
+<p>M9. Porque con Neumann homogéneo, \(X'(0)=X'(L)=0\), el caso \(\lambda=0\) da \(X=\text{constante}\), que satisface las condiciones y no es trivial. En calor representa la parte media de la temperatura, que no decae si no hay flujo por los extremos.</p>
+<p>M10. La serie completa se usa en \([-L,L]\) y contiene senos y cosenos. La serie de senos se usa en \([0,L]\) como extensión impar, y contiene solo senos. La serie de senos es la adecuada cuando los modos espaciales deben anularse en los extremos.</p>
+<h3>Respuestas a las preguntas difíciles</h3>
+<p>D1. Para \(\lambda=0\), \(X''=0\), luego \(X=Ax+B\). De \(X(0)=0\) se obtiene \(B=0\), y de \(X(L)=0\), \(A=0\). Solo queda \(X=0\). Para \(\lambda=-\mu^2&lt;0\), puede escribirse</p>
+<div class="formula-block">\[
+X=A\cosh(\mu x)+B\sinh(\mu x).
+\]</div>
+<p>De \(X(0)=0\) sale \(A=0\). De \(X(L)=0\), \(B\sinh(\mu L)=0\). Como \(\sinh(\mu L)\ne0\), resulta \(B=0\). Solo queda la solución trivial. Por tanto, los modos no triviales aparecen solo con \(\lambda&gt;0\).</p>
+<p>D2. La solución general con extremos nulos es</p>
+<div class="formula-block">\[
+u(x,t)=\sum_{n=1}^{\infty}b_ne^{-50(n\pi)^2t}\sin(n\pi x).
+\]</div>
+<p>El dato inicial ya está desarrollado:</p>
+<div class="formula-block">\[
+u(x,0)=2\sin(2\pi x)+6\sin(8\pi x).
+\]</div>
+<p>Por tanto \(b_2=2\), \(b_8=6\), y los demás coeficientes son cero:</p>
+<div class="formula-block">\[
+u(x,t)=2e^{-50(2\pi)^2t}\sin(2\pi x)
++6e^{-50(8\pi)^2t}\sin(8\pi x).
+\]</div>
+<p>D3. Con \(L=1\), \(c=1\), extremos fijos y velocidad inicial nula:</p>
+<div class="formula-block">\[
+u(x,t)=\sum_{n=1}^{\infty}A_n\cos(n\pi t)\sin(n\pi x).
+\]</div>
+<p>El dato inicial da \(A_1=1/4\), \(A_3=1/4\), y el resto cero. Luego</p>
+<div class="formula-block">\[
+u(x,t)=\frac14\sin(\pi x)\cos(\pi t)+
+\frac14\sin(3\pi x)\cos(3\pi t).
+\]</div>
+<p>D4. En extremos aislados,</p>
+<div class="formula-block">\[
+u_x(0,t)=u_x(L,t)=0.
+\]</div>
+<p>La base espacial es de cosenos e incluye el modo constante. La solución del calor es</p>
+<div class="formula-block">\[
+u(x,t)=\frac{a_0}{2}+\sum_{n=1}^{\infty}a_ne^{-\alpha^2(n\pi/L)^2t}\cos(n\pi x/L).
+\]</div>
+<p>El término \(a_0/2\) no decae porque corresponde a \(\lambda=0\). Como no hay flujo por la frontera, el calor total se conserva, y por tanto también el valor medio de la temperatura.</p>
+<p>D5. Con Neumann en \(x\), los modos espaciales son cosenos:</p>
+<div class="formula-block">\[
+X_n(x)=\cos(n\pi x/L),\quad n=0,1,2,\ldots
+\]</div>
+<p>Para \(n\ge1\), la parte en \(y\) cumple</p>
+<div class="formula-block">\[
+Y_n''-(n\pi/L)^2Y_n=0.
+\]</div>
+<p>La condición \(u(x,0)=0\) lleva a \(Y_n(y)=\sinh(n\pi y/L)\). Para \(n=0\), la ecuación en \(y\) es \(Y_0''=0\) y con \(Y_0(0)=0\) queda proporcional a \(y\). Si</p>
+<div class="formula-block">\[
+f(x)\sim \frac{a_0}{2}+\sum_{n=1}^{\infty}a_n\cos(n\pi x/L),
+\]</div>
+<p>entonces</p>
+<div class="formula-block">\[
+u(x,y)=\frac{a_0}{2}\frac{y}{H}
++\sum_{n=1}^{\infty}a_n
+\frac{\sinh(n\pi y/L)}{\sinh(n\pi H/L)}
+\cos(n\pi x/L).
+\]</div>
+<h3>Respuestas a las preguntas de desarrollo largo</h3>
+<p>L1. Para resolver</p>
+<div class="formula-block">\[
+u_t=\alpha^2u_{xx},\quad u(0,t)=u(L,t)=0,\quad u(x,0)=f(x),
+\]</div>
+<p>se ensaya \(u=XT\). Sustituyendo y dividiendo se obtiene</p>
+<div class="formula-block">\[
+X''/X=T'/(\alpha^2T)=-\lambda.
+\]</div>
+<p>Así,</p>
+<div class="formula-block">\[
+X''+\lambda X=0,\qquad T'+\alpha^2\lambda T=0.
+\]</div>
+<p>El problema espacial con \(X(0)=X(L)=0\) tiene modos</p>
+<div class="formula-block">\[
+X_n=\sin(n\pi x/L),\quad \lambda_n=(n\pi/L)^2.
+\]</div>
+<p>La parte temporal es</p>
+<div class="formula-block">\[
+T_n=e^{-\alpha^2(n\pi/L)^2t}.
+\]</div>
+<p>Por superposición:</p>
+<div class="formula-block">\[
+u=\sum_{n=1}^{\infty}b_ne^{-\alpha^2(n\pi/L)^2t}\sin(n\pi x/L).
+\]</div>
+<p>La condición inicial exige</p>
+<div class="formula-block">\[
+f(x)=\sum_{n=1}^{\infty}b_n\sin(n\pi x/L),
+\]</div>
+<p>por lo que</p>
+<div class="formula-block">\[
+b_n=\frac2L\int_0^L f(x)\sin(n\pi x/L)\,dx.
+\]</div>
+<p>Esta es la solución formal del problema.</p>
+<p>L2. Para la cuerda fija:</p>
+<div class="formula-block">\[
+u_{tt}=c^2u_{xx},\quad u(0,t)=u(L,t)=0,
+\]</div>
+<div class="formula-block">\[
+u(x,0)=f(x),\quad u_t(x,0)=g(x),
+\]</div>
+<p>se toma \(u=XT\). La separación da</p>
+<div class="formula-block">\[
+X''+\lambda X=0,\qquad T''+c^2\lambda T=0.
+\]</div>
+<p>El contorno fija</p>
+<div class="formula-block">\[
+X_n=\sin(n\pi x/L),\quad \lambda_n=(n\pi/L)^2.
+\]</div>
+<p>Entonces</p>
+<div class="formula-block">\[
+T_n=A_n\cos(cn\pi t/L)+B_n\sin(cn\pi t/L).
+\]</div>
+<p>Por tanto,</p>
+<div class="formula-block">\[
+u=\sum_{n=1}^{\infty}
+[A_n\cos(cn\pi t/L)+B_n\sin(cn\pi t/L)]
+\sin(n\pi x/L).
+\]</div>
+<p>Los \(A_n\) se obtienen desarrollando \(f\) en senos. Los \(B_n\) se obtienen desarrollando \(g\) en senos y dividiendo por \(cn\pi/L\). La solución expresa la cuerda como suma de modos normales.</p>
+<p>L3. Para EDP en \([0,L]\), la teoría mínima de Fourier consiste en saber desarrollar datos en las bases impuestas por el contorno. Si el contorno exige valores nulos en los extremos, se usa</p>
+<div class="formula-block">\[
+f(x)\sim\sum_{n=1}^{\infty}b_n\sin(n\pi x/L),
+\quad
+b_n=\frac2L\int_0^L f(x)\sin(n\pi x/L)\,dx.
+\]</div>
+<p>Si exige derivadas nulas, se usa</p>
+<div class="formula-block">\[
+f(x)\sim a_0/2+\sum_{n=1}^{\infty}a_n\cos(n\pi x/L),
+\]</div>
+<p>con</p>
+<div class="formula-block">\[
+a_n=\frac2L\int_0^L f(x)\cos(n\pi x/L)\,dx.
+\]</div>
+<p>La justificación técnica es la ortogonalidad. En puntos de continuidad, la serie representa a la función bajo condiciones regulares usuales; en saltos representa el promedio lateral.</p>
+<p>L4. En Laplace,</p>
+<div class="formula-block">\[
+u_{xx}+u_{yy}=0,
+\]</div>
+<p>se toma \(u=XY\). Entonces</p>
+<div class="formula-block">\[
+X''Y+XY''=0,
+\]</div>
+<p>y tras dividir:</p>
+<div class="formula-block">\[
+X''/X=-Y''/Y.
+\]</div>
+<p>Cada lado se iguala a una constante. Si las condiciones nulas están en \(x=0\) y \(x=L\), se obtiene \(X_n=\sin(n\pi x/L)\). La parte \(Y\) queda hiperbólica:</p>
+<div class="formula-block">\[
+Y_n=A\sinh(n\pi y/L)+B\cosh(n\pi y/L).
+\]</div>
+<p>Las condiciones en \(y=0\) y \(y=H\) determinan la combinación. Si \(u(x,0)=0\) y \(u(x,H)=f(x)\), la solución es</p>
+<div class="formula-block">\[
+u=\sum_{n=1}^{\infty}b_n
+\frac{\sinh(n\pi y/L)}{\sinh(n\pi H/L)}
+\sin(n\pi x/L),
+\]</div>
+<p>con \(b_n\) coeficientes de senos de \(f\).</p>
+<p>L5. Dirichlet fija \(u\) en la frontera. Si es homogénea en ambos extremos, suele dar senos. Neumann fija la derivada normal; si es homogénea, suele dar cosenos e incluye el modo constante. Robin mezcla valor y derivada, y suele producir condiciones de autovalores más generales. En separación de variables, estas condiciones no son un detalle final: determinan desde el principio qué modos espaciales pueden aparecer y, por tanto, qué serie de Fourier se utilizará para ajustar los datos.</p>
+<h3>Respuestas a las preguntas de relación entre conceptos</h3>
+<p>R1. Los autovalores son los valores permitidos de la constante de separación. Cada autovalor produce una autofunción espacial, que en física se interpreta como modo normal. La solución general se escribe como suma de esos modos, y los coeficientes de esa suma se obtienen mediante Fourier.</p>
+<p>R2. Las condiciones de contorno seleccionan la base. Si \(u=0\) en ambos extremos, los modos deben anularse y aparecen senos. Si \(u_x=0\), los modos deben tener derivada nula y aparecen cosenos. La función inicial solo decide los coeficientes dentro de esa base.</p>
+<p>R3. Calor y ondas con extremos fijos comparten el problema espacial:</p>
+<div class="formula-block">\[
+X''+\lambda X=0,\quad X(0)=X(L)=0.
+\]</div>
+<p>Por eso usan los mismos senos. Pero el calor tiene</p>
+<div class="formula-block">\[
+T'+\alpha^2\lambda T=0
+\]</div>
+<p>y las ondas</p>
+<div class="formula-block">\[
+T''+c^2\lambda T=0.
+\]</div>
+<p>Por eso el calor decae y la cuerda oscila.</p>
+<p>R4. Cuando el dato inicial es discontinuo o incompatible con el contorno en los extremos, la serie de Fourier debe interpretarse según su convergencia. En el interior puede representar el dato, mientras que en los saltos toma el valor medio. Esto explica por qué una serie de senos puede representar \(f(x)=1\) en \((0,1)\) aunque valga cero en los extremos.</p>
+<p>R5. La linealidad permite que una combinación de soluciones siga siendo solución. La separación da soluciones simples, pero una sola no ajusta datos generales. La superposición convierte los modos en una serie capaz de representar condiciones iniciales o de frontera mediante Fourier.</p>
+</div>
+    </section>
+    <section id="resumen" class="page">
+      <header class="section-header">
+        <p class="section-kicker">09</p>
+        <h2>9. Resumen final de repaso</h2>
+      </header>
+      <div class="reading-block">
+<p>Ideas principales:</p>
+<ul>
+<li>La separación de variables busca soluciones \(u=XT\).</li>
+<li>Sustituir y dividir produce una constante de separación.</li>
+<li>La parte espacial con condiciones de contorno es un problema de autovalores.</li>
+<li>Dirichlet homogéneo en ambos extremos suele dar senos.</li>
+<li>Neumann homogéneo en ambos extremos suele dar cosenos.</li>
+<li>La solución completa se obtiene sumando modos.</li>
+<li>Fourier sirve para calcular los coeficientes que ajustan el dato inicial o de frontera.</li>
+<li>En calor, los modos tienen factores \(e^{-\alpha^2\lambda_nt}\).</li>
+<li>En ondas, los modos tienen factores \(\cos(c\sqrt{\lambda_n}t)\) y \(\sin(c\sqrt{\lambda_n}t)\).</li>
+<li>En Laplace, una variable suele aportar senos/cosenos y la otra funciones hiperbólicas o exponenciales.</li>
+</ul>
+<p>Conceptos imprescindibles:</p>
+<ul>
+<li>Separación de variables.</li>
+<li>Constante de separación.</li>
+<li>Autovalores y autofunciones.</li>
+<li>Ortogonalidad.</li>
+<li>Serie de senos.</li>
+<li>Serie de cosenos.</li>
+<li>Serie completa de Fourier.</li>
+<li>Condiciones de Dirichlet, Neumann y Robin.</li>
+<li>Convergencia en puntos de continuidad y saltos.</li>
+<li>Superposición lineal.</li>
+</ul>
+<p>Relaciones clave:</p>
+<ul>
+<li>Contorno \(\rightarrow\) modos espaciales.</li>
+<li>Modos espaciales \(\rightarrow\) base de Fourier.</li>
+<li>Dato inicial/frontera \(\rightarrow\) coeficientes.</li>
+<li>Tipo de EDP \(\rightarrow\) evolución temporal.</li>
+<li>Linealidad \(\rightarrow\) suma de modos.</li>
+</ul>
+<p>Errores que evitar:</p>
+<ul>
+<li>Elegir senos o cosenos por la forma de \(f\), no por el contorno.</li>
+<li>Olvidar el modo constante en Neumann.</li>
+<li>Poner exponente positivo en calor.</li>
+<li>Confundir \(T'\) con \(T''\).</li>
+<li>No dividir correctamente por \(XT\).</li>
+<li>No adaptar los coeficientes al intervalo.</li>
+<li>Usar superposición en ecuaciones no lineales.</li>
+<li>Ignorar el significado de la serie en discontinuidades.</li>
+</ul>
+</div>
+    </section>
+    <section id="checklist" class="page">
+      <header class="section-header">
+        <p class="section-kicker">10</p>
+        <h2>10. Checklist de dominio</h2>
+      </header>
+      <div class="reading-block">
+<ul>
+<li>Si no puedes explicar por qué \(X''/X\) y \(T'/T\) deben ser constantes, falta repasar separación de variables.</li>
+<li>Si no puedes resolver \(X''+\lambda X=0\) con \(X(0)=X(L)=0\), falta repasar autovalores.</li>
+<li>Si confundes Dirichlet con Neumann, revisar tipos de condiciones de contorno.</li>
+<li>Si usas cosenos cuando \(u(0,t)=u(L,t)=0\), revisar la conexión entre contorno y base.</li>
+<li>Si olvidas el modo \(n=0\) en Neumann, revisar series de cosenos y modo constante.</li>
+<li>Si escribes \(e^{+\alpha^2\lambda_nt}\) en calor, revisar la ecuación temporal.</li>
+<li>Si en ondas no sabes calcular \(B_n\) a partir de \(g(x)\), revisar derivada temporal inicial.</li>
+<li>Si no sabes calcular</li>
+</ul>
+<div class="formula-block">\[
+b_n=\frac2L\int_0^L f(x)\sin(n\pi x/L)\,dx,
+\]</div>
+<p>falta practicar ortogonalidad e integrales.</p>
+<ul>
+<li>Si confundes serie de Fourier completa con serie de senos, revisar extensiones par e impar.</li>
+<li>Si no puedes explicar qué ocurre en un salto, revisar convergencia de Fourier.</li>
+<li>Si no puedes resolver el calor con dato ya expresado como suma de senos, falta repasar lectura modal.</li>
+<li>Si no puedes plantear Laplace en un rectángulo, revisar separación en \(x,y\) y funciones hiperbólicas.</li>
+<li>Si puedes deducir las EDO separadas, hallar los autovalores, elegir la base correcta, calcular coeficientes sencillos y escribir la solución final, el capítulo está suficientemente asentado.</li>
+<li>Si puedes explicar por qué el calor amortigua y la cuerda oscila usando solo la ecuación temporal, el bloque está bien comprendido.</li>
+<li>Si puedes resolver un ejercicio UNED de calor, ondas o Laplace sin mirar fórmulas, el tema está preparado para examen.</li>
+</ul>
+</div>
+    </section>
+    </main>
+  </div>
+</body>
+</html>
