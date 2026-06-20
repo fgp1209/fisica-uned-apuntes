@@ -1,0 +1,946 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="color-scheme" content="light dark" />
+  <title>MM2 — Tema 2: Holomorfía</title>
+  <meta name="description" content="Guía de estudio de Métodos Matemáticos II sobre holomorfía, derivada compleja, Cauchy-Riemann, singularidades, Taylor y funciones armónicas." />
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/icon-32.png" />
+  <link rel="icon" type="image/png" sizes="50x50" href="assets/icons/icon-50.png" />
+  <link rel="apple-touch-icon" sizes="100x100" href="assets/icons/icon-100.png" />
+  <meta name="theme-color" content="#375a7f" />
+  <link rel="stylesheet" href="assets/styles.css" />
+  <script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']], processEscapes: true },
+  svg: { fontCache: 'global' },
+  options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+};
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+  <script defer src="assets/app.js"></script>
+</head>
+<body class="subject-mm2">
+  <div class="wrap">
+    <header class="cover">
+      <a class="back-link" href="index.html">← Índice</a>
+      <p class="eyebrow">Métodos Matemáticos II</p>
+      <h1>Holomorfía</h1>
+      <p class="subtitle">Tema 2 · Boas: funciones de variable compleja, funciones analíticas, Cauchy-Riemann, singularidades, Taylor y funciones armónicas.</p>
+      <div class="lesson-meta">
+        <span>Asignatura: MM2</span>
+        <span>Tema 2</span>
+        <span>Estado: completo</span>
+        <span>Enfoque: examen UNED</span>
+      </div>
+    </header>
+
+    <div class="toolbar no-print" aria-label="Navegación del tema">
+      <nav>
+        <a href="#mapa">Mapa</a>
+        <a href="#prerrequisitos">Prerrequisitos</a>
+        <a href="#idea-central">Idea</a>
+        <a href="#desarrollo">Desarrollo</a>
+        <a href="#conceptos">Conceptos</a>
+        <a href="#errores">Errores</a>
+        <a href="#preguntas">Preguntas</a>
+        <a href="#respuestas">Respuestas</a>
+        <a href="#resumen">Resumen</a>
+        <a href="#checklist">Checklist</a>
+      </nav>
+      <div class="toolbar-actions"><button class="btn secondary" onclick="document.querySelectorAll('details').forEach(d=>d.open=true)">Abrir todo</button><button class="btn secondary" onclick="document.querySelectorAll('details').forEach(d=>d.open=false)">Modo repaso</button><button class="btn" onclick="printReady()">Imprimir / PDF</button></div>
+    </div>
+
+    <main>
+      <section id="mapa" class="page map-page">
+        <header class="section-header">
+          <p class="section-kicker">00</p>
+          <h2>Mapa conceptual</h2>
+        </header>
+        <div class="concept-map">
+          <a class="map-card" href="#prerrequisitos"><span>Función compleja</span><small>\(f(z)=u(x,y)+iv(x,y)\) separa el problema en dos funciones reales</small></a>
+          <a class="map-card" href="#desarrollo"><span>Derivada compleja</span><small>El límite debe ser independiente de cualquier camino de aproximación</small></a>
+          <a class="map-card" href="#desarrollo"><span>Cauchy-Riemann</span><small>Condiciones necesarias y suficientes con parciales continuas en una región</small></a>
+          <a class="map-card" href="#desarrollo"><span>Holomorfía</span><small>Propiedad regional: regularidad, singularidades, Taylor y radio de convergencia</small></a>
+          <a class="map-card" href="#desarrollo"><span>Armonicidad</span><small>Partes real e imaginaria satisfacen Laplace y admiten conjugadas armónicas</small></a>
+          <a class="map-card" href="#preguntas"><span>Examen</span><small>Definición, Cauchy-Riemann, dominios, singularidades y conjugadas</small></a>
+        </div>
+        <div class="reading-block source-block">
+          <p>Fuente principal: Mary L. Boas, <strong>Mathematical Methods in the Physical Sciences</strong>, capítulo 14, secciones 1 y 2: <strong>Functions of a Complex Variable</strong> y <strong>Analytic Functions</strong>. Uso auxiliar: exámenes UNED de Métodos Matemáticos para ajustar el tipo de preguntas.</p>
+        </div>
+      </section>
+
+    <section id="prerrequisitos" class="page">
+      <header class="section-header">
+        <p class="section-kicker">01</p>
+        <h2>Prerrequisitos mínimos</h2>
+      </header>
+      <div class="reading-block">
+<h3 id="numero-complejo-en-forma-binomica">1. Número complejo en forma binómica.</h3>
+<p>Definición breve: un número complejo se escribe como z = x + iy, con x, y reales e i^2 = -1. La parte real es Re z = x y la parte imaginaria es Im z = y.</p>
+<p>Por qué es necesario: toda función compleja f(z) se estudia separándola en parte real e imaginaria: f(z) = u(x,y) + i v(x,y). Sin esta separación no se pueden aplicar las condiciones de Cauchy-Riemann.</p>
+<p>Ejemplo mínimo: si f(z)=z^2, entonces f(x+iy)=(x+iy)^2=x^2-y^2+2ixy. Por tanto u(x,y)=x^2-y^2 y v(x,y)=2xy.</p>
+<h3 id="plano-complejo">2. Plano complejo.</h3>
+<p>Definición breve: el número z=x+iy se representa como el punto (x,y) del plano. El eje horizontal es el eje real y el vertical es el eje imaginario.</p>
+<p>Por qué es necesario: la derivada compleja exige estudiar el límite cuando z se aproxima a un punto desde infinitas direcciones del plano, no solo desde izquierda y derecha.</p>
+<p>Ejemplo mínimo: acercarse a z_0=0 por el eje real significa tomar Δz=Δx; acercarse por el eje imaginario significa tomar Δz=iΔy.</p>
+<h3 id="limite-de-funciones">3. Límite de funciones.</h3>
+<p>Definición breve: el límite de una expresión existe si se obtiene el mismo valor al aproximarse al punto de todas las formas permitidas.</p>
+<p>Por qué es necesario: la derivada compleja se define mediante un límite. La dificultad central es que en C hay infinitos caminos de aproximación.</p>
+<p>Ejemplo mínimo: para f(z)=z^2,</p>
+<div class="formula-block">\[
+\frac{(z+\Delta z)^2-z^2}{\Delta z}=2z+\Delta z \to 2z,
+\]</div>
+<p>independientemente de cómo tienda Δz a 0.</p>
+<h3 id="derivadas-parciales">4. Derivadas parciales.</h3>
+<p>Definición breve: si u=u(x,y), las derivadas parciales u_x y u_y miden cómo cambia u respecto a x o y manteniendo fija la otra variable.</p>
+<p>Por qué es necesario: las condiciones de Cauchy-Riemann comparan derivadas parciales de u y v.</p>
+<p>Ejemplo mínimo: si u(x,y)=x^2-y^2, entonces u_x=2x y u_y=-2y.</p>
+<h3 id="funciones-reales-de-dos-variables">5. Funciones reales de dos variables.</h3>
+<p>Definición breve: una función de dos variables asigna a cada punto (x,y) un número real.</p>
+<p>Por qué es necesario: aunque f sea compleja, su estudio local se reduce a dos funciones reales u(x,y) y v(x,y).</p>
+<p>Ejemplo mínimo: f(z)=|z|^2=x^2+y^2 tiene parte real u(x,y)=x^2+y^2 y parte imaginaria v(x,y)=0.</p>
+<h3 id="series-de-potencias">6. Series de potencias.</h3>
+<p>Definición breve: una serie de potencias centrada en z_0 tiene forma</p>
+<div class="formula-block">\[
+\sum_{n=0}^{\infty} a_n (z-z_0)^n.
+\]</div>
+<p>Por qué es necesario: una consecuencia fuerte de la holomorfía es que una función analítica admite desarrollo de Taylor en discos determinados por sus singularidades.</p>
+<p>Ejemplo mínimo:</p>
+<div class="formula-block">\[
+\frac{1}{1+z^2}=1-z^2+z^4-z^6+\cdots
+\]</div>
+<p>alrededor de z=0, con radio limitado por las singularidades z=\pm i.</p>
+<h3 id="funciones-elementales-complejas">7. Funciones elementales complejas.</h3>
+<p>Definición breve: son las extensiones al plano complejo de funciones como polinomios, racionales, exponencial, seno, coseno y logaritmo.</p>
+<p>Por qué es necesario: el capítulo afirma que muchas reglas de derivación conocidas siguen siendo válidas para funciones complejas cuando estas son analíticas.</p>
+<p>Ejemplo mínimo:</p>
+<div class="formula-block">\[
+\frac{d}{dz}z^n=nz^{n-1}, \qquad \frac{d}{dz}e^z=e^z.
+\]</div>
+<h3 id="ramas-de-funciones-multivaluadas">8. Ramas de funciones multivaluadas.</h3>
+<p>Definición breve: funciones como \(\log z\) o \(\sqrt z\) pueden tener varios valores; una rama fija una elección continua de valores en una región adecuada.</p>
+<p>Por qué es necesario: una función compleja debe ser univaluada para tratarla como función ordinaria. Al estudiar holomorfía de logaritmos y raíces siempre se trabaja con una rama.</p>
+<p>Ejemplo mínimo:</p>
+<div class="formula-block">\[
+\log z = \ln|z| + i(\theta+2\pi n).
+\]</div>
+<p>Si se restringe \(\theta\) a un intervalo de longitud \(2\pi\), se obtiene una rama.</p>
+      </div>
+    </section>
+    <section id="idea-central" class="page">
+      <header class="section-header">
+        <p class="section-kicker">02</p>
+        <h2>Idea central del capítulo</h2>
+      </header>
+      <div class="reading-block">
+<p>El capítulo introduce el cálculo diferencial de funciones de variable compleja. La idea básica es que una función compleja no es solo una regla algebraica con números complejos: también puede verse como un par de funciones reales de dos variables,</p>
+<div class="formula-block">\[
+f(z)=f(x+iy)=u(x,y)+iv(x,y).
+\]</div>
+<p>Esta descomposición permite traducir una cuestión compleja, la existencia de \(f'(z)\), en condiciones sobre derivadas parciales reales.</p>
+<p>El punto decisivo es que derivar respecto de una variable compleja es mucho más exigente que derivar respecto de una variable real. En una variable real solo hay dos direcciones naturales de aproximación a un punto: izquierda y derecha. En el plano complejo hay infinitas direcciones y curvas posibles. Por tanto, el cociente incremental</p>
+<div class="formula-block">\[
+\frac{f(z+\Delta z)-f(z)}{\Delta z}
+\]</div>
+<p>debe tender al mismo valor cualquiera que sea el modo en que \(\Delta z\) tienda a cero. Esta exigencia explica por qué funciones aparentemente sencillas, como \(|z|^2\), no son analíticas en ninguna región.</p>
+<p>El capítulo enseña a reconocer cuándo una función es analítica u holomorfa. Para ello introduce las condiciones de Cauchy-Riemann:</p>
+<div class="formula-block">\[
+u_x=v_y,\qquad v_x=-u_y.
+\]</div>
+<p>Si una función es analítica, estas condiciones se cumplen necesariamente. Si además \(u\), \(v\) y sus derivadas parciales son continuas en una región, entonces las condiciones son suficientes para garantizar la analiticidad dentro de la región.</p>
+<p>La holomorfía no se queda en una propiedad local de derivabilidad. Tiene consecuencias fuertes: una función analítica posee derivadas de todos los órdenes, admite desarrollo de Taylor y sus partes real e imaginaria son funciones armónicas, es decir, satisfacen la ecuación de Laplace</p>
+<div class="formula-block">\[
+u_{xx}+u_{yy}=0,\qquad v_{xx}+v_{yy}=0.
+\]</div>
+<p>Esta conexión prepara temas posteriores de MM2: integración compleja, series de Taylor y Laurent, singularidades y residuos. También explica por qué la variable compleja aparece en física matemática: las partes real e imaginaria de funciones analíticas dan soluciones de la ecuación de Laplace en dos dimensiones.</p>
+      </div>
+    </section>
+    <section id="desarrollo" class="page">
+      <header class="section-header">
+        <p class="section-kicker">03</p>
+        <h2>Desarrollo completo del capítulo</h2>
+      </header>
+      <div class="reading-block">
+<h3 id="3-1-funcion-compleja-como-par-de-funciones-reales">3.1. Función compleja como par de funciones reales</h3>
+<p>El capítulo parte de la observación de que una función de variable compleja toma valores complejos. Si \(z=x+iy\), entonces \(f(z)\) puede escribirse como</p>
+<div class="formula-block">\[
+f(z)=u(x,y)+iv(x,y),
+\]</div>
+<p>donde \(u\) y \(v\) son funciones reales de las variables reales \(x\) e \(y\). Esta escritura no es un detalle formal: es la herramienta que permite estudiar la derivabilidad compleja con técnicas de cálculo real de varias variables.</p>
+<p>El ejemplo básico es \(f(z)=z^2\). Al desarrollar,</p>
+<div class="formula-block">\[
+z^2=(x+iy)^2=x^2-y^2+2ixy.
+\]</div>
+<p>La parte real es \(u=x^2-y^2\) y la parte imaginaria es \(v=2xy\). La función compleja queda descrita por dos superficies reales. Esta idea se usará después para formular las condiciones de Cauchy-Riemann.</p>
+<p>También conviene distinguir las funciones univaluadas de las multivaluadas. El capítulo recuerda que expresiones como \(\log z\) pueden producir varios valores porque el argumento de \(z\) no es único. Para que una expresión defina una función en sentido ordinario, se debe escoger una rama. Esta restricción será importante en temas posteriores, pero aquí ya fija una regla: no se estudia la derivabilidad de “todos los valores a la vez”, sino de una rama concreta.</p>
+<h3 id="3-2-definicion-de-derivada-compleja">3.2. Definición de derivada compleja</h3>
+<p>La derivada compleja se define por el mismo aspecto formal que la derivada real:</p>
+<div class="formula-block">\[
+f'(z)=\frac{df}{dz}=\lim_{\Delta z\to 0}\frac{f(z+\Delta z)-f(z)}{\Delta z}.
+\]</div>
+<p>La diferencia está en el significado de \(\Delta z\to 0\). Como \(\Delta z=\Delta x+i\Delta y\), puede tender a cero por rectas horizontales, verticales, oblicuas o por curvas. La derivada existe solo si todos esos caminos dan el mismo límite.</p>
+<p>Esta condición es muy restrictiva. Para \(f(z)=z^2\),</p>
+<div class="formula-block">\[
+\frac{(z+\Delta z)^2-z^2}{\Delta z}=2z+\Delta z,
+\]</div>
+<p>y el límite es \(2z\) sin depender de la dirección. Por eso \(z^2\) es analítica.</p>
+<p>En cambio, funciones que dependen de \(\bar z\), de \(|z|\) o de las partes real e imaginaria por separado suelen fallar. El capítulo presenta \(|z|^2\) como ejemplo de función no analítica. El motivo es que el cociente incremental cambia al variar la dirección de aproximación. Lo que parece una función regular como función de \(x,y\) no necesariamente es derivable como función de \(z\).</p>
+<h3 id="3-3-analiticidad-u-holomorfia">3.3. Analiticidad u holomorfía</h3>
+<p>Una función es analítica, regular u holomorfa en una región si tiene derivada compleja en todos los puntos de esa región. El capítulo también precisa una convención importante: decir que una función es analítica en un punto significa que es derivable en todos los puntos de algún pequeño disco alrededor de ese punto. No basta con que exista la derivada solo en el punto aislado.</p>
+<p>Esta distinción es examinable. Una función puede ser derivable en un punto concreto y no ser holomorfa en ese punto, porque la holomorfía exige una vecindad. La región debe ser bidimensional; un punto aislado o una curva no cuentan como región de analiticidad.</p>
+<p>La consecuencia práctica es que, al responder “¿dónde es holomorfa?”, no se debe dar una lista de puntos aislados. Hay que identificar regiones abiertas donde la derivada exista en todos sus puntos.</p>
+<h3 id="3-4-reglas-de-derivacion">3.4. Reglas de derivación</h3>
+<p>Una vez que una función es analítica, muchas reglas de derivación coinciden con las reglas reales: suma, producto, cociente y regla de la cadena. Por eso se derivan polinomios, funciones racionales y funciones elementales con fórmulas familiares, siempre dentro de sus dominios de analiticidad.</p>
+<p>Por ejemplo,</p>
+<div class="formula-block">\[
+\frac{d}{dz}z^n=nz^{n-1},\qquad \frac{d}{dz}\sin z=\cos z.
+\]</div>
+<p>Esto no elimina la necesidad de comprobar el dominio. La función racional \(1/(1+z^2)\), por ejemplo, se deriva como en variable real donde esté definida, pero no es analítica en regiones que contengan \(z=i\) o \(z=-i\), porque allí el denominador se anula.</p>
+<p>La conexión con lo anterior es clara: primero se decide si la función es analítica en una región; después se aplican reglas de derivación en esa región.</p>
+<h3 id="3-5-condiciones-de-cauchy-riemann">3.5. Condiciones de Cauchy-Riemann</h3>
+<p>Si \(f(z)=u(x,y)+iv(x,y)\) es analítica en una región, entonces sus partes real e imaginaria satisfacen</p>
+<div class="formula-block">\[
+u_x=v_y,\qquad v_x=-u_y.
+\]</div>
+<p>Estas son las condiciones de Cauchy-Riemann.</p>
+<p>La razón es que, si \(f\) tiene derivada compleja, el valor de \(df/dz\) no puede depender de si nos movemos en dirección real o imaginaria. Al comparar las derivadas parciales obtenidas respecto de \(x\) y respecto de \(y\), se obtienen exactamente esas dos ecuaciones.</p>
+<p>Su importancia es doble. Primero, son una prueba rápida para descartar holomorfía: si fallan en una región, la función no es analítica en esa región. Segundo, con hipótesis de continuidad de las derivadas parciales, también sirven para confirmar holomorfía.</p>
+<p>Ejemplo:</p>
+<div class="formula-block">\[
+f(z)=z^2,\quad u=x^2-y^2,\quad v=2xy.
+\]</div>
+<p>Entonces</p>
+<div class="formula-block">\[
+u_x=2x,\quad v_y=2x,\quad v_x=2y,\quad -u_y=2y.
+\]</div>
+<p>Se cumplen las dos condiciones; por tanto, con la regularidad evidente de estas funciones, \(z^2\) es analítica en todo el plano.</p>
+<h3 id="3-6-necesidad-y-suficiencia">3.6. Necesidad y suficiencia</h3>
+<p>El capítulo distingue dos direcciones lógicas. Si una función es analítica, entonces cumple Cauchy-Riemann. Esto es necesario.</p>
+<p>La recíproca requiere hipótesis adicionales. Si \(u\), \(v\) y sus derivadas parciales son continuas en una región y satisfacen Cauchy-Riemann en esa región, entonces \(f=u+iv\) es analítica en los puntos interiores de la región. Esta es la versión útil para ejercicios.</p>
+<p>Esto evita un error habitual: comprobar Cauchy-Riemann en un único punto y concluir que la función es holomorfa en ese punto. En el sentido del capítulo, la holomorfía en un punto exige un disco alrededor del punto; además, la suficiencia se formula en regiones con continuidad de parciales.</p>
+<p>En problemas de examen, la respuesta completa debe decir qué se comprueba, dónde se comprueba y qué teorema se está usando. No basta escribir dos igualdades.</p>
+<h3 id="3-7-puntos-regulares-y-singularidades">3.7. Puntos regulares y singularidades</h3>
+<p>Un punto regular de \(f\) es un punto donde \(f\) es analítica. Un punto singular es un punto donde no lo es. Una singularidad aislada es un punto singular rodeado por un pequeño disco en el que la función sí es analítica salvo en el propio punto.</p>
+<p>Esta idea conecta la holomorfía con el desarrollo en series. Una función puede comportarse perfectamente en una zona y fallar en puntos concretos. Esos puntos limitan los discos donde se pueden usar series de Taylor.</p>
+<p>El ejemplo del capítulo es</p>
+<div class="formula-block">\[
+f(z)=\frac{1}{1+z^2}.
+\]</div>
+<p>Aunque como función real \(1/(1+x^2)\) no presenta problema en \(x=\pm 1\), la función compleja tiene singularidades en \(z=i\) y \(z=-i\). Por eso la serie</p>
+<div class="formula-block">\[
+\frac{1}{1+z^2}=1-z^2+z^4-z^6+\cdots
+\]</div>
+<p>centrada en 0 solo converge para \(|z|&lt;1\): el disco de convergencia llega hasta las singularidades más próximas.</p>
+<h3 id="3-8-consecuencia-fuerte-taylor-y-derivadas-de-todos-los-ordenes">3.8. Consecuencia fuerte: Taylor y derivadas de todos los órdenes</h3>
+<p>Una función real puede tener primera derivada sin tener derivadas superiores. En variable compleja ocurre algo mucho más rígido: si una función es analítica en una región, tiene derivadas de todos los órdenes dentro de ella y admite desarrollo de Taylor alrededor de cualquier punto interior.</p>
+<p>Además, el radio de convergencia del desarrollo viene determinado por la singularidad más cercana al punto de expansión. Esta afirmación será esencial para Taylor y Laurent en temas posteriores.</p>
+<p>La consecuencia para el estudio es importante: localizar singularidades no es un trámite algebraico. Sirve para saber dónde es válida una serie y hasta dónde se puede prolongar la información local que proporciona la holomorfía.</p>
+<h3 id="3-9-funciones-armonicas-y-conjugadas-armonicas">3.9. Funciones armónicas y conjugadas armónicas</h3>
+<p>Una función real \(\phi(x,y)\) es armónica si satisface la ecuación de Laplace:</p>
+<div class="formula-block">\[
+\phi_{xx}+\phi_{yy}=0.
+\]</div>
+<p>El capítulo establece que, si \(f=u+iv\) es analítica en una región, entonces tanto \(u\) como \(v\) son armónicas en esa región.</p>
+<p>La demostración se obtiene derivando las condiciones de Cauchy-Riemann y usando la igualdad de derivadas cruzadas. Por ejemplo,</p>
+<div class="formula-block">\[
+u_x=v_y,\qquad u_y=-v_x.
+\]</div>
+<p>Al derivar la primera respecto de \(x\) y la segunda respecto de \(y\), se deduce</p>
+<div class="formula-block">\[
+u_{xx}=v_{yx},\qquad u_{yy}=-v_{xy}.
+\]</div>
+<p>Si las derivadas cruzadas coinciden, entonces \(u_{xx}+u_{yy}=0\).</p>
+<p>La recíproca se formula en regiones simplemente conexas: una función armónica puede aparecer como parte real o imaginaria de una función analítica. En ese caso se busca su conjugada armónica mediante Cauchy-Riemann.</p>
+<p>Ejemplo: si</p>
+<div class="formula-block">\[
+u(x,y)=x^2-y^2,
+\]</div>
+<p>entonces \(u_{xx}+u_{yy}=2-2=0\). Buscamos \(v\) tal que \(u+iv\) sea analítica. Por Cauchy-Riemann,</p>
+<div class="formula-block">\[
+v_y=u_x=2x,
+\]</div>
+<p>así que</p>
+<div class="formula-block">\[
+v=2xy+g(x).
+\]</div>
+<p>La otra condición da</p>
+<div class="formula-block">\[
+v_x=2y+g'(x)=-u_y=2y,
+\]</div>
+<p>luego \(g'(x)=0\) y \(v=2xy+C\). Así,</p>
+<div class="formula-block">\[
+f(z)=x^2-y^2+i(2xy+C)=z^2+iC.
+\]</div>
+<p>Si se permite cambiar también la parte real por una constante, puede escribirse \(z^2+\text{constante}\); si la parte real debe ser exactamente \(u\), la constante debe ser puramente imaginaria.</p>
+<h3 id="3-10-condiciones-de-cauchy-riemann-en-polares">3.10. Condiciones de Cauchy-Riemann en polares</h3>
+<p>Aunque el capítulo presenta las condiciones en coordenadas cartesianas y propone obtenerlas en polares como ejercicio, conviene conocer la forma final por su presencia en exámenes.</p>
+<p>Si</p>
+<div class="formula-block">\[
+z=re^{i\theta},\qquad f(z)=u(r,\theta)+iv(r,\theta),
+\]</div>
+<p>entonces las condiciones de Cauchy-Riemann en polares son</p>
+<div class="formula-block">\[
+u_r=\frac{1}{r}v_\theta,\qquad v_r=-\frac{1}{r}u_\theta,\qquad r>0.
+\]</div>
+<p>Equivalentes:</p>
+<div class="formula-block">\[
+r u_r=v_\theta,\qquad u_\theta=-r v_r.
+\]</div>
+<p>Estas fórmulas son útiles cuando la parte real o imaginaria viene dada en términos de \(r\) y \(\theta\), por ejemplo con \(\ln r\), \(r^n\cos(n\theta)\) o \(r^n\sin(n\theta)\). También obligan a vigilar el punto \(r=0\), donde la expresión polar no es regular.</p>
+      </div>
+    </section>
+    <section id="conceptos" class="page">
+      <header class="section-header">
+        <p class="section-kicker">04</p>
+        <h2>Conceptos clave</h2>
+      </header>
+      <div class="reading-block">
+<h3 id="funcion-compleja">1. Función compleja.</h3>
+<p>Definición precisa: aplicación que a cada número complejo \(z\) de un dominio asigna un número complejo \(f(z)\).</p>
+<p>Explicación desarrollada: al escribir \(z=x+iy\), la función se descompone como \(f(z)=u(x,y)+iv(x,y)\). Esta descomposición traduce el problema complejo a un problema de dos funciones reales.</p>
+<p>Ejemplo: \(f(z)=z^2\) da \(u=x^2-y^2\), \(v=2xy\).</p>
+<p>Relación con otros conceptos: es la base para definir derivada compleja y condiciones de Cauchy-Riemann.</p>
+<p>Posible forma de preguntarlo en examen: “Escriba \(f(z)\) en forma \(u(x,y)+iv(x,y)\) y determine sus partes real e imaginaria”.</p>
+<h3 id="derivada-compleja">2. Derivada compleja.</h3>
+<p>Definición precisa:</p>
+<div class="formula-block">\[
+f'(z)=\lim_{\Delta z\to0}\frac{f(z+\Delta z)-f(z)}{\Delta z},
+\]</div>
+<p>si el límite existe y es independiente del modo de aproximación.</p>
+<p>Explicación desarrollada: la derivada compleja es más restrictiva que la real porque \(\Delta z\) puede tender a cero por infinitos caminos. La independencia del camino es el núcleo de la definición.</p>
+<p>Ejemplo: para \(f(z)=z^2\), el cociente incremental vale \(2z+\Delta z\), luego \(f'(z)=2z\).</p>
+<p>Relación con otros conceptos: si existe en una región, conduce a holomorfía; si existe, impone Cauchy-Riemann.</p>
+<p>Posible forma de preguntarlo en examen: “Use la definición de derivada para determinar si una función es derivable en un punto”.</p>
+<h3 id="funcion-analitica-u-holomorfa">3. Función analítica u holomorfa.</h3>
+<p>Definición precisa: \(f\) es analítica u holomorfa en una región si tiene derivada compleja en todos los puntos de esa región. Es analítica en un punto si lo es en algún disco alrededor de ese punto.</p>
+<p>Explicación desarrollada: la holomorfía es una propiedad local de entorno, no de punto aislado. Requiere que exista una región bidimensional de derivabilidad.</p>
+<p>Ejemplo: \(z^2\) es holomorfa en todo C. \(|z|^2\) no es holomorfa en ningún punto en el sentido de entorno, aunque pueda ser derivable en el origen.</p>
+<p>Relación con otros conceptos: implica Cauchy-Riemann, derivadas de todos los órdenes, Taylor y armonicidad de las partes real e imaginaria.</p>
+<p>Posible forma de preguntarlo en examen: “Explique la diferencia entre derivable en 0 y holomorfa en 0”.</p>
+<h3 id="condiciones-de-cauchy-riemann">4. Condiciones de Cauchy-Riemann.</h3>
+<p>Definición precisa: si \(f=u+iv\), entonces</p>
+<div class="formula-block">\[
+u_x=v_y,\qquad v_x=-u_y.
+\]</div>
+<p>Explicación desarrollada: expresan que el cociente incremental complejo tiene el mismo límite al aproximarse en direcciones compatibles con los ejes real e imaginario. Son necesarias para la holomorfía y suficientes con continuidad de parciales en una región.</p>
+<p>Ejemplo: para \(u=x^2-y^2\), \(v=2xy\), se cumplen porque \(u_x=v_y=2x\) y \(v_x=-u_y=2y\).</p>
+<p>Relación con otros conceptos: conectan derivabilidad compleja, funciones armónicas y construcción de conjugadas armónicas.</p>
+<p>Posible forma de preguntarlo en examen: “Demuestre que si \(f\) es holomorfa entonces satisface Cauchy-Riemann”.</p>
+<h3 id="necesidad-frente-a-suficiencia">5. Necesidad frente a suficiencia.</h3>
+<p>Definición precisa: una condición necesaria debe cumplirse si hay holomorfía; una suficiente permite concluir holomorfía si se cumple junto con sus hipótesis.</p>
+<p>Explicación desarrollada: Cauchy-Riemann son necesarias para toda función holomorfa. Para que sean suficientes, se exige continuidad de las derivadas parciales en una región.</p>
+<p>Ejemplo: comprobar Cauchy-Riemann solo en un punto no basta para afirmar holomorfía en un entorno.</p>
+<p>Relación con otros conceptos: evita una confusión central entre derivabilidad puntual y analiticidad.</p>
+<p>Posible forma de preguntarlo en examen: “¿Son suficientes las condiciones de Cauchy-Riemann en un punto para garantizar la derivabilidad?”</p>
+<h3 id="punto-regular">6. Punto regular.</h3>
+<p>Definición precisa: punto en el que \(f\) es analítica.</p>
+<p>Explicación desarrollada: un punto regular pertenece a una zona donde la función admite cálculo complejo ordinario.</p>
+<p>Ejemplo: cualquier punto \(z\neq \pm i\) es regular para \(f(z)=1/(1+z^2)\).</p>
+<p>Relación con otros conceptos: se opone a punto singular.</p>
+<p>Posible forma de preguntarlo en examen: “Determine los puntos donde la función es regular”.</p>
+<h3 id="singularidad">7. Singularidad.</h3>
+<p>Definición precisa: punto donde \(f\) no es analítica.</p>
+<p>Explicación desarrollada: una singularidad puede aparecer porque la función no está definida, porque no es univaluada en la forma elegida o porque falla la derivabilidad compleja.</p>
+<p>Ejemplo: \(z=i\) y \(z=-i\) son singularidades de \(1/(1+z^2)\).</p>
+<p>Relación con otros conceptos: las singularidades limitan el radio de convergencia de los desarrollos de Taylor.</p>
+<p>Posible forma de preguntarlo en examen: “Localice las singularidades y diga cómo afectan al desarrollo de Taylor”.</p>
+<h3 id="singularidad-aislada">8. Singularidad aislada.</h3>
+<p>Definición precisa: singularidad rodeada por un disco perforado donde la función sí es analítica.</p>
+<p>Explicación desarrollada: se puede estudiar localmente eliminando solo el punto problemático. Este concepto prepara el estudio de Laurent y residuos.</p>
+<p>Ejemplo: \(z=0\) es singularidad aislada de \(1/z\).</p>
+<p>Relación con otros conceptos: conecta con polos, residuos y series de Laurent en temas posteriores.</p>
+<p>Posible forma de preguntarlo en examen: “Indique si la singularidad es aislada”.</p>
+<h3 id="desarrollo-de-taylor-complejo">9. Desarrollo de Taylor complejo.</h3>
+<p>Definición precisa: representación de una función analítica cerca de \(z_0\) como</p>
+<div class="formula-block">\[
+f(z)=\sum_{n=0}^\infty a_n(z-z_0)^n.
+\]</div>
+<p>Explicación desarrollada: en variable compleja, la existencia de derivada en una región trae consigo derivadas de todos los órdenes y desarrollo en serie.</p>
+<p>Ejemplo:</p>
+<div class="formula-block">\[
+\frac{1}{1+z^2}=1-z^2+z^4-\cdots,\qquad |z|<1.
+\]</div>
+<p>Relación con otros conceptos: el radio de convergencia queda limitado por la singularidad más cercana.</p>
+<p>Posible forma de preguntarlo en examen: “Explique por qué el desarrollo de \(1/(1+z^2)\) alrededor de 0 tiene radio 1”.</p>
+<h3 id="funcion-armonica">10. Función armónica.</h3>
+<p>Definición precisa: función real \(\phi(x,y)\) que satisface</p>
+<div class="formula-block">\[
+\phi_{xx}+\phi_{yy}=0.
+\]</div>
+<p>Explicación desarrollada: las partes real e imaginaria de una función analítica son armónicas. Esto relaciona variable compleja con la ecuación de Laplace.</p>
+<p>Ejemplo: \(u=x^2-y^2\) es armónica porque \(u_{xx}=2\), \(u_{yy}=-2\).</p>
+<p>Relación con otros conceptos: si \(u\) es armónica en una región adecuada, puede buscarse una conjugada \(v\) para formar \(u+iv\) analítica.</p>
+<p>Posible forma de preguntarlo en examen: “Compruebe que \(u\) es armónica y obtenga una función analítica cuya parte real sea \(u\)”.</p>
+<h3 id="conjugada-armonica">11. Conjugada armónica.</h3>
+<p>Definición precisa: si \(u+iv\) es analítica, entonces \(v\) es una conjugada armónica de \(u\).</p>
+<p>Explicación desarrollada: \(v\) se obtiene resolviendo las ecuaciones de Cauchy-Riemann. Es única salvo una constante aditiva.</p>
+<p>Ejemplo: para \(u=x^2-y^2\), una conjugada es \(v=2xy\).</p>
+<p>Relación con otros conceptos: permite construir funciones holomorfas a partir de soluciones de Laplace.</p>
+<p>Posible forma de preguntarlo en examen: “Halle la armónica conjugada de \(u(x,y)\)”.</p>
+<h3 id="condiciones-de-cauchy-riemann-en-polares">12. Condiciones de Cauchy-Riemann en polares.</h3>
+<p>Definición precisa:</p>
+<div class="formula-block">\[
+u_r=\frac{1}{r}v_\theta,\qquad v_r=-\frac{1}{r}u_\theta,\qquad r>0.
+\]</div>
+<p>Explicación desarrollada: son la versión de Cauchy-Riemann para expresiones en \(r,\theta\). Se obtienen al aplicar la regla de la cadena a \(x=r\cos\theta\), \(y=r\sin\theta\).</p>
+<p>Ejemplo: si \(u=\ln r\), entonces \(u_r=1/r\) y \(u_\theta=0\). Las ecuaciones dan \(v_\theta=1\), \(v_r=0\), luego \(v=\theta+C\) en una rama.</p>
+<p>Relación con otros conceptos: aparece al estudiar logaritmos, potencias y dominios con cortes.</p>
+<p>Posible forma de preguntarlo en examen: “Deduzca Cauchy-Riemann en coordenadas polares”.</p>
+      </div>
+    </section>
+    <section id="relaciones" class="page">
+      <header class="section-header">
+        <p class="section-kicker">05</p>
+        <h2>Relaciones entre ideas</h2>
+      </header>
+      <div class="reading-block">
+<p>La primera dependencia conceptual es</p>
+<div class="formula-block">\[
+z=x+iy \quad \Longrightarrow \quad f(z)=u(x,y)+iv(x,y).
+\]</div>
+<p>Sin esta descomposición no se pueden formular las condiciones de Cauchy-Riemann. La función compleja se entiende mediante dos funciones reales, pero la derivabilidad compleja no se reduce a derivabilidad parcial ordinaria.</p>
+<p>La segunda dependencia es</p>
+<div class="formula-block">\[
+\text{derivada compleja} \quad \Longrightarrow \quad \text{independencia del camino}.
+\]</div>
+<p>Este es el salto respecto al cálculo real. En R se compara izquierda y derecha; en C se comparan infinitas aproximaciones. De ahí nace la rigidez de la teoría.</p>
+<p>La tercera relación es</p>
+<div class="formula-block">\[
+\text{holomorfía} \quad \Longrightarrow \quad \text{Cauchy-Riemann}.
+\]</div>
+<p>Las condiciones de Cauchy-Riemann son consecuencia de la existencia de una derivada compleja única. Por eso se usan como filtro necesario.</p>
+<p>La cuarta relación añade hipótesis:</p>
+<div class="formula-block">\[
+\text{Cauchy-Riemann + parciales continuas en una región}
+\quad \Longrightarrow \quad
+\text{holomorfía en el interior}.
+\]</div>
+<p>Esta es la herramienta de resolución más usada en ejercicios. La jerarquía correcta no es “Cauchy-Riemann en un punto implica holomorfía”, sino “Cauchy-Riemann en una región, con regularidad, implica analiticidad”.</p>
+<p>La quinta relación es</p>
+<div class="formula-block">\[
+\text{holomorfía} \quad \Longrightarrow \quad \text{Taylor}.
+\]</div>
+<p>Una función analítica no solo tiene primera derivada: tiene derivadas de todos los órdenes. Sus series de Taylor son válidas hasta que aparece una singularidad. Por eso localizar singularidades es una operación previa al estudio de series.</p>
+<p>La sexta relación es</p>
+<div class="formula-block">\[
+\text{holomorfía} \quad \Longrightarrow \quad u,v \text{ armónicas}.
+\]</div>
+<p>Las condiciones de Cauchy-Riemann, al derivarse de nuevo, producen la ecuación de Laplace para las partes real e imaginaria. Esta es la conexión central con problemas físicos estacionarios en dos dimensiones.</p>
+<p>La séptima relación es casi inversa:</p>
+<div class="formula-block">\[
+u \text{ armónica en región simplemente conexa}
+\quad \Longrightarrow \quad
+u=\operatorname{Re} f \text{ para alguna } f \text{ analítica}.
+\]</div>
+<p>En ejercicios, esta relación se concreta resolviendo Cauchy-Riemann para encontrar la conjugada armónica.</p>
+<p>La oposición más importante del capítulo es “derivable en un punto” frente a “holomorfa en un punto”. La primera es una propiedad puntual; la segunda exige un entorno. Otra oposición esencial es “condición necesaria” frente a “condición suficiente”: Cauchy-Riemann siempre es necesaria para holomorfía, pero solo es suficiente bajo hipótesis de continuidad en una región.</p>
+<p>Históricamente, el capítulo no desarrolla una evolución histórica; presenta la teoría por necesidad matemática: ampliar el cálculo a funciones complejas y obtener herramientas útiles para series, integrales y ecuaciones de Laplace.</p>
+      </div>
+    </section>
+    <section id="errores" class="page">
+      <header class="section-header">
+        <p class="section-kicker">06</p>
+        <h2>Errores habituales</h2>
+      </header>
+      <div class="reading-block">
+<h3 id="error-creer-que-derivable-en-un-punto-significa-holomorfa-en-ese-punto">1. Error: creer que derivable en un punto significa holomorfa en ese punto.</h3>
+<p>Por qué está mal: el capítulo define analítica en un punto como analítica en algún pequeño disco alrededor del punto. La derivabilidad aislada no basta.</p>
+<p>Corrección: distinguir “existe \(f'(z_0)\)” de “existe \(f'(z)\) en un entorno de \(z_0\)”.</p>
+<p>Respuesta incorrecta: “Como \(f\) es derivable en 0, entonces es holomorfa en 0”.</p>
+<p>Respuesta correcta: “La derivabilidad en 0 no basta. Para ser holomorfa en 0 debe ser derivable en todos los puntos de algún disco centrado en 0”.</p>
+<h3 id="error-comprobar-cauchy-riemann-en-un-punto-y-concluir-holomorfia">2. Error: comprobar Cauchy-Riemann en un punto y concluir holomorfía.</h3>
+<p>Por qué está mal: la suficiencia requiere que \(u\), \(v\) y sus derivadas parciales sean continuas y cumplan Cauchy-Riemann en una región.</p>
+<p>Corrección: indicar región e hipótesis de continuidad.</p>
+<p>Respuesta incorrecta: “En (0,0) se cumplen Cauchy-Riemann; por tanto, \(f\) es holomorfa en 0”.</p>
+<p>Respuesta correcta: “En (0,0) se cumplen Cauchy-Riemann, pero eso solo no garantiza holomorfía. Hay que comprobarlas en un entorno y verificar regularidad”.</p>
+<h3 id="error-tratar-delta-z-como-si-fuera-solo-real">3. Error: tratar \(\Delta z\) como si fuera solo real.</h3>
+<p>Por qué está mal: en C, \(\Delta z\) tiene parte real e imaginaria y puede aproximarse a cero por infinitos caminos.</p>
+<p>Corrección: al usar la definición de derivada, comprobar independencia del camino o usar un criterio equivalente.</p>
+<p>Respuesta incorrecta: “Tomo \(\Delta z=h\in R\) y calculo el límite; existe, luego hay derivada compleja”.</p>
+<p>Respuesta correcta: “El límite debe ser el mismo para todo \(\Delta z\to0\), no solo para incrementos reales”.</p>
+<h3 id="error-pensar-que-toda-funcion-suave-de-x-y-es-holomorfa">4. Error: pensar que toda función suave de \(x,y\) es holomorfa.</h3>
+<p>Por qué está mal: una función puede tener todas sus derivadas parciales y no satisfacer Cauchy-Riemann.</p>
+<p>Corrección: suavidad real no equivale a derivabilidad compleja.</p>
+<p>Respuesta incorrecta: “\(|z|^2=x^2+y^2\) es polinómica en \(x,y\), luego es holomorfa”.</p>
+<p>Respuesta correcta: “\(|z|^2\) no es holomorfa en ninguna región; sus partes real e imaginaria no satisfacen Cauchy-Riemann salvo, como mucho, en un punto aislado”.</p>
+<h3 id="error-olvidar-el-dominio">5. Error: olvidar el dominio.</h3>
+<p>Por qué está mal: la holomorfía siempre se refiere a una región concreta. Una fórmula puede ser analítica en una zona y fallar en otra.</p>
+<p>Corrección: escribir siempre “es holomorfa en...” y excluir singularidades.</p>
+<p>Respuesta incorrecta: “\(1/(1+z^2)\) es analítica”.</p>
+<p>Respuesta correcta: “\(1/(1+z^2)\) es analítica en \(\mathbb C\setminus\{i,-i\}\)”.</p>
+<h3 id="error-confundir-parte-real-con-modulo">6. Error: confundir parte real con módulo.</h3>
+<p>Por qué está mal: \(\operatorname{Re} f\) es una función real que extrae la componente real; \(|f|\) es el módulo. Sus propiedades diferenciales son distintas.</p>
+<p>Corrección: escribir \(f=u+iv\) antes de derivar.</p>
+<p>Respuesta incorrecta: “Si \(f=z^2\), su parte real es \(|z|^2\)”.</p>
+<p>Respuesta correcta: “Si \(f=z^2\), entonces \(\operatorname{Re} f=x^2-y^2\), no \(x^2+y^2\)”.</p>
+<h3 id="error-hallar-una-conjugada-armonica-sin-comprobar-que-u-es-armonica">7. Error: hallar una conjugada armónica sin comprobar que \(u\) es armónica.</h3>
+<p>Por qué está mal: si \(u\) no satisface Laplace, no puede ser parte real de una función analítica en una región.</p>
+<p>Corrección: antes de buscar \(v\), calcular \(u_{xx}+u_{yy}\).</p>
+<p>Respuesta incorrecta: “Integro \(v_y=u_x\) y ya obtengo una conjugada”.</p>
+<p>Respuesta correcta: “Primero compruebo que \(u_{xx}+u_{yy}=0\). Después uso Cauchy-Riemann para buscar \(v\)”.</p>
+<h3 id="error-perder-la-funcion-arbitraria-al-integrar-parcialmente">8. Error: perder la función arbitraria al integrar parcialmente.</h3>
+<p>Por qué está mal: al integrar \(v_y=u_x\) respecto de \(y\), puede aparecer una función de \(x\), no una constante directa.</p>
+<p>Corrección: escribir \(v=\int u_x\,dy+g(x)\) y usar la otra ecuación de Cauchy-Riemann para determinar \(g\).</p>
+<p>Respuesta incorrecta: “De \(v_y=2x\), \(v=2xy+C\), sin más”.</p>
+<p>Respuesta correcta: “De \(v_y=2x\), \(v=2xy+g(x)\). Luego \(v_x=2y+g'(x)=-u_y=2y\), así que \(g\) es constante”.</p>
+<h3 id="error-usar-taylor-sin-localizar-singularidades">9. Error: usar Taylor sin localizar singularidades.</h3>
+<p>Por qué está mal: el radio de convergencia está limitado por la singularidad más cercana al centro.</p>
+<p>Corrección: antes de afirmar un radio, localizar los puntos donde la función deja de ser analítica.</p>
+<p>Respuesta incorrecta: “La serie de \(1/(1+z^2)\) vale para todo z porque la fórmula algebraica está clara”.</p>
+<p>Respuesta correcta: “La serie centrada en 0 tiene radio 1 porque las singularidades más cercanas son \(z=\pm i\)”.</p>
+<h3 id="error-aplicar-coordenadas-polares-en-r-0-sin-cuidado">10. Error: aplicar coordenadas polares en \(r=0\) sin cuidado.</h3>
+<p>Por qué está mal: las condiciones polares contienen \(1/r\), luego presuponen \(r&gt;0\).</p>
+<p>Corrección: tratar el origen aparte.</p>
+<p>Respuesta incorrecta: “Las Cauchy-Riemann polares valen también en \(r=0\) directamente”.</p>
+<p>Respuesta correcta: “Las fórmulas polares se usan para \(r&gt;0\); el origen debe estudiarse con otra argumentación”.</p>
+      </div>
+    </section>
+    <section id="preguntas" class="page">
+      <header class="section-header">
+        <p class="section-kicker">07</p>
+        <h2>Preguntas orientadas a examen</h2>
+      </header>
+      <div class="reading-block">
+<h3 id="10-preguntas-faciles">10 preguntas fáciles</h3>
+<p>F1. Escriba la definición de derivada compleja de \(f(z)\).</p>
+<p>F2. ¿Qué significa que una función sea analítica u holomorfa en una región?</p>
+<p>F3. Si \(f(z)=u(x,y)+iv(x,y)\), escriba las condiciones de Cauchy-Riemann en cartesianas.</p>
+<p>F4. Para \(f(z)=z^2\), halle \(u\) y \(v\).</p>
+<p>F5. Compruebe si \(u=x^2-y^2\), \(v=2xy\) satisfacen Cauchy-Riemann.</p>
+<p>F6. Defina punto regular y punto singular.</p>
+<p>F7. ¿Qué es una singularidad aislada?</p>
+<p>F8. Defina función armónica.</p>
+<p>F9. ¿Qué relación hay entre una función analítica \(f=u+iv\) y la ecuación de Laplace?</p>
+<p>F10. Escriba las condiciones de Cauchy-Riemann en coordenadas polares.</p>
+<h3 id="10-preguntas-medias">10 preguntas medias</h3>
+<p>M1. Use la definición de derivada para calcular \((z^2)'\).</p>
+<p>M2. Explique por qué la existencia de derivada compleja exige independencia del camino.</p>
+<p>M3. Determine dónde es analítica \(f(z)=1/(1+z^2)\).</p>
+<p>M4. Para \(f(z)=\bar z\), compruebe si es holomorfa en alguna región.</p>
+<p>M5. Para \(f(z)=|z|^2\), explique por qué no es holomorfa en ninguna región.</p>
+<p>M6. Enuncie correctamente la suficiencia de las condiciones de Cauchy-Riemann.</p>
+<p>M7. Halle una conjugada armónica de \(u=x^2-y^2\).</p>
+<p>M8. Determine el radio de convergencia del desarrollo de \(1/(1+z^2)\) alrededor de 0.</p>
+<p>M9. Explique la diferencia entre “derivable en 0” y “holomorfa en 0”.</p>
+<p>M10. Si \(u=\ln r\), use Cauchy-Riemann en polares para hallar una posible \(v\).</p>
+<h3 id="5-preguntas-dificiles">5 preguntas difíciles</h3>
+<p>D1. Demuestre que si \(f=u+iv\) es holomorfa, entonces \(u\) y \(v\) satisfacen Cauchy-Riemann.</p>
+<p>D2. Demuestre que si \(f=u+iv\) es analítica y las derivadas segundas son continuas, entonces \(u\) y \(v\) son armónicas.</p>
+<p>D3. Deduzca las condiciones de Cauchy-Riemann en coordenadas polares a partir de las cartesianas.</p>
+<p>D4. Estudie la derivabilidad en el origen y la holomorfía en el origen de \(f(z)=|z|^2\).</p>
+<p>D5. Sea \(u(x,y)=x^3-3xy^2\). Compruebe que puede ser parte real de una función analítica y halle una función \(f\) correspondiente.</p>
+<h3 id="5-preguntas-de-desarrollo-largo">5 preguntas de desarrollo largo</h3>
+<p>L1. Desarrolle la diferencia entre derivabilidad compleja y derivabilidad real, usando la definición de derivada y el papel de los caminos de aproximación.</p>
+<p>L2. Explique el criterio de Cauchy-Riemann: necesidad, suficiencia y errores habituales al aplicarlo.</p>
+<p>L3. Explique cómo la holomorfía conduce a desarrollos de Taylor y cómo las singularidades determinan el radio de convergencia.</p>
+<p>L4. Explique la relación entre funciones analíticas, funciones armónicas y conjugadas armónicas.</p>
+<p>L5. Construya una respuesta completa de examen para el problema: “Dada \(u=x^2-y^2\), compruebe que es armónica, halle una conjugada armónica y obtenga una función analítica cuya parte real sea \(u\)”.</p>
+<h3 id="5-preguntas-de-relacion-entre-conceptos">5 preguntas de relación entre conceptos</h3>
+<p>R1. Relacione derivada compleja, independencia del camino y Cauchy-Riemann.</p>
+<p>R2. Relacione holomorfía, singularidades y series de Taylor.</p>
+<p>R3. Relacione Cauchy-Riemann y ecuación de Laplace.</p>
+<p>R4. Relacione derivabilidad puntual y holomorfía en una región.</p>
+<p>R5. Relacione ramas de funciones multivaluadas con dominios de analiticidad.</p>
+      </div>
+    </section>
+    <section id="respuestas" class="page">
+      <header class="section-header">
+        <p class="section-kicker">08</p>
+        <h2>Respuestas modelo</h2>
+      </header>
+      <div class="reading-block">
+<h3 id="respuestas-faciles">Respuestas fáciles</h3>
+<p>F1. La derivada compleja de \(f\) en \(z\) se define como</p>
+<div class="formula-block">\[
+f'(z)=\lim_{\Delta z\to0}\frac{f(z+\Delta z)-f(z)}{\Delta z},
+\]</div>
+<p>si el límite existe y tiene el mismo valor para cualquier forma de aproximar \(\Delta z\) a cero en el plano complejo.</p>
+<p>F2. Una función es analítica u holomorfa en una región si tiene derivada compleja en todos los puntos de esa región. Si se dice que es analítica en un punto, se entiende que existe un pequeño disco alrededor de ese punto donde la función es analítica.</p>
+<p>F3. Si \(f=u+iv\), las condiciones de Cauchy-Riemann son</p>
+<div class="formula-block">\[
+u_x=v_y,\qquad v_x=-u_y.
+\]</div>
+<p>Son necesarias para la holomorfía y, con continuidad de las derivadas parciales en una región, suficientes.</p>
+<p>F4. Si \(f(z)=z^2\) y \(z=x+iy\), entonces</p>
+<div class="formula-block">\[
+z^2=(x+iy)^2=x^2-y^2+2ixy.
+\]</div>
+<p>Por tanto,</p>
+<div class="formula-block">\[
+u(x,y)=x^2-y^2,\qquad v(x,y)=2xy.
+\]</div>
+<p>F5. Calculamos</p>
+<div class="formula-block">\[
+u_x=2x,\quad u_y=-2y,\quad v_x=2y,\quad v_y=2x.
+\]</div>
+<p>Se cumple \(u_x=v_y\) y \(v_x=-u_y\). Por tanto, satisfacen Cauchy-Riemann.</p>
+<p>F6. Un punto regular de \(f\) es un punto donde \(f\) es analítica. Un punto singular es un punto donde \(f\) no es analítica.</p>
+<p>F7. Una singularidad aislada es un punto singular rodeado por algún disco perforado en el que la función sí es analítica. Es decir, solo falla en el punto, no en todos los puntos cercanos.</p>
+<p>F8. Una función \(\phi(x,y)\) es armónica si satisface</p>
+<div class="formula-block">\[
+\phi_{xx}+\phi_{yy}=0.
+\]</div>
+<p>Esta ecuación es la ecuación de Laplace en dos dimensiones.</p>
+<p>F9. Si \(f=u+iv\) es analítica en una región, entonces \(u\) y \(v\) son armónicas en esa región:</p>
+<div class="formula-block">\[
+u_{xx}+u_{yy}=0,\qquad v_{xx}+v_{yy}=0.
+\]</div>
+<p>F10. Si \(f(re^{i\theta})=u(r,\theta)+iv(r,\theta)\), las condiciones de Cauchy-Riemann en polares son</p>
+<div class="formula-block">\[
+u_r=\frac{1}{r}v_\theta,\qquad v_r=-\frac{1}{r}u_\theta,\qquad r>0.
+\]</div>
+<h3 id="respuestas-medias">Respuestas medias</h3>
+<p>M1. Por definición,</p>
+<div class="formula-block">\[
+\frac{(z+\Delta z)^2-z^2}{\Delta z}
+=\frac{z^2+2z\Delta z+(\Delta z)^2-z^2}{\Delta z}
+=2z+\Delta z.
+\]</div>
+<p>Al tender \(\Delta z\) a cero, el límite es \(2z\), independientemente del camino. Por tanto, \((z^2)'=2z\).</p>
+<p>M2. En variable compleja, \(\Delta z=\Delta x+i\Delta y\). Por eso puede tender a cero por ejes, rectas oblicuas o curvas. El límite que define \(f'(z)\) solo existe si todos esos modos dan el mismo valor. Si dos caminos dan límites distintos, la derivada compleja no existe.</p>
+<p>M3. La función</p>
+<div class="formula-block">\[
+f(z)=\frac{1}{1+z^2}
+\]</div>
+<p>falla donde \(1+z^2=0\), es decir, en \(z=i\) y \(z=-i\). En el resto del plano es racional con denominador no nulo, luego es analítica en</p>
+<div class="formula-block">\[
+\mathbb C\setminus\{i,-i\}.
+\]</div>
+<p>M4. Para \(f(z)=\bar z=x-iy\), se tiene \(u=x\), \(v=-y\). Entonces</p>
+<div class="formula-block">\[
+u_x=1,\qquad v_y=-1.
+\]</div>
+<p>La primera condición \(u_x=v_y\) falla en todo punto. Por tanto, \(\bar z\) no es holomorfa en ninguna región.</p>
+<p>M5. \(|z|^2=x^2+y^2\), luego \(u=x^2+y^2\), \(v=0\). Las condiciones de Cauchy-Riemann dan</p>
+<div class="formula-block">\[
+2x=0,\qquad -2y=0.
+\]</div>
+<p>Solo podrían cumplirse en \((0,0)\), no en ningún entorno. Por tanto, \(|z|^2\) no es holomorfa en ninguna región.</p>
+<p>M6. Si \(f=u+iv\), y \(u\), \(v\), \(u_x\), \(u_y\), \(v_x\), \(v_y\) son continuas en una región, y además se cumple</p>
+<div class="formula-block">\[
+u_x=v_y,\qquad v_x=-u_y
+\]</div>
+<p>en esa región, entonces \(f\) es analítica en los puntos interiores de la región.</p>
+<p>M7. Para \(u=x^2-y^2\), Cauchy-Riemann exige</p>
+<div class="formula-block">\[
+v_y=u_x=2x.
+\]</div>
+<p>Integrando respecto de \(y\):</p>
+<div class="formula-block">\[
+v=2xy+g(x).
+\]</div>
+<p>La otra condición da</p>
+<div class="formula-block">\[
+v_x=2y+g'(x)=-u_y=2y,
+\]</div>
+<p>luego \(g'(x)=0\). Así,</p>
+<div class="formula-block">\[
+v=2xy+C.
+\]</div>
+<p>M8. Las singularidades de \(1/(1+z^2)\) son \(z=i\) y \(z=-i\), ambas a distancia 1 del origen. El desarrollo de Taylor alrededor de 0 converge dentro del disco que llega a la singularidad más próxima. Por tanto, su radio de convergencia es 1.</p>
+<p>M9. Que \(f\) sea derivable en 0 significa que existe el límite del cociente incremental solo en ese punto. Que sea holomorfa en 0 significa que hay un disco alrededor de 0 en el que \(f\) es derivable en todos sus puntos. La holomorfía es más fuerte.</p>
+<p>M10. Si \(u=\ln r\), entonces</p>
+<div class="formula-block">\[
+u_r=\frac1r,\qquad u_\theta=0.
+\]</div>
+<p>Por Cauchy-Riemann en polares,</p>
+<div class="formula-block">\[
+\frac1r=\frac1r v_\theta \Rightarrow v_\theta=1,
+\]</div>
+<p>y</p>
+<div class="formula-block">\[
+v_r=-\frac1r u_\theta=0.
+\]</div>
+<p>Luego \(v=\theta+C\), en una rama donde \(\theta\) esté bien definida.</p>
+<h3 id="respuestas-dificiles">Respuestas difíciles</h3>
+<p>D1. Supongamos que \(f=u+iv\) es holomorfa. Como \(z=x+iy\), al derivar respecto de \(x\),</p>
+<div class="formula-block">\[
+f_x=u_x+iv_x.
+\]</div>
+<p>Al derivar respecto de \(y\),</p>
+<div class="formula-block">\[
+f_y=u_y+iv_y.
+\]</div>
+<p>Pero, por la dependencia \(z=x+iy\), si existe \(df/dz\), debe cumplirse</p>
+<div class="formula-block">\[
+f_x=f'(z),\qquad f_y=i f'(z).
+\]</div>
+<p>Así,</p>
+<div class="formula-block">\[
+f'(z)=u_x+iv_x
+\]</div>
+<p>y también</p>
+<div class="formula-block">\[
+f'(z)=\frac1i f_y=\frac1i(u_y+iv_y)=v_y-iu_y.
+\]</div>
+<p>Igualando partes real e imaginaria:</p>
+<div class="formula-block">\[
+u_x=v_y,\qquad v_x=-u_y.
+\]</div>
+<p>Estas son las condiciones de Cauchy-Riemann.</p>
+<p>D2. Si \(f=u+iv\) es analítica, entonces se cumplen</p>
+<div class="formula-block">\[
+u_x=v_y,\qquad u_y=-v_x.
+\]</div>
+<p>Derivando la primera respecto de \(x\):</p>
+<div class="formula-block">\[
+u_{xx}=v_{yx}.
+\]</div>
+<p>Derivando la segunda respecto de \(y\):</p>
+<div class="formula-block">\[
+u_{yy}=-v_{xy}.
+\]</div>
+<p>Si las derivadas cruzadas coinciden, \(v_{yx}=v_{xy}\), entonces</p>
+<div class="formula-block">\[
+u_{xx}+u_{yy}=0.
+\]</div>
+<p>Análogamente, de \(v_y=u_x\) y \(v_x=-u_y\) se obtiene</p>
+<div class="formula-block">\[
+v_{xx}+v_{yy}=0.
+\]</div>
+<p>Por tanto, \(u\) y \(v\) son armónicas.</p>
+<p>D3. Usamos</p>
+<div class="formula-block">\[
+x=r\cos\theta,\qquad y=r\sin\theta.
+\]</div>
+<p>La regla de la cadena da</p>
+<div class="formula-block">\[
+u_r=u_x\cos\theta+u_y\sin\theta,
+\]</div>
+<div class="formula-block">\[
+u_\theta=-r u_x\sin\theta+r u_y\cos\theta,
+\]</div>
+<p>y fórmulas análogas para \(v\). Si se sustituyen las condiciones cartesianas</p>
+<div class="formula-block">\[
+u_x=v_y,\qquad u_y=-v_x,
+\]</div>
+<p>se obtiene</p>
+<div class="formula-block">\[
+u_r=\frac{1}{r}v_\theta,\qquad v_r=-\frac{1}{r}u_\theta.
+\]</div>
+<p>Estas son las condiciones de Cauchy-Riemann en polares, válidas para \(r&gt;0\).</p>
+<p>D4. Para \(f(z)=|z|^2=z\bar z\), en el origen:</p>
+<div class="formula-block">\[
+\frac{f(\Delta z)-f(0)}{\Delta z}
+=\frac{|\Delta z|^2}{\Delta z}
+=\overline{\Delta z}.
+\]</div>
+<p>Al tender \(\Delta z\to0\), \(\overline{\Delta z}\to0\). Luego \(f'(0)=0\). Sin embargo, no es holomorfa en 0 porque no es derivable en un entorno de 0. De hecho, las condiciones de Cauchy-Riemann para \(u=x^2+y^2\), \(v=0\), solo se cumplen en \((0,0)\), no en ningún disco.</p>
+<p>D5. Sea</p>
+<div class="formula-block">\[
+u=x^3-3xy^2.
+\]</div>
+<p>Comprobamos que es armónica:</p>
+<div class="formula-block">\[
+u_x=3x^2-3y^2,\quad u_{xx}=6x,
+\]</div>
+<div class="formula-block">\[
+u_y=-6xy,\quad u_{yy}=-6x.
+\]</div>
+<p>Luego</p>
+<div class="formula-block">\[
+u_{xx}+u_{yy}=0.
+\]</div>
+<p>Buscamos \(v\) por Cauchy-Riemann:</p>
+<div class="formula-block">\[
+v_y=u_x=3x^2-3y^2.
+\]</div>
+<p>Integrando respecto de \(y\):</p>
+<div class="formula-block">\[
+v=3x^2y-y^3+g(x).
+\]</div>
+<p>La otra ecuación:</p>
+<div class="formula-block">\[
+v_x=6xy+g'(x)=-u_y=6xy,
+\]</div>
+<p>luego \(g'(x)=0\). Por tanto,</p>
+<div class="formula-block">\[
+v=3x^2y-y^3+C.
+\]</div>
+<p>La función analítica correspondiente es</p>
+<div class="formula-block">\[
+f(z)=u+iv=z^3+iC.
+\]</div>
+<h3 id="respuestas-de-desarrollo-largo">Respuestas de desarrollo largo</h3>
+<p>L1. En una variable real, la derivada se define por un límite en el que el incremento \(h\) solo puede acercarse a 0 desde la izquierda o desde la derecha. En variable compleja, el incremento es \(\Delta z=\Delta x+i\Delta y\), de modo que puede aproximarse a 0 por infinitas direcciones y curvas. Por eso la derivabilidad compleja exige que el cociente incremental tenga el mismo límite para cualquier camino.</p>
+<p>Esta exigencia es mucho más fuerte. Una función como \(z^2\) sí cumple la condición porque el cociente incremental se reduce a \(2z+\Delta z\). En cambio, funciones como \(\bar z\) o \(|z|^2\) dependen de la dirección de aproximación y no son holomorfas en regiones. La derivada compleja no es simplemente “hacer cálculo con \(x\) e \(y\)”: es una restricción geométrica fuerte sobre cómo cambia la función en el plano.</p>
+<p>L2. Las condiciones de Cauchy-Riemann para \(f=u+iv\) son</p>
+<div class="formula-block">\[
+u_x=v_y,\qquad v_x=-u_y.
+\]</div>
+<p>Son necesarias porque, si existe una derivada compleja única, el cálculo de \(df/dz\) a partir de la variación en \(x\) y de la variación en \(y\) debe dar el mismo número complejo. Al igualar partes real e imaginaria se obtienen esas dos ecuaciones.</p>
+<p>También pueden ser suficientes, pero no de cualquier manera. Si \(u\), \(v\) y sus derivadas parciales son continuas en una región y cumplen Cauchy-Riemann en ella, entonces \(f\) es analítica en los puntos interiores. El error típico es comprobarlas en un punto aislado y concluir holomorfía. Otro error es olvidarse de justificar la continuidad de las parciales o el dominio donde se aplican.</p>
+<p>L3. La holomorfía tiene una consecuencia fuerte: si \(f\) es analítica en una región, entonces tiene derivadas de todos los órdenes y admite desarrollo de Taylor alrededor de cada punto interior. Esto es más rígido que en variable real.</p>
+<p>El desarrollo de Taylor no es válido necesariamente en todo el plano. Su radio de convergencia está limitado por la singularidad más cercana al centro. Por ejemplo,</p>
+<div class="formula-block">\[
+\frac{1}{1+z^2}
+\]</div>
+<p>tiene singularidades en \(z=i\) y \(z=-i\). Al expandir alrededor de 0, ambas están a distancia 1, luego el radio de convergencia es 1. Esta explicación aclara por qué la serie real de \(1/(1+x^2)\) alrededor de 0 deja de converger para \(|x|&gt;1\), aunque la función real no tenga singularidades en \(x=\pm1\).</p>
+<p>L4. Si \(f=u+iv\) es analítica, entonces \(u\) y \(v\) satisfacen Cauchy-Riemann. Al derivar de nuevo estas ecuaciones y usar la igualdad de derivadas cruzadas, se obtiene</p>
+<div class="formula-block">\[
+u_{xx}+u_{yy}=0,\qquad v_{xx}+v_{yy}=0.
+\]</div>
+<p>Por tanto, las partes real e imaginaria de una función analítica son armónicas.</p>
+<p>La relación inversa se usa para construir funciones analíticas. Si \(u\) es armónica en una región adecuada, puede buscarse \(v\) tal que \(u+iv\) sea analítica. Esa \(v\) se llama conjugada armónica de \(u\) y se obtiene resolviendo Cauchy-Riemann. En problemas de examen, el procedimiento correcto es: comprobar Laplace, integrar una ecuación de Cauchy-Riemann, introducir una función arbitraria de la variable no integrada y usar la otra ecuación para determinarla.</p>
+<p>L5. Sea \(u=x^2-y^2\). Primero comprobamos que es armónica:</p>
+<div class="formula-block">\[
+u_{xx}=2,\qquad u_{yy}=-2,\qquad u_{xx}+u_{yy}=0.
+\]</div>
+<p>Por tanto, puede buscarse una conjugada armónica \(v\).</p>
+<p>Usamos Cauchy-Riemann:</p>
+<div class="formula-block">\[
+v_y=u_x=2x.
+\]</div>
+<p>Integrando respecto de \(y\):</p>
+<div class="formula-block">\[
+v=2xy+g(x).
+\]</div>
+<p>La segunda condición es</p>
+<div class="formula-block">\[
+v_x=-u_y.
+\]</div>
+<p>Como \(v_x=2y+g'(x)\) y \(-u_y=2y\), se deduce</p>
+<div class="formula-block">\[
+g'(x)=0.
+\]</div>
+<p>Luego</p>
+<div class="formula-block">\[
+v=2xy+C.
+\]</div>
+<p>Así,</p>
+<div class="formula-block">\[
+f(z)=u+iv=x^2-y^2+i(2xy+C)=z^2+iC.
+\]</div>
+<p>Si se exige que la parte real sea exactamente \(u\), la constante debe ser puramente imaginaria. La respuesta final es que una conjugada armónica es \(v=2xy+C\) y una función analítica correspondiente es \(f(z)=z^2+iC\).</p>
+<h3 id="respuestas-de-relacion-entre-conceptos">Respuestas de relación entre conceptos</h3>
+<p>R1. La derivada compleja exige que el cociente incremental tenga el mismo límite para todo camino de aproximación. Al comparar la aproximación en dirección real y en dirección imaginaria se obtienen las condiciones de Cauchy-Riemann. Por eso Cauchy-Riemann expresa algebraicamente una exigencia geométrica: independencia del camino.</p>
+<p>R2. La holomorfía permite desarrollar una función en serie de Taylor. Las singularidades marcan los puntos donde la función deja de ser analítica. El desarrollo centrado en \(z_0\) converge hasta la singularidad más cercana, por lo que el radio de convergencia depende de la geometría de las singularidades en el plano complejo.</p>
+<p>R3. Cauchy-Riemann conecta \(u\) y \(v\) mediante sus derivadas parciales. Si se derivan esas igualdades y se usan derivadas cruzadas iguales, se obtiene la ecuación de Laplace para cada parte. Así, toda función analítica genera dos funciones armónicas.</p>
+<p>R4. La derivabilidad puntual solo afirma que existe \(f'(z_0)\). La holomorfía en una región afirma que \(f'(z)\) existe para todos los puntos de una zona abierta. La segunda propiedad es más fuerte y es la que permite usar Taylor, Cauchy-Riemann como criterio regional y consecuencias armónicas.</p>
+<p>R5. Funciones como \(\log z\) o \(\sqrt z\) tienen varios valores si no se fija una rama. Para estudiar holomorfía se necesita una función univaluada, por lo que se elige una rama en un dominio con corte. La elección de rama y corte determina el dominio donde la función puede ser analítica.</p>
+      </div>
+    </section>
+    <section id="resumen" class="page">
+      <header class="section-header">
+        <p class="section-kicker">09</p>
+        <h2>Resumen final de repaso</h2>
+      </header>
+      <div class="reading-block">
+<p>Ideas principales:</p>
+<ul>
+<li>Una función compleja se escribe como \(f(z)=u(x,y)+iv(x,y)\).</li>
+<li>La derivada compleja es</li>
+</ul>
+<div class="formula-block">  \[
+  f'(z)=\lim_{\Delta z\to0}\frac{f(z+\Delta z)-f(z)}{\Delta z}.
+  \]</div>
+<ul>
+<li>El límite debe ser independiente del camino.</li>
+<li>Holomorfa en una región significa derivable en todos los puntos de esa región.</li>
+<li>Holomorfa en un punto significa holomorfa en algún disco alrededor del punto.</li>
+<li>Si \(f=u+iv\) es holomorfa, entonces:</li>
+</ul>
+<div class="formula-block">  \[
+  u_x=v_y,\qquad v_x=-u_y.
+  \]</div>
+<ul>
+<li>Si Cauchy-Riemann se cumple en una región con parciales continuas, entonces \(f\) es analítica.</li>
+<li>Las funciones analíticas tienen derivadas de todos los órdenes y desarrollo de Taylor.</li>
+<li>Las singularidades determinan el radio de convergencia.</li>
+<li>Si \(f=u+iv\) es analítica, entonces \(u\) y \(v\) son armónicas.</li>
+<li>Una conjugada armónica se obtiene resolviendo Cauchy-Riemann.</li>
+</ul>
+<p>Conceptos imprescindibles:</p>
+<ul>
+<li>Derivada compleja.</li>
+<li>Función analítica / holomorfa.</li>
+<li>Región.</li>
+<li>Punto regular.</li>
+<li>Singularidad.</li>
+<li>Singularidad aislada.</li>
+<li>Condiciones de Cauchy-Riemann.</li>
+<li>Función armónica.</li>
+<li>Conjugada armónica.</li>
+<li>Desarrollo de Taylor.</li>
+<li>Rama de una función multivaluada.</li>
+</ul>
+<p>Relaciones clave:</p>
+<ul>
+<li>Derivada compleja → independencia del camino.</li>
+<li>Holomorfía → Cauchy-Riemann.</li>
+<li>Cauchy-Riemann + continuidad regional → holomorfía.</li>
+<li>Holomorfía → Taylor.</li>
+<li>Singularidad más cercana → radio de convergencia.</li>
+<li>Holomorfía → partes real e imaginaria armónicas.</li>
+<li>Función armónica + dominio adecuado → posible conjugada armónica.</li>
+</ul>
+<p>Errores que evitar:</p>
+<ul>
+<li>Confundir derivable en un punto con holomorfa en un punto.</li>
+<li>Usar Cauchy-Riemann en un punto como criterio suficiente absoluto.</li>
+<li>Olvidar comprobar el dominio.</li>
+<li>Tratar \(\Delta z\) como incremento real.</li>
+<li>Confundir \(\bar z\), \(|z|\) y \(\operatorname{Re}z\).</li>
+<li>Buscar conjugada armónica sin comprobar Laplace.</li>
+<li>Perder la función arbitraria al integrar parcialmente.</li>
+<li>Aplicar Cauchy-Riemann polares en \(r=0\) sin análisis aparte.</li>
+</ul>
+      </div>
+    </section>
+    <section id="checklist" class="page">
+      <header class="section-header">
+        <p class="section-kicker">10</p>
+        <h2>Checklist de dominio</h2>
+      </header>
+      <div class="reading-block">
+<ul>
+<li>Si no puedes escribir \(f(z)=u(x,y)+iv(x,y)\), falta repasar forma binómica y separación en partes real e imaginaria.</li>
+<li>Si no puedes definir \(f'(z)\) con el límite correcto, falta repasar derivada compleja.</li>
+<li>Si calculas el límite solo con \(\Delta z\) real, falta repasar independencia del camino.</li>
+<li>Si confundes derivable en un punto con holomorfa en un punto, revisar la definición de analiticidad local.</li>
+<li>Si no sabes qué es una región, revisar la diferencia entre punto, curva y subconjunto bidimensional abierto.</li>
+<li>Si no recuerdas Cauchy-Riemann, falta repasar</li>
+</ul>
+<div class="formula-block">  \[
+  u_x=v_y,\qquad v_x=-u_y.
+  \]</div>
+<ul>
+<li>Si aplicas Cauchy-Riemann sin mencionar continuidad de parciales, revisar necesidad y suficiencia.</li>
+<li>Si dices que \(\bar z\) es holomorfa, revisar el ejemplo \(u=x\), \(v=-y\).</li>
+<li>Si dices que \(|z|^2\) es holomorfa porque es suave en \(x,y\), revisar la diferencia entre regularidad real y compleja.</li>
+<li>Si no sabes localizar singularidades de \(1/(1+z^2)\), falta repasar raíces del denominador y dominio de analiticidad.</li>
+<li>Si no puedes explicar por qué el radio de \(1/(1+z^2)\) alrededor de 0 es 1, revisar singularidad más cercana.</li>
+<li>Si no puedes definir función armónica, repasar la ecuación de Laplace:</li>
+</ul>
+<div class="formula-block">  \[
+  \phi_{xx}+\phi_{yy}=0.
+  \]</div>
+<ul>
+<li>Si no puedes demostrar que las partes de una función analítica son armónicas, revisar la derivación de Cauchy-Riemann y derivadas cruzadas.</li>
+<li>Si no puedes hallar una conjugada armónica, repasar el procedimiento:</li>
+</ul>
+<div class="formula-block">  \[
+  v_y=u_x,\qquad v_x=-u_y.
+  \]</div>
+<ul>
+<li>Si al integrar \(v_y\) olvidas \(g(x)\), revisar integración parcial en funciones de dos variables.</li>
+<li>Si confundes \(v\) conjugada armónica con \(\bar z\) conjugado complejo, revisar la terminología.</li>
+<li>Si no puedes escribir Cauchy-Riemann en polares, repasar:</li>
+</ul>
+<div class="formula-block">  \[
+  u_r=\frac1r v_\theta,\qquad v_r=-\frac1r u_\theta.
+  \]</div>
+<ul>
+<li>Si aplicas fórmulas polares en el origen, revisar la condición \(r&gt;0\).</li>
+<li>Si puedes decidir dónde son holomorfas funciones simples como \(z^2\), \(\bar z\), \(|z|^2\) y \(1/(1+z^2)\), el núcleo del capítulo está asentado.</li>
+<li>Si puedes construir \(f\) a partir de una parte real armónica sencilla, el capítulo está suficientemente preparado para pasar a integración compleja y series.</li>
+</ul>
+      </div>
+    </section>
+    </main>
+  </div>
+</body>
+</html>
