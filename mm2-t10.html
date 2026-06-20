@@ -1,0 +1,900 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="color-scheme" content="light dark" />
+  <title>MM2 — Tema 10: Espacios de Hilbert</title>
+  <meta name="description" content="Guía de estudio de Métodos Matemáticos II sobre espacios de Hilbert, producto escalar, ortogonalidad, proyecciones, familias ortonormales, Bessel, Parseval y operadores acotados." />
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/icon-32.png" />
+  <link rel="icon" type="image/png" sizes="50x50" href="assets/icons/icon-50.png" />
+  <link rel="apple-touch-icon" sizes="100x100" href="assets/icons/icon-100.png" />
+  <meta name="theme-color" content="#375a7f" />
+  <link rel="stylesheet" href="assets/styles.css" />
+  <script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']], processEscapes: true },
+  svg: { fontCache: 'global' },
+  options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+};
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+  <script defer src="assets/app.js"></script>
+</head>
+<body class="subject-mm2">
+  <div class="wrap">
+    <header class="cover">
+      <a class="back-link" href="index.html">← Índice</a>
+      <p class="eyebrow">Métodos Matemáticos II</p>
+      <h1>Espacios de Hilbert</h1>
+      <p class="subtitle">Tema 10 · Producto escalar, norma inducida, ortogonalidad, proyección, bases ortonormales, Bessel, Parseval y operadores acotados.</p>
+      <div class="lesson-meta">
+        <span>Asignatura: MM2</span>
+        <span>Tema 10</span>
+        <span>Estado: completo</span>
+        <span>Enfoque: examen UNED</span>
+      </div>
+    </header>
+
+    <div class="toolbar no-print" aria-label="Navegación del tema">
+      <nav>
+        <a href="#mapa">Mapa</a>
+        <a href="#prerrequisitos">Prerrequisitos</a>
+        <a href="#idea-central">Idea</a>
+        <a href="#desarrollo">Desarrollo</a>
+        <a href="#conceptos">Conceptos</a>
+        <a href="#errores">Errores</a>
+        <a href="#preguntas">Preguntas</a>
+        <a href="#respuestas">Respuestas</a>
+        <a href="#resumen">Resumen</a>
+        <a href="#checklist">Checklist</a>
+      </nav>
+      <div class="toolbar-actions"><button class="btn secondary" onclick="document.querySelectorAll('details').forEach(d=>d.open=true)">Abrir todo</button><button class="btn secondary" onclick="document.querySelectorAll('details').forEach(d=>d.open=false)">Modo repaso</button><button class="btn" onclick="printReady()">Imprimir / PDF</button></div>
+    </div>
+
+    <main>
+      <section id="mapa" class="page map-page">
+        <header class="section-header">
+          <p class="section-kicker">00</p>
+          <h2>Mapa conceptual</h2>
+        </header>
+        <div class="concept-map">
+          <a class="map-card" href="#prerrequisitos"><span>Base geométrica</span><small>Espacio vectorial, producto escalar euclídeo, norma, distancia y convergencia</small></a>
+          <a class="map-card" href="#desarrollo"><span>Producto escalar</span><small>Norma inducida, conjugación compleja y ortogonalidad</small></a>
+          <a class="map-card" href="#desarrollo"><span>Hilbert</span><small>Espacio prehilbertiano completo para la norma inducida</small></a>
+          <a class="map-card" href="#desarrollo"><span>Proyección</span><small>Mejor aproximación ortogonal y coeficientes de Fourier</small></a>
+          <a class="map-card" href="#desarrollo"><span>Bessel y Parseval</span><small>Familias ortonormales, completitud y energía de coeficientes</small></a>
+          <a class="map-card" href="#preguntas"><span>Examen</span><small>Aplicar Cauchy-Schwarz, proyectar, distinguir Bessel/Parseval y acotar operadores</small></a>
+        </div>
+        <div class="reading-block source-block">
+          <p>Fuente principal: guía de estudio de MM2 sobre espacios de Hilbert. Núcleo del tema: producto escalar, norma inducida, ortogonalidad, Cauchy-Schwarz, completitud, proyección ortogonal, familias ortonormales, coeficientes de Fourier, Bessel, Parseval, \(L^2[a,b]\) y operadores lineales acotados.</p>
+        </div>
+      </section>
+
+    <section id="prerrequisitos" class="page">
+      <header class="section-header">
+        <p class="section-kicker">01</p>
+        <h2>Prerrequisitos mínimos</h2>
+      </header>
+      <div class="reading-block">
+<h3 id="espacio-vectorial">1. Espacio vectorial.</h3>
+<p>Un espacio vectorial es un conjunto cuyos elementos pueden sumarse entre sí y multiplicarse por escalares, cumpliendo las reglas usuales de linealidad. Es necesario porque un espacio de Hilbert es, antes que nada, un espacio vectorial dotado de más estructura. Por ejemplo, \(\mathbb{C}^3\) con la suma componente a componente y el producto por números complejos es un espacio vectorial.</p>
+<h3 id="combinacion-lineal-independencia-lineal-y-subespacio">2. Combinación lineal, independencia lineal y subespacio.</h3>
+<p>Una combinación lineal de \(v_1,\ldots,v_n\) es una expresión</p>
+<div class="formula-block">\[
+\alpha_1v_1+\cdots+\alpha_nv_n.
+\]</div>
+<p>Los vectores son linealmente independientes si la única combinación lineal que da cero es la trivial. Es necesario porque las bases ortogonales y ortonormales se construyen a partir de independencia lineal. Por ejemplo, en \(\mathbb{R}^2\), \((1,0)\) y \((0,1)\) son independientes.</p>
+<h3 id="base-y-coordenadas">3. Base y coordenadas.</h3>
+<p>Una base es una familia linealmente independiente que permite escribir todo vector del espacio como combinación lineal de sus elementos. Es necesaria porque las bases ortonormales permiten expresar vectores mediante coeficientes obtenidos con productos escalares. Por ejemplo, en \(\mathbb{R}^3\), la base canónica \(e_1,e_2,e_3\) permite escribir \(x=(x_1,x_2,x_3)\).</p>
+<h3 id="numeros-complejos-y-conjugacion">4. Números complejos y conjugación.</h3>
+<p>Si \(z=a+ib\), su conjugado es \(\overline z=a-ib\), y \(|z|^2=\overline z z\). Es necesario porque en espacios complejos el producto escalar debe incorporar conjugación para que \((v,v)\) sea real y no negativo. Por ejemplo, si \(v=(1,i)\), entonces \(\overline{1}1+\overline{i}i=1+1=2\).</p>
+<h3 id="producto-escalar-euclideo">5. Producto escalar euclídeo.</h3>
+<p>En \(\mathbb{R}^n\), el producto escalar usual es</p>
+<div class="formula-block">\[
+x\cdot y=\sum_{k=1}^n x_k y_k.
+\]</div>
+<p>Permite medir longitudes, ángulos y perpendicularidad. Es el modelo finito-dimensional del producto escalar de un espacio de Hilbert. Por ejemplo, \((1,2)\cdot(3,-1)=1\).</p>
+<h3 id="norma-y-distancia">6. Norma y distancia.</h3>
+<p>Una norma \(\|v\|\) mide el tamaño de un vector. A partir de ella se define una distancia \(d(u,v)=\|u-v\|\). Es necesaria porque la completitud de un espacio de Hilbert se formula mediante sucesiones de Cauchy en esa norma. Por ejemplo, en \(\mathbb{R}^n\), \(\|x\|=\sqrt{x_1^2+\cdots+x_n^2}\).</p>
+<h3 id="integrales-de-funciones-al-cuadrado">7. Integrales de funciones al cuadrado.</h3>
+<p>En espacios de funciones aparece la cantidad</p>
+<div class="formula-block">\[
+\int_a^b |f(x)|^2\,dx.
+\]</div>
+<p>Es necesaria para entender \(L^2[a,b]\), el ejemplo básico de espacio de Hilbert de funciones. Por ejemplo, \(f(x)=x\) pertenece a \(L^2[0,1]\) porque \(\int_0^1 x^2\,dx=1/3\).</p>
+<h3 id="convergencia-de-sucesiones">8. Convergencia de sucesiones.</h3>
+<p>Una sucesión \(v_n\) converge a \(v\) en norma si \(\|v_n-v\|\to 0\). Es necesaria porque muchas propiedades de Hilbert se expresan mediante límites: continuidad del producto escalar, convergencia de series de Fourier y completitud. Por ejemplo, en \(\mathbb{R}\), \(1/n\to 0\).</p>
+<h3 id="series-ortogonales-y-fourier">9. Series ortogonales y Fourier.</h3>
+<p>Una serie de Fourier expresa una función como suma de funciones ortogonales. Es necesaria porque las bases ortonormales de Hilbert generalizan esa idea. Por ejemplo, en \((-\pi,\pi)\), las funciones \(\sin nx\) y \(\cos mx\) son ortogonales cuando corresponde.</p>
+      </div>
+    </section>
+    <section id="idea-central" class="page">
+      <header class="section-header">
+        <p class="section-kicker">02</p>
+        <h2>Idea central del capítulo</h2>
+      </header>
+      <div class="reading-block">
+<p>El capítulo introduce una idea geométrica: muchas operaciones que se hacen con vectores ordinarios también pueden hacerse con funciones, sucesiones y otros objetos matemáticos, siempre que exista una forma adecuada de medir ángulos y longitudes. Esa forma adecuada es el producto escalar. A partir de él aparecen la norma, la distancia, la ortogonalidad, las proyecciones y las bases ortonormales.</p>
+<p>En \(\mathbb{R}^n\) la situación es familiar: dos vectores son perpendiculares si su producto escalar es cero, la longitud de un vector se obtiene mediante \(\|v\|=\sqrt{(v,v)}\), y un vector puede descomponerse en componentes respecto de una base ortonormal. El paso conceptual del capítulo consiste en conservar esa estructura cuando los vectores ya no son flechas en el espacio físico, sino funciones o sucesiones. En ese contexto, una integral sustituye a la suma finita de componentes.</p>
+<p>El espacio de Hilbert aparece cuando el espacio con producto escalar es completo. La completitud no es un detalle formal: asegura que los límites de sucesiones que deberían estar en el espacio efectivamente pertenecen al espacio. Sin completitud, los procesos de aproximación mediante series ortogonales pueden producir límites que quedan fuera del espacio de partida. Por eso \(L^2[a,b]\) es el ejemplo central: sus elementos son funciones de cuadrado integrable y su producto escalar se define mediante una integral.</p>
+<p>El capítulo ocupa una posición de puente en Métodos Matemáticos II. Viene después de espacios vectoriales, métricos y normados, y prepara el terreno para operadores, espectro y desarrollos en funciones propias. En Física, esta estructura aparece en Fourier, en Sturm-Liouville, en mecánica cuántica y en problemas de modos normales. En examen, el tema suele reducirse a demostrar continuidad mediante Cauchy-Schwarz, distinguir igualdad de Parseval e desigualdad de Bessel, trabajar con bases ortonormales y decidir si un operador en \(L^2\) es acotado.</p>
+      </div>
+    </section>
+    <section id="desarrollo" class="page">
+      <header class="section-header">
+        <p class="section-kicker">03</p>
+        <h2>Desarrollo completo del capítulo</h2>
+      </header>
+      <div class="reading-block">
+<h3 id="3-1-de-los-vectores-ordinarios-a-los-espacios-abstractos">3.1. De los vectores ordinarios a los espacios abstractos</h3>
+<p>La idea inicial es extender el lenguaje de la geometría euclídea. En dimensión dos o tres, un vector se representa mediante componentes. En dimensión \(n\), un vector puede verse como una lista ordenada</p>
+<div class="formula-block">\[
+v=(v_1,\ldots,v_n).
+\]</div>
+<p>La suma y el producto por escalares se definen componente a componente. Esta estructura basta para hablar de combinaciones lineales, subespacios, bases y dimensión.</p>
+<p>La importancia de esta generalización es que muchos problemas físicos no tienen solo tres variables. Un estado puede depender de muchas coordenadas, una función puede describir infinitos grados de libertad, y una sucesión puede codificar infinitas componentes. El capítulo usa primero espacios finito-dimensionales porque son el modelo más sencillo: todo se reduce a sumas finitas y a álgebra lineal.</p>
+<p>El ejemplo básico es \(\mathbb{C}^n\). Si</p>
+<div class="formula-block">\[
+u=(u_1,\ldots,u_n), \qquad v=(v_1,\ldots,v_n),
+\]</div>
+<p>se define un producto escalar complejo como</p>
+<div class="formula-block">\[
+(u,v)=\sum_{k=1}^n \overline{u_k}v_k.
+\]</div>
+<p>Con esta convención, el producto es conjugado-lineal en la primera variable y lineal en la segunda. Esta convención es habitual en textos de métodos matemáticos y en notación de Dirac. Si en otro texto se usa la convención opuesta, las fórmulas son las mismas salvo por el intercambio de conjugados.</p>
+<h3 id="3-2-producto-escalar-norma-y-ortogonalidad">3.2. Producto escalar, norma y ortogonalidad</h3>
+<p>Un producto escalar permite medir el tamaño de un vector mediante</p>
+<div class="formula-block">\[
+\|v\|=\sqrt{(v,v)}.
+\]</div>
+<p>La definición tiene sentido porque \((v,v)\ge 0\) y solo es cero cuando \(v=0\). En el caso complejo, esto obliga a usar conjugación:</p>
+<div class="formula-block">\[
+(v,v)=\sum_{k=1}^n |v_k|^2.
+\]</div>
+<p>Sin conjugación, podríamos obtener cantidades no positivas. Por ejemplo, si \(v=(i)\), entonces \(i^2=-1\), lo cual no sirve como cuadrado de una longitud; en cambio \(\overline{i}i=1\).</p>
+<p>La ortogonalidad se define diciendo que \(u\) y \(v\) son ortogonales cuando</p>
+<div class="formula-block">\[
+(u,v)=0.
+\]</div>
+<p>Esta condición generaliza la perpendicularidad. En espacios de funciones, por ejemplo, dos funciones pueden ser ortogonales aunque sus gráficas no sugieran una perpendicularidad visual. La perpendicularidad se entiende en términos de integral.</p>
+<p>Si \(f,g\in L^2[a,b]\), el producto escalar estándar es</p>
+<div class="formula-block">\[
+(f,g)=\int_a^b \overline{f(x)}g(x)\,dx.
+\]</div>
+<p>Entonces \(f\) y \(g\) son ortogonales cuando esa integral vale cero. Por ejemplo, en \([-\pi,\pi]\),</p>
+<div class="formula-block">\[
+\int_{-\pi}^{\pi}\sin x\cos x\,dx=0,
+\]</div>
+<p>luego \(\sin x\) y \(\cos x\) son ortogonales en ese intervalo.</p>
+<h3 id="3-3-desigualdad-de-cauchy-schwarz-y-desigualdad-triangular">3.3. Desigualdad de Cauchy-Schwarz y desigualdad triangular</h3>
+<p>La desigualdad de Cauchy-Schwarz es el resultado técnico central:</p>
+<div class="formula-block">\[
+|(u,v)|\le \|u\|\,\|v\|.
+\]</div>
+<p>En dimensión finita se demuestra observando que la norma de una combinación adecuada de \(u\) y \(v\) no puede ser negativa. En espacios de funciones adopta la forma</p>
+<div class="formula-block">\[
+\left|\int_a^b \overline{f(x)}g(x)\,dx\right|
+\le
+\left(\int_a^b |f(x)|^2\,dx\right)^{1/2}
+\left(\int_a^b |g(x)|^2\,dx\right)^{1/2}.
+\]</div>
+<p>Su importancia no es solo estimar integrales. También permite demostrar continuidad de aplicaciones definidas por productos escalares.</p>
+<p>De Cauchy-Schwarz se deduce la desigualdad triangular:</p>
+<div class="formula-block">\[
+\|u+v\|\le \|u\|+\|v\|.
+\]</div>
+<p>Esta desigualdad garantiza que la norma se comporta como una longitud. Con ella se define una distancia</p>
+<div class="formula-block">\[
+d(u,v)=\|u-v\|.
+\]</div>
+<p>Así, un espacio con producto escalar es automáticamente un espacio normado y métrico.</p>
+<h3 id="3-4-espacios-prehilbertianos-y-espacios-de-hilbert">3.4. Espacios prehilbertianos y espacios de Hilbert</h3>
+<p>Un espacio vectorial con producto escalar se llama espacio prehilbertiano. Si además es completo respecto de la norma inducida por el producto escalar, se llama espacio de Hilbert.</p>
+<p>La completitud significa que toda sucesión de Cauchy converge a un elemento del propio espacio. Una sucesión \((u_n)\) es de Cauchy si</p>
+<div class="formula-block">\[
+\|u_n-u_m\|\to 0
+\]</div>
+<p>cuando \(n,m\to\infty\). La idea es que los términos se acercan entre sí tanto como se quiera. En un espacio completo, esa aproximación tiene un límite dentro del espacio.</p>
+<p>En dimensión finita, \(\mathbb{R}^n\) y \(\mathbb{C}^n\) son espacios de Hilbert con el producto escalar usual. En dimensión infinita, los ejemplos básicos son</p>
+<div class="formula-block">\[
+\ell^2=\left\{(x_n):\sum_{n=1}^{\infty}|x_n|^2<\infty\right\}
+\]</div>
+<p>y</p>
+<div class="formula-block">\[
+L^2[a,b]=\left\{f:\int_a^b |f(x)|^2\,dx<\infty\right\}.
+\]</div>
+<p>En \(L^2[a,b]\) se identifican funciones que solo difieren en un conjunto de medida cero. Por eso el valor puntual \(f(a)\) no es una operación bien definida sobre \(L^2\): cambiar una función en un solo punto no altera su clase de \(L^2\).</p>
+<h3 id="3-5-proyeccion-ortogonal">3.5. Proyección ortogonal</h3>
+<p>En geometría euclídea, proyectar un vector sobre una recta significa extraer su componente en una dirección. En un espacio con producto escalar ocurre lo mismo. Si \(e\) es un vector unitario, la proyección de \(v\) sobre la recta generada por \(e\) es</p>
+<div class="formula-block">\[
+P(v)=(e,v)e.
+\]</div>
+<p>Si la convención del producto escalar es lineal en la segunda variable, el coeficiente de \(v\) respecto de \(e\) es \((e,v)\).</p>
+<p>Si el vector que genera la recta no está normalizado, la fórmula correcta es</p>
+<div class="formula-block">\[
+P(v)=\frac{(u,v)}{(u,u)}u.
+\]</div>
+<p>La división por \((u,u)\) es imprescindible. Omitirla es un error frecuente.</p>
+<p>En \(L^2[0,1]\), la proyección de \(f(x)=x\) sobre el subespacio generado por la función constante \(1\) es</p>
+<div class="formula-block">\[
+P(f)=\frac{(1,x)}{(1,1)}\,1
+=\frac{\int_0^1 x\,dx}{\int_0^1 1\,dx}\,1
+=\frac12.
+\]</div>
+<p>Esto significa que, en norma \(L^2\), la mejor aproximación constante de \(x\) en \([0,1]\) es \(1/2\).</p>
+<h3 id="3-6-familias-ortonormales-y-coeficientes-de-fourier">3.6. Familias ortonormales y coeficientes de Fourier</h3>
+<p>Una familia \((e_n)\) es ortonormal si</p>
+<div class="formula-block">\[
+(e_n,e_m)=\delta_{nm},
+\]</div>
+<p>donde \(\delta_{nm}=1\) si \(n=m\) y \(\delta_{nm}=0\) si \(n\ne m\). En una familia ortonormal, los coeficientes de un vector \(v\) se obtienen mediante productos escalares:</p>
+<div class="formula-block">\[
+c_n=(e_n,v).
+\]</div>
+<p>La serie formal</p>
+<div class="formula-block">\[
+\sum_{n} c_n e_n
+\]</div>
+<p>es la serie de Fourier de \(v\) respecto de esa familia.</p>
+<p>Si la familia es finita y ortonormal, la proyección de \(v\) sobre el subespacio generado por \(e_1,\ldots,e_N\) es</p>
+<div class="formula-block">\[
+P_Nv=\sum_{n=1}^N (e_n,v)e_n.
+\]</div>
+<p>El error \(v-P_Nv\) es ortogonal al subespacio de aproximación. Esta propiedad caracteriza a la proyección: la mejor aproximación se obtiene imponiendo que el error sea perpendicular a todas las direcciones usadas.</p>
+<h3 id="3-7-desigualdad-de-bessel-y-completitud-de-sistemas-ortonormales">3.7. Desigualdad de Bessel y completitud de sistemas ortonormales</h3>
+<p>Si \((e_n)\) es una familia ortonormal, no necesariamente completa, se cumple la desigualdad de Bessel:</p>
+<div class="formula-block">\[
+\sum_{n=1}^{\infty}|(e_n,v)|^2\le \|v\|^2.
+\]</div>
+<p>La desigualdad dice que la energía capturada por los coeficientes respecto de una familia ortonormal no puede superar la energía total del vector.</p>
+<p>Si la familia ortonormal es completa, entonces se obtiene la identidad de Parseval:</p>
+<div class="formula-block">\[
+\sum_{n=1}^{\infty}|(e_n,v)|^2= \|v\|^2.
+\]</div>
+<p>La diferencia entre Bessel y Parseval es examinable. Bessel vale para cualquier familia ortonormal. Parseval exige completitud.</p>
+<p>La completitud de una familia ortonormal significa que no queda ninguna dirección no nula ortogonal a todos sus elementos. Equivalentemente, el cierre del subespacio generado por la familia es todo el espacio. En espacios de funciones, esta idea formaliza que un sistema de funciones permite reconstruir cualquier función del espacio mediante una serie adecuada.</p>
+<h3 id="3-8-continuidad-del-producto-escalar">3.8. Continuidad del producto escalar</h3>
+<p>El producto escalar es continuo respecto de la norma. Si \(u_n\to u\) y \(v_n\to v\), entonces</p>
+<div class="formula-block">\[
+(u_n,v_n)\to (u,v).
+\]</div>
+<p>La demostración se basa en escribir</p>
+<div class="formula-block">\[
+(u_n,v_n)-(u,v)=(u_n-u,v_n)+(u,v_n-v)
+\]</div>
+<p>y estimar con Cauchy-Schwarz:</p>
+<div class="formula-block">\[
+|(u_n-u,v_n)|\le \|u_n-u\|\,\|v_n\|,
+\]</div>
+<div class="formula-block">\[
+|(u,v_n-v)|\le \|u\|\,\|v_n-v\|.
+\]</div>
+<p>Como toda sucesión convergente es acotada, \(\|v_n\|\) está acotada, y ambos términos tienden a cero.</p>
+<p>Un caso especial muy importante es la aplicación</p>
+<div class="formula-block">\[
+T_{v_0}:H\to\mathbb{C},\qquad T_{v_0}(v)=(v_0,v).
+\]</div>
+<p>Es lineal y continua porque</p>
+<div class="formula-block">\[
+|T_{v_0}(v)|=|(v_0,v)|\le \|v_0\|\,\|v\|.
+\]</div>
+<p>Por tanto,</p>
+<div class="formula-block">\[
+\|T_{v_0}\|\le \|v_0\|.
+\]</div>
+<p>Si \(v_0\ne 0\), tomando \(v=v_0/\|v_0\|\) se obtiene igualdad:</p>
+<div class="formula-block">\[
+\|T_{v_0}\|=\|v_0\|.
+\]</div>
+<p>Si \(v_0=0\), la norma del funcional es cero.</p>
+<h3 id="3-9-operadores-lineales-acotados">3.9. Operadores lineales acotados</h3>
+<p>Un operador lineal \(A:H\to H\) es acotado si existe \(C&gt;0\) tal que</p>
+<div class="formula-block">\[
+\|Af\|\le C\|f\|
+\]</div>
+<p>para todo \(f\in H\). La menor constante posible es la norma del operador:</p>
+<div class="formula-block">\[
+\|A\|=\sup_{\|f\|=1}\|Af\|.
+\]</div>
+<p>En espacios normados, para operadores lineales, acotado equivale a continuo. Esta equivalencia es básica para el tema siguiente de operadores y espectro.</p>
+<p>En \(\mathbb{R}^n\) o \(\mathbb{C}^n\), todo operador lineal es acotado. Si \(A\) es una matriz y se usa la norma euclídea, entonces</p>
+<div class="formula-block">\[
+\|A\|=\sqrt{\lambda_{\max}(A^*A)}.
+\]</div>
+<p>En dimensión infinita esto deja de ser automático. Hay operadores lineales no acotados, y hay expresiones que ni siquiera están bien definidas sobre \(L^2\). Por ejemplo, \(Af=f(a)\cos x\) no define un operador en \(L^2[a,b]\), porque \(f(a)\) no depende de la clase de equivalencia de \(f\). Además, incluso si se trabaja con representantes puntuales, la evaluación en un punto no es continua con la norma \(L^2\).</p>
+<h3 id="3-10-gram-schmidt-y-construccion-de-bases-ortonormales">3.10. Gram-Schmidt y construcción de bases ortonormales</h3>
+<p>El método de Gram-Schmidt transforma una familia linealmente independiente en una familia ortonormal que genera el mismo subespacio. Si \(v_1,v_2,\ldots\) son independientes, se empieza con</p>
+<div class="formula-block">\[
+e_1=\frac{v_1}{\|v_1\|}.
+\]</div>
+<p>Después se resta de \(v_2\) su proyección sobre \(e_1\):</p>
+<div class="formula-block">\[
+w_2=v_2-(e_1,v_2)e_1,\qquad e_2=\frac{w_2}{\|w_2\|}.
+\]</div>
+<p>Para el tercer vector se restan las proyecciones sobre \(e_1\) y \(e_2\):</p>
+<div class="formula-block">\[
+w_3=v_3-(e_1,v_3)e_1-(e_2,v_3)e_2,\qquad e_3=\frac{w_3}{\|w_3\|}.
+\]</div>
+<p>El procedimiento continúa igual.</p>
+<p>La consecuencia es que, cuando se trabaja en un subespacio finito-dimensional de un espacio de Hilbert, puede elegirse una base ortonormal. Esto simplifica cálculos de proyecciones, normas y coordenadas.</p>
+      </div>
+    </section>
+    <section id="conceptos" class="page">
+      <header class="section-header">
+        <p class="section-kicker">04</p>
+        <h2>Conceptos clave</h2>
+      </header>
+      <div class="reading-block">
+<h3 id="espacio-de-hilbert">1. Espacio de Hilbert.</h3>
+<p>Definición precisa: un espacio de Hilbert es un espacio vectorial con producto escalar que es completo respecto de la norma \(\|v\|=\sqrt{(v,v)}\).</p>
+<p>Explicación desarrollada: combina álgebra lineal, geometría y análisis. La parte algebraica permite sumar vectores y multiplicarlos por escalares. La parte geométrica viene del producto escalar. La parte analítica viene de la completitud.</p>
+<p>Ejemplo: \(\mathbb{C}^n\), \(\ell^2\) y \(L^2[a,b]\) con sus productos escalares usuales.</p>
+<p>Relación con otros conceptos: todo espacio de Hilbert es un espacio normado y métrico; no todo espacio normado es de Hilbert.</p>
+<p>Posible forma de preguntarlo en examen: “Defina espacio de Hilbert y explique qué papel desempeña la completitud”.</p>
+<h3 id="producto-escalar">2. Producto escalar.</h3>
+<p>Definición precisa: aplicación \((\cdot,\cdot):H\times H\to\mathbb{C}\) que satisface simetría hermítica, positividad y linealidad en una variable. Con la convención usada aquí:</p>
+<div class="formula-block">\[
+(u,v)=\overline{(v,u)},\qquad (v,v)\ge 0,\qquad (w,\alpha u+\beta v)=\alpha(w,u)+\beta(w,v).
+\]</div>
+<p>Explicación desarrollada: generaliza el producto escalar euclídeo. En espacios complejos requiere conjugación para que \((v,v)\) sea real no negativo.</p>
+<p>Ejemplo:</p>
+<div class="formula-block">\[
+(f,g)=\int_a^b \overline{f(x)}g(x)\,dx.
+\]</div>
+<p>Relación con otros conceptos: induce norma, ortogonalidad y proyecciones.</p>
+<p>Posible forma de preguntarlo en examen: “Compruebe si una aplicación dada define un producto escalar”.</p>
+<h3 id="norma-inducida">3. Norma inducida.</h3>
+<p>Definición precisa:</p>
+<div class="formula-block">\[
+\|v\|=\sqrt{(v,v)}.
+\]</div>
+<p>Explicación desarrollada: mide el tamaño de un vector. Procede del producto escalar, por lo que no es una norma cualquiera, sino una norma compatible con la geometría del espacio.</p>
+<p>Ejemplo:</p>
+<div class="formula-block">\[
+\|f\|_2=\left(\int_a^b |f(x)|^2\,dx\right)^{1/2}.
+\]</div>
+<p>Relación con otros conceptos: permite definir convergencia, continuidad y completitud.</p>
+<p>Posible forma de preguntarlo en examen: “Calcule la norma de una función en \(L^2[a,b]\)”.</p>
+<h3 id="ortogonalidad">4. Ortogonalidad.</h3>
+<p>Definición precisa: \(u\perp v\) si \((u,v)=0\).</p>
+<p>Explicación desarrollada: sustituye a la perpendicularidad geométrica. En espacios de funciones se verifica mediante una integral.</p>
+<p>Ejemplo:</p>
+<div class="formula-block">\[
+\int_{-\pi}^{\pi}\sin x\cos x\,dx=0.
+\]</div>
+<p>Relación con otros conceptos: permite construir bases ortonormales, proyecciones y series de Fourier.</p>
+<p>Posible forma de preguntarlo en examen: “Demuestre que dos funciones son ortogonales en un intervalo”.</p>
+<h3 id="familia-ortonormal">5. Familia ortonormal.</h3>
+<p>Definición precisa: una familia \((e_n)\) es ortonormal si</p>
+<div class="formula-block">\[
+(e_n,e_m)=\delta_{nm}.
+\]</div>
+<p>Explicación desarrollada: sus elementos son unitarios y mutuamente ortogonales. En una familia ortonormal, los coeficientes de una expansión se obtienen directamente mediante productos escalares.</p>
+<p>Ejemplo: en \(L^2[-\pi,\pi]\), las funciones trigonométricas normalizadas forman sistemas ortonormales adecuados.</p>
+<p>Relación con otros conceptos: una familia ortonormal es linealmente independiente; si es completa, permite reconstruir vectores.</p>
+<p>Posible forma de preguntarlo en examen: “Dada una familia de funciones, normalícela y compruebe su ortogonalidad”.</p>
+<h3 id="proyeccion-ortogonal">6. Proyección ortogonal.</h3>
+<p>Definición precisa: si \(M\) es un subespacio cerrado de \(H\), la proyección ortogonal de \(v\) sobre \(M\) es el único \(p\in M\) tal que \(v-p\perp M\).</p>
+<p>Explicación desarrollada: es la mejor aproximación de \(v\) dentro de \(M\) en la norma del espacio.</p>
+<p>Ejemplo: sobre \(\operatorname{span}\{e\}\), con \(\|e\|=1\),</p>
+<div class="formula-block">\[
+P(v)=(e,v)e.
+\]</div>
+<p>Relación con otros conceptos: conecta ortogonalidad, minimización y coeficientes de Fourier.</p>
+<p>Posible forma de preguntarlo en examen: “Calcule la proyección de una función sobre un subespacio generado por funciones ortonormales”.</p>
+<h3 id="desigualdad-de-cauchy-schwarz">7. Desigualdad de Cauchy-Schwarz.</h3>
+<p>Definición precisa:</p>
+<div class="formula-block">\[
+|(u,v)|\le \|u\|\,\|v\|.
+\]</div>
+<p>Explicación desarrollada: controla el producto escalar mediante las normas. Es la herramienta básica para demostrar continuidad.</p>
+<p>Ejemplo:</p>
+<div class="formula-block">\[
+\left|\int_0^1 f(x)g(x)\,dx\right|
+\le \|f\|_2\|g\|_2.
+\]</div>
+<p>Relación con otros conceptos: implica continuidad del producto escalar, desigualdad triangular y acotación de funcionales.</p>
+<p>Posible forma de preguntarlo en examen: “Use Cauchy-Schwarz para demostrar que \(v\mapsto (v_0,v)\) es continua”.</p>
+<h3 id="desigualdad-de-bessel">8. Desigualdad de Bessel.</h3>
+<p>Definición precisa: si \((e_n)\) es ortonormal, entonces</p>
+<div class="formula-block">\[
+\sum_{n=1}^{\infty}|(e_n,v)|^2\le \|v\|^2.
+\]</div>
+<p>Explicación desarrollada: una familia ortonormal, aunque no sea completa, no puede capturar más norma que la que tiene el vector original.</p>
+<p>Ejemplo: si \((\varphi_n)\) es un conjunto ortonormal en \(L^2\), entonces los coeficientes de Fourier cumplen</p>
+<div class="formula-block">\[
+\sum |(\varphi_n,f)|^2\le \|f\|_2^2.
+\]</div>
+<p>Relación con otros conceptos: se convierte en Parseval si el sistema es completo.</p>
+<p>Posible forma de preguntarlo en examen: “Demuestre la desigualdad de Bessel para una familia ortonormal”.</p>
+<h3 id="identidad-de-parseval">9. Identidad de Parseval.</h3>
+<p>Definición precisa: para una base ortonormal completa,</p>
+<div class="formula-block">\[
+\sum_{n=1}^{\infty}|(e_n,v)|^2=\|v\|^2.
+\]</div>
+<p>Explicación desarrollada: expresa conservación de la norma al pasar de un vector a sus coeficientes respecto de una base ortonormal.</p>
+<p>Ejemplo: en Fourier, la energía de la función se reparte entre sus armónicos.</p>
+<p>Relación con otros conceptos: requiere completitud; si no hay completitud, solo se tiene Bessel.</p>
+<p>Posible forma de preguntarlo en examen: “Explique por qué no puede usarse Parseval si el sistema ortonormal no es completo”.</p>
+<h3 id="funcional-lineal-continuo">10. Funcional lineal continuo.</h3>
+<p>Definición precisa: aplicación lineal \(T:H\to\mathbb{C}\) tal que existe \(C&gt;0\) con</p>
+<div class="formula-block">\[
+|T(v)|\le C\|v\|.
+\]</div>
+<p>Explicación desarrollada: transforma vectores en escalares de manera compatible con la norma. En Hilbert, los funcionales dados por producto escalar son continuos.</p>
+<p>Ejemplo:</p>
+<div class="formula-block">\[
+T_{v_0}(v)=(v_0,v),\qquad \|T_{v_0}\|=\|v_0\|.
+\]</div>
+<p>Relación con otros conceptos: se demuestra con Cauchy-Schwarz; anticipa el teorema de representación de Riesz.</p>
+<p>Posible forma de preguntarlo en examen: “Demuestre que \(T_{v_0}\) es continuo y calcule su norma”.</p>
+<h3 id="operador-lineal-acotado">11. Operador lineal acotado.</h3>
+<p>Definición precisa: operador lineal \(A:H\to H\) para el que existe \(C&gt;0\) tal que</p>
+<div class="formula-block">\[
+\|Av\|\le C\|v\|.
+\]</div>
+<p>Explicación desarrollada: en dimensión infinita no todo operador lineal es acotado. La acotación significa continuidad.</p>
+<p>Ejemplo: en \(\mathbb{C}^n\), toda matriz define un operador acotado. En \(L^2[a,b]\), la multiplicación por una función acotada también es acotada.</p>
+<p>Relación con otros conceptos: su norma es \(\|A\|=\sup_{\|v\|=1}\|Av\|\).</p>
+<p>Posible forma de preguntarlo en examen: “Determine si un operador dado en \(L^2\) es acotado y calcule su norma”.</p>
+<h3 id="l-2-a-b">12. \(L^2[a,b]\).</h3>
+<p>Definición precisa: espacio de clases de funciones medibles de cuadrado integrable:</p>
+<div class="formula-block">\[
+\int_a^b |f(x)|^2\,dx<\infty.
+\]</div>
+<p>Explicación desarrollada: es el modelo fundamental de Hilbert para funciones. Sus elementos no son funciones puntuales aisladas, sino clases de equivalencia que pueden diferir en conjuntos de medida cero.</p>
+<p>Ejemplo: \(x\in L^2[0,1]\), y \(\|x\|_2=1/\sqrt3\).</p>
+<p>Relación con otros conceptos: es el escenario natural para Fourier, Bessel, Parseval y operadores integrales.</p>
+<p>Posible forma de preguntarlo en examen: “Explique por qué la evaluación \(f\mapsto f(a)\) no está bien definida en \(L^2[a,b]\)”.</p>
+      </div>
+    </section>
+    <section id="relaciones" class="page">
+      <header class="section-header">
+        <p class="section-kicker">05</p>
+        <h2>Relaciones entre ideas</h2>
+      </header>
+      <div class="reading-block">
+<p>La jerarquía conceptual empieza en el espacio vectorial. Sin estructura vectorial no se puede hablar de linealidad, combinación lineal, subespacio ni base. Al añadir un producto escalar aparece la geometría: longitud, ángulo, ortogonalidad y proyección. Al tomar la norma inducida por el producto escalar aparece la noción de distancia y, por tanto, de convergencia. Al exigir completitud se obtiene un espacio de Hilbert.</p>
+<p>La desigualdad de Cauchy-Schwarz es el vínculo técnico entre el producto escalar y la norma. Permite pasar de una expresión algebraica, \((u,v)\), a una estimación métrica, \(\|u\|\|v\|\). Por eso se usa para demostrar continuidad de \(T_{v_0}\), continuidad del producto escalar y acotación de muchos operadores.</p>
+<p>La ortogonalidad genera un sistema de coordenadas eficiente. Si una familia es ortonormal, los coeficientes no se obtienen resolviendo sistemas lineales, sino aplicando productos escalares. Esta es la razón algebraica de los coeficientes de Fourier: la ortogonalidad elimina todos los términos salvo uno al integrar.</p>
+<p>La proyección ortogonal conecta geometría y aproximación. Si se proyecta \(v\) sobre un subespacio \(M\), el error \(v-Pv\) queda perpendicular a \(M\). La consecuencia es que \(Pv\) es la mejor aproximación a \(v\) dentro de \(M\). Esta idea está detrás de mínimos cuadrados, series truncadas y aproximación por modos.</p>
+<p>Bessel y Parseval distinguen dos niveles. Bessel solo necesita ortonormalidad y da una desigualdad. Parseval necesita completitud y da una igualdad. La oposición importante es: “familia ortonormal” no significa “base ortonormal completa”. Esta confusión aparece con frecuencia en exámenes.</p>
+<p>La completitud del espacio y la completitud de una familia ortonormal no son lo mismo. La completitud del espacio dice que no faltan límites de sucesiones de Cauchy. La completitud de una familia ortonormal dice que no faltan direcciones para expandir vectores del espacio. Ambas ideas están relacionadas, pero no son equivalentes.</p>
+<p>En evolución dentro de la asignatura, Hilbert prepara operadores. Una vez que se sabe medir normas y productos escalares, tiene sentido estudiar operadores acotados, adjuntos, autovalores, operadores autoadjuntos y espectro. En Física, esta secuencia desemboca en modos normales, Fourier, Sturm-Liouville y mecánica cuántica.</p>
+      </div>
+    </section>
+    <section id="errores" class="page">
+      <header class="section-header">
+        <p class="section-kicker">06</p>
+        <h2>Errores habituales</h2>
+      </header>
+      <div class="reading-block">
+<h3 id="error-olvidar-el-conjugado-en-espacios-complejos">1. Error: olvidar el conjugado en espacios complejos.</h3>
+<p>Por qué está mal: sin conjugación, \((v,v)\) puede no ser real positivo.</p>
+<p>Corrección: usar</p>
+<div class="formula-block">\[
+(u,v)=\sum \overline{u_k}v_k
+\]</div>
+<p>o la convención equivalente indicada por el profesor.</p>
+<p>Respuesta incorrecta: “Para \(v=(i)\), \((v,v)=i^2=-1\)”.</p>
+<p>Respuesta correcta: “Para \(v=(i)\), \((v,v)=\overline{i}i=1\)”.</p>
+<h3 id="error-afirmar-que-una-familia-ortogonal-puede-contener-el-vector-cero">2. Error: afirmar que una familia ortogonal puede contener el vector cero.</h3>
+<p>Por qué está mal: una familia ortonormal nunca contiene el cero, porque cada vector debe tener norma uno. Una familia ortogonal útil para independencia requiere vectores no nulos.</p>
+<p>Corrección: comprobar siempre \(\|e_n\|=1\) en una familia ortonormal.</p>
+<p>Respuesta incorrecta: “\(\{0,e_1\}\) es ortonormal porque el producto escalar con cero da cero”.</p>
+<p>Respuesta correcta: “No es ortonormal: \(\|0\|=0\ne 1\)”.</p>
+<h3 id="error-confundir-bessel-con-parseval">3. Error: confundir Bessel con Parseval.</h3>
+<p>Por qué está mal: Bessel vale para familias ortonormales no necesariamente completas; Parseval requiere completitud.</p>
+<p>Corrección: usar</p>
+<div class="formula-block">\[
+\sum |(e_n,v)|^2\le \|v\|^2
+\]</div>
+<p>salvo que se haya probado o indicado que \((e_n)\) es una base ortonormal completa.</p>
+<p>Respuesta incorrecta: “Como \((e_n)\) es ortonormal, hay igualdad de Parseval”.</p>
+<p>Respuesta correcta: “Como solo se sabe que \((e_n)\) es ortonormal, se aplica Bessel; la igualdad exige completitud”.</p>
+<h3 id="error-proyectar-sin-dividir-por-la-norma-cuando-el-vector-no-es-unitario">4. Error: proyectar sin dividir por la norma cuando el vector no es unitario.</h3>
+<p>Por qué está mal: la fórmula \(P(v)=(u,v)u\) solo vale si \(\|u\|=1\).</p>
+<p>Corrección:</p>
+<div class="formula-block">\[
+P(v)=\frac{(u,v)}{(u,u)}u.
+\]</div>
+<p>Respuesta incorrecta: “La proyección de \(v\) sobre \(u\) es \((u,v)u\)”.</p>
+<p>Respuesta correcta: “Si \(u\) no está normalizado, la proyección es \((u,v)u/\|u\|^2\)”.</p>
+<h3 id="error-tratar-f-a-como-una-operacion-bien-definida-en-l-2-a-b">5. Error: tratar \(f(a)\) como una operación bien definida en \(L^2[a,b]\).</h3>
+<p>Por qué está mal: en \(L^2\) las funciones se identifican si difieren en conjuntos de medida cero. Cambiar el valor en un punto no cambia el elemento de \(L^2\), pero sí cambia \(f(a)\).</p>
+<p>Corrección: no usar evaluación puntual como funcional sobre \(L^2\), salvo que se trabaje en otro espacio donde tenga sentido.</p>
+<p>Respuesta incorrecta: “El operador \(Af=f(a)\cos x\) está definido en \(L^2[a,b]\)”.</p>
+<p>Respuesta correcta: “No está bien definido en \(L^2[a,b]\); \(f(a)\) depende del representante”.</p>
+<h3 id="error-pensar-que-convergencia-puntual-implica-convergencia-en-l-2">6. Error: pensar que convergencia puntual implica convergencia en \(L^2\).</h3>
+<p>Por qué está mal: la norma \(L^2\) mide el área cuadrática del error, no el valor en cada punto por separado.</p>
+<p>Corrección: comprobar</p>
+<div class="formula-block">\[
+\|f_n-f\|_2^2=\int |f_n-f|^2.
+\]</div>
+<p>Respuesta incorrecta: “Como \(f_n(x)\to f(x)\), entonces \(\|f_n-f\|_2\to 0\) siempre”.</p>
+<p>Respuesta correcta: “La convergencia puntual no basta; hay que verificar convergencia en norma \(L^2\) o usar un teorema que la garantice”.</p>
+<h3 id="error-decir-que-un-operador-es-acotado-porque-af-es-una-funcion-acotada">7. Error: decir que un operador es acotado porque \(Af\) es una función acotada.</h3>
+<p>Por qué está mal: operador acotado significa que existe una constante \(C\) tal que \(\|Af\|\le C\|f\|\) para todo \(f\). No significa que cada \(Af\) sea una función acotada punto a punto.</p>
+<p>Corrección: estimar la norma del resultado en términos de la norma de entrada.</p>
+<p>Respuesta incorrecta: “\(A\) es acotado porque \(\cos x\) está acotada”.</p>
+<p>Respuesta correcta: “Hay que demostrar \(\|Af\|\le C\|f\|\). La acotación puntual de \(\cos x\) solo ayuda si el operador está bien definido y depende de \(f\) de forma continua”.</p>
+<h3 id="error-olvidar-que-toda-sucesion-convergente-es-acotada-al-demostrar-continuidad-del-producto-escalar">8. Error: olvidar que toda sucesión convergente es acotada al demostrar continuidad del producto escalar.</h3>
+<p>Por qué está mal: en la estimación</p>
+<div class="formula-block">\[
+|(u_n-u,v_n)|\le \|u_n-u\|\|v_n\|
+\]</div>
+<p>hace falta controlar \(\|v_n\|\).</p>
+<p>Corrección: usar que \(v_n\to v\) implica que existe \(M\) con \(\|v_n\|\le M\).</p>
+<p>Respuesta incorrecta: “El primer término tiende a cero porque \(\|u_n-u\|\to0\), sin mirar \(\|v_n\|\)”.</p>
+<p>Respuesta correcta: “Como \(v_n\) converge, está acotada; por tanto \(\|u_n-u\|\|v_n\|\to0\)”.</p>
+<h3 id="error-confundir-ortogonalidad-con-disjuncion-de-soportes">9. Error: confundir ortogonalidad con disjunción de soportes.</h3>
+<p>Por qué está mal: dos funciones con soportes disjuntos son ortogonales, pero también pueden ser ortogonales con soportes solapados por cancelación de la integral.</p>
+<p>Corrección: calcular el producto escalar.</p>
+<p>Respuesta incorrecta: “\(\sin x\) y \(\cos x\) no son ortogonales porque ambas son no nulas en muchos puntos”.</p>
+<p>Respuesta correcta: “Son ortogonales en \([-\pi,\pi]\) porque \(\int_{-\pi}^{\pi}\sin x\cos x\,dx=0\)”.</p>
+<h3 id="error-asumir-que-todo-subespacio-admite-proyeccion-ortogonal-sin-hipotesis">10. Error: asumir que todo subespacio admite proyección ortogonal sin hipótesis.</h3>
+<p>Por qué está mal: en Hilbert, la proyección ortogonal está garantizada para subespacios cerrados. En dimensión finita todo subespacio es cerrado, pero en dimensión infinita no.</p>
+<p>Corrección: si el subespacio es finito-dimensional o cerrado, puede usarse proyección ortogonal.</p>
+<p>Respuesta incorrecta: “Todo subespacio de un Hilbert tiene proyección ortogonal”.</p>
+<p>Respuesta correcta: “Todo subespacio cerrado de un Hilbert tiene proyección ortogonal; en particular, todo subespacio finito-dimensional”.</p>
+      </div>
+    </section>
+    <section id="preguntas" class="page">
+      <header class="section-header">
+        <p class="section-kicker">07</p>
+        <h2>Preguntas orientadas a examen</h2>
+      </header>
+      <div class="reading-block">
+<h3 id="10-preguntas-faciles">10 preguntas fáciles</h3>
+<p>F1. Defina espacio de Hilbert.</p>
+<p>F2. Defina producto escalar complejo con la convención lineal en el segundo argumento.</p>
+<p>F3. ¿Cómo se obtiene la norma inducida por un producto escalar?</p>
+<p>F4. ¿Cuándo dos vectores son ortogonales?</p>
+<p>F5. Dé el producto escalar usual en \(L^2[a,b]\).</p>
+<p>F6. Enuncie la desigualdad de Cauchy-Schwarz.</p>
+<p>F7. ¿Qué significa que una familia sea ortonormal?</p>
+<p>F8. Escriba la fórmula de la proyección sobre \(\operatorname{span}\{u\}\) cuando \(u\ne0\).</p>
+<p>F9. ¿Qué diferencia hay entre desigualdad de Bessel e identidad de Parseval?</p>
+<p>F10. ¿Qué significa que un operador lineal sea acotado?</p>
+<h3 id="10-preguntas-medias">10 preguntas medias</h3>
+<p>M1. Calcule \((u,v)\), \(\|u\|\) y \(\|v\|\) para \(u=(1,i,2)\), \(v=(i,1,1-i)\) en \(\mathbb{C}^3\).</p>
+<p>M2. Compruebe si \(f(x)=1\) y \(g(x)=x\) son ortogonales en \(L^2[-1,1]\).</p>
+<p>M3. Calcule la proyección de \(f(x)=x\) sobre las constantes en \(L^2[0,1]\).</p>
+<p>M4. Demuestre que \(T_{v_0}(v)=(v_0,v)\) es continuo.</p>
+<p>M5. Si \(u_n\to u\) en \(H\), demuestre que \((v,u_n)\to(v,u)\) para todo \(v\in H\).</p>
+<p>M6. Dada una familia ortonormal \((e_1,\ldots,e_N)\), demuestre que</p>
+<div class="formula-block">\[
+\left\|v-\sum_{k=1}^N(e_k,v)e_k\right\|^2
+=
+\|v\|^2-\sum_{k=1}^N |(e_k,v)|^2.
+\]</div>
+<p>M7. Explique por qué una familia ortonormal es linealmente independiente.</p>
+<p>M8. Determine si \(A:\mathbb{C}^2\to\mathbb{C}^2\), \(A(x,y)=(x+y,y)\), es acotado.</p>
+<p>M9. Explique por qué \(f\mapsto f(a)\) no está bien definido en \(L^2[a,b]\).</p>
+<p>M10. Enuncie qué debe probarse para decir que una familia ortonormal es completa.</p>
+<h3 id="5-preguntas-dificiles">5 preguntas difíciles</h3>
+<p>D1. Demuestre la desigualdad de Bessel para una familia ortonormal numerable.</p>
+<p>D2. Si \(u_n\to u\) y \(w_n\to w\) en un espacio de Hilbert, demuestre que \((u_n,w_n)\to(u,w)\).</p>
+<p>D3. Sea \(M\) un subespacio finito-dimensional con base ortonormal \(e_1,\ldots,e_N\). Demuestre que la proyección ortogonal sobre \(M\) es</p>
+<div class="formula-block">\[
+Pv=\sum_{k=1}^N(e_k,v)e_k.
+\]</div>
+<p>D4. Determine si la expresión \(Af=f(a)\cos x\) define un operador acotado en \(L^2[a,b]\).</p>
+<p>D5. Sea \(A\) una matriz compleja. Explique cómo calcular su norma como operador en \(\mathbb{C}^n\) con norma euclídea.</p>
+<h3 id="5-preguntas-de-desarrollo-largo">5 preguntas de desarrollo largo</h3>
+<p>L1. Desarrolle la construcción conceptual desde espacio vectorial hasta espacio de Hilbert.</p>
+<p>L2. Explique el papel de la desigualdad de Cauchy-Schwarz en espacios de Hilbert y sus consecuencias principales.</p>
+<p>L3. Explique qué son familias ortonormales, coeficientes de Fourier, desigualdad de Bessel e identidad de Parseval.</p>
+<p>L4. Explique la proyección ortogonal y su interpretación como mejor aproximación.</p>
+<p>L5. Explique por qué \(L^2[a,b]\) es el ejemplo central de espacio de Hilbert y qué precauciones hay que tener con los valores puntuales.</p>
+<h3 id="5-preguntas-de-relacion-entre-conceptos">5 preguntas de relación entre conceptos</h3>
+<p>R1. Relacione producto escalar, norma, distancia y convergencia.</p>
+<p>R2. Relacione ortogonalidad, proyección y series de Fourier.</p>
+<p>R3. Relacione completitud del espacio de Hilbert y completitud de una familia ortonormal.</p>
+<p>R4. Relacione Cauchy-Schwarz, funcionales lineales y operadores acotados.</p>
+<p>R5. Relacione \(L^2[a,b]\), Bessel, Parseval y problemas de Física con modos normales.</p>
+      </div>
+    </section>
+    <section id="respuestas" class="page">
+      <header class="section-header">
+        <p class="section-kicker">08</p>
+        <h2>Respuestas modelo</h2>
+      </header>
+      <div class="reading-block">
+<h3 id="respuestas-faciles">Respuestas fáciles</h3>
+<p>F1. Un espacio de Hilbert es un espacio vectorial con producto escalar que es completo respecto de la norma inducida por ese producto escalar. La norma es \(\|v\|=\sqrt{(v,v)}\), y la completitud significa que toda sucesión de Cauchy converge dentro del propio espacio.</p>
+<p>F2. En un espacio complejo, con la convención lineal en la segunda variable, el producto escalar satisface</p>
+<div class="formula-block">\[
+(u,v)=\overline{(v,u)},\qquad (u,u)\ge0,
+\]</div>
+<div class="formula-block">\[
+(w,\alpha u+\beta v)=\alpha(w,u)+\beta(w,v).
+\]</div>
+<p>Además, \((u,u)=0\) si y solo si \(u=0\).</p>
+<p>F3. La norma inducida se define por</p>
+<div class="formula-block">\[
+\|v\|=\sqrt{(v,v)}.
+\]</div>
+<p>Es una norma porque el producto escalar cumple positividad, Cauchy-Schwarz y la desigualdad triangular.</p>
+<p>F4. Dos vectores \(u,v\) son ortogonales si</p>
+<div class="formula-block">\[
+(u,v)=0.
+\]</div>
+<p>En espacios reales coincide con la perpendicularidad usual; en espacios complejos o de funciones es su generalización algebraica.</p>
+<p>F5. En \(L^2[a,b]\), el producto escalar usual es</p>
+<div class="formula-block">\[
+(f,g)=\int_a^b \overline{f(x)}g(x)\,dx.
+\]</div>
+<p>La norma asociada es</p>
+<div class="formula-block">\[
+\|f\|_2=\left(\int_a^b |f(x)|^2\,dx\right)^{1/2}.
+\]</div>
+<p>F6. La desigualdad de Cauchy-Schwarz dice que, para todo \(u,v\in H\),</p>
+<div class="formula-block">\[
+|(u,v)|\le \|u\|\,\|v\|.
+\]</div>
+<p>En \(L^2\) se escribe como una desigualdad integral.</p>
+<p>F7. Una familia \((e_n)\) es ortonormal si cada vector tiene norma uno y vectores distintos son ortogonales:</p>
+<div class="formula-block">\[
+(e_n,e_m)=\delta_{nm}.
+\]</div>
+<p>F8. Si \(u\ne0\), la proyección de \(v\) sobre \(\operatorname{span}\{u\}\) es</p>
+<div class="formula-block">\[
+P(v)=\frac{(u,v)}{(u,u)}u.
+\]</div>
+<p>Si \(\|u\|=1\), queda \(P(v)=(u,v)u\).</p>
+<p>F9. Bessel afirma</p>
+<div class="formula-block">\[
+\sum |(e_n,v)|^2\le \|v\|^2
+\]</div>
+<p>para cualquier familia ortonormal. Parseval afirma igualdad, pero exige que la familia ortonormal sea completa.</p>
+<p>F10. Un operador lineal \(A\) es acotado si existe \(C&gt;0\) tal que</p>
+<div class="formula-block">\[
+\|Av\|\le C\|v\|
+\]</div>
+<p>para todo \(v\). La menor constante posible es \(\|A\|\).</p>
+<h3 id="respuestas-medias">Respuestas medias</h3>
+<p>M1. Con \((u,v)=\sum\overline{u_k}v_k\),</p>
+<div class="formula-block">\[
+(u,v)=\overline{1}i+\overline{i}1+\overline{2}(1-i)
+=i+(-i)+2-2i=2-2i.
+\]</div>
+<p>Además,</p>
+<div class="formula-block">\[
+\|u\|^2=|1|^2+|i|^2+|2|^2=6,\qquad \|u\|=\sqrt6,
+\]</div>
+<div class="formula-block">\[
+\|v\|^2=|i|^2+|1|^2+|1-i|^2=1+1+2=4,\qquad \|v\|=2.
+\]</div>
+<p>M2. En \(L^2[-1,1]\),</p>
+<div class="formula-block">\[
+(f,g)=\int_{-1}^{1}1\cdot x\,dx=0.
+\]</div>
+<p>Por tanto, \(1\) y \(x\) son ortogonales en ese intervalo.</p>
+<p>M3. El subespacio de constantes está generado por \(u(x)=1\). Entonces</p>
+<div class="formula-block">\[
+P(f)=\frac{(1,x)}{(1,1)}1
+=\frac{\int_0^1 x\,dx}{\int_0^1 1\,dx}1
+=\frac12.
+\]</div>
+<p>M4. Por Cauchy-Schwarz,</p>
+<div class="formula-block">\[
+|T_{v_0}(v)|=|(v_0,v)|\le \|v_0\|\,\|v\|.
+\]</div>
+<p>Así \(T_{v_0}\) es acotado y, por tanto, continuo. Además \(\|T_{v_0}\|\le\|v_0\|\), y si \(v_0\ne0\), tomando \(v=v_0/\|v_0\|\), se obtiene \(\|T_{v_0}\|=\|v_0\|\).</p>
+<p>M5. Se tiene</p>
+<div class="formula-block">\[
+|(v,u_n)-(v,u)|=|(v,u_n-u)|
+\le \|v\|\,\|u_n-u\|.
+\]</div>
+<p>Como \(u_n\to u\), el último término tiende a cero. Luego \((v,u_n)\to(v,u)\).</p>
+<p>M6. Sea</p>
+<div class="formula-block">\[
+p_N=\sum_{k=1}^N(e_k,v)e_k.
+\]</div>
+<p>Entonces \(v-p_N\) es ortogonal a cada \(e_j\), porque</p>
+<div class="formula-block">\[
+(e_j,v-p_N)=(e_j,v)-\sum_{k=1}^N(e_k,v)(e_j,e_k)=0.
+\]</div>
+<p>Por Pitágoras,</p>
+<div class="formula-block">\[
+\|v\|^2=\|p_N\|^2+\|v-p_N\|^2.
+\]</div>
+<p>Como la familia es ortonormal,</p>
+<div class="formula-block">\[
+\|p_N\|^2=\sum_{k=1}^N |(e_k,v)|^2.
+\]</div>
+<p>Reordenando se obtiene la fórmula pedida.</p>
+<p>M7. Supongamos</p>
+<div class="formula-block">\[
+\alpha_1e_1+\cdots+\alpha_Ne_N=0.
+\]</div>
+<p>Tomando producto escalar con \(e_j\),</p>
+<div class="formula-block">\[
+(e_j,\alpha_1e_1+\cdots+\alpha_Ne_N)=\alpha_j=0.
+\]</div>
+<p>Esto vale para todo \(j\), luego todos los coeficientes son cero y la familia es linealmente independiente.</p>
+<p>M8. Sí. En dimensión finita todo operador lineal es acotado. En concreto,</p>
+<div class="formula-block">\[
+\|A(x,y)\|^2=|x+y|^2+|y|^2
+\le (|x|+|y|)^2+|y|^2
+\le 3(|x|^2+|y|^2)
+\]</div>
+<p>usando \((a+b)^2\le 2a^2+2b^2\) se puede obtener una constante. Por tanto existe \(C\) con \(\|A z\|\le C\|z\|\).</p>
+<p>M9. En \(L^2[a,b]\) dos funciones que difieren solo en un punto representan el mismo elemento. Si modificamos \(f\) en \(a\), no cambia su clase de \(L^2\), pero sí cambia el valor \(f(a)\). Por tanto \(f\mapsto f(a)\) no está bien definido sobre \(L^2[a,b]\).</p>
+<p>M10. Para probar que una familia ortonormal es completa hay que demostrar que no existe ningún vector no nulo ortogonal a todos sus elementos, o equivalentemente que el cierre del subespacio generado por la familia es todo el espacio.</p>
+<h3 id="respuestas-dificiles">Respuestas difíciles</h3>
+<p>D1. Para \(N\) fijo, sea</p>
+<div class="formula-block">\[
+p_N=\sum_{k=1}^N(e_k,v)e_k.
+\]</div>
+<p>Entonces \(v-p_N\perp p_N\), por lo que</p>
+<div class="formula-block">\[
+\|v\|^2=\|p_N\|^2+\|v-p_N\|^2\ge\|p_N\|^2.
+\]</div>
+<p>Como \((e_k)\) es ortonormal,</p>
+<div class="formula-block">\[
+\|p_N\|^2=\sum_{k=1}^N |(e_k,v)|^2.
+\]</div>
+<p>Así,</p>
+<div class="formula-block">\[
+\sum_{k=1}^N |(e_k,v)|^2\le \|v\|^2
+\]</div>
+<p>para todo \(N\). Al pasar al límite creciente en \(N\),</p>
+<div class="formula-block">\[
+\sum_{k=1}^{\infty} |(e_k,v)|^2\le \|v\|^2.
+\]</div>
+<p>D2. Escribimos</p>
+<div class="formula-block">\[
+(u_n,w_n)-(u,w)=(u_n-u,w_n)+(u,w_n-w).
+\]</div>
+<p>Entonces</p>
+<div class="formula-block">\[
+|(u_n,w_n)-(u,w)|
+\le \|u_n-u\|\,\|w_n\|+\|u\|\,\|w_n-w\|.
+\]</div>
+<p>Como \(w_n\to w\), la sucesión \((w_n)\) es acotada. El primer término tiende a cero porque \(\|u_n-u\|\to0\), y el segundo porque \(\|w_n-w\|\to0\). Luego \((u_n,w_n)\to(u,w)\).</p>
+<p>D3. Definimos</p>
+<div class="formula-block">\[
+Pv=\sum_{k=1}^N(e_k,v)e_k.
+\]</div>
+<p>Claramente \(Pv\in M\). Para cada \(j\),</p>
+<div class="formula-block">\[
+(e_j,v-Pv)=(e_j,v)-\sum_{k=1}^N(e_k,v)(e_j,e_k)=0.
+\]</div>
+<p>Luego \(v-Pv\) es ortogonal a toda base de \(M\), y por linealidad es ortogonal a todo \(M\). Por tanto \(Pv\) es la proyección ortogonal de \(v\) sobre \(M\).</p>
+<p>D4. No define un operador en \(L^2[a,b]\). En \(L^2\), los elementos son clases de equivalencia de funciones que pueden diferir en un punto sin dejar de ser el mismo elemento. El valor \(f(a)\) no está determinado por la clase de \(f\). Por tanto \(Af=f(a)\cos x\) no está bien definido. Si se eligieran representantes puntuales, tampoco sería continuo respecto de la norma \(L^2\), porque pueden construirse funciones con norma \(L^2\) pequeña y valor puntual arbitrariamente grande.</p>
+<p>D5. Con la norma euclídea,</p>
+<div class="formula-block">\[
+\|A\|=\sup_{\|x\|=1}\|Ax\|.
+\]</div>
+<p>Como</p>
+<div class="formula-block">\[
+\|Ax\|^2=(Ax,Ax)=(x,A^*Ax),
+\]</div>
+<p>la cantidad máxima sobre \(\|x\|=1\) es el mayor autovalor de la matriz hermítica positiva \(A^*A\). Por tanto,</p>
+<div class="formula-block">\[
+\|A\|=\sqrt{\lambda_{\max}(A^*A)}.
+\]</div>
+<h3 id="respuestas-de-desarrollo-largo">Respuestas de desarrollo largo</h3>
+<p>L1. Un espacio vectorial permite sumar elementos y multiplicarlos por escalares. Con esto se definen subespacios, independencia lineal y bases. Si se añade un producto escalar, se puede hablar de longitud, ángulo y ortogonalidad. El producto escalar induce la norma \(\|v\|=\sqrt{(v,v)}\), y la norma induce la distancia \(d(u,v)=\|u-v\|\). Con la distancia se estudian sucesiones, convergencia y continuidad. Si toda sucesión de Cauchy converge dentro del espacio, el espacio es completo. Un espacio vectorial con producto escalar y completo para la norma inducida es un espacio de Hilbert. Así, Hilbert es la generalización completa de la geometría euclídea a espacios de funciones y sucesiones.</p>
+<p>L2. Cauchy-Schwarz afirma que</p>
+<div class="formula-block">\[
+|(u,v)|\le\|u\|\|v\|.
+\]</div>
+<p>Su papel es convertir productos escalares en estimaciones de norma. De ella se deduce la desigualdad triangular, la continuidad del producto escalar y la continuidad de los funcionales \(v\mapsto(v_0,v)\). En examen suele ser la herramienta que permite probar que una aplicación es continua o que una sucesión de productos escalares converge. En \(L^2\) también permite justificar que una integral del tipo \(\int \overline f g\) está controlada por las normas de \(f\) y \(g\).</p>
+<p>L3. Una familia ortonormal \((e_n)\) cumple \((e_n,e_m)=\delta_{nm}\). Los coeficientes de Fourier de \(v\) respecto de esa familia son \(c_n=(e_n,v)\). La serie asociada es \(\sum c_ne_n\). Para cualquier familia ortonormal se cumple Bessel:</p>
+<div class="formula-block">\[
+\sum |c_n|^2\le\|v\|^2.
+\]</div>
+<p>Esto significa que los coeficientes no pueden contener más norma que el vector original. Si la familia es completa, la aproximación por la serie recupera todo el vector y se obtiene Parseval:</p>
+<div class="formula-block">\[
+\sum |c_n|^2=\|v\|^2.
+\]</div>
+<p>La diferencia entre ambas fórmulas es la completitud.</p>
+<p>L4. La proyección ortogonal de \(v\) sobre un subespacio cerrado \(M\) es el elemento \(p\in M\) tal que \(v-p\perp M\). En dimensión finita, si \(M\) tiene base ortonormal \(e_1,\ldots,e_N\),</p>
+<div class="formula-block">\[
+p=\sum_{k=1}^N(e_k,v)e_k.
+\]</div>
+<p>Esta fórmula muestra que proyectar es conservar las componentes de \(v\) en las direcciones de \(M\). Además, \(p\) es la mejor aproximación a \(v\) dentro de \(M\), porque para cualquier \(q\in M\),</p>
+<div class="formula-block">\[
+\|v-q\|^2=\|v-p\|^2+\|p-q\|^2\ge\|v-p\|^2.
+\]</div>
+<p>L5. \(L^2[a,b]\) es central porque convierte funciones en vectores y permite aplicar geometría a problemas de análisis. El producto escalar es</p>
+<div class="formula-block">\[
+(f,g)=\int_a^b\overline{f(x)}g(x)\,dx,
+\]</div>
+<p>y la norma mide el tamaño cuadrático de la función. Esto es natural en Fourier, en energía de señales y en modos normales. La precaución principal es que los elementos de \(L^2\) son clases de equivalencia: modificar una función en un punto no cambia su elemento de \(L^2\). Por eso la evaluación \(f(a)\) no está bien definida como funcional en \(L^2\). Los argumentos deben usar integrales y normas, no valores puntuales aislados.</p>
+<h3 id="respuestas-de-relacion-entre-conceptos">Respuestas de relación entre conceptos</h3>
+<p>R1. El producto escalar define la norma mediante \(\|v\|=\sqrt{(v,v)}\). La norma define la distancia \(d(u,v)=\|u-v\|\). La distancia define la convergencia: \(v_n\to v\) si \(\|v_n-v\|\to0\). Por tanto, la estructura geométrica inicial acaba determinando el análisis de límites.</p>
+<p>R2. La ortogonalidad permite separar componentes independientes. La proyección usa esa separación para obtener la mejor aproximación dentro de un subespacio. Las series de Fourier repiten esta idea con una familia ortonormal de funciones: cada coeficiente es una proyección sobre una dirección funcional.</p>
+<p>R3. La completitud del espacio indica que no faltan límites de sucesiones de Cauchy. La completitud de una familia ortonormal indica que no faltan direcciones para reconstruir vectores. Un Hilbert puede estar completo como espacio y, aun así, una familia ortonormal concreta puede no ser completa.</p>
+<p>R4. Cauchy-Schwarz permite estimar \(|(v_0,v)|\) por \(\|v_0\|\|v\|\). Esto demuestra que \(v\mapsto(v_0,v)\) es un funcional lineal continuo. La misma lógica se usa para operadores: hay que encontrar una constante \(C\) tal que \(\|Av\|\le C\|v\|\).</p>
+<p>R5. En \(L^2[a,b]\), las funciones de cuadrado integrable forman un espacio de Hilbert. Los sistemas ortonormales producen coeficientes de Fourier. Bessel garantiza que los coeficientes están controlados por la norma de la función. Parseval, si hay completitud, interpreta la norma total como suma de contribuciones de modos. En Física, esto se lee como descomposición en modos normales o armónicos.</p>
+      </div>
+    </section>
+    <section id="resumen" class="page">
+      <header class="section-header">
+        <p class="section-kicker">09</p>
+        <h2>Resumen final de repaso</h2>
+      </header>
+      <div class="reading-block">
+<p>Ideas principales:</p>
+<ul>
+<li>Un espacio de Hilbert es un espacio vectorial con producto escalar y completo para la norma inducida.</li>
+<li>El producto escalar genera norma, distancia, ortogonalidad y proyecciones.</li>
+<li>En espacios complejos hay que usar conjugación.</li>
+<li>En \(L^2[a,b]\), el producto escalar se define mediante una integral.</li>
+<li>Cauchy-Schwarz es la herramienta principal de estimación.</li>
+<li>Las familias ortonormales permiten obtener coeficientes por producto escalar.</li>
+<li>Bessel vale para familias ortonormales; Parseval exige completitud.</li>
+<li>Un operador lineal es acotado si \(\|Av\|\le C\|v\|\).</li>
+<li>En \(L^2\), los valores puntuales no están bien definidos como operaciones sobre clases de equivalencia.</li>
+</ul>
+<p>Conceptos imprescindibles:</p>
+<ul>
+<li>Producto escalar.</li>
+<li>Norma inducida.</li>
+<li>Espacio prehilbertiano.</li>
+<li>Espacio de Hilbert.</li>
+<li>Ortogonalidad.</li>
+<li>Familia ortonormal.</li>
+<li>Proyección ortogonal.</li>
+<li>Cauchy-Schwarz.</li>
+<li>Bessel.</li>
+<li>Parseval.</li>
+<li>\(L^2[a,b]\).</li>
+<li>Operador acotado.</li>
+<li>Funcional lineal continuo.</li>
+</ul>
+<p>Relaciones clave:</p>
+<ul>
+<li>Producto escalar \(\Rightarrow\) norma \(\Rightarrow\) distancia \(\Rightarrow\) convergencia.</li>
+<li>Ortogonalidad \(\Rightarrow\) proyección \(\Rightarrow\) aproximación óptima.</li>
+<li>Ortonormalidad \(\Rightarrow\) coeficientes de Fourier.</li>
+<li>Ortonormalidad sin completitud \(\Rightarrow\) Bessel.</li>
+<li>Ortonormalidad con completitud \(\Rightarrow\) Parseval.</li>
+<li>Cauchy-Schwarz \(\Rightarrow\) continuidad de funcionales y productos escalares.</li>
+</ul>
+<p>Errores que evitar:</p>
+<ul>
+<li>No olvidar conjugados en productos escalares complejos.</li>
+<li>No usar Parseval sin completitud.</li>
+<li>No proyectar sobre vectores no unitarios sin dividir por \(\|u\|^2\).</li>
+<li>No evaluar \(f(a)\) como si estuviera bien definido en \(L^2\).</li>
+<li>No confundir operador acotado con función imagen acotada.</li>
+<li>No confundir completitud del espacio con completitud de una familia ortonormal.</li>
+</ul>
+      </div>
+    </section>
+    <section id="checklist" class="page">
+      <header class="section-header">
+        <p class="section-kicker">10</p>
+        <h2>Checklist de dominio</h2>
+      </header>
+      <div class="reading-block">
+<ul>
+<li>Si no puedes explicar qué añade el producto escalar a un espacio vectorial, falta repasar espacio vectorial, producto escalar y norma inducida.</li>
+<li>Si no puedes justificar por qué \((v,v)\ge0\) en un espacio complejo, falta repasar conjugación compleja.</li>
+<li>Si confundes \((u,v)=0\) con que las funciones no se solapen, revisar ortogonalidad en \(L^2\).</li>
+<li>Si no puedes enunciar Cauchy-Schwarz, falta repasar la herramienta central del tema.</li>
+<li>Si no sabes demostrar que \(T_{v_0}(v)=(v_0,v)\) es continuo, falta practicar estimaciones con Cauchy-Schwarz.</li>
+<li>Si confundes Bessel con Parseval, revisar familia ortonormal, completitud y base ortonormal.</li>
+<li>Si usas \(P(v)=(u,v)u\) sin comprobar que \(\|u\|=1\), revisar proyección ortogonal.</li>
+<li>Si no puedes calcular una proyección sobre constantes en \(L^2[0,1]\), falta practicar productos escalares integrales.</li>
+<li>Si tratas \(f(a)\) como funcional continuo en \(L^2[a,b]\), revisar clases de equivalencia y evaluación puntual.</li>
+<li>Si no puedes explicar qué significa que un operador sea acotado, falta repasar norma de operador.</li>
+<li>Si no puedes demostrar que una familia ortonormal es linealmente independiente, falta repasar el uso del producto escalar con cada vector de la familia.</li>
+<li>Si puedes demostrar Bessel para una familia ortonormal finita y pasar al límite, el núcleo de series ortogonales está suficientemente asentado.</li>
+<li>Si puedes demostrar la continuidad del producto escalar para \(u_n\to u\), \(v_n\to v\), el manejo de límites en Hilbert está suficientemente asentado.</li>
+<li>Si puedes decidir que \(Af=f(a)\cos x\) no está bien definido en \(L^2[a,b]\), has entendido una de las trampas principales del tema.</li>
+<li>Si puedes relacionar Hilbert con Fourier, proyecciones y operadores acotados, el capítulo está suficientemente dominado para examen.</li>
+</ul>
+      </div>
+    </section>
+    </main>
+  </div>
+</body>
+</html>

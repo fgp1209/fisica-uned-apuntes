@@ -1,0 +1,1497 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="color-scheme" content="light dark" />
+  <title>MM2 — Tema 7: Espacios vectoriales</title>
+  <meta name="description" content="Guía de estudio de Métodos Matemáticos II sobre espacios vectoriales, combinaciones lineales, subespacios, bases, dimensión, operadores lineales y ortogonalidad." />
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/icon-32.png" />
+  <link rel="icon" type="image/png" sizes="50x50" href="assets/icons/icon-50.png" />
+  <link rel="apple-touch-icon" sizes="100x100" href="assets/icons/icon-100.png" />
+  <meta name="theme-color" content="#375a7f" />
+  <link rel="stylesheet" href="assets/styles.css" />
+  <script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']], processEscapes: true },
+  svg: { fontCache: 'global' },
+  options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+};
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+  <script defer src="assets/app.js"></script>
+</head>
+<body class="subject-mm2">
+  <div class="wrap">
+    <header class="cover">
+      <a class="back-link" href="index.html">← Índice</a>
+      <p class="eyebrow">Métodos Matemáticos II</p>
+      <h1>Espacios vectoriales</h1>
+      <p class="subtitle">Tema 7 · Combinaciones lineales, aplicaciones y operadores lineales, dependencia, subespacios, bases, dimensión y espacios de funciones.</p>
+      <div class="lesson-meta">
+        <span>Asignatura: MM2</span>
+        <span>Tema 7</span>
+        <span>Estado: completo</span>
+        <span>Enfoque: examen UNED</span>
+      </div>
+    </header>
+
+    <div class="toolbar no-print" aria-label="Navegación del tema">
+      <nav>
+        <a href="#mapa">Mapa</a>
+        <a href="#prerrequisitos">Prerrequisitos</a>
+        <a href="#idea-central">Idea</a>
+        <a href="#desarrollo">Desarrollo</a>
+        <a href="#conceptos">Conceptos</a>
+        <a href="#errores">Errores</a>
+        <a href="#preguntas">Preguntas</a>
+        <a href="#respuestas">Respuestas</a>
+        <a href="#resumen">Resumen</a>
+        <a href="#checklist">Checklist</a>
+      </nav>
+      <div class="toolbar-actions"><button class="btn secondary" onclick="document.querySelectorAll('details').forEach(d=>d.open=true)">Abrir todo</button><button class="btn secondary" onclick="document.querySelectorAll('details').forEach(d=>d.open=false)">Modo repaso</button><button class="btn" onclick="printReady()">Imprimir / PDF</button></div>
+    </div>
+
+    <main>
+      <section id="mapa" class="page map-page">
+        <header class="section-header">
+          <p class="section-kicker">00</p>
+          <h2>Mapa conceptual</h2>
+        </header>
+        <div class="concept-map">
+          <a class="map-card" href="#prerrequisitos"><span>Base lineal</span><small>Vectores, escalares, matrices, funciones y polinomios como objetos lineales</small></a>
+          <a class="map-card" href="#desarrollo"><span>Combinaciones</span><small>Span, dependencia e independencia lineal</small></a>
+          <a class="map-card" href="#desarrollo"><span>Aplicaciones lineales</span><small>Funciones, operadores y matrices que respetan suma y escalares</small></a>
+          <a class="map-card" href="#desarrollo"><span>Subespacios</span><small>Cierre, condiciones homogéneas, bases y dimensión</small></a>
+          <a class="map-card" href="#desarrollo"><span>Espacios de funciones</span><small>Polinomios, funciones, producto interno, norma y ortogonalidad</small></a>
+          <a class="map-card" href="#preguntas"><span>Examen</span><small>Verificar subespacios, reducir bases, calcular dimensión y justificar linealidad</small></a>
+        </div>
+        <div class="reading-block source-block">
+          <p>Fuente principal: guía de estudio de MM2 basada en Mary L. Boas, Mathematical Methods in the Physical Sciences, capítulo 3, secciones sobre combinaciones lineales, dependencia e independencia, espacios vectoriales lineales y espacios vectoriales generales. Núcleo del tema: combinaciones lineales, aplicaciones lineales, subespacios, bases, dimensión, operadores lineales, producto interno y ortogonalidad.</p>
+        </div>
+      </section>
+
+    <section id="prerrequisitos" class="page">
+      <header class="section-header">
+        <p class="section-kicker">01</p>
+        <h2>Prerrequisitos mínimos</h2>
+      </header>
+      <div class="reading-block">
+<h3 id="vector">Vector</h3>
+<p>Un vector es un objeto que puede sumarse con otros objetos del mismo tipo y multiplicarse por escalares. En \(\mathbb R^n\) se representa como una lista ordenada de \(n\) componentes:</p>
+<div class="formula-block">\[
+v=(v_1,v_2,\ldots,v_n).
+\]</div>
+<p>Es necesario porque todo el capítulo generaliza la geometría usual de vectores de dos y tres dimensiones a contextos más amplios: \(\mathbb R^n\), espacios de funciones y espacios de matrices.</p>
+<p>Ejemplo mínimo:</p>
+<div class="formula-block">\[
+(1,2,0)+(-1,3,4)=(0,5,4).
+\]</div>
+<h3 id="escalar">Escalar</h3>
+<p>Un escalar es un número del cuerpo sobre el que se trabaja, normalmente \(\mathbb R\) o \(\mathbb C\). Multiplicar un vector por un escalar cambia sus componentes de forma homogénea:</p>
+<div class="formula-block">\[
+\lambda(v_1,\ldots,v_n)=(\lambda v_1,\ldots,\lambda v_n).
+\]</div>
+<p>Es necesario porque las combinaciones lineales, las bases y las aplicaciones lineales dependen de la multiplicación por escalares.</p>
+<p>Ejemplo mínimo:</p>
+<div class="formula-block">\[
+3(1,-2,4)=(3,-6,12).
+\]</div>
+<h3 id="suma-de-vectores">Suma de vectores</h3>
+<p>La suma de vectores en \(\mathbb R^n\) se hace componente a componente. Es necesaria porque la primera operación estructural de un espacio vectorial es la suma.</p>
+<p>Ejemplo mínimo:</p>
+<div class="formula-block">\[
+(2,1,-1)+(0,3,5)=(2,4,4).
+\]</div>
+<h3 id="matriz">Matriz</h3>
+<p>Una matriz es una tabla rectangular de números. En el capítulo aparece como herramienta para organizar sistemas lineales, estudiar rango y representar aplicaciones lineales.</p>
+<p>Ejemplo mínimo:</p>
+<div class="formula-block">\[
+A=\begin{pmatrix}1&2\\0&-1\end{pmatrix}.
+\]</div>
+<p>Si \(x=(x_1,x_2)^T\), entonces</p>
+<div class="formula-block">\[
+Ax=\begin{pmatrix}x_1+2x_2\\-x_2\end{pmatrix}.
+\]</div>
+<h3 id="reduccion-por-filas">Reducción por filas</h3>
+<p>La reducción por filas transforma una matriz mediante operaciones elementales para revelar el número de filas independientes. Es necesaria porque Boas la usa como método práctico para detectar independencia lineal y encontrar una base del subespacio generado.</p>
+<p>Ejemplo mínimo:</p>
+<div class="formula-block">\[
+\begin{pmatrix}1&2\\2&4\end{pmatrix}
+\sim
+\begin{pmatrix}1&2\\0&0\end{pmatrix}.
+\]</div>
+<p>Solo hay una fila independiente.</p>
+<h3 id="sistema-lineal-homogeneo">Sistema lineal homogéneo</h3>
+<p>Un sistema homogéneo tiene la forma</p>
+<div class="formula-block">\[
+Ax=0.
+\]</div>
+<p>Es necesario porque la dependencia lineal se comprueba buscando coeficientes no todos nulos que anulen una combinación lineal.</p>
+<p>Ejemplo mínimo:</p>
+<div class="formula-block">\[
+a(1,0)+b(0,1)=0
+\]</div>
+<p>solo tiene solución \(a=b=0\), luego los vectores son independientes.</p>
+<h3 id="funcion">Función</h3>
+<p>Una función asigna a cada valor de la variable un valor numérico. En este capítulo las funciones pueden comportarse como vectores: se pueden sumar y multiplicar por escalares.</p>
+<p>Ejemplo mínimo:</p>
+<div class="formula-block">\[
+(2\sin x-3\cos x)(x)
+\]</div>
+<p>es una combinación lineal de \(\sin x\) y \(\cos x\).</p>
+<h3 id="derivada-e-integral-elementales">Derivada e integral elementales</h3>
+<p>La derivada aparece al estudiar operadores lineales como \(D=d/dx\). La integral aparece al definir producto interno entre funciones.</p>
+<p>Ejemplo mínimo:</p>
+<div class="formula-block">\[
+D(f+g)=Df+Dg,\qquad D(kf)=kDf.
+\]</div>
+<p>Por eso la derivación es un operador lineal.</p>
+<h3 id="polinomio">Polinomio</h3>
+<p>Un polinomio es una expresión del tipo</p>
+<div class="formula-block">\[
+p(x)=a_0+a_1x+\cdots+a_nx^n.
+\]</div>
+<p>Es necesario porque Boas usa los polinomios como ejemplo básico de espacio vectorial que no se parece, a primera vista, a los vectores geométricos.</p>
+<p>Ejemplo mínimo:</p>
+<div class="formula-block">\[
+p(x)=2-x+3x^2
+\]</div>
+<p>pertenece al espacio de polinomios de grado menor o igual que \(2\).</p>
+<h3 id="producto-escalar">Producto escalar</h3>
+<p>En \(\mathbb R^n\), el producto escalar de dos vectores es</p>
+<div class="formula-block">\[
+u\cdot v=\sum_{i=1}^n u_i v_i.
+\]</div>
+<p>Es necesario porque permite definir norma, ortogonalidad y, más adelante, espacios con producto interno.</p>
+<p>Ejemplo mínimo:</p>
+<div class="formula-block">\[
+(1,2,0)\cdot(3,-1,4)=3-2+0=1.
+\]</div>
+      </div>
+    </section>
+    <section id="idea-central" class="page">
+      <header class="section-header">
+        <p class="section-kicker">02</p>
+        <h2>Idea central del capítulo</h2>
+      </header>
+      <div class="reading-block">
+<p>El capítulo construye una idea abstracta de vector. Al principio, un vector se identifica con una flecha o con una lista de componentes. Esa imagen es suficiente para geometría elemental, pero resulta limitada cuando aparecen objetos matemáticos que se comportan como vectores sin ser flechas: funciones, polinomios, matrices o soluciones de ecuaciones diferenciales lineales. El problema que aborda el capítulo es precisamente reconocer qué propiedades hacen que un conjunto pueda tratarse como un espacio vectorial.</p>
+<p>La idea central es que lo importante no es la naturaleza física o geométrica del objeto, sino las operaciones que admite. Si podemos sumar dos elementos del conjunto, multiplicar un elemento por un escalar y mantener ciertas reglas algebraicas, entonces tenemos una estructura lineal. Esa estructura permite hablar de combinación lineal, dependencia, independencia, subespacio, base y dimensión. Estos conceptos son el lenguaje operativo de la parte lineal de los métodos matemáticos.</p>
+<p>El tema ocupa una posición central en Métodos Matemáticos II porque prepara el estudio de espacios métricos, normados, de Hilbert, operadores y espectro. También conecta con contenidos de MM1 y MM3: las soluciones de una ecuación diferencial lineal homogénea forman un espacio vectorial; las series de Fourier se entienden como expansiones respecto de una base de funciones; los modos normales son vectores propios en espacios de dimensión finita o infinita. Sin esta base, los temas posteriores se aprenden como recetas sueltas.</p>
+<p>El capítulo no pretende desarrollar una teoría axiomática completa de álgebra lineal abstracta. Su objetivo es más operativo: enseñar a identificar cuándo un conjunto es un espacio vectorial, cuándo un subconjunto es un subespacio, cómo decidir si unos vectores son independientes, cómo encontrar una base, cómo calcular la dimensión y cómo reconocer una aplicación lineal. En examen, esto se traduce en problemas de verificación, cálculo de bases, reducción de conjuntos generadores y justificación de linealidad.</p>
+      </div>
+    </section>
+    <section id="desarrollo" class="page">
+      <header class="section-header">
+        <p class="section-kicker">03</p>
+        <h2>Desarrollo completo del capítulo</h2>
+      </header>
+      <div class="reading-block">
+<h3 id="3-1-combinaciones-lineales">3.1. Combinaciones lineales</h3>
+<p>El primer paso del capítulo consiste en fijar qué significa combinar vectores linealmente. Dados dos vectores \(A\) y \(B\), una expresión</p>
+<div class="formula-block">\[
+aA+bB
+\]</div>
+<p>con \(a\) y \(b\) escalares se llama combinación lineal de \(A\) y \(B\). La misma idea se extiende a cualquier número finito de vectores:</p>
+<div class="formula-block">\[
+a_1v_1+a_2v_2+\cdots+a_nv_n.
+\]</div>
+<p>La importancia de esta definición es que describe todos los objetos que se pueden construir a partir de un conjunto inicial usando solo las dos operaciones permitidas en un espacio vectorial: suma y multiplicación por escalares. No se permite multiplicar vectores entre sí, elevarlos al cuadrado ni aplicar funciones no lineales. Por eso la palabra “lineal” tiene aquí un significado algebraico preciso.</p>
+<p>Geométricamente, dos vectores no paralelos con el mismo origen generan un plano: todas sus combinaciones lineales quedan dentro de ese plano, y todo vector del plano puede escribirse como combinación lineal de ellos. En tres dimensiones, los vectores unitarios \(i,j,k\) generan todo \(\mathbb R^3\), porque cualquier vector</p>
+<div class="formula-block">\[
+r=xi+yj+zk
+\]</div>
+<p>es una combinación lineal de esos tres vectores.</p>
+<p>Esta idea se generaliza inmediatamente. En \(\mathbb R^5\), por ejemplo, un vector</p>
+<div class="formula-block">\[
+(2,-1,0,3,4)
+\]</div>
+<p>puede escribirse como</p>
+<div class="formula-block">\[
+2e_1-e_2+0e_3+3e_4+4e_5,
+\]</div>
+<p>donde \(e_1,\ldots,e_5\) son los vectores de la base canónica. La geometría visual se pierde, pero el álgebra sigue funcionando.</p>
+<p>El ejemplo que fija la idea es el conjunto de vectores generados por</p>
+<div class="formula-block">\[
+u=(1,0,1),\qquad v=(0,1,-1).
+\]</div>
+<p>Sus combinaciones lineales son</p>
+<div class="formula-block">\[
+au+bv=(a,b,a-b).
+\]</div>
+<p>Por tanto, todos los vectores generados cumplen la relación</p>
+<div class="formula-block">\[
+x-y-z=0.
+\]</div>
+<p>La combinación lineal convierte un conjunto finito de vectores en un conjunto completo: el subespacio que esos vectores generan.</p>
+<h3 id="3-2-funciones-lineales">3.2. Funciones lineales</h3>
+<p>Después de introducir combinaciones lineales, el capítulo pasa a las funciones lineales. Una función \(f\) definida sobre vectores es lineal si respeta suma y multiplicación por escalares:</p>
+<div class="formula-block">\[
+f(r_1+r_2)=f(r_1)+f(r_2),\qquad f(ar)=af(r).
+\]</div>
+<p>Estas dos condiciones son el criterio fundamental. No basta con que la expresión gráfica sea una recta o con que aparezcan variables de primer grado. La linealidad se comprueba por las operaciones, no por la apariencia.</p>
+<p>Un ejemplo típico es</p>
+<div class="formula-block">\[
+f(r)=A\cdot r,
+\]</div>
+<p>donde \(A\) es un vector fijo. Si \(A=(2,3,-1)\) y \(r=(x,y,z)\), entonces</p>
+<div class="formula-block">\[
+f(r)=2x+3y-z.
+\]</div>
+<p>Esta función es lineal porque el producto escalar con un vector fijo distribuye sobre la suma y permite sacar escalares.</p>
+<p>En cambio,</p>
+<div class="formula-block">\[
+f(r)=|r|
+\]</div>
+<p>no es lineal. La norma de una suma no suele ser la suma de las normas:</p>
+<div class="formula-block">\[
+|r_1+r_2|\neq |r_1|+|r_2|
+\]</div>
+<p>en general. Este ejemplo es importante porque muestra un error frecuente: confundir una operación natural con una operación lineal.</p>
+<p>También se debe distinguir entre una ecuación de recta y una función lineal. La función</p>
+<div class="formula-block">\[
+f(x)=mx+b
+\]</div>
+<p>solo es lineal si \(b=0\). Si \(b\neq0\),</p>
+<div class="formula-block">\[
+f(x_1+x_2)=m(x_1+x_2)+b
+\]</div>
+<p>mientras que</p>
+<div class="formula-block">\[
+f(x_1)+f(x_2)=mx_1+b+mx_2+b=m(x_1+x_2)+2b.
+\]</div>
+<p>No coinciden. La constante independiente rompe la linealidad.</p>
+<h3 id="3-3-funciones-vectoriales-lineales">3.3. Funciones vectoriales lineales</h3>
+<p>El mismo criterio se aplica a funciones que devuelven vectores. Una función vectorial \(F\) es lineal si</p>
+<div class="formula-block">\[
+F(r_1+r_2)=F(r_1)+F(r_2),\qquad F(ar)=aF(r).
+\]</div>
+<p>Por ejemplo,</p>
+<div class="formula-block">\[
+F(r)=br
+\]</div>
+<p>con \(b\) escalar fijo es lineal. También lo es, para un vector fijo \(A\),</p>
+<div class="formula-block">\[
+F(r)=A\times r,
+\]</div>
+<p>porque el producto vectorial con un factor fijo se comporta linealmente respecto del otro factor.</p>
+<p>En física aparecen muchas funciones vectoriales: campos eléctricos, campos magnéticos, velocidades, fuerzas. No todos esos campos son lineales. El hecho de que \(F(r)\) sea un vector en cada punto no implica que \(F\) sea lineal. La prueba siempre es la misma: conservar suma y escalares.</p>
+<p>Este apartado conecta con la noción de operador. Una aplicación que toma un objeto y devuelve otro se puede estudiar por la misma propiedad de linealidad. La derivación, por ejemplo, actúa sobre funciones:</p>
+<div class="formula-block">\[
+D[f]=\frac{df}{dx}.
+\]</div>
+<p>Como</p>
+<div class="formula-block">\[
+D(f+g)=Df+Dg,\qquad D(kf)=kDf,
+\]</div>
+<p>la derivada es un operador lineal. Este punto será esencial al estudiar ecuaciones diferenciales lineales, operadores en espacios de Hilbert y problemas de autovalores.</p>
+<h3 id="3-4-operadores-lineales">3.4. Operadores lineales</h3>
+<p>Un operador es una regla que actúa sobre objetos matemáticos: números, vectores, funciones o matrices. Es lineal si cumple</p>
+<div class="formula-block">\[
+O(A+B)=O(A)+O(B),\qquad O(kA)=kO(A).
+\]</div>
+<p>Esta definición agrupa muchos ejemplos bajo una misma estructura.</p>
+<p>La derivada es lineal. La integral definida también lo es:</p>
+<div class="formula-block">\[
+\int_a^b (f+g)\,dx=\int_a^b f\,dx+\int_a^b g\,dx,
+\]</div>
+<div class="formula-block">\[
+\int_a^b kf\,dx=k\int_a^b f\,dx.
+\]</div>
+<p>La transposición de matrices también es lineal:</p>
+<div class="formula-block">\[
+(A+B)^T=A^T+B^T,\qquad (kA)^T=kA^T.
+\]</div>
+<p>En cambio, operaciones como tomar el cuadrado, el recíproco, el determinante o el máximo de una función no son lineales en general. Por ejemplo:</p>
+<div class="formula-block">\[
+(f+g)^2\neq f^2+g^2.
+\]</div>
+<p>El determinante tampoco es lineal como función de toda la matriz:</p>
+<div class="formula-block">\[
+\det(A+B)\neq \det A+\det B
+\]</div>
+<p>en general.</p>
+<p>Este punto tiene consecuencias directas en examen. Muchos ejercicios consisten en decidir si una aplicación es lineal. La respuesta correcta no debe limitarse a “sí” o “no”: hay que verificar las dos propiedades o dar un contraejemplo que destruya una de ellas. Un solo contraejemplo basta para demostrar que algo no es lineal.</p>
+<h3 id="3-5-matrices-como-operadores-lineales">3.5. Matrices como operadores lineales</h3>
+<p>Las matrices aparecen como forma concreta de representar operadores lineales entre espacios de dimensión finita. Si</p>
+<div class="formula-block">\[
+M=\begin{pmatrix}a&b\\c&d\end{pmatrix},
+\]</div>
+<p>entonces</p>
+<div class="formula-block">\[
+\begin{pmatrix}X\\Y\end{pmatrix}
+=
+M\begin{pmatrix}x\\y\end{pmatrix}
+=
+\begin{pmatrix}ax+by\\cx+dy\end{pmatrix}.
+\]</div>
+<p>Esta transformación lleva cada vector del plano a otro vector del plano. La matriz contiene toda la información de la transformación.</p>
+<p>La linealidad de una matriz se expresa como</p>
+<div class="formula-block">\[
+M(r_1+r_2)=Mr_1+Mr_2,\qquad M(kr)=kMr.
+\]</div>
+<p>Estas propiedades proceden de la distributividad del producto matricial. Por eso toda matriz define una aplicación lineal sobre vectores columna compatibles.</p>
+<p>El capítulo distingue además dos interpretaciones geométricas: una transformación activa, donde el vector se mueve y los ejes quedan fijos, y una transformación pasiva, donde cambia el sistema de coordenadas y el vector geométrico se mantiene. En ambos casos la misma matriz puede aparecer, pero la interpretación física o geométrica cambia.</p>
+<p>Entre las transformaciones lineales destacan las ortogonales, que conservan longitudes. En el plano, una transformación ortogonal satisface</p>
+<div class="formula-block">\[
+x'^2+y'^2=x^2+y^2.
+\]</div>
+<p>Geométricamente representa rotaciones o reflexiones. Algebraicamente, su matriz cumple</p>
+<div class="formula-block">\[
+M^{-1}=M^T.
+\]</div>
+<p>Aunque este no es el centro de T7, conviene entenderlo porque anticipa el papel de las bases ortonormales y de los operadores unitarios.</p>
+<h3 id="3-6-dependencia-e-independencia-lineal">3.6. Dependencia e independencia lineal</h3>
+<p>La dependencia lineal formaliza la idea de que un vector puede ser redundante. Un conjunto de vectores \(v_1,\ldots,v_n\) es linealmente dependiente si existen escalares \(a_1,\ldots,a_n\), no todos nulos, tales que</p>
+<div class="formula-block">\[
+a_1v_1+\cdots+a_nv_n=0.
+\]</div>
+<p>Si la única forma de obtener el vector cero es tomar todos los coeficientes nulos, el conjunto es linealmente independiente.</p>
+<p>Ejemplo:</p>
+<div class="formula-block">\[
+A=i+j,\qquad B=i+k,\qquad C=2i+j+k.
+\]</div>
+<p>Como</p>
+<div class="formula-block">\[
+A+B-C=0,
+\]</div>
+<p>los tres vectores son dependientes. El vector \(C\) no aporta una dirección nueva: se obtiene sumando \(A\) y \(B\).</p>
+<p>La independencia es la condición que permite usar un conjunto como base. Si hay dependencia, sobra al menos un vector. En términos prácticos, un conjunto dependiente contiene información repetida; un conjunto independiente contiene direcciones genuinamente distintas.</p>
+<p>Para decidir la independencia en casos más grandes, se escribe una matriz con los vectores como filas o columnas y se reduce por filas. El número de filas no nulas al final, es decir, el rango, da el número de vectores independientes. Si el rango es menor que el número de vectores iniciales, hay dependencia.</p>
+<p>Ejemplo:</p>
+<div class="formula-block">\[
+v_1=(1,2,0),\quad v_2=(2,4,0),\quad v_3=(0,1,1).
+\]</div>
+<p>Como \(v_2=2v_1\), los tres no son independientes. Un conjunto independiente que genera el mismo subespacio es</p>
+<div class="formula-block">\[
+\{v_1,v_3\}.
+\]</div>
+<h3 id="3-7-independencia-lineal-de-funciones">3.7. Independencia lineal de funciones</h3>
+<p>El capítulo extiende la dependencia lineal a funciones. Las funciones \(f_1,\ldots,f_n\) son dependientes si existen constantes \(k_1,\ldots,k_n\), no todas nulas, tales que</p>
+<div class="formula-block">\[
+k_1f_1(x)+\cdots+k_nf_n(x)\equiv 0.
+\]</div>
+<p>El símbolo \(\equiv 0\) significa que la igualdad se cumple para todo \(x\) del intervalo considerado, no solo en algunos puntos.</p>
+<p>Ejemplo:</p>
+<div class="formula-block">\[
+\sin^2x
+\]</div>
+<p>y</p>
+<div class="formula-block">\[
+1-\cos^2x
+\]</div>
+<p>son dependientes, porque</p>
+<div class="formula-block">\[
+\sin^2x-(1-\cos^2x)\equiv0.
+\]</div>
+<p>En cambio, \(\sin x\) y \(\cos x\) son independientes: no existen constantes \(a,b\), no ambas nulas, tales que</p>
+<div class="formula-block">\[
+a\sin x+b\cos x\equiv0.
+\]</div>
+<p>Para funciones suficientemente derivables, Boas introduce el wronskiano como criterio útil. Si</p>
+<div class="formula-block">\[
+W(f_1,\ldots,f_n)(x)=
+\begin{vmatrix}
+f_1 & f_2 & \cdots & f_n\\
+f_1' & f_2' & \cdots & f_n'\\
+\vdots & \vdots & \ddots & \vdots\\
+f_1^{(n-1)} & f_2^{(n-1)} & \cdots & f_n^{(n-1)}
+\end{vmatrix}
+\]</div>
+<p>no es idénticamente cero, entonces las funciones son linealmente independientes. El criterio es suficiente: si el wronskiano no se anula idénticamente, hay independencia.</p>
+<p>Ejemplo:</p>
+<div class="formula-block">\[
+f_1=1,\qquad f_2=x,\qquad f_3=\sin x.
+\]</div>
+<p>Entonces</p>
+<div class="formula-block">\[
+W=
+\begin{vmatrix}
+1&x&\sin x\\
+0&1&\cos x\\
+0&0&-\sin x
+\end{vmatrix}
+=-\sin x.
+\]</div>
+<p>Como \(-\sin x\) no es la función nula, las tres funciones son independientes.</p>
+<p>Este punto conecta directamente con ecuaciones diferenciales: las soluciones independientes de una ecuación lineal homogénea forman sistemas fundamentales. En MM2 servirá también para entender espacios de funciones y, después, bases ortogonales.</p>
+<h3 id="3-8-espacio-vectorial-generado">3.8. Espacio vectorial generado</h3>
+<p>Dado un conjunto de vectores, el conjunto de todas sus combinaciones lineales se llama espacio generado o span:</p>
+<div class="formula-block">\[
+\operatorname{span}\{v_1,\ldots,v_n\}
+=
+\{a_1v_1+\cdots+a_nv_n:\ a_i\in\mathbb K\}.
+\]</div>
+<p>Este es siempre un subespacio del espacio ambiente.</p>
+<p>La idea es sencilla: si se permiten todas las sumas y todos los múltiplos escalares posibles, se obtiene el menor espacio vectorial que contiene a los vectores iniciales. “Menor” significa que cualquier otro subespacio que contenga a \(v_1,\ldots,v_n\) debe contener también todas sus combinaciones lineales.</p>
+<p>Ejemplo:</p>
+<div class="formula-block">\[
+\operatorname{span}\{(1,0,0),(0,1,0)\}
+=
+\{(a,b,0):a,b\in\mathbb R\}.
+\]</div>
+<p>Es el plano \(z=0\) que pasa por el origen.</p>
+<p>Si los vectores iniciales son dependientes, el conjunto generado puede describirse con menos vectores. Por ejemplo,</p>
+<div class="formula-block">\[
+\operatorname{span}\{(1,0),(0,1),(1,1)\}
+=
+\operatorname{span}\{(1,0),(0,1)\}.
+\]</div>
+<p>El tercer vector no añade nada porque ya es combinación lineal de los dos primeros.</p>
+<h3 id="3-9-subespacios">3.9. Subespacios</h3>
+<p>Un subespacio es un subconjunto de un espacio vectorial que, con las mismas operaciones, es también un espacio vectorial. En la práctica, para comprobar que un subconjunto \(W\subset V\) es subespacio basta verificar tres condiciones:</p>
+<div class="formula-block">\[
+0\in W,
+\]</div>
+<div class="formula-block">\[
+u,v\in W\Rightarrow u+v\in W,
+\]</div>
+<div class="formula-block">\[
+u\in W,\ \lambda\in\mathbb K\Rightarrow \lambda u\in W.
+\]</div>
+<p>La primera condición suele estar implícita en las otras si se permite \(\lambda=0\), pero en examen conviene mencionarla porque detecta rápidamente errores.</p>
+<p>Un plano que pasa por el origen es subespacio de \(\mathbb R^3\). Un plano que no pasa por el origen no lo es. La razón no es geométrica superficial: si no contiene el vector cero, no puede ser espacio vectorial.</p>
+<p>Ejemplo correcto:</p>
+<div class="formula-block">\[
+W=\{(x,y,z)\in\mathbb R^3:\ x+y-z=0\}.
+\]</div>
+<p>Si \(u\) y \(v\) cumplen la ecuación, entonces \(u+v\) también la cumple. Si \(u\) la cumple, \(\lambda u\) también. Además, \(0+0-0=0\). Por tanto, \(W\) es subespacio.</p>
+<p>Ejemplo incorrecto:</p>
+<div class="formula-block">\[
+S=\{(x,y,z)\in\mathbb R^3:\ x+y-z=1\}.
+\]</div>
+<p>No contiene el vector cero. Tampoco es cerrado por suma: si dos vectores cumplen la ecuación con valor \(1\), su suma cumple valor \(2\). No es subespacio.</p>
+<p>Esta diferencia entre ecuaciones homogéneas e inhomogéneas es esencial. Las restricciones lineales homogéneas suelen definir subespacios. Las restricciones con término independiente no nulo suelen definir conjuntos afines, no espacios vectoriales.</p>
+<h3 id="3-10-base">3.10. Base</h3>
+<p>Una base de un espacio vectorial es un conjunto de vectores que cumple dos condiciones: genera el espacio y es linealmente independiente. Generar garantiza que todos los vectores del espacio pueden escribirse usando la base. La independencia garantiza que esa escritura no contiene redundancia.</p>
+<p>Formalmente, \(B=\{e_1,\ldots,e_n\}\) es base de \(V\) si todo \(v\in V\) puede escribirse como</p>
+<div class="formula-block">\[
+v=a_1e_1+\cdots+a_ne_n
+\]</div>
+<p>y si la igualdad</p>
+<div class="formula-block">\[
+a_1e_1+\cdots+a_ne_n=0
+\]</div>
+<p>implica</p>
+<div class="formula-block">\[
+a_1=\cdots=a_n=0.
+\]</div>
+<p>Estas dos propiedades juntas tienen una consecuencia fundamental: las coordenadas respecto de una base son únicas. Si un vector pudiera escribirse de dos formas distintas, al restar ambas expresiones se obtendría una combinación lineal nula no trivial, contradiciendo la independencia.</p>
+<p>Ejemplo:</p>
+<div class="formula-block">\[
+B=\{(1,0),(0,1)\}
+\]</div>
+<p>es base de \(\mathbb R^2\). Todo vector \((x,y)\) se escribe de forma única como</p>
+<div class="formula-block">\[
+(x,y)=x(1,0)+y(0,1).
+\]</div>
+<p>También</p>
+<div class="formula-block">\[
+B'=\{(1,1),(1,-1)\}
+\]</div>
+<p>es base de \(\mathbb R^2\). Aunque no es la base canónica, sus vectores son independientes y generan todo el plano. Esto muestra que la base no es única; lo que sí es único es el número de elementos de cualquier base finita.</p>
+<h3 id="3-11-dimension">3.11. Dimensión</h3>
+<p>La dimensión de un espacio vectorial finito es el número de vectores de una base. Si una base tiene \(n\) vectores, cualquier otra base tiene también \(n\) vectores. Esa invariancia permite definir:</p>
+<div class="formula-block">\[
+\dim V=n.
+\]</div>
+<p>En \(\mathbb R^3\), la dimensión es \(3\). En el plano \(z=0\) dentro de \(\mathbb R^3\), la dimensión es \(2\). En una recta que pasa por el origen, la dimensión es \(1\). El espacio formado solo por el vector cero tiene dimensión \(0\).</p>
+<p>Boas insiste en que esta idea se mantiene en espacios que no podemos visualizar. El espacio de polinomios de grado menor o igual que \(3\),</p>
+<div class="formula-block">\[
+P_3=\{a_0+a_1x+a_2x^2+a_3x^3\},
+\]</div>
+<p>tiene base</p>
+<div class="formula-block">\[
+\{1,x,x^2,x^3\}
+\]</div>
+<p>y dimensión \(4\).</p>
+<p>El cálculo de la dimensión en problemas concretos suele hacerse encontrando una base. Si se da un conjunto generador, se eliminan vectores dependientes hasta obtener un subconjunto independiente que siga generando. Si se da un subespacio mediante ecuaciones, se parametriza la solución y se lee el número de parámetros libres.</p>
+<h3 id="3-12-espacios-vectoriales-en-dimension-n">3.12. Espacios vectoriales en dimensión \(n\)</h3>
+<p>El capítulo generaliza la geometría de dos y tres dimensiones a \(\mathbb R^n\). Un vector de \(\mathbb R^n\) es una lista ordenada de \(n\) números:</p>
+<div class="formula-block">\[
+(x_1,\ldots,x_n).
+\]</div>
+<p>Aunque no podamos dibujar \(\mathbb R^5\) o \(\mathbb R^6\), se mantiene el lenguaje geométrico: puntos, vectores, distancia, ortogonalidad, cambio de coordenadas.</p>
+<p>La norma euclídea en \(\mathbb R^n\) se define por</p>
+<div class="formula-block">\[
+\|x\|=\sqrt{x_1^2+\cdots+x_n^2}.
+\]</div>
+<p>El producto interno euclídeo se define por</p>
+<div class="formula-block">\[
+x\cdot y=\sum_{i=1}^n x_i y_i.
+\]</div>
+<p>Dos vectores son ortogonales si</p>
+<div class="formula-block">\[
+x\cdot y=0.
+\]</div>
+<p>Esta extensión es importante porque muchos sistemas físicos se describen con más de tres variables. Boas menciona, por ejemplo, el espacio fase de una partícula clásica, que usa tres coordenadas de posición y tres de momento. La dimensión no mide necesariamente el espacio físico ordinario; mide el número de componentes necesarias para describir el estado.</p>
+<h3 id="3-13-espacios-vectoriales-generales">3.13. Espacios vectoriales generales</h3>
+<p>La abstracción culmina al considerar objetos que no son listas de números pero cumplen los axiomas de espacio vectorial. Un espacio vectorial es un conjunto de elementos, llamados vectores, con una suma y una multiplicación por escalares que satisfacen cierre, conmutatividad, asociatividad, existencia de cero, existencia de inverso aditivo y las reglas distributivas y asociativas de los escalares.</p>
+<p>El ejemplo más importante es el espacio de polinomios de grado menor o igual que \(3\):</p>
+<div class="formula-block">\[
+P_3=\{a_0+a_1x+a_2x^2+a_3x^3\}.
+\]</div>
+<p>La suma de dos polinomios de grado \(\leq3\) sigue teniendo grado \(\leq3\). Multiplicar por un escalar tampoco saca al polinomio del conjunto. El cero es el polinomio nulo. El inverso aditivo de \(p(x)\) es \(-p(x)\). Por tanto, \(P_3\) es un espacio vectorial.</p>
+<p>Su base natural es</p>
+<div class="formula-block">\[
+\{1,x,x^2,x^3\}.
+\]</div>
+<p>Todo polinomio de \(P_3\) es combinación lineal de esos cuatro elementos, y esos cuatro elementos son independientes. Luego</p>
+<div class="formula-block">\[
+\dim P_3=4.
+\]</div>
+<p>Más generalmente, el espacio de polinomios de grado menor o igual que \(N\) tiene base</p>
+<div class="formula-block">\[
+\{1,x,x^2,\ldots,x^N\}
+\]</div>
+<p>y dimensión</p>
+<div class="formula-block">\[
+N+1.
+\]</div>
+<p>También las matrices de tamaño fijo forman espacios vectoriales. El conjunto de matrices \(2\times3\), con suma de matrices y multiplicación por escalares, es un espacio vectorial. Una base puede formarse con las seis matrices que tienen un único \(1\) en una posición y ceros en las demás. Por tanto, su dimensión es \(6\).</p>
+<h3 id="3-14-subconjuntos-que-no-son-subespacios">3.14. Subconjuntos que no son subespacios</h3>
+<p>No todo subconjunto de un espacio vectorial es un subespacio. Esta es una advertencia importante del capítulo.</p>
+<p>Consideremos los polinomios de grado menor o igual que \(3\) tales que</p>
+<div class="formula-block">\[
+p(1)=1.
+\]</div>
+<p>Este conjunto no es un espacio vectorial. Si \(p(1)=1\) y \(q(1)=1\), entonces</p>
+<div class="formula-block">\[
+(p+q)(1)=2,
+\]</div>
+<p>de modo que \(p+q\) no pertenece al conjunto. Falla el cierre por suma. Además, el polinomio cero no está en el conjunto, porque \(0(1)=0\), no \(1\).</p>
+<p>En cambio, el conjunto de polinomios de grado menor o igual que \(3\) tales que</p>
+<div class="formula-block">\[
+p(1)=0
+\]</div>
+<p>sí es subespacio. La condición es homogénea. Si \(p(1)=0\) y \(q(1)=0\), entonces \((p+q)(1)=0\). Si \(p(1)=0\), entonces \((\lambda p)(1)=0\). Una base posible es</p>
+<div class="formula-block">\[
+\{x-1,\ x^2-1,\ x^3-1\}.
+\]</div>
+<p>La dimensión es \(3\).</p>
+<p>La enseñanza general es que las condiciones lineales homogéneas preservan estructura vectorial. Las condiciones con término independiente no nulo suelen destruirla.</p>
+<h3 id="3-15-espacios-de-funciones">3.15. Espacios de funciones</h3>
+<p>Las funciones pueden formar espacios vectoriales. Si se toma un conjunto de funciones cerrado por suma y por multiplicación escalar, se puede hablar de independencia, base y dimensión igual que con vectores ordinarios.</p>
+<p>Un ejemplo del capítulo es el conjunto generado por</p>
+<div class="formula-block">\[
+\{e^{ix},e^{-ix},\sin x,\cos x,x\sin x\}.
+\]</div>
+<p>No todos estos elementos son independientes, porque \(e^{ix}\) y \(e^{-ix}\) se pueden expresar mediante \(\sin x\) y \(\cos x\) usando las relaciones de Euler. Una base posible del espacio generado es</p>
+<div class="formula-block">\[
+\{\sin x,\cos x,x\sin x\}.
+\]</div>
+<p>Por tanto, la dimensión del espacio generado es \(3\).</p>
+<p>Este ejemplo es especialmente importante para Física: las soluciones de ecuaciones diferenciales lineales suelen ser funciones, y muchas veces se trabaja con el espacio generado por soluciones candidatas. Decir que dos soluciones son independientes no significa que tengan valores distintos en un punto, sino que ninguna es combinación lineal de las otras en todo el intervalo.</p>
+<h3 id="3-16-producto-interno-norma-y-ortogonalidad">3.16. Producto interno, norma y ortogonalidad</h3>
+<p>Aunque el núcleo de T7 es la estructura vectorial, el capítulo introduce la extensión de ideas geométricas como producto interno, norma y ortogonalidad. En \(\mathbb R^n\),</p>
+<div class="formula-block">\[
+\langle A,B\rangle=\sum_{i=1}^n A_iB_i,
+\]</div>
+<div class="formula-block">\[
+\|A\|=\sqrt{\langle A,A\rangle},
+\]</div>
+<p>y \(A\) y \(B\) son ortogonales si</p>
+<div class="formula-block">\[
+\langle A,B\rangle=0.
+\]</div>
+<p>En espacios complejos, el producto interno debe usar conjugación compleja:</p>
+<div class="formula-block">\[
+\langle A,B\rangle=\sum_{i=1}^n A_i^*B_i.
+\]</div>
+<p>Esto asegura que</p>
+<div class="formula-block">\[
+\langle A,A\rangle=\sum_{i=1}^n |A_i|^2\geq0.
+\]</div>
+<p>Sin el conjugado, la “norma al cuadrado” podría no ser positiva.</p>
+<p>Para funciones complejas en un intervalo \([a,b]\), el producto interno se define como</p>
+<div class="formula-block">\[
+\langle A,B\rangle=\int_a^b A^*(x)B(x)\,dx.
+\]</div>
+<p>La norma es</p>
+<div class="formula-block">\[
+\|A\|=\sqrt{\int_a^b A^*(x)A(x)\,dx},
+\]</div>
+<p>y la ortogonalidad se expresa como</p>
+<div class="formula-block">\[
+\int_a^b A^*(x)B(x)\,dx=0.
+\]</div>
+<p>Esta generalización permite tratar funciones como vectores con geometría propia. Es la antesala de las series de Fourier, los polinomios ortogonales, los espacios de Hilbert y la mecánica cuántica.</p>
+<h3 id="3-17-ortogonalizacion-de-gram-schmidt">3.17. Ortogonalización de Gram-Schmidt</h3>
+<p>El capítulo menciona el proceso de Gram-Schmidt como método para construir bases ortogonales u ortonormales a partir de una base inicial. La idea es tomar una lista independiente y modificar cada vector restándole sus proyecciones sobre los anteriores. Así se conservan los subespacios generados paso a paso, pero se mejora la geometría de la base.</p>
+<p>En un espacio con producto interno, si \(f_0,f_1,\ldots\) son funciones independientes, se puede construir una base ortogonal \(p_0,p_1,\ldots\). Después se normaliza cada elemento:</p>
+<div class="formula-block">\[
+e_i=\frac{p_i}{\|p_i\|}.
+\]</div>
+<p>En el ejemplo de los polinomios sobre \([-1,1]\), al ortogonalizar</p>
+<div class="formula-block">\[
+1,x,x^2,x^3
+\]</div>
+<p>aparecen funciones relacionadas con los polinomios de Legendre normalizados.</p>
+<p>No hace falta dominar aquí toda la teoría de polinomios ortogonales. Lo importante para T7 es entender que una base puede cambiarse para que tenga propiedades más útiles. Una base ortonormal facilita cálculos de coordenadas, proyecciones y expansiones.</p>
+<h3 id="3-18-espacios-de-dimension-infinita">3.18. Espacios de dimensión infinita</h3>
+<p>El capítulo termina señalando que algunos espacios vectoriales no tienen base finita. Se llaman espacios de dimensión infinita. El conjunto de todos los polinomios, sin cota superior para el grado, es un ejemplo natural. También lo son muchos espacios de funciones.</p>
+<p>En dimensión finita, una base tiene un número finito de elementos. En dimensión infinita, se usan familias infinitas de funciones, como</p>
+<div class="formula-block">\[
+1,x,x^2,\ldots
+\]</div>
+<p>o</p>
+<div class="formula-block">\[
+\sin x,\sin 2x,\sin 3x,\ldots
+\]</div>
+<p>para expandir funciones mediante series.</p>
+<p>Boas no desarrolla aquí la teoría completa de convergencia y completitud, pero avisa de que aparecerá más adelante. La analogía con las bases finitas es la clave: expandir una función en una serie de Fourier se parece a escribir un vector como combinación de los vectores de una base, aunque ahora la combinación tiene infinitos términos y requiere estudiar convergencia.</p>
+      </div>
+    </section>
+    <section id="conceptos" class="page">
+      <header class="section-header">
+        <p class="section-kicker">04</p>
+        <h2>Conceptos clave</h2>
+      </header>
+      <div class="reading-block">
+<h3 id="combinacion-lineal">Combinación lineal</h3>
+<p>Definición precisa:</p>
+<p>Una combinación lineal de \(v_1,\ldots,v_n\) es una expresión</p>
+<div class="formula-block">\[
+a_1v_1+\cdots+a_nv_n,
+\]</div>
+<p>donde \(a_1,\ldots,a_n\) son escalares.</p>
+<p>Explicación desarrollada:</p>
+<p>Es la operación básica que permite construir nuevos vectores a partir de otros sin salir del marco lineal. Todas las nociones posteriores dependen de ella: el span es el conjunto de todas las combinaciones lineales; la dependencia lineal se detecta mediante una combinación lineal nula; una base es un conjunto independiente que permite expresar todo vector como combinación lineal.</p>
+<p>Ejemplo:</p>
+<div class="formula-block">\[
+3(1,0,2)-2(0,1,1)=(3,-2,4).
+\]</div>
+<p>Relación con otros conceptos:</p>
+<p>Conecta directamente con span, dependencia, base y dimensión.</p>
+<p>Posible pregunta de examen: “Describa el subespacio generado por \(u=(1,0,1)\) y \(v=(0,1,-1)\).”</p>
+<h3 id="span-o-subespacio-generado">Span o subespacio generado</h3>
+<p>Definición precisa:</p>
+<div class="formula-block">\[
+\operatorname{span}\{v_1,\ldots,v_n\}
+=
+\{a_1v_1+\cdots+a_nv_n:\ a_i\in\mathbb K\}.
+\]</div>
+<p>Explicación desarrollada:</p>
+<p>Es el conjunto de todos los vectores que pueden construirse usando los vectores dados. Es siempre un subespacio. Si los vectores son redundantes, el mismo span puede describirse con un conjunto más pequeño.</p>
+<p>Ejemplo:</p>
+<div class="formula-block">\[
+\operatorname{span}\{(1,0,0),(0,1,0)\}=\{(x,y,0):x,y\in\mathbb R\}.
+\]</div>
+<p>Relación con otros conceptos:</p>
+<p>Una base de un espacio es un conjunto independiente cuyo span es todo el espacio.</p>
+<p>Posible pregunta de examen: “Determine si \((2,3,0)\) pertenece al span de \((1,0,0)\) y \((0,1,0)\).”</p>
+<h3 id="dependencia-lineal">Dependencia lineal</h3>
+<p>Definición precisa:</p>
+<p>Un conjunto \(v_1,\ldots,v_n\) es linealmente dependiente si existen escalares no todos nulos tales que</p>
+<div class="formula-block">\[
+a_1v_1+\cdots+a_nv_n=0.
+\]</div>
+<p>Explicación desarrollada:</p>
+<p>La dependencia significa que al menos un vector del conjunto no aporta información nueva: puede obtenerse como combinación lineal de los demás. En términos de problemas, permite eliminar vectores sobrantes.</p>
+<p>Ejemplo:</p>
+<div class="formula-block">\[
+(1,1)+(1,-1)-2(1,0)=0.
+\]</div>
+<p>Luego los tres vectores son dependientes.</p>
+<p>Relación con otros conceptos:</p>
+<p>Una base no puede contener vectores dependientes. El rango de una matriz indica cuántos vectores independientes hay.</p>
+<p>Posible pregunta de examen: “Estudie si los vectores \((1,2,0),(2,4,0),(0,1,1)\) son linealmente independientes.”</p>
+<h3 id="independencia-lineal">Independencia lineal</h3>
+<p>Definición precisa:</p>
+<p>Un conjunto \(v_1,\ldots,v_n\) es linealmente independiente si</p>
+<div class="formula-block">\[
+a_1v_1+\cdots+a_nv_n=0
+\]</div>
+<p>implica</p>
+<div class="formula-block">\[
+a_1=\cdots=a_n=0.
+\]</div>
+<p>Explicación desarrollada:</p>
+<p>La independencia garantiza que ningún vector del conjunto es combinación lineal de los otros. Es la condición que evita coordenadas ambiguas.</p>
+<p>Ejemplo:</p>
+<div class="formula-block">\[
+(1,0),\ (0,1)
+\]</div>
+<p>son independientes en \(\mathbb R^2\).</p>
+<p>Relación con otros conceptos:</p>
+<p>Una base es un conjunto independiente y generador. En espacios de funciones, la independencia se prueba a veces con el wronskiano.</p>
+<p>Posible pregunta de examen: “Demuestre que \(\sin x\) y \(\cos x\) son linealmente independientes.”</p>
+<h3 id="subespacio">Subespacio</h3>
+<p>Definición precisa:</p>
+<p>Un subconjunto \(W\subset V\) es subespacio si contiene al vector cero y es cerrado por suma y multiplicación escalar.</p>
+<p>Explicación desarrollada:</p>
+<p>Un subespacio es un espacio vectorial dentro de otro. No basta con que el subconjunto tenga forma de recta, plano o superficie; debe conservar la estructura lineal.</p>
+<p>Ejemplo:</p>
+<div class="formula-block">\[
+W=\{(x,y,z):x+y-z=0\}
+\]</div>
+<p>es subespacio de \(\mathbb R^3\).</p>
+<p>Relación con otros conceptos:</p>
+<p>Todo span es subespacio. El núcleo de una aplicación lineal también es subespacio, aunque esta idea se desarrolla más adelante.</p>
+<p>Posible pregunta de examen: “Decida si \(S=\{(x,y,z):x+y-z=1\}\) es subespacio.”</p>
+<h3 id="base">Base</h3>
+<p>Definición precisa:</p>
+<p>Una base de \(V\) es un conjunto linealmente independiente que genera \(V\).</p>
+<p>Explicación desarrollada:</p>
+<p>Una base proporciona un sistema de coordenadas para el espacio. Cada vector se expresa de forma única como combinación lineal de los vectores de la base.</p>
+<p>Ejemplo:</p>
+<div class="formula-block">\[
+\{1,x,x^2\}
+\]</div>
+<p>es base del espacio de polinomios de grado menor o igual que \(2\).</p>
+<p>Relación con otros conceptos:</p>
+<p>La base combina las nociones de span e independencia. La dimensión se define contando los elementos de una base.</p>
+<p>Posible pregunta de examen: “Encuentre una base del subespacio generado por \((1,0,1),(2,0,2),(0,1,1)\).”</p>
+<h3 id="dimension">Dimensión</h3>
+<p>Definición precisa:</p>
+<p>La dimensión de un espacio vectorial finito es el número de elementos de cualquier base.</p>
+<p>Explicación desarrollada:</p>
+<p>Mide cuántos parámetros independientes hacen falta para describir un vector del espacio. No depende de la base elegida.</p>
+<p>Ejemplo:</p>
+<div class="formula-block">\[
+\dim P_3=4,
+\]</div>
+<p>porque una base es \(\{1,x,x^2,x^3\}\).</p>
+<p>Relación con otros conceptos:</p>
+<p>La dimensión se obtiene encontrando una base. En un conjunto generador, coincide con el número máximo de vectores independientes.</p>
+<p>Posible pregunta de examen: “Calcule la dimensión del espacio de matrices \(2\times3\).”</p>
+<h3 id="aplicacion-lineal">Aplicación lineal</h3>
+<p>Definición precisa:</p>
+<p>Una aplicación \(T:V\to W\) es lineal si</p>
+<div class="formula-block">\[
+T(u+v)=T(u)+T(v),\qquad T(\lambda u)=\lambda T(u).
+\]</div>
+<p>Explicación desarrollada:</p>
+<p>Una aplicación lineal respeta la estructura vectorial. Transforma combinaciones lineales en combinaciones lineales:</p>
+<div class="formula-block">\[
+T(a_1v_1+\cdots+a_nv_n)=a_1T(v_1)+\cdots+a_nT(v_n).
+\]</div>
+<p>Ejemplo:</p>
+<div class="formula-block">\[
+T(x,y)=(x+2y,3x-y)
+\]</div>
+<p>es lineal.</p>
+<p>Relación con otros conceptos:</p>
+<p>Las matrices representan aplicaciones lineales en dimensión finita. Los operadores diferenciales lineales actúan sobre espacios de funciones.</p>
+<p>Posible pregunta de examen: “Compruebe si \(T(x,y)=(x+y,1)\) es lineal.”</p>
+<h3 id="operador-lineal">Operador lineal</h3>
+<p>Definición precisa:</p>
+<p>Un operador lineal es una aplicación lineal de un espacio en sí mismo o sobre objetos de naturaleza semejante.</p>
+<p>Explicación desarrollada:</p>
+<p>La derivada y ciertas integrales son ejemplos de operadores lineales sobre funciones. La matriz cuadrada es un operador lineal sobre \(\mathbb R^n\) o \(\mathbb C^n\).</p>
+<p>Ejemplo:</p>
+<div class="formula-block">\[
+D^2+2D+1
+\]</div>
+<p>es un operador lineal sobre funciones suficientemente derivables.</p>
+<p>Relación con otros conceptos:</p>
+<p>Los operadores lineales conducen a autovalores, espectro, diagonalización y ecuaciones diferenciales.</p>
+<p>Posible pregunta de examen: “Decida si el operador \(T[f]=f^2\) es lineal.”</p>
+<h3 id="producto-interno">Producto interno</h3>
+<p>Definición precisa:</p>
+<p>Un producto interno es una operación que asocia a dos vectores un escalar y permite definir norma y ortogonalidad. En \(\mathbb C^n\):</p>
+<div class="formula-block">\[
+\langle A,B\rangle=\sum_i A_i^*B_i.
+\]</div>
+<p>Explicación desarrollada:</p>
+<p>Generaliza el producto escalar euclídeo. La conjugación en el primer factor asegura positividad:</p>
+<div class="formula-block">\[
+\langle A,A\rangle\geq0.
+\]</div>
+<p>Ejemplo:</p>
+<div class="formula-block">\[
+\langle (1,i),(2,3)\rangle=1^*2+i^*3=2-3i.
+\]</div>
+<p>Relación con otros conceptos:</p>
+<p>Define norma, ortogonalidad, bases ortonormales y proyecciones.</p>
+<p>Posible pregunta de examen: “Calcule el producto interno de dos vectores complejos y determine si son ortogonales.”</p>
+<h3 id="norma">Norma</h3>
+<p>Definición precisa:</p>
+<p>La norma asociada a un producto interno es</p>
+<div class="formula-block">\[
+\|A\|=\sqrt{\langle A,A\rangle}.
+\]</div>
+<p>Explicación desarrollada:</p>
+<p>Mide la longitud del vector. En espacios de funciones mide el tamaño cuadrático medio en un intervalo.</p>
+<p>Ejemplo:</p>
+<div class="formula-block">\[
+\|(3,4)\|=5.
+\]</div>
+<p>Relación con otros conceptos:</p>
+<p>La norma permite normalizar vectores y construir bases ortonormales.</p>
+<p>Posible pregunta de examen: “Normalice el vector \((1,2,2)\).”</p>
+<h3 id="ortogonalidad">Ortogonalidad</h3>
+<p>Definición precisa:</p>
+<p>Dos vectores son ortogonales si su producto interno es cero:</p>
+<div class="formula-block">\[
+\langle A,B\rangle=0.
+\]</div>
+<p>Explicación desarrollada:</p>
+<p>Generaliza la perpendicularidad. En espacios de funciones, dos funciones pueden ser ortogonales aunque sus gráficas no sugieran nada visualmente perpendicular.</p>
+<p>Ejemplo:</p>
+<div class="formula-block">\[
+\int_{-\pi}^{\pi}\sin x\cos x\,dx=0.
+\]</div>
+<p>Relación con otros conceptos:</p>
+<p>Las bases ortogonales simplifican expansiones, proyecciones y series de Fourier.</p>
+<p>Posible pregunta de examen: “Compruebe si \(1\) y \(x\) son ortogonales en \([-1,1]\) con el producto interno integral.”</p>
+<h3 id="wronskiano">Wronskiano</h3>
+<p>Definición precisa:</p>
+<p>Para funciones \(f_1,\ldots,f_n\), el wronskiano es el determinante formado por las funciones y sus derivadas hasta orden \(n-1\).</p>
+<p>Explicación desarrollada:</p>
+<p>Si el wronskiano no es idénticamente cero, las funciones son linealmente independientes. Es una herramienta práctica, especialmente en ecuaciones diferenciales.</p>
+<p>Ejemplo:</p>
+<div class="formula-block">\[
+W(1,x,\sin x)=-\sin x\not\equiv0.
+\]</div>
+<p>Luego son independientes.</p>
+<p>Relación con otros conceptos:</p>
+<p>Relaciona independencia de funciones con determinantes y sistemas fundamentales de soluciones.</p>
+<p>Posible pregunta de examen: “Use el wronskiano para estudiar la independencia de \(1,x,e^x\).”</p>
+<h3 id="espacio-de-funciones">Espacio de funciones</h3>
+<p>Definición precisa:</p>
+<p>Es un espacio vectorial cuyos elementos son funciones, con suma y multiplicación escalar definidas punto a punto.</p>
+<p>Explicación desarrollada:</p>
+<p>Permite tratar funciones como vectores. Esto es fundamental en Fourier, ecuaciones diferenciales, Sturm-Liouville y mecánica cuántica.</p>
+<p>Ejemplo:</p>
+<p>El conjunto de polinomios de grado \(\leq N\) es un espacio de funciones de dimensión \(N+1\).</p>
+<p>Relación con otros conceptos:</p>
+<p>Se le pueden definir bases, producto interno, norma y ortogonalidad.</p>
+<p>Posible pregunta de examen: “Encuentre una base del espacio generado por \(\{e^{ix},e^{-ix},\sin x,\cos x\}\).”</p>
+      </div>
+    </section>
+    <section id="relaciones" class="page">
+      <header class="section-header">
+        <p class="section-kicker">05</p>
+        <h2>Relaciones entre ideas</h2>
+      </header>
+      <div class="reading-block">
+<p>La primera relación fundamental es:</p>
+<div class="formula-block">\[
+\text{combinación lineal}\Rightarrow \text{span}\Rightarrow \text{subespacio}.
+\]</div>
+<p>Una combinación lineal es una expresión concreta. El span es el conjunto de todas esas expresiones. Ese conjunto siempre es subespacio porque está construido precisamente cerrando respecto a suma y multiplicación por escalares.</p>
+<p>La segunda relación es:</p>
+<div class="formula-block">\[
+\text{independencia}+\text{generación}=\text{base}.
+\]</div>
+<p>Un conjunto generador puede tener demasiados vectores. Un conjunto independiente puede tener demasiado pocos. Una base logra las dos cosas a la vez: no sobra nada y no falta nada.</p>
+<p>La tercera relación es:</p>
+<div class="formula-block">\[
+\text{base}\Rightarrow \text{coordenadas únicas}\Rightarrow \text{dimensión}.
+\]</div>
+<p>La independencia asegura unicidad de coordenadas. El número de vectores de una base define la dimensión. Por eso la dimensión no se calcula contando vectores de cualquier conjunto generador, sino contando los vectores de una base.</p>
+<p>La cuarta relación conecta matrices y aplicaciones:</p>
+<div class="formula-block">\[
+\text{matriz}\Rightarrow \text{aplicación lineal}.
+\]</div>
+<p>Toda matriz representa una transformación que respeta combinaciones lineales. Esto permite estudiar transformaciones geométricas mediante álgebra matricial.</p>
+<p>La quinta relación conecta espacios vectoriales con funciones:</p>
+<div class="formula-block">\[
+\text{funciones}+\text{suma punto a punto}+\text{producto escalar}\Rightarrow \text{espacio vectorial de funciones}.
+\]</div>
+<p>El capítulo enseña que no hay que limitar la palabra vector a flechas. Una función puede ser un vector si pertenece a un conjunto cerrado bajo operaciones lineales.</p>
+<p>La sexta relación prepara temas posteriores:</p>
+<div class="formula-block">\[
+\text{producto interno}\Rightarrow \text{norma}\Rightarrow \text{ortogonalidad}\Rightarrow \text{bases ortonormales}.
+\]</div>
+<p>En dimensión finita esto reproduce la geometría euclídea. En espacios de funciones permite estudiar series de Fourier y expansiones en funciones ortogonales.</p>
+<p>La oposición más importante es entre condiciones homogéneas y no homogéneas. Una condición como</p>
+<div class="formula-block">\[
+p(1)=0
+\]</div>
+<p>puede definir un subespacio. Una condición como</p>
+<div class="formula-block">\[
+p(1)=1
+\]</div>
+<p>no lo define, porque no contiene el cero y no es cerrada por suma. Esta diferencia aparece también en ecuaciones diferenciales: las soluciones de una ecuación homogénea forman un espacio vectorial; las soluciones de una no homogénea forman, en general, un espacio afín.</p>
+<p>Otra oposición importante es entre lineal y no lineal. Una operación lineal conserva combinaciones lineales. Una operación no lineal puede parecer sencilla pero destruir esa estructura. La norma, el cuadrado, el determinante de una matriz completa, el máximo o el recíproco son ejemplos típicos de operaciones no lineales.</p>
+<p>Históricamente, el paso conceptual es una abstracción: de la geometría de flechas en el plano y en el espacio se pasa al álgebra de listas, y de ahí a espacios cuyos elementos son funciones o matrices. Este avance permite usar las mismas técnicas en geometría, ecuaciones diferenciales, series, mecánica y física cuántica.</p>
+      </div>
+    </section>
+    <section id="errores" class="page">
+      <header class="section-header">
+        <p class="section-kicker">06</p>
+        <h2>Errores habituales</h2>
+      </header>
+      <div class="reading-block">
+<h3 id="error-1-confundir-recta-con-funcion-lineal">Error 1. Confundir “recta” con “función lineal”</h3>
+<p>Formulación del error: Creer que \(f(x)=mx+b\) es lineal para cualquier \(b\).</p>
+<p>Por qué está mal:</p>
+<p>La linealidad exige \(f(x_1+x_2)=f(x_1)+f(x_2)\). Si \(b\neq0\), esta igualdad falla.</p>
+<p>Corrección:</p>
+<p>Solo \(f(x)=mx\) es lineal entre funciones afines de ese tipo.</p>
+<p>Ejemplo de respuesta incorrecta: “\(f(x)=2x+3\) es lineal porque su gráfica es una recta.”</p>
+<p>Ejemplo de respuesta correcta: “\(f(x)=2x+3\) no es lineal porque \(f(0)=3\neq0\), y toda aplicación lineal debe enviar \(0\) a \(0\).”</p>
+<h3 id="error-2-olvidar-comprobar-el-vector-cero-en-un-subespacio">Error 2. Olvidar comprobar el vector cero en un subespacio</h3>
+<p>Formulación del error: Aceptar como subespacio un conjunto que no contiene \(0\).</p>
+<p>Por qué está mal:</p>
+<p>Todo espacio vectorial contiene el vector cero.</p>
+<p>Corrección:</p>
+<p>Antes de comprobar cierre, verificar si \(0\in W\).</p>
+<p>Ejemplo de respuesta incorrecta: “\(\{(x,y):x+y=1\}\) es una recta, luego es subespacio.”</p>
+<p>Ejemplo de respuesta correcta: “No es subespacio porque \((0,0)\) no satisface \(x+y=1\).”</p>
+<h3 id="error-3-pensar-que-todo-subconjunto-de-un-espacio-vectorial-es-subespacio">Error 3. Pensar que todo subconjunto de un espacio vectorial es subespacio</h3>
+<p>Formulación del error: Suponer que cualquier subconjunto formado por vectores hereda automáticamente la estructura vectorial.</p>
+<p>Por qué está mal:</p>
+<p>La suma o la multiplicación por escalares pueden sacar elementos del conjunto.</p>
+<p>Corrección:</p>
+<p>Hay que comprobar cierre por suma y por escalares.</p>
+<p>Ejemplo de respuesta incorrecta: “Los polinomios con \(p(1)=1\) forman subespacio de \(P_3\).”</p>
+<p>Ejemplo de respuesta correcta: “No forman subespacio, porque si \(p(1)=q(1)=1\), entonces \((p+q)(1)=2\).”</p>
+<h3 id="error-4-confundir-generar-con-ser-independiente">Error 4. Confundir generar con ser independiente</h3>
+<p>Formulación del error: Creer que si un conjunto genera un espacio, entonces sus vectores son independientes.</p>
+<p>Por qué está mal:</p>
+<p>Un conjunto generador puede contener vectores redundantes.</p>
+<p>Corrección:</p>
+<p>Para ser base debe generar y ser independiente.</p>
+<p>Ejemplo de respuesta incorrecta: “\((1,0),(0,1),(1,1)\) es base de \(\mathbb R^2\) porque genera el plano.”</p>
+<p>Ejemplo de respuesta correcta: “No es base: genera \(\mathbb R^2\), pero es dependiente porque \((1,1)=(1,0)+(0,1)\).”</p>
+<h3 id="error-5-calcular-dimension-contando-vectores-de-un-conjunto-dependiente">Error 5. Calcular dimensión contando vectores de un conjunto dependiente</h3>
+<p>Formulación del error: Decir que la dimensión del span de cuatro vectores es \(4\) sin estudiar dependencias.</p>
+<p>Por qué está mal:</p>
+<p>La dimensión es el número de vectores de una base, no de cualquier conjunto generador.</p>
+<p>Corrección:</p>
+<p>Reducir por filas o eliminar vectores dependientes.</p>
+<p>Ejemplo de respuesta incorrecta: “El span de \((1,0),(0,1),(1,1)\) tiene dimensión \(3\).”</p>
+<p>Ejemplo de respuesta correcta: “Tiene dimensión \(2\), porque el tercer vector es suma de los dos primeros.”</p>
+<h3 id="error-6-probar-independencia-de-funciones-mirando-solo-valores-puntuales">Error 6. Probar independencia de funciones mirando solo valores puntuales</h3>
+<p>Formulación del error: Evaluar funciones en un par de puntos y concluir independencia sin justificación suficiente.</p>
+<p>Por qué está mal:</p>
+<p>La dependencia de funciones exige una identidad para todo \(x\), no una igualdad en puntos aislados.</p>
+<p>Corrección:</p>
+<p>Plantear</p>
+<div class="formula-block">\[
+a_1f_1+\cdots+a_nf_n\equiv0
+\]</div>
+<p>y demostrar que todos los coeficientes son cero, o usar un criterio válido como el wronskiano.</p>
+<p>Ejemplo de respuesta incorrecta: “\(\sin x\) y \(\cos x\) son independientes porque en \(x=0\) valen distinto.”</p>
+<p>Ejemplo de respuesta correcta: “Si \(a\sin x+b\cos x\equiv0\), al tomar \(x=0\) se obtiene \(b=0\), y al tomar \(x=\pi/2\) se obtiene \(a=0\). Luego son independientes.”</p>
+<h3 id="error-7-usar-el-wronskiano-al-reves">Error 7. Usar el wronskiano al revés</h3>
+<p>Formulación del error: Afirmar que si el wronskiano se anula en algún punto, las funciones son dependientes.</p>
+<p>Por qué está mal:</p>
+<p>El criterio usado en el capítulo dice que si el wronskiano no es idénticamente cero, hay independencia. Que se anule en puntos aislados no implica dependencia.</p>
+<p>Corrección:</p>
+<p>Distinguir entre “se anula en algún punto” y “es idénticamente nulo”.</p>
+<p>Ejemplo de respuesta incorrecta: “Como \(W(1,x,\sin x)=-\sin x\) vale cero en \(x=0\), son dependientes.”</p>
+<p>Ejemplo de respuesta correcta: “Como \(W=-\sin x\) no es la función nula, las funciones son independientes.”</p>
+<h3 id="error-8-olvidar-la-conjugacion-compleja-en-productos-internos-complejos">Error 8. Olvidar la conjugación compleja en productos internos complejos</h3>
+<p>Formulación del error: Usar \(\sum A_iB_i\) como producto interno complejo.</p>
+<p>Por qué está mal:</p>
+<p>Puede dar \(\langle A,A\rangle\) no real o no positivo.</p>
+<p>Corrección:</p>
+<p>En espacios complejos usar</p>
+<div class="formula-block">\[
+\langle A,B\rangle=\sum A_i^*B_i.
+\]</div>
+<p>Ejemplo de respuesta incorrecta: “Para \(A=(i)\), \(\langle A,A\rangle=i^2=-1\).”</p>
+<p>Ejemplo de respuesta correcta: “\(\langle A,A\rangle=i^*i=(-i)i=1\).”</p>
+<h3 id="error-9-creer-que-la-norma-es-lineal">Error 9. Creer que la norma es lineal</h3>
+<p>Formulación del error: Usar \(\|u+v\|=\|u\|+\|v\|\) como identidad general.</p>
+<p>Por qué está mal:</p>
+<p>La norma satisface una desigualdad triangular, no una igualdad general.</p>
+<p>Corrección:</p>
+<p>Solo hay igualdad en casos especiales. En general:</p>
+<div class="formula-block">\[
+\|u+v\|\leq\|u\|+\|v\|.
+\]</div>
+<p>Ejemplo de respuesta incorrecta: “\(\|(1,0)+(0,1)\|=1+1=2\).”</p>
+<p>Ejemplo de respuesta correcta: “\(\|(1,1)\|=\sqrt2\), no \(2\).”</p>
+<h3 id="error-10-no-distinguir-espacio-vectorial-de-espacio-afin">Error 10. No distinguir espacio vectorial de espacio afín</h3>
+<p>Formulación del error: Llamar subespacio a una recta o plano desplazado.</p>
+<p>Por qué está mal:</p>
+<p>Un subespacio debe pasar por el origen. Un conjunto desplazado puede tener forma geométrica de recta o plano, pero no contiene el cero.</p>
+<p>Corrección:</p>
+<p>Comprobar si la ecuación es homogénea.</p>
+<p>Ejemplo de respuesta incorrecta: “El plano \(x+y+z=1\) es un subespacio de \(\mathbb R^3\).”</p>
+<p>Ejemplo de respuesta correcta: “No es subespacio. Es un plano afín. El plano \(x+y+z=0\) sí es subespacio.”</p>
+      </div>
+    </section>
+    <section id="preguntas" class="page">
+      <header class="section-header">
+        <p class="section-kicker">07</p>
+        <h2>Preguntas orientadas a examen</h2>
+      </header>
+      <div class="reading-block">
+<h3 id="10-preguntas-faciles">10 preguntas fáciles</h3>
+<h3 id="defina-combinacion-lineal-de-un-conjunto-de-vectores">1. Defina combinación lineal de un conjunto de vectores.</h3>
+<p>2. ¿Qué significa que una aplicación sea lineal?</p>
+<h3 id="compruebe-si-f-x-3x-es-lineal">3. Compruebe si \(f(x)=3x\) es lineal.</h3>
+<h3 id="compruebe-si-f-x-3x-1-es-lineal">4. Compruebe si \(f(x)=3x+1\) es lineal.</h3>
+<h3 id="defina-subespacio-vectorial">5. Defina subespacio vectorial.</h3>
+<p>6. ¿Por qué una recta que no pasa por el origen no es subespacio de \(\mathbb R^2\)?</p>
+<h3 id="defina-dependencia-lineal">7. Defina dependencia lineal.</h3>
+<h3 id="defina-base-de-un-espacio-vectorial">8. Defina base de un espacio vectorial.</h3>
+<p>9. ¿Cuál es la dimensión de \(P_3\), el espacio de polinomios de grado menor o igual que \(3\)? 10. ¿Qué condición define la ortogonalidad de dos vectores en \(\mathbb R^n\)?</p>
+<h3 id="10-preguntas-medias">10 preguntas medias</h3>
+<h3 id="determine-si-1-0-0-1-1-1-son-linealmente-independientes">11. Determine si \((1,0),(0,1),(1,1)\) son linealmente independientes.</h3>
+<h3 id="encuentre-una-base-del-subespacio-generado-por-1-2-0-2-4-0-0-1-1">12. Encuentre una base del subespacio generado por \((1,2,0),(2,4,0),(0,1,1)\).</h3>
+<h3 id="decida-si-w-x-y-z-x-y-z-0-es-subespacio-de-mathbb-r-3">13. Decida si \(W=\{(x,y,z):x+y-z=0\}\) es subespacio de \(\mathbb R^3\).</h3>
+<h3 id="decida-si-s-x-y-z-x-y-z-1-es-subespacio-de-mathbb-r-3">14. Decida si \(S=\{(x,y,z):x+y-z=1\}\) es subespacio de \(\mathbb R^3\).</h3>
+<h3 id="calcule-la-dimension-del-espacio-de-matrices-2-times3">15. Calcule la dimensión del espacio de matrices \(2\times3\).</h3>
+<h3 id="determine-si-t-x-y-x-2y-3x-y-es-lineal">16. Determine si \(T(x,y)=(x+2y,3x-y)\) es lineal.</h3>
+<h3 id="determine-si-t-x-y-x-y-1-es-lineal">17. Determine si \(T(x,y)=(x+y,1)\) es lineal.</h3>
+<h3 id="compruebe-si-las-funciones-1-x-x-2-son-linealmente-independientes">18. Compruebe si las funciones \(1,x,x^2\) son linealmente independientes.</h3>
+<h3 id="estudie-si-los-polinomios-de-p-3-que-cumplen-p-1-0-forman-subespacio">19. Estudie si los polinomios de \(P_3\) que cumplen \(p(1)=0\) forman subespacio.</h3>
+<h3 id="estudie-si-los-polinomios-de-p-3-que-cumplen-p-1-1-forman-subespacio">20. Estudie si los polinomios de \(P_3\) que cumplen \(p(1)=1\) forman subespacio.</h3>
+<h3 id="5-preguntas-dificiles">5 preguntas difíciles</h3>
+<h3 id="use-el-wronskiano-para-estudiar-la-independencia-lineal-de-1-x-sin-x">21. Use el wronskiano para estudiar la independencia lineal de \(1,x,\sin x\).</h3>
+<h3 id="encuentre-una-base-y-la-dimension-del-espacio-generado-por-e-ix-e-ix-sin-x-cos-x-x-sin-x">22. Encuentre una base y la dimensión del espacio generado por \(\{e^{ix},e^{-ix},\sin x,\cos x,x\sin x\}\).</h3>
+<h3 id="sea-v-p-3-y-w-p-in-p-3-p-1-0-encuentre-una-base-de-w-y-su-dimension">23. Sea \(V=P_3\) y \(W=\{p\in P_3:p(1)=0\}\). Encuentre una base de \(W\) y su dimensión.</h3>
+<h3 id="determine-si-d-2-2d-1-es-un-operador-lineal-sobre-funciones-dos-veces-derivables">24. Determine si \(D^2+2D+1\) es un operador lineal sobre funciones dos veces derivables.</h3>
+<p>25. En \(\mathbb C^3\), calcule \(\langle A,B\rangle\) para \(A=(i,1-i,2)\), \(B=(1,2i,3)\), usando el producto interno complejo, y determine si son ortogonales.</p>
+<h3 id="5-preguntas-de-desarrollo-largo">5 preguntas de desarrollo largo</h3>
+<p>26. Explique el concepto de espacio vectorial general y desarrolle el ejemplo de los polinomios de grado menor o igual que \(N\).</p>
+<h3 id="explique-la-relacion-entre-dependencia-lineal-base-y-dimension-incluyendo-un-ejemplo-en-mathbb-r-3">27. Explique la relación entre dependencia lineal, base y dimensión, incluyendo un ejemplo en \(\mathbb R^3\).</h3>
+<p>28. Desarrolle cómo las matrices representan aplicaciones lineales y por qué toda matriz define una transformación lineal. 29. Explique cómo se extienden producto interno, norma y ortogonalidad desde \(\mathbb R^n\) hasta espacios de funciones. 30. Explique por qué las funciones pueden tratarse como vectores y qué papel tiene esto en el estudio de ecuaciones diferenciales y series.</p>
+<h3 id="5-preguntas-de-relacion-entre-conceptos">5 preguntas de relación entre conceptos</h3>
+<h3 id="relacione-combinacion-lineal-span-y-subespacio">31. Relacione combinación lineal, span y subespacio.</h3>
+<h3 id="relacione-base-coordenadas-unicas-y-dimension">32. Relacione base, coordenadas únicas y dimensión.</h3>
+<h3 id="relacione-operador-lineal-matriz-y-ecuacion-diferencial-lineal">33. Relacione operador lineal, matriz y ecuación diferencial lineal.</h3>
+<h3 id="relacione-producto-interno-ortogonalidad-y-gram-schmidt">34. Relacione producto interno, ortogonalidad y Gram-Schmidt.</h3>
+<h3 id="relacione-espacios-de-dimension-finita-e-infinita-a-partir-de-los-ejemplos-de-polinomios-y-series-de-fourier">35. Relacione espacios de dimensión finita e infinita a partir de los ejemplos de polinomios y series de Fourier.</h3>
+      </div>
+    </section>
+    <section id="respuestas" class="page">
+      <header class="section-header">
+        <p class="section-kicker">08</p>
+        <h2>Respuestas modelo</h2>
+      </header>
+      <div class="reading-block">
+<h3 id="1-defina-combinacion-lineal-de-un-conjunto-de-vectores">1. Defina combinación lineal de un conjunto de vectores.</h3>
+<p>Una combinación lineal de \(v_1,\ldots,v_n\) es una expresión</p>
+<div class="formula-block">\[
+a_1v_1+\cdots+a_nv_n,
+\]</div>
+<p>donde los coeficientes \(a_i\) son escalares. Es la forma básica de construir nuevos vectores a partir de un conjunto dado usando solo suma y multiplicación por escalares.</p>
+<h3 id="2-que-significa-que-una-aplicacion-sea-lineal">2. ¿Qué significa que una aplicación sea lineal?</h3>
+<p>Una aplicación \(T:V\to W\) es lineal si conserva la suma y el producto por escalares:</p>
+<div class="formula-block">\[
+T(u+v)=T(u)+T(v),
+\]</div>
+<div class="formula-block">\[
+T(\lambda u)=\lambda T(u).
+\]</div>
+<p>Equivalente: conserva combinaciones lineales.</p>
+<h3 id="3-compruebe-si-f-x-3x-es-lineal">3. Compruebe si \(f(x)=3x\) es lineal.</h3>
+<p>Sí. Para cualesquiera \(x,y\),</p>
+<div class="formula-block">\[
+f(x+y)=3(x+y)=3x+3y=f(x)+f(y).
+\]</div>
+<p>Además,</p>
+<div class="formula-block">\[
+f(\lambda x)=3\lambda x=\lambda f(x).
+\]</div>
+<p>Por tanto, es lineal.</p>
+<h3 id="4-compruebe-si-f-x-3x-1-es-lineal">4. Compruebe si \(f(x)=3x+1\) es lineal.</h3>
+<p>No. Basta observar que</p>
+<div class="formula-block">\[
+f(0)=1\neq0.
+\]</div>
+<p>Toda aplicación lineal debe enviar el cero al cero. También falla la suma:</p>
+<div class="formula-block">\[
+f(x+y)=3x+3y+1,
+\]</div>
+<p>pero</p>
+<div class="formula-block">\[
+f(x)+f(y)=3x+1+3y+1=3x+3y+2.
+\]</div>
+<h3 id="5-defina-subespacio-vectorial">5. Defina subespacio vectorial.</h3>
+<p>Un subconjunto \(W\) de un espacio vectorial \(V\) es subespacio si con las mismas operaciones de \(V\) es espacio vectorial. En la práctica, debe contener al cero, ser cerrado por suma y ser cerrado por multiplicación escalar.</p>
+<h3 id="6-por-que-una-recta-que-no-pasa-por-el-origen-no-es-subespacio-de-mathbb-r-2">6. ¿Por qué una recta que no pasa por el origen no es subespacio de \(\mathbb R^2\)?</h3>
+<p>Porque no contiene el vector cero. Además, al multiplicar un punto de la recta por \(0\) se obtiene \((0,0)\), que no pertenece a la recta. Por tanto, falla el cierre por multiplicación escalar.</p>
+<h3 id="7-defina-dependencia-lineal">7. Defina dependencia lineal.</h3>
+<p>Un conjunto \(v_1,\ldots,v_n\) es linealmente dependiente si existen escalares \(a_1,\ldots,a_n\), no todos nulos, tales que</p>
+<div class="formula-block">\[
+a_1v_1+\cdots+a_nv_n=0.
+\]</div>
+<p>Esto significa que al menos un vector puede expresarse como combinación lineal de los demás.</p>
+<h3 id="8-defina-base-de-un-espacio-vectorial">8. Defina base de un espacio vectorial.</h3>
+<p>Una base es un conjunto de vectores que genera todo el espacio y es linealmente independiente. Generar significa que cualquier vector del espacio se puede expresar como combinación lineal de la base. La independencia garantiza que esa expresión es única.</p>
+<h3 id="9-cual-es-la-dimension-de-p-3-el-espacio-de-polinomios-de-grado-menor-o-igual-que-3">9. ¿Cuál es la dimensión de \(P_3\), el espacio de polinomios de grado menor o igual que \(3\)?</h3>
+<p>La dimensión es \(4\), porque una base natural es</p>
+<div class="formula-block">\[
+\{1,x,x^2,x^3\}.
+\]</div>
+<p>Todo polinomio \(a_0+a_1x+a_2x^2+a_3x^3\) se expresa de forma única con esos cuatro elementos.</p>
+<h3 id="10-que-condicion-define-la-ortogonalidad-de-dos-vectores-en-mathbb-r-n">10. ¿Qué condición define la ortogonalidad de dos vectores en \(\mathbb R^n\)?</h3>
+<p>Dos vectores \(u,v\in\mathbb R^n\) son ortogonales si su producto interno euclídeo es cero:</p>
+<div class="formula-block">\[
+u\cdot v=\sum_{i=1}^n u_i v_i=0.
+\]</div>
+<h3 id="11-determine-si-1-0-0-1-1-1-son-linealmente-independientes">11. Determine si \((1,0),(0,1),(1,1)\) son linealmente independientes.</h3>
+<p>No son independientes. Se cumple</p>
+<div class="formula-block">\[
+(1,1)=(1,0)+(0,1).
+\]</div>
+<p>Luego</p>
+<div class="formula-block">\[
+(1,0)+(0,1)-(1,1)=0
+\]</div>
+<p>es una combinación lineal nula con coeficientes no todos cero. Son dependientes.</p>
+<h3 id="12-encuentre-una-base-del-subespacio-generado-por-1-2-0-2-4-0-0-1-1">12. Encuentre una base del subespacio generado por \((1,2,0),(2,4,0),(0,1,1)\).</h3>
+<p>Como</p>
+<div class="formula-block">\[
+(2,4,0)=2(1,2,0),
+\]</div>
+<p>el segundo vector es redundante. Los vectores</p>
+<div class="formula-block">\[
+(1,2,0),\qquad (0,1,1)
+\]</div>
+<p>no son múltiplos entre sí, luego son independientes. Una base del subespacio generado es</p>
+<div class="formula-block">\[
+\{(1,2,0),(0,1,1)\}.
+\]</div>
+<p>La dimensión es \(2\).</p>
+<h3 id="13-decida-si-w-x-y-z-x-y-z-0-es-subespacio-de-mathbb-r-3">13. Decida si \(W=\{(x,y,z):x+y-z=0\}\) es subespacio de \(\mathbb R^3\).</h3>
+<p>Sí. El vector cero pertenece a \(W\), porque \(0+0-0=0\). Si \(u\) y \(v\) cumplen \(x+y-z=0\), entonces \(u+v\) también la cumple por linealidad de la ecuación. Si \(u\) la cumple, \(\lambda u\) también. Por tanto, \(W\) es subespacio.</p>
+<h3 id="14-decida-si-s-x-y-z-x-y-z-1-es-subespacio-de-mathbb-r-3">14. Decida si \(S=\{(x,y,z):x+y-z=1\}\) es subespacio de \(\mathbb R^3\).</h3>
+<p>No. El vector cero no pertenece a \(S\), porque \(0+0-0=0\neq1\). Además, si dos vectores cumplen la ecuación con valor \(1\), su suma cumple valor \(2\), no \(1\). No hay cierre por suma.</p>
+<h3 id="15-calcule-la-dimension-del-espacio-de-matrices-2-times3">15. Calcule la dimensión del espacio de matrices \(2\times3\).</h3>
+<p>Una matriz \(2\times3\) tiene seis entradas libres. Una base está formada por las seis matrices que tienen un \(1\) en una posición y ceros en las demás. Por tanto, la dimensión es</p>
+<div class="formula-block">\[
+6.
+\]</div>
+<h3 id="16-determine-si-t-x-y-x-2y-3x-y-es-lineal">16. Determine si \(T(x,y)=(x+2y,3x-y)\) es lineal.</h3>
+<p>Sí. Cada componente es combinación lineal de \(x\) e \(y\) sin término constante. Además, \(T\) puede escribirse como producto matricial:</p>
+<div class="formula-block">\[
+T(x,y)=
+\begin{pmatrix}
+1&2\\
+3&-1
+\end{pmatrix}
+\begin{pmatrix}
+x\\y
+\end{pmatrix}.
+\]</div>
+<p>Toda matriz define una aplicación lineal.</p>
+<h3 id="17-determine-si-t-x-y-x-y-1-es-lineal">17. Determine si \(T(x,y)=(x+y,1)\) es lineal.</h3>
+<p>No. Se tiene</p>
+<div class="formula-block">\[
+T(0,0)=(0,1)\neq(0,0).
+\]</div>
+<p>Una aplicación lineal debe enviar el vector cero al vector cero. Por tanto, no es lineal.</p>
+<h3 id="18-compruebe-si-las-funciones-1-x-x-2-son-linealmente-independientes">18. Compruebe si las funciones \(1,x,x^2\) son linealmente independientes.</h3>
+<p>Supongamos</p>
+<div class="formula-block">\[
+a+b x+c x^2\equiv0.
+\]</div>
+<p>Un polinomio que es idénticamente cero tiene todos sus coeficientes nulos. Por tanto,</p>
+<div class="formula-block">\[
+a=b=c=0.
+\]</div>
+<p>Luego \(1,x,x^2\) son linealmente independientes.</p>
+<h3 id="19-estudie-si-los-polinomios-de-p-3-que-cumplen-p-1-0-forman-subespacio">19. Estudie si los polinomios de \(P_3\) que cumplen \(p(1)=0\) forman subespacio.</h3>
+<p>Sí. El polinomio cero cumple \(0(1)=0\). Si \(p(1)=0\) y \(q(1)=0\), entonces</p>
+<div class="formula-block">\[
+(p+q)(1)=p(1)+q(1)=0.
+\]</div>
+<p>Si \(p(1)=0\), entonces</p>
+<div class="formula-block">\[
+(\lambda p)(1)=\lambda p(1)=0.
+\]</div>
+<p>Por tanto, forman un subespacio de \(P_3\).</p>
+<h3 id="20-estudie-si-los-polinomios-de-p-3-que-cumplen-p-1-1-forman-subespacio">20. Estudie si los polinomios de \(P_3\) que cumplen \(p(1)=1\) forman subespacio.</h3>
+<p>No. El polinomio cero no pertenece al conjunto. Además, si \(p(1)=q(1)=1\), entonces</p>
+<div class="formula-block">\[
+(p+q)(1)=2,
+\]</div>
+<p>luego no hay cierre por suma.</p>
+<h3 id="21-use-el-wronskiano-para-estudiar-la-independencia-lineal-de-1-x-sin-x">21. Use el wronskiano para estudiar la independencia lineal de \(1,x,\sin x\).</h3>
+<p>Calculamos</p>
+<div class="formula-block">\[
+W=
+\begin{vmatrix}
+1&x&\sin x\\
+0&1&\cos x\\
+0&0&-\sin x
+\end{vmatrix}
+=-\sin x.
+\]</div>
+<p>Como \(-\sin x\) no es idénticamente cero, el wronskiano no es la función nula. Por el criterio del wronskiano, las funciones \(1,x,\sin x\) son linealmente independientes.</p>
+<h3 id="22-encuentre-una-base-y-la-dimension-del-espacio-generado-por-e-ix-e-ix-sin-x-cos-x-x-sin-x">22. Encuentre una base y la dimensión del espacio generado por \(\{e^{ix},e^{-ix},\sin x,\cos x,x\sin x\}\).</h3>
+<p>Usamos las relaciones</p>
+<div class="formula-block">\[
+e^{ix}=\cos x+i\sin x,\qquad e^{-ix}=\cos x-i\sin x.
+\]</div>
+<p>Por tanto, \(e^{ix}\) y \(e^{-ix}\) están en el span de \(\sin x\) y \(\cos x\). El espacio generado por los cinco elementos coincide con el generado por</p>
+<div class="formula-block">\[
+\{\sin x,\cos x,x\sin x\}.
+\]</div>
+<p>Estas tres funciones son linealmente independientes. Una base es</p>
+<div class="formula-block">\[
+\{\sin x,\cos x,x\sin x\}.
+\]</div>
+<p>La dimensión es \(3\).</p>
+<h3 id="23-sea-v-p-3-y-w-p-in-p-3-p-1-0-encuentre-una-base-de-w-y-su-dimension">23. Sea \(V=P_3\) y \(W=\{p\in P_3:p(1)=0\}\). Encuentre una base de \(W\) y su dimensión.</h3>
+<p>Todo polinomio de \(P_3\) se escribe</p>
+<div class="formula-block">\[
+p(x)=a_0+a_1x+a_2x^2+a_3x^3.
+\]</div>
+<p>La condición \(p(1)=0\) da</p>
+<div class="formula-block">\[
+a_0+a_1+a_2+a_3=0.
+\]</div>
+<p>Una forma de construir elementos que cumplen esta condición es tomar</p>
+<div class="formula-block">\[
+x-1,\qquad x^2-1,\qquad x^3-1.
+\]</div>
+<p>Cualquier combinación lineal de ellos se anula en \(x=1\), y generan todo \(W\). Son independientes. Por tanto, una base es</p>
+<div class="formula-block">\[
+\{x-1,\ x^2-1,\ x^3-1\},
+\]</div>
+<p>y</p>
+<div class="formula-block">\[
+\dim W=3.
+\]</div>
+<h3 id="24-determine-si-d-2-2d-1-es-un-operador-lineal-sobre-funciones-dos-veces-derivables">24. Determine si \(D^2+2D+1\) es un operador lineal sobre funciones dos veces derivables.</h3>
+<p>Sí. La derivada \(D\) es lineal y también lo es \(D^2\). La suma de operadores lineales con coeficientes escalares es lineal. Si</p>
+<div class="formula-block">\[
+L=D^2+2D+1,
+\]</div>
+<p>entonces</p>
+<div class="formula-block">\[
+L[f]=f''+2f'+f.
+\]</div>
+<p>Para funciones \(f,g\) y escalar \(\lambda\),</p>
+<div class="formula-block">\[
+L[f+g]=L[f]+L[g],
+\]</div>
+<div class="formula-block">\[
+L[\lambda f]=\lambda L[f].
+\]</div>
+<p>Luego \(L\) es lineal.</p>
+<h3 id="25-en-mathbb-c-3-calcule-langle-a-b-rangle-para-a-i-1-i-2-b-1-2i-3-usando-el-producto-interno-complejo-y-determine-si-son-ortogonales">25. En \(\mathbb C^3\), calcule \(\langle A,B\rangle\) para \(A=(i,1-i,2)\), \(B=(1,2i,3)\), usando el producto interno complejo, y determine si son ortogonales.</h3>
+<p>El producto interno complejo es</p>
+<div class="formula-block">\[
+\langle A,B\rangle=\sum A_i^*B_i.
+\]</div>
+<p>Así,</p>
+<div class="formula-block">\[
+A^*=(-i,1+i,2).
+\]</div>
+<p>Entonces</p>
+<div class="formula-block">\[
+\langle A,B\rangle=(-i)(1)+(1+i)(2i)+2\cdot3.
+\]</div>
+<p>Calculamos:</p>
+<div class="formula-block">\[
+(1+i)(2i)=2i+2i^2=2i-2.
+\]</div>
+<p>Por tanto,</p>
+<div class="formula-block">\[
+\langle A,B\rangle=-i+(2i-2)+6=4+i.
+\]</div>
+<p>Como</p>
+<div class="formula-block">\[
+4+i\neq0,
+\]</div>
+<p>los vectores no son ortogonales.</p>
+<h3 id="26-explique-el-concepto-de-espacio-vectorial-general-y-desarrolle-el-ejemplo-de-los-polinomios-de-grado-menor-o-igual-que-n">26. Explique el concepto de espacio vectorial general y desarrolle el ejemplo de los polinomios de grado menor o igual que \(N\).</h3>
+<p>Un espacio vectorial general es un conjunto de elementos, llamados vectores, en el que están definidas dos operaciones: suma de vectores y multiplicación por escalares. Estas operaciones deben satisfacer cierre, conmutatividad y asociatividad de la suma, existencia de vector cero, existencia de inverso aditivo y reglas distributivas y asociativas del producto por escalares.</p>
+<p>El punto importante es que los elementos no tienen por qué ser flechas ni listas de números. Pueden ser funciones, polinomios o matrices. Lo que importa es que las operaciones tengan el comportamiento lineal adecuado.</p>
+<p>El conjunto</p>
+<div class="formula-block">\[
+P_N=\{a_0+a_1x+\cdots+a_Nx^N\}
+\]</div>
+<p>de polinomios de grado menor o igual que \(N\) es un espacio vectorial. La suma de dos polinomios de grado \(\leq N\) sigue teniendo grado \(\leq N\). Multiplicar por un escalar tampoco aumenta el grado. El cero es el polinomio nulo y el inverso aditivo de \(p(x)\) es \(-p(x)\).</p>
+<p>Una base natural es</p>
+<div class="formula-block">\[
+\{1,x,x^2,\ldots,x^N\}.
+\]</div>
+<p>Todo polinomio de \(P_N\) se escribe de forma única como combinación lineal de estos \(N+1\) elementos. Por tanto,</p>
+<div class="formula-block">\[
+\dim P_N=N+1.
+\]</div>
+<h3 id="27-explique-la-relacion-entre-dependencia-lineal-base-y-dimension-incluyendo-un-ejemplo-en-mathbb-r-3">27. Explique la relación entre dependencia lineal, base y dimensión, incluyendo un ejemplo en \(\mathbb R^3\).</h3>
+<p>La dependencia lineal detecta redundancia. Un conjunto de vectores es dependiente si alguno puede obtenerse como combinación lineal de los demás. Una base debe evitar esa redundancia y, además, generar todo el espacio. Por tanto, una base es un conjunto que genera y es linealmente independiente.</p>
+<p>La dimensión se define como el número de vectores de una base. Por eso no se obtiene contando cualquier conjunto de vectores, sino contando un conjunto generador sin redundancias.</p>
+<p>Ejemplo en \(\mathbb R^3\):</p>
+<div class="formula-block">\[
+v_1=(1,0,0),\qquad v_2=(0,1,0),\qquad v_3=(1,1,0).
+\]</div>
+<p>Estos tres vectores son dependientes porque</p>
+<div class="formula-block">\[
+v_3=v_1+v_2.
+\]</div>
+<p>El espacio que generan es el plano \(z=0\), no todo \(\mathbb R^3\). Una base de ese subespacio es</p>
+<div class="formula-block">\[
+\{(1,0,0),(0,1,0)\}.
+\]</div>
+<p>Por tanto, su dimensión es \(2\).</p>
+<h3 id="28-desarrolle-como-las-matrices-representan-aplicaciones-lineales-y-por-que-toda-matriz-define-una-transformacion-lineal">28. Desarrolle cómo las matrices representan aplicaciones lineales y por qué toda matriz define una transformación lineal.</h3>
+<p>Una matriz \(A\) de tamaño \(m\times n\) define una aplicación</p>
+<div class="formula-block">\[
+T:\mathbb R^n\to\mathbb R^m
+\]</div>
+<p>mediante</p>
+<div class="formula-block">\[
+T(x)=Ax.
+\]</div>
+<p>Si \(x,y\in\mathbb R^n\) y \(\lambda\) es escalar, entonces por las propiedades del producto matricial:</p>
+<div class="formula-block">\[
+T(x+y)=A(x+y)=Ax+Ay=T(x)+T(y),
+\]</div>
+<div class="formula-block">\[
+T(\lambda x)=A(\lambda x)=\lambda Ax=\lambda T(x).
+\]</div>
+<p>Luego \(T\) es lineal.</p>
+<p>Geométricamente, una matriz puede representar rotaciones, reflexiones, proyecciones, deformaciones o cambios de coordenadas. En todos los casos conserva combinaciones lineales. En dimensión finita, las matrices son la forma operativa de estudiar aplicaciones lineales.</p>
+<h3 id="29-explique-como-se-extienden-producto-interno-norma-y-ortogonalidad-desde-mathbb-r-n-hasta-espacios-de-funciones">29. Explique cómo se extienden producto interno, norma y ortogonalidad desde \(\mathbb R^n\) hasta espacios de funciones.</h3>
+<p>En \(\mathbb R^n\), el producto interno se define por</p>
+<div class="formula-block">\[
+\langle u,v\rangle=\sum_{i=1}^n u_iv_i.
+\]</div>
+<p>La norma es</p>
+<div class="formula-block">\[
+\|u\|=\sqrt{\langle u,u\rangle},
+\]</div>
+<p>y la ortogonalidad se define por</p>
+<div class="formula-block">\[
+\langle u,v\rangle=0.
+\]</div>
+<p>Para funciones en un intervalo \([a,b]\), la suma finita se sustituye por una integral. Si las funciones son complejas, se usa conjugación:</p>
+<div class="formula-block">\[
+\langle f,g\rangle=\int_a^b f^*(x)g(x)\,dx.
+\]</div>
+<p>Entonces</p>
+<div class="formula-block">\[
+\|f\|=\sqrt{\int_a^b f^*(x)f(x)\,dx},
+\]</div>
+<p>y \(f\) y \(g\) son ortogonales si</p>
+<div class="formula-block">\[
+\int_a^b f^*(x)g(x)\,dx=0.
+\]</div>
+<p>Esta extensión permite tratar funciones como vectores y construir bases ortogonales, por ejemplo en series de Fourier.</p>
+<h3 id="30-explique-por-que-las-funciones-pueden-tratarse-como-vectores-y-que-papel-tiene-esto-en-el-estudio-de-ecuaciones-diferenciales-y-series">30. Explique por qué las funciones pueden tratarse como vectores y qué papel tiene esto en el estudio de ecuaciones diferenciales y series.</h3>
+<p>Las funciones pueden tratarse como vectores cuando el conjunto al que pertenecen es cerrado bajo suma y multiplicación por escalares. Si \(f\) y \(g\) están en el conjunto, también debe estar \(f+g\); si \(f\) está en el conjunto, también debe estar \(\lambda f\).</p>
+<p>Esto permite definir combinaciones lineales de funciones, independencia lineal, base y dimensión. Por ejemplo, el espacio generado por \(\sin x\) y \(\cos x\) contiene todas las funciones</p>
+<div class="formula-block">\[
+a\sin x+b\cos x.
+\]</div>
+<p>En ecuaciones diferenciales lineales homogéneas, las soluciones forman un espacio vectorial. Por eso se buscan soluciones independientes que formen un sistema fundamental. En series, una función se expande en términos de una familia de funciones base, igual que un vector se expresa mediante coordenadas respecto de una base finita. Fourier es el ejemplo principal: senos y cosenos actúan como funciones base.</p>
+<h3 id="31-relacione-combinacion-lineal-span-y-subespacio">31. Relacione combinación lineal, span y subespacio.</h3>
+<p>Una combinación lineal es una expresión formada con suma y multiplicación por escalares. El span de un conjunto es el conjunto de todas sus combinaciones lineales. Ese span siempre es subespacio porque está cerrado por suma y por multiplicación escalar. Por tanto:</p>
+<div class="formula-block">\[
+\text{combinaciones lineales de un conjunto}=\text{subespacio generado por ese conjunto}.
+\]</div>
+<h3 id="32-relacione-base-coordenadas-unicas-y-dimension">32. Relacione base, coordenadas únicas y dimensión.</h3>
+<p>Una base es un conjunto independiente que genera el espacio. Como genera, todo vector tiene coordenadas respecto de ella. Como es independiente, esas coordenadas son únicas. La dimensión es el número de vectores de una base. Por tanto, la base da un sistema de coordenadas y la dimensión mide cuántas coordenadas independientes hacen falta.</p>
+<h3 id="33-relacione-operador-lineal-matriz-y-ecuacion-diferencial-lineal">33. Relacione operador lineal, matriz y ecuación diferencial lineal.</h3>
+<p>Un operador lineal conserva sumas y productos por escalares. En dimensión finita, los operadores lineales se representan mediante matrices. En espacios de funciones, operadores como</p>
+<div class="formula-block">\[
+D,\quad D^2,\quad D^2+2D+1
+\]</div>
+<p>son lineales. Una ecuación diferencial lineal puede escribirse como</p>
+<div class="formula-block">\[
+L[y]=g,
+\]</div>
+<p>donde \(L\) es un operador lineal. Si \(g=0\), el conjunto de soluciones forma un espacio vectorial.</p>
+<h3 id="34-relacione-producto-interno-ortogonalidad-y-gram-schmidt">34. Relacione producto interno, ortogonalidad y Gram-Schmidt.</h3>
+<p>El producto interno permite medir ángulos y longitudes. Dos vectores son ortogonales si su producto interno es cero. Gram-Schmidt usa el producto interno para transformar una base cualquiera en una base ortogonal: a cada nuevo vector se le restan sus proyecciones sobre los anteriores. Después, normalizando, se obtiene una base ortonormal.</p>
+<h3 id="35-relacione-espacios-de-dimension-finita-e-infinita-a-partir-de-los-ejemplos-de-polinomios-y-series-de-fourier">35. Relacione espacios de dimensión finita e infinita a partir de los ejemplos de polinomios y series de Fourier.</h3>
+<p>El espacio \(P_N\) de polinomios de grado \(\leq N\) tiene dimensión finita \(N+1\), con base</p>
+<div class="formula-block">\[
+1,x,\ldots,x^N.
+\]</div>
+<p>En cambio, el espacio de todos los polinomios no tiene una base finita, porque se necesitan potencias arbitrariamente altas. De modo análogo, las series de Fourier usan una familia infinita de funciones como \(\sin nx\) y \(\cos nx\) para expandir funciones. La idea es la misma que en dimensión finita —expresar objetos en términos de una base—, pero con infinitos términos y con problemas adicionales de convergencia.</p>
+      </div>
+    </section>
+    <section id="resumen" class="page">
+      <header class="section-header">
+        <p class="section-kicker">09</p>
+        <h2>Resumen final de repaso</h2>
+      </header>
+      <div class="reading-block">
+<p>Ideas principales:</p>
+<ul>
+<li>El capítulo generaliza la noción de vector desde flechas y listas de números hasta funciones, polinomios y matrices.</li>
+<li>La estructura vectorial depende de dos operaciones: suma y multiplicación por escalares.</li>
+<li>Las combinaciones lineales son la operación básica de construcción.</li>
+<li>El span de un conjunto es el subespacio formado por todas sus combinaciones lineales.</li>
+<li>La dependencia lineal indica redundancia.</li>
+<li>Una base es un conjunto independiente y generador.</li>
+<li>La dimensión es el número de elementos de una base.</li>
+<li>Las matrices representan aplicaciones lineales en dimensión finita.</li>
+<li>Las funciones pueden formar espacios vectoriales.</li>
+<li>El producto interno permite definir norma, ortogonalidad y bases ortonormales.</li>
+<li>Los espacios de dimensión infinita preparan series de Fourier y funciones especiales.</li>
+</ul>
+<p>Conceptos imprescindibles:</p>
+<ul>
+<li>Combinación lineal.</li>
+<li>Span.</li>
+<li>Subespacio.</li>
+<li>Dependencia e independencia lineal.</li>
+<li>Base.</li>
+<li>Dimensión.</li>
+<li>Aplicación lineal.</li>
+<li>Operador lineal.</li>
+<li>Producto interno.</li>
+<li>Norma.</li>
+<li>Ortogonalidad.</li>
+<li>Wronskiano.</li>
+<li>Espacio de funciones.</li>
+<li>Espacio de dimensión infinita.</li>
+</ul>
+<p>Relaciones clave:</p>
+<ul>
+<li>Combinación lineal \(\rightarrow\) span \(\rightarrow\) subespacio.</li>
+<li>Independencia + generación \(\rightarrow\) base.</li>
+<li>Base \(\rightarrow\) coordenadas únicas \(\rightarrow\) dimensión.</li>
+<li>Matriz \(\rightarrow\) aplicación lineal.</li>
+<li>Producto interno \(\rightarrow\) norma y ortogonalidad.</li>
+<li>Funciones ortogonales \(\rightarrow\) series y expansiones.</li>
+</ul>
+<p>Errores que evitar:</p>
+<ul>
+<li>Llamar lineal a \(mx+b\) con \(b\neq0\).</li>
+<li>Aceptar como subespacio un conjunto que no contiene al cero.</li>
+<li>Confundir conjunto generador con base.</li>
+<li>Calcular dimensión sin eliminar dependencias.</li>
+<li>Probar independencia de funciones con valores aislados sin justificación.</li>
+<li>Usar el wronskiano al revés.</li>
+<li>Olvidar conjugación en productos internos complejos.</li>
+<li>Suponer que la norma es lineal.</li>
+<li>Confundir subespacios con espacios afines desplazados.</li>
+</ul>
+      </div>
+    </section>
+    <section id="checklist" class="page">
+      <header class="section-header">
+        <p class="section-kicker">10</p>
+        <h2>Checklist de dominio</h2>
+      </header>
+      <div class="reading-block">
+<ul>
+<li>Si no puedes explicar qué es una combinación lineal, falta repasar la definición de span.</li>
+<li>Si no puedes describir el span de dos vectores en \(\mathbb R^3\), falta repasar interpretación geométrica de combinaciones lineales.</li>
+<li>Si confundes “generar” con “ser independiente”, revisar base.</li>
+<li>Si llamas base a un conjunto con vectores redundantes, revisar dependencia lineal.</li>
+<li>Si calculas la dimensión contando vectores sin comprobar independencia, revisar rango y reducción por filas.</li>
+<li>Si no sabes decidir si un subconjunto es subespacio, falta repasar cierre por suma, cierre por escalares y vector cero.</li>
+<li>Si aceptas \(x+y=1\) como subespacio, revisar diferencia entre condición homogénea y no homogénea.</li>
+<li>Si dices que \(f(x)=mx+b\) siempre es lineal, revisar definición de aplicación lineal.</li>
+<li>Si no puedes dar un contraejemplo para una operación no lineal, revisar norma, cuadrado, recíproco y determinante.</li>
+<li>Si no sabes demostrar que una matriz define una aplicación lineal, revisar producto matricial y distributividad.</li>
+<li>Si no puedes estudiar independencia de funciones, repasar identidad funcional y wronskiano.</li>
+<li>Si confundes que el wronskiano se anule en un punto con dependencia, revisar el criterio “no idénticamente cero”.</li>
+<li>Si no sabes encontrar una base de \(P_N\), revisar polinomios como espacio vectorial.</li>
+<li>Si no puedes explicar por qué \(P_N\) tiene dimensión \(N+1\), revisar base \(\{1,x,\ldots,x^N\}\).</li>
+<li>Si no sabes por qué los polinomios con \(p(1)=0\) forman subespacio, revisar condiciones homogéneas.</li>
+<li>Si no sabes por qué los polinomios con \(p(1)=1\) no forman subespacio, revisar vector cero y cierre por suma.</li>
+<li>Si olvidas la conjugación en \(\mathbb C^n\), revisar producto interno complejo.</li>
+<li>Si no puedes calcular una norma a partir de un producto interno, revisar \(\|v\|=\sqrt{\langle v,v\rangle}\).</li>
+<li>Si no puedes comprobar ortogonalidad de funciones con una integral, revisar producto interno funcional.</li>
+<li>Si no puedes explicar qué hace Gram-Schmidt, falta repasar proyección y ortogonalización.</li>
+<li>Si no puedes relacionar bases finitas con series de Fourier, revisar espacios de dimensión infinita.</li>
+<li>Si puedes encontrar bases, dimensiones y decidir linealidad en ejemplos de vectores, funciones, polinomios y matrices, el capítulo está suficientemente asentado.</li>
+</ul>
+      </div>
+    </section>
+    </main>
+  </div>
+</body>
+</html>

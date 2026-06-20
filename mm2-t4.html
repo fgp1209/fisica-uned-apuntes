@@ -1,0 +1,920 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="color-scheme" content="light dark" />
+  <title>MM2 — Tema 4: Integración compleja</title>
+  <meta name="description" content="Guía de estudio de Métodos Matemáticos II sobre integración compleja: contornos, orientación, teorema de Cauchy, fórmula integral y derivadas." />
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/icon-32.png" />
+  <link rel="icon" type="image/png" sizes="50x50" href="assets/icons/icon-50.png" />
+  <link rel="apple-touch-icon" sizes="100x100" href="assets/icons/icon-100.png" />
+  <meta name="theme-color" content="#375a7f" />
+  <link rel="stylesheet" href="assets/styles.css" />
+  <script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']], processEscapes: true },
+  svg: { fontCache: 'global' },
+  options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+};
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+  <script defer src="assets/app.js"></script>
+</head>
+<body class="subject-mm2">
+  <div class="wrap">
+    <header class="cover">
+      <a class="back-link" href="index.html">← Índice</a>
+      <p class="eyebrow">Métodos Matemáticos II</p>
+      <h1>Integración compleja</h1>
+      <p class="subtitle">Tema 4 · Integrales de contorno, orientación, primitivas, teorema de Cauchy, fórmula integral y fórmulas para derivadas.</p>
+      <div class="lesson-meta">
+        <span>Asignatura: MM2</span>
+        <span>Tema 4</span>
+        <span>Estado: completo</span>
+        <span>Enfoque: examen UNED</span>
+      </div>
+    </header>
+
+    <div class="toolbar no-print" aria-label="Navegación del tema">
+      <nav>
+        <a href="#mapa">Mapa</a>
+        <a href="#prerrequisitos">Prerrequisitos</a>
+        <a href="#idea-central">Idea</a>
+        <a href="#desarrollo">Desarrollo</a>
+        <a href="#conceptos">Conceptos</a>
+        <a href="#errores">Errores</a>
+        <a href="#preguntas">Preguntas</a>
+        <a href="#respuestas">Respuestas</a>
+        <a href="#resumen">Resumen</a>
+        <a href="#checklist">Checklist</a>
+      </nav>
+      <div class="toolbar-actions"><button class="btn secondary" onclick="document.querySelectorAll('details').forEach(d=>d.open=true)">Abrir todo</button><button class="btn secondary" onclick="document.querySelectorAll('details').forEach(d=>d.open=false)">Modo repaso</button><button class="btn" onclick="printReady()">Imprimir / PDF</button></div>
+    </div>
+
+    <main>
+      <section id="mapa" class="page map-page">
+        <header class="section-header">
+          <p class="section-kicker">00</p>
+          <h2>Mapa conceptual</h2>
+        </header>
+        <div class="concept-map">
+          <a class="map-card" href="#prerrequisitos"><span>Curvas y contornos</span><small>Parametrización, orientación y reducción a una integral real</small></a>
+          <a class="map-card" href="#desarrollo"><span>Integral directa</span><small>\(\int_C f(z)\,dz=\int_a^b f(z(t))z'(t)\,dt\)</small></a>
+          <a class="map-card" href="#desarrollo"><span>Teorema de Cauchy</span><small>Analiticidad sobre y dentro del contorno implica integral cerrada nula</small></a>
+          <a class="map-card" href="#desarrollo"><span>Fórmula integral</span><small>\(\oint_C f(z)/(z-a)\,dz=2\pi i f(a)\)</small></a>
+          <a class="map-card" href="#desarrollo"><span>Derivadas</span><small>Denominadores \((z-a)^{n+1}\) activan \(f^{(n)}(a)\)</small></a>
+          <a class="map-card" href="#preguntas"><span>Examen</span><small>Parametrizar, localizar singularidades y justificar hipótesis</small></a>
+        </div>
+        <div class="reading-block source-block">
+          <p>Fuente principal utilizada: Mary L. Boas, <strong>Mathematical Methods in the Physical Sciences</strong>, capítulo 14, secciones sobre funciones analíticas e integrales de contorno. Los exámenes UNED se han usado solo como orientación de estilo: justificar hipótesis, distinguir cuándo aplicar un teorema y cuándo integrar directamente.</p>
+        </div>
+      </section>
+
+    <section id="prerrequisitos" class="page">
+      <header class="section-header">
+        <p class="section-kicker">01</p>
+        <h2>Prerrequisitos mínimos</h2>
+      </header>
+      <div class="reading-block">
+<h3 id="numero-complejo-y-plano-complejo">1. Número complejo y plano complejo.</h3>
+<p>Definición breve: un número complejo se escribe como \(z=x+iy\), con \(x=\operatorname{Re}z\), \(y=\operatorname{Im}z\). El plano complejo identifica \(z\) con el punto \((x,y)\).</p>
+<p>Por qué es necesario: una integral compleja se calcula sobre curvas del plano complejo. Sin esta identificación no se puede interpretar un contorno.</p>
+<p>Ejemplo mínimo: la circunferencia \(|z|=R\) se parametriza como \(z(t)=Re^{it}\), \(0\leq t\leq 2\pi\).</p>
+<h3 id="derivabilidad-compleja-y-analiticidad">2. Derivabilidad compleja y analiticidad.</h3>
+<p>Definición breve: \(f\) es derivable en sentido complejo en \(z_0\) si existe</p>
+<div class="formula-block">\[
+f'(z_0)=\lim_{\Delta z\to 0}\frac{f(z_0+\Delta z)-f(z_0)}{\Delta z},
+\]</div>
+<p>independientemente de la dirección desde la que \(\Delta z\) tiende a cero. Es analítica en una región si es derivable en todos sus puntos.</p>
+<p>Por qué es necesario: los teoremas de integración compleja no dependen solo de que la función sea continua, sino de que sea analítica en la región adecuada.</p>
+<p>Ejemplo mínimo: \(f(z)=z^2\) es entera; \(f(z)=\bar z\) no es analítica.</p>
+<h3 id="condiciones-de-cauchy-riemann">3. Condiciones de Cauchy-Riemann.</h3>
+<p>Definición breve: si \(f(z)=u(x,y)+iv(x,y)\), una condición necesaria de analiticidad es</p>
+<div class="formula-block">\[
+u_x=v_y,\qquad u_y=-v_x.
+\]</div>
+<p>Con hipótesis de regularidad suficientes, estas condiciones permiten reconocer funciones analíticas.</p>
+<p>Por qué es necesario: el teorema de Cauchy se apoya en que estas condiciones anulan ciertas integrales reales obtenidas al separar parte real e imaginaria.</p>
+<p>Ejemplo mínimo: para \(f(z)=z^2=(x^2-y^2)+i(2xy)\), se tiene \(u_x=2x=v_y\) y \(u_y=-2y=-v_x\).</p>
+<h3 id="curvas-parametrizadas">4. Curvas parametrizadas.</h3>
+<p>Definición breve: una curva \(C\) se describe mediante \(z(t)=x(t)+iy(t)\), \(a\leq t\leq b\). Su orientación viene dada por el sentido creciente de \(t\).</p>
+<p>Por qué es necesario: la definición operativa de integral de contorno reduce la integral compleja a una integral real en el parámetro.</p>
+<p>Ejemplo mínimo: el segmento de \(0\) a \(1+i\) puede escribirse como \(z(t)=(1+i)t\), \(0\leq t\leq 1\).</p>
+<h3 id="integrales-de-linea-reales">5. Integrales de línea reales.</h3>
+<p>Definición breve: una integral de línea integra una función o campo a lo largo de una curva, no sobre una región bidimensional.</p>
+<p>Por qué es necesario: Boas presenta la integral compleja como una integral de línea en el plano, escrita con \(dz=dx+i\,dy\).</p>
+<p>Ejemplo mínimo:</p>
+<div class="formula-block">\[
+\int_C f(z)\,dz=\int_C (u+iv)(dx+i\,dy).
+\]</div>
+<h3 id="teorema-de-green">6. Teorema de Green.</h3>
+<p>Definición breve: relaciona una integral de línea cerrada con una integral doble sobre la región encerrada:</p>
+<div class="formula-block">\[
+\oint_C P\,dx+Q\,dy=\iint_D(Q_x-P_y)\,dx\,dy,
+\]</div>
+<p>cuando se cumplen las hipótesis de regularidad y orientación positiva.</p>
+<p>Por qué es necesario: en la demostración elemental del teorema de Cauchy, la integral compleja se separa en dos integrales reales y se aplica Green.</p>
+<p>Ejemplo mínimo: si el integrando de Green se anula en todo \(D\), la integral cerrada vale cero.</p>
+<h3 id="primitiva-de-una-funcion">7. Primitiva de una función.</h3>
+<p>Definición breve: una función \(F\) es primitiva de \(f\) en un dominio si \(F'(z)=f(z)\).</p>
+<p>Por qué es necesario: cuando existe primitiva en el dominio que contiene la curva, la integral depende solo de los extremos:</p>
+<div class="formula-block">\[
+\int_{z_0}^{z_1} f(z)\,dz=F(z_1)-F(z_0).
+\]</div>
+<p>Ejemplo mínimo: si \(f(z)=e^z\), una primitiva es \(F(z)=e^z\), luego \(\int_C e^z\,dz=e^{z_1}-e^{z_0}\).</p>
+<h3 id="singularidades-y-dominio-de-analiticidad">8. Singularidades y dominio de analiticidad.</h3>
+<p>Definición breve: un punto singular es un punto donde la función no es analítica. Puede estar dentro, fuera o sobre el contorno.</p>
+<p>Por qué es necesario: la posición de las singularidades decide si se puede aplicar Cauchy, la fórmula integral de Cauchy o si hay que evitar el teorema.</p>
+<p>Ejemplo mínimo: \(1/(z-a)\) no es analítica en \(z=a\). Si \(a\) queda dentro de \(C\), no se puede afirmar directamente que \(\oint_C 1/(z-a)\,dz=0\).</p>
+      </div>
+    </section>
+    <section id="idea-central" class="page">
+      <header class="section-header">
+        <p class="section-kicker">02</p>
+        <h2>Idea central del capítulo</h2>
+      </header>
+      <div class="reading-block">
+<p>El capítulo introduce la integral compleja como una extensión de la integral de línea al plano complejo. La novedad no está en la mecánica de integrar, que sigue siendo una integral de una variable cuando se parametriza la curva, sino en las consecuencias extremadamente fuertes de la analiticidad. En variable real, una integral de línea suele depender del camino; en variable compleja, bajo hipótesis de analiticidad, muchas integrales cerradas se anulan y muchas integrales no dependen del camino.</p>
+<p>La idea directriz es que una función compleja analítica está mucho más rígidamente determinada que una función real diferenciable. En el tema anterior se estudian derivabilidad, condiciones de Cauchy-Riemann y funciones armónicas. En este tema esas propiedades se convierten en herramientas de cálculo: permiten transformar integrales aparentemente complicadas en cero, o en valores de la función y sus derivadas en puntos interiores.</p>
+<p>El primer objetivo operativo es aprender a calcular integrales complejas directamente: se parametriza el camino, se sustituye \(z=z(t)\), se calcula \(dz=z'(t)\,dt\) y se integra en \(t\). Este método siempre es legítimo si la parametrización y la función son manejables. Es el método base, y evita aplicar teoremas cuando sus hipótesis no se cumplen.</p>
+<p>El segundo objetivo es reconocer cuándo una integral cerrada se anula por el teorema de Cauchy. La forma típica es:</p>
+<div class="formula-block">\[
+\oint_C f(z)\,dz=0,
+\]</div>
+<p>si \(f\) es analítica en el contorno y en todo su interior. La dificultad de examen no suele estar en escribir el cero, sino en justificar que no hay singularidades dentro ni sobre el contorno.</p>
+<p>El tercer objetivo es usar la fórmula integral de Cauchy:</p>
+<div class="formula-block">\[
+f(a)=\frac{1}{2\pi i}\oint_C\frac{f(z)}{z-a}\,dz,
+\]</div>
+<p>cuando \(a\) está dentro de \(C\) y \(f\) es analítica en y sobre la región encerrada. Esta fórmula cambia el sentido del problema: una integral sobre la frontera determina el valor de la función en un punto interior. En cálculo de ejercicios, se usa al revés:</p>
+<div class="formula-block">\[
+\oint_C\frac{f(z)}{z-a}\,dz=2\pi i\,f(a).
+\]</div>
+<p>El cuarto objetivo es entender que las fórmulas para derivadas se obtienen diferenciando la fórmula de Cauchy:</p>
+<div class="formula-block">\[
+\oint_C\frac{f(z)}{(z-a)^{n+1}}\,dz=\frac{2\pi i}{n!}f^{(n)}(a).
+\]</div>
+<p>Estas fórmulas explican una de las propiedades profundas de la variable compleja: si una función es analítica, posee derivadas de todos los órdenes. Para un alumno de primero, lo esencial es dominar el uso práctico de la fórmula, sin perder las hipótesis.</p>
+<p>Dentro de Métodos Matemáticos II, este tema es la bisagra entre holomorfía y series/residuos. Si no se domina integración compleja, no se entiende por qué aparecen Laurent, residuos y evaluación de integrales reales mediante contornos. En examen, este bloque se manifiesta en tres tipos de tarea: calcular una integral por parametrización, decidir si una integral cerrada vale cero, y aplicar Cauchy o sus derivadas con una singularidad aparente del tipo \((z-a)^{-k}\).</p>
+      </div>
+    </section>
+    <section id="desarrollo" class="page">
+      <header class="section-header">
+        <p class="section-kicker">03</p>
+        <h2>Desarrollo completo del capítulo</h2>
+      </header>
+      <div class="reading-block">
+<h3 id="3-1-de-integral-real-a-integral-compleja">3.1. De integral real a integral compleja</h3>
+<p>Una integral compleja sobre un contorno \(C\) se entiende como una integral de línea. Si \(C\) se parametriza por</p>
+<div class="formula-block">\[
+z(t)=x(t)+iy(t),\qquad a\leq t\leq b,
+\]</div>
+<p>entonces</p>
+<div class="formula-block">\[
+dz=z'(t)\,dt
+\]</div>
+<p>y la integral se calcula como</p>
+<div class="formula-block">\[
+\int_C f(z)\,dz=\int_a^b f(z(t))z'(t)\,dt.
+\]</div>
+<p>Esta es la forma más segura de empezar cualquier ejercicio. No requiere que \(f\) sea analítica; solo requiere que la integral esté bien definida sobre la curva.</p>
+<p>La conexión con la integral de línea real aparece al escribir \(f=u+iv\) y \(dz=dx+i\,dy\):</p>
+<div class="formula-block">\[
+f(z)\,dz=(u+iv)(dx+i\,dy)=(u\,dx-v\,dy)+i(v\,dx+u\,dy).
+\]</div>
+<p>Por tanto, una integral compleja equivale a dos integrales de línea reales, una para la parte real y otra para la parte imaginaria. Esta descomposición es importante porque permite aplicar herramientas reales, como el teorema de Green, a problemas de variable compleja.</p>
+<p>Ejemplo. Sea \(C\) el segmento de \(0\) a \(1+i\), \(z(t)=(1+i)t\), \(0\leq t\leq 1\). Entonces</p>
+<div class="formula-block">\[
+\int_C z\,dz=\int_0^1 (1+i)t(1+i)\,dt=(1+i)^2\int_0^1 t\,dt=2i\cdot\frac12=i.
+\]</div>
+<p>Aquí no se ha usado ningún teorema global. Solo se ha parametrizado.</p>
+<p>La consecuencia inmediata es que no se debe empezar un ejercicio buscando Cauchy de forma automática. Primero se identifica el tipo de camino, el integrando y las singularidades. Si la función no es analítica o el camino no es cerrado, puede que la parametrización sea el camino correcto.</p>
+<h3 id="3-2-caminos-contornos-y-orientacion">3.2. Caminos, contornos y orientación</h3>
+<p>Un camino es una curva orientada. La orientación importa: recorrer una curva en sentido contrario cambia el signo de la integral. Si \(C^-\) denota el mismo camino recorrido en sentido opuesto, entonces</p>
+<div class="formula-block">\[
+\int_{C^-} f(z)\,dz=-\int_C f(z)\,dz.
+\]</div>
+<p>En los teoremas de Cauchy, se suele trabajar con curvas cerradas simples recorridas en sentido positivo, es decir, antihorario: la región encerrada queda a la izquierda del recorrido.</p>
+<p>Boas permite curvas con tangente continua salvo un número finito de esquinas. Esto cubre los contornos típicos de examen: circunferencias, rectángulos, triángulos y curvas a trozos. En una curva a trozos, la integral total es la suma de las integrales sobre cada tramo:</p>
+<div class="formula-block">\[
+\int_C f(z)\,dz=\sum_k \int_{C_k} f(z)\,dz.
+\]</div>
+<p>Ejemplo. Si \(C\) es la circunferencia \(|z|=R\) en sentido positivo, se usa</p>
+<div class="formula-block">\[
+z(t)=Re^{it},\qquad dz=iRe^{it}\,dt,\qquad 0\leq t\leq 2\pi.
+\]</div>
+<p>Entonces</p>
+<div class="formula-block">\[
+\oint_C \frac{1}{z}\,dz=\int_0^{2\pi}\frac{1}{Re^{it}}iRe^{it}\,dt=2\pi i.
+\]</div>
+<p>Este cálculo directo es fundamental porque muestra por qué no basta con decir que una integral cerrada “debería” ser cero: \(1/z\) no es analítica en el interior de la circunferencia si esta rodea al origen.</p>
+<h3 id="3-3-dependencia-del-camino-y-primitivas">3.3. Dependencia del camino y primitivas</h3>
+<p>En variable real, si \(f=F'\), entonces</p>
+<div class="formula-block">\[
+\int_a^b f(x)\,dx=F(b)-F(a).
+\]</div>
+<p>En variable compleja ocurre algo análogo: si \(F'(z)=f(z)\) en un dominio que contiene el camino, entonces</p>
+<div class="formula-block">\[
+\int_C f(z)\,dz=F(z_1)-F(z_0),
+\]</div>
+<p>donde \(z_0\) y \(z_1\) son los extremos de \(C\). En particular, si \(C\) es cerrado,</p>
+<div class="formula-block">\[
+\oint_C f(z)\,dz=0.
+\]</div>
+<p>Este criterio es útil porque evita parametrizar. Si el integrando tiene una primitiva global en el dominio relevante, la integral solo depende de los extremos. Por ejemplo, \(e^z\), \(\sin z\), \(\cos z\) y los polinomios tienen primitivas enteras, de modo que sus integrales sobre contornos cerrados son cero.</p>
+<p>Ejemplo. Para cualquier camino \(C\) que vaya de \(0\) a \(1+i\),</p>
+<div class="formula-block">\[
+\int_C z^2\,dz=\frac{(1+i)^3}{3}-0.
+\]</div>
+<p>Como \((1+i)^2=2i\), entonces \((1+i)^3=2i(1+i)=-2+2i\), y</p>
+<div class="formula-block">\[
+\int_C z^2\,dz=\frac{-2+2i}{3}.
+\]</div>
+<p>No importa si el camino es recto, poligonal o curvo, porque \(z^2\) tiene primitiva \(z^3/3\) en todo el plano.</p>
+<p>La advertencia importante es que analiticidad local no siempre garantiza una primitiva global en dominios con agujeros. El caso \(1/z\) en \(\mathbb C\setminus\{0\}\) es el ejemplo central: es analítica fuera del origen, pero su integral alrededor de una circunferencia que rodea al origen vale \(2\pi i\), no cero.</p>
+<h3 id="3-4-teorema-de-cauchy">3.4. Teorema de Cauchy</h3>
+<p>El teorema de Cauchy afirma que si \(C\) es una curva cerrada simple, suficientemente regular, y \(f\) es analítica sobre \(C\) y en todo su interior, entonces</p>
+<div class="formula-block">\[
+\oint_C f(z)\,dz=0.
+\]</div>
+<p>Este resultado es el primer gran salto del tema. No dice que toda integral cerrada compleja sea cero; dice que lo es cuando el integrando no tiene singularidades dentro ni sobre el contorno.</p>
+<p>La demostración presentada en Boas separa la integral en parte real e imaginaria:</p>
+<div class="formula-block">\[
+\oint_C f(z)\,dz=
+\oint_C (u\,dx-v\,dy)+i\oint_C(v\,dx+u\,dy).
+\]</div>
+<p>Aplicando el teorema de Green, las dos integrales se transforman en integrales dobles. Las condiciones de Cauchy-Riemann hacen que los integrandos resultantes se anulen. Por eso el resultado depende de la analiticidad.</p>
+<p>Ejemplo. Si \(C\) es cualquier circunferencia y \(f(z)=e^z\), entonces</p>
+<div class="formula-block">\[
+\oint_C e^z\,dz=0,
+\]</div>
+<p>porque \(e^z\) es entera. Lo mismo ocurre con cualquier polinomio, \(\sin z\) o \(\cos z\).</p>
+<p>Ejemplo contrario. Si \(C\) es \(|z|=1\),</p>
+<div class="formula-block">\[
+\oint_C \frac{1}{z}\,dz=2\pi i.
+\]</div>
+<p>No contradice Cauchy, porque \(1/z\) no es analítica en \(z=0\), que queda dentro de \(C\).</p>
+<p>En examen, la frase mínima correcta no es “por Cauchy vale cero”, sino “por Cauchy vale cero porque el integrando es analítico en el contorno y en todo su interior”. Si hay un punto problemático, hay que localizarlo y compararlo con el contorno.</p>
+<h3 id="3-5-que-ocurre-con-una-singularidad-dentro-del-contorno">3.5. Qué ocurre con una singularidad dentro del contorno</h3>
+<p>El teorema de Cauchy falla si el integrando tiene una singularidad dentro del contorno. Sin embargo, no todo está perdido. La fórmula integral de Cauchy trata precisamente integrales de la forma</p>
+<div class="formula-block">\[
+\oint_C\frac{f(z)}{z-a}\,dz,
+\]</div>
+<p>donde \(f\) sí es analítica, pero el cociente tiene una singularidad en \(a\).</p>
+<p>La idea geométrica es separar el punto \(a\) con una circunferencia pequeña alrededor de él. En la región entre el contorno grande y la circunferencia pequeña, el integrando ya es analítico. Por Cauchy, la integral por el contorno exterior se relaciona con la integral por la circunferencia pequeña. Al dejar que el radio de esa circunferencia tienda a cero, aparece el valor \(f(a)\).</p>
+<p>El resultado es:</p>
+<div class="formula-block">\[
+\oint_C\frac{f(z)}{z-a}\,dz=2\pi i\,f(a),
+\]</div>
+<p>si \(a\) está dentro de \(C\) y \(f\) es analítica sobre \(C\) y en su interior.</p>
+<p>Ejemplo. Sea \(C:|z|=2\). Entonces</p>
+<div class="formula-block">\[
+\oint_C\frac{e^z}{z-1}\,dz=2\pi i\,e,
+\]</div>
+<p>porque \(a=1\) está dentro de \(|z|=2\) y \(e^z\) es entera.</p>
+<p>Si el punto \(a\) queda fuera del contorno, entonces \(f(z)/(z-a)\) sí es analítica dentro y sobre \(C\), de modo que la integral vale cero por el teorema de Cauchy. Por ejemplo,</p>
+<div class="formula-block">\[
+\oint_{|z|=1}\frac{e^z}{z-2}\,dz=0.
+\]</div>
+<h3 id="3-6-formula-integral-de-cauchy">3.6. Fórmula integral de Cauchy</h3>
+<p>La fórmula integral de Cauchy se escribe como</p>
+<div class="formula-block">\[
+f(a)=\frac{1}{2\pi i}\oint_C\frac{f(z)}{z-a}\,dz.
+\]</div>
+<p>Su significado conceptual es fuerte: una función analítica dentro de una región queda determinada por sus valores en la frontera. Para el cálculo de examen, la lectura práctica es:</p>
+<div class="formula-block">\[
+\oint_C\frac{f(z)}{z-a}\,dz=2\pi i\,f(a).
+\]</div>
+<p>La dificultad está en poner el integrando en la forma correcta. No siempre aparece como \((z-a)^{-1}\) de forma inmediata. Hay que separar constantes y comprobar que lo que queda en el numerador es analítico.</p>
+<p>Ejemplo. Calcular</p>
+<div class="formula-block">\[
+\oint_{|z|=2}\frac{\cos z}{2z-\pi}\,dz.
+\]</div>
+<p>Se reescribe</p>
+<div class="formula-block">\[
+2z-\pi=2\left(z-\frac{\pi}{2}\right),
+\]</div>
+<p>por tanto</p>
+<div class="formula-block">\[
+\oint_{|z|=2}\frac{\cos z}{2z-\pi}\,dz
+=\frac12\oint_{|z|=2}\frac{\cos z}{z-\pi/2}\,dz.
+\]</div>
+<p>Como \(\pi/2&lt;2\), el punto \(a=\pi/2\) está dentro de \(C\), y</p>
+<div class="formula-block">\[
+\frac12\cdot 2\pi i\cos(\pi/2)=0.
+\]</div>
+<p>La integral vale cero, pero no porque el integrando sea analítico; vale cero porque el valor \(f(a)\) es cero. Esta distinción es típica de examen.</p>
+<h3 id="3-7-formulas-para-derivadas">3.7. Fórmulas para derivadas</h3>
+<p>Diferenciando la fórmula integral de Cauchy se obtiene</p>
+<div class="formula-block">\[
+f'(a)=\frac{1}{2\pi i}\oint_C\frac{f(z)}{(z-a)^2}\,dz.
+\]</div>
+<p>Más generalmente,</p>
+<div class="formula-block">\[
+f^{(n)}(a)=\frac{n!}{2\pi i}\oint_C\frac{f(z)}{(z-a)^{n+1}}\,dz.
+\]</div>
+<p>Equivalente para calcular integrales:</p>
+<div class="formula-block">\[
+\oint_C\frac{f(z)}{(z-a)^{n+1}}\,dz=\frac{2\pi i}{n!}f^{(n)}(a).
+\]</div>
+<p>Este resultado es importante por dos motivos. Primero, permite calcular integrales con potencias superiores en el denominador. Segundo, muestra que una función analítica no solo tiene primera derivada, sino derivadas de todos los órdenes. Esa propiedad prepara el camino hacia Taylor y Laurent.</p>
+<p>Ejemplo. Sea \(C:|z|=2\). Calcular</p>
+<div class="formula-block">\[
+\oint_C\frac{e^z}{(z-1)^2}\,dz.
+\]</div>
+<p>Aquí \(a=1\), \(n=1\), \(f(z)=e^z\). Entonces</p>
+<div class="formula-block">\[
+\oint_C\frac{e^z}{(z-1)^2}\,dz=2\pi i\,f'(1)=2\pi i\,e.
+\]</div>
+<p>Ejemplo. Calcular</p>
+<div class="formula-block">\[
+\oint_C\frac{e^z}{(z-1)^3}\,dz
+\]</div>
+<p>con el mismo contorno. Ahora \(n+1=3\), luego \(n=2\):</p>
+<div class="formula-block">\[
+\oint_C\frac{e^z}{(z-1)^3}\,dz=\frac{2\pi i}{2!}f''(1)=\pi i e.
+\]</div>
+<h3 id="3-8-cuando-integrar-directamente-y-cuando-aplicar-teoremas">3.8. Cuándo integrar directamente y cuándo aplicar teoremas</h3>
+<p>La decisión de método es parte del contenido del tema. Si el camino no es cerrado, Cauchy no da directamente cero. Si el integrando contiene \(\bar z\), \(|z|\), \(\operatorname{Re}z\) o \(\operatorname{Im}z\), normalmente no es analítico y no se debe aplicar Cauchy sin más. En esos casos se parametriza.</p>
+<p>Ejemplo. En \(C: |z|=1\), sentido positivo,</p>
+<div class="formula-block">\[
+\oint_C \bar z\,dz.
+\]</div>
+<p>Como \(z=e^{it}\), se tiene \(\bar z=e^{-it}\) y \(dz=ie^{it}dt\). Por tanto,</p>
+<div class="formula-block">\[
+\oint_C \bar z\,dz=\int_0^{2\pi}e^{-it}ie^{it}\,dt=\int_0^{2\pi}i\,dt=2\pi i.
+\]</div>
+<p>No se puede usar Cauchy porque \(\bar z\) no es analítica.</p>
+<p>La regla práctica es: si el integrando es analítico en una región con contorno cerrado, usar Cauchy para anular; si tiene una singularidad simple interior del tipo \(1/(z-a)\), usar fórmula integral; si tiene \((z-a)^{-(n+1)}\), usar fórmula de derivadas; si no es analítico o el camino no es cerrado, parametrizar.</p>
+<h3 id="3-9-papel-del-dominio">3.9. Papel del dominio</h3>
+<p>La palabra “dominio” no es decorativa. Los teoremas dependen de dónde es analítica la función y de qué región encierra el contorno. La misma función puede permitir o no un teorema según el contorno.</p>
+<p>Ejemplo. Para</p>
+<div class="formula-block">\[
+\frac{1}{z-3},
+\]</div>
+<p>la integral sobre \(|z|=1\) vale cero, porque la singularidad \(z=3\) queda fuera. Pero sobre \(|z|=4\) vale \(2\pi i\), porque \(z=3\) queda dentro:</p>
+<div class="formula-block">\[
+\oint_{|z|=4}\frac{1}{z-3}\,dz=2\pi i.
+\]</div>
+<p>También importa que la singularidad no esté sobre el contorno. Si se pide integrar</p>
+<div class="formula-block">\[
+\oint_{|z|=1}\frac{1}{z-1}\,dz,
+\]</div>
+<p>el integrando no está definido en un punto del camino. Esa integral no puede evaluarse con la fórmula integral ordinaria de Cauchy. Haría falta una interpretación adicional, como valor principal, que no pertenece al núcleo básico de este tema.</p>
+<h3 id="3-10-conexion-con-lo-que-viene-despues">3.10. Conexión con lo que viene después</h3>
+<p>La integración compleja prepara tres desarrollos posteriores. Primero, las series de Taylor: la fórmula de Cauchy explica por qué las funciones analíticas tienen derivadas de todos los órdenes. Segundo, las series de Laurent: cuando hay singularidades aisladas, las potencias negativas aparecen de forma natural. Tercero, el teorema de residuos: la fórmula integral de Cauchy es el caso más elemental de la idea de que las integrales cerradas detectan la parte singular de una función.</p>
+<p>Para T4, no hace falta resolver problemas generales por residuos. Sí hace falta reconocer que las integrales tipo</p>
+<div class="formula-block">\[
+\oint_C \frac{f(z)}{z-a}\,dz
+\]</div>
+<p>son la base de lo que después se llamará residuo. En esta etapa, se resuelven con Cauchy, no con un algoritmo de residuos.</p>
+      </div>
+    </section>
+    <section id="conceptos" class="page">
+      <header class="section-header">
+        <p class="section-kicker">04</p>
+        <h2>Conceptos clave</h2>
+      </header>
+      <div class="reading-block">
+<h3 id="integral-de-contorno">1. Integral de contorno.</h3>
+<p>Definición precisa: integral de una función compleja \(f\) a lo largo de una curva orientada \(C\):</p>
+<div class="formula-block">\[
+\int_C f(z)\,dz=\int_a^b f(z(t))z'(t)\,dt.
+\]</div>
+<p>Explicación desarrollada: convierte un problema de variable compleja en una integral real sobre el parámetro. La curva y su orientación forman parte de los datos.</p>
+<p>Ejemplo:</p>
+<div class="formula-block">\[
+\int_{0}^{1+i} z\,dz
+\]</div>
+<p>por el segmento recto se calcula con \(z=(1+i)t\).</p>
+<p>Relación con otros conceptos: es la base para Cauchy, fórmulas integrales y residuos.</p>
+<p>Posible forma de preguntarlo en examen: “Calcular directamente la integral de \(f(z)\) a lo largo del camino indicado”.</p>
+<h3 id="contorno-cerrado-simple">2. Contorno cerrado simple.</h3>
+<p>Definición precisa: curva cerrada que no se corta a sí misma. En sentido positivo, se recorre antihorariamente.</p>
+<p>Explicación desarrollada: delimita una región interior. Los teoremas de Cauchy se formulan sobre el contorno y su interior.</p>
+<p>Ejemplo: \(|z|=R\), recorrido con \(z=Re^{it}\), \(0\leq t\leq 2\pi\).</p>
+<p>Relación con otros conceptos: permite hablar de puntos dentro, fuera o sobre \(C\).</p>
+<p>Posible forma de preguntarlo en examen: “Determinar si el punto singular queda dentro del contorno”.</p>
+<h3 id="orientacion">3. Orientación.</h3>
+<p>Definición precisa: sentido en que se recorre una curva.</p>
+<p>Explicación desarrollada: cambiar la orientación cambia el signo de la integral. Las fórmulas estándar usan orientación positiva.</p>
+<p>Ejemplo:</p>
+<div class="formula-block">\[
+\oint_{|z|=1}^{\text{horario}}\frac{1}{z}\,dz=-2\pi i.
+\]</div>
+<p>Relación con otros conceptos: afecta a Cauchy, fórmula integral y cualquier integral de contorno.</p>
+<p>Posible forma de preguntarlo en examen: “Calcular la integral sobre el contorno recorrido en sentido negativo”.</p>
+<h3 id="funcion-analitica">4. Función analítica.</h3>
+<p>Definición precisa: función derivable en sentido complejo en todos los puntos de una región.</p>
+<p>Explicación desarrollada: es la hipótesis estructural que hace funcionar la teoría. No basta continuidad ni derivabilidad parcial real.</p>
+<p>Ejemplo: \(e^z\) es analítica en todo \(\mathbb C\).</p>
+<p>Relación con otros conceptos: implica Cauchy-Riemann, permite Cauchy, fórmula integral y derivadas de todos los órdenes.</p>
+<p>Posible forma de preguntarlo en examen: “Justificar si se puede aplicar el teorema de Cauchy”.</p>
+<h3 id="singularidad">5. Singularidad.</h3>
+<p>Definición precisa: punto donde la función no es analítica.</p>
+<p>Explicación desarrollada: una singularidad dentro del contorno impide aplicar directamente el teorema de Cauchy. Puede activar la fórmula integral si tiene la forma adecuada.</p>
+<p>Ejemplo: \(1/(z-a)\) tiene singularidad en \(a\).</p>
+<p>Relación con otros conceptos: determina si la integral vale cero, \(2\pi i f(a)\), o exige otro método.</p>
+<p>Posible forma de preguntarlo en examen: “Localizar los puntos singulares y decidir qué teorema aplicar”.</p>
+<h3 id="primitiva">6. Primitiva.</h3>
+<p>Definición precisa: \(F\) es primitiva de \(f\) si \(F'=f\).</p>
+<p>Explicación desarrollada: cuando existe en el dominio que contiene el camino, la integral depende solo de los extremos.</p>
+<p>Ejemplo:</p>
+<div class="formula-block">\[
+\int_C \cos z\,dz=\sin z_1-\sin z_0.
+\]</div>
+<p>Relación con otros conceptos: explica independencia del camino y anulación de integrales cerradas.</p>
+<p>Posible forma de preguntarlo en examen: “Calcular una integral entre dos puntos sin especificar camino”.</p>
+<h3 id="teorema-de-cauchy">7. Teorema de Cauchy.</h3>
+<p>Definición precisa: si \(f\) es analítica sobre y dentro de una curva cerrada simple \(C\), entonces</p>
+<div class="formula-block">\[
+\oint_C f(z)\,dz=0.
+\]</div>
+<p>Explicación desarrollada: es el resultado que permite anular integrales cerradas sin calcularlas.</p>
+<p>Ejemplo:</p>
+<div class="formula-block">\[
+\oint_C (z^3+e^z)\,dz=0.
+\]</div>
+<p>Relación con otros conceptos: se basa en analiticidad y en la ausencia de singularidades en la región.</p>
+<p>Posible forma de preguntarlo en examen: “Evaluar una integral cerrada y justificar el uso del teorema”.</p>
+<h3 id="formula-integral-de-cauchy">8. Fórmula integral de Cauchy.</h3>
+<p>Definición precisa:</p>
+<div class="formula-block">\[
+f(a)=\frac{1}{2\pi i}\oint_C \frac{f(z)}{z-a}\,dz,
+\]</div>
+<p>si \(f\) es analítica sobre y dentro de \(C\), y \(a\) está dentro de \(C\).</p>
+<p>Explicación desarrollada: calcula el valor interior de una función analítica a partir de una integral sobre la frontera.</p>
+<p>Ejemplo:</p>
+<div class="formula-block">\[
+\oint_{|z|=2}\frac{e^z}{z-1}\,dz=2\pi i e.
+\]</div>
+<p>Relación con otros conceptos: es la herramienta central para integrales con denominador lineal.</p>
+<p>Posible forma de preguntarlo en examen: “Calcular una integral tipo \(\oint f(z)/(z-a)\,dz\)”.</p>
+<h3 id="formula-de-cauchy-para-derivadas">9. Fórmula de Cauchy para derivadas.</h3>
+<p>Definición precisa:</p>
+<div class="formula-block">\[
+f^{(n)}(a)=\frac{n!}{2\pi i}\oint_C\frac{f(z)}{(z-a)^{n+1}}\,dz.
+\]</div>
+<p>Explicación desarrollada: generaliza la fórmula integral a potencias superiores del denominador.</p>
+<p>Ejemplo:</p>
+<div class="formula-block">\[
+\oint_C\frac{e^z}{(z-a)^2}\,dz=2\pi i e^a.
+\]</div>
+<p>Relación con otros conceptos: conecta integración con derivadas de todos los órdenes.</p>
+<p>Posible forma de preguntarlo en examen: “Evaluar una integral con \((z-a)^3\) en el denominador”.</p>
+<h3 id="funcion-no-analitica">10. Función no analítica.</h3>
+<p>Definición precisa: función que no cumple derivabilidad compleja en la región considerada.</p>
+<p>Explicación desarrollada: no permite aplicar automáticamente Cauchy, aunque la curva sea cerrada.</p>
+<p>Ejemplo: \(\bar z\), \(|z|^2\), \(\operatorname{Re}z\).</p>
+<p>Relación con otros conceptos: obliga a parametrizar o a reescribir el problema.</p>
+<p>Posible forma de preguntarlo en examen: “Explicar por qué no se puede usar el teorema de Cauchy”.</p>
+<h3 id="punto-interior-y-punto-exterior">11. Punto interior y punto exterior.</h3>
+<p>Definición precisa: un punto \(a\) es interior a \(C\) si queda dentro de la región delimitada por el contorno; exterior si queda fuera.</p>
+<p>Explicación desarrollada: en la fórmula de Cauchy, el resultado cambia completamente si \(a\) está dentro o fuera.</p>
+<p>Ejemplo:</p>
+<div class="formula-block">\[
+\oint_{|z|=1}\frac{1}{z-2}\,dz=0,\qquad
+\oint_{|z|=3}\frac{1}{z-2}\,dz=2\pi i.
+\]</div>
+<p>Relación con otros conceptos: localización de singularidades.</p>
+<p>Posible forma de preguntarlo en examen: “Discutir el valor de la integral según el radio del círculo”.</p>
+<h3 id="integral-directa">12. Integral directa.</h3>
+<p>Definición precisa: cálculo mediante parametrización del camino.</p>
+<p>Explicación desarrollada: es el método universal cuando no se puede usar un teorema global.</p>
+<p>Ejemplo:</p>
+<div class="formula-block">\[
+\oint_{|z|=1}\bar z\,dz=2\pi i.
+\]</div>
+<p>Relación con otros conceptos: contrasta con Cauchy; sirve para comprobar errores de hipótesis.</p>
+<p>Posible forma de preguntarlo en examen: “Calcular una integral con \(\bar z\) sobre una circunferencia”.</p>
+      </div>
+    </section>
+    <section id="relaciones" class="page">
+      <header class="section-header">
+        <p class="section-kicker">05</p>
+        <h2>Relaciones entre ideas</h2>
+      </header>
+      <div class="reading-block">
+<p>La relación básica del tema es:</p>
+<div class="formula-block">\[
+\text{curva parametrizada}\Rightarrow \text{integral de contorno}\Rightarrow \text{posible uso de analiticidad}.
+\]</div>
+<p>Primero se define la integral sobre un camino. Después se observa que, si la función tiene estructura analítica, la integral se simplifica drásticamente.</p>
+<p>La analiticidad depende de la derivabilidad compleja, y esta se conecta con las condiciones de Cauchy-Riemann. En la demostración del teorema de Cauchy, la integral compleja se separa en dos integrales reales; Green convierte esas integrales en integrales dobles; Cauchy-Riemann hace que los integrandos se anulen. La cadena conceptual es:</p>
+<div class="formula-block">\[
+f\ \text{analítica}\Rightarrow \text{Cauchy-Riemann}\Rightarrow \oint_C f(z)\,dz=0.
+\]</div>
+<p>El teorema de Cauchy se aplica cuando no hay singularidades dentro ni sobre el contorno. La fórmula integral de Cauchy aparece cuando el integrando completo sí tiene una singularidad en \(a\), pero procede de una función analítica \(f\) dividida por \(z-a\). La jerarquía es:</p>
+<div class="formula-block">\[
+\oint_C f(z)\,dz=0,
+\]</div>
+<p>si todo es analítico, mientras que</p>
+<div class="formula-block">\[
+\oint_C\frac{f(z)}{z-a}\,dz=2\pi i f(a),
+\]</div>
+<p>si \(a\) está dentro y \(f\) es analítica.</p>
+<p>La fórmula para derivadas es una consecuencia de la fórmula integral. El denominador indica qué derivada aparece:</p>
+<div class="formula-block">\[
+(z-a)^{-1}\Rightarrow f(a),\qquad
+(z-a)^{-2}\Rightarrow f'(a),\qquad
+(z-a)^{-3}\Rightarrow f''(a).
+\]</div>
+<p>Por tanto, la potencia del denominador no es un detalle algebraico, sino la señal del orden derivativo.</p>
+<p>Hay una oposición importante entre función analítica y función no analítica. Con \(e^z\), \(z^n\), \(\sin z\) o \(\cos z\), los teoremas suelen funcionar. Con \(\bar z\), \(|z|\), \(\operatorname{Re}z\) o \(\operatorname{Im}z\), normalmente hay que parametrizar. Este contraste es una fuente frecuente de preguntas de examen.</p>
+<p>También hay una oposición entre singularidad interior y singularidad exterior. Si</p>
+<div class="formula-block">\[
+\frac{f(z)}{z-a}
+\]</div>
+<p>tiene \(a\) fuera de \(C\), el integrando es analítico en el interior, y la integral se anula. Si \(a\) está dentro, la integral suele valer \(2\pi i f(a)\). Si \(a\) está sobre el contorno, no se aplica la fórmula ordinaria.</p>
+<p>La evolución conceptual dentro de la asignatura es clara. Primero se estudia holomorfía: qué significa que \(f\) sea analítica. Luego se estudia integración compleja: qué consecuencias tiene esa analiticidad. Después aparecerán Laurent y residuos: qué ocurre cuando hay singularidades aisladas y cómo la integral detecta la parte singular.</p>
+      </div>
+    </section>
+    <section id="errores" class="page">
+      <header class="section-header">
+        <p class="section-kicker">06</p>
+        <h2>Errores habituales</h2>
+      </header>
+      <div class="reading-block">
+<h3 id="error-aplicar-cauchy-solo-porque-el-contorno-es-cerrado">1. Error: aplicar Cauchy solo porque el contorno es cerrado.</h3>
+<p>Por qué está mal: Cauchy exige que el integrando sea analítico en el contorno y en todo el interior.</p>
+<p>Corrección: localizar singularidades antes de aplicar el teorema.</p>
+<p>Respuesta incorrecta: “\(\oint_{|z|=1}1/z\,dz=0\) porque el contorno es cerrado”.</p>
+<p>Respuesta correcta: “No se puede aplicar Cauchy porque \(1/z\) no es analítica en \(0\), que está dentro; la integral vale \(2\pi i\)”.</p>
+<h3 id="error-olvidar-comprobar-si-a-esta-dentro-de-c">2. Error: olvidar comprobar si \(a\) está dentro de \(C\).</h3>
+<p>Por qué está mal: la fórmula integral de Cauchy cambia según la posición de \(a\).</p>
+<p>Corrección: comparar \(|a|\) con el radio si \(C\) es una circunferencia centrada en \(0\), o estudiar la geometría del contorno.</p>
+<p>Respuesta incorrecta: “\(\oint_{|z|=1}e^z/(z-2)\,dz=2\pi i e^2\)”.</p>
+<p>Respuesta correcta: “Como \(2\) queda fuera de \(|z|=1\), el integrando es analítico dentro y la integral vale \(0\)”.</p>
+<h3 id="error-usar-la-formula-de-cauchy-con-el-punto-sobre-el-contorno">3. Error: usar la fórmula de Cauchy con el punto sobre el contorno.</h3>
+<p>Por qué está mal: el integrando no está definido sobre toda la curva.</p>
+<p>Corrección: indicar que la fórmula ordinaria no aplica; no asignar valor salvo que se pida valor principal u otra interpretación.</p>
+<p>Respuesta incorrecta: “\(\oint_{|z|=1}1/(z-1)\,dz=2\pi i\)”.</p>
+<p>Respuesta correcta: “La singularidad \(z=1\) está sobre el contorno; la integral ordinaria no está definida en ese punto”.</p>
+<h3 id="error-confundir-f-z-z-a-2-con-2-pi-i-f-a">4. Error: confundir \(f(z)/(z-a)^2\) con \(2\pi i f(a)\).</h3>
+<p>Por qué está mal: el denominador al cuadrado activa la fórmula de la primera derivada.</p>
+<p>Corrección:</p>
+<div class="formula-block">\[
+\oint_C\frac{f(z)}{(z-a)^2}\,dz=2\pi i f'(a).
+\]</div>
+<p>Respuesta incorrecta: “\(\oint e^z/(z-1)^2\,dz=2\pi i e\) porque \(f(1)=e\)”.</p>
+<p>Respuesta correcta: “Vale \(2\pi i f'(1)=2\pi i e\). En este caso coincide numéricamente con \(f(1)\), pero el razonamiento correcto usa \(f'\)”.</p>
+<h3 id="error-no-sacar-constantes-del-denominador">5. Error: no sacar constantes del denominador.</h3>
+<p>Por qué está mal: \(2z-\pi\) no es exactamente \(z-a\), sino \(2(z-\pi/2)\).</p>
+<p>Corrección: factorizar antes de aplicar Cauchy.</p>
+<p>Respuesta incorrecta: “El punto es \(a=\pi\)”.</p>
+<p>Respuesta correcta: “\(2z-\pi=2(z-\pi/2)\), luego \(a=\pi/2\) y aparece un factor \(1/2\)”.</p>
+<h3 id="error-aplicar-cauchy-a-funciones-con-bar-z">6. Error: aplicar Cauchy a funciones con \(\bar z\).</h3>
+<p>Por qué está mal: \(\bar z\) no es analítica.</p>
+<p>Corrección: parametrizar la curva.</p>
+<p>Respuesta incorrecta: “\(\oint_{|z|=1}\bar z\,dz=0\) por Cauchy”.</p>
+<p>Respuesta correcta: “Con \(z=e^{it}\), \(\bar z=e^{-it}\), \(dz=ie^{it}dt\), luego la integral vale \(2\pi i\)”.</p>
+<h3 id="error-ignorar-la-orientacion">7. Error: ignorar la orientación.</h3>
+<p>Por qué está mal: invertir el sentido cambia el signo.</p>
+<p>Corrección: comprobar si el contorno es antihorario o horario.</p>
+<p>Respuesta incorrecta: “\(\oint_{|z|=1}^{\text{horario}}1/z\,dz=2\pi i\)”.</p>
+<p>Respuesta correcta: “En sentido horario vale \(-2\pi i\)”.</p>
+<h3 id="error-confundir-z-y-la-variable-muda-de-integracion">8. Error: confundir \(z\) y la variable muda de integración.</h3>
+<p>Por qué está mal: en la fórmula de Cauchy, el punto interior no debe confundirse con la variable que recorre el contorno.</p>
+<p>Corrección: escribir</p>
+<div class="formula-block">\[
+f(a)=\frac{1}{2\pi i}\oint_C\frac{f(\zeta)}{\zeta-a}\,d\zeta
+\]</div>
+<p>si hay riesgo de confusión.</p>
+<p>Respuesta incorrecta: “Sustituyo \(z=a\) dentro de toda la integral”.</p>
+<p>Respuesta correcta: “La variable de integración recorre \(C\); \(a\) es un punto fijo interior”.</p>
+<h3 id="error-creer-que-si-el-resultado-es-cero-siempre-se-ha-usado-cauchy">9. Error: creer que si el resultado es cero siempre se ha usado Cauchy.</h3>
+<p>Por qué está mal: una integral puede anularse porque \(f(a)=0\), no porque el integrando sea analítico.</p>
+<p>Corrección: distinguir causa del cero.</p>
+<p>Respuesta incorrecta: “\(\oint \sin z/z\,dz=0\) por Cauchy aplicado al integrando”.</p>
+<p>Respuesta correcta: “\(\sin z/z\) tiene una singularidad evitable; también puede verse como \(2\pi i\sin 0=0\) si se aplica la forma adecuada”.</p>
+<h3 id="error-no-justificar-hipotesis-en-examen">10. Error: no justificar hipótesis en examen.</h3>
+<p>Por qué está mal: el resultado numérico sin condiciones puede ser inválido.</p>
+<p>Corrección: incluir una frase sobre analiticidad, posición de singularidades y orientación.</p>
+<p>Respuesta incorrecta: “El resultado es \(2\pi i e\)”.</p>
+<p>Respuesta correcta: “Como \(e^z\) es entera, \(a=1\) está dentro de \(C\) y \(C\) está orientado positivamente, por la fórmula integral de Cauchy la integral vale \(2\pi i e\)”.</p>
+      </div>
+    </section>
+    <section id="preguntas" class="page">
+      <header class="section-header">
+        <p class="section-kicker">07</p>
+        <h2>Preguntas orientadas a examen</h2>
+      </header>
+      <div class="reading-block">
+<h3 id="10-preguntas-faciles">10 preguntas fáciles</h3>
+<h3 id="define-integral-de-contorno-de-f-z-sobre-una-curva-parametrizada-z-t">1. Define integral de contorno de \(f(z)\) sobre una curva parametrizada \(z(t)\).</h3>
+<p>2. ¿Qué significa que un contorno esté orientado positivamente?</p>
+<h3 id="calcula-int-c-z-dz-donde-c-es-el-segmento-de-0-a-1-i">3. Calcula \(\int_C z\,dz\), donde \(C\) es el segmento de \(0\) a \(1+i\).</h3>
+<h3 id="enuncia-el-teorema-de-cauchy">4. Enuncia el teorema de Cauchy.</h3>
+<p>5. ¿Por qué \(\oint_C e^z\,dz=0\) para cualquier contorno cerrado simple?</p>
+<h3 id="calcula-oint-z-1-1-z-dz-en-sentido-positivo">6. Calcula \(\oint_{|z|=1}1/z\,dz\) en sentido positivo.</h3>
+<h3 id="explica-por-que-bar-z-no-permite-aplicar-cauchy">7. Explica por qué \(\bar z\) no permite aplicar Cauchy.</h3>
+<h3 id="enuncia-la-formula-integral-de-cauchy">8. Enuncia la fórmula integral de Cauchy.</h3>
+<h3 id="calcula-oint-z-2-e-z-z-1-dz">9. Calcula \(\oint_{|z|=2} e^z/(z-1)\,dz\).</h3>
+<p>10. ¿Qué ocurre si el punto \(a\) de \(1/(z-a)\) está fuera del contorno?</p>
+<h3 id="10-preguntas-medias">10 preguntas medias</h3>
+<h3 id="calcula-oint-z-1-bar-z-dz">11. Calcula \(\oint_{|z|=1}\bar z\,dz\).</h3>
+<h3 id="evalua-oint-z-2-cos-z-2z-pi-dz">12. Evalúa \(\oint_{|z|=2}\cos z/(2z-\pi)\,dz\).</h3>
+<h3 id="calcula-oint-z-1-e-z-z-2-dz">13. Calcula \(\oint_{|z|=1} e^z/(z-2)\,dz\).</h3>
+<h3 id="evalua-oint-z-3-z-2-1-z-1-dz">14. Evalúa \(\oint_{|z|=3} (z^2+1)/(z-1)\,dz\).</h3>
+<h3 id="calcula-oint-z-2-e-z-z-1-2-dz">15. Calcula \(\oint_{|z|=2} e^z/(z-1)^2\,dz\).</h3>
+<h3 id="calcula-oint-z-2-e-z-z-1-3-dz">16. Calcula \(\oint_{|z|=2} e^z/(z-1)^3\,dz\).</h3>
+<h3 id="explica-por-que-no-esta-definida-ordinariamente-oint-z-1-1-z-1-dz">17. Explica por qué no está definida ordinariamente \(\oint_{|z|=1}1/(z-1)\,dz\).</h3>
+<h3 id="decide-si-oint-c-z-3-sin-z-dz-vale-cero-y-justifica">18. Decide si \(\oint_C (z^3+\sin z)\,dz\) vale cero y justifica.</h3>
+<h3 id="calcula-int-c-z-2-dz-entre-0-y-1-i-para-cualquier-camino">19. Calcula \(\int_C z^2\,dz\) entre \(0\) y \(1+i\), para cualquier camino.</h3>
+<h3 id="determina-para-que-radios-r-0-la-integral-oint-z-r-1-z-3-dz-vale-cero-o-2-pi-i">20. Determina para qué radios \(R&gt;0\) la integral \(\oint_{|z|=R}1/(z-3)\,dz\) vale cero o \(2\pi i\).</h3>
+<h3 id="5-preguntas-dificiles">5 preguntas difíciles</h3>
+<h3 id="sea-c-z-2-calcula">21. Sea \(C:|z|=2\). Calcula</h3>
+<div class="formula-block">\[
+\oint_C \frac{z^2e^z}{(z-1)^2}\,dz.
+\]</div>
+<h3 id="sea-c-una-curva-cerrada-simple-que-contiene-a-pero-no-contiene-b-evalua">22. Sea \(C\) una curva cerrada simple que contiene \(a\) pero no contiene \(b\). Evalúa</h3>
+<div class="formula-block">\[
+\oint_C\frac{1}{(z-a)(z-b)}\,dz.
+\]</div>
+<h3 id="sea-c-z-3-evalua">23. Sea \(C:|z|=3\). Evalúa</h3>
+<div class="formula-block">\[
+\oint_C \frac{\sin z}{(z-\pi)^2}\,dz.
+\]</div>
+<h3 id="calcula-directamente-oint-z-r-z-m-dz-para-m-in-mathbb-z-indicando-el-caso-especial">24. Calcula directamente \(\oint_{|z|=R} z^m\,dz\) para \(m\in\mathbb Z\), indicando el caso especial.</h3>
+<h3 id="sea-c-z-2-evalua">25. Sea \(C:|z|=2\). Evalúa</h3>
+<div class="formula-block">\[
+\oint_C \frac{\cos z}{z^2}\,dz
+\]</div>
+<p>y explica por qué el resultado no contradice la existencia de una singularidad en \(0\).</p>
+<h3 id="5-preguntas-de-desarrollo-largo">5 preguntas de desarrollo largo</h3>
+<h3 id="desarrolla-la-definicion-de-integral-de-contorno-y-explica-como-se-reduce-a-una-integral-real">26. Desarrolla la definición de integral de contorno y explica cómo se reduce a una integral real.</h3>
+<h3 id="explica-el-teorema-de-cauchy-sus-hipotesis-y-el-papel-de-las-condiciones-de-cauchy-riemann-en-su-demostracion">27. Explica el teorema de Cauchy, sus hipótesis y el papel de las condiciones de Cauchy-Riemann en su demostración.</h3>
+<p>28. Explica la fórmula integral de Cauchy y su interpretación como determinación de valores interiores por valores en la frontera.</p>
+<h3 id="explica-la-formula-integral-para-derivadas-y-como-se-usa-para-calcular-integrales-con-potencias-del-denominador">29. Explica la fórmula integral para derivadas y cómo se usa para calcular integrales con potencias del denominador.</h3>
+<h3 id="compara-el-metodo-de-parametrizacion-directa-con-el-uso-de-cauchy-y-da-criterios-para-elegir-uno-u-otro">30. Compara el método de parametrización directa con el uso de Cauchy y da criterios para elegir uno u otro.</h3>
+<h3 id="5-preguntas-de-relacion-entre-conceptos">5 preguntas de relación entre conceptos</h3>
+<h3 id="relaciona-analiticidad-cauchy-riemann-y-anulacion-de-integrales-cerradas">31. Relaciona analiticidad, Cauchy-Riemann y anulación de integrales cerradas.</h3>
+<h3 id="relaciona-singularidad-interior-singularidad-exterior-y-valor-de-una-integral-de-tipo-oint-f-z-z-a-dz">32. Relaciona singularidad interior, singularidad exterior y valor de una integral de tipo \(\oint f(z)/(z-a)\,dz\).</h3>
+<h3 id="relaciona-orientacion-del-contorno-y-signo-de-la-integral">33. Relaciona orientación del contorno y signo de la integral.</h3>
+<h3 id="relaciona-primitiva-independencia-del-camino-y-teorema-de-cauchy">34. Relaciona primitiva, independencia del camino y teorema de Cauchy.</h3>
+<h3 id="relaciona-la-formula-integral-de-cauchy-con-la-existencia-de-derivadas-de-todos-los-ordenes">35. Relaciona la fórmula integral de Cauchy con la existencia de derivadas de todos los órdenes.</h3>
+      </div>
+    </section>
+    <section id="respuestas" class="page">
+      <header class="section-header">
+        <p class="section-kicker">08</p>
+        <h2>Respuestas modelo</h2>
+      </header>
+      <div class="reading-block">
+<h3 id="respuestas-faciles">Respuestas fáciles</h3>
+<h3 id="si-c-esta-parametrizada-por-z-t-a-leq-t-leq-b-la-integral-de-contorno-se-define-por">1. Si \(C\) está parametrizada por \(z(t)\), \(a\leq t\leq b\), la integral de contorno se define por</h3>
+<div class="formula-block">\[
+\int_C f(z)\,dz=\int_a^b f(z(t))z'(t)\,dt.
+\]</div>
+<p>Es una integral real en el parámetro \(t\), aunque el integrando sea complejo.</p>
+<p>2. Un contorno está orientado positivamente cuando se recorre en sentido antihorario, de forma que la región interior queda a la izquierda del movimiento. Esta es la orientación usada en las fórmulas estándar de Cauchy.</p>
+<h3 id="con-z-t-1-i-t-0-leq-t-leq1-se-tiene-dz-1-i-dt-entonces">3. Con \(z(t)=(1+i)t\), \(0\leq t\leq1\), se tiene \(dz=(1+i)dt\). Entonces</h3>
+<div class="formula-block">\[
+\int_C z\,dz=\int_0^1(1+i)t(1+i)\,dt=(1+i)^2\frac12=i.
+\]</div>
+<h3 id="si-f-es-analitica-sobre-una-curva-cerrada-simple-c-y-en-todo-su-interior-entonces">4. Si \(f\) es analítica sobre una curva cerrada simple \(C\) y en todo su interior, entonces</h3>
+<div class="formula-block">\[
+\oint_C f(z)\,dz=0.
+\]</div>
+<p>La hipótesis esencial es la analiticidad en toda la región encerrada, no solo sobre la curva.</p>
+<p>5. Porque \(e^z\) es analítica en todo el plano complejo. Por tanto, para cualquier contorno cerrado simple, se cumplen las hipótesis del teorema de Cauchy y la integral vale cero.</p>
+<h3 id="parametrizando-z-e-it-0-leq-t-leq-2-pi-dz-ie-it-dt">6. Parametrizando \(z=e^{it}\), \(0\leq t\leq 2\pi\), \(dz=ie^{it}dt\):</h3>
+<div class="formula-block">\[
+\oint_{|z|=1}\frac1z\,dz=\int_0^{2\pi}\frac{1}{e^{it}}ie^{it}dt=2\pi i.
+\]</div>
+<p>7. Porque \(\bar z=x-iy\) no es derivable en sentido complejo como función de \(z\) en una región. No cumple las condiciones de analiticidad necesarias para aplicar el teorema de Cauchy.</p>
+<h3 id="si-f-es-analitica-sobre-y-dentro-de-c-y-a-esta-dentro-de-c-entonces">8. Si \(f\) es analítica sobre y dentro de \(C\), y \(a\) está dentro de \(C\), entonces</h3>
+<div class="formula-block">\[
+f(a)=\frac{1}{2\pi i}\oint_C \frac{f(z)}{z-a}\,dz.
+\]</div>
+<p>Equivalente:</p>
+<div class="formula-block">\[
+\oint_C\frac{f(z)}{z-a}\,dz=2\pi i f(a).
+\]</div>
+<h3 id="como-e-z-es-entera-y-a-1-esta-dentro-de-z-2">9. Como \(e^z\) es entera y \(a=1\) está dentro de \(|z|=2\),</h3>
+<div class="formula-block">\[
+\oint_{|z|=2}\frac{e^z}{z-1}\,dz=2\pi i e^1=2\pi i e.
+\]</div>
+<p>10. Si \(a\) está fuera del contorno, entonces \(f(z)/(z-a)\) es analítica en el interior y sobre \(C\). Por el teorema de Cauchy, la integral vale cero.</p>
+<h3 id="respuestas-medias">Respuestas medias</h3>
+<h3 id="parametrizamos-z-e-it-dz-ie-it-dt-bar-z-e-it-entonces">11. Parametrizamos \(z=e^{it}\), \(dz=ie^{it}dt\), \(\bar z=e^{-it}\). Entonces</h3>
+<div class="formula-block">\[
+\oint_{|z|=1}\bar z\,dz=\int_0^{2\pi}e^{-it}ie^{it}dt=2\pi i.
+\]</div>
+<p>No se aplica Cauchy porque \(\bar z\) no es analítica.</p>
+<h3 id="se-escribe-2z-pi-2-z-pi-2">12. Se escribe \(2z-\pi=2(z-\pi/2)\):</h3>
+<div class="formula-block">\[
+\oint_{|z|=2}\frac{\cos z}{2z-\pi}\,dz
+=\frac12\oint_{|z|=2}\frac{\cos z}{z-\pi/2}\,dz.
+\]</div>
+<p>Como \(\pi/2&lt;2\), Cauchy da</p>
+<div class="formula-block">\[
+\frac12\,2\pi i\cos(\pi/2)=0.
+\]</div>
+<p>13. La singularidad \(z=2\) está fuera de \(|z|=1\). El integrando es analítico en el interior y sobre el contorno, luego</p>
+<div class="formula-block">\[
+\oint_{|z|=1}\frac{e^z}{z-2}\,dz=0.
+\]</div>
+<h3 id="con-f-z-z-2-1-a-1-y-1-dentro-de-z-3">14. Con \(f(z)=z^2+1\), \(a=1\), y \(1\) dentro de \(|z|=3\):</h3>
+<div class="formula-block">\[
+\oint_{|z|=3}\frac{z^2+1}{z-1}\,dz=2\pi i\,f(1)=2\pi i(2)=4\pi i.
+\]</div>
+<h3 id="se-usa-la-formula-de-derivadas-con-n-1-f-z-e-z-a-1">15. Se usa la fórmula de derivadas con \(n=1\), \(f(z)=e^z\), \(a=1\):</h3>
+<div class="formula-block">\[
+\oint_{|z|=2}\frac{e^z}{(z-1)^2}\,dz=2\pi i f'(1)=2\pi i e.
+\]</div>
+<h3 id="aqui-n-1-3-por-tanto-n-2">16. Aquí \(n+1=3\), por tanto \(n=2\):</h3>
+<div class="formula-block">\[
+\oint_{|z|=2}\frac{e^z}{(z-1)^3}\,dz
+=\frac{2\pi i}{2!}f''(1)=\pi i e.
+\]</div>
+<p>17. Porque \(z=1\) pertenece al contorno \(|z|=1\), y el integrando no está definido en un punto del camino. La integral ordinaria no se puede evaluar con Cauchy ni con la fórmula integral estándar.</p>
+<p>18. Sí, vale cero si \(C\) es cualquier contorno cerrado simple, porque \(z^3+\sin z\) es una función entera. Por el teorema de Cauchy:</p>
+<div class="formula-block">\[
+\oint_C(z^3+\sin z)\,dz=0.
+\]</div>
+<h3 id="como-z-2-tiene-primitiva-z-3-3">19. Como \(z^2\) tiene primitiva \(z^3/3\),</h3>
+<div class="formula-block">\[
+\int_C z^2\,dz=\frac{(1+i)^3}{3}-0=\frac{-2+2i}{3}.
+\]</div>
+<p>El resultado no depende del camino.</p>
+<p>20. Para \(|z|=R\), la singularidad está en \(z=3\). Si \(R&lt;3\), queda fuera y la integral vale \(0\). Si \(R&gt;3\), queda dentro y la integral vale \(2\pi i\). Si \(R=3\), la singularidad está sobre el contorno y la integral ordinaria no está definida.</p>
+<h3 id="respuestas-dificiles">Respuestas difíciles</h3>
+<h3 id="usamos-la-formula-de-derivadas-con">21. Usamos la fórmula de derivadas con</h3>
+<div class="formula-block">\[
+f(z)=z^2e^z,\qquad a=1.
+\]</div>
+<p>La integral es</p>
+<div class="formula-block">\[
+\oint_C \frac{f(z)}{(z-1)^2}\,dz=2\pi i f'(1).
+\]</div>
+<p>Calculamos:</p>
+<div class="formula-block">\[
+f'(z)=2ze^z+z^2e^z=e^z(2z+z^2).
+\]</div>
+<p>Por tanto,</p>
+<div class="formula-block">\[
+f'(1)=e(2+1)=3e,
+\]</div>
+<p>y la integral vale</p>
+<div class="formula-block">\[
+6\pi i e.
+\]</div>
+<h3 id="como-a-esta-dentro-y-b-esta-fuera-se-escribe">22. Como \(a\) está dentro y \(b\) está fuera, se escribe</h3>
+<div class="formula-block">\[
+\frac{1}{(z-a)(z-b)}=\frac{f(z)}{z-a},\qquad f(z)=\frac{1}{z-b}.
+\]</div>
+<p>La función \(f\) es analítica dentro y sobre \(C\), porque \(b\) queda fuera. Por Cauchy:</p>
+<div class="formula-block">\[
+\oint_C\frac{1}{(z-a)(z-b)}\,dz=2\pi i f(a)=\frac{2\pi i}{a-b}.
+\]</div>
+<p>23. Aquí \(a=\pi\). Como \(\pi&gt;3\), el punto \(z=\pi\) queda fuera de \(|z|=3\). El integrando es analítico dentro y sobre el contorno. Luego</p>
+<div class="formula-block">\[
+\oint_{|z|=3}\frac{\sin z}{(z-\pi)^2}\,dz=0.
+\]</div>
+<h3 id="en-z-r-z-re-it-dz-ire-it-dt">24. En \(|z|=R\), \(z=Re^{it}\), \(dz=iRe^{it}dt\):</h3>
+<div class="formula-block">\[
+\oint_{|z|=R}z^m\,dz=\int_0^{2\pi}R^m e^{imt}iRe^{it}dt
+=iR^{m+1}\int_0^{2\pi}e^{i(m+1)t}dt.
+\]</div>
+<p>Si \(m+1\neq 0\), la integral exponencial en un periodo vale cero. Si \(m=-1\), queda</p>
+<div class="formula-block">\[
+\oint_{|z|=R}\frac1z\,dz=2\pi i.
+\]</div>
+<p>Por tanto, el único caso especial es \(m=-1\).</p>
+<h3 id="se-usa-la-formula-de-derivadas-con-f-z-cos-z-a-0-n-1">25. Se usa la fórmula de derivadas con \(f(z)=\cos z\), \(a=0\), \(n=1\):</h3>
+<div class="formula-block">\[
+\oint_C\frac{\cos z}{z^2}\,dz=2\pi i f'(0).
+\]</div>
+<p>Como \(f'(z)=-\sin z\), \(f'(0)=0\), luego la integral vale cero. No contradice la singularidad en \(0\): la fórmula de Cauchy para derivadas permite tratar precisamente ese tipo de singularidad cuando el numerador es analítico.</p>
+<h3 id="respuestas-de-desarrollo-largo">Respuestas de desarrollo largo</h3>
+<p>26. Una integral de contorno es la integral de una función compleja a lo largo de una curva orientada. Si la curva viene dada por \(z(t)\), \(a\leq t\leq b\), se sustituye \(z\) por \(z(t)\) y \(dz\) por \(z'(t)dt\):</p>
+<div class="formula-block">\[
+\int_C f(z)\,dz=\int_a^b f(z(t))z'(t)\,dt.
+\]</div>
+<p>Así se reduce a una integral real de una función compleja. El resultado puede depender del camino y de la orientación. Si se invierte la orientación, cambia el signo. Si el camino está formado por varios tramos, se suma la integral de cada tramo.</p>
+<p>27. El teorema de Cauchy afirma que si \(f\) es analítica en una región que contiene una curva cerrada simple \(C\) y su interior, entonces la integral cerrada de \(f\) sobre \(C\) vale cero. Sus hipótesis son: curva cerrada simple, orientación habitual si se usa la forma estándar, regularidad suficiente y analiticidad del integrando sobre todo el dominio encerrado. La demostración elemental separa \(f=u+iv\) y \(dz=dx+i\,dy\), obteniendo dos integrales reales. Al aplicar Green, aparecen combinaciones de derivadas parciales que se anulan por Cauchy-Riemann. Por eso no basta con que \(f\) sea continua: la analiticidad es la clave.</p>
+<h3 id="la-formula-integral-de-cauchy-dice">28. La fórmula integral de Cauchy dice:</h3>
+<div class="formula-block">\[
+f(a)=\frac{1}{2\pi i}\oint_C\frac{f(z)}{z-a}\,dz,
+\]</div>
+<p>si \(f\) es analítica sobre y dentro de \(C\), y \(a\) está en el interior. Conceptualmente, muestra que los valores de una función analítica dentro de una región están determinados por sus valores en la frontera. Operativamente, permite calcular integrales:</p>
+<div class="formula-block">\[
+\oint_C\frac{f(z)}{z-a}\,dz=2\pi i f(a).
+\]</div>
+<p>La singularidad del integrando completo en \(a\) no impide el cálculo; de hecho, es la estructura que la fórmula está diseñada para tratar.</p>
+<h3 id="a-partir-de-la-formula-integral-de-cauchy-se-obtienen-las-formulas">29. A partir de la fórmula integral de Cauchy se obtienen las fórmulas:</h3>
+<div class="formula-block">\[
+f^{(n)}(a)=\frac{n!}{2\pi i}\oint_C\frac{f(z)}{(z-a)^{n+1}}\,dz.
+\]</div>
+<p>Para usarlas, se identifica \(a\), se comprueba que está dentro de \(C\), se reconoce el orden \(n+1\) del denominador y se deriva \(f\) \(n\) veces. Luego:</p>
+<div class="formula-block">\[
+\oint_C\frac{f(z)}{(z-a)^{n+1}}\,dz=\frac{2\pi i}{n!}f^{(n)}(a).
+\]</div>
+<p>Esto permite calcular integrales con polos de orden superior sin desarrollar series.</p>
+<p>30. La parametrización directa se usa siempre que el camino esté dado explícitamente o cuando el integrando no sea analítico, por ejemplo si aparece \(\bar z\) o \(|z|\). Consiste en sustituir \(z=z(t)\) y calcular una integral en \(t\). Los teoremas de Cauchy se usan cuando el contorno es cerrado y el integrando tiene estructura analítica. Si no hay singularidades interiores, el teorema de Cauchy da cero. Si aparece \(f(z)/(z-a)\), se usa la fórmula integral. Si aparece \(f(z)/(z-a)^{n+1}\), se usa la fórmula para derivadas. El criterio correcto es: primero comprobar hipótesis, después elegir método.</p>
+<h3 id="respuestas-de-relacion-entre-conceptos">Respuestas de relación entre conceptos</h3>
+<p>31. La analiticidad implica que \(f=u+iv\) satisface las condiciones de Cauchy-Riemann. Al separar una integral compleja cerrada en dos integrales reales y aplicar Green, esas condiciones hacen que los integrandos de área sean cero. Por eso la integral cerrada de una función analítica en una región sin singularidades vale cero.</p>
+<h3 id="si-a-esta-dentro-de-c-entonces">32. Si \(a\) está dentro de \(C\), entonces</h3>
+<div class="formula-block">\[
+\oint_C\frac{f(z)}{z-a}\,dz=2\pi i f(a).
+\]</div>
+<p>Si \(a\) está fuera, el integrando es analítico dentro y sobre \(C\), y la integral vale cero. Si \(a\) está sobre \(C\), la integral ordinaria no está definida. La posición de la singularidad decide el método y el valor.</p>
+<p>33. La orientación fija el signo de la integral. Las fórmulas estándar de Cauchy suponen orientación positiva, antihoraria. Si el mismo contorno se recorre en sentido contrario, el resultado cambia de signo:</p>
+<div class="formula-block">\[
+\int_{C^-}f(z)\,dz=-\int_Cf(z)\,dz.
+\]</div>
+<p>Por ejemplo, \(\oint_{|z|=1}1/z\,dz=2\pi i\) en sentido positivo y \(-2\pi i\) en sentido negativo.</p>
+<h3 id="si-f-tiene-primitiva-f-en-el-dominio-entonces-la-integral-entre-dos-puntos-depende-solo-de-los-extremos">34. Si \(f\) tiene primitiva \(F\) en el dominio, entonces la integral entre dos puntos depende solo de los extremos:</h3>
+<div class="formula-block">\[
+\int_Cf(z)\,dz=F(z_1)-F(z_0).
+\]</div>
+<p>Si \(C\) es cerrado, los extremos coinciden y la integral vale cero. El teorema de Cauchy proporciona una condición amplia para que las integrales cerradas de funciones analíticas se anulen, aunque en dominios con agujeros hay que vigilar singularidades.</p>
+<p>35. La fórmula integral de Cauchy expresa \(f(a)\) mediante una integral de \(f\) sobre la frontera. Al diferenciar esta fórmula respecto al punto interior, aparecen expresiones para \(f'(a)\), \(f''(a)\) y, en general, \(f^{(n)}(a)\). Así se ve que una función analítica posee derivadas de todos los órdenes y que esas derivadas también se calculan mediante integrales de contorno.</p>
+      </div>
+    </section>
+    <section id="resumen" class="page">
+      <header class="section-header">
+        <p class="section-kicker">09</p>
+        <h2>Resumen final de repaso</h2>
+      </header>
+      <div class="reading-block">
+<p>Ideas principales:</p>
+<ul>
+<li>Una integral compleja sobre un camino se calcula con \(z=z(t)\), \(dz=z'(t)dt\).</li>
+<li>La orientación cambia el signo de la integral.</li>
+<li>Si \(f\) tiene primitiva, la integral depende solo de los extremos.</li>
+<li>Si \(f\) es analítica sobre y dentro de un contorno cerrado simple, \(\oint_C f(z)\,dz=0\).</li>
+<li>Si \(a\) está dentro de \(C\),</li>
+</ul>
+<div class="formula-block">\[
+\oint_C\frac{f(z)}{z-a}\,dz=2\pi i f(a).
+\]</div>
+<ul>
+<li>Si el denominador es \((z-a)^{n+1}\),</li>
+</ul>
+<div class="formula-block">\[
+\oint_C\frac{f(z)}{(z-a)^{n+1}}\,dz=\frac{2\pi i}{n!}f^{(n)}(a).
+\]</div>
+<p>Conceptos imprescindibles:</p>
+<ul>
+<li>contorno,</li>
+<li>orientación,</li>
+<li>parametrización,</li>
+<li>analiticidad,</li>
+<li>singularidad,</li>
+<li>primitiva,</li>
+<li>teorema de Cauchy,</li>
+<li>fórmula integral de Cauchy,</li>
+<li>fórmula para derivadas.</li>
+</ul>
+<p>Relaciones clave:</p>
+<ul>
+<li>Analiticidad \(\Rightarrow\) Cauchy-Riemann \(\Rightarrow\) anulación de integrales cerradas.</li>
+<li>Singularidad fuera \(\Rightarrow\) integral cero.</li>
+<li>Singularidad interior tipo \(z-a\) \(\Rightarrow\) fórmula integral.</li>
+<li>Potencia superior \(\Rightarrow\) derivada.</li>
+<li>Funciones no analíticas \(\Rightarrow\) parametrización directa.</li>
+</ul>
+<p>Errores que evitar:</p>
+<ul>
+<li>Aplicar Cauchy sin comprobar singularidades.</li>
+<li>Olvidar si \(a\) está dentro, fuera o sobre el contorno.</li>
+<li>Usar \(f(a)\) cuando corresponde \(f'(a)\) o \(f^{(n)}(a)\).</li>
+<li>Ignorar constantes como \(2z-\pi=2(z-\pi/2)\).</li>
+<li>Aplicar Cauchy a \(\bar z\) o \(|z|\).</li>
+<li>Perder el signo por orientación.</li>
+</ul>
+      </div>
+    </section>
+    <section id="checklist" class="page">
+      <header class="section-header">
+        <p class="section-kicker">10</p>
+        <h2>Checklist de dominio</h2>
+      </header>
+      <div class="reading-block">
+<ul>
+<li>Si no puedes parametrizar una circunferencia \(|z|=R\), falta repasar curvas parametrizadas.</li>
+<li>Si no puedes calcular \(dz\) a partir de \(z(t)\), falta repasar derivación de funciones complejas de variable real.</li>
+<li>Si no puedes explicar por qué \(\oint_C e^z\,dz=0\), falta repasar teorema de Cauchy.</li>
+<li>Si no puedes explicar por qué \(\oint_{|z|=1}1/z\,dz\neq 0\), falta repasar singularidades interiores.</li>
+<li>Si confundes \(1/(z-a)\) con \(1/(z-a)^2\), revisar fórmula integral de Cauchy y fórmula para derivadas.</li>
+<li>Si confundes punto interior con variable de integración, revisar la notación \(\zeta\) para la variable muda.</li>
+<li>Si aplicas Cauchy a \(\bar z\), revisar analiticidad y Cauchy-Riemann.</li>
+<li>Si olvidas la orientación, revisar parametrizaciones antihorarias y horarias.</li>
+<li>Si no sabes qué hacer con \(2z-\pi\), revisar factorización antes de aplicar Cauchy.</li>
+<li>Si no distingues singularidad dentro, fuera o sobre el contorno, revisar geometría del plano complejo.</li>
+<li>Si puedes decidir entre parametrizar, aplicar Cauchy, aplicar fórmula integral o aplicar fórmula de derivadas, el capítulo está suficientemente asentado.</li>
+<li>Si puedes resolver integrales como \(\oint e^z/(z-a)^k\,dz\) justificando hipótesis, el núcleo de T4 está dominado.</li>
+<li>Si puedes explicar por qué el resultado cero puede venir de Cauchy o de \(f(a)=0\), tienes buen control conceptual.</li>
+<li>Si puedes corregir una solución que aplica Cauchy a \(\bar z\), el tema está preparado para examen.</li>
+<li>Si puedes resolver un problema nuevo localizando singularidades antes de calcular, el capítulo está asentado.</li>
+</ul>
+      </div>
+    </section>
+    </main>
+  </div>
+</body>
+</html>
