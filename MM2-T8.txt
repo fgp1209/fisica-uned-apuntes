@@ -1,0 +1,696 @@
+# Guía de estudio — Kreyszig / Métodos Matemáticos II
+
+Fuente principal: Erwin Kreyszig, Introductory Functional Analysis with Applications, capítulo 1, Metric Spaces.
+Tema trabajado: MM2 T8 — Espacios métricos.
+
+## 1. Prerrequisitos mínimos
+
+Concepto: conjunto y subconjunto.
+Definición breve: un conjunto es una colección de objetos; un subconjunto \(M\subset X\) contiene solo elementos de \(X\).
+Por qué es necesario: un espacio métrico se construye sobre un conjunto \(X\), y casi todo el capítulo estudia subconjuntos de \(X\): abiertos, cerrados, clausuras, conjuntos densos y subespacios.
+Ejemplo mínimo: si \(X=\mathbb{R}\), entonces \(M=(0,1)\) es un subconjunto de \(X\).
+
+Concepto: aplicación o función.
+Definición breve: una aplicación \(T:X\to Y\) asigna a cada elemento de \(X\) un único elemento de \(Y\).
+Por qué es necesario: la continuidad en espacios métricos se formula para aplicaciones entre espacios métricos, no solo para funciones reales de variable real.
+Ejemplo mínimo: \(T:\mathbb{R}\to\mathbb{R}\), \(T(x)=x^2\).
+
+Concepto: valor absoluto y módulo.
+Definición breve: en \(\mathbb{R}\), \(|x|\) mide la distancia de \(x\) a \(0\); en \(\mathbb{C}\), \(|z|\) es el módulo del número complejo.
+Por qué es necesario: las métricas usuales en \(\mathbb{R}\), \(\mathbb{C}\), \(\mathbb{R}^n\) y \(\mathbb{C}^n\) se construyen con valores absolutos o módulos.
+Ejemplo mínimo: en \(\mathbb{R}\), \(d(x,y)=|x-y|\).
+
+Concepto: desigualdad triangular.
+Definición breve: para números reales o complejos, \(|a+b|\le |a|+|b|\).
+Por qué es necesario: uno de los axiomas de una métrica es la desigualdad triangular. En muchos ejercicios de examen, el punto delicado es demostrar precisamente ese axioma.
+Ejemplo mínimo: \(|x-z|=|(x-y)+(y-z)|\le |x-y|+|y-z|\).
+
+Concepto: sucesión.
+Definición breve: una sucesión es una familia ordenada \((x_n)\) de elementos, indexada normalmente por \(n\in\mathbb{N}\).
+Por qué es necesario: convergencia, sucesiones de Cauchy y completitud se formulan mediante sucesiones.
+Ejemplo mínimo: \(x_n=1/n\) es una sucesión de números reales.
+
+Concepto: límite de una sucesión real.
+Definición breve: \(x_n\to x\) si para todo \(\varepsilon>0\) existe \(N\) tal que, si \(n>N\), entonces \(|x_n-x|<\varepsilon\).
+Por qué es necesario: en espacios métricos se sustituye \(|x_n-x|\) por \(d(x_n,x)\).
+Ejemplo mínimo: \(1/n\to 0\) en \(\mathbb{R}\) con la distancia usual.
+
+Concepto: supremo.
+Definición breve: el supremo de un conjunto acotado superiormente es la menor de sus cotas superiores.
+Por qué es necesario: varias métricas sobre espacios de funciones o sucesiones se definen mediante un supremo, por ejemplo \(d(f,g)=\sup_{t\in A}|f(t)-g(t)|\).
+Ejemplo mínimo: si \(A=(0,1)\), entonces \(\sup A=1\), aunque \(1\notin A\).
+
+Concepto: continuidad elemental.
+Definición breve: una función real \(f\) es continua en \(x_0\) si valores próximos de \(x\) producen valores próximos de \(f(x)\).
+Por qué es necesario: el capítulo generaliza esta idea a aplicaciones entre espacios métricos mediante \(\varepsilon\)-\(\delta\), entornos e imágenes inversas de abiertos.
+Ejemplo mínimo: \(f(x)=x^2\) es continua en \(\mathbb{R}\).
+
+Concepto: series numéricas.
+Definición breve: una serie \(\sum a_n\) es una suma infinita de términos.
+Por qué es necesario: los espacios \(\ell^p\) se definen por la convergencia de \(\sum |\xi_j|^p\).
+Ejemplo mínimo: la sucesión \(x=(1,1/2,1/3,\ldots)\) no pertenece a \(\ell^1\), porque \(\sum 1/j\) diverge, pero sí pertenece a \(\ell^2\), porque \(\sum 1/j^2\) converge.
+
+## 2. Idea central del capítulo
+
+El capítulo introduce la noción de espacio métrico. La idea esencial es separar el concepto de distancia de su contexto geométrico habitual. En \(\mathbb{R}\) o en \(\mathbb{R}^3\) estamos acostumbrados a medir distancias con fórmulas euclídeas, pero el capítulo muestra que lo importante no es una fórmula concreta, sino una estructura: un conjunto \(X\) junto con una función \(d:X\times X\to\mathbb{R}\) que satisfaga unos axiomas mínimos.
+
+Esta abstracción permite estudiar con un mismo lenguaje objetos muy distintos: puntos de \(\mathbb{R}^n\), números complejos, sucesiones, funciones acotadas, funciones continuas o espacios \(\ell^p\). El objetivo no es alejarse de los ejemplos, sino reconocer qué propiedades dependen solo de la distancia y no de la naturaleza particular de los elementos.
+
+Después de definir la distancia, el capítulo construye la geometría básica asociada: bolas, entornos, conjuntos abiertos, conjuntos cerrados, puntos de acumulación, clausura, densidad y separabilidad. Estos conceptos forman la parte topológica del tema. Sirven para decir qué significa estar cerca, aproximar un elemento por otros o estudiar una aplicación mediante la conservación de la proximidad.
+
+La segunda parte del capítulo se centra en sucesiones. La convergencia se formula mediante la métrica: \(x_n\to x\) si \(d(x_n,x)\to 0\). Esta definición conserva la intuición de cálculo, pero funciona en espacios donde los elementos no son números. La noción de sucesión de Cauchy es aún más interna: no compara la sucesión con un candidato a límite, sino sus términos entre sí. De ahí nace la completitud.
+
+La completitud es uno de los conceptos estructurales del análisis funcional. Un espacio completo no tiene “agujeros” desde el punto de vista de las sucesiones de Cauchy: toda sucesión que debería converger, porque sus términos se aproximan entre sí, converge realmente a un elemento del espacio. Esta propiedad será decisiva más adelante para espacios normados, espacios de Banach y espacios de Hilbert.
+
+Dentro de Métodos Matemáticos II, este capítulo ocupa un papel de cimentación. Antes de hablar de normas, productos escalares, operadores, espectros o espacios de Hilbert, hay que dominar el lenguaje métrico: distancia, entorno, abierto, cerrado, convergencia y completitud. Si falla esta base, las definiciones posteriores parecen formales y se pierde el control de los argumentos de existencia, continuidad y convergencia.
+
+## 3. Desarrollo completo del capítulo
+
+### 3.1. Espacio métrico y axiomas de la distancia
+
+El punto de partida es un conjunto no vacío \(X\). Sobre ese conjunto se define una función \(d\), llamada distancia o métrica, que a cada par de elementos \(x,y\in X\) le asigna un número real \(d(x,y)\). El par \((X,d)\) se llama espacio métrico cuando la función \(d\) cumple cuatro propiedades básicas:
+
+\(d(x,y)\ge 0\).
+
+\(d(x,y)=0\) si y solo si \(x=y\).
+
+\(d(x,y)=d(y,x)\).
+
+\(d(x,z)\le d(x,y)+d(y,z)\).
+
+La primera propiedad dice que una distancia no puede ser negativa. La segunda afirma que la distancia cero identifica puntos iguales; no basta con que \(d(x,x)=0\), también hay que exigir que si la distancia es cero entonces los dos puntos son el mismo. La tercera es la simetría: medir de \(x\) a \(y\) da lo mismo que medir de \(y\) a \(x\). La cuarta es la desigualdad triangular: ir directamente de \(x\) a \(z\) no puede ser más largo que pasar por un punto intermedio \(y\).
+
+La importancia de estos axiomas está en que permiten desarrollar análisis sin depender de coordenadas. En un examen, cuando se pide demostrar que una función es una distancia, hay que verificar los cuatro axiomas. Normalmente los tres primeros son inmediatos y el cuarto exige una estimación.
+
+Ejemplo: en \(\mathbb{R}\), \(d(x,y)=|x-y|\) es una métrica. La positividad y la simetría salen del valor absoluto. Si \(|x-y|=0\), entonces \(x=y\). La desigualdad triangular se obtiene de
+\[
+|x-z|=|(x-y)+(y-z)|\le |x-y|+|y-z|.
+\]
+
+Esta definición no dice que la distancia tenga que ser la distancia usual. Sobre un mismo conjunto pueden existir varias métricas. Esa observación es central: cambiar la métrica puede cambiar qué sucesiones convergen, qué conjuntos son abiertos o si el espacio es completo.
+
+### 3.2. Métricas usuales y métricas alternativas
+
+El capítulo muestra que los ejemplos familiares son casos particulares. En \(\mathbb{R}^n\), la métrica euclídea se define por
+\[
+d(x,y)=\left(\sum_{j=1}^n |\xi_j-\eta_j|^2\right)^{1/2},
+\]
+donde \(x=(\xi_1,\ldots,\xi_n)\) e \(y=(\eta_1,\ldots,\eta_n)\). En \(\mathbb{C}^n\) la misma fórmula se usa con módulos complejos. Para \(n=1\), en \(\mathbb{C}\), queda \(d(z,w)=|z-w|\).
+
+Pero también se introducen métricas no euclídeas. En \(\mathbb{R}^2\) puede definirse la métrica del taxi:
+\[
+d_1(x,y)=|\xi_1-\eta_1|+|\xi_2-\eta_2|.
+\]
+Esta distancia mide como si solo se pudiera avanzar en direcciones paralelas a los ejes. No coincide con la distancia euclídea, pero cumple los axiomas.
+
+Otro ejemplo básico es la métrica discreta:
+\[
+d(x,y)=
+\begin{cases}
+0, & x=y,\\
+1, & x\ne y.
+\end{cases}
+\]
+Esta métrica puede ponerse sobre cualquier conjunto. Es útil porque muestra que las propiedades métricas no dependen solo del conjunto, sino de la distancia elegida. En la métrica discreta, dos puntos distintos están siempre a distancia \(1\), aunque el conjunto sea infinito o tenga una estructura algebraica previa.
+
+Una consecuencia importante es que no se debe hablar de “el” espacio \(X\) sin especificar la métrica cuando la propiedad estudiada depende de la distancia. El mismo conjunto con dos métricas distintas puede dar dos espacios métricos distintos.
+
+### 3.3. Espacios de sucesiones
+
+El capítulo introduce espacios cuyos elementos son sucesiones. Esto es importante porque en análisis funcional los objetos de estudio no son siempre puntos de dimensión finita. Una sucesión
+\[
+x=(\xi_1,\xi_2,\ldots)
+\]
+puede considerarse como un punto de un espacio.
+
+Uno de los primeros ejemplos es \(\ell^\infty\), el espacio de sucesiones acotadas. Un elemento \(x=(\xi_j)\) pertenece a \(\ell^\infty\) si existe una constante \(M\) tal que \(|\xi_j|\le M\) para todo \(j\). La distancia natural es
+\[
+d(x,y)=\sup_{j\ge 1}|\xi_j-\eta_j|.
+\]
+Esta métrica mide la máxima separación uniforme entre dos sucesiones. Si dos sucesiones están cerca en \(\ell^\infty\), entonces todos sus términos están cerca a la vez.
+
+También aparece el espacio \(\ell^p\), con \(p\ge 1\), formado por las sucesiones \(x=(\xi_j)\) tales que
+\[
+\sum_{j=1}^{\infty}|\xi_j|^p<\infty.
+\]
+Su métrica se define por
+\[
+d(x,y)=\left(\sum_{j=1}^{\infty}|\xi_j-\eta_j|^p\right)^{1/p}.
+\]
+El caso \(p=2\) es especialmente importante porque anticipa la estructura de espacio de Hilbert. En \(\ell^2\), la distancia se parece a la euclídea, pero con infinitas coordenadas.
+
+Estos ejemplos obligan a manejar desigualdades. Para \(\ell^p\), la desigualdad triangular no se reduce a una comprobación elemental coordenada a coordenada; se apoya en la desigualdad de Minkowski. Para un alumno de primero, lo importante es saber qué se está verificando: que la fórmula propuesta realmente cumple el axioma triangular.
+
+### 3.4. Espacios de funciones
+
+Otro bloque de ejemplos lo forman los espacios de funciones. Si \(A\) es un conjunto, \(B(A)\) denota el conjunto de funciones acotadas definidas en \(A\). Una métrica natural es
+\[
+d(f,g)=\sup_{t\in A}|f(t)-g(t)|.
+\]
+Esta métrica mide la distancia uniforme entre funciones. No compara solo el valor en un punto, sino el peor error en todo el dominio.
+
+Si \(A=[a,b]\), el espacio de funciones continuas se denota normalmente \(C[a,b]\). Con la misma métrica del supremo,
+\[
+d(f,g)=\max_{t\in[a,b]}|f(t)-g(t)|,
+\]
+se obtiene un espacio métrico fundamental. El máximo existe porque una función continua en un intervalo cerrado y acotado alcanza máximo.
+
+La diferencia entre convergencia puntual y convergencia uniforme se ve aquí de forma natural. En la métrica del supremo, \(f_n\to f\) significa que el máximo de \(|f_n(t)-f(t)|\) tiende a cero. Eso es convergencia uniforme, no solo convergencia para cada \(t\).
+
+Ejemplo: \(f_n(t)=t^n\) en \([0,1]\) converge puntualmente a una función que vale \(0\) si \(0\le t<1\) y vale \(1\) si \(t=1\). Esa convergencia no es uniforme, y por tanto no es convergencia en la métrica del supremo sobre \(C[0,1]\).
+
+### 3.5. Bolas, entornos y la geometría local
+
+Una vez definida la distancia, se puede hablar de proximidad. La bola abierta de centro \(x_0\) y radio \(r>0\) es
+\[
+B(x_0;r)=\{x\in X: d(x,x_0)<r\}.
+\]
+La bola cerrada correspondiente es
+\[
+\overline{B}(x_0;r)=\{x\in X: d(x,x_0)\le r\}.
+\]
+
+Un entorno de \(x_0\) es un conjunto que contiene una bola abierta centrada en \(x_0\). Este concepto es la versión métrica de “estar alrededor de un punto”.
+
+La intuición geométrica de \(\mathbb{R}^2\) ayuda, pero hay que usarla con cuidado. En la métrica euclídea, las bolas son discos. En la métrica del taxi, las bolas tienen forma de rombo. En la métrica discreta, si \(0<r\le 1\), la bola \(B(x;r)\) contiene solo el punto \(x\); si \(r>1\), puede contener todo el conjunto.
+
+Esta variedad de formas muestra que la topología del espacio depende de la métrica. Las bolas abiertas son los ladrillos básicos para definir abiertos, continuidad y convergencia.
+
+### 3.6. Conjuntos abiertos y cerrados
+
+Un subconjunto \(M\subset X\) es abierto si cada punto de \(M\) tiene un entorno contenido en \(M\). Formalmente: para todo \(x\in M\), existe \(r>0\) tal que
+\[
+B(x;r)\subset M.
+\]
+
+Un conjunto es cerrado si su complementario es abierto. También puede caracterizarse secuencialmente: \(M\) es cerrado si toda sucesión de puntos de \(M\) que converge en \(X\) tiene su límite en \(M\).
+
+Esta segunda caracterización suele ser más útil en ejercicios. Por ejemplo, \([0,1]\) es cerrado en \(\mathbb{R}\) porque si \(x_n\in[0,1]\) y \(x_n\to x\) en \(\mathbb{R}\), entonces \(0\le x\le 1\).
+
+Hay que distinguir abierto y cerrado de forma estricta. No son conceptos opuestos en el sentido cotidiano. Un conjunto puede ser abierto y cerrado a la vez, como \(\varnothing\) y \(X\). En la métrica discreta, de hecho, todo subconjunto es abierto y cerrado.
+
+Ejemplo: en \(\mathbb{R}\) con la métrica usual, \((0,1)\) es abierto, \([0,1]\) es cerrado, \((0,1]\) no es abierto ni cerrado, y \(\mathbb{R}\) es abierto y cerrado.
+
+### 3.7. Puntos de acumulación, clausura y densidad
+
+Un punto \(x_0\in X\) es punto de acumulación de \(M\subset X\) si todo entorno de \(x_0\) contiene algún punto de \(M\) distinto de \(x_0\). No es necesario que \(x_0\) pertenezca a \(M\). Lo importante es que los puntos de \(M\) se acercan indefinidamente a \(x_0\).
+
+La clausura de \(M\), denotada \(\overline{M}\), es el conjunto formado por los puntos de \(M\) y todos sus puntos de acumulación. También puede entenderse como el menor conjunto cerrado que contiene a \(M\).
+
+Ejemplo: en \(\mathbb{R}\), si \(M=(0,1)\), entonces \(\overline{M}=[0,1]\). Los puntos \(0\) y \(1\) no pertenecen a \(M\), pero todo entorno suyo corta a \(M\).
+
+Un conjunto \(M\) es denso en \(X\) si \(\overline{M}=X\). Eso significa que todo punto de \(X\) puede aproximarse mediante puntos de \(M\). En \(\mathbb{R}\), \(\mathbb{Q}\) es denso: cualquier número real puede aproximarse por racionales.
+
+Un espacio métrico es separable si tiene un subconjunto denso numerable. Esta noción será útil más adelante porque muchos espacios importantes permiten trabajar con aproximaciones contables, lo cual simplifica argumentos de análisis.
+
+### 3.8. Continuidad entre espacios métricos
+
+Sean \((X,d_X)\) e \((Y,d_Y)\) espacios métricos. Una aplicación \(T:X\to Y\) es continua en \(x_0\in X\) si para todo \(\varepsilon>0\) existe \(\delta>0\) tal que
+\[
+d_X(x,x_0)<\delta \quad \Rightarrow \quad d_Y(Tx,Tx_0)<\varepsilon.
+\]
+
+Esta definición generaliza la continuidad de cálculo. La diferencia es que ahora la distancia del dominio y la distancia del codominio pueden ser distintas. Si \(X\) es un espacio de funciones e \(Y=\mathbb{R}\), la continuidad de \(T\) puede expresar que pequeñas variaciones uniformes en una función producen pequeñas variaciones en un número.
+
+El capítulo relaciona la continuidad con los abiertos: una aplicación es continua si la imagen inversa de todo abierto es abierta. Esta formulación es más estructural y anticipa el lenguaje topológico. En ejercicios, permite probar continuidad sin manipular directamente \(\varepsilon\)-\(\delta\), aunque para primero conviene dominar ambos enfoques.
+
+Ejemplo: si \(T:\mathbb{R}\to\mathbb{R}\), \(T(x)=2x\), con la métrica usual, entonces \(T\) es continua porque
+\[
+|T(x)-T(x_0)|=2|x-x_0|.
+\]
+Dado \(\varepsilon>0\), basta tomar \(\delta=\varepsilon/2\).
+
+### 3.9. Convergencia de sucesiones
+
+Una sucesión \((x_n)\) en un espacio métrico \((X,d)\) converge a \(x\in X\) si
+\[
+d(x_n,x)\to 0.
+\]
+Equivalente: para todo \(\varepsilon>0\), existe \(N\) tal que si \(n>N\), entonces \(d(x_n,x)<\varepsilon\).
+
+La convergencia depende de la métrica. En \(\mathbb{R}\) con la distancia usual, \(1/n\to 0\). En la métrica discreta, una sucesión converge a \(x\) solo si a partir de cierto índice todos sus términos son exactamente \(x\). Esto muestra que la convergencia métrica puede ser mucho más rígida que la convergencia usual.
+
+En un espacio métrico, si una sucesión converge, su límite es único. La demostración usa la desigualdad triangular: si \(x_n\to x\) y \(x_n\to y\), entonces
+\[
+d(x,y)\le d(x,x_n)+d(x_n,y),
+\]
+y el segundo miembro tiende a \(0\). Por tanto, \(d(x,y)=0\), luego \(x=y\).
+
+La convergencia se conecta con los cerrados: un conjunto cerrado contiene los límites de sus sucesiones convergentes. Esta idea se usa constantemente para demostrar que un subconjunto es cerrado o no lo es.
+
+### 3.10. Sucesiones de Cauchy
+
+Una sucesión \((x_n)\) es de Cauchy si para todo \(\varepsilon>0\) existe \(N\) tal que, si \(m,n>N\), entonces
+\[
+d(x_m,x_n)<\varepsilon.
+\]
+
+La diferencia con la convergencia es importante. Para probar convergencia hay que conocer un candidato \(x\). Para probar que una sucesión es de Cauchy solo se comparan términos de la propia sucesión. Por eso la noción de Cauchy detecta si la sucesión “quiere converger” dentro del espacio.
+
+Toda sucesión convergente es de Cauchy. La demostración vuelve a usar la desigualdad triangular:
+\[
+d(x_m,x_n)\le d(x_m,x)+d(x,x_n).
+\]
+Si ambos términos de la derecha son pequeños, entonces \(d(x_m,x_n)\) es pequeño.
+
+El recíproco no siempre es cierto. En \(\mathbb{R}\) sí lo es, pero en un espacio métrico general puede haber sucesiones de Cauchy que no convergen en el espacio. Por ejemplo, en \(X=(0,1)\) con la distancia usual, la sucesión \(x_n=1/n\) es de Cauchy, pero no converge en \(X\), porque su límite en \(\mathbb{R}\) es \(0\), y \(0\notin X\).
+
+Una sucesión de Cauchy es acotada. Pero una sucesión acotada no tiene por qué ser de Cauchy. En \(\mathbb{R}\), la sucesión \(x_n=(-1)^n\) está acotada, pero no es de Cauchy.
+
+### 3.11. Completitud
+
+Un espacio métrico \((X,d)\) es completo si toda sucesión de Cauchy en \(X\) converge a un elemento de \(X\). La completitud no dice que todas las sucesiones converjan; dice que convergen todas las que satisfacen la condición de Cauchy.
+
+\(\mathbb{R}\) y \(\mathbb{C}\) con sus métricas usuales son completos. También lo son \(\mathbb{R}^n\) y \(\mathbb{C}^n\). La razón de fondo es que la convergencia de una sucesión vectorial se reduce a la convergencia de sus coordenadas.
+
+Hay espacios incompletos muy simples. El intervalo \((0,1)\) con la métrica usual no es completo. Tampoco \(\mathbb{Q}\) con la distancia usual heredada de \(\mathbb{R}\): hay sucesiones de racionales que convergen en \(\mathbb{R}\) a un irracional, por ejemplo a \(\sqrt{2}\), pero no convergen dentro de \(\mathbb{Q}\).
+
+En espacios de funciones, la completitud es especialmente importante. \(C[a,b]\) con la métrica del supremo es completo. Esto expresa un hecho clásico: el límite uniforme de funciones continuas es continuo. En cambio, si se cambiara la métrica o el conjunto de funciones, la propiedad podría fallar.
+
+### 3.12. Subespacios completos y cerrados
+
+Si \(M\subset X\), puede verse \(M\) como espacio métrico usando la distancia de \(X\) restringida a \(M\). Entonces \(M\) se llama subespacio métrico.
+
+Un resultado fundamental del capítulo es: si \(X\) es completo, un subespacio \(M\) es completo si y solo si \(M\) es cerrado en \(X\).
+
+Este teorema conecta completitud y cerradura. Si \(M\) es cerrado, toda sucesión de Cauchy en \(M\) converge en \(X\) por completitud de \(X\), y como \(M\) es cerrado, el límite queda dentro de \(M\). Por tanto, \(M\) es completo. En sentido contrario, si \(M\) es completo y una sucesión de puntos de \(M\) converge en \(X\), entonces es de Cauchy y debe converger dentro de \(M\); por unicidad del límite, ese límite pertenece a \(M\). Luego \(M\) es cerrado.
+
+Ejemplo: \([0,1]\) es completo como subespacio de \(\mathbb{R}\) porque es cerrado en \(\mathbb{R}\) y \(\mathbb{R}\) es completo. En cambio, \((0,1)\) no es completo porque no es cerrado en \(\mathbb{R}\).
+
+### 3.13. Esquema típico de una prueba de completitud
+
+El capítulo insiste en un patrón de demostración. Para probar que un espacio \(X\) es completo, se toma una sucesión de Cauchy arbitraria \((x_n)\) en \(X\) y se demuestra que converge a un elemento de \(X\). Normalmente el argumento tiene tres pasos.
+
+Primero, se construye un candidato a límite. En \(\mathbb{R}^n\), se hace coordenada a coordenada. En un espacio de funciones, se define \(f(t)=\lim f_n(t)\) para cada \(t\). En un espacio de sucesiones, se define cada coordenada como límite de las coordenadas correspondientes.
+
+Segundo, se prueba que el candidato pertenece al espacio. Este paso no puede omitirse. En \(C[a,b]\), por ejemplo, hay que demostrar que el límite es continuo. En \(\ell^p\), hay que probar que la serie \(\sum |\xi_j|^p\) converge.
+
+Tercero, se prueba que la sucesión converge al candidato en la métrica del espacio. No basta con convergencia punto a punto o coordenada a coordenada si la métrica exige algo más fuerte. En \(C[a,b]\) con la métrica del supremo, hay que probar convergencia uniforme.
+
+Este esquema es muy útil en examen porque organiza la respuesta y evita demostraciones incompletas.
+
+## 4. Conceptos clave
+
+Concepto: espacio métrico.
+Definición precisa: un espacio métrico es un par \((X,d)\), donde \(X\) es un conjunto no vacío y \(d:X\times X\to\mathbb{R}\) cumple positividad, separación de puntos, simetría y desigualdad triangular.
+Explicación desarrollada: la métrica da sentido a la cercanía entre elementos. Permite hablar de bolas, abiertos, convergencia y continuidad sin exigir que los elementos sean números o vectores finitos.
+Ejemplo: \((\mathbb{R},|\cdot|)\), con \(d(x,y)=|x-y|\).
+Relación con otros conceptos: es la base de todos los conceptos del capítulo.
+Posible forma de preguntarlo en examen: “Demuestre que \(d(x,y)=|x-y|/(1+|x-y|)\) define una distancia en \(\mathbb{R}\)”.
+
+Concepto: métrica discreta.
+Definición precisa: \(d(x,y)=0\) si \(x=y\), y \(d(x,y)=1\) si \(x\ne y\).
+Explicación desarrollada: es una métrica válida sobre cualquier conjunto. Hace que todos los puntos distintos estén igualmente separados.
+Ejemplo: en \(X=\mathbb{N}\), \(d(2,5)=1\) y \(d(3,3)=0\).
+Relación con otros conceptos: muestra que una misma colección de elementos puede tener una topología muy distinta según la métrica.
+Posible forma de preguntarlo en examen: “Describa las bolas abiertas en un espacio con métrica discreta”.
+
+Concepto: bola abierta.
+Definición precisa: \(B(x_0;r)=\{x\in X:d(x,x_0)<r\}\), con \(r>0\).
+Explicación desarrollada: representa el conjunto de puntos que están a distancia menor que \(r\) de \(x_0\). Es el objeto local básico de la teoría.
+Ejemplo: en \(\mathbb{R}\), \(B(0;1)=(-1,1)\).
+Relación con otros conceptos: define entornos, abiertos, convergencia y continuidad.
+Posible forma de preguntarlo en examen: “Calcule \(B(a;r)\) para la métrica discreta”.
+
+Concepto: entorno.
+Definición precisa: un conjunto \(V\subset X\) es entorno de \(x\) si contiene alguna bola abierta centrada en \(x\).
+Explicación desarrollada: no tiene que ser exactamente una bola; basta con que alrededor de \(x\) quepa una bola.
+Ejemplo: \((-2,3)\) es entorno de \(0\) en \(\mathbb{R}\).
+Relación con otros conceptos: permite formular puntos interiores, continuidad y convergencia.
+Posible forma de preguntarlo en examen: “Caracterice la convergencia \(x_n\to x\) usando entornos”.
+
+Concepto: conjunto abierto.
+Definición precisa: \(M\subset X\) es abierto si para todo \(x\in M\) existe \(r>0\) tal que \(B(x;r)\subset M\).
+Explicación desarrollada: cada punto del conjunto tiene margen interior. En un abierto no se toca la frontera desde dentro.
+Ejemplo: \((0,1)\) es abierto en \(\mathbb{R}\).
+Relación con otros conceptos: las bolas abiertas son abiertas; la continuidad puede expresarse mediante imágenes inversas de abiertos.
+Posible forma de preguntarlo en examen: “Demuestre que una bola abierta es un conjunto abierto”.
+
+Concepto: conjunto cerrado.
+Definición precisa: \(M\subset X\) es cerrado si \(X\setminus M\) es abierto.
+Explicación desarrollada: en espacios métricos, también puede verse como un conjunto que contiene los límites de sus sucesiones convergentes.
+Ejemplo: \([0,1]\) es cerrado en \(\mathbb{R}\).
+Relación con otros conceptos: se conecta con clausura, completitud de subespacios y convergencia.
+Posible forma de preguntarlo en examen: “Demuestre que \(M\) es cerrado usando sucesiones”.
+
+Concepto: punto de acumulación.
+Definición precisa: \(x_0\) es punto de acumulación de \(M\) si todo entorno de \(x_0\) contiene algún punto de \(M\) distinto de \(x_0\).
+Explicación desarrollada: \(M\) tiene puntos arbitrariamente próximos a \(x_0\). El punto puede pertenecer o no a \(M\).
+Ejemplo: \(0\) es punto de acumulación de \((0,1)\) en \(\mathbb{R}\).
+Relación con otros conceptos: forma parte de la definición de clausura.
+Posible forma de preguntarlo en examen: “Halle los puntos de acumulación de un subconjunto dado”.
+
+Concepto: clausura.
+Definición precisa: \(\overline{M}\) es el conjunto formado por \(M\) y sus puntos de acumulación; equivalentemente, el menor cerrado que contiene a \(M\).
+Explicación desarrollada: añade a \(M\) todos los puntos que se pueden aproximar mediante puntos de \(M\).
+Ejemplo: \(\overline{(0,1)}=[0,1]\) en \(\mathbb{R}\).
+Relación con otros conceptos: \(M\) es cerrado si y solo si \(M=\overline{M}\).
+Posible forma de preguntarlo en examen: “Calcule la clausura de \(M\) en el subespacio \(X\)”.
+
+Concepto: conjunto denso.
+Definición precisa: \(M\) es denso en \(X\) si \(\overline{M}=X\).
+Explicación desarrollada: todo punto de \(X\) puede aproximarse mediante puntos de \(M\).
+Ejemplo: \(\mathbb{Q}\) es denso en \(\mathbb{R}\).
+Relación con otros conceptos: se relaciona con separabilidad y aproximación.
+Posible forma de preguntarlo en examen: “Explique qué significa que un subconjunto sea denso”.
+
+Concepto: espacio separable.
+Definición precisa: un espacio métrico es separable si contiene un subconjunto denso numerable.
+Explicación desarrollada: permite aproximar todos los puntos del espacio usando una familia contable.
+Ejemplo: \(\mathbb{R}\) es separable porque \(\mathbb{Q}\) es numerable y denso.
+Relación con otros conceptos: densidad y clausura.
+Posible forma de preguntarlo en examen: “Dé un ejemplo de espacio separable y justifique la respuesta”.
+
+Concepto: convergencia en un espacio métrico.
+Definición precisa: \(x_n\to x\) si \(d(x_n,x)\to 0\).
+Explicación desarrollada: generaliza la convergencia de sucesiones numéricas; el límite debe ser un elemento del espacio.
+Ejemplo: en \(\mathbb{R}\), \(1/n\to 0\).
+Relación con otros conceptos: cerrados, continuidad, completitud.
+Posible forma de preguntarlo en examen: “Demuestre que el límite de una sucesión convergente en un espacio métrico es único”.
+
+Concepto: sucesión de Cauchy.
+Definición precisa: \((x_n)\) es de Cauchy si para todo \(\varepsilon>0\) existe \(N\) tal que \(d(x_m,x_n)<\varepsilon\) cuando \(m,n>N\).
+Explicación desarrollada: sus términos se hacen próximos entre sí. No se exige conocer un límite.
+Ejemplo: \(x_n=1/n\) es de Cauchy en \((0,1)\), aunque no converge en ese espacio.
+Relación con otros conceptos: toda sucesión convergente es de Cauchy; la completitud pide el recíproco para todas las sucesiones de Cauchy.
+Posible forma de preguntarlo en examen: “Dé un ejemplo de sucesión de Cauchy no convergente en un espacio no completo”.
+
+Concepto: completitud.
+Definición precisa: un espacio métrico es completo si toda sucesión de Cauchy converge a un elemento del espacio.
+Explicación desarrollada: expresa que el espacio no pierde los límites que sus propias sucesiones de Cauchy sugieren.
+Ejemplo: \(\mathbb{R}\) es completo; \((0,1)\) no lo es.
+Relación con otros conceptos: cerradura de subespacios y espacios de Banach.
+Posible forma de preguntarlo en examen: “Decida si un subespacio dado es completo”.
+
+Concepto: subespacio métrico.
+Definición precisa: si \(M\subset X\), entonces \(M\) es espacio métrico con la distancia restringida \(d_M=d|_{M\times M}\).
+Explicación desarrollada: las distancias entre puntos de \(M\) son las mismas que en \(X\), pero los posibles límites se evalúan dentro de \(M\).
+Ejemplo: \((0,1)\) como subespacio de \(\mathbb{R}\).
+Relación con otros conceptos: un subespacio cerrado de un espacio completo es completo.
+Posible forma de preguntarlo en examen: “Explique por qué \((0,1)\) no es completo como subespacio de \(\mathbb{R}\)”.
+
+Concepto: continuidad métrica.
+Definición precisa: \(T:X\to Y\) es continua en \(x_0\) si para todo \(\varepsilon>0\) existe \(\delta>0\) tal que \(d_X(x,x_0)<\delta\) implica \(d_Y(Tx,Tx_0)<\varepsilon\).
+Explicación desarrollada: conserva proximidad: puntos próximos en \(X\) se transforman en puntos próximos en \(Y\).
+Ejemplo: \(T(x)=2x\) es continua en \(\mathbb{R}\).
+Relación con otros conceptos: puede caracterizarse por imágenes inversas de abiertos.
+Posible forma de preguntarlo en examen: “Demuestre que una aplicación dada es continua entre espacios métricos”.
+
+## 5. Relaciones entre ideas
+
+La relación principal es jerárquica. Primero se define una métrica. Con ella se definen bolas. Con las bolas se definen entornos y abiertos. Con los abiertos se definen cerrados, continuidad, clausura, densidad y separabilidad. Con la métrica también se definen convergencia y Cauchy. Finalmente, con Cauchy se define completitud.
+
+La métrica es, por tanto, el dato inicial. Si cambia la métrica, pueden cambiar todas las propiedades posteriores. La métrica discreta ilustra esta dependencia: las bolas pequeñas son puntos aislados, todos los subconjuntos son abiertos y cerrados, y la convergencia exige que la sucesión sea finalmente constante.
+
+Los abiertos y cerrados tienen una relación de dualidad mediante complementarios. Pero no son excluyentes. Un conjunto puede ser abierto y cerrado, puede no ser ninguna de las dos cosas, o puede ser solo una de ellas. Esta idea es importante porque muchos errores vienen de tratar “cerrado” como si significara “no abierto”.
+
+La clausura conecta topología y sucesiones. Un punto está en la clausura de \(M\) si se puede aproximar por puntos de \(M\). En espacios métricos, esa aproximación puede formularse con sucesiones. Por eso los cerrados también se caracterizan como conjuntos que contienen límites de sus sucesiones convergentes.
+
+La convergencia implica Cauchy. La completitud pregunta si la condición de Cauchy basta para garantizar convergencia dentro del espacio. Así, la completitud es una propiedad global del espacio, no de una sucesión aislada.
+
+Los subespacios muestran la diferencia entre converger en el espacio grande y converger en el subespacio. La sucesión \(1/n\) converge a \(0\) en \(\mathbb{R}\), pero no converge en \((0,1)\). La causa no es la sucesión, sino que el límite queda fuera del subespacio.
+
+La completitud y la cerradura se conectan mediante un teorema esencial: dentro de un espacio completo, los subespacios completos son exactamente los cerrados. Esta relación explica por qué los intervalos cerrados de \(\mathbb{R}\) son completos y los intervalos abiertos no lo son.
+
+Históricamente, el capítulo sitúa la completitud en la línea de Fréchet, que introdujo la noción abstracta de espacio métrico. La importancia histórica no está en el dato biográfico, sino en el cambio conceptual: pasar de límites de números a límites en espacios generales.
+
+## 6. Errores habituales
+
+Error 1: comprobar solo que \(d(x,x)=0\) y olvidar el recíproco.
+Por qué está mal: el axioma exige \(d(x,y)=0\) si y solo si \(x=y\). Si dos puntos distintos pueden estar a distancia cero, no hay métrica.
+Corrección: probar ambas implicaciones.
+Respuesta incorrecta: “Como \(d(x,x)=0\), se cumple el axioma de identidad”.
+Respuesta correcta: “Se tiene \(d(x,x)=0\). Además, si \(d(x,y)=0\), entonces necesariamente \(x=y\)”.
+
+Error 2: dar por hecha la desigualdad triangular.
+Por qué está mal: suele ser el único axioma no trivial.
+Corrección: escribir una cadena de desigualdades que termine en \(d(x,z)\le d(x,y)+d(y,z)\).
+Respuesta incorrecta: “La triangular es evidente”.
+Respuesta correcta: “Por la desigualdad triangular del valor absoluto, \(|x-z|\le |x-y|+|y-z|\), y de ahí se deduce el axioma”.
+
+Error 3: confundir abierto con cerrado.
+Por qué está mal: son propiedades distintas, no negaciones mutuas.
+Corrección: usar las definiciones: abierto mediante bolas; cerrado mediante complementario abierto o límites de sucesiones.
+Respuesta incorrecta: “\([0,1]\) no es abierto, luego no es cerrado”.
+Respuesta correcta: “\([0,1]\) es cerrado porque su complementario \((-\infty,0)\cup(1,\infty)\) es abierto”.
+
+Error 4: olvidar que abierto/cerrado son relativos al espacio ambiente.
+Por qué está mal: el mismo conjunto puede cambiar de propiedad si cambia \(X\).
+Corrección: indicar siempre el espacio métrico.
+Respuesta incorrecta: “\((0,1)\) no es cerrado”.
+Respuesta correcta: “\((0,1)\) no es cerrado en \(\mathbb{R}\), pero sí es cerrado en \(X=(0,1)\) como subconjunto de sí mismo”.
+
+Error 5: pensar que toda sucesión acotada es convergente.
+Por qué está mal: la acotación no garantiza ni Cauchy ni convergencia.
+Corrección: distinguir acotada, Cauchy y convergente.
+Respuesta incorrecta: “\((-1)^n\) converge porque está acotada”.
+Respuesta correcta: “\((-1)^n\) está acotada, pero no es de Cauchy y no converge en \(\mathbb{R}\)”.
+
+Error 6: pensar que toda sucesión de Cauchy converge en cualquier espacio.
+Por qué está mal: eso solo ocurre en espacios completos.
+Corrección: comprobar si el límite pertenece al espacio.
+Respuesta incorrecta: “\(1/n\) converge en \((0,1)\) porque es de Cauchy”.
+Respuesta correcta: “\(1/n\) es de Cauchy en \((0,1)\), pero su límite sería \(0\), que no pertenece a \((0,1)\); por tanto no converge en ese espacio”.
+
+Error 7: confundir convergencia puntual con convergencia en la métrica del supremo.
+Por qué está mal: la métrica del supremo exige control uniforme.
+Corrección: calcular \(\sup |f_n-f|\) y comprobar si tiende a cero.
+Respuesta incorrecta: “Como \(f_n(t)\to f(t)\) para cada \(t\), entonces \(f_n\to f\) en \(C[a,b]\)”.
+Respuesta correcta: “En la métrica del supremo hay que probar que \(\sup_{t\in[a,b]}|f_n(t)-f(t)|\to 0\)”.
+
+Error 8: probar que una sucesión converge a un punto fuera del espacio.
+Por qué está mal: el límite debe ser elemento de \(X\).
+Corrección: verificar que el candidato pertenece al espacio.
+Respuesta incorrecta: “En \(\mathbb{Q}\), una sucesión racional que converge a \(\sqrt2\) converge”.
+Respuesta correcta: “Converge en \(\mathbb{R}\), pero no en \(\mathbb{Q}\), porque \(\sqrt2\notin\mathbb{Q}\)”.
+
+Error 9: decir que un subespacio de un completo siempre es completo.
+Por qué está mal: solo los subespacios cerrados de un completo son completos.
+Corrección: comprobar cerradura.
+Respuesta incorrecta: “\((0,1)\) es completo porque está dentro de \(\mathbb{R}\), que es completo”.
+Respuesta correcta: “\((0,1)\) no es completo porque no es cerrado en \(\mathbb{R}\)”.
+
+Error 10: usar una fórmula métrica sin comprobar que está bien definida.
+Por qué está mal: puede tomar valores infinitos o no estar definida para todos los pares.
+Corrección: comprobar dominio, finitud y axiomas.
+Respuesta incorrecta: “En todas las sucesiones, \(d(x,y)=\sup_j|\xi_j-\eta_j|\) es una métrica”.
+Respuesta correcta: “Esa fórmula define una métrica en \(\ell^\infty\), porque las sucesiones son acotadas y el supremo es finito”.
+
+## 7. Preguntas orientadas a examen
+
+### 10 preguntas fáciles
+
+1. Define espacio métrico.
+2. Enumera los axiomas de una métrica.
+3. Da un ejemplo de métrica en \(\mathbb{R}\).
+4. Define bola abierta \(B(x_0;r)\).
+5. Define conjunto abierto en un espacio métrico.
+6. Define conjunto cerrado.
+7. Define convergencia de una sucesión en un espacio métrico.
+8. Define sucesión de Cauchy.
+9. Define espacio métrico completo.
+10. Da un ejemplo de espacio métrico no completo.
+
+### 10 preguntas medias
+
+11. Demuestra que \(d(x,y)=|x-y|\) es una métrica en \(\mathbb{R}\).
+12. Describe las bolas abiertas en un conjunto con métrica discreta.
+13. Demuestra que toda sucesión convergente en un espacio métrico es de Cauchy.
+14. Demuestra que el límite de una sucesión convergente en un espacio métrico es único.
+15. Prueba que \((0,1)\) con la métrica usual no es completo.
+16. Decide si \([0,1]\) es completo con la métrica usual.
+17. Explica por qué un conjunto cerrado contiene los límites de sus sucesiones convergentes.
+18. Calcula la clausura de \((0,1)\) en \(\mathbb{R}\).
+19. Explica la diferencia entre convergencia puntual y convergencia uniforme en \(C[a,b]\).
+20. Demuestra que la métrica discreta hace que toda sucesión convergente sea finalmente constante.
+
+### 5 preguntas difíciles
+
+21. Demuestra que \(d(x,y)=\frac{|x-y|}{1+|x-y|}\) define una métrica en \(\mathbb{R}\).
+22. Sea \(X\) completo y \(M\subset X\). Demuestra que si \(M\) es cerrado, entonces \(M\) es completo.
+23. Sea \(X\) completo y \(M\subset X\). Demuestra que si \(M\) es completo como subespacio, entonces \(M\) es cerrado en \(X\).
+24. Prueba que si dos métricas \(d_1,d_2\) satisfacen \(a d_1(x,y)\le d_2(x,y)\le b d_1(x,y)\), con \(a,b>0\), entonces tienen las mismas sucesiones de Cauchy.
+25. En \(C[a,b]\) con la métrica del supremo, explica por qué el límite uniforme de funciones continuas debe ser continuo.
+
+### 5 preguntas de desarrollo largo
+
+26. Desarrolla la construcción de la teoría métrica desde la distancia hasta la completitud.
+27. Explica los principales ejemplos de espacios métricos del capítulo: \(\mathbb{R}^n\), \(\mathbb{C}^n\), métrica discreta, \(\ell^\infty\), \(\ell^p\) y \(C[a,b]\).
+28. Explica la relación entre abiertos, cerrados, clausura y puntos de acumulación.
+29. Desarrolla el concepto de sucesión de Cauchy y su relación con la completitud.
+30. Explica el teorema que caracteriza los subespacios completos de un espacio métrico completo.
+
+### 5 preguntas de relación entre conceptos
+
+31. Relaciona bolas abiertas, entornos y conjuntos abiertos.
+32. Relaciona convergencia, cerradura y conjuntos cerrados.
+33. Relaciona sucesiones de Cauchy, completitud y espacios incompletos.
+34. Relaciona densidad, clausura y separabilidad.
+35. Relaciona la elección de una métrica con la forma de las bolas y la convergencia de sucesiones.
+
+## 8. Respuestas modelo
+
+1. Un espacio métrico es un par \((X,d)\), donde \(X\) es un conjunto no vacío y \(d:X\times X\to\mathbb{R}\) es una función que mide distancia entre elementos de \(X\) y cumple los axiomas de positividad, identidad, simetría y desigualdad triangular.
+
+2. Los axiomas son: \(d(x,y)\ge0\); \(d(x,y)=0\) si y solo si \(x=y\); \(d(x,y)=d(y,x)\); y \(d(x,z)\le d(x,y)+d(y,z)\) para cualesquiera \(x,y,z\in X\).
+
+3. En \(\mathbb{R}\), la distancia usual \(d(x,y)=|x-y|\) es una métrica. Mide la separación ordinaria entre dos números reales.
+
+4. La bola abierta de centro \(x_0\) y radio \(r>0\) es \(B(x_0;r)=\{x\in X:d(x,x_0)<r\}\). Contiene los puntos situados a distancia menor que \(r\) de \(x_0\).
+
+5. Un subconjunto \(M\subset X\) es abierto si para cada \(x\in M\) existe \(r>0\) tal que \(B(x;r)\subset M\). Es decir, cada punto de \(M\) tiene un margen interior contenido en \(M\).
+
+6. Un conjunto \(M\subset X\) es cerrado si su complementario \(X\setminus M\) es abierto. En espacios métricos, equivalentemente, contiene los límites de sus sucesiones convergentes.
+
+7. Una sucesión \((x_n)\) converge a \(x\in X\) si \(d(x_n,x)\to0\). En forma \(\varepsilon\)-\(N\), para todo \(\varepsilon>0\) existe \(N\) tal que \(n>N\) implica \(d(x_n,x)<\varepsilon\).
+
+8. Una sucesión \((x_n)\) es de Cauchy si para todo \(\varepsilon>0\) existe \(N\) tal que \(m,n>N\) implica \(d(x_m,x_n)<\varepsilon\). Sus términos se hacen arbitrariamente próximos entre sí.
+
+9. Un espacio métrico es completo si toda sucesión de Cauchy en ese espacio converge a un elemento del propio espacio.
+
+10. \((0,1)\) con la distancia usual es no completo. La sucesión \(x_n=1/n\) pertenece a \((0,1)\) para \(n\ge2\), es de Cauchy, pero su límite en \(\mathbb{R}\) es \(0\), que no pertenece a \((0,1)\).
+
+11. Para \(d(x,y)=|x-y|\), se tiene \(d(x,y)\ge0\). Además, \(d(x,y)=0\) si y solo si \(|x-y|=0\), lo que equivale a \(x=y\). La simetría se obtiene de \(|x-y|=|y-x|\). Finalmente,
+\[
+d(x,z)=|x-z|=|(x-y)+(y-z)|\le |x-y|+|y-z|=d(x,y)+d(y,z).
+\]
+Luego es una métrica.
+
+12. En la métrica discreta, \(d(x,y)=0\) si \(x=y\) y \(1\) si \(x\ne y\). Si \(0<r\le1\), entonces \(B(x;r)=\{x\}\). Si \(r>1\), entonces \(B(x;r)=X\). Esto se debe a que todo punto distinto de \(x\) está exactamente a distancia \(1\).
+
+13. Si \(x_n\to x\), dado \(\varepsilon>0\), existe \(N\) tal que \(n>N\) implica \(d(x_n,x)<\varepsilon/2\). Entonces, si \(m,n>N\),
+\[
+d(x_m,x_n)\le d(x_m,x)+d(x,x_n)<\varepsilon/2+\varepsilon/2=\varepsilon.
+\]
+Por tanto, \((x_n)\) es de Cauchy.
+
+14. Supongamos que \(x_n\to x\) y \(x_n\to y\). Entonces
+\[
+d(x,y)\le d(x,x_n)+d(x_n,y).
+\]
+Al tomar \(n\to\infty\), los dos términos de la derecha tienden a cero. Por tanto, \(d(x,y)=0\), y por el axioma de identidad, \(x=y\). El límite es único.
+
+15. En \(X=(0,1)\), la sucesión \(x_n=1/n\) para \(n\ge2\) está en \(X\). Es de Cauchy porque converge en \(\mathbb{R}\). Sin embargo, su único límite posible es \(0\), y \(0\notin X\). Luego no converge en \(X\), y \(X\) no es completo.
+
+16. \([0,1]\) es completo con la métrica usual. Como \(\mathbb{R}\) es completo y \([0,1]\) es cerrado en \(\mathbb{R}\), toda sucesión de Cauchy en \([0,1]\) converge en \(\mathbb{R}\) y su límite pertenece a \([0,1]\). Por tanto converge dentro del subespacio.
+
+17. Si \(M\) es cerrado y \(x_n\in M\) con \(x_n\to x\) en \(X\), entonces \(x\) no puede pertenecer al complementario abierto \(X\setminus M\). Si perteneciera, habría una bola alrededor de \(x\) contenida en el complementario, pero los \(x_n\) acabarían entrando en esa bola, contradiciendo \(x_n\in M\). Luego \(x\in M\).
+
+18. La clausura de \((0,1)\) en \(\mathbb{R}\) es \([0,1]\). Los puntos interiores ya pertenecen al conjunto. Además, \(0\) y \(1\) son puntos de acumulación porque cualquier entorno suyo corta a \((0,1)\). Ningún punto fuera de \([0,1]\) es punto de acumulación.
+
+19. La convergencia puntual exige que para cada \(t\), \(f_n(t)\to f(t)\). La convergencia uniforme exige que \(\sup_{t\in[a,b]}|f_n(t)-f(t)|\to0\). En la métrica del supremo, la convergencia es uniforme. Por eso la convergencia puntual no basta para converger en \(C[a,b]\) con esa métrica.
+
+20. Supongamos que \(x_n\to x\) en la métrica discreta. Tomamos \(\varepsilon=1/2\). Entonces existe \(N\) tal que \(n>N\) implica \(d(x_n,x)<1/2\). Pero en la métrica discreta, si \(x_n\ne x\), la distancia vale \(1\). Por tanto debe ser \(x_n=x\) para todo \(n>N\). La sucesión es finalmente constante.
+
+21. Sea \(\rho(x,y)=|x-y|\) y \(h(t)=t/(1+t)\) para \(t\ge0\). Entonces \(d(x,y)=h(\rho(x,y))\). La positividad, simetría e identidad son inmediatas porque \(h(t)\ge0\), \(h(t)=0\) solo si \(t=0\), y \(\rho\) es simétrica. Para la triangular, usamos \(\rho(x,z)\le \rho(x,y)+\rho(y,z)\). Como \(h\) es creciente,
+\[
+d(x,z)\le h(\rho(x,y)+\rho(y,z)).
+\]
+Además, para \(a,b\ge0\),
+\[
+\frac{a+b}{1+a+b}\le \frac{a}{1+a}+\frac{b}{1+b}.
+\]
+Luego \(d(x,z)\le d(x,y)+d(y,z)\). Por tanto \(d\) es una métrica.
+
+22. Sea \((x_n)\) una sucesión de Cauchy en \(M\). Como \(M\subset X\) y la métrica es la restringida, \((x_n)\) también es de Cauchy en \(X\). Como \(X\) es completo, existe \(x\in X\) tal que \(x_n\to x\). Como \(M\) es cerrado y todos los \(x_n\) pertenecen a \(M\), el límite \(x\) pertenece a \(M\). Por tanto, toda sucesión de Cauchy en \(M\) converge en \(M\), y \(M\) es completo.
+
+23. Supongamos que \(M\) es completo como subespacio de \(X\). Para probar que \(M\) es cerrado, tomamos una sucesión \(x_n\in M\) que converge en \(X\) a \(x\). Toda sucesión convergente es de Cauchy, luego \((x_n)\) es de Cauchy en \(M\). Como \(M\) es completo, converge en \(M\) a algún \(y\in M\). Pero el límite en un espacio métrico es único, así que \(y=x\). Por tanto \(x\in M\), y \(M\) es cerrado.
+
+24. Si \((x_n)\) es de Cauchy para \(d_1\), dado \(\varepsilon>0\), elegimos \(N\) tal que \(d_1(x_m,x_n)<\varepsilon/b\) si \(m,n>N\). Entonces \(d_2(x_m,x_n)\le b d_1(x_m,x_n)<\varepsilon\), luego es de Cauchy para \(d_2\). Recíprocamente, si es de Cauchy para \(d_2\), usamos \(a d_1\le d_2\), es decir \(d_1\le d_2/a\), y se obtiene que también es de Cauchy para \(d_1\).
+
+25. Sea \(f_n\in C[a,b]\) y supongamos que \(f_n\to f\) uniformemente. Para probar que \(f\) es continua en \(t_0\), dado \(\varepsilon>0\), se elige \(N\) tal que \(|f_N(t)-f(t)|<\varepsilon/3\) para todo \(t\). Como \(f_N\) es continua, existe \(\delta>0\) tal que \(|t-t_0|<\delta\) implica \(|f_N(t)-f_N(t_0)|<\varepsilon/3\). Entonces
+\[
+|f(t)-f(t_0)|\le |f(t)-f_N(t)|+|f_N(t)-f_N(t_0)|+|f_N(t_0)-f(t_0)|<\varepsilon.
+\]
+Así \(f\) es continua.
+
+26. La teoría empieza con una distancia \(d\) sobre un conjunto \(X\). Esa distancia permite definir bolas abiertas, que expresan proximidad local. A partir de las bolas se definen entornos y conjuntos abiertos. Los cerrados se obtienen por complementarios o mediante límites de sucesiones. La métrica también permite definir convergencia: \(x_n\to x\) si \(d(x_n,x)\to0\). Después aparece la condición de Cauchy, que no menciona un límite sino la proximidad mutua de los términos. Finalmente, un espacio es completo si toda sucesión de Cauchy converge en él. Así, el capítulo pasa de una noción elemental de distancia a una propiedad estructural de existencia de límites.
+
+27. \(\mathbb{R}^n\) y \(\mathbb{C}^n\) usan la métrica euclídea, que generaliza la distancia ordinaria. La métrica discreta sirve sobre cualquier conjunto y separa todos los puntos distintos a distancia \(1\). \(\ell^\infty\) está formado por sucesiones acotadas y usa la distancia del supremo. \(\ell^p\) reúne sucesiones con \(\sum |\xi_j|^p<\infty\) y usa una distancia tipo \(p\). \(C[a,b]\) está formado por funciones continuas en un intervalo cerrado y usa la métrica del supremo. Estos ejemplos muestran que los elementos de un espacio métrico pueden ser números, vectores, sucesiones o funciones.
+
+28. Un abierto es un conjunto que contiene una bola alrededor de cada uno de sus puntos. Un cerrado es el complementario de un abierto y, en espacios métricos, contiene los límites de sus sucesiones convergentes. Un punto de acumulación de \(M\) es un punto cuyos entornos siempre contienen puntos de \(M\) distintos de él. La clausura \(\overline{M}\) añade a \(M\) sus puntos de acumulación y es el menor cerrado que contiene a \(M\). Por tanto, la clausura mide qué puntos se pueden alcanzar por aproximación desde \(M\).
+
+29. Una sucesión de Cauchy es una sucesión cuyos términos se hacen arbitrariamente próximos entre sí. Toda sucesión convergente es de Cauchy, pero no toda sucesión de Cauchy converge en cualquier espacio. La completitud es la propiedad que elimina esta diferencia: en un espacio completo, Cauchy equivale a convergencia. Los espacios incompletos tienen sucesiones de Cauchy cuyo límite natural queda fuera del espacio, como \(1/n\) en \((0,1)\).
+
+30. Si \(X\) es completo y \(M\subset X\), entonces \(M\) es completo si y solo si \(M\) es cerrado en \(X\). Si \(M\) es cerrado, toda sucesión de Cauchy de \(M\) converge en \(X\), y el límite pertenece a \(M\). Si \(M\) es completo, toda sucesión de \(M\) que converge en \(X\) es de Cauchy, luego converge también en \(M\); por unicidad del límite, el límite pertenece a \(M\). Este resultado permite decidir completitud de subespacios usando cerradura.
+
+31. Las bolas abiertas son los objetos básicos que expresan cercanía. Un entorno de \(x\) es cualquier conjunto que contiene una bola centrada en \(x\). Un conjunto abierto es aquel que es entorno de todos sus puntos. Por tanto, la cadena conceptual es: métrica \(\to\) bola \(\to\) entorno \(\to\) abierto.
+
+32. Una sucesión \(x_n\in M\) que converge a \(x\) muestra si \(M\) contiene sus límites. La clausura \(\overline{M}\) contiene todos los puntos que pueden obtenerse como límites de sucesiones de \(M\). Un conjunto es cerrado si contiene esos límites; equivalentemente, \(M=\overline{M}\).
+
+33. La condición de Cauchy expresa aproximación interna de una sucesión. La completitud asegura que esa aproximación interna produce un límite en el espacio. Un espacio incompleto falla porque existe al menos una sucesión de Cauchy cuyo límite queda fuera del espacio. Por eso \((0,1)\) no es completo.
+
+34. Un conjunto denso \(M\) en \(X\) cumple \(\overline{M}=X\), es decir, cualquier punto de \(X\) puede aproximarse con puntos de \(M\). Un espacio separable es aquel que tiene un subconjunto denso numerable. Por tanto, separabilidad es densidad con una restricción adicional de cardinalidad: el conjunto aproximante puede elegirse contable.
+
+35. La métrica determina la forma de las bolas. En \(\mathbb{R}^2\), la métrica euclídea produce discos, mientras que la métrica del taxi produce rombos. La métrica también determina la convergencia: en la métrica discreta una sucesión converge solo si es finalmente constante. Por tanto, no basta conocer el conjunto \(X\); hay que conocer \(d\).
+
+## 9. Resumen final de repaso
+
+Ideas principales:
+- Un espacio métrico es un conjunto con una distancia que cumple cuatro axiomas.
+- La misma base \(X\) puede producir espacios distintos si cambia la métrica.
+- Las bolas abiertas permiten definir entornos, abiertos y continuidad.
+- Los cerrados contienen límites de sucesiones convergentes.
+- La clausura añade los puntos aproximables desde un conjunto.
+- La convergencia se expresa mediante \(d(x_n,x)\to0\).
+- Toda sucesión convergente es de Cauchy.
+- Un espacio completo es aquel en el que toda sucesión de Cauchy converge dentro del espacio.
+- Un subespacio de un completo es completo si y solo si es cerrado.
+
+Conceptos imprescindibles:
+- Métrica.
+- Bola abierta.
+- Entorno.
+- Abierto.
+- Cerrado.
+- Punto de acumulación.
+- Clausura.
+- Denso.
+- Separable.
+- Sucesión convergente.
+- Sucesión de Cauchy.
+- Completitud.
+- Subespacio métrico.
+- Continuidad métrica.
+
+Relaciones clave:
+- Métrica \(\to\) bolas \(\to\) abiertos.
+- Abiertos \(\leftrightarrow\) cerrados por complementarios.
+- Clausura \(\leftrightarrow\) puntos de acumulación.
+- Cerrado \(\leftrightarrow\) contiene límites de sucesiones.
+- Convergencia \(\Rightarrow\) Cauchy.
+- Cauchy \(\Rightarrow\) convergencia solo en espacios completos.
+- En un completo: subespacio completo \(\leftrightarrow\) subespacio cerrado.
+
+Errores que evitar:
+- No olvidar el “si y solo si” en \(d(x,y)=0\).
+- No saltarse la desigualdad triangular.
+- No tratar abierto y cerrado como opuestos.
+- No olvidar el espacio ambiente.
+- No confundir acotada, Cauchy y convergente.
+- No aceptar límites fuera del espacio.
+- No confundir convergencia puntual con uniforme.
+- No afirmar que todo subespacio de un completo es completo.
+
+## 10. Checklist de dominio
+
+- Si no puedes explicar qué es una métrica, falta repasar los cuatro axiomas de distancia.
+- Si no puedes demostrar la desigualdad triangular en ejemplos sencillos, falta repasar desigualdad triangular del valor absoluto y estimaciones.
+- Si confundes \(d(x,x)=0\) con \(d(x,y)=0\Rightarrow x=y\), revisar el axioma de identidad.
+- Si no puedes describir una bola abierta, falta repasar la definición \(B(x_0;r)=\{x:d(x,x_0)<r\}\).
+- Si no puedes distinguir abierto de cerrado, falta repasar bolas interiores y complementarios.
+- Si confundes abierto con “no cerrado”, revisar ejemplos de conjuntos abiertos y cerrados a la vez.
+- Si olvidas el espacio ambiente, revisar abiertos y cerrados relativos.
+- Si no puedes calcular una clausura, falta repasar puntos de acumulación.
+- Si no puedes explicar densidad, falta repasar la condición \(\overline{M}=X\).
+- Si no puedes definir convergencia en un espacio métrico, falta repasar \(d(x_n,x)\to0\).
+- Si no puedes probar que el límite es único, falta repasar la desigualdad triangular aplicada a \(d(x,y)\).
+- Si confundes sucesión convergente con sucesión de Cauchy, revisar ambas definiciones.
+- Si crees que toda sucesión de Cauchy converge, falta repasar completitud.
+- Si no puedes dar un ejemplo de espacio incompleto, revisar \((0,1)\) y \(\mathbb{Q}\) con la métrica usual.
+- Si no puedes probar que una sucesión convergente es de Cauchy, falta repasar el argumento con \(\varepsilon/2\).
+- Si no puedes decidir si \([0,1]\) es completo, revisar el teorema de subespacio cerrado de un completo.
+- Si confundes convergencia puntual con uniforme, revisar la métrica del supremo en \(C[a,b]\).
+- Si puedes demostrar que \(d(x,y)=|x-y|/(1+|x-y|)\) es una métrica, el bloque de axiomas está asentado.
+- Si puedes probar que \((0,1)\) no es completo, el bloque de Cauchy/completitud está asentado.
+- Si puedes explicar por qué un subespacio cerrado de un completo es completo, el capítulo está suficientemente asentado.

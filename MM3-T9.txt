@@ -1,0 +1,1285 @@
+# Guía de estudio — MM3 T9. Ecuaciones en varias dimensiones
+
+Nota de fuente: el documento específico de Haberman Ch. 7 no aparece entre los archivos cargados. Esta guía se ha elaborado a partir del bloque equivalente de los documentos disponibles: Boas, capítulo 13, sobre ecuaciones en derivadas parciales; Sanz/Torres, capítulos de introducción a EDP y separación de variables; y exámenes de Métodos Matemáticos III. El contenido se ha reorganizado con finalidad docente y se limita al alcance de esas fuentes: Laplace, Poisson, calor/difusión, ondas, Helmholtz, separación de variables en varias dimensiones, coordenadas rectangulares, cilíndricas y esféricas, funciones de Bessel, funciones de Legendre, modos normales y condiciones de contorno.
+
+## 1. Prerrequisitos mínimos
+
+1. Derivadas parciales.
+
+Definición breve: una derivada parcial mide la variación de una función de varias variables respecto de una de ellas, manteniendo las demás constantes. Si \(u=u(x,y,z,t)\), entonces \(u_x\), \(u_{yy}\) o \(u_t\) son derivadas parciales.
+
+Por qué es necesario: las ecuaciones en derivadas parciales se construyen precisamente con derivadas parciales. Sin distinguir \(u_x\), \(u_y\), \(u_{xx}\) y \(u_{tt}\), no se puede identificar el orden, el tipo ni el método de resolución.
+
+Ejemplo mínimo: si \(u(x,y)=x^2y+\sin y\), entonces
+\[
+u_x=2xy,\qquad u_y=x^2+\cos y,\qquad u_{xx}=2y.
+\]
+
+2. Operador gradiente y operador laplaciano.
+
+Definición breve: el gradiente de \(u\) es el vector de derivadas primeras,
+\[
+\nabla u=(u_x,u_y,u_z),
+\]
+y el laplaciano es la divergencia del gradiente:
+\[
+\nabla^2 u=u_{xx}+u_{yy}+u_{zz}
+\]
+en coordenadas cartesianas tridimensionales.
+
+Por qué es necesario: las ecuaciones centrales del tema se escriben con el laplaciano: Laplace, Poisson, calor, ondas, Helmholtz y Schrödinger. En dominios circulares o esféricos, además, hay que saber que el laplaciano cambia de forma al cambiar de coordenadas.
+
+Ejemplo mínimo: si \(u=x^2+y^2+z^2\), entonces \(\nabla^2u=2+2+2=6\).
+
+3. Ecuaciones diferenciales ordinarias lineales.
+
+Definición breve: una EDO lineal relaciona una función de una variable y sus derivadas de forma lineal. Por ejemplo,
+\[
+X''+\lambda X=0.
+\]
+
+Por qué es necesario: el método de separación de variables convierte una EDP en varias EDO. El alumno no resuelve la EDP directamente; la reduce a problemas ordinarios con condiciones de contorno.
+
+Ejemplo mínimo:
+\[
+X''+\mu^2X=0,\quad X(0)=X(L)=0
+\]
+tiene soluciones no triviales solo para \(\mu=n\pi/L\), con \(X_n(x)=\sin(n\pi x/L)\).
+
+4. Series de Fourier y ortogonalidad.
+
+Definición breve: una función definida en un intervalo puede desarrollarse, bajo hipótesis adecuadas, como serie de senos y cosenos. La ortogonalidad permite calcular los coeficientes.
+
+Por qué es necesario: las soluciones separadas se suman para ajustar condiciones iniciales o de contorno arbitrarias. En rectángulos aparecen series trigonométricas; en cilindros aparecen series de Bessel; en esferas aparecen series de Legendre.
+
+Ejemplo mínimo:
+\[
+f(x)=\sum_{n=1}^{\infty} b_n\sin\frac{n\pi x}{L},
+\qquad
+b_n=\frac{2}{L}\int_0^L f(x)\sin\frac{n\pi x}{L}\,dx.
+\]
+
+5. Problemas de autovalores.
+
+Definición breve: un problema de autovalores busca valores del parámetro \(\lambda\) para los cuales existe una solución no nula que satisface una ecuación diferencial y unas condiciones de contorno.
+
+Por qué es necesario: las condiciones de contorno no solo fijan constantes; a menudo obligan a que ciertos parámetros tomen valores discretos. Esos valores generan modos.
+
+Ejemplo mínimo:
+\[
+X''+\lambda X=0,\quad X(0)=X(L)=0
+\]
+da \(\lambda_n=(n\pi/L)^2\).
+
+6. Coordenadas polares, cilíndricas y esféricas.
+
+Definición breve: son sistemas de coordenadas adaptados a dominios circulares, cilíndricos o esféricos. En polares, \(x=r\cos\theta\), \(y=r\sin\theta\). En cilíndricas se añade \(z\). En esféricas se usan \(r\), \(\theta\) y \(\phi\).
+
+Por qué es necesario: la geometría del dominio decide el sistema de coordenadas. Un disco se trata naturalmente en polares; un cilindro en cilíndricas; una esfera en esféricas.
+
+Ejemplo mínimo: en polares,
+\[
+\nabla^2 u=u_{rr}+\frac1r u_r+\frac1{r^2}u_{\theta\theta}.
+\]
+
+7. Funciones de Bessel.
+
+Definición breve: las funciones \(J_n\) aparecen como soluciones de la ecuación radial en problemas circulares o cilíndricos.
+
+Por qué es necesario: al separar variables en un disco, una membrana circular o un cilindro, la parte radial no suele ser trigonométrica, sino de tipo Bessel.
+
+Ejemplo mínimo: una ecuación radial típica es
+\[
+r^2R''+rR'+(k^2r^2-n^2)R=0,
+\]
+cuyas soluciones regulares en \(r=0\) son proporcionales a \(J_n(kr)\).
+
+8. Polinomios de Legendre y armónicos esféricos.
+
+Definición breve: los polinomios de Legendre \(P_l(\cos\theta)\) y los armónicos esféricos \(Y_l^m(\theta,\phi)\) aparecen al separar variables en coordenadas esféricas.
+
+Por qué es necesario: en problemas de Laplace dentro o fuera de esferas, la dependencia angular se expresa mediante estas funciones, no mediante senos y cosenos simples salvo en casos muy particulares.
+
+Ejemplo mínimo: si hay simetría axial, la solución interior de Laplace en una esfera se escribe como
+\[
+u(r,\theta)=\sum_{l=0}^{\infty} A_l r^l P_l(\cos\theta).
+\]
+
+## 2. Idea central del capítulo
+
+El capítulo estudia cómo resolver ecuaciones en derivadas parciales cuando el dominio tiene más de una variable espacial. Hasta ahora, muchos problemas de calor u ondas podían plantearse en una barra o una cuerda, con una sola coordenada espacial \(x\). En varias dimensiones aparecen placas, discos, cilindros, membranas, esferas y cavidades. La dificultad principal no es solo que haya más derivadas, sino que la geometría del dominio empieza a determinar la forma de la solución.
+
+La idea central es que una misma ecuación matemática describe fenómenos físicos distintos. La ecuación de Laplace puede representar temperatura estacionaria, potencial electrostático, potencial gravitatorio o potencial de velocidad. La ecuación de Poisson representa los mismos tipos de magnitudes cuando hay fuentes. La ecuación del calor describe evolución difusiva. La ecuación de ondas describe propagación y vibración. El capítulo no exige estudiar a fondo esos fenómenos físicos, sino reconocer la estructura matemática común.
+
+El método dominante es la separación de variables. Se supone que la solución puede escribirse como producto de funciones de una sola variable. Por ejemplo,
+\[
+u(x,y,z)=X(x)Y(y)Z(z),
+\]
+o, en coordenadas cilíndricas,
+\[
+u(r,\theta,z)=R(r)\Theta(\theta)Z(z).
+\]
+Al sustituir esta forma en la EDP, la ecuación se separa en varias EDO. Cada EDO lleva sus condiciones propias: periodicidad angular, regularidad en el origen, anulación en la frontera, aislamiento térmico o valor impuesto.
+
+El paso esencial es que las condiciones de contorno convierten los parámetros de separación en autovalores. En un rectángulo aparecen senos y cosenos de Fourier. En un cilindro o disco aparecen ceros de funciones de Bessel. En una esfera aparecen polinomios de Legendre y armónicos esféricos. En todos los casos, la solución general útil no suele ser un solo producto, sino una suma infinita de productos separados.
+
+Dentro de MM3, este tema conecta Fourier, Sturm-Liouville, calor, ondas y geometría. Es un bloque de síntesis: para resolverlo bien hay que reconocer la ecuación, escoger coordenadas, separar variables, imponer condiciones, identificar la familia ortogonal correcta y ajustar coeficientes.
+
+## 3. Desarrollo completo del capítulo
+
+### 3.1. Las EDP como modelos matemáticos
+
+Una ecuación en derivadas parciales relaciona una función de varias variables con algunas de sus derivadas parciales. Si la incógnita es \(u(x,y,z,t)\), la ecuación puede incluir derivadas espaciales como \(u_{xx}\), \(u_{yy}\), \(u_{zz}\) y derivadas temporales como \(u_t\) o \(u_{tt}\). El orden de la EDP es el mayor orden de derivada que aparece.
+
+Las ecuaciones principales del capítulo son lineales. Esto significa que la incógnita \(u\) y sus derivadas aparecen a la primera potencia y no multiplicadas entre sí. Esta propiedad es decisiva porque permite usar superposición: si \(u_1\) y \(u_2\) son soluciones de una ecuación lineal homogénea, entonces \(c_1u_1+c_2u_2\) también lo es. Gracias a ello se pueden sumar modos separados para construir soluciones más generales.
+
+La ecuación de Laplace es
+\[
+\nabla^2u=0.
+\]
+Describe estados estacionarios sin fuentes. En temperatura, significa que el calor ya no cambia con el tiempo y no hay generación interna de calor. En potencial electrostático, significa que no hay carga en la región estudiada. La ecuación de Poisson es
+\[
+\nabla^2u=f.
+\]
+La función \(f\) representa una densidad de fuente. Si \(f=0\), se recupera Laplace.
+
+La ecuación del calor o difusión se escribe, en forma típica,
+\[
+u_t=\alpha^2\nabla^2u,
+\]
+o equivalentemente
+\[
+\nabla^2u=\frac1{\alpha^2}u_t.
+\]
+Describe evolución con disipación. Los modos temporales decaen exponencialmente en problemas con condiciones homogéneas.
+
+La ecuación de ondas es
+\[
+u_{tt}=v^2\nabla^2u,
+\]
+o
+\[
+\nabla^2u=\frac1{v^2}u_{tt}.
+\]
+Describe propagación o vibración. Sus modos temporales son oscilatorios. Esta diferencia entre calor y ondas es muy importante: ambas pueden producir la misma ecuación espacial de Helmholtz, pero la parte temporal tiene interpretación distinta.
+
+Al separar la parte temporal de calor u ondas aparece con frecuencia la ecuación de Helmholtz,
+\[
+\nabla^2F+k^2F=0,
+\]
+que representa la parte espacial de los modos. No es una ecuación nueva aislada, sino el resultado natural de separar variables en problemas dependientes del tiempo.
+
+### 3.2. Condiciones de contorno e iniciales
+
+Una EDP no queda determinada solo por la ecuación. Hace falta especificar qué ocurre en la frontera del dominio y, si hay tiempo, qué ocurre en el instante inicial.
+
+Una condición de Dirichlet fija el valor de la función:
+\[
+u=g \quad \text{en la frontera}.
+\]
+En temperatura, equivale a mantener una frontera a temperatura prescrita. En una membrana, equivale a fijar el desplazamiento.
+
+Una condición de Neumann fija la derivada normal:
+\[
+\frac{\partial u}{\partial n}=g.
+\]
+En calor, una frontera aislada suele escribirse como \(\partial u/\partial n=0\), porque no hay flujo a través de la frontera.
+
+Una condición de Robin combina valor y derivada normal:
+\[
+a u+b\frac{\partial u}{\partial n}=g.
+\]
+Aparece cuando el flujo a través de la frontera depende del valor de la función.
+
+En problemas con tiempo se añaden condiciones iniciales. Para el calor basta normalmente con \(u(x,y,z,0)=f(x,y,z)\). Para ondas hacen falta desplazamiento y velocidad inicial:
+\[
+u(x,y,z,0)=f(x,y,z),\qquad u_t(x,y,z,0)=g(x,y,z).
+\]
+
+Estas condiciones no son un añadido menor: determinan qué modos sobreviven, qué autovalores son admisibles y qué coeficientes aparecen en la serie final.
+
+### 3.3. Separación de variables
+
+Separar variables significa buscar soluciones producto. En un problema rectangular tridimensional de Laplace, se prueba
+\[
+u(x,y,z)=X(x)Y(y)Z(z).
+\]
+Al sustituir en
+\[
+u_{xx}+u_{yy}+u_{zz}=0
+\]
+se obtiene
+\[
+\frac{X''}{X}+\frac{Y''}{Y}+\frac{Z''}{Z}=0.
+\]
+Cada término depende de una variable distinta. Para que la suma sea cero para todos los valores de \(x,y,z\), cada término debe ser constante, con signos elegidos de forma compatible.
+
+En una dimensión con extremos fijos, la ecuación \(X''+\lambda X=0\) y las condiciones \(X(0)=X(L)=0\) solo permiten
+\[
+\lambda_n=\left(\frac{n\pi}{L}\right)^2,\qquad X_n(x)=\sin\frac{n\pi x}{L}.
+\]
+El parámetro de separación se convierte en autovalor.
+
+Una sola solución separada rara vez satisface todos los datos. Por eso se usa la superposición:
+\[
+u=\sum_n A_n X_nY_nZ_n,
+\]
+o una suma doble o triple. Los coeficientes se obtienen expandiendo el dato de frontera o el dato inicial en la base ortogonal adecuada.
+
+### 3.4. Problemas rectangulares en dos y tres dimensiones
+
+En un rectángulo, la geometría encaja con coordenadas cartesianas. Si se resuelve Laplace en
+\[
+0<x<L,\qquad 0<y<H,
+\]
+con tres lados a temperatura cero y el cuarto con temperatura \(f(x)\), se ensaya
+\[
+u(x,y)=X(x)Y(y).
+\]
+Las condiciones \(u(0,y)=u(L,y)=0\) llevan a
+\[
+X_n(x)=\sin\frac{n\pi x}{L}.
+\]
+La parte en \(y\) contiene funciones hiperbólicas o exponenciales, según si el dominio es finito o semiinfinito. El dato \(u(x,H)=f(x)\) se expresa como serie de senos:
+\[
+f(x)=\sum_{n=1}^{\infty} A_n\sin\frac{n\pi x}{L}.
+\]
+
+En tres dimensiones, por ejemplo en un cubo, la misma lógica genera series dobles o triples. Si una cara tiene un valor impuesto y las demás están a cero, la función de esa cara se expande en una doble serie de senos:
+\[
+f(x,y)=\sum_{m=1}^{\infty}\sum_{n=1}^{\infty} A_{mn}
+\sin\frac{m\pi x}{L}\sin\frac{n\pi y}{L}.
+\]
+La tercera variable aporta factores hiperbólicos o exponenciales.
+
+La consecuencia práctica es que en dominios rectangulares hay que dominar Fourier. La novedad de varias dimensiones no cambia el método básico, pero multiplica los índices y exige más cuidado en la identificación de las condiciones.
+
+### 3.5. Coordenadas cilíndricas: cilindros, discos y problemas radiales
+
+Cuando el dominio es circular o cilíndrico, usar coordenadas cartesianas complica el problema. En coordenadas cilíndricas,
+\[
+x=r\cos\theta,\qquad y=r\sin\theta,\qquad z=z.
+\]
+El laplaciano es
+\[
+\nabla^2u=
+\frac1r\frac{\partial}{\partial r}\left(r\frac{\partial u}{\partial r}\right)
++\frac1{r^2}\frac{\partial^2u}{\partial\theta^2}
++\frac{\partial^2u}{\partial z^2}.
+\]
+
+Para Laplace se ensaya
+\[
+u(r,\theta,z)=R(r)\Theta(\theta)Z(z).
+\]
+La ecuación angular conduce a
+\[
+\Theta''+n^2\Theta=0,
+\]
+con
+\[
+\Theta(\theta)=A\cos n\theta+B\sin n\theta.
+\]
+La periodicidad \(\Theta(\theta+2\pi)=\Theta(\theta)\) obliga a que \(n\) sea entero. Este es uno de los puntos más preguntables del tema.
+
+La parte radial conduce a ecuaciones de Bessel cuando aparece un parámetro \(k\):
+\[
+r^2R''+rR'+(k^2r^2-n^2)R=0.
+\]
+La solución regular en el origen es \(J_n(kr)\). La otra solución independiente suele descartarse en un disco sólido porque se hace singular en \(r=0\). Si el dominio es un anillo o una corona cilíndrica que no contiene el origen, esa solución ya no se descarta automáticamente.
+
+Si la frontera circular \(r=a\) impone \(u(a,\theta,z)=0\), aparecen condiciones del tipo
+\[
+J_n(ka)=0.
+\]
+Por tanto \(k\) debe ser un cero de \(J_n\). Estos ceros desempeñan el mismo papel que \(n\pi/L\) en una barra: son los autovalores geométricos del problema.
+
+Los coeficientes ya no se calculan con una serie de Fourier ordinaria en \(r\). Aparece una expansión de Fourier-Bessel. La ortogonalidad radial tiene peso \(r\), porque el elemento de área en polares es \(r\,dr\,d\theta\). Por eso, en los coeficientes, aparece una integral del tipo
+\[
+\int_0^a f(r)J_n(k_{mn}r/a)\,r\,dr.
+\]
+
+### 3.6. Membrana circular y modos normales
+
+La ecuación de ondas para una membrana circular se escribe como
+\[
+u_{tt}=v^2\nabla^2u,
+\]
+donde el laplaciano se toma en coordenadas polares si la membrana está en un disco. Se separa
+\[
+u(r,\theta,t)=R(r)\Theta(\theta)T(t).
+\]
+La parte espacial cumple una ecuación de Helmholtz:
+\[
+\nabla^2F+k^2F=0.
+\]
+La parte temporal cumple
+\[
+T''+k^2v^2T=0.
+\]
+Por tanto, el tiempo oscila con frecuencia dependiente de \(k\).
+
+En un disco de radio \(a\) con borde fijo se impone
+\[
+u(a,\theta,t)=0.
+\]
+La condición se traduce en
+\[
+J_n(ka)=0.
+\]
+Si \(k_{mn}\) es el \(m\)-ésimo cero positivo de \(J_n\), entonces
+\[
+k=\frac{k_{mn}}{a}.
+\]
+Los modos normales tienen la forma
+\[
+J_n(k_{mn}r/a)\cos(n\theta)\cos(k_{mn}vt/a),
+\]
+junto con variantes con seno angular y seno temporal.
+
+La importancia de estos modos es doble. Matemáticamente, forman una familia con la que se expanden condiciones iniciales. Físicamente, representan patrones de vibración con líneas nodales. En examen, interesa sobre todo justificar la aparición de \(J_n\), de los ceros \(J_n(k a)=0\), y de la frecuencia.
+
+### 3.7. Coordenadas esféricas: esferas, capas y simetría axial
+
+En una esfera, la coordenada natural esférica separa la distancia radial y los ángulos. El laplaciano tridimensional en esféricas es más complejo, pero su estructura permite separar
+\[
+u(r,\theta,\phi)=R(r)\Theta(\theta)\Phi(\phi).
+\]
+
+En problemas de Laplace con simetría axial, la solución no depende de \(\phi\). Entonces la parte angular se reduce a polinomios de Legendre:
+\[
+P_l(\cos\theta).
+\]
+La solución regular dentro de una esfera se escribe como
+\[
+u(r,\theta)=\sum_{l=0}^{\infty} A_l r^l P_l(\cos\theta).
+\]
+El término \(r^{-l-1}\) se descarta dentro de una esfera sólida porque es singular en \(r=0\).
+
+Si el problema es exterior a una esfera o una capa esférica que no contiene \(r=0\), sí pueden aparecer términos
+\[
+r^{-l-1}.
+\]
+Por ejemplo, en una capa \(a<r<b\), la forma radial general es
+\[
+A_l r^l+B_l r^{-l-1}.
+\]
+Las condiciones en las dos esferas \(r=a\) y \(r=b\) determinan los coeficientes.
+
+Si no hay simetría axial, aparecen armónicos esféricos:
+\[
+Y_l^m(\theta,\phi).
+\]
+Para el nivel de MM3, lo esencial es reconocerlos como las funciones angulares naturales de la esfera y saber que sustituyen a los senos/cosenos de Fourier en geometría esférica.
+
+### 3.8. Ecuación de Poisson y presencia de fuentes
+
+La ecuación de Poisson es
+\[
+\nabla^2u=f.
+\]
+A diferencia de Laplace, su segundo miembro no es cero. Esto representa fuentes: calor generado internamente, carga eléctrica, masa o fuentes de fluido según el contexto.
+
+El principio de trabajo es separar la solución en dos partes:
+\[
+u=u_p+u_h,
+\]
+donde \(u_p\) es una solución particular de Poisson y \(u_h\) satisface Laplace:
+\[
+\nabla^2u_h=0.
+\]
+La parte homogénea se usa para ajustar las condiciones de contorno.
+
+En un problema sencillo con fuente constante y simetría radial, puede buscarse directamente una solución particular radial. En problemas más generales, se usan funciones de Green, desarrollos en series o transformadas integrales. En el nivel de examen, normalmente se espera reconocer que no basta con resolver Laplace y que el término fuente exige una solución particular.
+
+### 3.9. Estrategia de examen
+
+Ante un problema de EDP en varias dimensiones, el orden operativo debe ser estable.
+
+Primero se identifica la ecuación: Laplace, Poisson, calor, ondas, Helmholtz o Schrödinger. Después se identifica el dominio: rectángulo, cubo, disco, cilindro, esfera o capa. El dominio determina las coordenadas. A continuación se leen las condiciones: valores, derivadas normales, regularidad, periodicidad angular e iniciales.
+
+Luego se propone una separación compatible. Si hay \(x,y,z\), se usa producto cartesiano. Si hay \(r,\theta,z\), se espera Bessel en la parte radial. Si hay \(r,\theta,\phi\), se espera Legendre o armónicos esféricos. Después se imponen las condiciones que generan autovalores. Finalmente se escribe la serie y se calculan coeficientes solo hasta donde el enunciado lo pida.
+
+Un error de examen muy frecuente consiste en empezar a calcular sin haber justificado el tipo de funciones que aparecen. En este tema, la elección de coordenadas y la justificación de la familia ortogonal valen tanto como la integración.
+
+## 4. Conceptos clave
+
+1. Ecuación en derivadas parciales.
+
+Definición precisa: igualdad en la que aparece una función incógnita de dos o más variables independientes y algunas de sus derivadas parciales.
+
+Explicación desarrollada: una EDP no describe la evolución de una sola variable independiente, sino la dependencia simultánea respecto de varias. Por ejemplo, \(u(x,y)\) puede representar temperatura en una placa y \(u(x,t)\) temperatura en una barra dependiente del tiempo.
+
+Ejemplo:
+\[
+u_t=k u_{xx}
+\]
+es una EDP porque \(u\) depende de \(x\) y \(t\).
+
+Relación con otros conceptos: su orden, linealidad, homogeneidad y condiciones de contorno determinan el método.
+
+Posible forma de examen: "Caracterice la linealidad, homogeneidad y orden de una EDP dada".
+
+2. Laplaciano.
+
+Definición precisa: operador diferencial de segundo orden definido como \(\nabla^2u=\nabla\cdot\nabla u\).
+
+Explicación desarrollada: mide la curvatura espacial total de una función. En coordenadas cartesianas tridimensionales es \(u_{xx}+u_{yy}+u_{zz}\), pero en polares, cilíndricas y esféricas cambia.
+
+Ejemplo:
+\[
+\nabla^2u=u_{rr}+\frac1r u_r+\frac1{r^2}u_{\theta\theta}
+\]
+en coordenadas polares.
+
+Relación con otros conceptos: aparece en Laplace, Poisson, calor, ondas, Helmholtz y Schrödinger.
+
+Posible forma de examen: "Calcule el laplaciano de una función en polares y decida si es armónica".
+
+3. Ecuación de Laplace.
+
+Definición precisa:
+\[
+\nabla^2u=0.
+\]
+
+Explicación desarrollada: representa estados estacionarios sin fuentes. Matemáticamente, sus soluciones se llaman funciones armónicas. Su comportamiento está determinado por las condiciones en la frontera.
+
+Ejemplo: temperatura estacionaria en una placa sin fuentes internas.
+
+Relación con otros conceptos: es el caso homogéneo de Poisson.
+
+Posible forma de examen: "Resolver Laplace en un rectángulo o disco con condiciones de contorno".
+
+4. Ecuación de Poisson.
+
+Definición precisa:
+\[
+\nabla^2u=f.
+\]
+
+Explicación desarrollada: incorpora un término fuente. La función \(f\) no forma parte de las condiciones de contorno, sino de la ecuación. Obliga a buscar una solución particular.
+
+Ejemplo:
+\[
+\nabla^2u=Q/k
+\]
+para temperatura estacionaria con fuente uniforme.
+
+Relación con otros conceptos: se resuelve como particular más solución de Laplace.
+
+Posible forma de examen: "Hallar la distribución estacionaria con una fuente constante".
+
+5. Ecuación del calor o difusión.
+
+Definición precisa:
+\[
+u_t=\alpha^2\nabla^2u.
+\]
+
+Explicación desarrollada: describe procesos disipativos. En dominios acotados con condiciones homogéneas, los modos espaciales se multiplican por exponenciales decrecientes.
+
+Ejemplo:
+\[
+u_t=\alpha^2 u_{xx},\quad u(0,t)=u(L,t)=0.
+\]
+
+Relación con otros conceptos: al separar variables aparece una ecuación espacial de autovalores y una temporal de decaimiento.
+
+Posible forma de examen: "Resolver una ecuación del calor con dato inicial expandible en senos".
+
+6. Ecuación de ondas.
+
+Definición precisa:
+\[
+u_{tt}=v^2\nabla^2u.
+\]
+
+Explicación desarrollada: describe vibraciones y propagación. Sus modos tienen oscilación temporal sinusoidal.
+
+Ejemplo: membrana circular con borde fijo.
+
+Relación con otros conceptos: comparte la parte espacial de Helmholtz con otros problemas, pero su parte temporal es oscilatoria.
+
+Posible forma de examen: "Determinar los modos normales de una membrana".
+
+7. Ecuación de Helmholtz.
+
+Definición precisa:
+\[
+\nabla^2F+k^2F=0.
+\]
+
+Explicación desarrollada: aparece como ecuación espacial tras separar variables en ondas y en problemas relacionados. Su parámetro \(k\) queda fijado por la frontera.
+
+Ejemplo: en una membrana circular,
+\[
+F=J_n(kr)\cos n\theta.
+\]
+
+Relación con otros conceptos: conecta ondas, Bessel, Legendre y autovalores.
+
+Posible forma de examen: "Separar la ecuación de ondas y obtener la ecuación espacial".
+
+8. Separación de variables.
+
+Definición precisa: método que busca soluciones como producto de funciones de una sola variable.
+
+Explicación desarrollada: transforma una EDP lineal en varias EDO. Solo produce soluciones especiales, pero por superposición y ortogonalidad se construyen soluciones generales útiles.
+
+Ejemplo:
+\[
+u(r,\theta,z)=R(r)\Theta(\theta)Z(z).
+\]
+
+Relación con otros conceptos: genera autovalores, autofunciones y series.
+
+Posible forma de examen: "Deduzca las EDO resultantes al separar variables".
+
+9. Condición de Dirichlet.
+
+Definición precisa: condición que fija el valor de la función en la frontera:
+\[
+u=g.
+\]
+
+Explicación desarrollada: impone temperatura, potencial o desplazamiento. Si \(g=0\), es homogénea.
+
+Ejemplo:
+\[
+u(0,y)=u(L,y)=0.
+\]
+
+Relación con otros conceptos: suele generar senos, ceros de Bessel o anulación en la frontera.
+
+Posible forma de examen: "Interpretar físicamente una condición de contorno".
+
+10. Condición de Neumann.
+
+Definición precisa: condición que fija la derivada normal:
+\[
+\frac{\partial u}{\partial n}=g.
+\]
+
+Explicación desarrollada: representa flujo impuesto. Si \(g=0\), en calor equivale a frontera aislada.
+
+Ejemplo:
+\[
+u_x(0,t)=0.
+\]
+
+Relación con otros conceptos: puede introducir modos de coseno y, en algunos problemas, un modo constante.
+
+Posible forma de examen: "Resolver calor con extremos aislados y explicar conservación de la media".
+
+11. Autovalor y autofunción.
+
+Definición precisa: valores y funciones no triviales que satisfacen un problema diferencial con condiciones de contorno.
+
+Explicación desarrollada: no todos los parámetros de separación son admisibles. Las condiciones discretizan los valores permitidos.
+
+Ejemplo:
+\[
+X_n(x)=\sin(n\pi x/L),\quad \lambda_n=(n\pi/L)^2.
+\]
+
+Relación con otros conceptos: son los modos de la solución.
+
+Posible forma de examen: "Determinar autovalores y autofunciones de un problema de Sturm-Liouville".
+
+12. Función de Bessel.
+
+Definición precisa: solución especial de la ecuación de Bessel que aparece en problemas radiales cilíndricos.
+
+Explicación desarrollada: \(J_n\) sustituye a los senos y cosenos cuando la variable radial está en un dominio circular. Sus ceros determinan los modos radiales.
+
+Ejemplo:
+\[
+R(r)=J_0(kr)
+\]
+en un problema radialmente simétrico.
+
+Relación con otros conceptos: aparece en Fourier-Bessel, membrana circular y cilindros.
+
+Posible forma de examen: "Explique por qué la condición \(u(a,\theta)=0\) lleva a ceros de \(J_n\)".
+
+13. Polinomio de Legendre.
+
+Definición precisa: función \(P_l(x)\) que aparece como solución angular en problemas esféricos con simetría axial.
+
+Explicación desarrollada: en una esfera, la variable angular natural es \(\cos\theta\). Los datos sobre la superficie se expanden en serie de Legendre.
+
+Ejemplo:
+\[
+u(r,\theta)=A_0+A_1 r\cos\theta+A_2r^2P_2(\cos\theta)+\cdots.
+\]
+
+Relación con otros conceptos: es el análogo esférico de los cosenos de Fourier para problemas con simetría axial.
+
+Posible forma de examen: "Escribir la forma general de la solución de Laplace dentro de una esfera con simetría axial".
+
+14. Regularidad en el origen.
+
+Definición precisa: exigencia de que la solución permanezca finita en puntos como \(r=0\).
+
+Explicación desarrollada: no toda solución formal de la EDO separada es físicamente o matemáticamente admisible. En discos y esferas sólidas se descartan términos singulares.
+
+Ejemplo: dentro de una esfera se descarta \(r^{-l-1}\).
+
+Relación con otros conceptos: decide qué rama radial se conserva.
+
+Posible forma de examen: "Justifique por qué se elimina la solución singular".
+
+15. Serie de Fourier-Bessel.
+
+Definición precisa: expansión de una función radial en términos de funciones \(J_n\) evaluadas en ceros adecuados.
+
+Explicación desarrollada: aparece cuando la variable radial está limitada por una frontera circular. Los coeficientes se calculan con peso \(r\).
+
+Ejemplo:
+\[
+f(r)=\sum_m A_mJ_0(k_m r/a),
+\]
+donde \(J_0(k_m)=0\).
+
+Relación con otros conceptos: es una expansión ortogonal de Sturm-Liouville.
+
+Posible forma de examen: "Escriba la fórmula integral para los coeficientes y explique el peso \(r\)".
+
+## 5. Relaciones entre ideas
+
+La jerarquía conceptual empieza con la EDP. Primero se identifica si la ecuación es lineal, homogénea y de qué orden. Después se reconoce su tipo físico-matemático: Laplace, Poisson, calor, ondas o Helmholtz. Esa identificación decide si habrá estado estacionario, fuente, disipación o propagación.
+
+El laplaciano es el eje común. Laplace es el laplaciano igualado a cero; Poisson es el laplaciano igualado a una fuente; calor relaciona laplaciano con derivada temporal primera; ondas lo relaciona con derivada temporal segunda; Helmholtz aparece cuando la parte temporal ya ha sido separada. Por eso, aunque las ecuaciones parezcan distintas, comparten la misma parte espacial.
+
+La geometría determina las coordenadas. Un rectángulo lleva a senos y cosenos. Un disco o cilindro lleva a funciones de Bessel. Una esfera lleva a funciones de Legendre o armónicos esféricos. Esta no es una cuestión estética: elegir coordenadas incorrectas suele hacer imposible la separación.
+
+Las condiciones de contorno transforman una familia continua de soluciones separadas en una familia discreta de modos. En un intervalo, \(X(0)=X(L)=0\) produce \(n\pi/L\). En un disco, \(R(a)=0\) produce ceros de \(J_n\). En una esfera, la regularidad en \(r=0\) elimina términos singulares y la frontera \(r=a\) fija los coeficientes.
+
+La ortogonalidad permite pasar de modos sueltos a soluciones generales. Los senos son ortogonales en un intervalo; los Bessel son ortogonales con peso \(r\); los Legendre son ortogonales en la variable \(\cos\theta\). La ortogonalidad es el mecanismo que traduce un dato \(f\) de frontera o inicial en coeficientes.
+
+La oposición entre Laplace y Poisson es la oposición entre ausencia y presencia de fuentes. La oposición entre calor y ondas es la oposición entre disipación y oscilación. La oposición entre Dirichlet y Neumann es la diferencia entre fijar el valor de \(u\) y fijar su flujo normal.
+
+Históricamente, el método parte de las series de Fourier para problemas de calor y se generaliza a otros sistemas ortogonales procedentes de problemas de Sturm-Liouville. En el curso, esto se traduce en una regla operativa: cada geometría trae su familia ortogonal.
+
+## 6. Errores habituales
+
+1. Error: usar siempre el laplaciano cartesiano.
+
+Por qué está mal: el laplaciano depende del sistema de coordenadas. En un disco o esfera, escribir \(u_{xx}+u_{yy}\) sin transformar puede impedir separar.
+
+Corrección: usar la forma del laplaciano correspondiente al sistema adaptado al dominio.
+
+Respuesta incorrecta: "En un disco, \(\nabla^2u=u_{rr}+u_{\theta\theta}\)".
+
+Respuesta correcta: "En un disco,
+\[
+\nabla^2u=u_{rr}+\frac1r u_r+\frac1{r^2}u_{\theta\theta}.
+\]"
+
+2. Error: olvidar la periodicidad angular.
+
+Por qué está mal: una función física en el plano debe cumplir \(u(r,\theta+2\pi)=u(r,\theta)\).
+
+Corrección: exigir que \(n\) sea entero en \(\sin n\theta\) y \(\cos n\theta\).
+
+Respuesta incorrecta: "La constante angular puede ser cualquier \(\alpha\) real".
+
+Respuesta correcta: "La periodicidad impone \(\alpha=n\in\mathbb{Z}\)".
+
+3. Error: elegir mal el signo de la constante de separación.
+
+Por qué está mal: el signo determina si aparecen senos, cosenos, exponenciales o funciones hiperbólicas. Elegirlo sin mirar la frontera lleva a soluciones incompatibles.
+
+Corrección: escoger el signo que permita satisfacer las condiciones. Extremos fijos suelen exigir funciones sinusoidales.
+
+Respuesta incorrecta: "Como \(X''-\lambda X=0\), con \(X(0)=X(L)=0\), tomo exponenciales".
+
+Respuesta correcta: "Para extremos fijos no triviales se usa \(X''+\lambda X=0\), con \(\lambda>0\)".
+
+4. Error: no descartar soluciones singulares en el origen.
+
+Por qué está mal: una solución que se hace infinita en \(r=0\) no es aceptable en un disco o esfera sólidos.
+
+Corrección: conservar solo la parte regular, como \(J_n\) frente a la solución singular, o \(r^l\) frente a \(r^{-l-1}\).
+
+Respuesta incorrecta: "Dentro de una esfera,
+\[
+R=A r^l+B r^{-l-1}.
+\]"
+
+Respuesta correcta: "Dentro de una esfera sólida,
+\[
+R=A r^l
+\]
+si se exige finitud en \(r=0\)."
+
+5. Error: confundir los ceros de \(J_n\) con los de \(J_{n+1}\).
+
+Por qué está mal: la condición de contorno decide qué función debe anularse. El cero que aparece no se puede cambiar por comodidad.
+
+Corrección: si \(u(a)=0\), se impone \(J_n(ka)=0\). Si la condición es sobre derivada radial, aparecerá \(J_n'(ka)=0\).
+
+Respuesta incorrecta: "Como hay \(J_{n+1}\) en la normalización, los autovalores son ceros de \(J_{n+1}\)".
+
+Respuesta correcta: "La normalización puede incluir \(J_{n+1}\), pero los autovalores con Dirichlet vienen de \(J_n(ka)=0\)."
+
+6. Error: calcular coeficientes radiales sin peso \(r\).
+
+Por qué está mal: en polares el elemento de área es \(r\,dr\,d\theta\). La ortogonalidad radial de Bessel incluye ese peso.
+
+Corrección: integrar con \(r\,dr\).
+
+Respuesta incorrecta:
+\[
+A_m=\int_0^a f(r)J_0(k_mr/a)\,dr.
+\]
+
+Respuesta correcta:
+\[
+A_m\propto \int_0^a f(r)J_0(k_mr/a)\,r\,dr.
+\]
+
+7. Error: tratar Poisson como si fuera Laplace.
+
+Por qué está mal: si hay fuente \(f\), la ecuación no es homogénea.
+
+Corrección: buscar una solución particular y añadir una solución armónica para ajustar frontera.
+
+Respuesta incorrecta: "Como \(\nabla^2u=C\), separo igual que \(\nabla^2u=0\) y listo".
+
+Respuesta correcta: "Tomo \(u=u_p+u_h\), con \(\nabla^2u_p=C\) y \(\nabla^2u_h=0\)."
+
+8. Error: aplicar superposición a una EDP no lineal.
+
+Por qué está mal: la suma de soluciones solo está garantizada para ecuaciones lineales homogéneas.
+
+Corrección: comprobar linealidad antes de sumar modos.
+
+Respuesta incorrecta: "Si \(u_x+u u_y=0\), la suma de dos soluciones también es solución".
+
+Respuesta correcta: "Esa ecuación es no lineal; no se puede usar superposición sin comprobar."
+
+9. Error: confundir condición inicial con condición de contorno.
+
+Por qué está mal: la condición inicial se impone en \(t=0\); la de contorno, en la frontera espacial.
+
+Corrección: separar claramente dominio espacial, frontera y tiempo inicial.
+
+Respuesta incorrecta: "\(u(x,0)=f(x)\) es una condición de contorno".
+
+Respuesta correcta: "\(u(x,0)=f(x)\) es condición inicial; \(u(0,t)=0\) es de contorno."
+
+10. Error: olvidar el modo constante en Neumann homogéneo.
+
+Por qué está mal: con extremos aislados, el modo \(n=0\) puede representar la media conservada.
+
+Corrección: incluir el término constante si las condiciones lo permiten.
+
+Respuesta incorrecta:
+\[
+u(x,t)=\sum_{n=1}^{\infty} A_n\cos(n\pi x/L)e^{-\alpha^2(n\pi/L)^2t}.
+\]
+
+Respuesta correcta:
+\[
+u(x,t)=A_0+\sum_{n=1}^{\infty} A_n\cos(n\pi x/L)e^{-\alpha^2(n\pi/L)^2t}.
+\]
+
+11. Error: imponer todas las condiciones a un solo modo.
+
+Por qué está mal: un modo separado satisface la ecuación y algunas condiciones homogéneas, pero no un dato arbitrario.
+
+Corrección: usar una serie de modos y ajustar coeficientes.
+
+Respuesta incorrecta: "Elijo un \(n\) que se parezca a \(f(x)\)".
+
+Respuesta correcta: "Expando \(f(x)\) en la base de autofunciones."
+
+12. Error: no comprobar la variable de la función de frontera.
+
+Por qué está mal: si la frontera es \(r=a\), el dato depende de \(\theta\) y quizá de \(z\), no de \(r\).
+
+Corrección: escribir la condición exactamente sobre la frontera antes de expandir.
+
+Respuesta incorrecta: "En \(r=a\), expando \(f(r)\)".
+
+Respuesta correcta: "En \(r=a\), expando \(f(\theta,z)\) en las funciones de las variables restantes."
+
+## 7. Preguntas orientadas a examen
+
+### 10 preguntas fáciles
+
+F1. Defina qué es una ecuación en derivadas parciales e indique qué significa su orden.
+
+F2. Escriba el laplaciano en coordenadas cartesianas tridimensionales.
+
+F3. Explique la diferencia entre la ecuación de Laplace y la ecuación de Poisson.
+
+F4. Defina condiciones de Dirichlet, Neumann y Robin.
+
+F5. Escriba la ecuación del calor y la ecuación de ondas en forma multidimensional.
+
+F6. ¿Qué significa buscar una solución separada?
+
+F7. ¿Por qué en coordenadas polares la parte angular suele tener \(n\) entero?
+
+F8. ¿Qué es un autovalor en un problema de contorno?
+
+F9. ¿Por qué se descartan soluciones singulares en \(r=0\)?
+
+F10. ¿Qué es un modo normal?
+
+### 10 preguntas medias
+
+M1. Clasifique como elíptica, parabólica o hiperbólica las ecuaciones de Laplace, calor y ondas en sus formas básicas.
+
+M2. Separe variables en
+\[
+u_{xx}+u_{yy}=0
+\]
+suponiendo \(u(x,y)=X(x)Y(y)\).
+
+M3. Escriba el laplaciano cilíndrico y plantee la separación \(u=R(r)\Theta(\theta)Z(z)\) para Laplace.
+
+M4. Explique cómo aparece la ecuación de Bessel en un problema circular.
+
+M5. En un disco de radio \(a\) con \(u(a,\theta)=0\), explique por qué los autovalores están relacionados con los ceros de \(J_n\).
+
+M6. Para una membrana circular con borde fijo, indique la forma general de un modo normal.
+
+M7. En una esfera con simetría axial, escriba la forma general de la solución regular de Laplace.
+
+M8. Explique el método \(u=u_p+u_h\) para la ecuación de Poisson.
+
+M9. En la ecuación del calor con fronteras aisladas, explique el significado de \(\partial u/\partial n=0\).
+
+M10. Escriba la estructura de los coeficientes de una expansión de Fourier-Bessel y explique el peso \(r\).
+
+### 5 preguntas difíciles
+
+D1. Resuelva formalmente la ecuación de Laplace en un cuarto de disco de radio \(a\), con \(u=0\) en los radios \(\theta=0\) y \(\theta=\pi/2\), y \(u(a,\theta)=f(\theta)\).
+
+D2. Plantee la solución de la ecuación de ondas en una membrana circular de radio \(a\) con borde fijo y desplazamiento inicial \(f(r,\theta)\), velocidad inicial nula.
+
+D3. Determine la forma de la solución interior de Laplace en una esfera de radio \(a\) si la temperatura superficial tiene simetría axial \(u(a,\theta)=f(\theta)\).
+
+D4. Resuelva el planteamiento general de Poisson en una esfera con fuente constante y condición \(u(a)=0\), suponiendo simetría radial.
+
+D5. Compare la forma radial de la solución de Laplace dentro de una esfera sólida y en una capa esférica \(a<r<b\).
+
+### 5 preguntas de desarrollo largo
+
+DL1. Desarrolle el método de separación de variables para la ecuación de Laplace en un cilindro.
+
+DL2. Explique la obtención de los modos normales de una membrana circular.
+
+DL3. Explique cómo se resuelve un problema de Laplace en una esfera con simetría axial.
+
+DL4. Describa el método para resolver Laplace en un cubo con una cara a temperatura \(f(x,y)\) y las demás a cero.
+
+DL5. Compare Laplace, Poisson, calor y ondas desde el punto de vista de la ecuación, las condiciones necesarias y el tipo de solución esperada.
+
+### 5 preguntas de relación entre conceptos
+
+R1. Relacione series de Fourier, series de Fourier-Bessel y series de Legendre.
+
+R2. Relacione la ecuación de ondas, la ecuación del calor y la ecuación de Helmholtz.
+
+R3. Explique la relación entre geometría del dominio, coordenadas y funciones especiales.
+
+R4. Explique cómo las condiciones de contorno generan autovalores.
+
+R5. Relacione clasificación de EDP, separación de variables y estrategia de examen.
+
+## 8. Respuestas modelo
+
+### Respuestas a las preguntas fáciles
+
+F1. Una ecuación en derivadas parciales es una ecuación donde la incógnita es una función de dos o más variables independientes y aparecen derivadas parciales de esa función. Su orden es el mayor orden de derivada parcial que interviene. Por ejemplo, \(u_t=ku_{xx}\) es de segundo orden porque aparece \(u_{xx}\).
+
+F2. En coordenadas cartesianas tridimensionales,
+\[
+\nabla^2u=u_{xx}+u_{yy}+u_{zz}.
+\]
+En dos dimensiones se elimina el término \(u_{zz}\).
+
+F3. Laplace es
+\[
+\nabla^2u=0,
+\]
+y describe situaciones sin fuente en la región. Poisson es
+\[
+\nabla^2u=f,
+\]
+y describe situaciones con fuente \(f\). Si \(f=0\), Poisson se reduce a Laplace.
+
+F4. Dirichlet fija \(u\) en la frontera. Neumann fija la derivada normal \(\partial u/\partial n\). Robin fija una combinación lineal de ambas:
+\[
+a u+b\frac{\partial u}{\partial n}=g.
+\]
+
+F5. La ecuación del calor es
+\[
+u_t=\alpha^2\nabla^2u.
+\]
+La ecuación de ondas es
+\[
+u_{tt}=v^2\nabla^2u.
+\]
+
+F6. Buscar una solución separada consiste en suponer que la solución puede escribirse como producto de funciones de una sola variable, por ejemplo
+\[
+u(x,y,t)=X(x)Y(y)T(t).
+\]
+Esto permite transformar la EDP en varias EDO.
+
+F7. Porque la variable angular representa el mismo punto al sumar \(2\pi\). La solución debe cumplir
+\[
+\Theta(\theta+2\pi)=\Theta(\theta).
+\]
+Esto obliga a que las soluciones sinusoidales tengan frecuencia entera \(n\).
+
+F8. Un autovalor es un valor del parámetro de separación para el que existe una solución no nula que satisface las condiciones de contorno. Por ejemplo, en \(X''+\lambda X=0\), \(X(0)=X(L)=0\), los autovalores son \(\lambda_n=(n\pi/L)^2\).
+
+F9. Porque una solución infinita en un punto del dominio no es aceptable en los problemas regulares del tema. En un disco sólido se descartan soluciones radiales singulares en \(r=0\); en una esfera sólida se descartan términos \(r^{-l-1}\).
+
+F10. Un modo normal es una solución separada asociada a un autovalor. Representa un patrón espacial fijo con una evolución temporal simple, normalmente exponencial en calor u oscilatoria en ondas.
+
+### Respuestas a las preguntas medias
+
+M1. La ecuación de Laplace \(u_{xx}+u_{yy}=0\) es elíptica. La ecuación del calor \(u_t=ku_{xx}\), tratada como EDP de segundo orden en \((x,t)\), es parabólica. La ecuación de ondas \(u_{tt}=c^2u_{xx}\) es hiperbólica. Esta clasificación se basa en la parte principal de segundo orden.
+
+M2. Si \(u=XY\), entonces
+\[
+u_{xx}=X''Y,\qquad u_{yy}=XY''.
+\]
+Sustituyendo:
+\[
+X''Y+XY''=0.
+\]
+Dividiendo por \(XY\):
+\[
+\frac{X''}{X}+\frac{Y''}{Y}=0.
+\]
+Como cada término depende de una variable distinta, se igualan a constantes opuestas:
+\[
+\frac{X''}{X}=-\lambda,\qquad \frac{Y''}{Y}=\lambda.
+\]
+Así se obtienen dos EDO:
+\[
+X''+\lambda X=0,\qquad Y''-\lambda Y=0.
+\]
+
+M3. En cilíndricas,
+\[
+\nabla^2u=
+\frac1r(r u_r)_r+\frac1{r^2}u_{\theta\theta}+u_{zz}.
+\]
+Con \(u=R\Theta Z\), al sustituir en \(\nabla^2u=0\) y dividir por \(R\Theta Z\), se obtiene una suma de términos dependientes de \(r\), \(\theta\) y \(z\). La parte angular conduce a \(\Theta''+n^2\Theta=0\), la parte axial a una ecuación de exponenciales o senos/cosenos, y la parte radial a una ecuación de tipo Bessel cuando aparece un parámetro radial.
+
+M4. Aparece al separar variables en polares o cilíndricas. Tras resolver la parte angular como \(\sin n\theta\) y \(\cos n\theta\), la parte radial toma la forma
+\[
+r^2R''+rR'+(k^2r^2-n^2)R=0.
+\]
+Esta es la ecuación de Bessel de orden \(n\), y su solución regular es \(J_n(kr)\).
+
+M5. Si el borde del disco está fijo o a valor cero, se impone \(R(a)=0\). Para la solución regular \(R(r)=J_n(kr)\), esto exige
+\[
+J_n(ka)=0.
+\]
+Por tanto, \(ka\) debe ser un cero de \(J_n\). Si \(k_{mn}\) es uno de esos ceros, entonces
+\[
+k=\frac{k_{mn}}{a}.
+\]
+
+M6. Un modo normal de una membrana circular con borde fijo tiene forma
+\[
+u_{mn}(r,\theta,t)=J_n(k_{mn}r/a)
+\left(A\cos n\theta+B\sin n\theta\right)
+\left(C\cos(k_{mn}vt/a)+D\sin(k_{mn}vt/a)\right),
+\]
+donde \(k_{mn}\) es un cero de \(J_n\).
+
+M7. Si hay simetría axial, no hay dependencia en \(\phi\). La solución interior regular de Laplace en una esfera es
+\[
+u(r,\theta)=\sum_{l=0}^{\infty} A_l r^l P_l(\cos\theta).
+\]
+Los coeficientes se determinan expandiendo el dato superficial \(f(\theta)=u(a,\theta)\) en polinomios de Legendre.
+
+M8. Para Poisson,
+\[
+\nabla^2u=f,
+\]
+se busca una solución particular \(u_p\) que cumpla \(\nabla^2u_p=f\). Luego se añade una solución homogénea \(u_h\) con \(\nabla^2u_h=0\). La suma
+\[
+u=u_p+u_h
+\]
+cumple Poisson, y \(u_h\) se ajusta para satisfacer la frontera.
+
+M9. La condición
+\[
+\frac{\partial u}{\partial n}=0
+\]
+significa que no hay flujo normal a través de la frontera. En calor, representa aislamiento térmico. Matemáticamente suele conducir a condiciones de coseno y puede conservar la media de la solución.
+
+M10. Para un problema radial en un disco,
+\[
+f(r)=\sum_m A_m J_n(k_{mn}r/a).
+\]
+Los coeficientes se calculan usando ortogonalidad con peso \(r\):
+\[
+A_m\propto \int_0^a f(r)J_n(k_{mn}r/a)\,r\,dr.
+\]
+El peso \(r\) procede del elemento de área polar \(r\,dr\,d\theta\).
+
+### Respuestas a las preguntas difíciles
+
+D1. En el cuarto de disco se trabaja en polares. Laplace es
+\[
+u_{rr}+\frac1r u_r+\frac1{r^2}u_{\theta\theta}=0.
+\]
+Se toma \(u=R(r)\Theta(\theta)\). Las condiciones \(u(r,0)=u(r,\pi/2)=0\) imponen
+\[
+\Theta(0)=\Theta(\pi/2)=0.
+\]
+Por tanto,
+\[
+\Theta_n(\theta)=\sin(2n\theta),\qquad n=1,2,\dots
+\]
+La ecuación radial de Laplace sin dependencia temporal da potencias:
+\[
+R_n(r)=r^{2n}
+\]
+si se exige regularidad en el origen. La solución formal es
+\[
+u(r,\theta)=\sum_{n=1}^{\infty} A_n r^{2n}\sin(2n\theta).
+\]
+La condición \(u(a,\theta)=f(\theta)\) da
+\[
+f(\theta)=\sum_{n=1}^{\infty} A_n a^{2n}\sin(2n\theta).
+\]
+Así,
+\[
+A_n a^{2n}=\frac{4}{\pi}\int_0^{\pi/2} f(\theta)\sin(2n\theta)\,d\theta.
+\]
+
+D2. En una membrana circular,
+\[
+u_{tt}=v^2\left(u_{rr}+\frac1r u_r+\frac1{r^2}u_{\theta\theta}\right),
+\qquad u(a,\theta,t)=0.
+\]
+Se separa \(u=R\Theta T\). La parte angular da \(\sin n\theta,\cos n\theta\). La parte radial da \(J_n(kr)\), y el borde fijo impone \(J_n(ka)=0\). Por tanto,
+\[
+k=\frac{k_{mn}}{a}.
+\]
+La solución con velocidad inicial nula es
+\[
+u(r,\theta,t)=\sum_{n=0}^{\infty}\sum_{m=1}^{\infty}
+J_n(k_{mn}r/a)
+\left(A_{mn}\cos n\theta+B_{mn}\sin n\theta\right)
+\cos(k_{mn}vt/a).
+\]
+Los coeficientes se obtienen expandiendo \(f(r,\theta)\) en la base de Fourier-Bessel.
+
+D3. Con simetría axial, la solución no depende de \(\phi\). Dentro de la esfera se descartan términos singulares. Por tanto,
+\[
+u(r,\theta)=\sum_{l=0}^{\infty} A_l r^l P_l(\cos\theta).
+\]
+En la superficie,
+\[
+f(\theta)=u(a,\theta)=\sum_{l=0}^{\infty} A_l a^l P_l(\cos\theta).
+\]
+Expandiendo \(f\) en serie de Legendre,
+\[
+f(\theta)=\sum_{l=0}^{\infty} c_l P_l(\cos\theta),
+\]
+se obtiene
+\[
+A_l=\frac{c_l}{a^l}.
+\]
+
+D4. Con simetría radial en una esfera,
+\[
+\nabla^2u=\frac1{r^2}(r^2u')'=C,
+\]
+donde \(C\) es la fuente constante. Entonces
+\[
+(r^2u')'=Cr^2.
+\]
+Integrando:
+\[
+r^2u'=\frac{C}{3}r^3+C_1.
+\]
+La regularidad en \(r=0\) exige \(C_1=0\), luego
+\[
+u'=\frac{C}{3}r.
+\]
+Integrando:
+\[
+u=\frac{C}{6}r^2+C_2.
+\]
+La condición \(u(a)=0\) da
+\[
+C_2=-\frac{C}{6}a^2.
+\]
+Por tanto,
+\[
+u(r)=\frac{C}{6}(r^2-a^2).
+\]
+Si la constante fuente lleva otro signo físico, el signo final cambia según la forma exacta de Poisson planteada.
+
+D5. En una esfera sólida, \(0\le r<a\), la regularidad en el origen obliga a descartar \(r^{-l-1}\). La forma radial permitida es
+\[
+R_l(r)=A_l r^l.
+\]
+En una capa esférica \(a<r<b\), el origen no pertenece al dominio. Por tanto, no hay razón matemática para eliminar \(r^{-l-1}\). La forma general es
+\[
+R_l(r)=A_l r^l+B_l r^{-l-1}.
+\]
+Las dos fronteras determinan \(A_l\) y \(B_l\).
+
+### Respuestas a las preguntas de desarrollo largo
+
+DL1. En un cilindro se usan coordenadas \((r,\theta,z)\). Para Laplace,
+\[
+\frac1r(r u_r)_r+\frac1{r^2}u_{\theta\theta}+u_{zz}=0.
+\]
+Se ensaya \(u=R\Theta Z\). Al dividir por \(R\Theta Z\), se separa primero la parte \(z\), que da exponenciales, senos o cosenos según las condiciones. La parte angular da
+\[
+\Theta''+n^2\Theta=0,
+\]
+y la periodicidad impone \(n\in\mathbb{Z}\). La parte radial da una ecuación de Bessel cuando aparece un parámetro \(k\):
+\[
+r^2R''+rR'+(k^2r^2-n^2)R=0.
+\]
+La regularidad en el eje conserva \(J_n(kr)\). Las condiciones en \(r=a\) generan los ceros de Bessel. La solución se escribe como suma de todos los modos admisibles, con coeficientes calculados por ortogonalidad.
+
+DL2. La membrana circular satisface la ecuación de ondas en polares:
+\[
+u_{tt}=v^2\left(u_{rr}+\frac1r u_r+\frac1{r^2}u_{\theta\theta}\right).
+\]
+Se toma \(u=R\Theta T\). La separación lleva a una ecuación angular trigonométrica, una radial de Bessel y una temporal oscilatoria. La periodicidad angular exige \(n\) entero. La condición de borde fijo \(u(a,\theta,t)=0\) obliga a \(J_n(ka)=0\). Los valores \(k_{mn}/a\) generan las frecuencias
+\[
+\omega_{mn}=v k_{mn}/a.
+\]
+Cada modo normal es un patrón espacial \(J_n(k_{mn}r/a)(\cos n\theta\ \text{o}\ \sin n\theta)\) multiplicado por una oscilación temporal. La solución general es una suma doble de modos ajustada a las condiciones iniciales.
+
+DL3. En una esfera con simetría axial, se usa \(u(r,\theta)\). La ecuación de Laplace separa en una parte radial y una angular. La parte angular da los polinomios de Legendre \(P_l(\cos\theta)\). La parte radial da \(r^l\) y \(r^{-l-1}\). Dentro de una esfera sólida se elimina \(r^{-l-1}\) por singularidad en el origen. Por eso:
+\[
+u(r,\theta)=\sum_{l=0}^{\infty}A_l r^lP_l(\cos\theta).
+\]
+El dato en la superficie \(r=a\) se desarrolla en serie de Legendre. Si
+\[
+f(\theta)=\sum_l c_lP_l(\cos\theta),
+\]
+entonces \(A_l=c_l/a^l\). En una capa esférica se mantienen las dos potencias radiales y se usan las dos fronteras.
+
+DL4. En un cubo con \(0<x<L\), \(0<y<L\), \(0<z<L\), si una cara tiene temperatura \(f(x,y)\) y las demás están a cero, se separa
+\[
+u=X(x)Y(y)Z(z).
+\]
+Las condiciones homogéneas en las caras laterales suelen llevar a
+\[
+X_m=\sin(m\pi x/L),\qquad Y_n=\sin(n\pi y/L).
+\]
+La tercera variable satisface una ecuación hiperbólica con parámetro combinado:
+\[
+Z''-\left[\left(\frac{m\pi}{L}\right)^2+\left(\frac{n\pi}{L}\right)^2\right]Z=0.
+\]
+Se escoge la combinación de \(Z\) que se anule en la cara opuesta y se ajuste en la cara con \(f\). El dato se expande como doble serie:
+\[
+f(x,y)=\sum_{m,n}A_{mn}\sin(m\pi x/L)\sin(n\pi y/L).
+\]
+La solución se obtiene sumando los productos correspondientes.
+
+DL5. Laplace, Poisson, calor y ondas comparten el laplaciano, pero representan estructuras distintas. Laplace, \(\nabla^2u=0\), es estacionaria y sin fuente; requiere condiciones de contorno. Poisson, \(\nabla^2u=f\), es estacionaria con fuente; requiere una solución particular más una homogénea. Calor, \(u_t=\alpha^2\nabla^2u\), es evolutiva y disipativa; necesita condición inicial y condiciones de contorno. Ondas, \(u_{tt}=v^2\nabla^2u\), es evolutiva y oscilatoria; necesita desplazamiento inicial y velocidad inicial, además de contorno. En separación de variables, calor genera factores temporales exponenciales; ondas genera factores temporales sinusoidales. Las ecuaciones espaciales asociadas conducen a autovalores y autofunciones.
+
+### Respuestas a las preguntas de relación entre conceptos
+
+R1. Las series de Fourier aparecen en intervalos y rectángulos; las de Fourier-Bessel en discos y cilindros; las de Legendre en esferas con simetría axial. Todas son expansiones en familias ortogonales que proceden de problemas de autovalores. Cambia la geometría y cambia la familia ortogonal.
+
+R2. La ecuación del calor y la de ondas contienen el laplaciano espacial. Al separar variables, ambas producen una ecuación espacial de tipo Helmholtz. La diferencia está en la parte temporal: en calor, los modos decaen; en ondas, los modos oscilan.
+
+R3. La geometría decide las coordenadas. Rectángulos y cubos usan cartesianas y Fourier. Discos y cilindros usan polares/cilíndricas y Bessel. Esferas usan esféricas y Legendre o armónicos esféricos. Elegir las coordenadas adecuadas simplifica la frontera y permite separar.
+
+R4. Las condiciones de contorno restringen los parámetros de separación. En un intervalo con extremos fijos aparecen \(n\pi/L\). En un disco con borde fijo aparecen ceros de \(J_n\). En una esfera, la regularidad y la frontera seleccionan potencias y coeficientes. Así se pasa de infinitas soluciones formales a una familia discreta de modos.
+
+R5. La clasificación orienta la naturaleza del problema: elíptico para estados estacionarios, parabólico para difusión, hiperbólico para ondas. La separación de variables proporciona el método cuando la geometría y las condiciones son compatibles. En examen, primero se identifica la ecuación y el dominio; después se separa, se imponen condiciones y se escribe la expansión.
+
+## 9. Resumen final de repaso
+
+Ideas principales:
+
+- Las EDP multidimensionales del tema se organizan alrededor del laplaciano.
+- Laplace: \(\nabla^2u=0\), estado estacionario sin fuentes.
+- Poisson: \(\nabla^2u=f\), estado estacionario con fuentes.
+- Calor: \(u_t=\alpha^2\nabla^2u\), evolución disipativa.
+- Ondas: \(u_{tt}=v^2\nabla^2u\), evolución oscilatoria.
+- Helmholtz: \(\nabla^2F+k^2F=0\), parte espacial de modos.
+
+Conceptos imprescindibles:
+
+- Separación de variables.
+- Condiciones de Dirichlet, Neumann y Robin.
+- Autovalores y autofunciones.
+- Ortogonalidad.
+- Series de Fourier.
+- Funciones de Bessel y sus ceros.
+- Polinomios de Legendre y armónicos esféricos.
+- Regularidad en el origen.
+- Principio de superposición para ecuaciones lineales homogéneas.
+
+Relaciones clave:
+
+- Rectángulo \(\rightarrow\) coordenadas cartesianas \(\rightarrow\) senos/cosenos.
+- Disco o cilindro \(\rightarrow\) polares/cilíndricas \(\rightarrow\) Bessel.
+- Esfera \(\rightarrow\) esféricas \(\rightarrow\) Legendre/armónicos esféricos.
+- Condición de contorno homogénea \(\rightarrow\) autovalores.
+- Dato inicial o de frontera \(\rightarrow\) coeficientes de una serie ortogonal.
+- Poisson \(\rightarrow\) particular \(+\) Laplace.
+
+Errores que evitar:
+
+- Usar el laplaciano cartesiano en coordenadas curvas.
+- Olvidar el peso \(r\) en integrales de Bessel.
+- Ignorar la periodicidad angular.
+- No descartar singularidades en el origen.
+- Confundir \(J_n\) con \(J_n'\) en las condiciones de contorno.
+- Aplicar superposición a ecuaciones no lineales.
+- Resolver Poisson como si fuese Laplace.
+- Omitir el modo constante en problemas de Neumann.
+
+## 10. Checklist de dominio
+
+- Si no puedes escribir el laplaciano en cartesianas y polares, falta repasar operadores diferenciales.
+
+- Si no puedes distinguir Laplace de Poisson, falta repasar el papel de las fuentes.
+
+- Si confundes calor con ondas, revisar la diferencia entre derivada temporal primera y segunda.
+
+- Si no puedes explicar qué es una condición de Dirichlet, Neumann y Robin, falta repasar condiciones de contorno.
+
+- Si no puedes separar \(u(x,y)=X(x)Y(y)\) en Laplace, falta repasar separación de variables básica.
+
+- Si no puedes justificar por qué \(n\) es entero en \(\Theta(\theta)\), falta repasar periodicidad angular.
+
+- Si no puedes explicar por qué aparece \(J_n\) en un disco, falta repasar la ecuación radial en polares.
+
+- Si confundes los ceros de \(J_n\) con los de \(J_n'\), revisar cómo se traduce cada condición de contorno.
+
+- Si no puedes explicar por qué los coeficientes de Bessel llevan peso \(r\), falta repasar el elemento de área en polares.
+
+- Si no puedes escribir la solución regular de Laplace dentro de una esfera con simetría axial, falta repasar Legendre.
+
+- Si incluyes \(r^{-l-1}\) dentro de una esfera sólida sin justificarlo, revisar regularidad en el origen.
+
+- Si eliminas \(r^{-l-1}\) en una capa esférica sin que el origen pertenezca al dominio, revisar dominio y singularidades.
+
+- Si resuelves Poisson sin buscar solución particular, falta repasar ecuaciones no homogéneas.
+
+- Si no puedes decir qué familia ortogonal corresponde a rectángulo, disco y esfera, falta repasar la relación geometría-coordenadas.
+
+- Si puedes plantear la separación, obtener autovalores, escribir la serie y explicar cómo se calculan los coeficientes, el capítulo está suficientemente asentado.
+
+- Si puedes reconocer en un enunciado UNED si se pide clasificación, separación, modos, equilibrio o desarrollo en funciones especiales, el tema está preparado para examen.

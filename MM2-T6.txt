@@ -1,0 +1,1848 @@
+# Guía de estudio — Boas / Métodos Matemáticos II
+
+Capítulo trabajado: MM2 T6 — Series de Laurent y residuos
+
+## 1. Prerrequisitos mínimos
+
+1. Función compleja analítica
+
+Una función compleja \(f(z)\) es analítica en una región si es derivable complejamente en todos los puntos de esa región. En variable compleja esta condición es muy fuerte: cuando una función es analítica en una región, admite derivadas de todos los órdenes y puede desarrollarse en serie de Taylor alrededor de puntos interiores, hasta alcanzar la singularidad más próxima.
+
+Es necesario conocer esta noción porque las series de Laurent aparecen precisamente cuando la función no es analítica en un punto aislado, pero sí lo es alrededor de él. Por ejemplo, \(f(z)=1/(1+z^2)\) es analítica cerca de \(0\), pero tiene singularidades en \(z=i\) y \(z=-i\); por eso su desarrollo en potencias centrado en \(0\) no puede tener radio mayor que \(1\).
+
+2. Singularidad aislada
+
+Un punto \(z_0\) es una singularidad aislada de \(f\) si \(f\) no es analítica en \(z_0\), pero sí lo es en algún disco perforado \(0<|z-z_0|<R\). La palabra “aislada” es esencial: permite rodear el punto con una curva cerrada que no encierre otras singularidades.
+
+Este concepto es necesario porque el desarrollo de Laurent y el residuo se definen localmente alrededor de una singularidad aislada. Por ejemplo, \(f(z)=1/z\) tiene una singularidad aislada en \(z=0\), pues es analítica en cualquier disco perforado \(0<|z|<R\).
+
+3. Serie de Taylor
+
+Una serie de Taylor alrededor de \(z_0\) tiene la forma
+\[
+f(z)=a_0+a_1(z-z_0)+a_2(z-z_0)^2+\cdots .
+\]
+Solo contiene potencias no negativas de \(z-z_0\).
+
+Es necesaria porque la serie de Laurent generaliza la serie de Taylor añadiendo potencias negativas. Si no hay potencias negativas, el desarrollo de Laurent se reduce a Taylor y la función es regular en el punto. Por ejemplo,
+\[
+e^z=1+z+\frac{z^2}{2!}+\cdots
+\]
+es un desarrollo de Taylor en \(0\).
+
+4. Series geométricas
+
+La identidad básica
+\[
+\frac{1}{1-w}=1+w+w^2+\cdots,\qquad |w|<1,
+\]
+y sus variantes son la herramienta práctica más usada para obtener desarrollos de Laurent sin calcular integrales de coeficientes.
+
+Es necesaria porque muchos ejercicios de examen piden desarrollar funciones racionales en distintos dominios. Por ejemplo,
+\[
+\frac{1}{1+z}=1-z+z^2-z^3+\cdots,\qquad |z|<1,
+\]
+mientras que para \(|z|>1\),
+\[
+\frac{1}{1+z}=\frac{1}{z}\frac{1}{1+1/z}
+=\frac{1}{z}\left(1-\frac1z+\frac1{z^2}-\cdots\right).
+\]
+
+5. Integrales de contorno
+
+Una integral de contorno \(\int_C f(z)\,dz\) integra una función compleja a lo largo de una curva orientada. Si \(f\) es analítica en una región simplemente conexa que contiene a \(C\) y a su interior, la integral sobre una curva cerrada es cero.
+
+Es necesario porque el teorema de los residuos permite calcular integrales cerradas cuando hay singularidades dentro del contorno. El caso elemental que conviene dominar es
+\[
+\oint_C \frac{dz}{z-z_0}=2\pi i
+\]
+si \(C\) rodea una vez a \(z_0\) en sentido positivo.
+
+6. Fórmula integral de Cauchy
+
+Si \(f\) es analítica dentro y sobre una curva cerrada \(C\), entonces
+\[
+f(a)=\frac{1}{2\pi i}\oint_C \frac{f(z)}{z-a}\,dz,
+\]
+para \(a\) interior a \(C\).
+
+Es necesaria porque el teorema de los residuos contiene esta fórmula como caso particular: el integrando tiene un polo simple en \(a\), y el residuo es \(f(a)\).
+
+7. Polos y ceros de funciones
+
+Un cero de orden \(m\) de \(g\) en \(z_0\) significa que
+\[
+g(z)=(z-z_0)^m h(z),\qquad h(z_0)\ne0.
+\]
+Un polo aparece cuando una función tiene un factor negativo de este tipo.
+
+Es necesario porque el orden de un polo se reconoce comparando los ceros del numerador y del denominador. Por ejemplo,
+\[
+\frac{\sin^2 z}{z^3}
+\]
+tiene en \(z=0\) un polo simple, porque \(\sin z\sim z\), luego \(\sin^2 z\sim z^2\), y queda un factor \(1/z\).
+
+8. Descomposición en fracciones simples
+
+Para funciones racionales, descomponer en fracciones simples permite convertir cada término en una serie geométrica o calcular residuos directamente.
+
+Es necesaria porque muchas series de Laurent en torno al origen se obtienen escribiendo términos del tipo \(1/(z-a)\) en potencias de \(z\) si \(|z|<|a|\), o en potencias de \(1/z\) si \(|z|>|a|\).
+
+9. Exponencial, seno y coseno complejos
+
+Las funciones \(e^z\), \(\sin z\) y \(\cos z\) se desarrollan mediante sus series habituales:
+\[
+e^z=\sum_{n=0}^\infty \frac{z^n}{n!},\quad
+\sin z=\sum_{n=0}^\infty (-1)^n\frac{z^{2n+1}}{(2n+1)!},\quad
+\cos z=\sum_{n=0}^\infty (-1)^n\frac{z^{2n}}{(2n)!}.
+\]
+
+Son necesarias porque permiten clasificar singularidades como \(e^{1/z}\), \(\sin z/z^4\), \((1-\cos z)/z^2\), etc. Por ejemplo,
+\[
+e^{1/z}=1+\frac1z+\frac{1}{2!z^2}+\cdots
+\]
+tiene infinitas potencias negativas.
+
+10. Orientación positiva
+
+Una curva cerrada simple se recorre positivamente cuando deja su interior a la izquierda; en el plano complejo esto suele ser sentido antihorario.
+
+Es necesario porque el teorema de los residuos usa el signo \(2\pi i\) para orientación positiva. Si el contorno se recorre en sentido horario, aparece el signo contrario.
+
+
+## 2. Idea central del capítulo
+
+El capítulo estudia qué ocurre cuando una función compleja deja de ser analítica en un punto aislado. En los temas anteriores de variable compleja, la herramienta natural era la serie de Taylor: si una función es analítica, se puede representar localmente mediante potencias no negativas de \(z-z_0\). Pero esta representación no sirve en un punto singular. El objetivo de Laurent es conservar una representación por series permitiendo también potencias negativas.
+
+La idea esencial es que, alrededor de una singularidad aislada, la función puede descomponerse en una parte regular, parecida a una serie de Taylor, y una parte principal, formada por potencias negativas. Esa parte principal mide la naturaleza de la singularidad. Si no hay parte principal, el punto era regular. Si hay un número finito de potencias negativas, la singularidad es un polo. Si hay infinitas potencias negativas, la singularidad es esencial.
+
+Dentro de la parte principal, el término más importante para integrar no es necesariamente el más singular, sino el coeficiente de \((z-z_0)^{-1}\). Ese coeficiente se llama residuo. La razón es directa: al integrar término a término alrededor de una curva cerrada que rodea \(z_0\), todas las potencias de \((z-z_0)\) tienen integral cero salvo \((z-z_0)^{-1}\). Por eso el residuo es lo que “queda” de la singularidad al integrar.
+
+El teorema de los residuos convierte esta observación local en un método global: una integral compleja sobre una curva cerrada se calcula sumando los residuos de las singularidades interiores. Es uno de los resultados más operativos de la variable compleja. Permite resolver integrales de contorno sin parametrizar la curva y también calcular algunas integrales reales mediante contornos adecuados.
+
+En Métodos Matemáticos II, este capítulo ocupa un lugar central porque conecta series, analiticidad, singularidades e integración compleja. En examen suelen aparecer cuatro tareas: desarrollar una función en serie de Laurent en distintos dominios, clasificar singularidades, calcular residuos y aplicar el teorema de los residuos a integrales complejas o reales.
+
+
+## 3. Desarrollo completo del capítulo
+
+### 3.1. De Taylor a Laurent
+
+Cuando una función \(f\) es analítica en un disco centrado en \(z_0\), puede desarrollarse como
+\[
+f(z)=a_0+a_1(z-z_0)+a_2(z-z_0)^2+\cdots .
+\]
+Esta representación solo usa potencias no negativas. La distancia al primer punto singular limita el radio de convergencia.
+
+Pero si \(z_0\) es una singularidad aislada, \(f\) no es analítica en \(z_0\), aunque puede serlo en una corona
+\[
+r<|z-z_0|<R.
+\]
+En esa corona puede aparecer un desarrollo más general:
+\[
+f(z)=a_0+a_1(z-z_0)+a_2(z-z_0)^2+\cdots
++\frac{b_1}{z-z_0}+\frac{b_2}{(z-z_0)^2}+\cdots .
+\]
+Esta es la serie de Laurent. La primera parte, con los coeficientes \(a_n\), se comporta como una serie de Taylor. La segunda, con los coeficientes \(b_n\), es la parte principal.
+
+La diferencia conceptual es importante. Taylor describe comportamiento regular. Laurent describe comportamiento regular más la contribución singular. Por eso Laurent no sustituye a Taylor, sino que lo amplía.
+
+Ejemplo:
+\[
+\frac{e^z}{z^3}
+=
+\frac{1}{z^3}+\frac{1}{z^2}+\frac{1}{2z}+\frac{1}{6}+\cdots .
+\]
+La función no es analítica en \(0\), pero el desarrollo de Laurent muestra exactamente cómo falla: aparecen tres potencias negativas. La parte principal es
+\[
+\frac{1}{z^3}+\frac{1}{z^2}+\frac{1}{2z}.
+\]
+
+### 3.2. Regiones de convergencia: coronas
+
+Una serie de Laurent no converge normalmente en un disco completo, sino en una corona. Esto se debe a que combina dos tipos de series: una serie de potencias positivas, que converge dentro de cierto círculo, y una serie de potencias negativas, que converge fuera de cierto círculo.
+
+Por ejemplo, si aparece una parte positiva que converge para \(|z|<2\) y una parte negativa que converge para \(|z|>1\), el desarrollo completo converge en
+\[
+1<|z|<2.
+\]
+La región natural de una serie de Laurent es, por tanto, una corona.
+
+Esto explica por qué una misma función puede tener varios desarrollos de Laurent alrededor del mismo punto. Si hay varias singularidades a distintas distancias, las coronas separadas por esas singularidades dan desarrollos distintos.
+
+Ejemplo orientativo:
+\[
+f(z)=\frac{12}{z(2-z)(1+z)}
+\]
+tiene singularidades en \(z=0\), \(z=2\) y \(z=-1\). Al desarrollar alrededor de \(0\), las otras singularidades están a distancias \(1\) y \(2\). Por tanto aparecen tres regiones naturales:
+\[
+0<|z|<1,\qquad 1<|z|<2,\qquad |z|>2.
+\]
+La función es la misma, pero la serie de Laurent cambia según el dominio.
+
+La consecuencia práctica para examen es clara: no basta con “sacar una serie”; hay que indicar en qué dominio converge. Si el enunciado pide dos dominios, por ejemplo \(0<|z|<1\) y \(|z|>1\), el mismo factor debe expandirse de forma diferente en cada uno.
+
+### 3.3. Cómo obtener series de Laurent en la práctica
+
+Aunque existen fórmulas integrales para los coeficientes de Laurent, en problemas elementales casi nunca son el método más corto. Lo habitual es transformar la función usando álgebra y series geométricas.
+
+El patrón más frecuente es:
+\[
+\frac{1}{z-a}.
+\]
+Si se trabaja en \(|z|<|a|\), se escribe
+\[
+\frac{1}{z-a}=-\frac1a\frac{1}{1-z/a}
+=-\frac1a\sum_{n=0}^{\infty}\left(\frac za\right)^n.
+\]
+Si se trabaja en \(|z|>|a|\), se escribe
+\[
+\frac{1}{z-a}=\frac1z\frac{1}{1-a/z}
+=\frac1z\sum_{n=0}^{\infty}\left(\frac az\right)^n.
+\]
+
+Este cambio es una de las claves del tema. El dominio decide la forma de la expansión. El error típico es usar una serie geométrica correcta algebraicamente, pero válida en el dominio equivocado.
+
+Ejemplo:
+\[
+\frac{1}{1+z}
+=
+1-z+z^2-z^3+\cdots,\qquad |z|<1.
+\]
+Pero si \(|z|>1\),
+\[
+\frac{1}{1+z}
+=
+\frac1z\frac{1}{1+1/z}
+=
+\frac1z-\frac1{z^2}+\frac1{z^3}-\cdots .
+\]
+Ambas expresiones representan la misma función, pero no en la misma región.
+
+### 3.4. Clasificación de singularidades mediante Laurent
+
+El desarrollo de Laurent cerca de \(z_0\) permite clasificar el punto.
+
+Si no hay términos negativos, \(z_0\) es un punto regular. La función puede definirse o ya está definida analíticamente en el punto.
+
+Si hay un número finito de términos negativos y el más negativo es
+\[
+\frac{b_n}{(z-z_0)^n},\qquad b_n\ne0,
+\]
+entonces \(z_0\) es un polo de orden \(n\). Si \(n=1\), es un polo simple.
+
+Si hay infinitos términos negativos, \(z_0\) es una singularidad esencial.
+
+Ejemplos:
+\[
+e^z=1+z+\frac{z^2}{2!}+\cdots
+\]
+no tiene potencias negativas, luego \(0\) es regular.
+
+\[
+\frac{e^z}{z^3}
+=
+\frac1{z^3}+\frac1{z^2}+\frac1{2z}+\cdots
+\]
+tiene un polo de orden \(3\) en \(0\).
+
+\[
+e^{1/z}
+=
+1+\frac1z+\frac1{2!z^2}+\frac1{3!z^3}+\cdots
+\]
+tiene una singularidad esencial en \(0\).
+
+Esta clasificación no es solo terminológica. Determina qué método conviene usar para calcular residuos y qué comportamiento tiene la función cerca del punto.
+
+### 3.5. El residuo
+
+El residuo de \(f\) en \(z_0\) es el coeficiente de
+\[
+\frac{1}{z-z_0}
+\]
+en la serie de Laurent de \(f\) alrededor de \(z_0\). Se denota
+\[
+\operatorname{Res}(f,z_0).
+\]
+
+Si
+\[
+f(z)=\cdots+\frac{b_2}{(z-z_0)^2}+\frac{b_1}{z-z_0}+a_0+a_1(z-z_0)+\cdots,
+\]
+entonces
+\[
+\operatorname{Res}(f,z_0)=b_1.
+\]
+
+El residuo no mide todo el comportamiento singular, sino solo la parte que contribuye a la integral cerrada. Por ejemplo,
+\[
+\frac1{z^2}
+\]
+tiene un polo de orden \(2\) en \(0\), pero residuo cero, porque no hay término \(1/z\).
+
+Ejemplo:
+\[
+\frac{e^z}{z^3}
+=
+\frac1{z^3}+\frac1{z^2}+\frac1{2z}+\frac16+\cdots.
+\]
+Por tanto,
+\[
+\operatorname{Res}\left(\frac{e^z}{z^3},0\right)=\frac12.
+\]
+
+### 3.6. Por qué solo importa el residuo al integrar
+
+Si \(C\) es una curva cerrada que rodea \(z_0\), el cálculo básico es
+\[
+\oint_C (z-z_0)^n\,dz=0
+\]
+para todo entero \(n\ne -1\), mientras que
+\[
+\oint_C \frac{dz}{z-z_0}=2\pi i.
+\]
+Al integrar una serie de Laurent término a término, todos los términos se anulan salvo el término \(b_1/(z-z_0)\). Por tanto,
+\[
+\oint_C f(z)\,dz=2\pi i\, b_1.
+\]
+Como \(b_1\) es el residuo,
+\[
+\oint_C f(z)\,dz=2\pi i\,\operatorname{Res}(f,z_0),
+\]
+si \(z_0\) es la única singularidad interior.
+
+Esta es la idea nuclear del capítulo. El residuo es el coeficiente que sobrevive al proceso de integración cerrada.
+
+### 3.7. Teorema de los residuos
+
+Si \(f\) es analítica sobre una curva cerrada simple \(C\) y en su interior salvo en un número finito de singularidades aisladas \(z_1,\ldots,z_m\), y \(C\) está orientada positivamente, entonces
+\[
+\oint_C f(z)\,dz
+=
+2\pi i\sum_{k=1}^m \operatorname{Res}(f,z_k).
+\]
+
+La importancia del teorema está en que evita parametrizar el contorno. La integral depende solo de las singularidades encerradas y de sus residuos.
+
+Ejemplo:
+\[
+\oint_C \frac{e^z}{z-1}\,dz
+\]
+si \(C\) rodea a \(1\) positivamente y no encierra otras singularidades. Como
+\[
+\frac{e^z}{z-1}
+=
+\frac{e\,e^{z-1}}{z-1}
+=
+\frac{e}{z-1}+e+\cdots,
+\]
+el residuo en \(1\) es \(e\), y la integral vale
+\[
+2\pi i\,e.
+\]
+
+Si el contorno no encierra la singularidad, la contribución de esa singularidad no aparece. Si el contorno se recorre en sentido horario, el resultado cambia de signo.
+
+### 3.8. Cálculo de residuos por serie de Laurent
+
+El método más directo es desarrollar la función en Laurent y leer el coeficiente de \((z-z_0)^{-1}\). Es especialmente útil si la función contiene exponenciales, senos, cosenos o series ya conocidas.
+
+Ejemplo:
+\[
+\operatorname{Res}\left(\frac{\sin z}{z^4},0\right).
+\]
+Como
+\[
+\sin z=z-\frac{z^3}{3!}+\frac{z^5}{5!}-\cdots,
+\]
+entonces
+\[
+\frac{\sin z}{z^4}
+=
+\frac1{z^3}-\frac{1}{6z}+\frac{z}{120}-\cdots .
+\]
+El residuo es
+\[
+-\frac16.
+\]
+
+Este método obliga a desarrollar alrededor del punto correcto. Para un residuo en \(z=1\), no sirve directamente la serie de \(e^z\) alrededor de \(0\); hay que escribir \(e^z=e\,e^{z-1}\) y desarrollar en potencias de \(z-1\).
+
+### 3.9. Residuos en polos simples
+
+Si \(z_0\) es un polo simple de \(f\), entonces
+\[
+\operatorname{Res}(f,z_0)=\lim_{z\to z_0}(z-z_0)f(z).
+\]
+
+Este método es el más rápido cuando la singularidad procede de un factor lineal simple.
+
+Ejemplo:
+\[
+f(z)=\frac{\cos z}{z}.
+\]
+En \(z=0\),
+\[
+\operatorname{Res}(f,0)=\lim_{z\to0}z\frac{\cos z}{z}=\cos0=1.
+\]
+
+Otro ejemplo:
+\[
+f(z)=\frac{z}{(2z+1)(5-z)}.
+\]
+En \(z=-1/2\), el factor que se anula es \(2z+1=2(z+1/2)\). Hay que multiplicar por \(z+1/2\), no por \(2z+1\), si se usa directamente la fórmula del polo simple:
+\[
+\operatorname{Res}(f,-1/2)
+=
+\lim_{z\to-1/2}(z+1/2)\frac{z}{(2z+1)(5-z)}
+=
+-\frac1{22}.
+\]
+Este ejemplo fija un error frecuente: olvidar constantes multiplicativas en factores lineales.
+
+### 3.10. Cociente \(g/h\) con cero simple del denominador
+
+Si
+\[
+f(z)=\frac{g(z)}{h(z)},
+\]
+donde \(g\) y \(h\) son analíticas, \(g(z_0)\ne0\), \(h(z_0)=0\) y \(h'(z_0)\ne0\), entonces \(z_0\) es un polo simple y
+\[
+\operatorname{Res}(f,z_0)=\frac{g(z_0)}{h'(z_0)}.
+\]
+
+Ejemplo:
+\[
+f(z)=\frac{\sin z}{1-z^4}.
+\]
+En \(z=i\), el denominador se anula y
+\[
+h'(z)=-4z^3.
+\]
+Por tanto,
+\[
+\operatorname{Res}(f,i)
+=
+\frac{\sin i}{-4i^3}.
+\]
+Usando \(\sin i=i\sinh1\) e \(i^3=-i\),
+\[
+\operatorname{Res}(f,i)=\frac{\sinh1}{4}.
+\]
+
+Este método es especialmente útil para funciones racionales o cocientes con trigonométricas y exponenciales en el numerador.
+
+### 3.11. Residuos en polos múltiples
+
+Si \(f\) tiene un polo de orden \(n\) en \(z_0\), entonces
+\[
+\operatorname{Res}(f,z_0)
+=
+\frac{1}{(n-1)!}
+\lim_{z\to z_0}
+\frac{d^{\,n-1}}{dz^{\,n-1}}
+\left[(z-z_0)^n f(z)\right].
+\]
+
+La idea es eliminar el polo multiplicando por \((z-z_0)^n\). Luego se deriva lo justo para extraer el coeficiente que antes acompañaba a \((z-z_0)^{-1}\).
+
+Ejemplo:
+\[
+f(z)=\frac{z\sin z}{(z-\pi)^3}.
+\]
+Tomando \(n=3\),
+\[
+\operatorname{Res}(f,\pi)
+=
+\frac1{2!}\left.\frac{d^2}{dz^2}(z\sin z)\right|_{z=\pi}.
+\]
+Como
+\[
+\frac{d}{dz}(z\sin z)=\sin z+z\cos z,
+\]
+\[
+\frac{d^2}{dz^2}(z\sin z)=2\cos z-z\sin z,
+\]
+resulta
+\[
+\operatorname{Res}(f,\pi)=\frac12(2\cos\pi-\pi\sin\pi)=-1.
+\]
+
+En examen conviene no usar esta fórmula si el polo es simple: el límite del polo simple suele ser más corto.
+
+### 3.12. Integrales de contorno por residuos
+
+Para calcular
+\[
+\oint_C f(z)\,dz
+\]
+mediante residuos hay que seguir un protocolo:
+
+Primero se localizan las singularidades de \(f\). Después se determina cuáles quedan dentro del contorno. Luego se calcula el residuo en cada una de las interiores. Finalmente se suma y se multiplica por \(2\pi i\), ajustando el signo si la orientación no es antihoraria.
+
+Ejemplo:
+\[
+\oint_{|z|=2}\frac{dz}{z^2-1}.
+\]
+Las singularidades son \(z=1\) y \(z=-1\), ambas dentro de \(|z|=2\). Como
+\[
+\frac1{z^2-1}=\frac1{(z-1)(z+1)},
+\]
+los residuos son
+\[
+\operatorname{Res}(f,1)=\frac12,\qquad
+\operatorname{Res}(f,-1)=-\frac12.
+\]
+La suma es cero, luego la integral vale \(0\). Esto muestra que tener singularidades dentro no garantiza una integral no nula; lo que importa es la suma de residuos.
+
+### 3.13. Integrales trigonométricas reales
+
+El capítulo muestra que algunas integrales reales entre \(0\) y \(2\pi\) se transforman en integrales sobre la circunferencia unidad usando
+\[
+z=e^{i\theta},\qquad d\theta=\frac{dz}{iz},
+\]
+\[
+\cos\theta=\frac12\left(z+\frac1z\right),\qquad
+\sin\theta=\frac{1}{2i}\left(z-\frac1z\right).
+\]
+Así una integral trigonométrica racional se convierte en una integral racional en \(z\) sobre \(|z|=1\).
+
+Ejemplo:
+\[
+I=\int_0^{2\pi}\frac{d\theta}{5+4\cos\theta}.
+\]
+Con el cambio \(z=e^{i\theta}\),
+\[
+I=\frac1i\oint_{|z|=1}\frac{dz}{(2z+1)(z+2)}.
+\]
+Los polos están en \(z=-1/2\) y \(z=-2\). Solo \(z=-1/2\) queda dentro de la circunferencia unidad. Su residuo en la función racional interior es \(1/3\). Por tanto,
+\[
+I=\frac1i\,2\pi i\,\frac13=\frac{2\pi}{3}.
+\]
+
+Este procedimiento exige controlar qué polos están dentro de \(|z|=1\). Ese paso no es decorativo: decide el resultado.
+
+### 3.14. Integrales reales impropias
+
+Para integrales sobre \((-\infty,\infty)\), se suele cerrar el contorno con una semicircunferencia en el semiplano superior o inferior. El caso básico es
+\[
+\int_{-\infty}^{\infty}\frac{dx}{1+x^2}.
+\]
+Se considera
+\[
+\oint_C \frac{dz}{1+z^2},
+\]
+donde \(C\) es el semicírculo superior de radio \(R\) más el segmento \([-R,R]\). Dentro queda el polo \(z=i\), cuyo residuo es \(1/(2i)\). La integral cerrada vale \(\pi\). La contribución del arco tiende a cero cuando \(R\to\infty\), y queda
+\[
+\int_{-\infty}^{\infty}\frac{dx}{1+x^2}=\pi.
+\]
+
+Para integrales con \(\cos x\) o \(\sin x\), se introduce \(e^{iz}\). Por ejemplo, para
+\[
+\int_{0}^{\infty}\frac{\cos x}{1+x^2}\,dx
+\]
+se estudia la parte real de
+\[
+\int_{-\infty}^{\infty}\frac{e^{ix}}{1+x^2}\,dx.
+\]
+Al cerrar en el semiplano superior, \(e^{iz}=e^{ix-y}\) ayuda a que el arco se anule. El residuo en \(z=i\) da \(\pi/e\) para la integral sobre toda la recta, y por paridad:
+\[
+\int_0^\infty\frac{\cos x}{1+x^2}\,dx=\frac{\pi}{2e}.
+\]
+
+### 3.15. Valor principal de Cauchy
+
+Cuando una integral real tiene una singularidad sobre el eje de integración, puede no existir como integral impropia ordinaria, pero sí existir como valor principal.
+
+El valor principal de Cauchy elimina de forma simétrica el entorno de la singularidad. Por ejemplo,
+\[
+\mathrm{PV}\int_a^b \frac{dx}{x-c}
+\]
+se interpreta como
+\[
+\lim_{\varepsilon\to0^+}
+\left(
+\int_a^{c-\varepsilon}\frac{dx}{x-c}
++
+\int_{c+\varepsilon}^b\frac{dx}{x-c}
+\right).
+\]
+Las divergencias logarítmicas opuestas pueden cancelarse.
+
+En contornos con polos sobre el eje real, hay que rodear los polos mediante pequeños semicírculos y distinguir cuidadosamente entre integral ordinaria y valor principal. En examen, si aparece “V.P.”, hay que escribirlo y justificarlo.
+
+### 3.16. Conexión con ramas y cortes
+
+Cuando la función incluye potencias fraccionarias o logaritmos, como \(z^{p-1}\) o \(\log z\), no basta con localizar polos. Hay que fijar una rama y un corte para que la función sea monovaluada en la región de integración.
+
+Por ejemplo, para estudiar integrales de tipo
+\[
+\int_0^\infty \frac{x^{p-1}}{1+x}\,dx,\qquad 0<p<1,
+\]
+se usa una rama de \(z^{p-1}\) y un contorno adaptado al corte. Este tipo de técnica pertenece al uso avanzado de residuos. Para un primer dominio del tema, lo importante es reconocer que las funciones multivaluadas exigen elegir rama antes de aplicar el teorema de los residuos.
+
+### 3.17. Qué se espera en un examen
+
+En un problema de Laurent y residuos, no basta con obtener un número. Deben aparecer las justificaciones mínimas:
+
+Se debe indicar dónde están las singularidades y cuáles son aisladas. Se debe clasificar cada una cuando se pide. Si se desarrolla en Laurent, se debe decir el dominio de validez. Si se aplica el teorema de los residuos, hay que comprobar que las singularidades consideradas están dentro del contorno y que la función es analítica en el resto de la región relevante. Si se calcula una integral real, hay que explicar por qué se anula el arco o por qué se toma valor principal, cuando proceda.
+
+La forma típica de respuesta breve para una integral compleja es:
+“Las singularidades son \(z_1,\ldots,z_m\). Dentro de \(C\) quedan \(z_1,z_2\). Son polos simples. Sus residuos son \(R_1,R_2\). Por el teorema de los residuos,
+\[
+\oint_C f(z)\,dz=2\pi i(R_1+R_2).
+\]”
+
+La forma típica de respuesta para Laurent es:
+“Las singularidades respecto al centro son tales y tales; por tanto el dominio pedido pertenece a esta corona. Expando cada factor usando la forma válida en esa corona. La serie resultante es ..., válida para ... . El residuo es el coeficiente de \(1/(z-z_0)\).”
+
+
+## 4. Conceptos clave
+
+1. Serie de Laurent
+
+Definición precisa:
+Una serie de Laurent de \(f\) alrededor de \(z_0\) es una expansión de la forma
+\[
+f(z)=\sum_{n=0}^{\infty}a_n(z-z_0)^n+\sum_{n=1}^{\infty}\frac{b_n}{(z-z_0)^n},
+\]
+válida en una corona \(r<|z-z_0|<R\).
+
+Explicación desarrollada:
+Es la extensión natural de Taylor a regiones donde puede haber una singularidad aislada. La parte con \(a_n\) describe el comportamiento regular; la parte con \(b_n\) describe el comportamiento singular.
+
+Ejemplo:
+\[
+\frac{\sin z}{z^4}
+=
+\frac1{z^3}-\frac1{6z}+\frac{z}{120}-\cdots .
+\]
+
+Relación con otros conceptos:
+Conecta Taylor, singularidades aisladas, polos, singularidades esenciales y residuos.
+
+Posible forma de preguntarlo en examen:
+“Obtener la serie de Laurent de \(f(z)\) en torno a \(z=0\) en los dominios \(0<|z|<1\) y \(|z|>1\).”
+
+2. Parte principal
+
+Definición precisa:
+La parte principal de una serie de Laurent es la suma de los términos con potencias negativas:
+\[
+\sum_{n=1}^{\infty}\frac{b_n}{(z-z_0)^n}.
+\]
+
+Explicación desarrollada:
+Es la parte que no podría aparecer en una serie de Taylor. Determina el tipo de singularidad.
+
+Ejemplo:
+Para
+\[
+\frac{e^z}{z^3}
+=
+\frac1{z^3}+\frac1{z^2}+\frac1{2z}+\cdots,
+\]
+la parte principal es
+\[
+\frac1{z^3}+\frac1{z^2}+\frac1{2z}.
+\]
+
+Relación con otros conceptos:
+Si desaparece, el punto es regular; si es finita, hay un polo; si es infinita, hay singularidad esencial.
+
+Posible forma de preguntarlo en examen:
+“Indique la parte principal de \(f\) en \(z_0\) y clasifique la singularidad.”
+
+3. Punto regular
+
+Definición precisa:
+Un punto \(z_0\) es regular si \(f\) es analítica en \(z_0\). En términos de Laurent, no aparecen potencias negativas.
+
+Explicación desarrollada:
+A veces una función parece singular por su fórmula, pero el desarrollo muestra que la singularidad es eliminable. En ese caso puede definirse el valor adecuado en el punto y obtener una función analítica.
+
+Ejemplo:
+\[
+\frac{1-\cos z}{z^2}
+=
+\frac12-\frac{z^2}{24}+\cdots.
+\]
+Aunque la fórmula no está definida en \(z=0\), la singularidad es eliminable y el valor regularizado sería \(1/2\).
+
+Relación con otros conceptos:
+Es el caso límite de Laurent sin parte principal.
+
+Posible forma de preguntarlo en examen:
+“¿Se puede garantizar la existencia de una función entera \(g\) que coincida con \(f\) fuera de \(z_0\)? En caso afirmativo, calcule \(g(z_0)\).”
+
+4. Polo
+
+Definición precisa:
+\(z_0\) es un polo de orden \(n\) si la parte principal de Laurent tiene un número finito de términos y el término más singular es
+\[
+\frac{b_n}{(z-z_0)^n},\qquad b_n\ne0.
+\]
+
+Explicación desarrollada:
+Un polo es una singularidad con comportamiento controlado. Cerca del polo, la función tiende a infinito como una potencia de \(1/(z-z_0)\).
+
+Ejemplo:
+\[
+\frac{z+3}{z^2(z-1)^3(z+1)}
+\]
+tiene un polo de orden \(2\) en \(0\), de orden \(3\) en \(1\), y simple en \(-1\), salvo cancelaciones inexistentes.
+
+Relación con otros conceptos:
+Los polos permiten fórmulas rápidas de residuos. Las funciones analíticas salvo polos se llaman meromorfas.
+
+Posible forma de preguntarlo en examen:
+“Determine los polos de \(f\), su orden y el residuo en cada uno.”
+
+5. Polo simple
+
+Definición precisa:
+Un polo simple es un polo de orden \(1\).
+
+Explicación desarrollada:
+Es el caso más frecuente y más sencillo. Si \(f\) tiene polo simple en \(z_0\), el residuo se obtiene con un límite.
+
+Ejemplo:
+\[
+f(z)=\frac{\cos z}{z}
+\]
+tiene un polo simple en \(0\) y residuo \(1\).
+
+Relación con otros conceptos:
+Es el caso en que el residuo coincide con el coeficiente principal del único término singular.
+
+Posible forma de preguntarlo en examen:
+“Calcule el residuo de \(f(z)=g(z)/h(z)\) en un cero simple de \(h\).”
+
+6. Singularidad esencial
+
+Definición precisa:
+\(z_0\) es una singularidad esencial si la parte principal de Laurent contiene infinitos términos no nulos.
+
+Explicación desarrollada:
+No puede describirse mediante un número finito de potencias negativas. Su comportamiento local es más complicado que el de un polo.
+
+Ejemplo:
+\[
+e^{1/z}=1+\frac1z+\frac1{2!z^2}+\frac1{3!z^3}+\cdots
+\]
+tiene una singularidad esencial en \(0\).
+
+Relación con otros conceptos:
+Puede tener residuo, aunque no sea un polo. En el ejemplo anterior, el residuo es \(1\).
+
+Posible forma de preguntarlo en examen:
+“Clasifique la singularidad de \(e^{1/z}\) en \(z=0\) y calcule su residuo.”
+
+7. Residuo
+
+Definición precisa:
+El residuo de \(f\) en \(z_0\) es el coeficiente \(b_1\) de \((z-z_0)^{-1}\) en la serie de Laurent:
+\[
+\operatorname{Res}(f,z_0)=b_1.
+\]
+
+Explicación desarrollada:
+Es el dato local que determina la contribución de la singularidad a una integral cerrada.
+
+Ejemplo:
+\[
+\frac{\sin z}{z^4}
+=
+\frac1{z^3}-\frac1{6z}+\cdots,
+\]
+luego el residuo en \(0\) es \(-1/6\).
+
+Relación con otros conceptos:
+Aparece en el teorema de los residuos y en la fórmula integral de Cauchy.
+
+Posible forma de preguntarlo en examen:
+“Obtenga el residuo de \(f\) en cada singularidad aislada.”
+
+8. Teorema de los residuos
+
+Definición precisa:
+Si \(f\) es analítica dentro y sobre \(C\), salvo singularidades aisladas interiores \(z_k\), entonces
+\[
+\oint_C f(z)\,dz=2\pi i\sum_k\operatorname{Res}(f,z_k),
+\]
+para \(C\) orientada positivamente.
+
+Explicación desarrollada:
+Reduce una integral de contorno al cálculo de residuos. No depende de la forma exacta de \(C\), sino de qué singularidades encierra.
+
+Ejemplo:
+Si \(C\) encierra solo \(z=1\),
+\[
+\oint_C \frac{e^z}{z-1}\,dz=2\pi i e.
+\]
+
+Relación con otros conceptos:
+Se deduce de Laurent y generaliza la fórmula integral de Cauchy.
+
+Posible forma de preguntarlo en examen:
+“Usando la teoría de residuos, calcule la integral \(\oint_C f(z)\,dz\).”
+
+9. Dominio anular
+
+Definición precisa:
+Un dominio anular centrado en \(z_0\) es una región
+\[
+r<|z-z_0|<R.
+\]
+
+Explicación desarrollada:
+Es la región natural de convergencia de una serie de Laurent. Las singularidades alrededor de \(z_0\) separan unas coronas de otras.
+
+Ejemplo:
+Si las singularidades distintas de \(0\) están en \(|z|=1\) y \(|z|=2\), aparecen las coronas \(0<|z|<1\), \(1<|z|<2\), \(|z|>2\).
+
+Relación con otros conceptos:
+Cada corona puede tener una serie de Laurent distinta para la misma función.
+
+Posible forma de preguntarlo en examen:
+“Obtenga el desarrollo de Laurent en cada uno de los dominios indicados.”
+
+10. Valor principal de Cauchy
+
+Definición precisa:
+El valor principal de una integral impropia con singularidad interior se obtiene excluyendo simétricamente un entorno de la singularidad y tomando el límite.
+
+Explicación desarrollada:
+Permite asignar valor a algunas integrales divergentes en sentido ordinario. En residuos aparece cuando hay polos sobre el eje real.
+
+Ejemplo:
+\[
+\mathrm{PV}\int_0^5\frac{dx}{x-3}
+=
+\lim_{\varepsilon\to0^+}
+\left[
+\int_0^{3-\varepsilon}\frac{dx}{x-3}
++
+\int_{3+\varepsilon}^5\frac{dx}{x-3}
+\right].
+\]
+
+Relación con otros conceptos:
+Se usa en integrales reales por contorno cuando la singularidad está sobre el camino de integración.
+
+Posible forma de preguntarlo en examen:
+“Calcule, como valor principal de Cauchy, una integral real mediante residuos.”
+
+
+## 5. Relaciones entre ideas
+
+El capítulo se organiza alrededor de una cadena conceptual muy clara: analiticidad, singularidad aislada, desarrollo de Laurent, residuo, teorema de los residuos e integrales.
+
+La analiticidad es el punto de partida. Si una función es analítica en un disco, Taylor basta. Si falla en un único punto pero se conserva alrededor, Taylor se sustituye por Laurent. Por tanto, Laurent depende de haber entendido antes qué significa que una función sea analítica y qué significa que una singularidad sea aislada.
+
+La serie de Laurent contiene una jerarquía de información. La parte regular no produce problemas de analiticidad. La parte principal concentra la singularidad. Dentro de la parte principal, el término \(1/(z-z_0)\) tiene un papel especial porque es el único que no desaparece al integrar alrededor del punto. Así, el residuo es una pieza muy concreta de la serie, no toda la serie.
+
+La clasificación de singularidades depende de la extensión de la parte principal. Si no existe, no hay singularidad real: el punto es regular o eliminable. Si tiene finitos términos, el punto es un polo. Si tiene infinitos, la singularidad es esencial. Esta jerarquía permite decidir qué método usar: para polos simples se usa un límite; para cocientes con denominador de cero simple se usa \(g(z_0)/h'(z_0)\); para polos múltiples se usa una derivada; para singularidades esenciales normalmente se necesita leer el coeficiente desde la serie.
+
+El teorema de los residuos es consecuencia de integrar Laurent. No aparece como una fórmula aislada. Su causa es que las integrales de todas las potencias enteras de \(z-z_0\) se anulan salvo la potencia \(-1\). La consecuencia es potente: una integral sobre un contorno se reduce a sumar datos locales de singularidades interiores.
+
+Hay una oposición importante entre dominio local y contorno global. El residuo se calcula localmente, cerca de cada singularidad. La integral depende globalmente del contorno, pero solo a través de qué singularidades contiene y de su orientación. Por eso dos contornos distintos que encierren las mismas singularidades y no crucen otras dan la misma integral.
+
+También hay una oposición práctica entre “desarrollar” y “calcular residuos”. Desarrollar Laurent da más información: dominio de convergencia, parte principal, clasificación y residuo. Calcular residuos con límites o derivadas da menos información, pero es más rápido para integrales. En examen hay que elegir según lo que se pide. Si el enunciado pide “serie de Laurent”, no basta con calcular el residuo. Si pide una integral, desarrollar toda la serie suele ser innecesario.
+
+La aplicación a integrales reales introduce una última conexión: se transforma un problema real en uno complejo. Una integral trigonométrica se convierte en una integral sobre la circunferencia unidad mediante \(z=e^{i\theta}\). Una integral impropia sobre la recta real se convierte en una integral sobre un semicírculo. La parte compleja se resuelve por residuos y después se recupera la integral real.
+
+Históricamente, este desarrollo es una de las razones por las que la variable compleja es tan eficaz en física y matemáticas aplicadas: convierte problemas globales de integración en cálculo algebraico local alrededor de singularidades.
+
+
+## 6. Errores habituales
+
+1. Usar una serie geométrica fuera de su dominio
+
+Formulación del error:
+Expandir
+\[
+\frac{1}{1+z}=1-z+z^2-\cdots
+\]
+también para \(|z|>1\).
+
+Por qué está mal:
+Esa serie solo converge si \(|z|<1\). En \(|z|>1\) no representa a la función.
+
+Corrección:
+Para \(|z|>1\), escribir
+\[
+\frac{1}{1+z}=\frac1z\frac{1}{1+1/z}
+=
+\frac1z-\frac1{z^2}+\frac1{z^3}-\cdots.
+\]
+
+Respuesta incorrecta:
+“Para \(|z|>1\), \(1/(1+z)=1-z+z^2-\cdots\).”
+
+Respuesta correcta:
+“Para \(|z|>1\), se desarrolla en potencias de \(1/z\):
+\[
+1/(1+z)=z^{-1}-z^{-2}+z^{-3}-\cdots.
+\]”
+
+2. Olvidar indicar el dominio de convergencia
+
+Formulación del error:
+Dar una serie de Laurent sin especificar dónde converge.
+
+Por qué está mal:
+La misma función puede tener series distintas en coronas distintas. Sin dominio, la respuesta está incompleta.
+
+Corrección:
+Indicar siempre \(r<|z-z_0|<R\).
+
+Respuesta incorrecta:
+\[
+\frac{1}{z(1-z)}=\frac1z+1+z+z^2+\cdots.
+\]
+
+Respuesta correcta:
+\[
+\frac{1}{z(1-z)}=\frac1z+1+z+z^2+\cdots,\qquad 0<|z|<1.
+\]
+
+3. Confundir residuo con coeficiente principal más singular
+
+Formulación del error:
+En
+\[
+\frac{e^z}{z^3}
+=
+\frac1{z^3}+\frac1{z^2}+\frac1{2z}+\cdots,
+\]
+decir que el residuo es \(1\), por mirar el coeficiente de \(1/z^3\).
+
+Por qué está mal:
+El residuo es solo el coeficiente de \(1/z\).
+
+Corrección:
+Leer el coeficiente de la potencia \(-1\).
+
+Respuesta incorrecta:
+“El residuo es \(1\), porque el primer término es \(1/z^3\).”
+
+Respuesta correcta:
+“El residuo es \(1/2\), porque el coeficiente de \(1/z\) es \(1/2\).”
+
+4. Clasificar como polo una singularidad eliminable
+
+Formulación del error:
+Decir que
+\[
+\frac{1-\cos z}{z^2}
+\]
+tiene un polo de orden \(2\) en \(0\).
+
+Por qué está mal:
+El numerador también se anula de orden \(2\). Hay cancelación en el desarrollo.
+
+Corrección:
+Usar la serie de \(\cos z\):
+\[
+1-\cos z=\frac{z^2}{2}-\frac{z^4}{24}+\cdots.
+\]
+Entonces
+\[
+\frac{1-\cos z}{z^2}=\frac12-\frac{z^2}{24}+\cdots.
+\]
+
+Respuesta incorrecta:
+“Como hay \(z^2\) en el denominador, el polo es de orden \(2\).”
+
+Respuesta correcta:
+“La singularidad es eliminable; no hay potencias negativas en Laurent.”
+
+5. Calcular mal el residuo en un factor lineal no normalizado
+
+Formulación del error:
+Para
+\[
+\frac{z}{(2z+1)(5-z)}
+\]
+en \(z=-1/2\), multiplicar por \(2z+1\) y tomar eso como residuo sin ajustar.
+
+Por qué está mal:
+La fórmula del polo simple usa \((z-z_0)\), no cualquier múltiplo.
+
+Corrección:
+Como \(2z+1=2(z+1/2)\),
+\[
+\operatorname{Res}(f,-1/2)=
+\lim_{z\to-1/2}(z+1/2)f(z).
+\]
+
+Respuesta incorrecta:
+“Residuo \(=\lim (2z+1)f(z)\).”
+
+Respuesta correcta:
+“\(\lim (z+1/2)f(z)\), o bien dividir por la constante correspondiente.”
+
+6. Aplicar \(g(z_0)/h'(z_0)\) cuando el cero no es simple
+
+Formulación del error:
+Usar
+\[
+\operatorname{Res}(g/h,z_0)=g(z_0)/h'(z_0)
+\]
+aunque \(h'(z_0)=0\).
+
+Por qué está mal:
+La fórmula solo vale si \(h\) tiene cero simple en \(z_0\).
+
+Corrección:
+Determinar el orden del cero del denominador y usar Laurent o la fórmula de polo múltiple.
+
+Respuesta incorrecta:
+“Como \(h(z_0)=0\), el residuo es \(g(z_0)/h'(z_0)\).”
+
+Respuesta correcta:
+“Hay que comprobar \(h'(z_0)\ne0\). Si \(h'(z_0)=0\), no es polo simple.”
+
+7. Incluir singularidades exteriores al contorno
+
+Formulación del error:
+Sumar todos los residuos de la función sin mirar el contorno.
+
+Por qué está mal:
+El teorema de los residuos suma solo las singularidades interiores a \(C\).
+
+Corrección:
+Localizar el contorno y comparar distancias o posición geométrica.
+
+Respuesta incorrecta:
+“Las singularidades son \(1\) y \(3\); sumo ambas para \(|z|=2\).”
+
+Respuesta correcta:
+“Para \(|z|=2\), solo \(z=1\) está dentro; \(z=3\) no contribuye.”
+
+8. Olvidar la orientación del contorno
+
+Formulación del error:
+Usar \(2\pi i\) aunque la curva se recorra en sentido horario.
+
+Por qué está mal:
+El signo depende de la orientación.
+
+Corrección:
+Sentido antihorario: \(+2\pi i\). Sentido horario: \(-2\pi i\).
+
+Respuesta incorrecta:
+“Da \(2\pi i\sum R_k\)” sin mirar orientación.
+
+Respuesta correcta:
+“Como \(C\) está recorrida en sentido horario, la integral es \(-2\pi i\sum R_k\).”
+
+9. No distinguir integral impropia ordinaria y valor principal
+
+Formulación del error:
+Calcular una integral con un polo en el eje real como si fuese convergente ordinaria.
+
+Por qué está mal:
+La integral puede divergir, aunque el valor principal exista.
+
+Corrección:
+Escribir explícitamente \(\mathrm{PV}\) y justificar la exclusión simétrica.
+
+Respuesta incorrecta:
+\[
+\int_{-\infty}^{\infty}\frac{\cos x}{x}\,dx=0.
+\]
+
+Respuesta correcta:
+\[
+\mathrm{PV}\int_{-\infty}^{\infty}\frac{\cos x}{x}\,dx=0,
+\]
+pero la integral impropia ordinaria no converge.
+
+10. Desarrollar alrededor del punto equivocado
+
+Formulación del error:
+Para calcular el residuo de \(e^z/(z-1)\) en \(z=1\), usar directamente
+\[
+e^z=1+z+z^2/2+\cdots
+\]
+y leer mal el coeficiente.
+
+Por qué está mal:
+El desarrollo debe estar en potencias de \(z-1\).
+
+Corrección:
+Escribir
+\[
+e^z=e\,e^{z-1}
+=e\left(1+(z-1)+\frac{(z-1)^2}{2!}+\cdots\right).
+\]
+
+Respuesta incorrecta:
+“El residuo es \(1\).”
+
+Respuesta correcta:
+“El residuo es \(e\).”
+
+
+## 7. Preguntas orientadas a examen
+
+### 10 preguntas fáciles
+
+1. Defina serie de Laurent alrededor de \(z_0\).
+
+2. ¿Qué se llama parte principal de una serie de Laurent?
+
+3. ¿Qué es el residuo de \(f\) en una singularidad aislada \(z_0\)?
+
+4. Clasifique la singularidad de \(f(z)=1/z^3\) en \(z=0\).
+
+5. Calcule \(\operatorname{Res}(\cos z/z,0)\).
+
+6. Indique el dominio de validez de
+\[
+\frac{1}{1-z}=1+z+z^2+\cdots.
+\]
+
+7. Dé la fórmula del residuo en un polo simple.
+
+8. Enuncie el teorema de los residuos.
+
+9. ¿Qué singularidades de \(f(z)=1/(z^2+1)\) quedan dentro de \(|z|=2\)?
+
+10. ¿Qué ocurre con el signo del teorema de los residuos si el contorno se recorre en sentido horario?
+
+### 10 preguntas medias
+
+11. Desarrolle en Laurent alrededor de \(0\):
+\[
+\frac{\sin z}{z^4}.
+\]
+Clasifique la singularidad y calcule el residuo.
+
+12. Calcule el residuo de
+\[
+\frac{e^z}{z-1}
+\]
+en \(z=1\).
+
+13. Determine las singularidades y residuos de
+\[
+f(z)=\frac{1}{z^2-1}.
+\]
+
+14. Calcule
+\[
+\oint_{|z|=2}\frac{dz}{z^2-1}.
+\]
+
+15. Obtenga el desarrollo de
+\[
+\frac{1}{z(1-z)}
+\]
+en \(0<|z|<1\).
+
+16. Obtenga el desarrollo de
+\[
+\frac{1}{z(1-z)}
+\]
+en \(|z|>1\).
+
+17. Clasifique la singularidad de
+\[
+e^{1/z}
+\]
+en \(z=0\) y calcule su residuo.
+
+18. Calcule el residuo de
+\[
+\frac{\sin z}{1-z^4}
+\]
+en \(z=i\).
+
+19. Calcule
+\[
+\oint_{|z|=1}\frac{e^z}{z^2}\,dz.
+\]
+
+20. Determine si \(z=0\) es polo o singularidad eliminable para
+\[
+\frac{1-\cos z}{z^2}.
+\]
+Si es eliminable, indique el valor que debe asignarse.
+
+### 5 preguntas difíciles
+
+21. Desarrolle
+\[
+\frac{1}{(z-1)(z-2)}
+\]
+alrededor de \(0\) en los dominios \(|z|<1\), \(1<|z|<2\) y \(|z|>2\).
+
+22. Calcule el residuo de
+\[
+\frac{z\sin z}{(z-\pi)^3}
+\]
+en \(z=\pi\).
+
+23. Evalúe
+\[
+\int_0^{2\pi}\frac{d\theta}{5+4\cos\theta}
+\]
+usando residuos.
+
+24. Evalúe
+\[
+\int_{-\infty}^{\infty}\frac{dx}{1+x^2}
+\]
+mediante un contorno semicircular.
+
+25. Calcule
+\[
+\oint_{|z|=3}\frac{z^2+1}{z(z-1)^2(z+2)}\,dz.
+\]
+
+### 5 preguntas de desarrollo largo
+
+26. Explique la diferencia entre serie de Taylor y serie de Laurent, y por qué Laurent es necesaria cerca de una singularidad aislada.
+
+27. Desarrolle el proceso que lleva desde la serie de Laurent al teorema de los residuos.
+
+28. Explique cómo se clasifican las singularidades aisladas mediante la parte principal de Laurent, con ejemplos.
+
+29. Describa el método general para calcular integrales reales racionales sobre \((-\infty,\infty)\) usando residuos.
+
+30. Explique cómo se transforman integrales trigonométricas racionales en integrales sobre la circunferencia unidad.
+
+### 5 preguntas de relación entre conceptos
+
+31. Relacione dominio de convergencia, singularidades y distintos desarrollos de Laurent de una misma función.
+
+32. Relacione polo simple, fórmula del límite y fórmula \(g(z_0)/h'(z_0)\).
+
+33. Relacione residuo y fórmula integral de Cauchy.
+
+34. Relacione valor principal de Cauchy y polos sobre el eje real.
+
+35. Relacione singularidad eliminable, serie de Laurent y extensión analítica.
+
+
+## 8. Respuestas modelo
+
+### Respuestas a las 10 preguntas fáciles
+
+1. Una serie de Laurent alrededor de \(z_0\) es una expansión de la forma
+\[
+f(z)=\sum_{n=0}^{\infty}a_n(z-z_0)^n+
+\sum_{n=1}^{\infty}\frac{b_n}{(z-z_0)^n},
+\]
+válida normalmente en una corona \(r<|z-z_0|<R\). Generaliza Taylor al permitir potencias negativas.
+
+2. La parte principal es la suma de términos con potencias negativas:
+\[
+\sum_{n=1}^{\infty}\frac{b_n}{(z-z_0)^n}.
+\]
+Es la parte que describe la singularidad de la función en \(z_0\).
+
+3. El residuo de \(f\) en \(z_0\) es el coeficiente de \((z-z_0)^{-1}\) en la serie de Laurent de \(f\) alrededor de \(z_0\):
+\[
+\operatorname{Res}(f,z_0)=b_1.
+\]
+
+4. \(f(z)=1/z^3\) tiene en \(z=0\) un polo de orden \(3\). Su desarrollo ya es una serie de Laurent con un único término negativo de orden \(3\).
+
+5. Como \(z=0\) es un polo simple,
+\[
+\operatorname{Res}\left(\frac{\cos z}{z},0\right)
+=
+\lim_{z\to0}z\frac{\cos z}{z}
+=
+\cos0=1.
+\]
+
+6. La serie
+\[
+\frac{1}{1-z}=1+z+z^2+\cdots
+\]
+es válida para
+\[
+|z|<1.
+\]
+
+7. Si \(z_0\) es un polo simple de \(f\), entonces
+\[
+\operatorname{Res}(f,z_0)
+=
+\lim_{z\to z_0}(z-z_0)f(z).
+\]
+
+8. Si \(f\) es analítica sobre \(C\) y en su interior salvo en singularidades aisladas \(z_k\), y \(C\) está orientada positivamente, entonces
+\[
+\oint_C f(z)\,dz
+=
+2\pi i\sum_k\operatorname{Res}(f,z_k),
+\]
+sumando solo las singularidades interiores a \(C\).
+
+9. \(f(z)=1/(z^2+1)\) tiene singularidades en \(z=i\) y \(z=-i\). Ambas cumplen \(|z|=1<2\), luego ambas quedan dentro de \(|z|=2\).
+
+10. Si el contorno se recorre en sentido horario, la integral cambia de signo:
+\[
+\oint_C f(z)\,dz=-2\pi i\sum_k\operatorname{Res}(f,z_k).
+\]
+
+### Respuestas a las 10 preguntas medias
+
+11. Usamos
+\[
+\sin z=z-\frac{z^3}{3!}+\frac{z^5}{5!}-\cdots.
+\]
+Dividiendo por \(z^4\):
+\[
+\frac{\sin z}{z^4}
+=
+\frac1{z^3}-\frac1{6z}+\frac{z}{120}-\cdots.
+\]
+La singularidad en \(0\) es un polo de orden \(3\). El residuo es el coeficiente de \(1/z\):
+\[
+\operatorname{Res}(f,0)=-\frac16.
+\]
+
+12. Para desarrollar alrededor de \(1\):
+\[
+e^z=e\,e^{z-1}
+=
+e\left(1+(z-1)+\frac{(z-1)^2}{2!}+\cdots\right).
+\]
+Entonces
+\[
+\frac{e^z}{z-1}
+=
+\frac{e}{z-1}+e+\frac{e}{2!}(z-1)+\cdots.
+\]
+Por tanto,
+\[
+\operatorname{Res}\left(\frac{e^z}{z-1},1\right)=e.
+\]
+
+13. Las singularidades de
+\[
+f(z)=\frac1{z^2-1}=\frac1{(z-1)(z+1)}
+\]
+son \(z=1\) y \(z=-1\), ambas polos simples. En \(z=1\),
+\[
+\operatorname{Res}(f,1)=\lim_{z\to1}\frac{z-1}{(z-1)(z+1)}=\frac12.
+\]
+En \(z=-1\),
+\[
+\operatorname{Res}(f,-1)=\lim_{z\to-1}\frac{z+1}{(z-1)(z+1)}=-\frac12.
+\]
+
+14. Para \(|z|=2\), los polos \(1\) y \(-1\) están dentro. Por el teorema de los residuos,
+\[
+\oint_{|z|=2}\frac{dz}{z^2-1}
+=
+2\pi i\left(\frac12-\frac12\right)=0.
+\]
+
+15. En \(0<|z|<1\),
+\[
+\frac1{z(1-z)}=\frac1z\frac1{1-z}
+=
+\frac1z(1+z+z^2+\cdots).
+\]
+Por tanto,
+\[
+\frac1{z(1-z)}=\frac1z+1+z+z^2+\cdots,\qquad 0<|z|<1.
+\]
+
+16. En \(|z|>1\),
+\[
+\frac1{1-z}=-\frac1z\frac1{1-1/z}
+=
+-\frac1z\left(1+\frac1z+\frac1{z^2}+\cdots\right).
+\]
+Así,
+\[
+\frac1{z(1-z)}
+=
+-\frac1{z^2}-\frac1{z^3}-\frac1{z^4}-\cdots,\qquad |z|>1.
+\]
+
+17. Se tiene
+\[
+e^{1/z}=1+\frac1z+\frac1{2!z^2}+\frac1{3!z^3}+\cdots.
+\]
+Hay infinitos términos negativos, luego \(z=0\) es una singularidad esencial. El residuo es el coeficiente de \(1/z\), por tanto
+\[
+\operatorname{Res}(e^{1/z},0)=1.
+\]
+
+18. Escribimos \(f=g/h\), con \(g(z)=\sin z\) y \(h(z)=1-z^4\). En \(z=i\), \(h(i)=0\) y
+\[
+h'(z)=-4z^3,\qquad h'(i)=-4i^3=4i.
+\]
+Por tanto,
+\[
+\operatorname{Res}(f,i)=\frac{\sin i}{4i}.
+\]
+Como \(\sin i=i\sinh1\),
+\[
+\operatorname{Res}(f,i)=\frac{\sinh1}{4}.
+\]
+
+19. En \(|z|=1\), la única singularidad es \(z=0\). Desarrollamos:
+\[
+e^z=1+z+\frac{z^2}{2!}+\cdots,
+\]
+luego
+\[
+\frac{e^z}{z^2}
+=
+\frac1{z^2}+\frac1z+\frac12+\cdots.
+\]
+El residuo es \(1\). Por tanto,
+\[
+\oint_{|z|=1}\frac{e^z}{z^2}\,dz=2\pi i.
+\]
+
+20. Como
+\[
+1-\cos z=\frac{z^2}{2}-\frac{z^4}{24}+\cdots,
+\]
+se obtiene
+\[
+\frac{1-\cos z}{z^2}
+=
+\frac12-\frac{z^2}{24}+\cdots.
+\]
+No hay potencias negativas. La singularidad en \(0\) es eliminable y debe asignarse
+\[
+f(0)=\frac12.
+\]
+
+### Respuestas a las 5 preguntas difíciles
+
+21. Primero,
+\[
+\frac1{(z-1)(z-2)}
+=
+-\frac1{z-1}+\frac1{z-2}.
+\]
+
+Para \(|z|<1\):
+\[
+-\frac1{z-1}=\frac1{1-z}=1+z+z^2+\cdots,
+\]
+\[
+\frac1{z-2}=-\frac12\frac1{1-z/2}
+=-\frac12\left(1+\frac z2+\frac{z^2}{2^2}+\cdots\right).
+\]
+Luego
+\[
+f(z)=
+\sum_{n=0}^{\infty}z^n-\sum_{n=0}^{\infty}\frac{z^n}{2^{n+1}},
+\qquad |z|<1.
+\]
+
+Para \(1<|z|<2\):
+\[
+-\frac1{z-1}
+=
+-\frac1z\frac1{1-1/z}
+=
+-\left(\frac1z+\frac1{z^2}+\frac1{z^3}+\cdots\right),
+\]
+mientras
+\[
+\frac1{z-2}
+=
+-\frac12\left(1+\frac z2+\frac{z^2}{2^2}+\cdots\right).
+\]
+Por tanto,
+\[
+f(z)=
+-\sum_{n=1}^{\infty}z^{-n}
+-\sum_{n=0}^{\infty}\frac{z^n}{2^{n+1}},
+\qquad 1<|z|<2.
+\]
+
+Para \(|z|>2\):
+\[
+-\frac1{z-1}
+=
+-\sum_{n=1}^{\infty}z^{-n},
+\]
+y
+\[
+\frac1{z-2}
+=
+\frac1z\frac1{1-2/z}
+=
+\sum_{n=0}^{\infty}2^n z^{-n-1}.
+\]
+Entonces
+\[
+f(z)=
+-\sum_{n=1}^{\infty}z^{-n}
++
+\sum_{n=0}^{\infty}2^n z^{-n-1},
+\qquad |z|>2.
+\]
+
+22. La función tiene en \(\pi\) un polo de orden como máximo \(3\). Usamos la fórmula de polo múltiple:
+\[
+\operatorname{Res}\left(\frac{z\sin z}{(z-\pi)^3},\pi\right)
+=
+\frac1{2!}
+\left.\frac{d^2}{dz^2}(z\sin z)\right|_{z=\pi}.
+\]
+Como
+\[
+(z\sin z)'=\sin z+z\cos z,
+\]
+\[
+(z\sin z)''=2\cos z-z\sin z,
+\]
+resulta
+\[
+\operatorname{Res}(f,\pi)
+=
+\frac12(2\cos\pi-\pi\sin\pi)
+=
+\frac12(-2)=-1.
+\]
+
+23. Usamos
+\[
+z=e^{i\theta},\quad d\theta=\frac{dz}{iz},\quad
+\cos\theta=\frac12\left(z+\frac1z\right).
+\]
+Entonces
+\[
+I=\int_0^{2\pi}\frac{d\theta}{5+4\cos\theta}
+=
+\frac1i\oint_{|z|=1}\frac{dz}{2z^2+5z+2}.
+\]
+Factorizando,
+\[
+2z^2+5z+2=(2z+1)(z+2).
+\]
+Los polos son \(z=-1/2\) y \(z=-2\). Solo \(-1/2\) está dentro de \(|z|=1\). El residuo de
+\[
+\frac1{(2z+1)(z+2)}
+\]
+en \(-1/2\) es
+\[
+\lim_{z\to-1/2}\frac{z+1/2}{(2z+1)(z+2)}
+=
+\frac1{2(z+2)}\bigg|_{z=-1/2}
+=
+\frac13.
+\]
+Por tanto,
+\[
+I=\frac1i\,2\pi i\,\frac13=\frac{2\pi}{3}.
+\]
+
+24. Consideramos
+\[
+\oint_C \frac{dz}{1+z^2}
+\]
+sobre el contorno formado por \([-R,R]\) y el semicírculo superior. La función tiene polos en \(i\) y \(-i\), pero solo \(i\) queda dentro. El residuo en \(i\) es
+\[
+\operatorname{Res}\left(\frac1{1+z^2},i\right)
+=
+\frac1{2i}.
+\]
+La integral cerrada vale
+\[
+2\pi i\frac1{2i}=\pi.
+\]
+La integral sobre el arco tiende a cero cuando \(R\to\infty\), porque el denominador crece como \(R^2\) y la longitud del arco como \(R\). Por tanto,
+\[
+\int_{-\infty}^{\infty}\frac{dx}{1+x^2}=\pi.
+\]
+
+25. Las singularidades son \(z=0\), \(z=1\) y \(z=-2\). Todas están dentro de \(|z|=3\). Calculamos residuos.
+
+Para \(z=0\), polo simple:
+\[
+R_0=\lim_{z\to0}z\frac{z^2+1}{z(z-1)^2(z+2)}
+=
+\frac1{(1)(2)}=\frac12.
+\]
+
+Para \(z=-2\), polo simple:
+\[
+R_{-2}=\lim_{z\to-2}(z+2)\frac{z^2+1}{z(z-1)^2(z+2)}
+=
+\frac{5}{(-2)(-3)^2}
+=
+-\frac5{18}.
+\]
+
+Para \(z=1\), polo doble:
+\[
+R_1=
+\left.\frac{d}{dz}\left[(z-1)^2\frac{z^2+1}{z(z-1)^2(z+2)}\right]\right|_{z=1}
+=
+\left.\frac{d}{dz}\left(\frac{z^2+1}{z(z+2)}\right)\right|_{z=1}.
+\]
+Sea
+\[
+\phi(z)=\frac{z^2+1}{z^2+2z}.
+\]
+Entonces
+\[
+\phi'(z)=\frac{2z(z^2+2z)-(z^2+1)(2z+2)}{(z^2+2z)^2}.
+\]
+En \(z=1\),
+\[
+\phi'(1)=\frac{2\cdot1\cdot3-2\cdot4}{3^2}
+=
+\frac{6-8}{9}
+=
+-\frac29.
+\]
+La suma de residuos es
+\[
+\frac12-\frac5{18}-\frac29
+=
+\frac9{18}-\frac5{18}-\frac4{18}=0.
+\]
+Por tanto,
+\[
+\oint_{|z|=3}\frac{z^2+1}{z(z-1)^2(z+2)}\,dz=0.
+\]
+
+### Respuestas a las 5 preguntas de desarrollo largo
+
+26. La serie de Taylor representa una función analítica mediante potencias no negativas de \(z-z_0\). Su forma es
+\[
+f(z)=\sum_{n=0}^{\infty}a_n(z-z_0)^n.
+\]
+Si \(f\) no es analítica en \(z_0\), esta forma no puede describir el comportamiento de la función en torno a ese punto. Sin embargo, si la singularidad es aislada, \(f\) sí puede ser analítica en una corona alrededor de \(z_0\). En ese caso aparece la serie de Laurent:
+\[
+f(z)=\sum_{n=0}^{\infty}a_n(z-z_0)^n+
+\sum_{n=1}^{\infty}\frac{b_n}{(z-z_0)^n}.
+\]
+La diferencia es la aparición de potencias negativas, que representan la parte singular. Laurent es necesaria porque permite estudiar funciones como \(1/z\), \(e^z/z^3\) o \(e^{1/z}\), que no admiten Taylor en el punto singular pero sí tienen una expansión útil en un disco perforado.
+
+27. Se parte del desarrollo de Laurent de \(f\) alrededor de una singularidad aislada \(z_0\):
+\[
+f(z)=\sum_{n=0}^{\infty}a_n(z-z_0)^n+
+\sum_{n=1}^{\infty}\frac{b_n}{(z-z_0)^n}.
+\]
+Al integrar alrededor de una curva cerrada que rodea \(z_0\), todos los términos tienen integral nula salvo
+\[
+\frac{b_1}{z-z_0}.
+\]
+En efecto,
+\[
+\oint_C (z-z_0)^m\,dz=0
+\]
+para todo entero \(m\ne -1\), mientras que
+\[
+\oint_C \frac{dz}{z-z_0}=2\pi i.
+\]
+Por tanto,
+\[
+\oint_C f(z)\,dz=2\pi i\,b_1.
+\]
+Como \(b_1\) es el residuo, si hay una singularidad:
+\[
+\oint_C f(z)\,dz=2\pi i\,\operatorname{Res}(f,z_0).
+\]
+Si hay varias singularidades aisladas en el interior, se rodea cada una localmente y se suman las contribuciones:
+\[
+\oint_C f(z)\,dz
+=
+2\pi i\sum_k \operatorname{Res}(f,z_k).
+\]
+
+28. La clasificación se hace mirando la parte principal de Laurent. Si no hay parte principal, el punto es regular o la singularidad es eliminable. Por ejemplo,
+\[
+\frac{1-\cos z}{z^2}=\frac12-\frac{z^2}{24}+\cdots
+\]
+no tiene términos negativos en \(0\).
+
+Si la parte principal tiene un número finito de términos y el más singular es \((z-z_0)^{-n}\), entonces hay un polo de orden \(n\). Por ejemplo,
+\[
+\frac{e^z}{z^3}
+=
+\frac1{z^3}+\frac1{z^2}+\frac1{2z}+\cdots
+\]
+tiene un polo de orden \(3\).
+
+Si la parte principal tiene infinitos términos, la singularidad es esencial. Por ejemplo,
+\[
+e^{1/z}=1+\frac1z+\frac1{2!z^2}+\cdots
+\]
+tiene una singularidad esencial en \(0\).
+
+29. Para calcular integrales reales racionales sobre \((-\infty,\infty)\), se construye una función compleja \(F(z)\) que coincide con el integrando real cuando \(z=x\). Se integra \(F\) sobre un contorno formado por el segmento \([-R,R]\) y una semicircunferencia en el semiplano superior o inferior. Después se aplica el teorema de los residuos a los polos interiores.
+
+El método funciona de forma directa cuando la integral sobre el arco tiende a cero al hacer \(R\to\infty\). En racionales \(P(x)/Q(x)\), esto suele requerir que el grado de \(Q\) sea al menos dos unidades mayor que el de \(P\), y que no haya polos sobre el eje real. Si hay exponenciales \(e^{iaz}\), se elige el semiplano en el que la exponencial decrece. Si hay polos sobre el eje real, se debe trabajar con valor principal y pequeños desvíos del contorno.
+
+30. Para una integral racional en \(\sin\theta\) y \(\cos\theta\) entre \(0\) y \(2\pi\), se usa el cambio
+\[
+z=e^{i\theta}.
+\]
+Entonces la circunferencia unidad se recorre una vez en sentido antihorario y
+\[
+d\theta=\frac{dz}{iz}.
+\]
+Además,
+\[
+\cos\theta=\frac12\left(z+\frac1z\right),\qquad
+\sin\theta=\frac1{2i}\left(z-\frac1z\right).
+\]
+Con estas sustituciones, la integral se transforma en una integral racional sobre \(|z|=1\). Después se localizan los polos dentro de la circunferencia unidad y se aplica el teorema de los residuos. El paso decisivo es seleccionar solo los polos interiores.
+
+### Respuestas a las 5 preguntas de relación entre conceptos
+
+31. Las singularidades determinan las fronteras de las coronas de convergencia. Al desarrollar alrededor de \(z_0\), la distancia a las singularidades cercanas separa regiones como \(0<|z-z_0|<r_1\), \(r_1<|z-z_0|<r_2\), etc. En cada corona la función es analítica y admite una serie de Laurent, pero la expresión de la serie puede cambiar. Por eso una misma función puede tener varios desarrollos de Laurent alrededor del mismo centro.
+
+32. Si \(z_0\) es un polo simple, el residuo se calcula mediante
+\[
+\operatorname{Res}(f,z_0)=\lim_{z\to z_0}(z-z_0)f(z).
+\]
+Cuando \(f=g/h\), con \(g(z_0)\ne0\), \(h(z_0)=0\) y \(h'(z_0)\ne0\), el cero del denominador es simple. Entonces el límite anterior se simplifica a
+\[
+\operatorname{Res}(f,z_0)=\frac{g(z_0)}{h'(z_0)}.
+\]
+La segunda fórmula es un caso particular de la primera.
+
+33. La fórmula integral de Cauchy puede verse como una aplicación del teorema de los residuos. Si \(f\) es analítica y se integra
+\[
+\frac{f(z)}{z-a}
+\]
+sobre un contorno que encierra \(a\), el integrando tiene un polo simple en \(a\). Su residuo es \(f(a)\). Por el teorema de los residuos,
+\[
+\oint_C \frac{f(z)}{z-a}\,dz=2\pi i f(a),
+\]
+que equivale a
+\[
+f(a)=\frac1{2\pi i}\oint_C\frac{f(z)}{z-a}\,dz.
+\]
+
+34. El valor principal de Cauchy aparece cuando una integral real tiene una singularidad en el camino de integración. En contornos complejos, esto corresponde a polos sobre el eje real. La integral impropia ordinaria puede divergir, pero el valor principal puede existir por cancelación simétrica de las partes divergentes. Para usar residuos en este caso, se deforma el contorno evitando el polo con pequeños semicírculos y se toma el límite.
+
+35. Una singularidad eliminable se detecta porque el desarrollo de Laurent no tiene parte principal. Aunque la fórmula original de la función no esté definida en \(z_0\), la serie muestra un valor finito para la función. Definiendo \(f(z_0)\) como el término constante de la serie, se obtiene una extensión analítica. Por ejemplo,
+\[
+\frac{1-\cos z}{z^2}=\frac12-\frac{z^2}{24}+\cdots,
+\]
+luego la extensión analítica se obtiene asignando \(f(0)=1/2\).
+
+
+## 9. Resumen final de repaso
+
+Ideas principales:
+
+La serie de Laurent generaliza Taylor permitiendo potencias negativas.
+
+La región natural de convergencia de Laurent es una corona \(r<|z-z_0|<R\).
+
+La parte principal es la parte con potencias negativas.
+
+La clasificación de singularidades se lee en la parte principal:
+sin parte principal, punto regular o eliminable;
+parte principal finita, polo;
+parte principal infinita, singularidad esencial.
+
+El residuo es el coeficiente de \((z-z_0)^{-1}\).
+
+Al integrar alrededor de una singularidad, solo sobrevive el residuo.
+
+El teorema de los residuos afirma:
+\[
+\oint_C f(z)\,dz=2\pi i\sum \operatorname{Res}(f,z_k).
+\]
+
+Conceptos imprescindibles:
+
+Serie de Laurent.
+Corona de convergencia.
+Parte principal.
+Singularidad aislada.
+Polo simple.
+Polo de orden \(n\).
+Singularidad esencial.
+Residuo.
+Teorema de los residuos.
+Valor principal de Cauchy.
+
+Relaciones clave:
+
+Taylor es el caso particular de Laurent sin potencias negativas.
+
+El residuo pertenece a la parte principal, pero no toda la parte principal afecta a la integral.
+
+El orden del polo se obtiene mirando la potencia negativa más alta o comparando ceros de numerador y denominador.
+
+La fórmula \(g(z_0)/h'(z_0)\) solo vale para polos simples.
+
+Las integrales reales por residuos dependen de elegir bien el contorno y justificar la desaparición del arco.
+
+Errores que evitar:
+
+No usar series geométricas fuera de su dominio.
+
+No olvidar el dominio de convergencia de la serie.
+
+No confundir residuo con coeficiente del término más singular.
+
+No sumar residuos de singularidades exteriores al contorno.
+
+No ignorar la orientación del contorno.
+
+No aplicar fórmulas de polo simple a polos múltiples.
+
+No olvidar el valor principal cuando hay polos sobre el eje real.
+
+No desarrollar alrededor del punto equivocado.
+
+
+## 10. Checklist de dominio
+
+- Si no puedes explicar qué añade Laurent a Taylor, falta repasar la diferencia entre función analítica y singularidad aislada.
+
+- Si no puedes decidir en qué corona converge una serie, falta repasar singularidades y series geométricas.
+
+- Si confundes parte principal con residuo, revisar la definición de coeficiente de \((z-z_0)^{-1}\).
+
+- Si llamas polo a toda expresión con denominador cero, revisar cancelaciones y singularidades eliminables.
+
+- Si no distingues polo simple de polo múltiple, repasar orden de ceros del denominador y del numerador.
+
+- Si aplicas \(\operatorname{Res}(g/h,z_0)=g(z_0)/h'(z_0)\) sin comprobar \(h'(z_0)\ne0\), revisar polos simples.
+
+- Si no puedes calcular \(\operatorname{Res}(\cos z/z,0)\), falta repasar la fórmula del polo simple.
+
+- Si no puedes calcular \(\operatorname{Res}(e^z/z^3,0)\), falta repasar series de Taylor elementales.
+
+- Si no puedes desarrollar \(1/(1+z)\) en \(|z|<1\) y en \(|z|>1\), falta repasar series geométricas.
+
+- Si no sabes qué singularidades están dentro de un contorno, falta repasar geometría básica del plano complejo.
+
+- Si olvidas el signo al cambiar la orientación del contorno, revisar orientación positiva y negativa.
+
+- Si calculas una integral por residuos sin justificar qué polos contribuyen, revisar el enunciado del teorema de los residuos.
+
+- Si no puedes transformar una integral trigonométrica con \(z=e^{i\theta}\), falta repasar las identidades de seno y coseno en función de \(z\).
+
+- Si no puedes resolver \(\int_{-\infty}^{\infty}dx/(1+x^2)\) por contorno, falta repasar semicircunferencias y estimación del arco.
+
+- Si confundes integral impropia con valor principal, revisar polos sobre el eje real.
+
+- Si puedes obtener la serie de Laurent en el dominio correcto, clasificar la singularidad y extraer el residuo, el núcleo del capítulo está asentado.
+
+- Si puedes aplicar el teorema de los residuos a una integral de contorno seleccionando solo los polos interiores, el uso operativo está asentado.
+
+- Si puedes transformar una integral real sencilla en una integral compleja y justificar el paso al límite, el capítulo está suficientemente dominado para examen básico.
+
+- Si puedes explicar por qué solo el término \(1/(z-z_0)\) contribuye a la integral, el fundamento teórico está dominado.
+
+- Si puedes detectar cuándo conviene serie, límite, \(g/h'\) o fórmula de polo múltiple, el capítulo está preparado para problemas de examen.

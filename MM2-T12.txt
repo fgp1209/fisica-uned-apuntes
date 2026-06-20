@@ -1,0 +1,890 @@
+# Guía de estudio — Métodos Matemáticos II
+
+Capítulo trabajado: T12. Espectro de operadores.
+
+## 1. Prerrequisitos mínimos
+
+1. Espacio vectorial complejo.
+
+Definición breve: un espacio vectorial complejo es un conjunto cuyos elementos pueden sumarse y multiplicarse por escalares complejos, cumpliendo las reglas algebraicas habituales.
+
+Por qué es necesario: la teoría espectral del capítulo se formula sobre espacios complejos no triviales. El parámetro espectral \(\lambda\) pertenece a \(\mathbb C\), y el espectro se entiende como subconjunto del plano complejo.
+
+Ejemplo mínimo: \(\mathbb C^n\), \(\ell^2(\mathbb C)\) y \(L^2[a,b]\) son espacios vectoriales complejos usados habitualmente en problemas de operadores.
+
+2. Norma y espacio normado.
+
+Definición breve: una norma es una aplicación \(x\mapsto \|x\|\) que mide el tamaño de los vectores y permite hablar de convergencia.
+
+Por qué es necesario: para decidir si un operador o su inverso es acotado hay que usar normas. Además, el espectro continuo se caracteriza por la existencia de una inversa no acotada.
+
+Ejemplo mínimo: en \(\mathbb C^n\), \(\|x\|_2=(|x_1|^2+\cdots+|x_n|^2)^{1/2}\). En \(\ell^2\), \(\|x\|_2=(\sum_{n=1}^\infty |x_n|^2)^{1/2}\).
+
+3. Espacio de Banach.
+
+Definición breve: es un espacio normado completo, es decir, toda sucesión de Cauchy converge dentro del propio espacio.
+
+Por qué es necesario: varios resultados estructurales del espectro de operadores acotados se formulan en espacios de Banach complejos. Por ejemplo, para un operador acotado sobre un espacio de Banach complejo, el espectro es compacto y está contenido en un disco determinado por la norma del operador.
+
+Ejemplo mínimo: \(\mathbb C^n\), \(\ell^2\) y \(L^2[a,b]\) son completos con sus normas usuales.
+
+4. Operador lineal.
+
+Definición breve: una aplicación \(T:X\to X\) es lineal si \(T(\alpha x+\beta y)=\alpha Tx+\beta Ty\).
+
+Por qué es necesario: todo el capítulo estudia cómo cambia el comportamiento de \(T-\lambda I\) al variar \(\lambda\in\mathbb C\).
+
+Ejemplo mínimo: si \(A\) es una matriz cuadrada, \(T(x)=Ax\) es un operador lineal en \(\mathbb C^n\).
+
+5. Operador acotado.
+
+Definición breve: un operador lineal \(T:X\to X\) es acotado si existe \(C>0\) tal que \(\|Tx\|\le C\|x\|\) para todo \(x\in X\). Su norma es \(\|T\|=\sup_{\|x\|=1}\|Tx\|\).
+
+Por qué es necesario: la acotación del resolvente decide si un valor pertenece al conjunto resolvente o al espectro. Para operadores acotados, además, se obtiene la inclusión \(\sigma(T)\subset\{\lambda:|\lambda|\le\|T\|\}\).
+
+Ejemplo mínimo: si \(T(x)=2x\), entonces \(\|T\|=2\).
+
+6. Inversa de un operador.
+
+Definición breve: \(T^{-1}\) existe si \(T\) es inyectivo sobre su dominio y cada elemento de su imagen tiene una única preimagen.
+
+Por qué es necesario: el resolvente se define como la inversa de \(T-\lambda I\). Si esa inversa no existe, \(\lambda\) pertenece al espectro puntual.
+
+Ejemplo mínimo: la matriz \(\begin{pmatrix}2&0\\0&3\end{pmatrix}-\lambda I\) es invertible salvo cuando \(\lambda=2\) o \(\lambda=3\).
+
+7. Densidad de un subconjunto.
+
+Definición breve: un subconjunto \(M\subset X\) es denso en \(X\) si todo elemento de \(X\) puede aproximarse por elementos de \(M\).
+
+Por qué es necesario: la clasificación espectral distingue entre que la imagen de \(T-\lambda I\) sea densa o no. Esa diferencia separa espectro continuo y espectro residual.
+
+Ejemplo mínimo: en muchos espacios de funciones, los polinomios o las funciones suaves pueden ser densos respecto de una norma adecuada.
+
+8. Autovalores y autovectores.
+
+Definición breve: \(\lambda\) es autovalor de \(T\) si existe \(x\ne0\) tal que \(Tx=\lambda x\). Ese \(x\) es autovector.
+
+Por qué es necesario: el espectro puntual generaliza la noción de autovalor. En dimensión finita el espectro es únicamente espectro puntual, pero en dimensión infinita pueden aparecer valores espectrales que no son autovalores.
+
+Ejemplo mínimo: para \(A=\begin{pmatrix}2&0\\0&3\end{pmatrix}\), los autovalores son \(2\) y \(3\).
+
+## 2. Idea central del capítulo
+
+El capítulo estudia cómo analizar un operador lineal mediante los valores complejos \(\lambda\) para los que el operador desplazado \(T-\lambda I\) deja de comportarse de forma regular. Esta idea prolonga la teoría de autovalores de matrices. En una matriz finita, los valores importantes son los \(\lambda\) que hacen singular \(A-\lambda I\). En espacios normados, especialmente de dimensión infinita, la situación se vuelve más rica: puede existir la inversa algebraica de \(T-\lambda I\), pero no ser acotada, o puede existir solo sobre una imagen que no es densa.
+
+El objetivo no es solo encontrar autovalores. El espectro \(\sigma(T)\) contiene todos los valores en los que falla alguna propiedad esencial del resolvente. Por eso se divide en espectro puntual, continuo y residual. Esta división es la parte operativa del tema: en un problema de examen no basta con decir “\(\lambda\) está en el espectro”; hay que justificar si falla la inyectividad, la acotación del inverso o la densidad de la imagen.
+
+El capítulo ocupa una posición de cierre dentro del bloque de espacios y operadores de MM2. Antes se han estudiado espacios vectoriales, métricos, normados, de Hilbert, operadores lineales, acotación y adjuntos. El espectro reúne todo eso en un mismo método: estudiar \(T-\lambda I\), su núcleo, su imagen, su inversa y la acotación de esa inversa.
+
+La diferencia conceptual más importante respecto al álgebra lineal elemental es que en dimensión infinita no todo valor espectral tiene autovector. En dimensión finita, si \(A-\lambda I\) no es invertible, hay un vector no nulo anulado por \(A-\lambda I\). En espacios infinitodimensionales puede ocurrir que \(T-\lambda I\) sea inyectivo, tenga imagen densa, pero su inversa sea no acotada. Ese caso produce espectro continuo. También puede ocurrir que la imagen no sea densa, lo que da espectro residual.
+
+El uso de sucesiones de Weyl en los exámenes responde a esta idea. Para valores del espectro continuo, muchas veces no se encuentra un autovector exacto, pero sí vectores normalizados \(x_n\) tales que \(\|(T-\lambda I)x_n\|\to0\). Son “casi autovectores”: no resuelven \(Tx=\lambda x\), pero muestran que el operador se acerca a ser singular en el límite.
+
+## 3. Desarrollo completo del capítulo
+
+### 3.1. De matrices a operadores
+
+El punto de partida es la teoría de autovalores de matrices. Para una matriz cuadrada \(A\), un número \(\lambda\) es autovalor si existe \(x\ne0\) tal que
+\[
+Ax=\lambda x.
+\]
+Equivalente:
+\[
+(A-\lambda I)x=0
+\]
+tiene solución no trivial. En dimensión finita esto ocurre exactamente cuando
+\[
+\det(A-\lambda I)=0.
+\]
+
+Esto importa porque el capítulo toma esta idea algebraica y la convierte en una teoría válida para operadores en espacios normados. En dimensión finita, el espectro de una matriz es el conjunto de sus autovalores y el resolvente es el complemento de ese conjunto en \(\mathbb C\). Si \(A=\operatorname{diag}(2,3)\), entonces
+\[
+\sigma(A)=\{2,3\},\qquad \rho(A)=\mathbb C\setminus\{2,3\}.
+\]
+
+La conexión con lo anterior es directa: los temas previos de MM2 han enseñado qué son operadores lineales y cuándo son continuos o acotados. El espectro pregunta para qué valores \(\lambda\) el operador \(T-\lambda I\) pierde una buena inversa.
+
+La consecuencia inmediata es que el cálculo espectral siempre empieza igual: escribir \(T_\lambda=T-\lambda I\) y estudiar si \(T_\lambda\) es inyectivo, qué imagen tiene y si su inversa está acotada.
+
+### 3.2. El operador desplazado \(T-\lambda I\)
+
+Dado un operador lineal \(T\), para cada \(\lambda\in\mathbb C\) se considera
+\[
+T_\lambda=T-\lambda I.
+\]
+El problema espectral no estudia \(T\) aislado, sino toda la familia \(T_\lambda\).
+
+Si \(T_\lambda\) tiene inversa, se define el resolvente
+\[
+R_\lambda(T)=(T-\lambda I)^{-1}.
+\]
+Algunos textos usan \((\lambda I-T)^{-1}\). La diferencia es un signo, pero en examen hay que fijar una convención y mantenerla.
+
+La pregunta importante no es solo “¿existe la inversa?”. En espacios normados hay que preguntar también si esa inversa es acotada y si está definida en un subconjunto denso del espacio. El dominio de \(R_\lambda(T)\) es la imagen de \(T-\lambda I\). Por eso la densidad de la imagen entra en la definición.
+
+Ejemplo: si \(T=0\), entonces \(T-\lambda I=-\lambda I\). Para \(\lambda\ne0\), la inversa existe y es \(-\lambda^{-1}I\), acotada. Para \(\lambda=0\), la inversa no existe. Por tanto, \(\sigma(T)=\{0\}\).
+
+### 3.3. Valor regular, conjunto resolvente y espectro
+
+Un valor \(\lambda\) es regular para \(T\) si se cumplen tres condiciones:
+
+(R1) \(R_\lambda(T)\) existe.
+
+(R2) \(R_\lambda(T)\) es acotado.
+
+(R3) \(R_\lambda(T)\) está definido en un subconjunto denso de \(X\), es decir, la imagen de \(T-\lambda I\) es densa en \(X\).
+
+El conjunto de todos los valores regulares se llama conjunto resolvente:
+\[
+\rho(T).
+\]
+El espectro es su complemento:
+\[
+\sigma(T)=\mathbb C\setminus\rho(T).
+\]
+
+Esta definición es el núcleo del capítulo. En dimensión finita puede parecer excesiva, porque toda aplicación lineal definida en dimensión finita es acotada y la densidad coincide con ser todo el espacio. Pero en dimensión infinita las tres condiciones se separan, y esa separación produce los tres tipos de espectro.
+
+Consecuencia práctica: para clasificar \(\lambda\), no se empieza preguntando “¿es autovalor?”. Se empieza por \(T-\lambda I\). Si tiene núcleo no trivial, hay espectro puntual. Si es inyectivo, se mira su imagen y la acotación del inverso.
+
+### 3.4. Espectro puntual
+
+El espectro puntual \(\sigma_p(T)\) está formado por los \(\lambda\) para los que \(R_\lambda(T)\) no existe. Esto equivale a que \(T-\lambda I\) no sea inyectivo:
+\[
+\ker(T-\lambda I)\ne\{0\}.
+\]
+En ese caso, existe \(x\ne0\) tal que
+\[
+Tx=\lambda x.
+\]
+
+Por tanto, el espectro puntual es exactamente el conjunto de autovalores. El autoespacio asociado a \(\lambda\) es
+\[
+E_\lambda=\ker(T-\lambda I).
+\]
+
+Esto importa en examen porque, si se pide “espectro puntual y base del autoespacio”, el procedimiento es resolver la ecuación \(Tx=\lambda x\), imponer que \(x\) pertenezca al espacio correspondiente y describir todas las soluciones no nulas.
+
+Ejemplo en \(\ell^2\): para el shift a la izquierda
+\[
+S(x_1,x_2,x_3,\ldots)=(x_2,x_3,x_4,\ldots),
+\]
+la ecuación \(Sx=\lambda x\) da
+\[
+x_{n+1}=\lambda x_n.
+\]
+Luego \(x_n=\lambda^{n-1}x_1\). Esta sucesión pertenece a \(\ell^2\) si y solo si \(|\lambda|<1\), salvo el caso trivial \(x_1=0\). Por tanto, en este ejemplo,
+\[
+\sigma_p(S)=\{\lambda\in\mathbb C:|\lambda|<1\}.
+\]
+
+### 3.5. Espectro continuo
+
+El espectro continuo \(\sigma_c(T)\) aparece cuando \(R_\lambda(T)\) existe y su dominio es denso, pero \(R_\lambda(T)\) no es acotado. Equivalentemente, \(T-\lambda I\) es inyectivo, su imagen es densa, pero la inversa sobre esa imagen no controla la norma.
+
+Este caso no aparece en dimensión finita. Es una de las razones por las que la teoría espectral de operadores es más amplia que la teoría de autovalores de matrices.
+
+La interpretación operativa es la siguiente: no hay autovector exacto, pero el operador \(T-\lambda I\) puede hacerse arbitrariamente pequeño sobre vectores de norma uno. En los ejercicios de MM2 esto suele expresarse mediante sucesiones de Weyl: una sucesión \((x_n)\) con
+\[
+\|x_n\|=1,\qquad \|(T-\lambda I)x_n\|\to0.
+\]
+Tales sucesiones muestran que \(\lambda\) se comporta como un autovalor aproximado.
+
+Ejemplo para el shift a la izquierda \(S\) en \(\ell^2\): si \(|\lambda|=1\), se puede tomar
+\[
+x^{(N)}=\frac1{\sqrt N}(1,\lambda,\lambda^2,\ldots,\lambda^{N-1},0,0,\ldots).
+\]
+Entonces \(\|x^{(N)}\|=1\) y
+\[
+\|(S-\lambda I)x^{(N)}\|\to0
+\]
+con una elección coherente de potencias según la convención usada para el shift. Esto ilustra por qué los puntos de la circunferencia unidad aparecen como espectro continuo.
+
+### 3.6. Espectro residual
+
+El espectro residual \(\sigma_r(T)\) aparece cuando \(R_\lambda(T)\) existe, pero su dominio no es denso en \(X\). Como el dominio del resolvente es la imagen de \(T-\lambda I\), esto significa que
+\[
+\overline{\operatorname{Im}(T-\lambda I)}\ne X.
+\]
+
+La diferencia con el espectro continuo es sutil pero esencial. En ambos casos \(\lambda\) no es autovalor, porque la inversa existe. La diferencia es la imagen: en el continuo es densa; en el residual no lo es.
+
+Esta distinción importa especialmente en espacios de Hilbert, porque la falta de densidad puede detectarse mediante ortogonalidad. Si la imagen de \(T-\lambda I\) no es densa, existe un vector no nulo ortogonal a esa imagen. Esto conecta el espectro residual con el adjunto.
+
+Ejemplo conceptual: en el shift a la derecha en \(\ell^2\), pueden aparecer valores que no son autovalores del operador, pero sí están relacionados con autovalores del adjunto. Esa es una fuente típica de espectro residual.
+
+### 3.7. Partición del plano complejo
+
+El plano complejo queda dividido en cuatro conjuntos disjuntos:
+\[
+\mathbb C=\rho(T)\cup\sigma_p(T)\cup\sigma_c(T)\cup\sigma_r(T).
+\]
+El espectro total es
+\[
+\sigma(T)=\sigma_p(T)\cup\sigma_c(T)\cup\sigma_r(T).
+\]
+
+Esta es una jerarquía de decisión. Para cada \(\lambda\), una y solo una de las siguientes posibilidades ocurre: \(\lambda\) es regular, es autovalor, pertenece al espectro continuo o pertenece al residual.
+
+En examen, esta partición exige justificar la clasificación. No basta escribir el conjunto final. Hay que indicar por qué falla o se cumple cada condición: núcleo, imagen, densidad y acotación.
+
+### 3.8. Dimensión finita frente a dimensión infinita
+
+En dimensión finita, la teoría se reduce a autovalores. Todo operador lineal puede representarse por una matriz. Las matrices que representan el mismo operador en bases distintas son semejantes y tienen los mismos autovalores. Por tanto, los autovalores del operador están bien definidos, no dependen de la base.
+
+Además, en dimensión finita:
+\[
+\sigma(T)=\sigma_p(T),\qquad \sigma_c(T)=\varnothing,\qquad \sigma_r(T)=\varnothing.
+\]
+
+Esto importa porque muchos errores surgen de aplicar mecánicamente la intuición matricial a espacios infinitodimensionales. En una matriz, si no hay autovector, no hay espectro. En un operador sobre \(\ell^2\) o \(L^2\), puede haber espectro sin autovector.
+
+Ejemplo de contraste: una matriz diagonal finita tiene un número finito de valores espectrales. Un operador shift en \(\ell^2\) puede tener como espectro todo el disco unidad cerrado.
+
+### 3.9. Propiedades del espectro de operadores acotados
+
+Si \(T:X\to X\) es un operador lineal acotado sobre un espacio de Banach complejo, entonces el conjunto resolvente \(\rho(T)\) es abierto y el espectro \(\sigma(T)\) es cerrado. Además, el espectro es compacto y está contenido en el disco
+\[
+|\lambda|\le \|T\|.
+\]
+
+Esto tiene consecuencias prácticas. Primero, si se conoce \(\|T\|\), se obtiene una región donde debe estar el espectro. Segundo, si se calcula una parte del espectro y se sabe que el espectro es cerrado, hay que incluir puntos límite. Por eso, en operadores tipo shift, el espectro puntual puede ser el disco abierto, pero el espectro total contiene también la frontera.
+
+El radio espectral se define como
+\[
+r_\sigma(T)=\sup\{|\lambda|:\lambda\in\sigma(T)\}.
+\]
+El capítulo presenta esta cantidad como el radio del menor disco cerrado centrado en el origen que contiene al espectro.
+
+Ejemplo: si \(\sigma(T)=\{\lambda:|\lambda|\le1\}\), entonces \(r_\sigma(T)=1\).
+
+### 3.10. Resolvente y serie de Neumann
+
+Una herramienta básica del capítulo es la inversión por series. Si un operador \(A\) tiene norma menor que uno, entonces \(I-A\) es invertible y
+\[
+(I-A)^{-1}=\sum_{n=0}^\infty A^n.
+\]
+Esta idea permite demostrar que el conjunto resolvente es abierto y obtener una representación local del resolvente.
+
+Si \(\lambda_0\in\rho(T)\), entonces para \(\lambda\) suficientemente cercano a \(\lambda_0\), también \(\lambda\in\rho(T)\). El resolvente puede desarrollarse en una serie de potencias alrededor de \(\lambda_0\), dentro de un disco contenido en \(\rho(T)\).
+
+La consecuencia conceptual es importante: los puntos espectrales no aparecen aislados por accidente de cálculo. El resolvente tiene estabilidad local; si un valor es regular, hay un entorno de valores regulares.
+
+### 3.11. Adjuntos y espectro
+
+En espacios de Hilbert, el adjunto \(T^*\) se define por
+\[
+(Tx,y)=(x,T^*y)
+\]
+con la convención de producto escalar correspondiente. El adjunto entra en los ejercicios de espectro porque ayuda a estudiar imágenes no densas y operadores shift.
+
+La relación práctica es que la imagen de \(T-\lambda I\) no es densa si existe un vector no nulo ortogonal a ella. En espacios de Hilbert esto se traduce en condiciones sobre el núcleo de un operador adjunto. Por eso, aunque el tema sea “espectro”, los exámenes pueden pedir también calcular \(T^*\).
+
+Ejemplo: si \(S\) es el shift a la izquierda en \(\ell^2\), su adjunto es el shift a la derecha:
+\[
+S^*(x_1,x_2,x_3,\ldots)=(0,x_1,x_2,\ldots),
+\]
+salvo que se usen ponderaciones o factores complejos, en cuyo caso el adjunto incorpora los conjugados de esos factores.
+
+## 4. Conceptos clave
+
+1. Operador desplazado \(T-\lambda I\).
+
+Definición precisa: para \(T:X\to X\) y \(\lambda\in\mathbb C\), es el operador \(T_\lambda=T-\lambda I\).
+
+Explicación desarrollada: convierte el problema espectral en un problema de invertibilidad. En lugar de estudiar directamente \(T\), se estudia cuándo \(T_\lambda\) tiene buena inversa.
+
+Ejemplo: si \(T=A\) es una matriz, \(A-\lambda I\) es la matriz característica.
+
+Relación con otros conceptos: su núcleo da el espectro puntual; su imagen y la acotación de su inversa separan espectro continuo y residual.
+
+Posible forma de preguntarlo en examen: “Para el operador \(T\), estudiar \(T-\lambda I\) y clasificar los valores espectrales”.
+
+2. Resolvente.
+
+Definición precisa: \(R_\lambda(T)=(T-\lambda I)^{-1}\), cuando esa inversa existe con la convención indicada.
+
+Explicación desarrollada: el resolvente mide si \(T-\lambda I\) puede invertirse de manera controlada. No es solo una fórmula: su existencia, dominio y acotación determinan la clasificación espectral.
+
+Ejemplo: si \(T=0\), entonces \(R_\lambda(T)=-\lambda^{-1}I\) para \(\lambda\ne0\).
+
+Relación con otros conceptos: el conjunto de valores donde el resolvente es regular es \(\rho(T)\); su complemento es \(\sigma(T)\).
+
+Posible forma de preguntarlo en examen: “Determinar el conjunto resolvente de una matriz u operador sencillo”.
+
+3. Conjunto resolvente \(\rho(T)\).
+
+Definición precisa: conjunto de \(\lambda\in\mathbb C\) tales que \(R_\lambda(T)\) existe, es acotado y está definido en un conjunto denso de \(X\).
+
+Explicación desarrollada: agrupa los valores para los que \(T-\lambda I\) no presenta problema espectral. En operadores acotados sobre Banach es abierto.
+
+Ejemplo: para \(A=\operatorname{diag}(2,3)\), \(\rho(A)=\mathbb C\setminus\{2,3\}\).
+
+Relación con otros conceptos: \(\sigma(T)=\mathbb C\setminus\rho(T)\).
+
+Posible forma de preguntarlo en examen: “Justificar que un cierto \(\lambda\) pertenece al resolvente”.
+
+4. Espectro \(\sigma(T)\).
+
+Definición precisa: complemento del resolvente en \(\mathbb C\):
+\[
+\sigma(T)=\mathbb C\setminus\rho(T).
+\]
+
+Explicación desarrollada: contiene todos los valores en los que falla alguna condición de regularidad. Puede incluir autovalores, valores continuos y valores residuales.
+
+Ejemplo: para el shift a la izquierda en \(\ell^2\), el espectro total es el disco unidad cerrado.
+
+Relación con otros conceptos: se descompone en \(\sigma_p(T)\), \(\sigma_c(T)\) y \(\sigma_r(T)\).
+
+Posible forma de preguntarlo en examen: “Calcular el espectro y sus componentes puntual, continuo y residual”.
+
+5. Espectro puntual.
+
+Definición precisa: conjunto de \(\lambda\) tales que \(T-\lambda I\) no es inyectivo.
+
+Explicación desarrollada: es el conjunto de autovalores. Se obtiene resolviendo \(Tx=\lambda x\) con \(x\ne0\) y verificando que \(x\in X\).
+
+Ejemplo: para \(S(x_1,x_2,\ldots)=(x_2,x_3,\ldots)\) en \(\ell^2\), \(|\lambda|<1\) da autovectores de la forma \((1,\lambda,\lambda^2,\ldots)\).
+
+Relación con otros conceptos: el autoespacio asociado es \(\ker(T-\lambda I)\).
+
+Posible forma de preguntarlo en examen: “Determinar el espectro puntual y una base de cada autoespacio”.
+
+6. Autoespacio.
+
+Definición precisa:
+\[
+E_\lambda=\ker(T-\lambda I).
+\]
+
+Explicación desarrollada: contiene el cero y todos los autovectores asociados a \(\lambda\). En un examen hay que describirlo como subespacio y, si se pide, dar una base y su dimensión.
+
+Ejemplo: si \(A=\operatorname{diag}(2,3)\), entonces \(E_2=\operatorname{span}\{(1,0)\}\).
+
+Relación con otros conceptos: existe autoespacio no trivial si y solo si \(\lambda\in\sigma_p(T)\).
+
+Posible forma de preguntarlo en examen: “Dar la dimensión del autoespacio correspondiente a cada autovalor”.
+
+7. Espectro continuo.
+
+Definición precisa: conjunto de \(\lambda\) tales que \(R_\lambda(T)\) existe y está definido en un conjunto denso, pero no es acotado.
+
+Explicación desarrollada: no hay autovector, pero \(T-\lambda I\) se comporta de forma casi singular. Aparece en dimensión infinita.
+
+Ejemplo: para el shift a la izquierda en \(\ell^2\), los \(\lambda\) con \(|\lambda|=1\) forman el espectro continuo.
+
+Relación con otros conceptos: suele demostrarse mediante sucesiones de Weyl o mostrando que la imagen es densa y la inversa no acotada.
+
+Posible forma de preguntarlo en examen: “Determinar el espectro continuo y dar sucesiones de Weyl”.
+
+8. Espectro residual.
+
+Definición precisa: conjunto de \(\lambda\) tales que \(R_\lambda(T)\) existe, pero su dominio no es denso en \(X\).
+
+Explicación desarrollada: \(T-\lambda I\) es inyectivo, pero su imagen deja fuera una parte no aproximable del espacio.
+
+Ejemplo: en operadores shift, el residual puede aparecer al comparar el operador con su adjunto.
+
+Relación con otros conceptos: se relaciona con \(\overline{\operatorname{Im}(T-\lambda I)}\ne X\).
+
+Posible forma de preguntarlo en examen: “Decidir si el espectro residual es vacío”.
+
+9. Sucesión de Weyl.
+
+Definición precisa: en el uso habitual de los ejercicios, es una sucesión \((x_n)\subset X\) con \(\|x_n\|=1\) y \(\|(T-\lambda I)x_n\|\to0\).
+
+Explicación desarrollada: muestra que \(\lambda\) actúa como autovalor aproximado. No produce un autovector exacto, pero detecta falta de acotación del inverso.
+
+Ejemplo: para el shift a la izquierda y \(|\lambda|=1\), se usan vectores truncados de potencias de \(\lambda\).
+
+Relación con otros conceptos: es una herramienta para justificar espectro continuo.
+
+Posible forma de preguntarlo en examen: “Dar explícitamente sucesiones de Weyl para los valores del espectro continuo”.
+
+10. Radio espectral.
+
+Definición precisa:
+\[
+r_\sigma(T)=\sup_{\lambda\in\sigma(T)}|\lambda|.
+\]
+
+Explicación desarrollada: mide el tamaño máximo del espectro respecto al origen. Para operadores acotados se cumple \(r_\sigma(T)\le\|T\|\).
+
+Ejemplo: si \(\sigma(T)=\{|\lambda|\le1\}\), entonces \(r_\sigma(T)=1\).
+
+Relación con otros conceptos: depende del espectro total, no solo del puntual.
+
+Posible forma de preguntarlo en examen: “Usando la norma, acotar el espectro de un operador”.
+
+11. Adjuntamiento.
+
+Definición precisa: en un espacio de Hilbert, \(T^*\) es el operador que satisface \((Tx,y)=(x,T^*y)\).
+
+Explicación desarrollada: permite trasladar información de imagen y ortogonalidad. En ejercicios de shift es una herramienta directa para hallar el operador adjunto.
+
+Ejemplo: el adjunto del shift a la izquierda es el shift a la derecha.
+
+Relación con otros conceptos: ayuda a detectar espectro residual mediante la no densidad de la imagen.
+
+Posible forma de preguntarlo en examen: “Calcular el adjunto del operador y usarlo para estudiar el espectro”.
+
+## 5. Relaciones entre ideas
+
+La relación principal es jerárquica. Primero se define \(T-\lambda I\). Después se define su inversa, si existe. A partir de ahí se define el resolvente. Finalmente, el espectro aparece como el conjunto donde el resolvente no es regular.
+
+El espectro puntual depende del núcleo:
+\[
+\ker(T-\lambda I)\ne\{0\}.
+\]
+El espectro continuo y residual aparecen cuando ese núcleo es trivial, pero falla otra cosa. Si la imagen es densa y la inversa no es acotada, hay espectro continuo. Si la imagen no es densa, hay espectro residual.
+
+La diferencia entre dimensión finita e infinita atraviesa todo el capítulo. En dimensión finita, la inyectividad, la sobreyectividad y la existencia de inversa están unidas. En dimensión infinita se separan. Por eso el espectro deja de ser solo una lista de autovalores.
+
+El resolvente y el espectro son opuestos. Donde el resolvente se comporta bien, no hay espectro. Donde falla existencia, acotación o densidad, hay espectro. Esta oposición produce la partición:
+\[
+\mathbb C=\rho(T)\cup\sigma_p(T)\cup\sigma_c(T)\cup\sigma_r(T).
+\]
+
+La acotación del operador \(T\) tiene consecuencias globales. Si \(T\) es acotado sobre un espacio de Banach complejo, el espectro está encerrado dentro del disco de radio \(\|T\|\). Por tanto, al estudiar un operador concreto, calcular o estimar \(\|T\|\) sirve para no buscar espectro fuera de una región imposible.
+
+Las sucesiones de Weyl se sitúan entre autovalores y espectro continuo. Un autovalor tiene un vector exacto \(x\ne0\) con \((T-\lambda I)x=0\). Un valor del espectro continuo puede no tener ese vector, pero admite vectores normalizados para los que \((T-\lambda I)x_n\) tiende a cero. La consecuencia de examen es clara: si no encuentras autovector para \(|\lambda|=1\) en un shift, no concluyas que no hay espectro; busca autovectores aproximados.
+
+El adjunto conecta con el residual. En espacios de Hilbert, que una imagen no sea densa equivale a que exista un vector no nulo ortogonal a ella. Esa ortogonalidad se expresa mediante el adjunto. Por eso los problemas de espectro de operadores en \(\ell^2\) suelen pedir también \(T^*\).
+
+La evolución histórica interna del tema, tal como se presenta didácticamente, va de lo algebraico a lo analítico: primero matrices y determinantes; después operadores en espacios normados; luego acotación, densidad, resolvente y clasificación espectral. El determinante deja de ser la herramienta central, porque no existe en general para operadores infinitodimensionales. Lo sustituyen núcleo, imagen, densidad, norma del inverso y aproximación por sucesiones.
+
+## 6. Errores habituales
+
+1. Error: identificar siempre espectro con autovalores.
+
+Por qué está mal: eso solo es válido en dimensión finita. En dimensión infinita puede haber espectro continuo o residual sin autovectores.
+
+Corrección: calcular \(\sigma_p(T)\), \(\sigma_c(T)\) y \(\sigma_r(T)\) por separado.
+
+Respuesta incorrecta: “Como \(Tx=\lambda x\) no tiene solución no nula, \(\lambda\notin\sigma(T)\)”.
+
+Respuesta correcta: “Como no hay autovectores, \(\lambda\notin\sigma_p(T)\). Falta estudiar imagen, densidad y acotación del inverso”.
+
+2. Error: olvidar comprobar que el autovector pertenece al espacio.
+
+Por qué está mal: una solución formal de \(Tx=\lambda x\) puede no estar en \(X\). En \(\ell^2\), no toda sucesión definida por recurrencia es admisible.
+
+Corrección: después de obtener \(x_n\), verificar \(\sum |x_n|^2<\infty\).
+
+Respuesta incorrecta: “\(x=(1,\lambda,\lambda^2,\ldots)\) es autovector para todo \(\lambda\)”.
+
+Respuesta correcta: “Ese vector pertenece a \(\ell^2\) solo si \(|\lambda|<1\)”.
+
+3. Error: confundir imagen densa con imagen igual al espacio.
+
+Por qué está mal: en espacios infinitodimensionales un subespacio puede ser denso sin coincidir con todo el espacio.
+
+Corrección: distinguir \(\operatorname{Im}(T-\lambda I)=X\) de \(\overline{\operatorname{Im}(T-\lambda I)}=X\).
+
+Respuesta incorrecta: “La imagen no es todo el espacio, luego el espectro es residual”.
+
+Respuesta correcta: “La imagen no es todo el espacio; hay que comprobar si es densa. Si lo es y el inverso no es acotado, el espectro es continuo”.
+
+4. Error: clasificar como continuo sin probar que no es puntual.
+
+Por qué está mal: el espectro continuo exige que \(R_\lambda(T)\) exista; por tanto \(T-\lambda I\) debe ser inyectivo.
+
+Corrección: primero demostrar \(\ker(T-\lambda I)=\{0\}\).
+
+Respuesta incorrecta: “Como hay una sucesión de Weyl, \(\lambda\) está en el continuo”.
+
+Respuesta correcta: “La sucesión de Weyl muestra comportamiento aproximado; además, como el núcleo es trivial y la imagen es densa, \(\lambda\) pertenece al continuo”.
+
+5. Error: usar el determinante en dimensión infinita.
+
+Por qué está mal: los operadores en \(\ell^2\) o \(L^2\) no se tratan mediante determinantes finitos.
+
+Corrección: usar núcleo, imagen, densidad, acotación e inversa.
+
+Respuesta incorrecta: “Calculo \(\det(T-\lambda I)\)”.
+
+Respuesta correcta: “Resuelvo \((T-\lambda I)x=0\) y estudio la imagen de \(T-\lambda I\)”.
+
+6. Error: olvidar el cierre del espectro.
+
+Por qué está mal: para operadores acotados sobre Banach complejo, el espectro es cerrado. Si aparece un disco abierto de autovalores, los puntos frontera deben examinarse.
+
+Corrección: incluir los puntos límite si forman parte del espectro total.
+
+Respuesta incorrecta: “El espectro del shift a la izquierda es \(|\lambda|<1\)”.
+
+Respuesta correcta: “El espectro puntual es \(|\lambda|<1\), pero el espectro total incluye la frontera \(|\lambda|=1\)”.
+
+7. Error: no distinguir operador y adjunto.
+
+Por qué está mal: el adjunto puede tener espectro puntual distinto del operador. En shifts, izquierda y derecha se comportan de forma diferente.
+
+Corrección: calcular \(T^*\) usando la definición del producto escalar.
+
+Respuesta incorrecta: “El adjunto del shift a la izquierda es el mismo shift”.
+
+Respuesta correcta: “El adjunto del shift a la izquierda es el shift a la derecha, con conjugación de coeficientes si hay pesos complejos”.
+
+8. Error: confundir acotación de \(T\) con acotación del resolvente.
+
+Por qué está mal: \(T\) puede ser acotado y, sin embargo, \((T-\lambda I)^{-1}\) no estar acotado para ciertos \(\lambda\).
+
+Corrección: estudiar explícitamente \(R_\lambda(T)\).
+
+Respuesta incorrecta: “Como \(T\) es acotado, todo inverso que exista será acotado”.
+
+Respuesta correcta: “Aunque \(T\) sea acotado, el inverso de \(T-\lambda I\) puede no ser acotado; eso produce espectro continuo”.
+
+9. Error: no normalizar las sucesiones de Weyl.
+
+Por qué está mal: si no se impone \(\|x_n\|=1\), cualquier sucesión que tienda a cero podría dar una prueba falsa.
+
+Corrección: construir \(x_n\) con norma uno.
+
+Respuesta incorrecta: “Tomo \(x_n\to0\), entonces \((T-\lambda I)x_n\to0\)”.
+
+Respuesta correcta: “Tomo \(\|x_n\|=1\) y pruebo \(\|(T-\lambda I)x_n\|\to0\)”.
+
+10. Error: dar solo el conjunto espectral sin clasificación.
+
+Por qué está mal: los problemas de MM2 suelen pedir componentes puntual, continua y residual.
+
+Corrección: presentar el resultado por partes.
+
+Respuesta incorrecta: “\(\sigma(T)=\{|\lambda|\le1\}\)”.
+
+Respuesta correcta: “\(\sigma_p(T)=\{|\lambda|<1\}\), \(\sigma_c(T)=\{|\lambda|=1\}\), \(\sigma_r(T)=\varnothing\), luego \(\sigma(T)=\{|\lambda|\le1\}\)”.
+
+## 7. Preguntas orientadas a examen
+
+### 10 preguntas fáciles
+
+1. Define el operador \(T-\lambda I\) y explica por qué aparece en teoría espectral.
+
+2. ¿Qué es el resolvente \(R_\lambda(T)\)?
+
+3. Define conjunto resolvente y espectro de un operador.
+
+4. ¿Cuándo pertenece \(\lambda\) al espectro puntual?
+
+5. ¿Qué es el autoespacio asociado a un autovalor?
+
+6. En dimensión finita, ¿qué relación hay entre espectro y autovalores?
+
+7. ¿Qué tres condiciones debe cumplir un valor regular?
+
+8. ¿Qué significa que la imagen de un operador sea densa?
+
+9. Define radio espectral.
+
+10. ¿Por qué en dimensión infinita puede haber espectro sin autovalores?
+
+### 10 preguntas medias
+
+11. Clasifica las tres formas de fallo de regularidad de \(T-\lambda I\).
+
+12. Explica la diferencia entre espectro continuo y residual.
+
+13. Calcula el espectro de \(A=\operatorname{diag}(2,3)\).
+
+14. Para \(T=0\) en un espacio normado complejo no trivial, calcula \(\rho(T)\) y \(\sigma(T)\).
+
+15. Sea \(T=cI\). Determina su espectro y su espectro puntual.
+
+16. Explica por qué, si \(T\) es acotado sobre un Banach complejo, \(\sigma(T)\subset\{|\lambda|\le\|T\|\}\).
+
+17. Para el shift a la izquierda en \(\ell^2\), resuelve formalmente \(Sx=\lambda x\).
+
+18. En el shift a la izquierda, ¿para qué \(\lambda\) el vector \((1,\lambda,\lambda^2,\ldots)\) pertenece a \(\ell^2\)?
+
+19. ¿Qué papel tiene una sucesión de Weyl en la detección del espectro continuo?
+
+20. Explica cómo se calcula el adjunto de un operador shift usando el producto escalar.
+
+### 5 preguntas difíciles
+
+21. Para el shift a la izquierda \(S\) en \(\ell^2\), determina \(\sigma_p(S)\), \(\sigma_c(S)\), \(\sigma_r(S)\) y \(\sigma(S)\).
+
+22. Para \(|\lambda|=1\), construye una sucesión de Weyl para el shift a la izquierda.
+
+23. Justifica por qué el espectro de un operador acotado sobre Banach complejo es cerrado.
+
+24. Explica cómo el adjunto ayuda a detectar espectro residual en espacios de Hilbert.
+
+25. Da un ejemplo conceptual de valor espectral que no sea autovalor y explica qué falla.
+
+### 5 preguntas de desarrollo largo
+
+26. Desarrolla la transición desde la teoría de autovalores de matrices hasta la teoría espectral de operadores.
+
+27. Explica con detalle la partición \(\mathbb C=\rho(T)\cup\sigma_p(T)\cup\sigma_c(T)\cup\sigma_r(T)\).
+
+28. Redacta un método general para resolver un problema de espectro de un operador en \(\ell^2\).
+
+29. Explica las propiedades principales del espectro de operadores acotados sobre espacios de Banach complejos.
+
+30. Expón la relación entre espectro, resolvente, sucesiones de Weyl y adjunto en problemas de examen.
+
+### 5 preguntas de relación entre conceptos
+
+31. Relaciona núcleo de \(T-\lambda I\), espectro puntual y autoespacio.
+
+32. Relaciona imagen densa, inversa no acotada y espectro continuo.
+
+33. Relaciona imagen no densa, ortogonalidad y adjunto.
+
+34. Relaciona dimensión finita, determinante y ausencia de espectro continuo.
+
+35. Relaciona norma del operador, compacidad del espectro y radio espectral.
+
+## 8. Respuestas modelo
+
+### Respuestas fáciles
+
+1. El operador \(T-\lambda I\) es el desplazamiento de \(T\) por el múltiplo escalar \(\lambda\) de la identidad. Aparece porque \(\lambda\) es espectral precisamente cuando \(T-\lambda I\) no tiene una inversa regular. En matrices, esto equivale a estudiar \(A-\lambda I\).
+
+2. El resolvente es
+\[
+R_\lambda(T)=(T-\lambda I)^{-1},
+\]
+si esa inversa existe. No basta con que exista algebraicamente: en espacios normados también se exige que sea acotado y definido sobre un conjunto denso para que \(\lambda\) sea regular.
+
+3. El conjunto resolvente \(\rho(T)\) es el conjunto de valores \(\lambda\in\mathbb C\) para los que \(R_\lambda(T)\) existe, es acotado y tiene dominio denso. El espectro es el complemento:
+\[
+\sigma(T)=\mathbb C\setminus\rho(T).
+\]
+
+4. \(\lambda\) pertenece al espectro puntual si \(T-\lambda I\) no es inyectivo. Equivalentemente, existe \(x\ne0\) tal que \(Tx=\lambda x\). Por tanto, el espectro puntual es el conjunto de autovalores.
+
+5. El autoespacio asociado a \(\lambda\) es
+\[
+E_\lambda=\ker(T-\lambda I).
+\]
+Contiene todos los autovectores asociados a \(\lambda\), junto con el vector cero. Es un subespacio vectorial.
+
+6. En dimensión finita, el espectro coincide con el conjunto de autovalores. No hay espectro continuo ni residual. Por eso se puede calcular mediante la ecuación característica \(\det(A-\lambda I)=0\).
+
+7. Debe cumplirse: que \(R_\lambda(T)\) exista, que sea acotado y que esté definido en un conjunto denso de \(X\). Si falla alguna de esas tres condiciones, \(\lambda\) pertenece al espectro.
+
+8. La imagen de un operador es densa si su clausura coincide con todo el espacio:
+\[
+\overline{\operatorname{Im}T}=X.
+\]
+Esto significa que cualquier vector de \(X\) puede aproximarse por vectores de la imagen.
+
+9. El radio espectral es
+\[
+r_\sigma(T)=\sup_{\lambda\in\sigma(T)}|\lambda|.
+\]
+Mide el radio del menor disco cerrado centrado en el origen que contiene el espectro.
+
+10. Porque en dimensión infinita la inyectividad, la densidad de la imagen y la acotación del inverso son propiedades separadas. Puede no haber autovectores y, aun así, fallar la acotación del inverso o la densidad de la imagen.
+
+### Respuestas medias
+
+11. Las tres formas de fallo son: fallo de existencia del resolvente, que da espectro puntual; existencia del resolvente con dominio denso pero no acotado, que da espectro continuo; y existencia del resolvente con dominio no denso, que da espectro residual.
+
+12. En el espectro continuo, \(T-\lambda I\) es inyectivo y su imagen es densa, pero la inversa no es acotada. En el residual, \(T-\lambda I\) también es inyectivo, pero su imagen no es densa. La diferencia clave es la densidad de la imagen.
+
+13. Para \(A=\operatorname{diag}(2,3)\),
+\[
+A-\lambda I=\begin{pmatrix}2-\lambda&0\\0&3-\lambda\end{pmatrix}.
+\]
+Es invertible si \(\lambda\ne2,3\). Por tanto,
+\[
+\sigma(A)=\{2,3\},\qquad \rho(A)=\mathbb C\setminus\{2,3\}.
+\]
+
+14. Si \(T=0\), entonces \(T-\lambda I=-\lambda I\). Para \(\lambda\ne0\), es invertible y su inversa es acotada. Para \(\lambda=0\), no es invertible. Luego
+\[
+\rho(T)=\mathbb C\setminus\{0\},\qquad \sigma(T)=\{0\}.
+\]
+
+15. Si \(T=cI\), entonces \(T-\lambda I=(c-\lambda)I\). Es invertible si \(\lambda\ne c\) y no lo es si \(\lambda=c\). Por tanto,
+\[
+\sigma(T)=\sigma_p(T)=\{c\}.
+\]
+El autoespacio asociado a \(c\) es todo \(X\).
+
+16. Para \(|\lambda|>\|T\|\), puede invertirse \(T-\lambda I\) mediante una serie de Neumann, reescribiendo el operador en términos de \(I-\lambda^{-1}T\). Como \(\|\lambda^{-1}T\|<1\), la inversa existe y es acotada. Por tanto, esos \(\lambda\) están en el resolvente y el espectro queda dentro de \(|\lambda|\le\|T\|\).
+
+17. Si \(S(x_1,x_2,\ldots)=(x_2,x_3,\ldots)\), la ecuación \(Sx=\lambda x\) equivale a
+\[
+x_{n+1}=\lambda x_n.
+\]
+De aquí
+\[
+x_n=\lambda^{n-1}x_1.
+\]
+Si \(x_1\ne0\), el candidato a autovector es proporcional a \((1,\lambda,\lambda^2,\ldots)\).
+
+18. Ese vector pertenece a \(\ell^2\) si
+\[
+\sum_{n=0}^{\infty}|\lambda|^{2n}<\infty,
+\]
+lo cual ocurre si y solo si \(|\lambda|<1\). Si \(|\lambda|\ge1\), no pertenece a \(\ell^2\), salvo el vector nulo.
+
+19. Una sucesión de Weyl muestra que existen vectores de norma uno sobre los que \(T-\lambda I\) actúa casi como cero. Sirve para probar que \(\lambda\) es un autovalor aproximado y, si además no hay autovector y la imagen es densa, ayuda a identificar espectro continuo.
+
+20. Se impone la igualdad
+\[
+(Sx,y)=(x,S^*y)
+\]
+para todo \(x,y\in\ell^2\). Al desplazar índices en la suma del producto escalar, se identifica qué operación debe realizar \(S^*\). Para el shift a la izquierda, el adjunto es el shift a la derecha.
+
+### Respuestas difíciles
+
+21. Para \(S(x_1,x_2,\ldots)=(x_2,x_3,\ldots)\), el espectro puntual es
+\[
+\sigma_p(S)=\{|\lambda|<1\},
+\]
+porque los autovectores son proporcionales a \((1,\lambda,\lambda^2,\ldots)\), que pertenece a \(\ell^2\) exactamente si \(|\lambda|<1\). Como \(\|S\|=1\), el espectro está contenido en el disco cerrado \(|\lambda|\le1\). La frontera \(|\lambda|=1\) pertenece al espectro continuo mediante sucesiones de Weyl. En este caso,
+\[
+\sigma_c(S)=\{|\lambda|=1\},\qquad \sigma_r(S)=\varnothing,
+\]
+y por tanto
+\[
+\sigma(S)=\{|\lambda|\le1\}.
+\]
+
+22. Para \(|\lambda|=1\), se puede tomar
+\[
+x^{(N)}=\frac1{\sqrt N}(1,\lambda,\lambda^2,\ldots,\lambda^{N-1},0,0,\ldots),
+\]
+ajustando las potencias a la convención exacta del shift. Entonces
+\[
+\|x^{(N)}\|=1.
+\]
+Al aplicar \(S-\lambda I\), casi todos los términos se cancelan y queda solo un término de borde cuyo tamaño tiende a cero cuando \(N\to\infty\). Por tanto,
+\[
+\|(S-\lambda I)x^{(N)}\|\to0.
+\]
+
+23. Si \(\lambda_0\in\rho(T)\), el resolvente \(R_{\lambda_0}(T)\) existe y es acotado. Para \(\lambda\) cercano a \(\lambda_0\), se factoriza
+\[
+T-\lambda I=(T-\lambda_0 I)\left[I-(\lambda-\lambda_0)R_{\lambda_0}(T)\right].
+\]
+Si \(|\lambda-\lambda_0|\|R_{\lambda_0}(T)\|<1\), el segundo factor es invertible por serie de Neumann. Así, un entorno de \(\lambda_0\) queda dentro de \(\rho(T)\). Luego \(\rho(T)\) es abierto y \(\sigma(T)\) es cerrado.
+
+24. En un espacio de Hilbert, una imagen no densa se detecta por ortogonalidad: \(\overline{\operatorname{Im}A}\ne X\) si existe \(y\ne0\) tal que \(y\perp \operatorname{Im}A\). Tomando \(A=T-\lambda I\), esa condición se expresa mediante el adjunto. Por eso, estudiar \(\ker(T^*-\overline{\lambda}I)\) puede indicar que la imagen de \(T-\lambda I\) no es densa, lo que apunta a espectro residual.
+
+25. Un valor de la frontera del disco unidad para el shift a la izquierda es espectral pero no autovalor. No hay \(x\in\ell^2\), \(x\ne0\), con \(Sx=\lambda x\) si \(|\lambda|=1\), porque el candidato no es cuadrado-sumable. Sin embargo, existen sucesiones de Weyl, de modo que \(S-\lambda I\) se comporta como no invertible de forma estable. Lo que falla es la acotación del inverso.
+
+### Respuestas de desarrollo largo
+
+26. En matrices, la teoría espectral empieza con \(Ax=\lambda x\). Esto equivale a \((A-\lambda I)x=0\), y hay solución no trivial cuando \(\det(A-\lambda I)=0\). El espectro de una matriz es el conjunto de raíces de esa ecuación característica. Al pasar a operadores en espacios normados, el determinante deja de ser una herramienta general. Se conserva la idea de estudiar \(T-\lambda I\), pero se reemplaza el determinante por el análisis de la inversa: existencia, dominio, densidad y acotación. En dimensión finita esas condiciones se reducen a la invertibilidad matricial. En dimensión infinita se separan y dan lugar al espectro puntual, continuo y residual.
+
+27. La partición se construye a partir de las tres condiciones de regularidad. Si \(R_\lambda(T)\) existe, es acotado y tiene dominio denso, entonces \(\lambda\in\rho(T)\). Si falla la existencia del resolvente, entonces \(T-\lambda I\) no es inyectivo y \(\lambda\in\sigma_p(T)\). Si el resolvente existe y su dominio es denso pero no es acotado, entonces \(\lambda\in\sigma_c(T)\). Si el resolvente existe pero su dominio no es denso, entonces \(\lambda\in\sigma_r(T)\). Estas posibilidades son disjuntas y cubren todo \(\mathbb C\).
+
+28. Un método general para \(\ell^2\) empieza por calcular o estimar \(\|T\|\), para limitar la región donde puede estar el espectro. Después se resuelve \(Tx=\lambda x\) y se impone que \(x\in\ell^2\), lo que da \(\sigma_p(T)\) y los autoespacios. Luego se estudian los valores restantes dentro de la región posible. Para ellos se analiza si \(T-\lambda I\) es inyectivo, si su imagen es densa y si la inversa sería acotada. En la frontera del espectro se buscan sucesiones de Weyl. Si el problema incluye adjunto, se calcula \(T^*\) para detectar posibles fallos de densidad de la imagen.
+
+29. Para un operador lineal acotado sobre un espacio de Banach complejo, el conjunto resolvente es abierto y el espectro es cerrado. Además, el espectro está contenido en el disco \(|\lambda|\le\|T\|\), y por tanto es acotado. Como es cerrado y acotado en \(\mathbb C\), es compacto. El radio espectral mide el tamaño de ese conjunto. Estas propiedades permiten controlar el resultado: si un cálculo produce valores espectrales fuera de \(\|T\|\), hay un error; si aparece un conjunto abierto como espectro total de un operador acotado, falta revisar sus puntos frontera.
+
+30. El espectro se define como el conjunto donde falla el resolvente regular. El resolvente depende de invertir \(T-\lambda I\). Cuando falla la inyectividad, aparece espectro puntual. Cuando no falla la inyectividad, pero hay autovalores aproximados y el inverso no está acotado, aparece espectro continuo; ahí entran las sucesiones de Weyl. Cuando la imagen no es densa, aparece espectro residual; en espacios de Hilbert, el adjunto permite detectar esa falta de densidad mediante ortogonalidad. En examen, estos cuatro elementos forman una cadena: \(T-\lambda I\), resolvente, sucesiones aproximantes y adjunto.
+
+### Respuestas de relación entre conceptos
+
+31. El núcleo de \(T-\lambda I\) contiene los vectores \(x\) tales que \(Tx=\lambda x\). Si ese núcleo no es trivial, \(\lambda\) es un autovalor y pertenece al espectro puntual. El autoespacio es precisamente ese núcleo:
+\[
+E_\lambda=\ker(T-\lambda I).
+\]
+
+32. Si \(T-\lambda I\) es inyectivo, su inversa existe sobre la imagen. Si esa imagen es densa pero la inversa no es acotada, entonces \(\lambda\) pertenece al espectro continuo. La densidad evita el residual; la falta de acotación evita el resolvente.
+
+33. En un espacio de Hilbert, una imagen no densa tiene un ortogonal no trivial. Si \(\operatorname{Im}(T-\lambda I)\) no es densa, existe \(y\ne0\) ortogonal a esa imagen. Esa condición se traduce mediante el adjunto, relacionando el espectro residual de \(T\) con autovalores de \(T^*\).
+
+34. En dimensión finita, el determinante permite decidir la invertibilidad de \(A-\lambda I\). Si \(\det(A-\lambda I)=0\), hay autovalor; si no, hay inversa. Como no aparece la posibilidad de inversa no acotada ni imagen densa propia, no hay espectro continuo ni residual.
+
+35. La norma de un operador acotado limita el espectro al disco \(|\lambda|\le\|T\|\). En un Banach complejo, el espectro es cerrado y acotado, luego compacto. El radio espectral es el supremo de \(|\lambda|\) en ese compacto y cumple \(r_\sigma(T)\le\|T\|\).
+
+## 9. Resumen final de repaso
+
+Ideas principales:
+
+- El espectro estudia para qué \(\lambda\) falla la regularidad de \(T-\lambda I\).
+- El resolvente es \(R_\lambda(T)=(T-\lambda I)^{-1}\).
+- \(\rho(T)\) contiene los valores regulares.
+- \(\sigma(T)=\mathbb C\setminus\rho(T)\).
+- El espectro se divide en puntual, continuo y residual.
+- En dimensión finita, el espectro coincide con los autovalores.
+- En dimensión infinita puede haber espectro sin autovectores.
+- Para operadores acotados en Banach complejo, \(\sigma(T)\) es compacto y está contenido en \(|\lambda|\le\|T\|\).
+
+Conceptos imprescindibles:
+
+- \(T-\lambda I\).
+- Resolvente.
+- Conjunto resolvente.
+- Espectro.
+- Espectro puntual.
+- Espectro continuo.
+- Espectro residual.
+- Autoespacio.
+- Imagen densa.
+- Inversa acotada.
+- Sucesión de Weyl.
+- Adjunto.
+- Radio espectral.
+
+Relaciones clave:
+
+- \(\lambda\in\sigma_p(T)\) si \(\ker(T-\lambda I)\ne\{0\}\).
+- \(\lambda\in\sigma_c(T)\) si \(T-\lambda I\) es inyectivo, la imagen es densa y el inverso no es acotado.
+- \(\lambda\in\sigma_r(T)\) si \(T-\lambda I\) es inyectivo y la imagen no es densa.
+- El adjunto ayuda a estudiar la densidad de la imagen.
+- Las sucesiones de Weyl detectan autovalores aproximados.
+- La norma de \(T\) acota la región donde puede estar el espectro.
+
+Errores que evitar:
+
+- No identificar espectro con autovalores en dimensión infinita.
+- No aceptar autovectores formales sin comprobar que pertenecen al espacio.
+- No confundir imagen densa con imagen total.
+- No clasificar como continuo sin probar que no es puntual.
+- No olvidar los puntos frontera del espectro.
+- No usar determinantes en operadores infinitodimensionales.
+- No olvidar normalizar las sucesiones de Weyl.
+- No omitir el adjunto cuando el ejercicio lo pide.
+
+## 10. Checklist de dominio
+
+- Si no puedes explicar qué es \(T-\lambda I\), falta repasar la definición de operador desplazado.
+
+- Si no puedes definir \(R_\lambda(T)\), falta repasar resolvente.
+
+- Si confundes \(\rho(T)\) con \(\sigma(T)\), revisar conjunto resolvente y espectro.
+
+- Si llamas espectro solo a los autovalores, revisar la diferencia entre dimensión finita e infinita.
+
+- Si no puedes decidir cuándo \(\lambda\in\sigma_p(T)\), falta repasar núcleo y autovalores.
+
+- Si no puedes construir el autoespacio \(E_\lambda\), falta repasar \(\ker(T-\lambda I)\).
+
+- Si confundes espectro continuo con residual, revisar densidad de la imagen.
+
+- Si no sabes qué significa que una imagen sea densa, falta repasar clausura de subespacios.
+
+- Si no compruebas que un autovector está en \(\ell^2\), falta repasar convergencia de series cuadráticas.
+
+- Si no puedes calcular el espectro de una matriz diagonal, falta repasar álgebra lineal básica.
+
+- Si no puedes calcular el espectro de \(T=cI\), falta repasar operadores escalares.
+
+- Si no sabes usar \(\|T\|\) para acotar \(\sigma(T)\), falta repasar operadores acotados.
+
+- Si confundes \(T\) con \(T^*\), revisar adjuntos en espacios de Hilbert.
+
+- Si no puedes obtener el adjunto de un shift, falta repasar producto escalar en \(\ell^2\).
+
+- Si no puedes explicar una sucesión de Weyl, falta repasar autovalores aproximados.
+
+- Si no normalizas las sucesiones de Weyl, revisar la definición operativa usada en los ejercicios.
+
+- Si puedes resolver \(Sx=\lambda x\) para el shift a la izquierda y decidir cuándo \(x\in\ell^2\), el espectro puntual está asentado.
+
+- Si puedes justificar que \(|\lambda|=1\) da espectro continuo mediante sucesiones de Weyl, el bloque de espectro continuo está suficientemente asentado.
+
+- Si puedes explicar por qué el espectro de un operador acotado es cerrado y está en \(|\lambda|\le\|T\|\), el capítulo está bien conectado con teoría de Banach.
+
+- Si puedes presentar \(\sigma_p(T)\), \(\sigma_c(T)\), \(\sigma_r(T)\) y \(\sigma(T)\) por separado, el capítulo está suficientemente dominado para examen.

@@ -1,0 +1,1280 @@
+# Guía de estudio — Sanz y Torres / Métodos Matemáticos III
+
+Tema: MM3 T4 — Ecuaciones diferenciales en derivadas parciales simples.
+
+## 1. Prerrequisitos mínimos
+
+### 1. Funciones de varias variables
+
+Una función de varias variables asigna un valor a cada punto de un dominio con más de una coordenada. En este tema la incógnita suele escribirse como \(u(x,t)\), \(u(x,y)\) o \(u(x,y,z)\). La variable \(x\) suele representar posición, \(t\) tiempo, y \(y,z\) otras coordenadas espaciales.
+
+Es necesario porque una EDP no describe una función de una sola variable, sino una magnitud que cambia simultáneamente respecto a varias variables. En una barra caliente, por ejemplo, la temperatura depende de la posición y del tiempo: \(u=u(x,t)\).
+
+Ejemplo mínimo: \(u(x,t)=e^{-t}\sin x\) tiene una variable espacial \(x\) y una variable temporal \(t\).
+
+### 2. Derivadas parciales
+
+La derivada parcial mide cómo cambia una función respecto a una variable manteniendo fijas las demás. Se usan notaciones como
+\[
+u_x=\frac{\partial u}{\partial x},\quad
+u_t=\frac{\partial u}{\partial t},\quad
+u_{xx}=\frac{\partial^2 u}{\partial x^2},\quad
+u_{xy}=\frac{\partial^2 u}{\partial x\,\partial y}.
+\]
+
+Es necesario porque una EDP contiene precisamente derivadas parciales. Sin distinguir \(u_x\), \(u_t\), \(u_{xx}\) o \(u_{tt}\), no se puede identificar el orden ni el tipo de la ecuación.
+
+Ejemplo mínimo: si \(u(x,t)=x^2t\), entonces \(u_x=2xt\), \(u_t=x^2\), \(u_{xx}=2t\).
+
+### 3. Dominio y frontera
+
+El dominio es la región donde se busca la solución. La frontera es el borde de esa región. En una barra \(0<x<L\), el dominio espacial es el intervalo abierto \((0,L)\) y su frontera son los extremos \(x=0\) y \(x=L\).
+
+Es necesario porque muchas EDP no se plantean solas. Van acompañadas de condiciones impuestas en la frontera o en el instante inicial. La ecuación describe la evolución dentro del dominio; las condiciones fijan cómo se comporta la solución en los bordes o al comienzo.
+
+Ejemplo mínimo: en \(0<x<L\), la condición \(u(0,t)=u(L,t)=0\) fija el valor de la solución en los extremos.
+
+### 4. EDO y solución general
+
+Una ecuación diferencial ordinaria contiene derivadas respecto a una sola variable independiente. Su solución general suele depender de constantes arbitrarias. En cambio, una EDP suele producir soluciones con funciones arbitrarias.
+
+Es necesario porque el capítulo compara continuamente EDO y EDP. En las EDO de orden dos aparecen dos constantes; en una EDP de primer orden puede aparecer una función arbitraria.
+
+Ejemplo mínimo: \(y''=0\) tiene solución \(y=C_1x+C_2\). En cambio, \(u_x=x+y\) tiene solución \(u=x^2/2+xy+\varphi(y)\).
+
+### 5. Integración parcial
+
+Integrar parcialmente una EDP sencilla consiste en integrar respecto a una variable tratando las demás como constantes. La constante de integración pasa a ser una función arbitraria de las variables que se han mantenido fijas.
+
+Es necesario porque el capítulo muestra ejemplos donde la solución general se obtiene integrando derivadas parciales. Este paso es una fuente habitual de errores.
+
+Ejemplo mínimo:
+\[
+u_x=x+y
+\]
+se integra respecto a \(x\):
+\[
+u(x,y)=\frac{x^2}{2}+xy+\varphi(y).
+\]
+No se escribe una constante \(C\), sino una función \(\varphi(y)\), porque al derivar respecto a \(x\) cualquier función solo dependiente de \(y\) desaparece.
+
+### 6. Linealidad
+
+Una expresión es lineal en \(u\) y sus derivadas si no aparecen productos, potencias ni funciones no lineales de ellas. Una EDP lineal puede escribirse como un operador lineal aplicado a \(u\), igualado a una función conocida.
+
+Es necesario porque la linealidad permite usar superposición: combinaciones lineales de soluciones de una ecuación homogénea siguen siendo soluciones. Además, los métodos posteriores, como separación de variables y series, dependen de esta propiedad.
+
+Ejemplo mínimo:
+\[
+u_t-u_{xx}=0
+\]
+es lineal. En cambio,
+\[
+u_t+u\,u_x=0
+\]
+no es lineal, porque aparece el producto \(u\,u_x\).
+
+### 7. Condiciones iniciales y condiciones de contorno
+
+Una condición inicial fija el estado de la solución en un instante, normalmente \(t=0\). Una condición de contorno fija valores o derivadas en la frontera espacial del dominio.
+
+Es necesario porque el modelo matemático completo no es solo la EDP. En calor y ondas se exige una ecuación, condiciones de frontera y, si hay tiempo, condiciones iniciales.
+
+Ejemplo mínimo:
+\[
+u(x,0)=f(x)
+\]
+es condición inicial. En cambio,
+\[
+u(0,t)=u(L,t)=0
+\]
+son condiciones de contorno.
+
+### 8. Interpretación física mínima
+
+La ecuación del calor describe difusión, la ecuación de ondas describe vibraciones y la ecuación de Laplace describe estados estacionarios sin fuente interna. No hace falta desarrollar la física completa, pero sí reconocer qué magnitud representa \(u\) y qué significan las condiciones.
+
+Es necesario porque el capítulo introduce EDP a partir de problemas técnicos: temperatura en una barra, desplazamiento de una cuerda y temperatura estacionaria en una placa.
+
+Ejemplo mínimo: \(u_t=\alpha^2u_{xx}\) indica que la variación temporal de la temperatura está relacionada con la curvatura espacial de la distribución térmica.
+
+## 2. Idea central del capítulo
+
+El capítulo introduce las ecuaciones diferenciales en derivadas parciales como una extensión natural de las ecuaciones diferenciales ordinarias. En una EDO la incógnita depende de una sola variable; en una EDP depende de varias. Por eso ya no basta con hablar de \(y(x)\) y sus derivadas ordinarias, sino de \(u(x,t)\), \(u(x,y)\) o \(u(x,y,z)\) y sus derivadas parciales.
+
+La idea fundamental es que una EDP aparece cuando una magnitud depende simultáneamente de varias variables independientes. La temperatura en una varilla depende de la posición y del tiempo; el desplazamiento de una cuerda vibrante depende de la posición y del tiempo; la temperatura estacionaria de una placa depende de dos coordenadas espaciales. El capítulo no busca todavía una teoría completa de resolución, sino fijar el lenguaje mínimo: qué es una EDP, cuál es su orden, qué significa que sea solución, qué significa que sea lineal y qué condiciones adicionales forman parte del problema.
+
+El segundo eje del capítulo es que una ecuación aislada rara vez define por completo el problema. En las aplicaciones, una EDP viene acompañada de condiciones iniciales y de contorno. Estas condiciones no son adornos: seleccionan una solución concreta entre una familia de soluciones y expresan restricciones físicas. En una cuerda con extremos fijos, las condiciones \(u(0,t)=u(L,t)=0\) forman parte del modelo tanto como la propia ecuación de ondas.
+
+El tercer eje es la linealidad. Las EDP lineales permiten aplicar el principio de superposición, construir soluciones a partir de otras y preparar el terreno para separación de variables y series de Fourier. Por eso el capítulo distingue con cuidado entre ecuaciones lineales y no lineales, homogéneas y no homogéneas. Esta distinción es operativa: si la ecuación no es lineal, no se pueden sumar soluciones esperando obtener otra solución.
+
+El capítulo también presenta tres EDP básicas: calor, ondas y Laplace. No son solo ejemplos. Funcionan como modelos patrón. La ecuación del calor representa evolución difusiva; la ecuación de ondas representa propagación vibratoria; la ecuación de Laplace representa equilibrio espacial. En el tema siguiente, estas ecuaciones reaparecen como casos representativos de EDP parabólicas, hiperbólicas y elípticas.
+
+Dentro de MM3, este tema hace de puente. Viene después de EDO, sistemas y estabilidad, y prepara Fourier, separación de variables, Sturm-Liouville y problemas de contorno. Si no se domina aquí qué tipo de ecuación se tiene, qué condiciones acompañan al problema y qué permite la linealidad, los temas posteriores se convierten en manipulación formal sin control matemático.
+
+## 3. Desarrollo completo del capítulo
+
+### 3.1. De EDO a EDP
+
+Una ecuación diferencial es una igualdad donde aparece una función incógnita junto con alguna de sus derivadas. Si la función depende de una sola variable independiente, la ecuación es ordinaria. Si depende de dos o más variables independientes y aparecen derivadas parciales, la ecuación es una EDP.
+
+La diferencia no es solo notacional. En una EDO, la solución general suele depender de constantes arbitrarias. En una EDP, incluso en ejemplos muy sencillos, la solución general puede depender de funciones arbitrarias. Esto refleja que hay más grados de libertad: al integrar respecto a una variable, las demás variables pueden quedar dentro de una función no determinada.
+
+Por ejemplo, si
+\[
+u_x=x+y,
+\]
+al integrar respecto a \(x\) se obtiene
+\[
+u(x,y)=\frac{x^2}{2}+xy+\varphi(y).
+\]
+La función \(\varphi(y)\) aparece porque \(\partial\varphi(y)/\partial x=0\). Este ejemplo fija una diferencia esencial con las EDO: la solución general de una EDP no tiene por qué depender de un número finito de constantes.
+
+Esta observación conecta con la necesidad de condiciones adicionales. Si la solución contiene una función arbitraria, una condición de contorno o inicial puede servir para determinarla total o parcialmente. Por eso en EDP no se estudia solo la ecuación, sino el problema completo.
+
+### 3.2. Orden de una EDP
+
+El orden de una EDP es el mayor orden de las derivadas parciales que aparecen en ella. La regla es la misma que en EDO, pero aplicada a derivadas parciales.
+
+La ecuación
+\[
+u_x=x+y
+\]
+es de primer orden. La ecuación
+\[
+u_{xx}+u_{yy}=0
+\]
+es de segundo orden. La ecuación
+\[
+u_t=\alpha^2u_{xxxx}
+\]
+es de cuarto orden respecto a \(x\), aunque solo sea de primer orden respecto a \(t\); el orden de la EDP es cuatro porque aparece una derivada cuarta.
+
+Este concepto importa porque el orden condiciona el tipo de condiciones que suelen acompañar al problema. En ecuaciones de segundo orden aparecen con frecuencia condiciones de Dirichlet, Neumann o Robin en la frontera. En ecuaciones dependientes del tiempo aparecen además condiciones iniciales.
+
+Un error típico consiste en mirar solo una variable. En \(u_{tt}=c^2u_{xx}\), la ecuación es de segundo orden porque aparecen \(u_{tt}\) y \(u_{xx}\), no de primer orden porque solo intervengan dos variables.
+
+### 3.3. Solución particular y solución general
+
+Una solución particular de una EDP es una función que, al sustituirla en la ecuación, hace verdadera la igualdad. La solución general es una expresión que contiene teóricamente todas las soluciones particulares.
+
+La comprobación de una solución es directa: se calculan las derivadas que aparecen en la ecuación y se sustituyen. Por ejemplo, para comprobar si
+\[
+u(x,t)=e^{-4t}\sin(2x)
+\]
+resuelve una ecuación del calor de la forma \(u_t=\alpha^2u_{xx}\), se calculan \(u_t\) y \(u_{xx}\), y se verifica si existe el valor de \(\alpha^2\) que hace coincidir ambos miembros.
+
+El capítulo insiste en que encontrar soluciones generales de EDP suele ser difícil. Algunos ejemplos se resuelven por integración parcial, pero esto no representa un método general. La dificultad aumenta cuando hay varias derivadas mezcladas, condiciones de contorno o dominios no triviales.
+
+También aparece el proceso inverso: si se da una familia de funciones con funciones arbitrarias, puede obtenerse una EDP eliminando esas funciones mediante derivadas parciales. Por ejemplo, si
+\[
+u=f(x+y),
+\]
+entonces
+\[
+u_x=f'(x+y),\qquad u_y=f'(x+y),
+\]
+y por tanto
+\[
+u_x-u_y=0.
+\]
+Esta EDP tiene como solución general funciones que dependen de \(x+y\).
+
+### 3.4. Linealidad de una EDP
+
+Una EDP es lineal si \(u\) y sus derivadas aparecen de forma lineal: sin productos entre ellas, sin potencias, sin senos, exponenciales u otras funciones aplicadas a \(u\) o a sus derivadas. En dos variables, una EDP lineal de segundo orden tiene la forma general
+\[
+a u_{xx}+b u_{xy}+c u_{yy}+d u_x+e u_y+f u=g,
+\]
+donde los coeficientes pueden depender de \(x\) e \(y\). Si esos coeficientes son constantes, se habla de coeficientes constantes. Si \(g=0\), la ecuación es homogénea; si \(g\neq 0\), es no homogénea.
+
+La linealidad importa porque permite interpretar la ecuación mediante un operador diferencial lineal:
+\[
+L(u)=g.
+\]
+Si \(g=0\), el conjunto de soluciones tiene estructura compatible con la suma y el producto por escalares. Esto es la base de la superposición.
+
+Ejemplos lineales:
+\[
+u_t-\alpha^2u_{xx}=0,\qquad u_{xx}+u_{yy}=0,\qquad u_{tt}-c^2u_{xx}=h(x,t).
+\]
+
+Ejemplos no lineales:
+\[
+u_t+u\,u_x=0,\qquad (u_x)^2+u_y=0,\qquad u_{xx}+\sin u=0.
+\]
+En todos ellos aparece una operación no lineal sobre \(u\) o sus derivadas.
+
+La distinción lineal/no lineal es de examen porque afecta al principio de superposición. Si \(u_1\) y \(u_2\) son soluciones de una EDP lineal homogénea, entonces \(c_1u_1+c_2u_2\) también lo es. Esto no es cierto en general para EDP no lineales.
+
+### 3.5. Condiciones de contorno
+
+Las condiciones de contorno son restricciones adicionales impuestas en la frontera del dominio. En problemas de segundo orden aparecen tres tipos básicos.
+
+Una condición de Dirichlet fija el valor de la función en la frontera:
+\[
+u=g \quad \text{en la frontera}.
+\]
+En una barra, \(u(0,t)=0\) y \(u(L,t)=0\) significan que los extremos se mantienen a temperatura cero o, en una cuerda, que los extremos están fijos.
+
+Una condición de Neumann fija la derivada normal:
+\[
+\frac{\partial u}{\partial n}=g \quad \text{en la frontera}.
+\]
+En calor, una condición de derivada normal nula suele expresar aislamiento: no hay flujo a través de esa frontera.
+
+Una condición de Robin combina el valor de la función y la derivada normal:
+\[
+A u+B\frac{\partial u}{\partial n}=g \quad \text{en la frontera}.
+\]
+Representa situaciones mixtas, por ejemplo intercambio con el medio exterior proporcional a la diferencia de temperaturas.
+
+Si \(g=0\), la condición se llama homogénea. Conviene no confundir homogeneidad de la condición con homogeneidad de la ecuación: una EDP puede ser no homogénea y tener condiciones homogéneas, o al revés.
+
+### 3.6. Condiciones iniciales y compatibilidad
+
+Cuando una EDP contiene tiempo, suele necesitar condiciones iniciales. En calor, al ser de primer orden en \(t\), se prescribe normalmente
+\[
+u(x,0)=f(x).
+\]
+En ondas, al ser de segundo orden en \(t\), se prescriben normalmente posición inicial y velocidad inicial:
+\[
+u(x,0)=f(x),\qquad u_t(x,0)=g(x).
+\]
+
+Estas condiciones deben ser compatibles con las condiciones de contorno. Por ejemplo, si una cuerda está fija en sus extremos,
+\[
+u(0,t)=u(L,t)=0,
+\]
+entonces en el instante \(t=0\) también debe cumplirse
+\[
+u(0,0)=u(L,0)=0.
+\]
+Por tanto, una condición inicial \(u(x,0)=f(x)\) debe satisfacer \(f(0)=f(L)=0\). Si no lo hace, el modelo tal como está escrito contiene una contradicción.
+
+Este punto es importante en examen porque no basta con escribir una ecuación. Hay que comprobar que las condiciones tienen sentido entre sí y con el fenómeno descrito.
+
+### 3.7. Ecuación unidimensional del calor
+
+La ecuación del calor describe la transferencia de calor por conducción en una varilla delgada. La incógnita \(u(x,t)\) representa la temperatura en la posición \(x\) y en el instante \(t\).
+
+En su forma básica:
+\[
+u_t=\alpha^2 u_{xx},\qquad 0<x<L,\quad t>0,
+\]
+donde \(\alpha^2>0\) resume constantes físicas del material. También puede escribirse como
+\[
+u_t-\alpha^2u_{xx}=0.
+\]
+
+La forma clásica del problema añade una distribución inicial de temperatura y condiciones en los extremos:
+\[
+u(x,0)=f(x),\qquad u(0,t)=u(L,t)=0.
+\]
+La primera condición dice cómo empieza la barra. Las dos últimas indican que los extremos se mantienen a temperatura cero.
+
+Si existen fuentes de calor, el segundo miembro deja de ser cero:
+\[
+u_t-\alpha^2u_{xx}=F(x,t,u,u_x,\ldots).
+\]
+Si los extremos están aislados, aparecen condiciones de Neumann:
+\[
+u_x(0,t)=0,\qquad u_x(L,t)=0
+\]
+en el caso unidimensional.
+
+La ecuación del calor es el modelo patrón de una EDP parabólica. Desde el punto de vista del examen, se debe reconocer su forma, interpretar sus condiciones y distinguir entre solución dependiente del tiempo y solución estacionaria. En equilibrio, \(u_t=0\), por lo que la ecuación se reduce a una ecuación espacial.
+
+### 3.8. Ecuación de ondas
+
+La ecuación de ondas describe vibraciones transversales de una cuerda. La incógnita \(u(x,t)\) representa el desplazamiento vertical de la cuerda en la posición \(x\) y en el instante \(t\).
+
+Su forma básica es
+\[
+u_{tt}=c^2u_{xx},\qquad 0<x<L,\quad t>0,
+\]
+o bien
+\[
+u_{tt}-c^2u_{xx}=0.
+\]
+
+El problema clásico con extremos fijos se escribe:
+\[
+u(0,t)=u(L,t)=0,
+\]
+\[
+u(x,0)=f(x),\qquad u_t(x,0)=g(x).
+\]
+Las condiciones de contorno fijan los extremos; las condiciones iniciales fijan posición y velocidad iniciales.
+
+Si actúan fuerzas externas, la ecuación puede tomar la forma
+\[
+u_{tt}-c^2u_{xx}=h(x,t),
+\]
+donde \(h\) representa la acción externa. También pueden aparecer términos de amortiguamiento en modelos más ricos, pero la estructura básica del capítulo es la ecuación lineal de segundo orden.
+
+La ecuación de ondas es el modelo patrón de una EDP hiperbólica. Su rasgo básico es que relaciona aceleración temporal con curvatura espacial. En términos de examen, hay que reconocer que requiere dos condiciones iniciales, no una.
+
+### 3.9. Ecuación de Laplace
+
+La ecuación de Laplace bidimensional es
+\[
+u_{xx}+u_{yy}=0.
+\]
+Describe, entre otros modelos, distribuciones estacionarias de temperatura en una placa cuando no hay fuentes internas. La incógnita \(u(x,y)\) depende de dos variables espaciales, no del tiempo.
+
+Se abrevia mediante el operador laplaciano:
+\[
+\nabla^2u=u_{xx}+u_{yy}.
+\]
+En tres dimensiones:
+\[
+\nabla^2u=u_{xx}+u_{yy}+u_{zz}.
+\]
+
+En una placa rectangular, las condiciones de contorno pueden fijar temperaturas en algunos bordes y aislamiento en otros. Por ejemplo,
+\[
+u(x,0)=f(x),\qquad u(x,b)=g(x)
+\]
+son condiciones de Dirichlet, mientras que
+\[
+u_x(0,y)=0,\qquad u_x(a,y)=0
+\]
+expresan aislamiento lateral en los bordes verticales.
+
+La ecuación de Laplace es el modelo patrón de una EDP elíptica. Se asocia a equilibrio, no a evolución temporal. Por eso no se acompaña de condiciones iniciales, sino de condiciones de contorno en la frontera del dominio.
+
+### 3.10. Clasificación de EDP lineales de segundo orden
+
+Una EDP lineal de segundo orden en dos variables puede escribirse, en una convención frecuente, como
+\[
+a u_{xx}+b u_{xy}+c u_{yy}+d u_x+e u_y+f u=g.
+\]
+La clasificación depende de la parte principal:
+\[
+a u_{xx}+b u_{xy}+c u_{yy}.
+\]
+Con esta convención, el discriminante es
+\[
+\Delta=b^2-4ac.
+\]
+La ecuación es hiperbólica si \(\Delta>0\), parabólica si \(\Delta=0\) y elíptica si \(\Delta<0\).
+
+En otra convención, muy usada en enunciados de examen, la parte principal se escribe
+\[
+a u_{xx}+2b u_{xy}+c u_{yy}.
+\]
+Entonces el criterio equivalente se formula con
+\[
+b^2-ac.
+\]
+Hay que mirar siempre cómo está escrito el término mixto. Si aparece \(2b u_{xy}\), no se usa el mismo símbolo \(b\) que en la forma \(b u_{xy}\).
+
+Los modelos básicos encajan en esta clasificación. La ecuación de ondas es hiperbólica, la ecuación del calor es parabólica y la ecuación de Laplace es elíptica. Esta clasificación anticipa métodos y comportamiento cualitativo, aunque el capítulo solo introduce la idea.
+
+### 3.11. Principio de superposición
+
+Si \(L\) es un operador diferencial lineal y
+\[
+L(u)=0,
+\]
+entonces, si \(u_1,\ldots,u_n\) son soluciones,
+\[
+u=c_1u_1+\cdots+c_nu_n
+\]
+también es solución. Además, si una serie de soluciones converge con suficiente regularidad para poder derivarse término a término hasta el orden necesario, su suma también resuelve la ecuación homogénea.
+
+En ecuaciones no homogéneas, la superposición se adapta así: si
+\[
+L(u_1)=f_1,\qquad L(u_2)=f_2,
+\]
+entonces
+\[
+L(\alpha u_1+\beta u_2)=\alpha f_1+\beta f_2.
+\]
+
+Esta propiedad es la razón matemática por la que aparecen series de Fourier en los problemas de calor, ondas y Laplace. Primero se resuelven modos simples; después se combinan para ajustarse a la condición inicial o de frontera.
+
+El error que se debe evitar es aplicar superposición a una EDP no lineal. Si la ecuación es \(u_x+uu_y=0\), que \(u_1\) y \(u_2\) sean soluciones no implica que \(u_1+u_2\) lo sea.
+
+### 3.12. Separación de variables como puente al tema siguiente
+
+El método de separación de variables parte de la hipótesis
+\[
+u(x,t)=X(x)T(t).
+\]
+Si la hipótesis encaja con la ecuación y las condiciones de contorno, la EDP se transforma en dos EDO: una espacial y otra temporal.
+
+Por ejemplo, en la ecuación del calor,
+\[
+u_t=\alpha^2u_{xx},
+\]
+si \(u=XT\), entonces
+\[
+XT'=\alpha^2X''T.
+\]
+Dividiendo por \(\alpha^2XT\), se separan las variables:
+\[
+\frac{X''}{X}=\frac{T'}{\alpha^2T}=\lambda.
+\]
+De aquí salen dos EDO:
+\[
+X''-\lambda X=0,\qquad T'-\alpha^2\lambda T=0.
+\]
+
+El capítulo no exige justificar toda la teoría de existencia y unicidad del método. Lo importante en este punto es entender la lógica: las EDP lineales con condiciones adecuadas pueden reducirse a problemas de EDO, y la combinación de modos mediante superposición permite construir soluciones más generales.
+
+## 4. Conceptos clave
+
+### 1. Ecuación diferencial en derivadas parciales
+
+Definición precisa: una EDP es una ecuación donde aparece una función incógnita de varias variables independientes junto con algunas de sus derivadas parciales.
+
+Explicación desarrollada: la EDP expresa una relación entre variaciones de una magnitud respecto a distintas variables. En \(u_t=\alpha^2u_{xx}\), se relaciona el cambio temporal de \(u\) con su curvatura espacial.
+
+Ejemplo:
+\[
+u_x+u_y=0.
+\]
+
+Relación con otros conceptos: depende de funciones de varias variables, derivadas parciales, dominio, frontera y condiciones adicionales.
+
+Posible forma de preguntarlo en examen: “Defina EDP y distinga entre EDO y EDP mediante un ejemplo.”
+
+### 2. Orden de una EDP
+
+Definición precisa: es el mayor orden de las derivadas parciales que aparecen en la ecuación.
+
+Explicación desarrollada: el orden se determina mirando todas las derivadas, no solo una variable. En \(u_{tt}=c^2u_{xx}\), el orden es dos.
+
+Ejemplo:
+\[
+u_t+u_{xxxx}=0
+\]
+es de orden cuatro.
+
+Relación con otros conceptos: condiciona el tipo y número de condiciones que acompañan al problema.
+
+Posible forma de preguntarlo en examen: “Indique el orden de varias EDP y justifique su respuesta.”
+
+### 3. Solución particular
+
+Definición precisa: función que satisface la EDP al ser sustituida en ella.
+
+Explicación desarrollada: comprobar una solución exige calcular las derivadas parciales necesarias y sustituir. No basta con que la función tenga la forma esperada.
+
+Ejemplo: \(u=x^2/2+xy\) es solución particular de \(u_x=x+y\).
+
+Relación con otros conceptos: una solución particular puede seleccionarse a partir de la solución general usando condiciones iniciales o de contorno.
+
+Posible forma de preguntarlo en examen: “Compruebe si \(u(x,t)=e^{-4t}\sin(2x)\) es solución de una ecuación dada.”
+
+### 4. Solución general
+
+Definición precisa: expresión que contiene todas las soluciones particulares de la EDP, al menos formalmente.
+
+Explicación desarrollada: en EDP suele depender de funciones arbitrarias, no solo de constantes. Esto ocurre porque integrar respecto a una variable deja indeterminadas funciones de las demás.
+
+Ejemplo:
+\[
+u_x=x+y
+\quad\Rightarrow\quad
+u=\frac{x^2}{2}+xy+\varphi(y).
+\]
+
+Relación con otros conceptos: las condiciones de contorno e iniciales sirven para determinar las funciones arbitrarias.
+
+Posible forma de preguntarlo en examen: “Obtenga la solución general de una EDP sencilla por integración parcial.”
+
+### 5. Linealidad
+
+Definición precisa: una EDP es lineal si puede escribirse como \(L(u)=g\), donde \(L\) es un operador lineal en \(u\) y sus derivadas.
+
+Explicación desarrollada: la linealidad excluye productos como \(u u_x\), potencias como \((u_x)^2\) y funciones como \(\sin u\). Permite superposición.
+
+Ejemplo:
+\[
+u_{xx}+xu_y+u=e^y
+\]
+es lineal. En cambio,
+\[
+u_{xx}+u^2=0
+\]
+no lo es.
+
+Relación con otros conceptos: base del principio de superposición, de la construcción modal y de la separación de variables.
+
+Posible forma de preguntarlo en examen: “Determine si las siguientes EDP son lineales, homogéneas y de qué orden.”
+
+### 6. Homogeneidad
+
+Definición precisa: una EDP lineal \(L(u)=g\) es homogénea si \(g=0\). Si \(g\neq0\), es no homogénea.
+
+Explicación desarrollada: la homogeneidad se refiere al segundo miembro de la ecuación, no a que las condiciones sean nulas. Es frecuente que una ecuación homogénea tenga condiciones no homogéneas.
+
+Ejemplo:
+\[
+u_t-u_{xx}=0
+\]
+es homogénea. 
+\[
+u_t-u_{xx}=1
+\]
+es no homogénea.
+
+Relación con otros conceptos: la superposición simple vale para ecuaciones homogéneas.
+
+Posible forma de preguntarlo en examen: “Explique la diferencia entre EDP lineal homogénea y no homogénea.”
+
+### 7. Condición de Dirichlet
+
+Definición precisa: condición que fija el valor de \(u\) en la frontera.
+
+Explicación desarrollada: especifica directamente la magnitud buscada en el borde. En calor, fija temperatura; en ondas, fija desplazamiento.
+
+Ejemplo:
+\[
+u(0,t)=u(L,t)=0.
+\]
+
+Relación con otros conceptos: forma parte de los problemas de valores de contorno.
+
+Posible forma de preguntarlo en examen: “Identifique el tipo de condición \(u(0,t)=A\).”
+
+### 8. Condición de Neumann
+
+Definición precisa: condición que fija la derivada normal \(\partial u/\partial n\) en la frontera.
+
+Explicación desarrollada: en problemas térmicos, la derivada normal se relaciona con el flujo a través de la frontera. Si es nula, suele representar aislamiento.
+
+Ejemplo:
+\[
+u_x(0,t)=0.
+\]
+
+Relación con otros conceptos: contrasta con Dirichlet, que fija el valor de la función.
+
+Posible forma de preguntarlo en examen: “Explique qué tipo de condición expresa aislamiento lateral en una placa.”
+
+### 9. Condición de Robin
+
+Definición precisa: condición que impone una combinación lineal de \(u\) y su derivada normal.
+
+Explicación desarrollada: modela situaciones mixtas. No fija solo la temperatura ni solo el flujo, sino una relación entre ambos.
+
+Ejemplo:
+\[
+A u(0,t)+B u_x(0,t)=g(t).
+\]
+
+Relación con otros conceptos: combina Dirichlet y Neumann.
+
+Posible forma de preguntarlo en examen: “Clasifique una condición de frontera del tipo \(u_x(0,t)=k u(0,t)\).”
+
+### 10. Ecuación del calor
+
+Definición precisa:
+\[
+u_t=\alpha^2u_{xx}.
+\]
+
+Explicación desarrollada: describe difusión unidimensional de temperatura en una varilla homogénea, delgada y aislada lateralmente. Su forma depende de condiciones iniciales y de contorno.
+
+Ejemplo:
+\[
+u_t=u_{xx},\quad u(x,0)=f(x),\quad u(0,t)=u(L,t)=0.
+\]
+
+Relación con otros conceptos: EDP lineal de segundo orden en espacio y primer orden en tiempo; modelo parabólico.
+
+Posible forma de preguntarlo en examen: “Escriba el problema de calor para una barra con extremos a temperatura cero.”
+
+### 11. Ecuación de ondas
+
+Definición precisa:
+\[
+u_{tt}=c^2u_{xx}.
+\]
+
+Explicación desarrollada: describe vibración transversal de una cuerda. Al ser de segundo orden en tiempo, necesita posición y velocidad iniciales.
+
+Ejemplo:
+\[
+u_{tt}=c^2u_{xx},\quad u(0,t)=u(L,t)=0,\quad u(x,0)=f(x),\quad u_t(x,0)=g(x).
+\]
+
+Relación con otros conceptos: modelo hiperbólico; conduce a modos normales y series en temas posteriores.
+
+Posible forma de preguntarlo en examen: “Plantee el problema de una cuerda fija en sus extremos con desplazamiento inicial dado.”
+
+### 12. Ecuación de Laplace
+
+Definición precisa:
+\[
+u_{xx}+u_{yy}=0.
+\]
+
+Explicación desarrollada: describe estados estacionarios sin fuente en dos dimensiones. No contiene tiempo; se resuelve con condiciones en la frontera.
+
+Ejemplo:
+\[
+u_{xx}+u_{yy}=0
+\]
+en un rectángulo, con valores prescritos en los bordes.
+
+Relación con otros conceptos: modelo elíptico; usa el operador laplaciano.
+
+Posible forma de preguntarlo en examen: “Reconozca la ecuación de Laplace y explique qué tipo de condiciones necesita.”
+
+### 13. Clasificación hiperbólica, parabólica y elíptica
+
+Definición precisa: para una EDP lineal de segundo orden con parte principal \(a u_{xx}+b u_{xy}+c u_{yy}\), se usa \(\Delta=b^2-4ac\): hiperbólica si \(\Delta>0\), parabólica si \(\Delta=0\), elíptica si \(\Delta<0\).
+
+Explicación desarrollada: la clasificación depende solo de la parte principal, no de los términos de primer orden ni del término en \(u\). En la convención \(a u_{xx}+2b u_{xy}+c u_{yy}\), el criterio se escribe con \(b^2-ac\).
+
+Ejemplo: \(u_{xx}+u_{yy}=0\) tiene \(a=1\), \(b=0\), \(c=1\), luego \(\Delta=-4<0\): elíptica.
+
+Relación con otros conceptos: ondas, calor y Laplace son los modelos patrón de los tres tipos.
+
+Posible forma de preguntarlo en examen: “Clasifique varias EDP lineales de segundo orden y muestre el cálculo del discriminante.”
+
+### 14. Principio de superposición
+
+Definición precisa: si \(L\) es lineal y homogéneo, una combinación lineal de soluciones también es solución.
+
+Explicación desarrollada: permite construir soluciones complejas sumando soluciones simples. Es esencial para pasar de modos individuales a soluciones adaptadas a datos iniciales o de frontera.
+
+Ejemplo: si \(u_1\) y \(u_2\) satisfacen \(u_t-u_{xx}=0\), entonces \(3u_1-2u_2\) también la satisface.
+
+Relación con otros conceptos: solo vale directamente para ecuaciones lineales homogéneas.
+
+Posible forma de preguntarlo en examen: “Explique por qué la suma de dos soluciones puede dejar de ser solución en una EDP no lineal.”
+
+### 15. Separación de variables
+
+Definición precisa: método que busca soluciones producto, por ejemplo \(u(x,t)=X(x)T(t)\).
+
+Explicación desarrollada: reduce una EDP a varias EDO al separar las variables. La hipótesis no se justifica de forma general en este capítulo, pero produce soluciones formales útiles.
+
+Ejemplo:
+\[
+u_t=\alpha^2u_{xx},\quad u=XT
+\]
+lleva a
+\[
+\frac{X''}{X}=\frac{T'}{\alpha^2T}.
+\]
+
+Relación con otros conceptos: usa linealidad, condiciones de contorno y superposición; enlaza con Fourier.
+
+Posible forma de preguntarlo en examen: “Deduzca las EDO resultantes de aplicar separación de variables a la ecuación del calor.”
+
+## 5. Relaciones entre ideas
+
+La primera relación importante es entre número de variables y tipo de derivada. En EDO, una función depende de una variable y aparecen derivadas ordinarias. En EDP, una función depende de varias variables y aparecen derivadas parciales. Esta diferencia obliga a cambiar el modo de entender la solución general: ya no se esperan solo constantes arbitrarias, sino funciones arbitrarias.
+
+La segunda relación es entre ecuación y condiciones adicionales. Una EDP aislada describe una relación local, pero el problema matemático completo necesita dominio, frontera, condiciones de contorno y, si hay tiempo, condiciones iniciales. Por eso la ecuación del calor no se presenta solo como \(u_t=\alpha^2u_{xx}\), sino junto a \(u(x,0)=f(x)\) y condiciones en \(x=0,L\).
+
+La tercera relación es entre condiciones y significado físico. Dirichlet fija el valor de la magnitud; Neumann fija el flujo o derivada normal; Robin mezcla ambos. En una cuerda, Dirichlet impone extremos fijos. En calor, Neumann nula expresa aislamiento. En una placa, Dirichlet puede fijar temperaturas en bordes.
+
+La cuarta relación es entre linealidad y superposición. La linealidad no es una etiqueta formal: permite sumar soluciones. Esta propiedad explica por qué en temas posteriores se construyen soluciones como series. Si el problema es no lineal, esta construcción deja de estar garantizada.
+
+La quinta relación es entre los tres modelos básicos y la clasificación de segundo orden. Ondas representa el caso hiperbólico, calor el parabólico y Laplace el elíptico. Esta jerarquía organiza el estudio posterior: ondas se asocia a propagación, calor a difusión y Laplace a equilibrio.
+
+La sexta relación es entre parte principal y clasificación. Para clasificar una EDP lineal de segundo orden solo se miran los términos de segundo orden. Los términos \(u_x\), \(u_y\), \(u\) o el segundo miembro no deciden si la ecuación es hiperbólica, parabólica o elíptica.
+
+La séptima relación es entre equilibrio y eliminación del tiempo. En calor, una solución estacionaria satisface \(u_t=0\). Así, la ecuación se reduce a una ecuación espacial. En una dimensión, el equilibrio sin fuentes lleva a \(u_{xx}=0\); en dos dimensiones, al modelo de Laplace.
+
+Históricamente, estas ecuaciones aparecen ligadas a problemas físicos clásicos: difusión del calor, vibración de cuerdas y potenciales estacionarios. El capítulo adopta ese punto de vista aplicado, pero lo traduce a lenguaje matemático operativo: ecuación, dominio, condiciones y tipo.
+
+## 6. Errores habituales
+
+### 1. Confundir EDP con EDO por la presencia de una sola función incógnita
+
+Formulación del error: “Como solo aparece \(u\), es una EDO.”
+
+Por qué está mal: lo decisivo no es cuántas funciones incógnitas aparecen, sino de cuántas variables independientes depende la función y si hay derivadas parciales.
+
+Corrección: si \(u=u(x,t)\) y aparecen \(u_x\), \(u_t\) o \(u_{xx}\), es una EDP.
+
+Respuesta incorrecta: “\(u_t-u_{xx}=0\) es una EDO porque solo hay una incógnita \(u\).”
+
+Respuesta correcta: “\(u_t-u_{xx}=0\) es una EDP porque \(u\) depende de \(x\) y \(t\), y aparecen derivadas parciales.”
+
+### 2. Calcular mal el orden
+
+Formulación del error: “\(u_t=u_{xx}\) es de primer orden porque aparece \(u_t\).”
+
+Por qué está mal: el orden se determina por la derivada de mayor orden que aparece, no por la derivada temporal.
+
+Corrección: \(u_t=u_{xx}\) es de segundo orden porque aparece \(u_{xx}\).
+
+Respuesta incorrecta: “La ecuación del calor es de primer orden.”
+
+Respuesta correcta: “La ecuación del calor es de segundo orden como EDP, aunque sea de primer orden respecto al tiempo.”
+
+### 3. Escribir constantes en lugar de funciones arbitrarias
+
+Formulación del error: al integrar \(u_x=x+y\), escribir \(u=x^2/2+xy+C\).
+
+Por qué está mal: al integrar respecto a \(x\), cualquier función de \(y\) actúa como constante.
+
+Corrección:
+\[
+u=\frac{x^2}{2}+xy+\varphi(y).
+\]
+
+Respuesta incorrecta: “La solución general es \(u=x^2/2+xy+C\).”
+
+Respuesta correcta: “La solución general es \(u=x^2/2+xy+\varphi(y)\).”
+
+### 4. Aplicar superposición a una EDP no lineal
+
+Formulación del error: “Si \(u_1\) y \(u_2\) son soluciones de \(u_x+uu_y=0\), entonces \(u_1+u_2\) también lo es.”
+
+Por qué está mal: la ecuación contiene el producto \(u u_y\), luego no es lineal.
+
+Corrección: comprobar la linealidad antes de usar superposición.
+
+Respuesta incorrecta: “La suma es solución por superposición.”
+
+Respuesta correcta: “No puede aplicarse superposición porque la ecuación no es lineal.”
+
+### 5. Confundir condición homogénea con ecuación homogénea
+
+Formulación del error: “Si \(u(0,t)=0\), la EDP es homogénea.”
+
+Por qué está mal: la homogeneidad de la EDP depende del segundo miembro de \(L(u)=g\), no de la condición de frontera.
+
+Corrección: distinguir ecuación \(L(u)=0\) de condición \(u=0\) en la frontera.
+
+Respuesta incorrecta: “\(u_t-u_{xx}=1\), \(u(0,t)=0\), es una EDP homogénea.”
+
+Respuesta correcta: “La EDP es no homogénea porque el segundo miembro es \(1\); la condición de contorno sí es homogénea.”
+
+### 6. Identificar mal Dirichlet y Neumann
+
+Formulación del error: “\(u_x(0,t)=0\) es Dirichlet.”
+
+Por qué está mal: Dirichlet fija \(u\); Neumann fija derivada normal.
+
+Corrección: \(u_x(0,t)=0\) es Neumann en un intervalo unidimensional.
+
+Respuesta incorrecta: “Como está en la frontera, es Dirichlet.”
+
+Respuesta correcta: “Es Neumann porque prescribe una derivada de \(u\) en la frontera.”
+
+### 7. Clasificar usando términos de primer orden
+
+Formulación del error: “La ecuación \(u_{xx}+u_{yy}+3u_x=0\) no es elíptica por el término \(3u_x\).”
+
+Por qué está mal: la clasificación depende de la parte principal de segundo orden.
+
+Corrección: mirar solo \(u_{xx}+u_{yy}\). Es elíptica.
+
+Respuesta incorrecta: “No se puede clasificar por tener \(u_x\).”
+
+Respuesta correcta: “Se clasifica por \(a=1\), \(b=0\), \(c=1\); es elíptica.”
+
+### 8. Usar mal el discriminante por no mirar la convención
+
+Formulación del error: en \(a u_{xx}+2b u_{xy}+c u_{yy}\), usar \( (2b)^2-4ac\) sin explicar la convención.
+
+Por qué está mal: si el enunciado llama \(b\) al coeficiente de \(u_{xy}\), se usa \(b^2-4ac\); si escribe \(2b u_{xy}\), el criterio equivalente es \(b^2-ac\).
+
+Corrección: primero identificar si el término mixto se ha escrito como \(b u_{xy}\) o como \(2b u_{xy}\).
+
+Respuesta incorrecta: “Siempre uso \(b^2-4ac\) sin mirar la forma.”
+
+Respuesta correcta: “En la forma \(a u_{xx}+2b u_{xy}+c u_{yy}\), clasifico con \(b^2-ac\).”
+
+### 9. Poner una sola condición inicial en ondas
+
+Formulación del error: “Para \(u_{tt}=c^2u_{xx}\) basta con \(u(x,0)=f(x)\).”
+
+Por qué está mal: la ecuación es de segundo orden en tiempo, por lo que hace falta posición y velocidad iniciales.
+
+Corrección:
+\[
+u(x,0)=f(x),\qquad u_t(x,0)=g(x).
+\]
+
+Respuesta incorrecta: “La cuerda queda determinada solo por su forma inicial.”
+
+Respuesta correcta: “Además de la posición inicial, hace falta la velocidad inicial.”
+
+### 10. No comprobar compatibilidad entre datos
+
+Formulación del error: escribir extremos fijos \(u(0,t)=u(L,t)=0\) y una condición inicial \(u(x,0)=f(x)\) con \(f(0)\neq0\).
+
+Por qué está mal: en \(t=0\) ambas condiciones deben cumplirse simultáneamente.
+
+Corrección: exigir \(f(0)=f(L)=0\) si los extremos están fijos.
+
+Respuesta incorrecta: “Cualquier \(f\) sirve.”
+
+Respuesta correcta: “Debe cumplirse \(f(0)=f(L)=0\) para que el planteamiento sea compatible.”
+
+## 7. Preguntas orientadas a examen
+
+### 10 preguntas fáciles
+
+1. Defina qué es una ecuación diferencial en derivadas parciales.
+2. Indique el orden de \(u_t-u_{xx}=0\).
+3. Explique la diferencia entre condición inicial y condición de contorno.
+4. Clasifique como Dirichlet, Neumann o Robin la condición \(u(0,t)=5\).
+5. Clasifique como Dirichlet, Neumann o Robin la condición \(u_x(L,t)=0\).
+6. Diga si \(u_t-u_{xx}=0\) es lineal y homogénea.
+7. Diga si \(u_t+u\,u_x=0\) es lineal.
+8. Escriba la forma básica de la ecuación del calor unidimensional.
+9. Escriba la forma básica de la ecuación de ondas unidimensional.
+10. Escriba la ecuación de Laplace bidimensional.
+
+### 10 preguntas medias
+
+11. Obtenga la solución general de \(u_x=x+y\).
+12. Compruebe si \(u(x,y)=x^2/2+xy+y^2\) es solución de \(u_x=x+y\).
+13. Explique por qué las soluciones generales de EDP pueden contener funciones arbitrarias.
+14. Determine si \(u_{xx}+u_{yy}+u=e^x\) es lineal, homogénea y de qué orden.
+15. Determine si \(u_{xx}+\sin u=0\) es lineal.
+16. Escriba un problema de calor en una barra \(0<x<L\) con extremos a temperatura cero y temperatura inicial \(f(x)\).
+17. Escriba un problema de ondas en una cuerda con extremos fijos, posición inicial \(f(x)\) y velocidad inicial \(g(x)\).
+18. Explique qué representa \(u_x(0,t)=0\) en un problema unidimensional de calor.
+19. Clasifique \(u_{xx}+u_{yy}=0\) como elíptica, parabólica o hiperbólica.
+20. Clasifique \(u_{tt}-c^2u_{xx}=0\) como elíptica, parabólica o hiperbólica.
+
+### 5 preguntas difíciles
+
+21. Clasifique \(2u_{xx}+4u_{xy}+u_{yy}=0\) usando la forma \(a u_{xx}+b u_{xy}+c u_{yy}\).
+22. Clasifique \(2u_{xx}+4u_{xy}+u_{yy}=0\) usando la forma \(a u_{xx}+2b u_{xy}+c u_{yy}\) y compruebe que el resultado coincide.
+23. Si \(u_1\) y \(u_2\) satisfacen \(L(u)=0\) con \(L\) lineal, demuestre que \(\alpha u_1+\beta u_2\) también es solución.
+24. Dé un ejemplo donde dos funciones sean soluciones de una EDP no lineal pero su suma no sea solución.
+25. Aplique separación de variables a \(u_t=\alpha^2u_{xx}\) y deduzca las dos EDO resultantes.
+
+### 5 preguntas de desarrollo largo
+
+26. Desarrolle la diferencia entre EDO y EDP, incluyendo el papel de las funciones arbitrarias en las soluciones generales.
+27. Explique el papel de las condiciones de contorno en los problemas de EDP y compare Dirichlet, Neumann y Robin.
+28. Desarrolle el planteamiento matemático de la ecuación del calor unidimensional con condiciones iniciales y de frontera.
+29. Desarrolle el planteamiento matemático de la ecuación de ondas en una cuerda fija en sus extremos.
+30. Explique la clasificación de las EDP lineales de segundo orden y relacione ondas, calor y Laplace con los tres tipos.
+
+### 5 preguntas de relación entre conceptos
+
+31. Relacione linealidad, homogeneidad y principio de superposición.
+32. Relacione ecuación del calor, condición inicial y solución estacionaria.
+33. Relacione ecuación de ondas, orden temporal y número de condiciones iniciales.
+34. Relacione ecuación de Laplace, equilibrio y condiciones de contorno.
+35. Relacione clasificación de segundo orden y parte principal de la EDP.
+
+## 8. Respuestas modelo
+
+### 1. Defina qué es una ecuación diferencial en derivadas parciales.
+
+Una EDP es una ecuación en la que aparece una función incógnita de varias variables independientes junto con algunas de sus derivadas parciales. Por ejemplo, \(u_t-u_{xx}=0\) es una EDP porque \(u=u(x,t)\) depende de \(x\) y \(t\), y aparecen derivadas parciales respecto a esas variables.
+
+### 2. Indique el orden de \(u_t-u_{xx}=0\).
+
+Es una EDP de segundo orden. Aunque aparece una derivada primera respecto al tiempo, \(u_t\), también aparece \(u_{xx}\), que es de segundo orden. El orden de la ecuación es el mayor orden de las derivadas presentes.
+
+### 3. Explique la diferencia entre condición inicial y condición de contorno.
+
+Una condición inicial fija el estado de la solución en un instante, normalmente \(t=0\), como \(u(x,0)=f(x)\). Una condición de contorno fija valores o derivadas en la frontera espacial del dominio, como \(u(0,t)=u(L,t)=0\). En problemas dependientes del tiempo pueden aparecer ambas.
+
+### 4. Clasifique como Dirichlet, Neumann o Robin la condición \(u(0,t)=5\).
+
+Es una condición de Dirichlet porque fija directamente el valor de la función \(u\) en un punto de la frontera, \(x=0\).
+
+### 5. Clasifique como Dirichlet, Neumann o Robin la condición \(u_x(L,t)=0\).
+
+Es una condición de Neumann. En una dimensión, la derivada respecto a \(x\) en el extremo representa la derivada normal. Al ser nula, suele interpretarse como ausencia de flujo a través de ese extremo en problemas de calor.
+
+### 6. Diga si \(u_t-u_{xx}=0\) es lineal y homogénea.
+
+Es lineal porque \(u\) y sus derivadas aparecen en primer grado y no se multiplican entre sí. Es homogénea porque el segundo miembro es cero.
+
+### 7. Diga si \(u_t+u\,u_x=0\) es lineal.
+
+No es lineal porque aparece el producto \(u\,u_x\). La linealidad exige que \(u\) y sus derivadas aparezcan solo de forma lineal.
+
+### 8. Escriba la forma básica de la ecuación del calor unidimensional.
+
+Una forma básica es
+\[
+u_t=\alpha^2u_{xx},\qquad 0<x<L,\quad t>0,
+\]
+donde \(u(x,t)\) representa la temperatura y \(\alpha^2>0\) es una constante del material.
+
+### 9. Escriba la forma básica de la ecuación de ondas unidimensional.
+
+Una forma básica es
+\[
+u_{tt}=c^2u_{xx},\qquad 0<x<L,\quad t>0,
+\]
+donde \(u(x,t)\) representa el desplazamiento de la cuerda y \(c>0\) es la velocidad de propagación.
+
+### 10. Escriba la ecuación de Laplace bidimensional.
+
+La ecuación de Laplace en dos dimensiones es
+\[
+u_{xx}+u_{yy}=0,
+\]
+o, de forma abreviada,
+\[
+\nabla^2u=0.
+\]
+
+### 11. Obtenga la solución general de \(u_x=x+y\).
+
+Se integra respecto a \(x\), tratando \(y\) como constante:
+\[
+u(x,y)=\int (x+y)\,dx=\frac{x^2}{2}+xy+\varphi(y).
+\]
+La función \(\varphi(y)\) aparece porque cualquier función solo dependiente de \(y\) tiene derivada parcial nula respecto a \(x\).
+
+### 12. Compruebe si \(u(x,y)=x^2/2+xy+y^2\) es solución de \(u_x=x+y\).
+
+Calculamos
+\[
+u_x=x+y.
+\]
+Al sustituir en la ecuación, se obtiene exactamente \(x+y=x+y\). Por tanto, sí es solución particular. Corresponde al caso \(\varphi(y)=y^2\) dentro de la solución general.
+
+### 13. Explique por qué las soluciones generales de EDP pueden contener funciones arbitrarias.
+
+Al integrar una derivada parcial respecto a una variable, las funciones que dependen solo de las otras variables se comportan como constantes. Por eso, al resolver \(u_x=x+y\), aparece \(\varphi(y)\), no una constante numérica. Esta es una diferencia esencial respecto a muchas EDO.
+
+### 14. Determine si \(u_{xx}+u_{yy}+u=e^x\) es lineal, homogénea y de qué orden.
+
+Es lineal porque \(u\), \(u_{xx}\) y \(u_{yy}\) aparecen linealmente. Es no homogénea porque el segundo miembro es \(e^x\), que no es cero. Es de segundo orden porque aparecen derivadas segundas.
+
+### 15. Determine si \(u_{xx}+\sin u=0\) es lineal.
+
+No es lineal. Aunque \(u_{xx}\) es lineal en \(u\), el término \(\sin u\) no lo es. Una EDP lineal no puede contener funciones no lineales aplicadas a la incógnita.
+
+### 16. Escriba un problema de calor en una barra \(0<x<L\) con extremos a temperatura cero y temperatura inicial \(f(x)\).
+
+El problema se plantea como
+\[
+u_t=\alpha^2u_{xx},\qquad 0<x<L,\quad t>0,
+\]
+\[
+u(x,0)=f(x),\qquad 0<x<L,
+\]
+\[
+u(0,t)=u(L,t)=0,\qquad t>0.
+\]
+La primera ecuación describe la conducción; la segunda fija la temperatura inicial; las dos últimas fijan los extremos a temperatura cero.
+
+### 17. Escriba un problema de ondas en una cuerda con extremos fijos, posición inicial \(f(x)\) y velocidad inicial \(g(x)\).
+
+El problema es
+\[
+u_{tt}=c^2u_{xx},\qquad 0<x<L,\quad t>0,
+\]
+\[
+u(0,t)=u(L,t)=0,
+\]
+\[
+u(x,0)=f(x),\qquad u_t(x,0)=g(x).
+\]
+Las dos condiciones iniciales son necesarias porque la ecuación es de segundo orden respecto al tiempo.
+
+### 18. Explique qué representa \(u_x(0,t)=0\) en un problema unidimensional de calor.
+
+Representa una condición de Neumann homogénea en el extremo \(x=0\). En el contexto térmico, suele interpretarse como ausencia de flujo de calor por ese extremo, es decir, extremo aislado.
+
+### 19. Clasifique \(u_{xx}+u_{yy}=0\) como elíptica, parabólica o hiperbólica.
+
+La parte principal es \(u_{xx}+u_{yy}\), de modo que \(a=1\), \(b=0\), \(c=1\) en la forma \(a u_{xx}+b u_{xy}+c u_{yy}\). El discriminante es
+\[
+\Delta=b^2-4ac=0-4=-4<0.
+\]
+Por tanto, es elíptica.
+
+### 20. Clasifique \(u_{tt}-c^2u_{xx}=0\) como elíptica, parabólica o hiperbólica.
+
+Tomando las variables \((x,t)\), la parte principal es
+\[
+-c^2u_{xx}+u_{tt}.
+\]
+No hay término mixto. Por tanto \(a=-c^2\), \(b=0\), \(c=1\) en la forma \(a u_{xx}+b u_{xt}+c u_{tt}\). Entonces
+\[
+\Delta=0-4(-c^2)(1)=4c^2>0.
+\]
+Es hiperbólica.
+
+### 21. Clasifique \(2u_{xx}+4u_{xy}+u_{yy}=0\) usando la forma \(a u_{xx}+b u_{xy}+c u_{yy}\).
+
+Aquí \(a=2\), \(b=4\), \(c=1\). El discriminante es
+\[
+\Delta=b^2-4ac=16-8=8>0.
+\]
+La ecuación es hiperbólica.
+
+### 22. Clasifique \(2u_{xx}+4u_{xy}+u_{yy}=0\) usando la forma \(a u_{xx}+2b u_{xy}+c u_{yy}\) y compruebe que el resultado coincide.
+
+En la forma \(a u_{xx}+2b u_{xy}+c u_{yy}\), tenemos \(a=2\), \(2b=4\), luego \(b=2\), y \(c=1\). Se calcula
+\[
+b^2-ac=4-2=2>0.
+\]
+También resulta hiperbólica. Coincide con la clasificación anterior; solo cambia la convención del coeficiente mixto.
+
+### 23. Si \(u_1\) y \(u_2\) satisfacen \(L(u)=0\) con \(L\) lineal, demuestre que \(\alpha u_1+\beta u_2\) también es solución.
+
+Como \(L\) es lineal,
+\[
+L(\alpha u_1+\beta u_2)=\alpha L(u_1)+\beta L(u_2).
+\]
+Pero \(u_1\) y \(u_2\) son soluciones de la ecuación homogénea, luego
+\[
+L(u_1)=0,\qquad L(u_2)=0.
+\]
+Por tanto,
+\[
+L(\alpha u_1+\beta u_2)=\alpha\cdot0+\beta\cdot0=0.
+\]
+Así, \(\alpha u_1+\beta u_2\) también es solución.
+
+### 24. Dé un ejemplo donde dos funciones sean soluciones de una EDP no lineal pero su suma no sea solución.
+
+Considérese la EDP no lineal
+\[
+u_x u_y=0.
+\]
+La función \(u_1(x,y)=x\) es solución porque \(u_{1y}=0\), luego \(u_{1x}u_{1y}=0\). La función \(u_2(x,y)=y\) también es solución porque \(u_{2x}=0\), luego \(u_{2x}u_{2y}=0\).
+
+Sin embargo, la suma \(u_1+u_2=x+y\) tiene
+\[
+(u_1+u_2)_x=1,\qquad (u_1+u_2)_y=1.
+\]
+Por tanto,
+\[
+(u_1+u_2)_x (u_1+u_2)_y=1\neq0.
+\]
+La suma no es solución. Esto muestra que en una EDP no lineal no se puede usar superposición sin comprobarla.
+
+### 25. Aplique separación de variables a \(u_t=\alpha^2u_{xx}\) y deduzca las dos EDO resultantes.
+
+Se supone
+\[
+u(x,t)=X(x)T(t).
+\]
+Entonces
+\[
+u_t=XT',\qquad u_{xx}=X''T.
+\]
+Sustituyendo:
+\[
+XT'=\alpha^2X''T.
+\]
+Si \(X\) y \(T\) no son nulas, se divide por \(\alpha^2XT\):
+\[
+\frac{X''}{X}=\frac{T'}{\alpha^2T}=\lambda.
+\]
+De aquí resultan
+\[
+X''-\lambda X=0,\qquad T'-\alpha^2\lambda T=0.
+\]
+Según las condiciones de contorno se escoge la forma conveniente de \(\lambda\).
+
+### 26. Desarrolle la diferencia entre EDO y EDP, incluyendo el papel de las funciones arbitrarias en las soluciones generales.
+
+Una EDO contiene una función incógnita de una sola variable independiente y sus derivadas ordinarias. Por ejemplo, \(y''+y=0\). Una EDP contiene una función incógnita de varias variables independientes y derivadas parciales, como \(u_t-u_{xx}=0\).
+
+La diferencia afecta a la forma de las soluciones generales. En una EDO de orden \(n\), la solución general suele contener \(n\) constantes arbitrarias. En una EDP, al integrar respecto a una variable, las demás variables pueden quedar dentro de funciones arbitrarias. Por ejemplo,
+\[
+u_x=x+y
+\]
+da
+\[
+u=\frac{x^2}{2}+xy+\varphi(y).
+\]
+La presencia de \(\varphi(y)\) muestra que la solución general de una EDP puede tener más libertad que la de una EDO. Por eso son esenciales las condiciones iniciales y de contorno.
+
+### 27. Explique el papel de las condiciones de contorno en los problemas de EDP y compare Dirichlet, Neumann y Robin.
+
+Las condiciones de contorno completan el modelo matemático al imponer restricciones en la frontera del dominio. Sin ellas, la EDP suele tener demasiadas soluciones posibles.
+
+Dirichlet fija el valor de la función:
+\[
+u=g.
+\]
+Neumann fija la derivada normal:
+\[
+\frac{\partial u}{\partial n}=g.
+\]
+Robin combina ambas:
+\[
+Au+B\frac{\partial u}{\partial n}=g.
+\]
+En calor, Dirichlet fija temperatura, Neumann fija flujo y Robin representa una relación mixta entre temperatura y flujo. En ondas, Dirichlet puede expresar extremos fijos.
+
+### 28. Desarrolle el planteamiento matemático de la ecuación del calor unidimensional con condiciones iniciales y de frontera.
+
+Para una varilla \(0<x<L\), la temperatura \(u(x,t)\) satisface, en el modelo básico,
+\[
+u_t=\alpha^2u_{xx},\qquad 0<x<L,\quad t>0.
+\]
+La condición inicial prescribe la distribución de temperatura en \(t=0\):
+\[
+u(x,0)=f(x).
+\]
+Si los extremos se mantienen a temperatura cero, se imponen condiciones de Dirichlet:
+\[
+u(0,t)=u(L,t)=0.
+\]
+El problema completo combina evolución interna, estado inicial y comportamiento en la frontera. Si hubiese fuentes de calor, aparecería un término no nulo en el segundo miembro. Si los extremos estuviesen aislados, las condiciones serían de Neumann.
+
+### 29. Desarrolle el planteamiento matemático de la ecuación de ondas en una cuerda fija en sus extremos.
+
+Para una cuerda de longitud \(L\), el desplazamiento vertical \(u(x,t)\) satisface
+\[
+u_{tt}=c^2u_{xx},\qquad 0<x<L,\quad t>0.
+\]
+Si los extremos están fijos,
+\[
+u(0,t)=u(L,t)=0.
+\]
+Como la ecuación es de segundo orden en el tiempo, hacen falta dos condiciones iniciales:
+\[
+u(x,0)=f(x),\qquad u_t(x,0)=g(x).
+\]
+La primera fija la forma inicial de la cuerda y la segunda la velocidad inicial. Además, debe haber compatibilidad: \(f(0)=f(L)=0\) si los extremos están fijos.
+
+### 30. Explique la clasificación de las EDP lineales de segundo orden y relacione ondas, calor y Laplace con los tres tipos.
+
+Para una EDP lineal de segundo orden con parte principal
+\[
+a u_{xx}+b u_{xy}+c u_{yy},
+\]
+se calcula
+\[
+\Delta=b^2-4ac.
+\]
+Si \(\Delta>0\), la ecuación es hiperbólica; si \(\Delta=0\), parabólica; si \(\Delta<0\), elíptica.
+
+La ecuación de ondas es hiperbólica, porque su parte principal tiene signos opuestos entre derivada temporal segunda y derivada espacial segunda. La ecuación del calor es parabólica, porque combina una derivada temporal primera con una derivada espacial segunda y representa difusión. La ecuación de Laplace es elíptica, porque su parte principal \(u_{xx}+u_{yy}\) tiene discriminante negativo.
+
+### 31. Relacione linealidad, homogeneidad y principio de superposición.
+
+La linealidad permite escribir la EDP como \(L(u)=g\), con \(L\) operador lineal. Si además \(g=0\), la ecuación es homogénea. En ese caso se cumple el principio de superposición: combinaciones lineales de soluciones siguen siendo soluciones. Si la ecuación es lineal pero no homogénea, la superposición se aplica al segundo miembro de forma proporcional. Si la ecuación no es lineal, no se puede usar este principio en general.
+
+### 32. Relacione ecuación del calor, condición inicial y solución estacionaria.
+
+La ecuación del calor describe evolución:
+\[
+u_t=\alpha^2u_{xx}.
+\]
+La condición inicial \(u(x,0)=f(x)\) fija de dónde parte la evolución. Una solución estacionaria es aquella que ya no cambia con el tiempo, por lo que \(u_t=0\). Entonces la ecuación se reduce a
+\[
+u_{xx}=0
+\]
+en el caso unidimensional sin fuentes. Las condiciones de contorno determinan qué equilibrio se alcanza, si existe.
+
+### 33. Relacione ecuación de ondas, orden temporal y número de condiciones iniciales.
+
+La ecuación de ondas
+\[
+u_{tt}=c^2u_{xx}
+\]
+es de segundo orden respecto al tiempo. Por analogía con las EDO de segundo orden, se necesitan dos datos iniciales: posición inicial y velocidad inicial. Por eso se prescribe
+\[
+u(x,0)=f(x),\qquad u_t(x,0)=g(x).
+\]
+Con una sola condición inicial el problema no queda determinado.
+
+### 34. Relacione ecuación de Laplace, equilibrio y condiciones de contorno.
+
+La ecuación de Laplace
+\[
+u_{xx}+u_{yy}=0
+\]
+describe estados estacionarios sin fuente en dos dimensiones. Como no contiene tiempo, no se acompaña de condiciones iniciales, sino de condiciones de contorno en la frontera del dominio. Estas condiciones pueden fijar valores de \(u\), derivadas normales o combinaciones de ambos.
+
+### 35. Relacione clasificación de segundo orden y parte principal de la EDP.
+
+La clasificación hiperbólica, parabólica o elíptica depende de la parte principal, es decir, de los términos con derivadas de segundo orden. En
+\[
+a u_{xx}+b u_{xy}+c u_{yy}+d u_x+e u_y+fu=g,
+\]
+solo importan \(a u_{xx}+b u_{xy}+c u_{yy}\). Los términos de primer orden, el término \(fu\) y el segundo miembro no determinan el tipo. Por eso una ecuación como \(u_{xx}+u_{yy}+3u_x=0\) sigue siendo elíptica.
+
+## 9. Resumen final de repaso
+
+Ideas principales:
+
+- Una EDP contiene derivadas parciales de una función de varias variables.
+- El orden lo marca la derivada parcial de mayor orden.
+- Las soluciones generales de EDP pueden contener funciones arbitrarias.
+- Una EDP aplicada se plantea junto a dominio, condiciones iniciales y condiciones de contorno.
+- Dirichlet fija \(u\); Neumann fija \(\partial u/\partial n\); Robin combina ambas.
+- La linealidad permite usar superposición.
+- La ecuación del calor modela difusión y es parabólica.
+- La ecuación de ondas modela vibración y es hiperbólica.
+- La ecuación de Laplace modela equilibrio y es elíptica.
+- La clasificación se hace con la parte principal de segundo orden.
+
+Conceptos imprescindibles:
+
+- EDP.
+- Orden.
+- Solución particular.
+- Solución general.
+- Linealidad.
+- Homogeneidad.
+- Condición inicial.
+- Condición de contorno.
+- Dirichlet.
+- Neumann.
+- Robin.
+- Calor.
+- Ondas.
+- Laplace.
+- Parte principal.
+- Clasificación.
+- Superposición.
+- Separación de variables.
+
+Relaciones clave:
+
+- EDP + condiciones = problema matemático completo.
+- Linealidad + homogeneidad = superposición directa.
+- Calor + condición inicial + contorno = evolución térmica.
+- Ondas + dos condiciones iniciales + contorno = vibración determinada.
+- Laplace + contorno = equilibrio espacial.
+- Parte principal + discriminante = tipo de EDP.
+
+Errores que evitar:
+
+- Llamar EDO a una EDP porque solo hay una función incógnita.
+- Calcular el orden mirando solo \(t\).
+- Sustituir funciones arbitrarias por constantes al integrar parcialmente.
+- Aplicar superposición a EDP no lineales.
+- Confundir condiciones homogéneas con ecuaciones homogéneas.
+- Intercambiar Dirichlet y Neumann.
+- Clasificar usando términos de primer orden.
+- Usar mal el discriminante por no mirar si el término mixto es \(b u_{xy}\) o \(2b u_{xy}\).
+- Olvidar la segunda condición inicial en ondas.
+- No comprobar compatibilidad entre frontera e instante inicial.
+
+## 10. Checklist de dominio
+
+- Si no puedes explicar qué diferencia una EDP de una EDO, falta repasar definición de EDP y dependencia de varias variables.
+- Si no puedes calcular el orden de \(u_t-u_{xx}=0\), falta repasar orden de derivadas parciales.
+- Si confundes \(u_x\) con una derivada total, revisar notación de derivadas parciales.
+- Si al integrar \(u_x=x+y\) escribes una constante \(C\), revisar integración parcial y funciones arbitrarias.
+- Si no puedes distinguir solución particular y solución general, falta repasar sustitución directa y familias de soluciones.
+- Si confundes linealidad con homogeneidad, revisar la forma \(L(u)=g\).
+- Si aplicas superposición a \(u_t+u u_x=0\), revisar linealidad.
+- Si confundes Dirichlet con Neumann, revisar qué fija cada condición.
+- Si no sabes interpretar \(u_x(0,t)=0\) en calor, revisar derivada normal y aislamiento.
+- Si no sabes escribir el problema básico de calor en una barra, repasar \(u_t=\alpha^2u_{xx}\), condición inicial y condiciones en extremos.
+- Si no sabes escribir el problema básico de ondas, repasar \(u_{tt}=c^2u_{xx}\), extremos fijos, posición inicial y velocidad inicial.
+- Si pones solo una condición inicial en ondas, revisar orden temporal.
+- Si no sabes reconocer Laplace, repasar \(u_{xx}+u_{yy}=0\) y operador laplaciano.
+- Si clasificas una EDP mirando \(u_x\) o \(u\), revisar parte principal.
+- Si no distingues las convenciones \(b u_{xy}\) y \(2b u_{xy}\), revisar discriminante.
+- Si puedes clasificar calor, ondas y Laplace, el bloque de identificación está asentado.
+- Si puedes plantear ecuación, dominio, condiciones iniciales y contorno de calor y ondas, el capítulo está suficientemente asentado.
+- Si puedes explicar por qué la superposición prepara las series de Fourier, estás listo para separación de variables.

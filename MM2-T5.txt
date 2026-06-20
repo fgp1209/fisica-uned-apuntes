@@ -1,0 +1,1362 @@
+# Guía de estudio — MM2 / Boas: Series infinitas y series de potencias
+
+## 1. Prerrequisitos mínimos
+
+1. Sucesión
+
+Definición breve: una sucesión es una lista ordenada de números, normalmente escrita como \(a_1,a_2,\ldots,a_n,\ldots\), donde cada término depende de un índice natural \(n\).
+
+Por qué es necesaria: una serie infinita se construye sumando los términos de una sucesión. Antes de estudiar si \(\sum a_n\) converge, hay que saber manejar el comportamiento de \(a_n\) cuando \(n\to\infty\).
+
+Ejemplo mínimo: en \(a_n=1/n\), los términos son \(1,1/2,1/3,\ldots\), y \(\lim_{n\to\infty}a_n=0\).
+
+
+2. Límite de una sucesión
+
+Definición breve: \(\lim_{n\to\infty}a_n=L\) significa que los términos de la sucesión se acercan tanto como se quiera a \(L\) cuando \(n\) crece.
+
+Por qué es necesario: la suma de una serie se define mediante el límite de sus sumas parciales, y el primer test de divergencia exige calcular \(\lim a_n\).
+
+Ejemplo mínimo: \(\lim_{n\to\infty}1/n=0\), pero \(\lim_{n\to\infty}n/(n+1)=1\).
+
+
+3. Sumas finitas y notación sigma
+
+Definición breve: la notación \(\sum_{n=1}^{N} a_n\) representa la suma \(a_1+a_2+\cdots+a_N\).
+
+Por qué es necesaria: el capítulo pasa continuamente de expresiones largas a notación compacta. La serie infinita \(\sum_{n=1}^{\infty}a_n\) se entiende a partir de las sumas finitas \(S_N=\sum_{n=1}^{N}a_n\).
+
+Ejemplo mínimo:
+\[
+\sum_{n=1}^{4} n^2=1^2+2^2+3^2+4^2=30.
+\]
+
+
+4. Progresión geométrica
+
+Definición breve: una progresión geométrica es una sucesión en la que cada término se obtiene multiplicando el anterior por una razón fija \(r\).
+
+Por qué es necesaria: la serie geométrica es el modelo básico de serie infinita y aparece como comparación, como desarrollo de funciones y como patrón de muchos cálculos.
+
+Ejemplo mínimo:
+\[
+1,x,x^2,x^3,\ldots
+\]
+es geométrica de razón \(x\).
+
+
+5. Factorial
+
+Definición breve: para \(n\geq 1\), \(n!=n(n-1)(n-2)\cdots 1\), y se toma \(0!=1\).
+
+Por qué es necesario: las series de \(e^x\), \(\sin x\), \(\cos x\) y la fórmula de Taylor usan factoriales.
+
+Ejemplo mínimo:
+\[
+5!=5\cdot4\cdot3\cdot2\cdot1=120.
+\]
+
+
+6. Derivadas sucesivas
+
+Definición breve: la derivada primera \(f'\), segunda \(f''\), tercera \(f'''\), y en general \(f^{(n)}\), miden variaciones sucesivas de una función.
+
+Por qué es necesario: los coeficientes de Taylor se obtienen evaluando derivadas sucesivas en el punto de desarrollo.
+
+Ejemplo mínimo: si \(f(x)=e^x\), entonces \(f^{(n)}(x)=e^x\) para todo \(n\).
+
+
+7. Integración elemental
+
+Definición breve: integrar consiste en hallar primitivas o áreas acumuladas. En este capítulo se usa sobre todo la integración término a término de series de potencias.
+
+Por qué es necesaria: muchas series se obtienen integrando una serie conocida. Por ejemplo, la serie de \(\arctan x\) se obtiene integrando la serie geométrica de \(1/(1+x^2)\).
+
+Ejemplo mínimo:
+\[
+\int_0^x t^n\,dt=\frac{x^{n+1}}{n+1}.
+\]
+
+
+8. Valor absoluto y comparación de tamaños
+
+Definición breve: \(|a|\) mide la magnitud de un número real sin signo.
+
+Por qué es necesario: los criterios de convergencia para series positivas y la convergencia absoluta trabajan con \(|a_n|\).
+
+Ejemplo mínimo: la serie alternada \(\sum (-1)^n/n\) se estudia también mediante \(\sum |(-1)^n/n|=\sum 1/n\).
+
+
+9. Funciones elementales
+
+Definición breve: son funciones como \(e^x\), \(\sin x\), \(\cos x\), \(\ln(1+x)\), \((1+x)^p\).
+
+Por qué es necesario: el capítulo enseña a representarlas localmente por series de potencias.
+
+Ejemplo mínimo:
+\[
+e^x=1+x+\frac{x^2}{2!}+\cdots
+\]
+dentro de su intervalo de validez.
+
+
+10. Números complejos básicos
+
+Definición breve: un número complejo se escribe \(z=x+iy\), con \(i^2=-1\), y tiene módulo \(|z|=\sqrt{x^2+y^2}\).
+
+Por qué es necesario: en MM2 las series de potencias reales se prolongan de forma natural a series en \(z\), y el intervalo de convergencia pasa a ser un disco de convergencia.
+
+Ejemplo mínimo:
+\[
+\sum_{n=0}^{\infty}z^n
+\]
+converge si \(|z|<1\).
+
+
+## 2. Idea central del capítulo
+
+El capítulo estudia cómo sumar, clasificar y utilizar expresiones con infinitos términos. La idea de fondo es sencilla, pero técnicamente delicada: una suma infinita no se puede tratar como una suma ordinaria salvo que antes se haya justificado su convergencia. Por eso el capítulo comienza con la serie geométrica, donde todo puede verse de forma explícita, y a partir de ahí introduce el lenguaje general de series, sumas parciales, convergencia y divergencia.
+
+La primera parte del capítulo responde a una pregunta básica: dada una serie \(\sum a_n\), ¿tiene sentido asignarle una suma finita? Para contestarla se introducen criterios de convergencia. El test preliminar descarta series cuyos términos no tienden a cero; los criterios de comparación, integral y cociente permiten tratar series de términos positivos; el criterio alternado cubre el caso importante de signos alternos; y la convergencia absoluta separa las series manejables de las condicionalmente convergentes, que son más peligrosas porque su suma puede depender del orden de los términos.
+
+La segunda parte pasa de series numéricas a series de potencias. Una serie como
+\[
+\sum_{n=0}^{\infty}a_n x^n
+\]
+no tiene una única respuesta de convergencia, porque depende del valor de \(x\). De ahí surge el intervalo de convergencia en variable real y, en MM2, el disco de convergencia cuando la variable es compleja. Esta transición es fundamental: las series dejan de ser solo sumas infinitas y pasan a representar funciones.
+
+El capítulo culmina con las series de Taylor y Maclaurin. La idea es que, bajo condiciones adecuadas, una función puede expresarse mediante sus valores y derivadas en un punto. Esto permite aproximar funciones complicadas por polinomios y operar con ellas como si fueran polinomios, siempre dentro del intervalo o disco donde la serie converge y representa realmente a la función.
+
+Dentro de Métodos Matemáticos II, este tema sirve de base para el estudio posterior de funciones complejas, desarrollos de Taylor y Laurent, singularidades y residuos. Sin dominar convergencia, radio de convergencia y manipulación de series de potencias, los capítulos de variable compleja quedan reducidos a recetas formales sin control matemático.
+
+
+## 3. Desarrollo completo del capítulo
+
+### 3.1. La serie geométrica como modelo
+
+El capítulo empieza con la serie geométrica porque es el ejemplo más claro de cómo una suma infinita puede tener un valor finito. Una progresión geométrica tiene términos
+\[
+a,\ ar,\ ar^2,\ ar^3,\ldots
+\]
+y la serie asociada es
+\[
+a+ar+ar^2+ar^3+\cdots.
+\]
+La suma de los \(N+1\) primeros términos se obtiene mediante una fórmula cerrada:
+\[
+S_N=a\frac{1-r^{N+1}}{1-r}, \qquad r\neq 1.
+\]
+Si \(|r|<1\), entonces \(r^{N+1}\to 0\), y por tanto
+\[
+\sum_{n=0}^{\infty}ar^n=\frac{a}{1-r}.
+\]
+Si \(|r|\geq 1\), la serie geométrica no converge en el sentido ordinario.
+
+Este ejemplo importa porque muestra dos ideas que se repiten durante todo el tema. Primero, la suma infinita se define como límite de sumas parciales, no como una operación algebraica sin control. Segundo, que los términos de una serie se hagan pequeños no basta por sí solo para justificar cualquier manipulación: hace falta estudiar el límite de las sumas parciales.
+
+Un ejemplo básico es
+\[
+1+x+x^2+x^3+\cdots=\frac{1}{1-x},\qquad |x|<1.
+\]
+Esta igualdad será una herramienta recurrente para construir otras series. Por ejemplo, sustituyendo \(x\) por \(-x^2\) se obtiene
+\[
+\frac{1}{1+x^2}=1-x^2+x^4-x^6+\cdots,\qquad |x|<1.
+\]
+
+
+### 3.2. Definición de serie y suma parcial
+
+Una serie infinita se escribe
+\[
+\sum_{n=1}^{\infty}a_n.
+\]
+Su significado no es “sumar todos los términos de golpe”, sino estudiar la sucesión de sumas parciales
+\[
+S_N=a_1+a_2+\cdots+a_N.
+\]
+Si existe un número \(S\) tal que \(\lim_{N\to\infty}S_N=S\), se dice que la serie converge y que su suma es \(S\). Si ese límite no existe como número finito, la serie diverge.
+
+Esta definición es la que impide errores típicos. Por ejemplo, la expresión
+\[
+1+2+4+8+\cdots
+\]
+no se puede manipular como si tuviera una suma ordinaria. Aunque formalmente pueda escribirse una ecuación absurda, las sumas parciales \(1,3,7,15,\ldots\) crecen sin límite, así que la serie diverge.
+
+La conexión con la sección anterior es directa: en la serie geométrica se puede calcular \(S_N\) explícitamente; en series más complicadas no siempre se puede. Por eso se necesitan criterios de convergencia.
+
+
+### 3.3. Aplicaciones de las series
+
+El capítulo subraya que las series no son solo un objeto teórico. En muchas aplicaciones, una solución exacta puede ser inaccesible, pero una serie permite aproximar la solución con tantos términos como hagan falta. Esto aparece en ecuaciones diferenciales, ecuaciones en derivadas parciales, funciones especiales y desarrollos locales de funciones.
+
+La consecuencia práctica es que una serie útil debe responder a dos preguntas: dónde converge y con qué precisión aproximan sus sumas parciales. Por ejemplo, aproximar \(e^x\) mediante
+\[
+1+x+\frac{x^2}{2!}
+\]
+puede ser razonable para valores pequeños de \(x\), pero la validez de esa aproximación no se decide por intuición; depende de la convergencia de la serie y del control del resto.
+
+En Física, este enfoque aparece constantemente: pequeñas oscilaciones, aproximaciones para ángulos pequeños, soluciones por modos y desarrollos perturbativos. El capítulo no desarrolla esas aplicaciones físicas en detalle, pero prepara la técnica matemática que las hace posibles.
+
+
+### 3.4. Convergencia, divergencia y test preliminar
+
+La primera comprobación que debe hacerse en una serie
+\[
+\sum a_n
+\]
+es el comportamiento de su término general. Si
+\[
+\lim_{n\to\infty}a_n\neq 0,
+\]
+entonces la serie diverge. Este criterio se llama test preliminar o test del término general.
+
+Su importancia está en que descarta series rápidamente. Por ejemplo,
+\[
+\sum_{n=1}^{\infty}\frac{n}{n+1}
+\]
+diverge porque \(\frac{n}{n+1}\to 1\), no a cero.
+
+Pero el test preliminar no prueba convergencia. Si \(a_n\to 0\), solo sabemos que la serie no queda descartada por este criterio. El ejemplo esencial es la serie armónica
+\[
+\sum_{n=1}^{\infty}\frac{1}{n},
+\]
+cuyos términos tienden a cero, pero la serie diverge. Este punto es una fuente frecuente de errores de examen.
+
+
+### 3.5. Series de términos positivos y convergencia absoluta
+
+Para series con términos positivos, el capítulo introduce criterios que comparan la serie dada con otras cuyo comportamiento ya se conoce. Si una serie con términos positivos queda por debajo de una convergente, converge. Si queda por encima de una divergente, diverge. Esta es la idea del criterio de comparación.
+
+El criterio se aplica también a la convergencia absoluta. Dada una serie con signos cualesquiera,
+\[
+\sum a_n,
+\]
+se estudia
+\[
+\sum |a_n|.
+\]
+Si esta última converge, la serie original converge absolutamente y, en particular, converge. La convergencia absoluta es una forma fuerte de convergencia: permite reordenar términos sin cambiar la suma y justifica operaciones algebraicas con mucha más seguridad.
+
+Por ejemplo,
+\[
+\sum_{n=1}^{\infty}\frac{(-1)^n}{n^2}
+\]
+converge absolutamente porque
+\[
+\sum_{n=1}^{\infty}\frac{1}{n^2}
+\]
+converge.
+
+
+### 3.6. Criterios de comparación, integral y cociente
+
+El criterio de comparación exige reconocer una serie patrón. La serie geométrica y las series tipo \(p\),
+\[
+\sum_{n=1}^{\infty}\frac{1}{n^p},
+\]
+son las referencias principales: la serie \(p\) converge si \(p>1\) y diverge si \(p\leq 1\).
+
+El criterio integral relaciona la serie
+\[
+\sum_{n=1}^{\infty}a_n
+\]
+con una integral impropia, cuando \(a_n=f(n)\) y \(f\) es positiva, decreciente y suficientemente regular. La idea es comparar la suma de rectángulos con el área bajo la curva. Así se justifica, por ejemplo, que la armónica diverge mediante
+\[
+\int_1^\infty \frac{dx}{x}.
+\]
+
+El criterio del cociente es especialmente eficaz cuando aparecen factoriales, potencias o productos. Se calcula
+\[
+\rho=\lim_{n\to\infty}\left|\frac{a_{n+1}}{a_n}\right|.
+\]
+Si \(\rho<1\), la serie converge absolutamente; si \(\rho>1\), diverge; si \(\rho=1\), el criterio no decide.
+
+Por ejemplo, en
+\[
+\sum_{n=0}^{\infty}\frac{x^n}{n!}
+\]
+el cociente es
+\[
+\left|\frac{x^{n+1}/(n+1)!}{x^n/n!}\right|=\frac{|x|}{n+1}\to 0.
+\]
+Por tanto la serie converge para todo \(x\).
+
+
+### 3.7. Series alternadas y convergencia condicional
+
+Una serie alternada tiene signos que cambian regularmente, como
+\[
+1-\frac12+\frac13-\frac14+\cdots.
+\]
+El criterio alternado dice que una serie alternada converge si los valores absolutos de sus términos decrecen hacia cero.
+
+La serie armónica alternada converge:
+\[
+\sum_{n=1}^{\infty}\frac{(-1)^{n+1}}{n}.
+\]
+Sin embargo, no converge absolutamente, porque la serie de valores absolutos es la armónica:
+\[
+\sum_{n=1}^{\infty}\frac{1}{n}.
+\]
+Por eso se dice que converge condicionalmente.
+
+Esta distinción es crucial. En una serie absolutamente convergente, reordenar los términos no cambia la suma. En una serie condicionalmente convergente, reordenar términos puede cambiar el valor de la suma e incluso alterar la convergencia. En examen, no basta con decir “converge”: conviene precisar si la convergencia es absoluta o condicional.
+
+
+### 3.8. Hechos útiles sobre series
+
+El capítulo recoge varias reglas operativas. Multiplicar todos los términos de una serie por una constante no nula no cambia su convergencia o divergencia. Cambiar, añadir o quitar un número finito de términos tampoco cambia la convergencia, aunque sí puede cambiar la suma.
+
+Dos series convergentes pueden sumarse o restarse término a término, y la serie resultante converge a la suma o diferencia de las sumas. En cambio, estas operaciones no se aplican sin más a series divergentes.
+
+La regla más importante para evitar errores es que la reordenación de términos solo es segura para series absolutamente convergentes. Esta restricción conecta con la sección anterior: las series condicionales no se comportan como sumas finitas ordinarias.
+
+
+### 3.9. Series de potencias e intervalo de convergencia
+
+Una serie de potencias tiene la forma
+\[
+\sum_{n=0}^{\infty}a_n x^n
+\]
+o, más generalmente,
+\[
+\sum_{n=0}^{\infty}a_n(x-a)^n.
+\]
+A diferencia de una serie numérica, su convergencia depende del valor de la variable. El conjunto de valores reales de \(x\) para los que converge se llama intervalo de convergencia.
+
+El criterio del cociente permite hallar normalmente el radio \(R\). Si el desarrollo está centrado en \(a\), la serie converge para
+\[
+|x-a|<R
+\]
+y diverge para
+\[
+|x-a|>R.
+\]
+Los extremos \(x=a-R\) y \(x=a+R\) deben estudiarse aparte, porque el criterio del cociente suele dar \(\rho=1\) en ellos.
+
+Ejemplo:
+\[
+\sum_{n=1}^{\infty}\frac{x^n}{n}
+\]
+tiene radio \(R=1\). Para \(x=1\) se obtiene la armónica, divergente. Para \(x=-1\) se obtiene la armónica alternada, convergente. Por tanto su intervalo de convergencia es
+\[
+[-1,1).
+\]
+Este ejemplo muestra que radio e intervalo no son lo mismo: el radio da la zona interior, pero los extremos requieren análisis adicional.
+
+
+### 3.10. Disco de convergencia en variable compleja
+
+En MM2 se trabaja con variable compleja. La serie
+\[
+\sum_{n=0}^{\infty}a_n z^n
+\]
+se estudia con el módulo complejo. El intervalo real se transforma en un disco:
+\[
+|z-z_0|<R.
+\]
+El radio de convergencia se calcula de forma análoga, a menudo con el criterio del cociente o con el criterio de la raíz.
+
+La idea es la misma, pero geométricamente más rica. En la recta real, la distancia al centro se mide con \(|x-a|\); en el plano complejo, con \(|z-z_0|\). Por ejemplo,
+\[
+\sum_{n=0}^{\infty}z^n
+\]
+converge si \(|z|<1\) y diverge si \(|z|>1\). La frontera \(|z|=1\) requiere estudio específico.
+
+Esta noción prepara el paso a Taylor complejo: una función analítica puede desarrollarse en serie de potencias dentro de un disco cuyo tamaño viene limitado por las singularidades más cercanas. Esta idea será esencial antes de estudiar Laurent y residuos.
+
+
+### 3.11. Teoremas operativos sobre series de potencias
+
+Dentro de su intervalo de convergencia, una serie de potencias se comporta en muchos aspectos como un polinomio. Puede derivarse término a término:
+\[
+\frac{d}{dx}\sum_{n=0}^{\infty}a_nx^n
+=\sum_{n=1}^{\infty}na_nx^{n-1},
+\]
+y puede integrarse término a término:
+\[
+\int \sum_{n=0}^{\infty}a_nx^n\,dx
+=\sum_{n=0}^{\infty}a_n\frac{x^{n+1}}{n+1}+C.
+\]
+La convergencia de las series derivada e integrada se mantiene en el interior del mismo intervalo, aunque los extremos pueden cambiar.
+
+También pueden sumarse, restarse y multiplicarse series de potencias dentro de su intervalo común de convergencia. Se pueden sustituir unas series en otras siempre que los valores sustituidos permanezcan dentro del intervalo de validez. Además, la serie de potencias de una función, si existe, es única.
+
+La consecuencia práctica es potente: una vez conocidas unas pocas series básicas, pueden construirse muchas más sin calcular derivadas sucesivas.
+
+
+### 3.12. Series de Taylor y Maclaurin
+
+Una serie de Taylor de \(f\) alrededor de \(x=a\) tiene la forma
+\[
+f(x)=f(a)+(x-a)f'(a)+\frac{(x-a)^2}{2!}f''(a)+\cdots+
+\frac{(x-a)^n}{n!}f^{(n)}(a)+\cdots.
+\]
+La serie de Maclaurin es el caso particular \(a=0\):
+\[
+f(x)=f(0)+xf'(0)+\frac{x^2}{2!}f''(0)+\cdots.
+\]
+El capítulo obtiene esta fórmula razonando que, si una función puede escribirse como serie de potencias, los coeficientes quedan determinados por las derivadas en el punto.
+
+Las series básicas que conviene dominar son:
+\[
+\sin x=x-\frac{x^3}{3!}+\frac{x^5}{5!}-\cdots,
+\]
+\[
+\cos x=1-\frac{x^2}{2!}+\frac{x^4}{4!}-\cdots,
+\]
+\[
+e^x=1+x+\frac{x^2}{2!}+\frac{x^3}{3!}+\cdots,
+\]
+\[
+\ln(1+x)=x-\frac{x^2}{2}+\frac{x^3}{3}-\frac{x^4}{4}+\cdots,\qquad -1<x\leq 1,
+\]
+\[
+(1+x)^p=1+px+\frac{p(p-1)}{2!}x^2+\frac{p(p-1)(p-2)}{3!}x^3+\cdots,\qquad |x|<1.
+\]
+Estas series son herramientas, no resultados aislados. Con ellas se construyen desarrollos de productos, cocientes, composiciones e integrales.
+
+
+### 3.13. Técnicas para obtener desarrollos
+
+El capítulo insiste en que no siempre conviene aplicar la fórmula de Taylor calculando muchas derivadas. Es más eficiente partir de series conocidas.
+
+Para multiplicar una función por un polinomio o por otra serie, se multiplican términos y se agrupan potencias iguales. Por ejemplo,
+\[
+(x+1)\sin x=(x+1)\left(x-\frac{x^3}{3!}+\cdots\right)
+=x+x^2-\frac{x^3}{3!}-\frac{x^4}{3!}+\cdots.
+\]
+
+Para dividir, se usa una serie conocida o una división formal de potencias. Por ejemplo,
+\[
+\frac{\ln(1+x)}{x}=1-\frac{x}{2}+\frac{x^2}{3}-\frac{x^3}{4}+\cdots.
+\]
+
+Para sustituir, se reemplaza la variable de una serie por una expresión válida. Así,
+\[
+e^{-x^2}=1-x^2+\frac{x^4}{2!}-\frac{x^6}{3!}+\cdots.
+\]
+
+Para combinar métodos, se puede integrar una serie ya conocida. Como
+\[
+\frac{1}{1+t^2}=1-t^2+t^4-t^6+\cdots,
+\]
+entonces
+\[
+\arctan x=\int_0^x\frac{dt}{1+t^2}
+=x-\frac{x^3}{3}+\frac{x^5}{5}-\frac{x^7}{7}+\cdots.
+\]
+
+La consecuencia de estas técnicas es que el cálculo de series se convierte en una operación algebraica controlada por la convergencia.
+
+
+### 3.14. Precisión y resto
+
+Representar una función por una serie no basta: hay que saber qué error se comete al truncarla. Si se toma el polinomio de Taylor hasta orden \(n\), el resto es
+\[
+R_n(x)=f(x)-\left[f(a)+(x-a)f'(a)+\cdots+\frac{(x-a)^n}{n!}f^{(n)}(a)\right].
+\]
+Decir que la serie representa a la función significa que
+\[
+\lim_{n\to\infty}R_n(x)=0
+\]
+en el intervalo considerado.
+
+En series alternadas que cumplen el criterio alternado, el error al cortar la serie está acotado por el primer término omitido. Por ejemplo, si se aproxima una serie alternada decreciente hasta el término \(a_n\), entonces
+\[
+|S-S_n|\leq |a_{n+1}|.
+\]
+Esta regla es muy útil para estimaciones rápidas.
+
+El capítulo también advierte que una serie de Taylor formal puede converger y, aun así, no representar a la función si no se comprueba la condición del resto. Por eso no basta con calcular coeficientes: hay que tener presente el dominio de validez.
+
+
+### 3.15. Usos principales de las series
+
+Las series permiten aproximar valores numéricos, simplificar funciones, resolver ecuaciones diferenciales mediante desarrollos y definir funciones más generales. El uso básico consiste en reemplazar una función complicada por sus primeros términos cuando se trabaja cerca del punto de desarrollo.
+
+Por ejemplo, para \(x\) pequeño:
+\[
+\sin x\approx x,\qquad
+\cos x\approx 1-\frac{x^2}{2},\qquad
+e^x\approx 1+x+\frac{x^2}{2}.
+\]
+Estas aproximaciones no son identidades globales, sino truncamientos con un error que debe controlarse.
+
+En MM2, el uso más importante es preparar el desarrollo local de funciones complejas. Una función analítica se comporta localmente como una serie de potencias; cerca de una singularidad, en cambio, harán falta series de Laurent. Por eso este tema es la entrada técnica a buena parte de la variable compleja.
+
+
+## 4. Conceptos clave
+
+1. Serie infinita
+
+Definición precisa: una serie infinita es una expresión de la forma \(\sum_{n=1}^{\infty}a_n\), definida mediante la sucesión de sumas parciales \(S_N=\sum_{n=1}^{N}a_n\).
+
+Explicación desarrollada: no es una suma ordinaria con infinitos sumandos, sino el límite de una sucesión de sumas finitas. Si ese límite existe y es finito, la serie converge. Si no existe o es infinito, diverge.
+
+Ejemplo:
+\[
+\sum_{n=0}^{\infty}\left(\frac12\right)^n=2.
+\]
+
+Relación con otros conceptos: depende de sucesiones, límites y sumas parciales. Es la base para convergencia, series de potencias y Taylor.
+
+Forma de preguntarlo en examen: “Defina convergencia de una serie mediante sumas parciales y estudie si una serie dada converge.”
+
+
+2. Suma parcial
+
+Definición precisa: la suma parcial \(S_N\) de una serie \(\sum a_n\) es
+\[
+S_N=a_1+a_2+\cdots+a_N.
+\]
+
+Explicación desarrollada: la sucesión \((S_N)\) es el verdadero objeto que se estudia. La serie converge si \(S_N\) tiende a un límite finito.
+
+Ejemplo: para la geométrica \(\sum_{n=0}^{\infty}r^n\),
+\[
+S_N=\frac{1-r^{N+1}}{1-r}.
+\]
+
+Relación con otros conceptos: permite definir rigurosamente suma de una serie y justificar la fórmula geométrica.
+
+Forma de preguntarlo en examen: “Calcule \(S_N\) y deduzca la convergencia de la serie.”
+
+
+3. Serie geométrica
+
+Definición precisa:
+\[
+\sum_{n=0}^{\infty}ar^n
+\]
+es geométrica de primer término \(a\) y razón \(r\). Converge si \(|r|<1\) y entonces su suma es \(a/(1-r)\).
+
+Explicación desarrollada: es el prototipo de serie sumable. También sirve para construir desarrollos como \(1/(1-x)=\sum x^n\).
+
+Ejemplo:
+\[
+1-\frac{x}{2}+\frac{x^2}{4}-\cdots=\frac{1}{1+x/2},\qquad |x|<2.
+\]
+
+Relación con otros conceptos: aparece en comparación, series de potencias y desarrollos por sustitución.
+
+Forma de preguntarlo en examen: “Identifique una serie geométrica, halle su suma y su dominio de convergencia.”
+
+
+4. Test preliminar
+
+Definición precisa: si \(\lim_{n\to\infty}a_n\neq0\), entonces \(\sum a_n\) diverge.
+
+Explicación desarrollada: es un criterio necesario, no suficiente. Si el término general no tiende a cero, las sumas parciales no pueden estabilizarse. Si sí tiende a cero, hace falta otro criterio.
+
+Ejemplo:
+\[
+\sum_{n=1}^{\infty}\frac{n+1}{n}
+\]
+diverge porque el término general tiende a \(1\).
+
+Relación con otros conceptos: debe aplicarse antes de criterios más finos. Evita usar mal el criterio del cociente o el alternado.
+
+Forma de preguntarlo en examen: “Use el test del término general y explique por qué no prueba convergencia.”
+
+
+5. Convergencia absoluta
+
+Definición precisa: \(\sum a_n\) converge absolutamente si \(\sum |a_n|\) converge.
+
+Explicación desarrollada: es una forma fuerte de convergencia. Si hay convergencia absoluta, entonces la serie original converge. Además, sus términos pueden reordenarse sin cambiar la suma.
+
+Ejemplo:
+\[
+\sum_{n=1}^{\infty}\frac{(-1)^n}{n^2}
+\]
+converge absolutamente.
+
+Relación con otros conceptos: se estudia con criterios de series positivas. Se opone a convergencia condicional.
+
+Forma de preguntarlo en examen: “Determine si la convergencia es absoluta, condicional o si la serie diverge.”
+
+
+6. Convergencia condicional
+
+Definición precisa: \(\sum a_n\) converge condicionalmente si \(\sum a_n\) converge, pero \(\sum |a_n|\) diverge.
+
+Explicación desarrollada: estas series son delicadas porque la convergencia depende del orden. No se pueden reordenar ni manipular como series absolutamente convergentes.
+
+Ejemplo:
+\[
+1-\frac12+\frac13-\frac14+\cdots
+\]
+converge condicionalmente.
+
+Relación con otros conceptos: aparece en series alternadas; se distingue de la convergencia absoluta.
+
+Forma de preguntarlo en examen: “Estudie la serie alternada y clasifique su convergencia.”
+
+
+7. Criterio del cociente
+
+Definición precisa: para \(\sum a_n\), se calcula
+\[
+\rho=\lim_{n\to\infty}\left|\frac{a_{n+1}}{a_n}\right|.
+\]
+Si \(\rho<1\), converge absolutamente; si \(\rho>1\), diverge; si \(\rho=1\), no decide.
+
+Explicación desarrollada: mide si los términos se comportan aproximadamente como los de una serie geométrica. Funciona muy bien con factoriales y potencias.
+
+Ejemplo:
+\[
+\sum_{n=0}^{\infty}\frac{x^n}{n!}
+\]
+tiene \(\rho=0\) para todo \(x\), luego converge para todo \(x\).
+
+Relación con otros conceptos: se usa para hallar radios de convergencia.
+
+Forma de preguntarlo en examen: “Aplique el criterio del cociente y discuta los casos frontera.”
+
+
+8. Serie alternada
+
+Definición precisa: es una serie cuyos términos cambian de signo, típicamente
+\[
+\sum_{n=1}^{\infty}(-1)^n b_n
+\]
+con \(b_n\geq0\).
+
+Explicación desarrollada: si \(b_n\) decrece hacia cero, la serie converge. No necesariamente converge absolutamente.
+
+Ejemplo:
+\[
+\sum_{n=1}^{\infty}\frac{(-1)^{n+1}}{n}
+\]
+converge por el criterio alternado.
+
+Relación con otros conceptos: permite estimar el error por el primer término omitido.
+
+Forma de preguntarlo en examen: “Justifique la convergencia alternada y acote el error de truncamiento.”
+
+
+9. Serie de potencias
+
+Definición precisa: una serie de potencias centrada en \(a\) es
+\[
+\sum_{n=0}^{\infty}c_n(x-a)^n.
+\]
+
+Explicación desarrollada: representa una función en aquellos valores de \(x\) para los que converge. Dentro de su intervalo de convergencia puede derivarse e integrarse término a término.
+
+Ejemplo:
+\[
+\sum_{n=0}^{\infty}x^n=\frac{1}{1-x},\qquad |x|<1.
+\]
+
+Relación con otros conceptos: conecta series numéricas, funciones, Taylor y análisis complejo.
+
+Forma de preguntarlo en examen: “Halle el intervalo de convergencia de una serie de potencias.”
+
+
+10. Radio e intervalo de convergencia
+
+Definición precisa: para una serie centrada en \(a\), el radio \(R\) determina la convergencia segura en \(|x-a|<R\). El intervalo de convergencia añade el estudio de los extremos.
+
+Explicación desarrollada: el radio se obtiene normalmente por el cociente o la raíz. Los extremos no se deducen automáticamente y deben analizarse sustituyendo.
+
+Ejemplo:
+\[
+\sum_{n=1}^{\infty}\frac{x^n}{n}
+\]
+tiene radio \(1\), converge en \(x=-1\) y diverge en \(x=1\).
+
+Relación con otros conceptos: en variable compleja se transforma en disco de convergencia.
+
+Forma de preguntarlo en examen: “Calcule radio, intervalo y comportamiento en los extremos.”
+
+
+11. Disco de convergencia
+
+Definición precisa: para una serie compleja centrada en \(z_0\),
+\[
+\sum c_n(z-z_0)^n,
+\]
+el disco de convergencia es \(|z-z_0|<R\).
+
+Explicación desarrollada: es la versión compleja del intervalo real. Los puntos a igual distancia del centro forman circunferencias, no pares de extremos.
+
+Ejemplo:
+\[
+\sum_{n=0}^{\infty}\frac{(z-i)^n}{3^n}
+\]
+converge si \(|z-i|<3\).
+
+Relación con otros conceptos: conecta con analiticidad, singularidades y desarrollos de Taylor complejos.
+
+Forma de preguntarlo en examen: “Determine el disco de convergencia de una serie compleja.”
+
+
+12. Serie de Taylor
+
+Definición precisa:
+\[
+f(x)=\sum_{n=0}^{\infty}\frac{f^{(n)}(a)}{n!}(x-a)^n
+\]
+cuando la serie converge a \(f\) en el dominio considerado.
+
+Explicación desarrollada: expresa localmente una función mediante sus derivadas en un punto. No basta escribir la fórmula; debe respetarse el intervalo donde representa a la función.
+
+Ejemplo:
+\[
+e^x=\sum_{n=0}^{\infty}\frac{x^n}{n!}.
+\]
+
+Relación con otros conceptos: es una serie de potencias con coeficientes determinados por derivadas.
+
+Forma de preguntarlo en examen: “Obtenga la serie de Taylor de una función alrededor de un punto dado.”
+
+
+13. Serie de Maclaurin
+
+Definición precisa: es la serie de Taylor en torno a \(a=0\):
+\[
+f(x)=\sum_{n=0}^{\infty}\frac{f^{(n)}(0)}{n!}x^n.
+\]
+
+Explicación desarrollada: es el desarrollo más usado para funciones elementales. Muchas series se obtienen por combinación de unas pocas Maclaurin básicas.
+
+Ejemplo:
+\[
+\ln(1+x)=\sum_{n=1}^{\infty}\frac{(-1)^{n+1}x^n}{n}.
+\]
+
+Relación con otros conceptos: facilita sustituciones, productos, cocientes e integraciones término a término.
+
+Forma de preguntarlo en examen: “Use series de Maclaurin conocidas para desarrollar una función.”
+
+
+14. Resto de Taylor
+
+Definición precisa: es la diferencia entre la función y el polinomio de Taylor truncado:
+\[
+R_n(x)=f(x)-P_n(x).
+\]
+
+Explicación desarrollada: controla si la serie converge a la función y qué error se comete al aproximar. Sin control del resto, un desarrollo formal puede no ser suficiente.
+
+Ejemplo: para una serie alternada decreciente, el error queda acotado por el primer término omitido.
+
+Relación con otros conceptos: conecta convergencia, aproximación y validez del desarrollo.
+
+Forma de preguntarlo en examen: “Aproxime una función mediante una serie y acote el error.”
+
+
+15. Unicidad de la serie de potencias
+
+Definición precisa: si una función está representada por una serie de potencias en un intervalo, los coeficientes de esa serie son únicos.
+
+Explicación desarrollada: permite obtener una serie por cualquier método correcto: derivadas, multiplicación, división, sustitución o integración.
+
+Ejemplo: la serie de \(\sin x\) obtenida por derivadas coincide con la obtenida por manipulación de series complejas o ecuaciones diferenciales, siempre que represente a la función.
+
+Relación con otros conceptos: justifica las técnicas abreviadas del capítulo.
+
+Forma de preguntarlo en examen: “Explique por qué puede usarse una serie conocida para deducir otra sin recalcular todas las derivadas.”
+
+
+## 5. Relaciones entre ideas
+
+La estructura conceptual del capítulo va de lo más concreto a lo más funcional. Primero aparece la serie geométrica, donde la suma parcial se calcula exactamente. A partir de ella se fija la definición general: una serie converge si sus sumas parciales tienen límite finito.
+
+Sobre esa definición se construyen los criterios de convergencia. El test preliminar ocupa el nivel más básico: si el término general no tiende a cero, la serie diverge. Después vienen criterios más potentes. Los de comparación e integral dependen de reconocer tamaños comparables con series conocidas. El del cociente aproxima la serie a una geométrica y por eso es especialmente útil cuando hay potencias o factoriales.
+
+La convergencia absoluta se sitúa jerárquicamente por encima de la convergencia ordinaria. Toda serie absolutamente convergente converge, pero no toda serie convergente converge absolutamente. La convergencia condicional es una zona intermedia: permite asignar una suma, pero prohíbe ciertas manipulaciones. Esta oposición es esencial:
+\[
+\text{absoluta} \Rightarrow \text{convergente}, \qquad
+\text{convergente} \nRightarrow \text{absoluta}.
+\]
+
+Las series de potencias trasladan el problema desde números a funciones. Para cada valor de \(x\), una serie de potencias se convierte en una serie numérica. Por eso los criterios anteriores siguen siendo necesarios. El radio de convergencia surge al aplicar esos criterios de manera paramétrica.
+
+El paso de intervalo real a disco complejo es una ampliación natural: la cantidad que decide la convergencia ya no es \(|x-a|\), sino \(|z-z_0|\). En análisis complejo, esta idea se conectará con la distancia a las singularidades. Aunque ese resultado pertenece a capítulos posteriores, el capítulo de series ya prepara la interpretación geométrica.
+
+Taylor y Maclaurin dependen de las series de potencias. La fórmula de Taylor no es una regla aislada: aparece porque, si una función admite un desarrollo en potencias, sus coeficientes quedan fijados por sus derivadas. La unicidad permite obtener desarrollos por métodos indirectos. Por eso las técnicas de producto, cociente, sustitución e integración no son trucos: son consecuencias del comportamiento polinómico de las series de potencias dentro de su intervalo de convergencia.
+
+La última relación importante es entre desarrollo y aproximación. Una serie sirve para representar una función solo donde converge a ella. Una aproximación truncada sirve si el resto es pequeño. Por tanto, el orden lógico correcto es:
+\[
+\text{serie} \rightarrow \text{convergencia} \rightarrow \text{representación} \rightarrow \text{aproximación}.
+\]
+Saltarse cualquiera de esos pasos produce errores típicos de examen.
+
+
+## 6. Errores habituales
+
+1. Confundir \(a_n\to0\) con convergencia de \(\sum a_n\)
+
+Por qué está mal: que el término general tienda a cero es necesario, pero no suficiente.
+
+Corrección: si \(a_n\not\to0\), la serie diverge; si \(a_n\to0\), hay que aplicar otro criterio.
+
+Respuesta incorrecta: “\(\sum 1/n\) converge porque \(1/n\to0\).”
+
+Respuesta correcta: “Aunque \(1/n\to0\), la serie armónica diverge; el test preliminar no prueba convergencia.”
+
+
+2. No estudiar los extremos del intervalo de convergencia
+
+Por qué está mal: el criterio del cociente suele dar \(\rho=1\) en los extremos, así que no decide.
+
+Corrección: tras hallar el radio, sustituir cada extremo y estudiar la serie numérica resultante.
+
+Respuesta incorrecta: “Como \(R=1\), el intervalo es \((-1,1)\).”
+
+Respuesta correcta: “El radio es \(1\); ahora se estudian \(x=-1\) y \(x=1\) por separado.”
+
+
+3. Usar el criterio alternado sin comprobar que los términos decrecen hacia cero
+
+Por qué está mal: el cambio de signo no basta para converger.
+
+Corrección: verificar que \(b_n\geq0\), \(b_{n+1}\leq b_n\) desde algún índice y \(b_n\to0\).
+
+Respuesta incorrecta: “Converge porque tiene signos alternos.”
+
+Respuesta correcta: “Converge por el criterio alternado porque \(b_n=1/n\) decrece y tiende a cero.”
+
+
+4. Confundir convergencia condicional con absoluta
+
+Por qué está mal: la convergencia absoluta exige que converja la serie de valores absolutos.
+
+Corrección: estudiar \(\sum |a_n|\) además de \(\sum a_n\).
+
+Respuesta incorrecta: “\(\sum (-1)^{n+1}/n\) converge absolutamente.”
+
+Respuesta correcta: “Converge condicionalmente, porque la serie alternada converge pero la armónica de valores absolutos diverge.”
+
+
+5. Reordenar términos de una serie condicional
+
+Por qué está mal: la suma de una serie condicional puede cambiar al reordenar los términos.
+
+Corrección: solo reordenar libremente series absolutamente convergentes.
+
+Respuesta incorrecta: “Agrupo los positivos y los negativos por separado en la armónica alternada.”
+
+Respuesta correcta: “No puedo reordenar ni agrupar sin justificación porque la serie no converge absolutamente.”
+
+
+6. Aplicar el criterio del cociente cuando da \(1\) como si decidiera
+
+Por qué está mal: \(\rho=1\) es caso inconcluso.
+
+Corrección: usar comparación, integral, alternado u otro criterio.
+
+Respuesta incorrecta: “Como \(\rho=1\), la serie diverge.”
+
+Respuesta correcta: “Como \(\rho=1\), el criterio del cociente no decide; se necesita otro criterio.”
+
+
+7. Olvidar el centro de una serie de potencias
+
+Por qué está mal: en \(\sum a_n(x-a)^n\), la convergencia depende de la distancia a \(a\), no de \(|x|\).
+
+Corrección: trabajar con \(|x-a|\).
+
+Respuesta incorrecta: “La serie \(\sum (x-2)^n/3^n\) converge si \(|x|<3\).”
+
+Respuesta correcta: “Converge si \(|x-2|<3\).”
+
+
+8. Usar una serie conocida fuera de su intervalo de validez
+
+Por qué está mal: una igualdad como \(1/(1-x)=\sum x^n\) solo es válida para \(|x|<1\).
+
+Corrección: indicar siempre la condición de convergencia.
+
+Respuesta incorrecta: “Para \(x=2\), \(1/(1-x)=1+x+x^2+\cdots\).”
+
+Respuesta correcta: “Esa serie solo representa \(1/(1-x)\) si \(|x|<1\).”
+
+
+9. Derivar o integrar una serie sin respetar el intervalo
+
+Por qué está mal: las operaciones término a término se justifican dentro del intervalo de convergencia; los extremos pueden cambiar.
+
+Corrección: operar en el interior y revisar extremos si son relevantes.
+
+Respuesta incorrecta: “Integro y mantengo automáticamente los mismos extremos.”
+
+Respuesta correcta: “La integración es válida en el interior; los extremos deben comprobarse aparte.”
+
+
+10. Creer que toda serie de Taylor representa automáticamente a la función
+
+Por qué está mal: la fórmula formal puede no converger a la función si el resto no tiende a cero.
+
+Corrección: comprobar dominio de convergencia y representación, o usar resultados conocidos que la garanticen.
+
+Respuesta incorrecta: “He calculado las derivadas, luego la serie representa a \(f\).”
+
+Respuesta correcta: “El cálculo da la serie formal; además hay que justificar que el resto tiende a cero en el intervalo considerado.”
+
+
+11. Perder términos al multiplicar series
+
+Por qué está mal: para obtener todos los términos hasta cierto orden hay que considerar todos los productos que dan esa potencia.
+
+Corrección: ordenar por potencias y no truncar antes de tiempo.
+
+Respuesta incorrecta: “En \(e^x\cos x\), solo multiplico los primeros términos línea a línea.”
+
+Respuesta correcta: “Agrupo todos los productos que contribuyen a cada potencia de \(x\).”
+
+
+12. No distinguir intervalo real y disco complejo
+
+Por qué está mal: en variable compleja la convergencia se expresa mediante distancias en el plano.
+
+Corrección: escribir \(|z-z_0|<R\), no solo un intervalo.
+
+Respuesta incorrecta: “La serie compleja converge entre \(-1\) y \(1\).”
+
+Respuesta correcta: “La serie compleja converge en el disco \(|z|<1\); sobre la frontera hay que estudiar aparte.”
+
+
+## 7. Preguntas orientadas a examen
+
+### 10 preguntas fáciles
+
+F1. Defina qué significa que una serie \(\sum a_n\) converge.
+
+F2. Enuncie el test preliminar de divergencia.
+
+F3. ¿Para qué valores de \(r\) converge \(\sum_{n=0}^{\infty} ar^n\) y cuál es su suma?
+
+F4. Explique por qué \(\sum 1/n\) no converge aunque \(1/n\to0\).
+
+F5. Defina convergencia absoluta.
+
+F6. Escriba las series de Maclaurin de \(e^x\), \(\sin x\) y \(\cos x\).
+
+F7. ¿Qué es una serie de potencias centrada en \(a\)?
+
+F8. ¿Qué diferencia hay entre radio e intervalo de convergencia?
+
+F9. Enuncie el criterio alternado.
+
+F10. ¿Qué significa truncar una serie para aproximar una función?
+
+
+### 10 preguntas medias
+
+M1. Estudie la convergencia de \(\sum_{n=1}^{\infty}\frac{n}{n^2+1}\).
+
+M2. Estudie la convergencia absoluta o condicional de \(\sum_{n=1}^{\infty}\frac{(-1)^{n+1}}{n}\).
+
+M3. Halle el radio e intervalo de convergencia de \(\sum_{n=1}^{\infty}\frac{x^n}{n}\).
+
+M4. Halle el radio de convergencia de \(\sum_{n=0}^{\infty}\frac{x^n}{n!}\).
+
+M5. Desarrolle en serie de Maclaurin \(e^{-x^2}\).
+
+M6. Desarrolle en serie de Maclaurin \(\frac{\ln(1+x)}{x}\).
+
+M7. Use una serie conocida para obtener los primeros cuatro términos no nulos de \(\arctan x\).
+
+M8. Determine el disco de convergencia de \(\sum_{n=0}^{\infty}\left(\frac{z-i}{2}\right)^n\).
+
+M9. Explique por qué se pueden derivar término a término las series de potencias dentro de su intervalo de convergencia.
+
+M10. Aproxime \(\sin x\) hasta orden \(x^5\) y diga qué tipo de error debe controlarse.
+
+
+### 5 preguntas difíciles
+
+D1. Halle el intervalo de convergencia de
+\[
+\sum_{n=1}^{\infty}\frac{(x-2)^n}{n3^n}.
+\]
+
+D2. Clasifique la convergencia de
+\[
+\sum_{n=1}^{\infty}(-1)^n\frac{n}{n+1}.
+\]
+
+D3. Obtenga los términos hasta orden \(x^4\) de \(e^x\cos x\).
+
+D4. Calcule el radio de convergencia de
+\[
+\sum_{n=1}^{\infty} n!\,x^n.
+\]
+
+D5. Explique por qué la serie de Taylor formal de una función no garantiza por sí sola la igualdad con la función.
+
+
+### 5 preguntas de desarrollo largo
+
+DL1. Desarrolle de forma razonada la teoría básica de convergencia de series: sumas parciales, convergencia, divergencia, test preliminar y ejemplos.
+
+DL2. Explique los criterios de comparación, integral y cociente, indicando cuándo conviene usar cada uno.
+
+DL3. Exponga la diferencia entre convergencia absoluta y condicional, incluyendo el papel de las series alternadas y la reordenación de términos.
+
+DL4. Desarrolle la teoría de series de potencias: definición, radio, intervalo, extremos, operaciones término a término y unicidad.
+
+DL5. Explique la construcción de las series de Taylor y Maclaurin y describa técnicas para obtener desarrollos sin calcular derivadas sucesivas.
+
+
+### 5 preguntas de relación entre conceptos
+
+R1. Relacione la serie geométrica con el criterio del cociente y con las series de potencias.
+
+R2. Relacione convergencia absoluta, convergencia condicional y posibilidad de reordenar términos.
+
+R3. Relacione radio de convergencia real y disco de convergencia complejo.
+
+R4. Relacione la unicidad de las series de potencias con las técnicas de sustitución, producto e integración.
+
+R5. Relacione el resto de Taylor con la validez de una aproximación física o numérica.
+
+
+## 8. Respuestas modelo
+
+### Respuestas a las preguntas fáciles
+
+F1. Una serie \(\sum a_n\) converge si la sucesión de sumas parciales
+\[
+S_N=a_1+\cdots+a_N
+\]
+tiene límite finito cuando \(N\to\infty\). Ese límite se llama suma de la serie. Si dicho límite no existe o no es finito, la serie diverge.
+
+F2. El test preliminar afirma que si \(\lim_{n\to\infty}a_n\neq0\), entonces la serie \(\sum a_n\) diverge. Si \(\lim a_n=0\), el criterio no decide; hay que aplicar otro test.
+
+F3. La serie geométrica
+\[
+\sum_{n=0}^{\infty}ar^n
+\]
+converge si \(|r|<1\). En ese caso,
+\[
+\sum_{n=0}^{\infty}ar^n=\frac{a}{1-r}.
+\]
+Si \(|r|\geq1\), no converge en el sentido ordinario.
+
+F4. Porque \(a_n\to0\) es condición necesaria, pero no suficiente. En la serie armónica,
+\[
+\sum_{n=1}^{\infty}\frac1n,
+\]
+los términos tienden a cero, pero las sumas parciales crecen sin límite. Por tanto diverge.
+
+F5. Una serie \(\sum a_n\) converge absolutamente si converge la serie de valores absolutos:
+\[
+\sum |a_n|.
+\]
+Si una serie converge absolutamente, entonces converge.
+
+F6. Las series básicas son:
+\[
+e^x=\sum_{n=0}^{\infty}\frac{x^n}{n!},
+\]
+\[
+\sin x=\sum_{n=0}^{\infty}\frac{(-1)^n x^{2n+1}}{(2n+1)!},
+\]
+\[
+\cos x=\sum_{n=0}^{\infty}\frac{(-1)^n x^{2n}}{(2n)!}.
+\]
+
+F7. Una serie de potencias centrada en \(a\) es una serie de la forma
+\[
+\sum_{n=0}^{\infty}c_n(x-a)^n.
+\]
+Su convergencia depende de la distancia \(|x-a|\).
+
+F8. El radio de convergencia \(R\) indica la distancia al centro dentro de la cual la serie converge. El intervalo de convergencia es el conjunto real completo de valores de \(x\), incluyendo o excluyendo los extremos tras estudiarlos por separado.
+
+F9. Una serie alternada
+\[
+\sum (-1)^n b_n
+\]
+con \(b_n\geq0\) converge si \(b_n\) decrece hacia cero. Es decir, si \(b_{n+1}\leq b_n\) desde algún índice y \(\lim b_n=0\).
+
+F10. Truncar una serie es sustituirla por una suma finita de sus primeros términos. Se obtiene una aproximación; el error es el resto, es decir, la diferencia entre la función o suma exacta y la suma parcial usada.
+
+
+### Respuestas a las preguntas medias
+
+M1. Para \(n\) grande,
+\[
+\frac{n}{n^2+1}\sim\frac1n.
+\]
+Como la serie armónica diverge, la serie dada también diverge por comparación límite o por comparación asintótica. Además, el término general tiende a cero, así que el test preliminar no bastaba.
+
+M2. La serie
+\[
+\sum_{n=1}^{\infty}\frac{(-1)^{n+1}}{n}
+\]
+converge por el criterio alternado, porque \(1/n\) decrece y tiende a cero. No converge absolutamente, ya que
+\[
+\sum_{n=1}^{\infty}\frac1n
+\]
+diverge. Por tanto converge condicionalmente.
+
+M3. Aplicamos el criterio del cociente a
+\[
+a_n=\frac{x^n}{n}.
+\]
+Se obtiene
+\[
+\left|\frac{a_{n+1}}{a_n}\right|
+=|x|\frac{n}{n+1}\to |x|.
+\]
+Converge si \(|x|<1\) y diverge si \(|x|>1\). En \(x=1\), queda \(\sum1/n\), divergente. En \(x=-1\), queda \(\sum(-1)^n/n\), convergente alternada. El intervalo es \([-1,1)\) si la serie está escrita como \(\sum x^n/n\) con el signo correspondiente en \(x=-1\).
+
+M4. Para
+\[
+a_n=\frac{x^n}{n!},
+\]
+\[
+\left|\frac{a_{n+1}}{a_n}\right|
+=\frac{|x|}{n+1}\to0.
+\]
+Como el límite es menor que \(1\) para todo \(x\), la serie converge para todo \(x\). Su radio de convergencia es \(R=\infty\).
+
+M5. Partiendo de
+\[
+e^u=1+u+\frac{u^2}{2!}+\frac{u^3}{3!}+\cdots,
+\]
+se sustituye \(u=-x^2\):
+\[
+e^{-x^2}=1-x^2+\frac{x^4}{2!}-\frac{x^6}{3!}+\cdots.
+\]
+
+M6. Como
+\[
+\ln(1+x)=x-\frac{x^2}{2}+\frac{x^3}{3}-\frac{x^4}{4}+\cdots,
+\]
+dividiendo por \(x\):
+\[
+\frac{\ln(1+x)}{x}
+=1-\frac{x}{2}+\frac{x^2}{3}-\frac{x^3}{4}+\cdots.
+\]
+La validez procede de la serie del logaritmo, con atención al intervalo correspondiente.
+
+M7. Se usa
+\[
+\frac{1}{1+t^2}=1-t^2+t^4-t^6+\cdots.
+\]
+Integrando de \(0\) a \(x\):
+\[
+\arctan x=\int_0^x\frac{dt}{1+t^2}
+=x-\frac{x^3}{3}+\frac{x^5}{5}-\frac{x^7}{7}+\cdots.
+\]
+
+M8. La serie es geométrica con razón
+\[
+\frac{z-i}{2}.
+\]
+Converge si
+\[
+\left|\frac{z-i}{2}\right|<1,
+\]
+es decir,
+\[
+|z-i|<2.
+\]
+El disco de convergencia tiene centro \(i\) y radio \(2\).
+
+M9. Dentro del intervalo de convergencia, las series de potencias se comportan como polinomios infinitos controlados. Por ello pueden derivarse término a término y la serie resultante representa la derivada de la función suma en el interior del intervalo. Los extremos deben revisarse aparte.
+
+M10. La serie de Maclaurin es
+\[
+\sin x=x-\frac{x^3}{3!}+\frac{x^5}{5!}-\cdots.
+\]
+Hasta orden \(x^5\):
+\[
+\sin x\approx x-\frac{x^3}{6}+\frac{x^5}{120}.
+\]
+El error es el resto de Taylor; al ser una serie alternada con términos decrecientes para \(x\) suficientemente pequeño, puede acotarse por el primer término omitido en ese régimen.
+
+
+### Respuestas a las preguntas difíciles
+
+D1. Aplicamos el cociente:
+\[
+a_n=\frac{(x-2)^n}{n3^n}.
+\]
+Entonces
+\[
+\left|\frac{a_{n+1}}{a_n}\right|
+=\left|\frac{x-2}{3}\right|\frac{n}{n+1}\to \left|\frac{x-2}{3}\right|.
+\]
+Converge si \(|x-2|<3\), es decir, \(-1<x<5\). En \(x=5\), queda \(\sum 1/n\), divergente. En \(x=-1\), queda \(\sum (-1)^n/n\), convergente alternada. Por tanto el intervalo es \([-1,5)\).
+
+D2. El término general es
+\[
+a_n=(-1)^n\frac{n}{n+1}.
+\]
+No tiende a cero, porque \(\frac{n}{n+1}\to1\). Aunque cambie de signo, los términos no se acercan a cero. Por el test preliminar, la serie diverge. El criterio alternado no puede aplicarse porque la condición \(b_n\to0\) falla.
+
+D3. Usamos
+\[
+e^x=1+x+\frac{x^2}{2}+\frac{x^3}{6}+\frac{x^4}{24}+\cdots
+\]
+y
+\[
+\cos x=1-\frac{x^2}{2}+\frac{x^4}{24}+\cdots.
+\]
+Multiplicando y agrupando hasta orden \(x^4\):
+\[
+e^x\cos x
+=1+x+\left(\frac12-\frac12\right)x^2+
+\left(\frac16-\frac12\right)x^3+
+\left(\frac1{24}-\frac14+\frac1{24}\right)x^4+\cdots.
+\]
+Por tanto:
+\[
+e^x\cos x=1+x-\frac{x^3}{3}-\frac{x^4}{6}+\cdots.
+\]
+
+D4. Para
+\[
+a_n=n!x^n,
+\]
+\[
+\left|\frac{a_{n+1}}{a_n}\right|
+=\left|(n+1)x\right|.
+\]
+Si \(x\neq0\), este cociente tiende a infinito, luego la serie diverge. Si \(x=0\), todos los términos son cero. Por tanto solo converge en \(x=0\), y el radio de convergencia es \(R=0\).
+
+D5. La fórmula de Taylor proporciona una serie formal cuyos coeficientes vienen dados por las derivadas de la función. Pero para que la igualdad sea válida, el resto
+\[
+R_n(x)=f(x)-P_n(x)
+\]
+debe tender a cero. Hay funciones para las que el desarrollo formal no representa a la función fuera del punto de desarrollo. Por tanto, en un argumento completo se debe indicar el dominio de convergencia y justificar que la serie converge a la función.
+
+
+### Respuestas a las preguntas de desarrollo largo
+
+DL1. Una serie \(\sum a_n\) se define mediante las sumas parciales \(S_N=a_1+\cdots+a_N\). Si la sucesión \((S_N)\) tiene límite finito, la serie converge; si no, diverge. La serie geométrica muestra el caso básico en que se calcula explícitamente:
+\[
+\sum_{n=0}^{\infty}ar^n=\frac{a}{1-r},\qquad |r|<1.
+\]
+El test preliminar afirma que si \(a_n\not\to0\), la serie diverge. Sin embargo, \(a_n\to0\) no asegura convergencia, como muestra la armónica \(\sum1/n\). Por tanto el estudio de una serie requiere pasar del término general a criterios que controlen las sumas parciales.
+
+DL2. El criterio de comparación usa series conocidas. Si una serie positiva queda por debajo de una convergente, converge; si queda por encima de una divergente, diverge. Es útil cuando el término se parece a \(1/n^p\) o a una geométrica. El criterio integral compara \(\sum f(n)\) con \(\int f(x)\,dx\), y se usa cuando \(f\) es positiva, decreciente y fácil de integrar. El criterio del cociente calcula \(\rho=\lim|a_{n+1}/a_n|\); si \(\rho<1\), hay convergencia absoluta; si \(\rho>1\), divergencia; si \(\rho=1\), no decide. Conviene usarlo con factoriales y potencias.
+
+DL3. La convergencia absoluta de \(\sum a_n\) significa que \(\sum|a_n|\) converge. Implica convergencia ordinaria y permite reordenar los términos sin cambiar la suma. La convergencia condicional ocurre cuando \(\sum a_n\) converge, pero \(\sum|a_n|\) diverge. El ejemplo central es la armónica alternada. Las series alternadas convergen si sus términos positivos decrecen hacia cero, pero pueden no converger absolutamente. La diferencia importa porque las series condicionales no admiten las mismas manipulaciones algebraicas que las absolutamente convergentes.
+
+DL4. Una serie de potencias centrada en \(a\) es
+\[
+\sum c_n(x-a)^n.
+\]
+Su convergencia se organiza alrededor de un radio \(R\): converge si \(|x-a|<R\) y diverge si \(|x-a|>R\). Los extremos se estudian aparte. Dentro del intervalo de convergencia, la serie define una función y puede derivarse o integrarse término a término. También puede combinarse con otras series mediante suma, producto, división bajo condiciones adecuadas y sustitución. La unicidad garantiza que cualquier método correcto produce la misma serie de potencias de una función.
+
+DL5. Si una función \(f\) admite un desarrollo en potencias alrededor de \(a\), sus coeficientes están determinados por sus derivadas:
+\[
+f(x)=\sum_{n=0}^{\infty}\frac{f^{(n)}(a)}{n!}(x-a)^n.
+\]
+Para \(a=0\) se obtiene la serie de Maclaurin. En la práctica, muchas series se obtienen sin calcular derivadas sucesivas: multiplicando series conocidas, dividiendo, sustituyendo una expresión en una serie básica o integrando término a término. Este método es válido dentro del dominio de convergencia correspondiente y debe acompañarse del control del intervalo o radio de validez.
+
+
+### Respuestas a las preguntas de relación entre conceptos
+
+R1. La serie geométrica es el modelo de convergencia por razón constante. El criterio del cociente compara una serie general con un comportamiento geométrico asintótico. Las series de potencias se estudian aplicando ese criterio a términos que dependen de \(x\), lo que produce condiciones del tipo \(|x-a|<R\).
+
+R2. La convergencia absoluta implica convergencia y permite reordenar términos. La convergencia condicional implica convergencia, pero no convergencia de valores absolutos. Por eso una serie condicional puede cambiar de suma al reordenarse, mientras que una absolutamente convergente no.
+
+R3. En variable real, una serie centrada en \(a\) converge dentro de un intervalo \(|x-a|<R\). En variable compleja, la misma condición se escribe \(|z-z_0|<R\), que describe un disco. La idea común es la distancia al centro; cambia la geometría del conjunto.
+
+R4. La unicidad dice que una función no puede tener dos series de potencias distintas con el mismo centro y dominio de representación. Por eso, si se obtiene una serie mediante sustitución, producto o integración término a término, no hace falta recalcular todas las derivadas: el resultado coincide con la serie de Taylor correspondiente cuando representa a la función.
+
+R5. El resto de Taylor mide el error entre la función y el polinomio truncado. En una aproximación física o numérica, no basta escribir los primeros términos; hay que saber que los términos omitidos son pequeños. Para series alternadas decrecientes, el primer término omitido da una cota práctica del error.
+
+
+## 9. Resumen final de repaso
+
+Ideas principales:
+
+- Una serie se define por el límite de sus sumas parciales.
+- La serie geométrica converge si \(|r|<1\) y suma \(a/(1-r)\).
+- Si \(a_n\not\to0\), \(\sum a_n\) diverge.
+- Si \(a_n\to0\), no se puede concluir convergencia sin otro criterio.
+- Los criterios principales son comparación, integral, cociente y alternado.
+- La convergencia absoluta es más fuerte que la convergencia ordinaria.
+- Las series condicionales no admiten reordenaciones arbitrarias.
+- Una serie de potencias converge dentro de un radio y puede requerir estudiar extremos.
+- En variable compleja, el intervalo se convierte en disco de convergencia.
+- Taylor y Maclaurin expresan funciones mediante derivadas y potencias.
+- Las series conocidas permiten obtener desarrollos por producto, división, sustitución e integración.
+- El resto controla la validez de las aproximaciones.
+
+Conceptos imprescindibles:
+
+- Suma parcial.
+- Convergencia y divergencia.
+- Serie geométrica.
+- Test preliminar.
+- Comparación.
+- Criterio integral.
+- Criterio del cociente.
+- Serie alternada.
+- Convergencia absoluta.
+- Convergencia condicional.
+- Serie de potencias.
+- Radio e intervalo de convergencia.
+- Disco de convergencia.
+- Taylor y Maclaurin.
+- Resto.
+
+Relaciones clave:
+
+- Serie geométrica → criterio del cociente → radio de convergencia.
+- \(a_n\to0\) es necesario, no suficiente.
+- Convergencia absoluta → convergencia → posibilidad de operar con más seguridad.
+- Serie de potencias → función representada dentro del intervalo.
+- Taylor → serie de potencias con coeficientes dados por derivadas.
+- Resto → control del error y de la representación.
+
+Errores que evitar:
+
+- Decir que una serie converge solo porque el término general tiende a cero.
+- Olvidar estudiar los extremos del intervalo.
+- Usar una serie fuera de su dominio de convergencia.
+- Reordenar series condicionales.
+- Aplicar el criterio del cociente cuando da \(1\) como si decidiera.
+- Confundir radio real con disco complejo.
+- Truncar una serie sin pensar en el error.
+
+
+## 10. Checklist de dominio
+
+- Si no puedes definir una serie mediante sumas parciales, falta repasar definición de convergencia.
+
+- Si confundes \(a_n\to0\) con convergencia de \(\sum a_n\), revisar test preliminar y serie armónica.
+
+- Si no reconoces una serie geométrica, falta repasar razón, suma parcial y condición \(|r|<1\).
+
+- Si no sabes decidir entre comparación, integral y cociente, falta practicar clasificación previa del término general.
+
+- Si aplicas el cociente y obtienes \(\rho=1\) sin saber continuar, falta repasar criterios alternativos.
+
+- Si no distingues convergencia absoluta y condicional, revisar series alternadas y valores absolutos.
+
+- Si reordenas términos de una serie alternada sin justificar convergencia absoluta, revisar convergencia condicional.
+
+- Si no puedes hallar el radio de \(\sum c_n(x-a)^n\), falta practicar el criterio del cociente con parámetro.
+
+- Si calculas el radio pero olvidas los extremos, revisar intervalo de convergencia.
+
+- Si escribes \(|x|<R\) cuando la serie está centrada en \(a\), revisar el papel del centro.
+
+- Si no sabes pasar de intervalo real a disco complejo, revisar módulo complejo y condición \(|z-z_0|<R\).
+
+- Si no puedes escribir las series de \(e^x\), \(\sin x\), \(\cos x\), \(\ln(1+x)\) y \((1+x)^p\), falta memorización operativa.
+
+- Si calculas Taylor siempre por derivadas largas, falta practicar producto, división, sustitución e integración de series conocidas.
+
+- Si no puedes justificar por qué se deriva o integra término a término, revisar teoremas de series de potencias.
+
+- Si confundes Taylor con Maclaurin, revisar que Maclaurin es Taylor alrededor de \(0\).
+
+- Si no indicas el dominio de validez de un desarrollo, falta repasar convergencia de series de potencias.
+
+- Si usas un polinomio de Taylor como si fuera una igualdad exacta global, revisar resto y error de truncamiento.
+
+- Si puedes estudiar convergencia, hallar radio e intervalo, obtener desarrollos básicos y controlar el error, el capítulo está suficientemente asentado.

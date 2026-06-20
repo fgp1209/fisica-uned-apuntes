@@ -1,0 +1,1314 @@
+# Guía de estudio — MM3 T5: Introducción a la ecuación del calor-difusión
+
+Fuentes disponibles empleadas: material cargado de Métodos Matemáticos III sobre ecuaciones en derivadas parciales, ecuación del calor, separación de variables y exámenes UNED; Boas, capítulo de ecuaciones en derivadas parciales, sección de difusión o flujo de calor. El archivo específico de Haberman, Ch. 1: Heat Equation, no aparece entre los documentos cargados accesibles, por lo que esta guía se limita al contenido equivalente presente en los documentos disponibles.
+
+## 1. Prerrequisitos mínimos
+
+1. Derivadas parciales.
+
+Definición breve: si \(u=u(x,t)\), las derivadas parciales \(u_x\), \(u_t\), \(u_{xx}\) miden la variación de \(u\) respecto de una variable manteniendo fija la otra. Por ejemplo,
+\[
+u_t=\frac{\partial u}{\partial t},\qquad u_{xx}=\frac{\partial^2 u}{\partial x^2}.
+\]
+Es necesario porque la ecuación del calor relaciona una derivada temporal con una derivada espacial segunda. Si \(u(x,t)=e^{-t}\sin x\), entonces \(u_t=-e^{-t}\sin x\) y \(u_{xx}=-e^{-t}\sin x\), luego \(u_t=u_{xx}\).
+
+2. Ecuaciones en derivadas parciales.
+
+Definición breve: una ecuación en derivadas parciales, o EDP, es una ecuación que contiene una función desconocida de varias variables y algunas de sus derivadas parciales. Es necesaria porque el calor depende de la posición y del tiempo, no solo de una variable. La ecuación
+\[
+u_t=\alpha^2u_{xx}
+\]
+es una EDP para \(u(x,t)\).
+
+3. Linealidad.
+
+Definición breve: una ecuación es lineal en \(u\) si \(u\) y sus derivadas aparecen solo multiplicadas por funciones conocidas, sin productos entre ellas ni potencias no lineales. Es necesario porque el método de superposición, la separación de variables y las series de Fourier dependen de la linealidad. La ecuación \(u_t=\alpha^2u_{xx}\) es lineal; la ecuación \(u_t=u\,u_{xx}\) no lo es.
+
+4. Condición inicial.
+
+Definición breve: es el dato de la solución en el instante inicial, normalmente
+\[
+u(x,0)=f(x).
+\]
+Es necesaria porque la ecuación del calor describe evolución temporal: sin el estado inicial no se determina qué distribución se está difundiendo. Si una barra tiene inicialmente \(f(x)=\sin(\pi x/L)\), la solución con extremos a cero conserva ese perfil espacial y solo cambia su amplitud con el tiempo.
+
+5. Condiciones de contorno.
+
+Definición breve: son restricciones impuestas en la frontera espacial del dominio. En una barra \(0<x<L\), se imponen en \(x=0\) y \(x=L\). Son necesarias porque la evolución depende de cómo interactúan los extremos con el exterior. En Dirichlet se prescribe \(u\); en Neumann se prescribe \(u_x\); en Robin se prescribe una combinación de \(u\) y \(u_x\). Por ejemplo,
+\[
+u(0,t)=u(L,t)=0
+\]
+significa extremos mantenidos a temperatura cero.
+
+6. Ecuaciones diferenciales ordinarias lineales.
+
+Definición breve: son ecuaciones para funciones de una sola variable. Son necesarias porque la separación de variables transforma la EDP en varias EDO. Por ejemplo, de \(u(x,t)=X(x)T(t)\) se obtienen ecuaciones como
+\[
+X''+\lambda X=0,\qquad T'+\alpha^2\lambda T=0.
+\]
+
+7. Problemas de autovalores.
+
+Definición breve: son problemas donde se buscan valores de un parámetro \(\lambda\) para los que existe una solución no nula que satisface una EDO y unas condiciones de contorno. Son necesarios porque las condiciones de contorno seleccionan los modos permitidos de la barra. Para
+\[
+X''+\lambda X=0,\qquad X(0)=X(L)=0,
+\]
+los autovalores son
+\[
+\lambda_n=\left(\frac{n\pi}{L}\right)^2,\qquad n=1,2,\ldots
+\]
+y las autofunciones son \(\sin(n\pi x/L)\).
+
+8. Series de Fourier.
+
+Definición breve: una función definida en un intervalo puede representarse, bajo hipótesis adecuadas, como una serie de senos, cosenos o ambas familias. Son necesarias porque la condición inicial \(f(x)\) se reconstruye a partir de los modos espaciales. Para Dirichlet homogéneo en \(0<x<L\),
+\[
+f(x)=\sum_{n=1}^{\infty}b_n\sin\left(\frac{n\pi x}{L}\right),
+\qquad
+b_n=\frac{2}{L}\int_0^L f(x)\sin\left(\frac{n\pi x}{L}\right)\,dx.
+\]
+
+9. Interpretación física elemental del flujo.
+
+Definición breve: el calor o una concentración se desplaza desde zonas de mayor valor hacia zonas de menor valor. Es necesario para entender el signo de la ecuación y la tendencia al suavizado. Si \(u\) tiene un máximo local, entonces \(u_{xx}<0\), y la ecuación \(u_t=\alpha^2u_{xx}\) indica que allí \(u_t<0\): el máximo baja.
+
+10. Estado estacionario.
+
+Definición breve: es una solución independiente del tiempo. Se obtiene imponiendo \(u_t=0\). Es necesario porque muchos problemas de examen piden el equilibrio cuando \(t\to\infty\). Para
+\[
+u_t=\alpha^2u_{xx},
+\]
+el equilibrio satisface \(u_{xx}=0\), por tanto \(u(x)=Ax+B\) en una barra sin fuentes.
+
+## 2. Idea central del capítulo
+
+El capítulo introduce la ecuación del calor-difusión como modelo matemático de un proceso de redistribución. La incógnita \(u(x,t)\) puede representar la temperatura de una barra o la concentración de una sustancia que difunde. La estructura esencial es que el cambio temporal de \(u\) en un punto está gobernado por la curvatura espacial de \(u\):
+\[
+u_t=\alpha^2u_{xx}.
+\]
+Si la distribución tiene curvatura positiva, el valor local tiende a aumentar; si tiene curvatura negativa, tiende a disminuir. El efecto global es suavizar diferencias.
+
+La ecuación aparece como una EDP lineal de segundo orden en espacio y primer orden en tiempo. Este rasgo la distingue de la ecuación de ondas. En el calor, la evolución tiene memoria de la condición inicial pero no oscila: los modos decaen exponencialmente. En una cuerda vibrante los modos oscilan; en una barra térmica los modos se amortiguan.
+
+El capítulo también enseña a formular correctamente un problema físico. No basta escribir la EDP. Hay que añadir una condición inicial y condiciones de contorno. La condición inicial fija la distribución al comienzo; las condiciones de contorno describen qué ocurre en los extremos: temperatura fijada, aislamiento, flujo impuesto o intercambio con el exterior. Cambiar una condición cambia el problema.
+
+El método operativo central es la separación de variables. Se busca una solución producto \(u(x,t)=X(x)T(t)\). Al sustituir en la ecuación se separan una ecuación espacial y una temporal. Las condiciones de contorno convierten la parte espacial en un problema de autovalores. De ahí salen los modos permitidos. La parte temporal dice cómo decae cada modo.
+
+Dentro de MM3, este capítulo es el puente entre la teoría general de EDP y los problemas de calor por separación de variables. Lo importante para examen no es memorizar una fórmula aislada, sino reconocer el tipo de problema, elegir las condiciones de contorno correctas, hallar los modos, expandir la condición inicial y estudiar el comportamiento para \(t\to\infty\).
+
+## 3. Desarrollo completo del capítulo
+
+### 3.1. La incógnita y el dominio
+
+El punto de partida es una barra unidimensional de longitud \(L\), situada sobre el intervalo
+\[
+0<x<L.
+\]
+La función
+\[
+u(x,t)
+\]
+representa la temperatura o concentración en el punto \(x\) y en el instante \(t\). El dominio temporal usual es \(t>0\). Se trabaja con una magnitud que varía en el espacio y en el tiempo, por eso la ecuación es en derivadas parciales.
+
+La idealización unidimensional supone que la barra es suficientemente delgada para considerar constante la temperatura en cada sección transversal. Así se ignoran variaciones laterales y solo se estudia la variación longitudinal. Esta hipótesis no es un detalle físico secundario: permite pasar de un problema tridimensional a una EDP en \(x\) y \(t\).
+
+Un ejemplo mínimo es:
+\[
+u_t=u_{xx},\qquad 0<x<1,\quad t>0.
+\]
+Aquí la constante de difusión se ha tomado igual a \(1\). Si \(u(x,0)=\sin(\pi x)\), la solución compatible con extremos a cero será
+\[
+u(x,t)=e^{-\pi^2t}\sin(\pi x).
+\]
+
+### 3.2. La forma de la ecuación del calor
+
+La ecuación básica es
+\[
+u_t=\alpha^2u_{xx},
+\]
+o equivalentemente
+\[
+u_t-\alpha^2u_{xx}=0,
+\]
+donde \(\alpha^2>0\) es una constante característica del material. En difusión de materia suele escribirse
+\[
+u_t=D u_{xx},
+\]
+con \(D>0\) coeficiente de difusión.
+
+La derivada \(u_t\) mide cómo cambia la temperatura con el tiempo. La derivada \(u_{xx}\) mide la curvatura espacial del perfil. La ecuación afirma que el cambio temporal no depende directamente de la pendiente \(u_x\), sino de cómo cambia esa pendiente. Por eso un perfil lineal sin fuentes,
+\[
+u(x)=Ax+B,
+\]
+satisface \(u_{xx}=0\) y es estacionario.
+
+El ejemplo que fija la idea es un máximo interior. Si \(u\) tiene un máximo en \(x_0\), entonces normalmente \(u_{xx}(x_0,t)<0\). Por la ecuación,
+\[
+u_t(x_0,t)<0,
+\]
+y la temperatura baja en ese punto. En un mínimo interior ocurre lo contrario. Así se entiende el efecto suavizador del calor.
+
+### 3.3. Hipótesis físicas que justifican el modelo
+
+El modelo unidimensional requiere varias hipótesis. La barra se considera homogénea; sus propiedades térmicas no cambian de punto a punto. La conducción se produce solo en la dirección longitudinal. La barra está lateralmente aislada si no hay intercambio con el exterior. Además, los parámetros materiales se recogen en una constante positiva.
+
+La deducción elemental se basa en comparar el calor que entra y sale de un pequeño elemento \([x,x+\Delta x]\). Si entra más calor del que sale, la temperatura del elemento aumenta. Si sale más calor del que entra, disminuye. Al tomar límites cuando \(\Delta x\to0\) y \(\Delta t\to0\), aparece una ecuación proporcional a \(u_{xx}\).
+
+Esta deducción también explica por qué \(u_{xx}\) aparece con signo positivo en
+\[
+u_t=\alpha^2u_{xx}.
+\]
+El calor fluye de mayor a menor temperatura. Si se invirtiera el signo, los máximos crecerían y los mínimos bajarían, lo cual produciría inestabilidad física.
+
+### 3.4. Condición inicial
+
+La condición inicial fija el perfil en \(t=0\):
+\[
+u(x,0)=f(x),\qquad 0<x<L.
+\]
+Esta condición dice desde qué distribución arranca el proceso. Para una EDP de primer orden en tiempo, se necesita una condición inicial, no dos. Esto contrasta con la ecuación de ondas, que es de segundo orden temporal y necesita desplazamiento y velocidad iniciales.
+
+Si
+\[
+u_t=\alpha^2u_{xx},\qquad u(0,t)=u(L,t)=0,\qquad u(x,0)=f(x),
+\]
+el objetivo es encontrar una función que cumpla simultáneamente la EDP, las condiciones de contorno y la condición inicial. No basta resolver la EDP de forma aislada.
+
+Un error típico consiste en imponer \(f(0)=f(L)=0\) sin pensar. Para continuidad en las esquinas sería natural que la condición inicial coincidiera con el contorno, pero en muchos tratamientos de Fourier se admite una incompatibilidad puntual en los extremos. En examen conviene advertirlo si el dato inicial no respeta las condiciones en \(x=0,L\).
+
+### 3.5. Condiciones de contorno
+
+En una barra, la frontera espacial son los extremos. Una condición de Dirichlet prescribe la temperatura:
+\[
+u(0,t)=A,\qquad u(L,t)=B.
+\]
+Si \(A=B=0\), los extremos se mantienen a temperatura cero.
+
+Una condición de Neumann prescribe el flujo, representado matemáticamente por la derivada normal. En una dimensión aparece como una condición sobre \(u_x\):
+\[
+u_x(0,t)=a,\qquad u_x(L,t)=b.
+\]
+Si \(u_x=0\) en un extremo, no hay flujo a través de él; se interpreta como aislamiento.
+
+Una condición de Robin mezcla valor y derivada:
+\[
+A u+B u_x=g.
+\]
+Modela intercambio con el exterior. En exámenes de MM3 aparece como condición del tipo
+\[
+u_x(0)-[u(0)-T]=0.
+\]
+La clave no es memorizar nombres, sino traducir correctamente el enunciado al lenguaje matemático.
+
+### 3.6. Problemas estacionarios
+
+Una solución estacionaria no depende de \(t\). Por tanto \(u_t=0\). En ausencia de fuentes,
+\[
+u_t=\alpha^2u_{xx}
+\]
+se transforma en
+\[
+u_{xx}=0.
+\]
+La solución general es
+\[
+u(x)=Ax+B.
+\]
+
+Si una barra de longitud \(L\) tiene extremos a temperaturas \(T_0\) y \(T_1\), se imponen
+\[
+u(0)=T_0,\qquad u(L)=T_1.
+\]
+De aquí
+\[
+u(x)=T_0+\frac{T_1-T_0}{L}x.
+\]
+Este perfil lineal es el equilibrio.
+
+Con fuentes aparece una ecuación estacionaria no homogénea. Si el modelo es
+\[
+u_t=K u_{xx}+Q(x),
+\]
+entonces el equilibrio satisface
+\[
+K u''(x)+Q(x)=0.
+\]
+El método consiste en integrar dos veces y aplicar las condiciones de contorno. Esta es una pregunta frecuente: “encuentre la solución de equilibrio”.
+
+### 3.7. Separación de variables
+
+Para resolver el problema homogéneo con condiciones homogéneas de Dirichlet,
+\[
+u_t=\alpha^2u_{xx},\qquad u(0,t)=u(L,t)=0,\qquad u(x,0)=f(x),
+\]
+se busca primero una solución producto:
+\[
+u(x,t)=X(x)T(t).
+\]
+Al sustituir,
+\[
+X(x)T'(t)=\alpha^2X''(x)T(t).
+\]
+Dividiendo por \(\alpha^2XT\), si \(X\) y \(T\) no son nulas,
+\[
+\frac{T'}{\alpha^2T}=\frac{X''}{X}.
+\]
+El lado izquierdo depende solo de \(t\); el derecho solo de \(x\). Para que sean iguales para todo \(x,t\), ambos deben ser una constante.
+
+Se escoge la constante como \(-\lambda\):
+\[
+\frac{X''}{X}=-\lambda,\qquad \frac{T'}{\alpha^2T}=-\lambda.
+\]
+Así se obtienen
+\[
+X''+\lambda X=0,
+\]
+\[
+T'+\alpha^2\lambda T=0.
+\]
+
+La elección del signo importa. Para el calor, los modos físicos deben decaer en el tiempo, no crecer. Si \(\lambda>0\),
+\[
+T(t)=C e^{-\alpha^2\lambda t},
+\]
+que decae cuando \(t\to\infty\).
+
+### 3.8. Autovalores con Dirichlet homogéneo
+
+Las condiciones \(u(0,t)=u(L,t)=0\) implican
+\[
+X(0)=0,\qquad X(L)=0.
+\]
+El problema espacial es
+\[
+X''+\lambda X=0,\qquad X(0)=X(L)=0.
+\]
+Se estudian los casos de \(\lambda\).
+
+Si \(\lambda=0\), entonces \(X=Ax+B\). Las condiciones dan \(B=0\) y \(A=0\), luego solo hay solución trivial. No sirve.
+
+Si \(\lambda<0\), escribiendo \(\lambda=-\mu^2\), se obtiene \(X=Ae^{\mu x}+Be^{-\mu x}\). Las condiciones vuelven a forzar la solución trivial.
+
+Si \(\lambda>0\), escribiendo \(\lambda=\mu^2\),
+\[
+X=A\cos(\mu x)+B\sin(\mu x).
+\]
+La condición \(X(0)=0\) da \(A=0\). La condición \(X(L)=0\) da
+\[
+B\sin(\mu L)=0.
+\]
+Para una solución no trivial, \(B\neq0\), luego
+\[
+\sin(\mu L)=0,\qquad \mu L=n\pi.
+\]
+Por tanto,
+\[
+\mu_n=\frac{n\pi}{L},\qquad \lambda_n=\left(\frac{n\pi}{L}\right)^2,\qquad n=1,2,\ldots
+\]
+y
+\[
+X_n(x)=\sin\left(\frac{n\pi x}{L}\right).
+\]
+
+### 3.9. Modos temporales y solución general
+
+Para cada autovalor,
+\[
+T_n'+\alpha^2\lambda_nT_n=0.
+\]
+La solución es
+\[
+T_n(t)=C_ne^{-\alpha^2(n\pi/L)^2t}.
+\]
+Así, cada modo separado es
+\[
+u_n(x,t)=C_n\sin\left(\frac{n\pi x}{L}\right)e^{-\alpha^2(n\pi/L)^2t}.
+\]
+
+Por linealidad, se suman todos los modos:
+\[
+u(x,t)=\sum_{n=1}^{\infty}C_n\sin\left(\frac{n\pi x}{L}\right)e^{-\alpha^2(n\pi/L)^2t}.
+\]
+La condición inicial determina los coeficientes:
+\[
+f(x)=u(x,0)=\sum_{n=1}^{\infty}C_n\sin\left(\frac{n\pi x}{L}\right).
+\]
+Por tanto \(C_n\) son los coeficientes de la serie seno de Fourier de \(f\):
+\[
+C_n=\frac{2}{L}\int_0^L f(x)\sin\left(\frac{n\pi x}{L}\right)\,dx.
+\]
+
+Ejemplo:
+\[
+u_t=u_{xx},\quad 0<x<1,\quad u(0,t)=u(1,t)=0,
+\]
+\[
+u(x,0)=2\sin(2\pi x)+6\sin(8\pi x).
+\]
+La solución es directamente
+\[
+u(x,t)=2e^{-4\pi^2t}\sin(2\pi x)+6e^{-64\pi^2t}\sin(8\pi x).
+\]
+No hace falta recalcular integrales porque la condición inicial ya está en modos propios.
+
+### 3.10. Interpretación de los modos
+
+Cada modo tiene una forma espacial y una amplitud temporal. La forma espacial es
+\[
+\sin\left(\frac{n\pi x}{L}\right).
+\]
+La amplitud temporal es
+\[
+e^{-\alpha^2(n\pi/L)^2t}.
+\]
+Los modos con \(n\) grande decaen más rápido porque el exponente contiene \(n^2\). Esto significa que las oscilaciones espaciales finas se eliminan antes que las variaciones suaves.
+
+Cuando \(t\to\infty\), todos los modos con Dirichlet homogéneo decaen a cero:
+\[
+u(x,t)\to0.
+\]
+Esto tiene sentido físico: los extremos están mantenidos a temperatura cero y la barra acaba enfriándose.
+
+Con condiciones de Neumann homogéneas,
+\[
+u_x(0,t)=u_x(L,t)=0,
+\]
+puede aparecer un modo constante. Ese modo no decae porque su segunda derivada es cero. Por eso, con extremos aislados, la temperatura media puede conservarse y el límite puede ser una constante, no necesariamente cero.
+
+### 3.11. Fuentes y reducción a problema homogéneo
+
+Si hay una fuente,
+\[
+u_t=\alpha^2u_{xx}+Q(x),
+\]
+o si las condiciones de contorno no son homogéneas, una técnica habitual es separar la solución en dos partes:
+\[
+u(x,t)=u_e(x)+v(x,t),
+\]
+donde \(u_e\) es una solución estacionaria que satisface la fuente y las condiciones no homogéneas. Entonces \(v\) suele satisfacer un problema homogéneo:
+\[
+v_t=\alpha^2v_{xx},
+\]
+con condiciones de contorno homogéneas y condición inicial
+\[
+v(x,0)=f(x)-u_e(x).
+\]
+
+Esta descomposición es muy útil en examen. Primero se calcula el equilibrio. Después se resuelve el transitorio. Finalmente se suma. Además, permite leer el límite:
+\[
+u(x,t)\to u_e(x)
+\]
+si todos los modos transitorios decaen.
+
+Ejemplo sin fuente con extremos \(u(0,t)=T_0\), \(u(L,t)=T_1\):
+\[
+u_e(x)=T_0+\frac{T_1-T_0}{L}x.
+\]
+Entonces \(v=u-u_e\) satisface \(v(0,t)=v(L,t)=0\) y se resuelve con senos.
+
+### 3.12. Clasificación como ecuación parabólica
+
+La ecuación del calor en una dimensión espacial,
+\[
+u_t-\alpha^2u_{xx}=0,
+\]
+es una EDP lineal de segundo orden si se consideran las variables \((x,t)\), pero solo contiene segunda derivada en \(x\), no en \(t\). Su parte principal tiene un único término de segundo orden. Por ello se clasifica como parabólica.
+
+La clasificación importa porque anticipa el tipo de comportamiento. Las ecuaciones elípticas, como Laplace, describen equilibrios. Las hiperbólicas, como ondas, describen propagación oscilatoria. Las parabólicas, como calor, describen difusión y amortiguamiento.
+
+En examen pueden pedir clasificar la ecuación del calor, la de Laplace y la de ondas. La respuesta debe indicar la parte principal y justificar el signo del discriminante o del determinante de la matriz asociada.
+
+### 3.13. Método corto de examen
+
+Para un problema clásico de calor con Dirichlet homogéneo:
+
+Primero se escribe el modelo completo:
+\[
+u_t=\alpha^2u_{xx},\quad 0<x<L,\quad t>0,
+\]
+\[
+u(0,t)=u(L,t)=0,\quad u(x,0)=f(x).
+\]
+
+Después se propone
+\[
+u=XT.
+\]
+Se obtienen
+\[
+X''+\lambda X=0,\qquad T'+\alpha^2\lambda T=0.
+\]
+
+Después se aplican las condiciones espaciales:
+\[
+X(0)=X(L)=0.
+\]
+Se concluye
+\[
+\lambda_n=\left(\frac{n\pi}{L}\right)^2,\qquad X_n=\sin\left(\frac{n\pi x}{L}\right).
+\]
+
+Después se escribe
+\[
+T_n=e^{-\alpha^2(n\pi/L)^2t}.
+\]
+
+Finalmente,
+\[
+u(x,t)=\sum_{n=1}^{\infty}b_n\sin\left(\frac{n\pi x}{L}\right)e^{-\alpha^2(n\pi/L)^2t},
+\]
+\[
+b_n=\frac{2}{L}\int_0^L f(x)\sin\left(\frac{n\pi x}{L}\right)\,dx.
+\]
+
+Si \(f\) ya viene escrita como suma de senos, se leen directamente los coeficientes y se evita integrar.
+
+## 4. Conceptos clave
+
+1. Ecuación del calor.
+
+Definición precisa: EDP de la forma
+\[
+u_t=\alpha^2u_{xx}
+\]
+en una dimensión espacial, donde \(\alpha^2>0\).
+
+Explicación desarrollada: relaciona la variación temporal de la temperatura con la curvatura espacial del perfil. Es lineal, parabólica y modela difusión. No describe transporte rígido ni oscilación, sino suavizado.
+
+Ejemplo:
+\[
+u_t=u_{xx},\qquad u(x,0)=\sin(\pi x).
+\]
+Con extremos a cero,
+\[
+u(x,t)=e^{-\pi^2t}\sin(\pi x).
+\]
+
+Relación con otros conceptos: necesita condiciones iniciales y de contorno; se resuelve mediante separación de variables; sus soluciones se expresan en series de Fourier.
+
+Posible forma de preguntarlo en examen: “Plantee el problema de calor en una barra de longitud \(L\) con extremos a temperatura cero y distribución inicial \(f(x)\)”.
+
+2. Difusividad.
+
+Definición precisa: constante positiva que mide la rapidez con la que se difunde la magnitud \(u\). En calor se escribe \(\alpha^2\); en difusión de materia, \(D\).
+
+Explicación desarrollada: aparece multiplicando a \(u_{xx}\). Si es mayor, los modos decaen más deprisa. El modo \(n\) decae como
+\[
+e^{-\alpha^2(n\pi/L)^2t}.
+\]
+
+Ejemplo: si \(\alpha^2=4\), el modo \(\sin(\pi x/L)\) decae cuatro veces más rápido que si \(\alpha^2=1\).
+
+Relación con otros conceptos: controla la escala temporal de la solución.
+
+Posible forma de preguntarlo en examen: “Indique cómo afecta la constante \(k\) al comportamiento temporal de los modos”.
+
+3. Condición de Dirichlet.
+
+Definición precisa: condición que fija el valor de \(u\) en la frontera:
+\[
+u|_{\partial\Omega}=g.
+\]
+
+Explicación desarrollada: en una barra, prescribe temperaturas en los extremos. Dirichlet homogéneo significa extremos mantenidos a cero:
+\[
+u(0,t)=u(L,t)=0.
+\]
+
+Ejemplo: una barra con extremos en hielo idealizado puede modelarse con \(u(0,t)=u(L,t)=0\).
+
+Relación con otros conceptos: con Dirichlet homogéneo en \(0,L\), las autofunciones espaciales son senos.
+
+Posible forma de preguntarlo en examen: “Explique por qué se usa una serie seno en el problema con \(u(0,t)=u(L,t)=0\)”.
+
+4. Condición de Neumann.
+
+Definición precisa: condición que fija la derivada normal de \(u\):
+\[
+\frac{\partial u}{\partial n}=g.
+\]
+
+Explicación desarrollada: en calor representa flujo impuesto. Si \(g=0\), hay aislamiento. En una dimensión se traduce en condiciones sobre \(u_x\).
+
+Ejemplo:
+\[
+u_x(0,t)=u_x(L,t)=0
+\]
+representa extremos aislados.
+
+Relación con otros conceptos: con Neumann homogéneo aparecen cosenos y puede aparecer un modo constante.
+
+Posible forma de preguntarlo en examen: “Determine el equilibrio si \(u_x(0)=a\) y \(u_x(L)=b\)”.
+
+5. Condición de Robin.
+
+Definición precisa: condición lineal que mezcla \(u\) y su derivada normal:
+\[
+A u+B\frac{\partial u}{\partial n}=g.
+\]
+
+Explicación desarrollada: modela intercambio con el entorno. No fija solo la temperatura ni solo el flujo, sino una relación entre ambos.
+
+Ejemplo:
+\[
+u_x(0)-[u(0)-T]=0.
+\]
+
+Relación con otros conceptos: modifica el problema de autovalores; no siempre da senos o cosenos puros.
+
+Posible forma de preguntarlo en examen: “Clasifique la condición \(u_x(0)-[u(0)-T]=0\) y úsela para hallar el equilibrio”.
+
+6. Estado estacionario.
+
+Definición precisa: solución independiente del tiempo, \(u_t=0\).
+
+Explicación desarrollada: representa el perfil límite cuando la evolución deja de cambiar. En ausencia de fuentes, en una dimensión satisface \(u''=0\). Con fuentes, satisface una EDO no homogénea.
+
+Ejemplo:
+\[
+u_t=3u_{xx}+9\sin x
+\]
+tiene equilibrio \(u_e\) dado por
+\[
+3u_e''+9\sin x=0.
+\]
+
+Relación con otros conceptos: se usa para descomponer \(u=u_e+v\) y resolver el transitorio homogéneo.
+
+Posible forma de preguntarlo en examen: “Encuentre la solución de equilibrio de la ecuación del calor con fuente \(Q(x)\)”.
+
+7. Separación de variables.
+
+Definición precisa: método que busca soluciones producto \(u(x,t)=X(x)T(t)\).
+
+Explicación desarrollada: al sustituir en la EDP se separa una ecuación espacial y una temporal. Es eficaz cuando el dominio y las condiciones de contorno permiten familias ortogonales de funciones propias.
+
+Ejemplo:
+\[
+XT'=\alpha^2X''T
+\]
+lleva a
+\[
+X''+\lambda X=0,\qquad T'+\alpha^2\lambda T=0.
+\]
+
+Relación con otros conceptos: produce autovalores, autofunciones y series de Fourier.
+
+Posible forma de preguntarlo en examen: “Deduzca las EDO resultantes de aplicar separación de variables a la ecuación del calor”.
+
+8. Autovalores y autofunciones.
+
+Definición precisa: valores \(\lambda\) para los que el problema espacial admite soluciones no nulas que satisfacen las condiciones de contorno.
+
+Explicación desarrollada: las condiciones de contorno restringen las posibles formas espaciales. No cualquier \(\lambda\) sirve. En Dirichlet homogéneo aparecen modos senoidales discretos.
+
+Ejemplo:
+\[
+X''+\lambda X=0,\quad X(0)=X(L)=0
+\]
+da
+\[
+\lambda_n=(n\pi/L)^2,\quad X_n=\sin(n\pi x/L).
+\]
+
+Relación con otros conceptos: cada autovalor determina una tasa de decaimiento temporal.
+
+Posible forma de preguntarlo en examen: “Calcule los autovalores del problema espacial asociado al calor con extremos a cero”.
+
+9. Serie seno de Fourier.
+
+Definición precisa: desarrollo de una función en \(0<x<L\) como suma de senos:
+\[
+f(x)=\sum_{n=1}^{\infty}b_n\sin(n\pi x/L).
+\]
+
+Explicación desarrollada: aparece porque los senos son las autofunciones del problema espacial con Dirichlet homogéneo. Permite ajustar la condición inicial.
+
+Ejemplo:
+\[
+b_n=\frac{2}{L}\int_0^L f(x)\sin(n\pi x/L)\,dx.
+\]
+
+Relación con otros conceptos: los coeficientes de Fourier son las amplitudes iniciales de los modos térmicos.
+
+Posible forma de preguntarlo en examen: “Calcule los dos primeros modos de la serie seno de \(f(x)=1\) en \([0,1]\)”.
+
+10. Modo térmico.
+
+Definición precisa: solución elemental separada de la forma
+\[
+u_n(x,t)=b_nX_n(x)e^{-\alpha^2\lambda_nt}.
+\]
+
+Explicación desarrollada: representa una componente espacial que mantiene su forma y solo cambia de amplitud. En calor, esa amplitud decae.
+
+Ejemplo:
+\[
+u_3(x,t)=b_3\sin(3\pi x/L)e^{-9\alpha^2\pi^2t/L^2}.
+\]
+
+Relación con otros conceptos: los modos se suman por linealidad y forman la solución general bajo condiciones adecuadas.
+
+Posible forma de preguntarlo en examen: “Explique por qué los modos de orden alto desaparecen antes”.
+
+11. Principio de superposición.
+
+Definición precisa: si \(u_1\) y \(u_2\) son soluciones de un problema lineal homogéneo, entonces \(a u_1+b u_2\) también lo es.
+
+Explicación desarrollada: permite construir soluciones complejas sumando modos simples. Sin linealidad no se podría sumar soluciones.
+
+Ejemplo:
+\[
+u=2e^{-4\pi^2t}\sin(2\pi x)+6e^{-64\pi^2t}\sin(8\pi x)
+\]
+es solución si cada término lo es.
+
+Relación con otros conceptos: justifica la serie infinita de modos.
+
+Posible forma de preguntarlo en examen: “¿Por qué la suma de modos separados sigue resolviendo la ecuación del calor?”
+
+12. Fuente térmica.
+
+Definición precisa: término no homogéneo añadido a la ecuación, por ejemplo
+\[
+u_t=\alpha^2u_{xx}+Q(x,t).
+\]
+
+Explicación desarrollada: representa producción o extracción de calor. En equilibrio obliga a resolver una EDO con segundo miembro.
+
+Ejemplo:
+\[
+K u_e''+Q(x)=0.
+\]
+
+Relación con otros conceptos: obliga a distinguir solución estacionaria y transitoria.
+
+Posible forma de preguntarlo en examen: “Encuentre el equilibrio de una barra con fuente \(Q=K_0x^2\) y condiciones mixtas”.
+
+## 5. Relaciones entre ideas
+
+La ecuación del calor se construye sobre una cadena conceptual: primero se define la magnitud \(u(x,t)\); después se relaciona su variación temporal con el flujo espacial; finalmente se añaden datos iniciales y de frontera para obtener un problema cerrado. La EDP sola no representa un problema físico completo.
+
+La derivada \(u_{xx}\) es la causa matemática del suavizado. Un perfil con gran curvatura cambia deprisa; un perfil lineal no cambia si no hay fuentes. De ahí que el estado estacionario sin fuentes satisfaga \(u''=0\). Esta es la conexión entre calor dependiente del tiempo y ecuaciones de equilibrio.
+
+Las condiciones de contorno determinan la familia de funciones propias. Dirichlet homogéneo lleva a senos; Neumann homogéneo lleva a cosenos; Robin lleva a ecuaciones de autovalores más generales. Por tanto, no se elige la serie de Fourier por costumbre, sino por el problema espacial que imponen las condiciones.
+
+La separación de variables depende de la linealidad y de la geometría sencilla del dominio. Al separar, aparece un problema espacial de autovalores y un problema temporal de decaimiento. El autovalor \(\lambda_n\) cumple dos funciones: selecciona la forma espacial y fija la rapidez de amortiguamiento.
+
+La condición inicial no cambia los modos permitidos; solo cambia sus amplitudes. Los modos los decide el contorno. Los coeficientes de Fourier los decide \(f(x)\). Esta distinción es esencial en examen.
+
+La solución estacionaria y la solución transitoria cumplen papeles distintos. La estacionaria resuelve el equilibrio impuesto por fuentes y condiciones no homogéneas. La transitoria corrige la diferencia entre el estado inicial y ese equilibrio. Cuando los modos transitorios decaen, queda el equilibrio.
+
+Hay una oposición importante entre la ecuación del calor y la ecuación de ondas. La del calor tiene un primer orden temporal y produce exponenciales decrecientes. La de ondas tiene segundo orden temporal y produce senos y cosenos en el tiempo. Ambas pueden usar funciones espaciales parecidas, pero su interpretación temporal es distinta.
+
+La clasificación de EDP ordena estos comportamientos. Laplace es elíptica y describe equilibrio; calor es parabólica y describe difusión; ondas es hiperbólica y describe propagación. Esta clasificación no es decorativa: anticipa qué tipo de condiciones necesita el problema y qué tipo de solución cabe esperar.
+
+Históricamente, el estudio de la ecuación del calor está unido al desarrollo de las series trigonométricas. La necesidad de representar perfiles iniciales arbitrarios como suma de modos senoidales conduce naturalmente a Fourier. En MM3 esto se traduce en una regla operativa: resolver el problema espacial, obtener la base propia y expandir el dato inicial en esa base.
+
+## 6. Errores habituales
+
+1. Error: escribir la solución sin condiciones de contorno.
+
+Por qué está mal: la EDP sola tiene infinitas soluciones. Las condiciones de contorno seleccionan los modos.
+
+Corrección: plantear siempre ecuación, dominio, condición inicial y condiciones de contorno.
+
+Respuesta incorrecta: “La solución de \(u_t=u_{xx}\) es \(e^{-t}\sin x\)”.
+
+Respuesta correcta: “Para \(0<x<L\), \(u(0,t)=u(L,t)=0\) y \(u(x,0)=f(x)\), la solución se construye con modos \(\sin(n\pi x/L)\)”.
+
+2. Error: usar cosenos con Dirichlet homogéneo.
+
+Por qué está mal: \(X(0)=0\) elimina el coseno.
+
+Corrección: con \(X(0)=X(L)=0\), las autofunciones son senos.
+
+Respuesta incorrecta:
+\[
+u=\sum a_n\cos(n\pi x/L)e^{-\alpha^2(n\pi/L)^2t}.
+\]
+
+Respuesta correcta:
+\[
+u=\sum b_n\sin(n\pi x/L)e^{-\alpha^2(n\pi/L)^2t}.
+\]
+
+3. Error: olvidar el factor \((n\pi/L)^2\) en el exponente.
+
+Por qué está mal: la tasa temporal depende del autovalor espacial.
+
+Corrección:
+\[
+e^{-\alpha^2\lambda_nt}=e^{-\alpha^2(n\pi/L)^2t}.
+\]
+
+Respuesta incorrecta:
+\[
+e^{-n\pi t/L}.
+\]
+
+Respuesta correcta:
+\[
+e^{-\alpha^2n^2\pi^2t/L^2}.
+\]
+
+4. Error: tomar constante de separación positiva y obtener crecimiento.
+
+Por qué está mal: el calor no debe producir crecimiento espontáneo en el problema homogéneo con extremos a cero.
+
+Corrección: escribir
+\[
+X''+\lambda X=0,\qquad T'+\alpha^2\lambda T=0,
+\]
+con \(\lambda>0\).
+
+Respuesta incorrecta:
+\[
+T=e^{+\alpha^2\lambda t}.
+\]
+
+Respuesta correcta:
+\[
+T=e^{-\alpha^2\lambda t}.
+\]
+
+5. Error: confundir equilibrio con condición inicial.
+
+Por qué está mal: el equilibrio se obtiene imponiendo \(u_t=0\); no depende directamente de \(f(x)\) salvo en casos con conservación.
+
+Corrección: resolver primero la EDO estacionaria.
+
+Respuesta incorrecta: “El equilibrio es \(u(x)=f(x)\)”.
+
+Respuesta correcta: “Si no hay fuentes y los extremos son \(T_0,T_1\), el equilibrio es \(u(x)=T_0+(T_1-T_0)x/L\)”.
+
+6. Error: no homogeneizar las condiciones de contorno no homogéneas.
+
+Por qué está mal: las series seno estándar resuelven condiciones homogéneas. Si los extremos no son cero, hay que restar un equilibrio o función auxiliar.
+
+Corrección:
+\[
+u=u_e+v,
+\]
+donde \(u_e\) satisface el contorno no homogéneo.
+
+Respuesta incorrecta:
+\[
+u=\sum b_n\sin(n\pi x/L)e^{-\alpha^2(n\pi/L)^2t}
+\]
+con \(u(0,t)=T_0\neq0\).
+
+Respuesta correcta:
+\[
+u_e=T_0+\frac{T_1-T_0}{L}x,\qquad v=u-u_e.
+\]
+
+7. Error: calcular coeficientes de Fourier en el intervalo equivocado.
+
+Por qué está mal: los coeficientes dependen del intervalo y de la base.
+
+Corrección: en \(0<x<L\),
+\[
+b_n=\frac{2}{L}\int_0^L f(x)\sin(n\pi x/L)\,dx.
+\]
+
+Respuesta incorrecta:
+\[
+b_n=\frac{1}{\pi}\int_{-\pi}^{\pi}f(x)\sin(nx)\,dx
+\]
+para un problema en \([0,L]\).
+
+Respuesta correcta:
+\[
+b_n=\frac{2}{L}\int_0^L f(x)\sin(n\pi x/L)\,dx.
+\]
+
+8. Error: tratar una fuente como si fuera cero.
+
+Por qué está mal: una fuente cambia el equilibrio y puede cambiar el límite temporal.
+
+Corrección: si
+\[
+u_t=\alpha^2u_{xx}+Q(x),
+\]
+el equilibrio satisface
+\[
+\alpha^2u_e''+Q(x)=0.
+\]
+
+Respuesta incorrecta: “Como \(t\to\infty\), \(u\to0\) siempre”.
+
+Respuesta correcta: “Con fuente o contorno no homogéneo, \(u\) tiende al equilibrio correspondiente, no necesariamente a cero”.
+
+9. Error: decir que todos los problemas con Neumann tienden a cero.
+
+Por qué está mal: con extremos aislados puede conservarse la media y quedar un modo constante.
+
+Corrección: revisar si existe modo \(\lambda=0\).
+
+Respuesta incorrecta: “Si \(u_x(0,t)=u_x(L,t)=0\), entonces \(u\to0\)”.
+
+Respuesta correcta: “Con Neumann homogéneo, el modo constante no decae; el límite puede ser la media inicial”.
+
+10. Error: no justificar la clasificación parabólica.
+
+Por qué está mal: en examen no basta nombrar el tipo; hay que mirar la parte principal.
+
+Corrección: escribir la matriz o el discriminante asociado a la parte de segundo orden.
+
+Respuesta incorrecta: “Es parabólica porque es la ecuación del calor”.
+
+Respuesta correcta: “En variables \((x,t)\), la parte principal solo contiene \(u_{xx}\); el determinante de la matriz principal es cero, luego es parabólica”.
+
+## 7. Preguntas orientadas a examen
+
+### 10 preguntas fáciles
+
+1. ¿Qué representa \(u(x,t)\) en la ecuación del calor unidimensional?
+
+2. Escriba la ecuación del calor homogénea en una barra de longitud \(L\).
+
+3. ¿Qué significa la condición \(u(x,0)=f(x)\)?
+
+4. ¿Qué tipo de condición es \(u(0,t)=u(L,t)=0\)?
+
+5. ¿Qué tipo de condición es \(u_x(0,t)=u_x(L,t)=0\)?
+
+6. ¿Qué se impone para obtener una solución estacionaria?
+
+7. ¿Cuál es la solución general de \(u''(x)=0\)?
+
+8. ¿Qué forma producto se usa en separación de variables?
+
+9. En el problema \(X''+\lambda X=0\), \(X(0)=X(L)=0\), ¿cuáles son las autofunciones?
+
+10. ¿Por qué los modos de orden alto decaen más deprisa?
+
+### 10 preguntas medias
+
+11. Deduzca las EDO que resultan de aplicar \(u=XT\) a \(u_t=\alpha^2u_{xx}\).
+
+12. Resuelva el problema espacial \(X''+\lambda X=0\), \(X(0)=X(L)=0\).
+
+13. Escriba la solución general para \(u_t=\alpha^2u_{xx}\) con \(u(0,t)=u(L,t)=0\) y \(u(x,0)=f(x)\).
+
+14. Calcule la solución si \(L=1\), \(\alpha^2=1\), \(u(x,0)=3\sin(2\pi x)\) y los extremos están a cero.
+
+15. Halle el equilibrio de una barra sin fuentes con \(u(0)=T_0\), \(u(L)=T_1\).
+
+16. Explique por qué una condición de Dirichlet homogénea conduce a serie seno.
+
+17. Clasifique la ecuación \(u_t-\alpha^2u_{xx}=0\) como elíptica, parabólica o hiperbólica.
+
+18. Si \(u_t=ku_{xx}+Q(x)\), escriba la ecuación que satisface el equilibrio.
+
+19. Para \(u_t=u_{xx}\), \(u_x(0,t)=u_x(L,t)=0\), ¿qué diferencia aparece respecto al caso Dirichlet?
+
+20. Explique el papel de los coeficientes de Fourier en la solución del calor.
+
+### 5 preguntas difíciles
+
+21. Resuelva
+\[
+u_t=u_{xx},\quad 0<x<1,\quad u(0,t)=u(1,t)=0,\quad u(x,0)=1.
+\]
+
+22. Halle el equilibrio para
+\[
+u_t=3u_{xx}+9\sin x
+\]
+en \([0,2\pi]\), con \(u(0)=9\), \(u_x(2\pi)=0\).
+
+23. Determine para qué valores de \(\beta\) existe equilibrio en
+\[
+u_t=u_{xx}+1,\quad 0<x<L,\quad u_x(0,t)=1,\quad u_x(L,t)=\beta.
+\]
+
+24. Explique cómo resolvería un problema con \(u(0,t)=T_0\), \(u(L,t)=T_1\), \(u(x,0)=f(x)\), sin calcular todos los coeficientes.
+
+25. Para \(u_t=\alpha^2u_{xx}\) con Neumann homogéneo, demuestre formalmente que la media espacial se conserva.
+
+### 5 preguntas de desarrollo largo
+
+26. Desarrolle el método de separación de variables para la ecuación del calor con extremos a temperatura cero.
+
+27. Explique la deducción física de la ecuación del calor en una barra delgada y homogénea.
+
+28. Compare la ecuación del calor, la ecuación de ondas y la ecuación de Laplace desde el punto de vista de clasificación y comportamiento.
+
+29. Explique el concepto de solución estacionaria y su uso para resolver problemas no homogéneos.
+
+30. Describa el papel de las series de Fourier en los problemas de calor y justifique por qué aparecen senos, cosenos o ambos.
+
+### 5 preguntas de relación entre conceptos
+
+31. Relacione condiciones de contorno, autovalores y forma de la serie de Fourier.
+
+32. Relacione el signo de \(u_{xx}\) con el comportamiento físico de máximos y mínimos.
+
+33. Relacione la presencia de fuentes con el límite \(t\to\infty\).
+
+34. Relacione el autovalor \(\lambda_n\) con la rapidez de decaimiento temporal.
+
+35. Relacione Dirichlet homogéneo y Neumann homogéneo en cuanto al modo constante.
+
+## 8. Respuestas modelo
+
+1. \(u(x,t)\) representa la temperatura, o concentración en un problema de difusión, en el punto \(x\) y en el instante \(t\). Es la incógnita de la EDP.
+
+2. La ecuación homogénea es
+\[
+u_t=\alpha^2u_{xx},\qquad 0<x<L,\quad t>0,
+\]
+con \(\alpha^2>0\).
+
+3. Significa que en el instante inicial \(t=0\) la distribución espacial es \(f(x)\). Es el dato que inicia la evolución temporal.
+
+4. Es una condición de Dirichlet homogénea. Fija el valor de la temperatura en los extremos y lo fija igual a cero.
+
+5. Es una condición de Neumann homogénea. Fija la derivada espacial en los extremos; en calor se interpreta como aislamiento o flujo nulo.
+
+6. Se impone \(u_t=0\), porque una solución estacionaria no cambia con el tiempo.
+
+7. Integrando dos veces,
+\[
+u(x)=Ax+B.
+\]
+
+8. Se usa
+\[
+u(x,t)=X(x)T(t),
+\]
+donde \(X\) depende solo de \(x\) y \(T\) solo de \(t\).
+
+9. Son
+\[
+X_n(x)=\sin\left(\frac{n\pi x}{L}\right),\qquad n=1,2,\ldots
+\]
+
+10. Porque su autovalor es
+\[
+\lambda_n=\left(\frac{n\pi}{L}\right)^2,
+\]
+y el factor temporal es
+\[
+e^{-\alpha^2\lambda_nt}.
+\]
+Al crecer \(n\), crece \(\lambda_n\) como \(n^2\).
+
+11. Sustituyendo \(u=XT\) en \(u_t=\alpha^2u_{xx}\):
+\[
+XT'=\alpha^2X''T.
+\]
+Dividiendo por \(\alpha^2XT\),
+\[
+\frac{T'}{\alpha^2T}=\frac{X''}{X}.
+\]
+Ambos lados son constantes. Tomando \(-\lambda\),
+\[
+X''+\lambda X=0,\qquad T'+\alpha^2\lambda T=0.
+\]
+
+12. Si \(\lambda=0\), \(X=Ax+B\), y las condiciones dan \(X=0\). Si \(\lambda<0\), las soluciones exponenciales también dan solo la solución trivial. Si \(\lambda>0\), escribimos \(\lambda=\mu^2\):
+\[
+X=A\cos\mu x+B\sin\mu x.
+\]
+De \(X(0)=0\), \(A=0\). De \(X(L)=0\), \(\sin\mu L=0\). Así,
+\[
+\mu=\frac{n\pi}{L},\quad \lambda_n=\left(\frac{n\pi}{L}\right)^2,\quad X_n=\sin\left(\frac{n\pi x}{L}\right).
+\]
+
+13. La solución es
+\[
+u(x,t)=\sum_{n=1}^{\infty}b_n\sin\left(\frac{n\pi x}{L}\right)e^{-\alpha^2(n\pi/L)^2t},
+\]
+donde
+\[
+b_n=\frac{2}{L}\int_0^L f(x)\sin\left(\frac{n\pi x}{L}\right)\,dx.
+\]
+
+14. Como \(f(x)=3\sin(2\pi x)\), solo aparece el modo \(n=2\). Por tanto,
+\[
+u(x,t)=3e^{-4\pi^2t}\sin(2\pi x).
+\]
+
+15. En equilibrio \(u''=0\), luego \(u=Ax+B\). De \(u(0)=T_0\), \(B=T_0\). De \(u(L)=T_1\), \(A=(T_1-T_0)/L\). Así,
+\[
+u(x)=T_0+\frac{T_1-T_0}{L}x.
+\]
+
+16. Porque las condiciones \(X(0)=X(L)=0\) eliminan el coseno y obligan a que la parte espacial sea proporcional a \(\sin(n\pi x/L)\). Al expandir \(f\), debe hacerse en esa misma familia.
+
+17. Es parabólica. En variables \((x,t)\), la parte principal de segundo orden solo contiene \(u_{xx}\). La matriz principal tiene determinante cero, lo que corresponde al caso parabólico.
+
+18. Si \(u_e\) es estacionaria, \(u_t=0\). Por tanto,
+\[
+ku_e''+Q(x)=0.
+\]
+
+19. En Neumann homogéneo aparece el modo constante \(X_0=1\), asociado a \(\lambda=0\). Ese modo no decae. En Dirichlet homogéneo no existe modo constante no nulo, y todos los modos decaen.
+
+20. Los coeficientes de Fourier son las amplitudes iniciales de los modos espaciales. La EDP y el contorno determinan los modos; la condición inicial determina cuánto de cada modo aparece.
+
+21. Buscamos serie seno en \((0,1)\):
+\[
+1=\sum_{n=1}^{\infty}b_n\sin(n\pi x),
+\]
+\[
+b_n=2\int_0^1\sin(n\pi x)\,dx
+=\frac{2}{n\pi}\left(1-(-1)^n\right).
+\]
+Luego \(b_n=0\) si \(n\) es par, y \(b_n=4/(n\pi)\) si \(n\) es impar. La solución es
+\[
+u(x,t)=\sum_{\substack{n=1\\ n\ \mathrm{impar}}}^{\infty}
+\frac{4}{n\pi}\sin(n\pi x)e^{-n^2\pi^2t}.
+\]
+
+22. En equilibrio:
+\[
+0=3u''+9\sin x,
+\]
+\[
+u''=-3\sin x.
+\]
+Integrando:
+\[
+u'=3\cos x+C_1,
+\]
+\[
+u=3\sin x+C_1x+C_2.
+\]
+De \(u(0)=9\), \(C_2=9\). De \(u_x(2\pi)=0\),
+\[
+3\cos(2\pi)+C_1=0,
+\]
+\[
+3+C_1=0,\quad C_1=-3.
+\]
+Por tanto,
+\[
+u_e(x)=3\sin x-3x+9.
+\]
+
+23. En equilibrio:
+\[
+0=u''+1,
+\]
+por tanto
+\[
+u'=-x+C_1.
+\]
+La condición \(u_x(0)=1\) da \(C_1=1\). Entonces
+\[
+u_x(L)=-L+1.
+\]
+Para que exista equilibrio con \(u_x(L)=\beta\), debe cumplirse
+\[
+\beta=1-L.
+\]
+
+24. Primero se calcula el equilibrio lineal:
+\[
+u_e(x)=T_0+\frac{T_1-T_0}{L}x.
+\]
+Después se define
+\[
+v(x,t)=u(x,t)-u_e(x).
+\]
+Entonces \(v\) satisface condiciones homogéneas:
+\[
+v(0,t)=v(L,t)=0.
+\]
+Su condición inicial es
+\[
+v(x,0)=f(x)-u_e(x).
+\]
+Se resuelve \(v\) mediante serie seno y finalmente se suma \(u=u_e+v\).
+
+25. Definimos la media:
+\[
+\overline u(t)=\frac{1}{L}\int_0^L u(x,t)\,dx.
+\]
+Derivando:
+\[
+\overline u'(t)=\frac{1}{L}\int_0^L u_t(x,t)\,dx
+=\frac{\alpha^2}{L}\int_0^L u_{xx}(x,t)\,dx.
+\]
+Integrando:
+\[
+\overline u'(t)=\frac{\alpha^2}{L}\big[u_x(L,t)-u_x(0,t)\big].
+\]
+Con Neumann homogéneo, ambos términos son cero, luego
+\[
+\overline u'(t)=0.
+\]
+La media se conserva.
+
+26. Para el problema
+\[
+u_t=\alpha^2u_{xx},\quad u(0,t)=u(L,t)=0,\quad u(x,0)=f(x),
+\]
+se propone \(u=XT\). Sustituyendo:
+\[
+XT'=\alpha^2X''T.
+\]
+Separando:
+\[
+\frac{T'}{\alpha^2T}=\frac{X''}{X}=-\lambda.
+\]
+Se obtiene
+\[
+X''+\lambda X=0,\qquad T'+\alpha^2\lambda T=0.
+\]
+Las condiciones de contorno dan
+\[
+X(0)=X(L)=0.
+\]
+El problema espacial tiene autovalores
+\[
+\lambda_n=(n\pi/L)^2
+\]
+y autofunciones
+\[
+X_n=\sin(n\pi x/L).
+\]
+La parte temporal es
+\[
+T_n=e^{-\alpha^2(n\pi/L)^2t}.
+\]
+Por superposición,
+\[
+u(x,t)=\sum_{n=1}^{\infty}b_n\sin(n\pi x/L)e^{-\alpha^2(n\pi/L)^2t}.
+\]
+La condición inicial exige
+\[
+f(x)=\sum_{n=1}^{\infty}b_n\sin(n\pi x/L),
+\]
+por lo que
+\[
+b_n=\frac{2}{L}\int_0^L f(x)\sin(n\pi x/L)\,dx.
+\]
+
+27. Se considera un pequeño elemento de barra entre \(x\) y \(x+\Delta x\). La variación de calor en ese elemento es la diferencia entre lo que entra y lo que sale. El flujo es proporcional al gradiente de temperatura y tiene sentido de mayor a menor temperatura. Al comparar el balance de calor con el cambio de temperatura del elemento, dividir por \(\Delta x\Delta t\) y tomar límites, se obtiene una relación entre \(u_t\) y \(u_{xx}\). Agrupando constantes físicas positivas se llega a
+\[
+u_t=\alpha^2u_{xx}.
+\]
+La deducción depende de que la barra sea homogénea, delgada, lateralmente aislada y con parámetros materiales constantes.
+
+28. La ecuación de Laplace,
+\[
+u_{xx}+u_{yy}=0,
+\]
+es elíptica y describe equilibrio. No hay evolución temporal. La ecuación del calor,
+\[
+u_t=\alpha^2u_{xx},
+\]
+es parabólica y describe difusión: los perfiles se suavizan y los modos decaen exponencialmente. La ecuación de ondas,
+\[
+u_{tt}=c^2u_{xx},
+\]
+es hiperbólica y describe propagación: los modos oscilan en el tiempo. Las tres pueden resolverse por separación de variables en dominios sencillos, pero la parte temporal y la interpretación física son distintas.
+
+29. Una solución estacionaria es independiente del tiempo, por lo que se obtiene imponiendo \(u_t=0\). En problemas sin fuentes, suele satisfacer \(u''=0\). En problemas con fuentes, satisface una ecuación no homogénea como
+\[
+\alpha^2u_e''+Q(x)=0.
+\]
+Su utilidad es doble: da el límite al que tiende la solución cuando el transitorio decae y permite homogeneizar problemas no homogéneos mediante \(u=u_e+v\). Entonces \(v\) suele resolverse por separación de variables.
+
+30. Las series de Fourier aparecen porque las condiciones de contorno convierten la parte espacial en un problema de autovalores. Las autofunciones forman la base en la que se desarrolla la condición inicial. Con Dirichlet homogéneo aparecen senos; con Neumann homogéneo aparecen cosenos; con condiciones mixtas aparecen otras familias propias. Los coeficientes de Fourier no se eligen libremente: se calculan imponiendo que la serie reproduzca \(f(x)\).
+
+31. Las condiciones de contorno determinan el problema espacial. Ese problema produce autovalores y autofunciones. Las autofunciones son la familia usada para expandir la condición inicial. Por ejemplo, Dirichlet homogéneo da senos; Neumann homogéneo da cosenos.
+
+32. Si \(u_{xx}<0\), el perfil es cóncavo hacia abajo y, por \(u_t=\alpha^2u_{xx}\), se tiene \(u_t<0\). Un máximo local baja. Si \(u_{xx}>0\), un mínimo local sube. Así se suavizan diferencias.
+
+33. Una fuente puede mantener una distribución no nula en equilibrio. Sin fuente y con extremos a cero, la solución tiende a cero. Con fuente, el límite satisface una ecuación estacionaria no homogénea.
+
+34. El autovalor \(\lambda_n\) aparece en la ecuación temporal:
+\[
+T_n'+\alpha^2\lambda_nT_n=0.
+\]
+Por tanto,
+\[
+T_n=e^{-\alpha^2\lambda_nt}.
+\]
+Cuanto mayor es \(\lambda_n\), más rápido decae el modo.
+
+35. En Dirichlet homogéneo, el modo constante no cumple \(u(0)=u(L)=0\), salvo si es cero. En Neumann homogéneo, el modo constante sí cumple \(u_x(0)=u_x(L)=0\), y no decae. Por eso el límite con Dirichlet homogéneo suele ser cero, mientras que con Neumann homogéneo puede ser la media inicial.
+
+## 9. Resumen final de repaso
+
+Ideas principales:
+
+La ecuación del calor-difusión en una dimensión es
+\[
+u_t=\alpha^2u_{xx}.
+\]
+Modela suavizado temporal de una distribución espacial.
+
+Un problema completo necesita dominio, EDP, condición inicial y condiciones de contorno.
+
+Con extremos a cero:
+\[
+u(0,t)=u(L,t)=0,
+\]
+los modos espaciales son
+\[
+\sin(n\pi x/L).
+\]
+
+La solución clásica con Dirichlet homogéneo es
+\[
+u(x,t)=\sum_{n=1}^{\infty}b_n\sin(n\pi x/L)e^{-\alpha^2(n\pi/L)^2t},
+\]
+\[
+b_n=\frac{2}{L}\int_0^L f(x)\sin(n\pi x/L)\,dx.
+\]
+
+Conceptos imprescindibles:
+
+EDP lineal, condición inicial, Dirichlet, Neumann, Robin, estado estacionario, separación de variables, autovalores, autofunciones, serie seno de Fourier, decaimiento modal.
+
+Relaciones clave:
+
+Las condiciones de contorno determinan los modos. La condición inicial determina los coeficientes. Los autovalores determinan la rapidez de decaimiento. Las fuentes y contornos no homogéneos determinan el equilibrio.
+
+Errores que evitar:
+
+No usar senos si las condiciones no son Dirichlet homogéneas. No olvidar el factor \(n^2\) en el exponente. No confundir equilibrio con condición inicial. No resolver un problema no homogéneo como si fuera homogéneo. No afirmar que todos los límites temporales son cero.
+
+## 10. Checklist de dominio
+
+- Si no puedes explicar qué representa \(u(x,t)\), falta repasar la formulación física del problema.
+
+- Si no puedes distinguir \(u_t\), \(u_x\) y \(u_{xx}\), falta repasar derivadas parciales.
+
+- Si no puedes escribir el problema completo con EDP, dominio, condición inicial y contorno, falta repasar planteamiento de EDP.
+
+- Si confundes condición inicial con condición de contorno, revisar la diferencia entre datos en \(t=0\) y datos en \(x=0,L\).
+
+- Si confundes Dirichlet con Neumann, revisar los tipos de condiciones de frontera.
+
+- Si no puedes obtener \(X''+\lambda X=0\) y \(T'+\alpha^2\lambda T=0\), falta repasar separación de variables.
+
+- Si no puedes justificar \(\lambda_n=(n\pi/L)^2\), falta repasar problemas de autovalores.
+
+- Si usas cosenos con \(u(0,t)=u(L,t)=0\), revisar el problema espacial Dirichlet homogéneo.
+
+- Si olvidas \(e^{-\alpha^2(n\pi/L)^2t}\), falta repasar la ecuación temporal.
+
+- Si no puedes calcular
+\[
+b_n=\frac{2}{L}\int_0^L f(x)\sin(n\pi x/L)\,dx,
+\]
+falta repasar series seno de Fourier.
+
+- Si afirmas que el equilibrio siempre es cero, revisar problemas con fuentes y contornos no homogéneos.
+
+- Si no puedes resolver un equilibrio imponiendo \(u_t=0\), falta repasar la reducción estacionaria.
+
+- Si confundes calor con ondas, revisar la diferencia entre primer y segundo orden temporal.
+
+- Si no puedes explicar por qué los modos altos decaen antes, revisar la relación entre autovalor y factor temporal.
+
+- Si puedes plantear, separar, hallar autovalores, expandir \(f(x)\) y describir el límite \(t\to\infty\), el capítulo está suficientemente asentado.
