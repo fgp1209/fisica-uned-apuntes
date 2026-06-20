@@ -1,0 +1,702 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="color-scheme" content="light dark" />
+  <title>MM2 — Tema 11: Operadores</title>
+  <meta name="description" content="Operadores lineales, dominios, núcleo, imagen, acotación, continuidad, norma, inversos, adjuntos y clasificación básica." />
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/icon-32.png" />
+  <link rel="icon" type="image/png" sizes="50x50" href="assets/icons/icon-50.png" />
+  <link rel="apple-touch-icon" sizes="100x100" href="assets/icons/icon-100.png" />
+  <meta name="theme-color" content="#375a7f" />
+  <link rel="stylesheet" href="assets/styles.css" />
+  <script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']], processEscapes: true },
+  svg: { fontCache: 'global' },
+  options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+};
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+  <script defer src="assets/app.js"></script>
+</head>
+<body class="subject-mm2">
+  <div class="wrap">
+    <header class="cover">
+      <a class="back-link" href="index.html">← Índice</a>
+      <p class="eyebrow">Métodos Matemáticos II</p>
+      <h1>Operadores</h1>
+      <p class="subtitle">Tema 11 · Operadores lineales, dominios, núcleo, imagen, acotación, continuidad, norma, inversos, adjuntos y clasificación básica.</p>
+      <div class="lesson-meta"><span>Asignatura: MM2</span><span>Tema 11</span><span>Estado: completo</span><span>Enfoque: examen UNED</span></div>
+    </header>
+    <div class="toolbar no-print" aria-label="Navegación del tema">
+      <nav><a href="#mapa">Mapa</a><a href="#prerrequisitos">Prerrequisitos</a><a href="#idea-central">Idea</a><a href="#desarrollo">Desarrollo</a><a href="#conceptos">Conceptos</a><a href="#errores">Errores</a><a href="#preguntas">Preguntas</a><a href="#respuestas">Respuestas</a><a href="#resumen">Resumen</a><a href="#checklist">Checklist</a></nav>
+      <div class="toolbar-actions"><button class="btn secondary" onclick="document.querySelectorAll('details').forEach(d=>d.open=true)">Abrir todo</button><button class="btn secondary" onclick="document.querySelectorAll('details').forEach(d=>d.open=false)">Modo repaso</button><button class="btn" onclick="printReady()">Imprimir / PDF</button></div>
+    </div>
+    <main>
+      <section id="mapa" class="page map-page">
+        <header class="section-header"><p class="section-kicker">00</p><h2>Mapa conceptual</h2></header>
+        <div class="concept-map">
+          <a class="map-card" href="#prerrequisitos"><span>Base funcional</span><small>Espacios vectoriales, normas, producto escalar, Hilbert y matrices</small></a>
+          <a class="map-card" href="#desarrollo"><span>Linealidad</span><small>Dominio, núcleo, imagen y principio de superposición</small></a>
+          <a class="map-card" href="#desarrollo"><span>Acotación</span><small>Norma de operador, continuidad y sucesiones de prueba</small></a>
+          <a class="map-card" href="#desarrollo"><span>Adjunto</span><small>Producto escalar, operador adjunto y matrices conjugadas</small></a>
+          <a class="map-card" href="#desarrollo"><span>Clasificación</span><small>Autoadjuntos, unitarios, normales y autovalores</small></a>
+          <a class="map-card" href="#preguntas"><span>Examen</span><small>Problemas tipo, preguntas y respuestas modelo</small></a>
+        </div>
+        <div class="reading-block source-block"><p>Fuente principal: apunte bruto MM2-T11.txt convertido a página HTML de estudio, conservando estructura, fórmulas, preguntas, respuestas y checklist del documento original.</p></div>
+      </section>
+
+    <section id="prerrequisitos" class="page">
+      <header class="section-header">
+        <p class="section-kicker">01</p>
+        <h2>Prerrequisitos mínimos</h2>
+      </header>
+      <div class="card-grid">
+<h3 id="espacio-vectorial">Espacio vectorial.</h3>
+<p>Definición breve: conjunto \(X\) cuyos elementos pueden sumarse y multiplicarse por escalares, cumpliendo las reglas algebraicas habituales. Por qué es necesario: un operador lineal actúa sobre vectores en sentido amplio: vectores de \(\mathbb{R}^n\), sucesiones, funciones o clases de funciones. Ejemplo mínimo: \(\mathbb{C}^2\) es un espacio vectorial; si \(x=(1,i)\) y \(y=(2,0)\), entonces \(3x-y=(1,3i)\).</p>
+<h3 id="subespacio-nucleo-e-imagen">Subespacio, núcleo e imagen.</h3>
+<p>Definición breve: un subespacio es una parte de un espacio vectorial cerrada para sumas y productos por escalares. El núcleo de un operador es el conjunto de vectores que envía a cero; la imagen es el conjunto de valores que alcanza. Por qué es necesario: las propiedades básicas de un operador se leen en \(\ker T\) y \(\operatorname{Im}T\). La inyectividad equivale a \(\ker T=\{0\}\). Ejemplo mínimo: si \(T(x,y)=(x,0)\), entonces \(\ker T=\{(0,y):y\in\mathbb{R}\}\) e \(\operatorname{Im}T=\{(x,0):x\in\mathbb{R}\}\).</p>
+<h3 id="norma">Norma.</h3>
+<p>Definición breve: aplicación \(\|\cdot\|\) que mide tamaño y satisface positividad, homogeneidad y desigualdad triangular. Por qué es necesario: la acotación y la continuidad de operadores se expresan comparando \(\|Tx\|\) con \(\|x\|\). Ejemplo mínimo: en \(\mathbb{C}^n\), \(\|x\|_2=(\sum |x_i|^2)^{1/2}\).</p>
+<h3 id="producto-escalar">Producto escalar.</h3>
+<p>Definición breve: operación \(\langle x,y\rangle\) que mide ángulos y longitudes; en espacios complejos es lineal en una variable y conjugada-lineal en la otra, según la convención usada. Por qué es necesario: el adjunto \(T^*\) se define trasladando \(T\) de una entrada del producto escalar a la otra. Ejemplo mínimo: en \(\mathbb{C}^n\), con la convención matemática habitual, \(\langle x,y\rangle=\sum x_i\overline{y_i}\).</p>
+<h3 id="espacio-de-hilbert">Espacio de Hilbert.</h3>
+<p>Definición breve: espacio vectorial con producto escalar cuya norma asociada lo hace completo. Por qué es necesario: el adjunto hilbertiano de un operador acotado se construye en espacios de Hilbert; sin completitud se pierden resultados de existencia. Ejemplo mínimo: \(\ell^2\), el espacio de sucesiones \(x=(x_n)\) tales que \(\sum |x_n|^2<\infty\), con \(\langle x,y\rangle=\sum x_n\overline{y_n}\).</p>
+<h3 id="matrices-y-aplicaciones-lineales-finito-dimensionales">Matrices y aplicaciones lineales finito-dimensionales.</h3>
+<p>Definición breve: una matriz representa una aplicación lineal una vez fijadas bases. Por qué es necesario: muchas preguntas de examen reducen operadores en \(\mathbb{C}^n\) o \(\mathbb{R}^n\) a cálculos matriciales: norma, adjunto, autovalores, diagonalización. Ejemplo mínimo: \(A=\begin{pmatrix}1&2\\0&3\end{pmatrix}\) define \(T(x)=Ax\).</p>
+<h3 id="autovalores-y-autovectores">Autovalores y autovectores.</h3>
+<p>Definición breve: \(\lambda\) es autovalor de \(T\) si existe \(x\neq0\) tal que \(Tx=\lambda x\); ese \(x\) es autovector. Por qué es necesario: el estudio de operadores empieza por detectar direcciones que el operador no mezcla, solo escala. Ejemplo mínimo: para \(A=\operatorname{diag}(2,-1)\), \(e_1\) es autovector de autovalor \(2\) y \(e_2\) de autovalor \(-1\).</p>
+<h3 id="desigualdad-de-cauchy-schwarz">Desigualdad de Cauchy-Schwarz.</h3>
+<p>Definición breve: \(|\langle x,y\rangle|\leq \|x\|\|y\|\). Por qué es necesario: se usa para probar acotación de funcionales, existencia del adjunto y estimaciones de normas. Ejemplo mínimo: \(|\int_0^1 f(x)\overline{g(x)}\,dx|\leq \|f\|_2\|g\|_2\).</p>
+      </div>
+    </section>
+    <section id="idea-central" class="page">
+      <header class="section-header">
+        <p class="section-kicker">02</p>
+        <h2>Idea central del capítulo</h2>
+      </header>
+      <div class="reading-block">
+<p>El capítulo estudia los operadores como funciones entre espacios vectoriales que respetan la estructura lineal. La idea no es nueva si se han manejado matrices: una matriz \(A\) transforma un vector \(x\) en otro vector \(Ax\). La ampliación conceptual consiste en admitir que los vectores pueden ser funciones, sucesiones o elementos abstractos de un espacio normado o de Hilbert. La derivada, la integral definida, la multiplicación por una función y los cambios de coordenadas son ejemplos de operadores.</p>
+<p>La primera pregunta es algebraica: qué significa que un operador sea lineal. La respuesta es que debe respetar suma y producto por escalares. Esta propiedad permite aplicar el principio de superposición: si se conoce la acción del operador sobre elementos sencillos, se conoce sobre combinaciones lineales de ellos. Por eso las bases, los subespacios, el núcleo y la imagen aparecen de forma natural.</p>
+<p>La segunda pregunta es analítica: no basta con saber que un operador es lineal; hay que saber si controla tamaños. Un operador acotado es aquel para el que existe una constante \(C\) tal que \(\|Tx\|\leq C\|x\|\). Esta desigualdad es la forma operativa de decir que el operador no amplifica arbitrariamente vectores pequeños. En espacios normados, para operadores lineales, acotación y continuidad son esencialmente la misma propiedad. Esto es central en Métodos Matemáticos II porque conecta álgebra lineal con análisis.</p>
+<p>La tercera pregunta aparece cuando el espacio tiene producto escalar. En ese caso puede definirse el adjunto \(T^*\) mediante</p>
+<div class="formula-block">\[
+\langle Tx,y\rangle=\langle x,T^*y\rangle.
+\]</div>
+<p>El adjunto generaliza la traspuesta conjugada de una matriz. Una vez introducido, permite clasificar operadores importantes: autoadjuntos, unitarios y normales. Los autoadjuntos son la versión abstracta de las matrices hermíticas; los unitarios son transformaciones que conservan la norma; los normales son operadores que conmutan con su adjunto.</p>
+<p>El papel del capítulo dentro de MM2 es preparar el lenguaje para espacios de Hilbert, problemas espectrales y aplicaciones físicas posteriores. En mecánica cuántica, Fourier, Sturm-Liouville y teoría de modos, los objetos centrales no son solo funciones, sino operadores que actúan sobre funciones. En examen, lo habitual no es pedir teoría abstracta larga, sino comprobar linealidad, acotación, norma, adjunto, autovalores y clasificación básica.</p>
+      </div>
+    </section>
+    <section id="desarrollo" class="page">
+      <header class="section-header">
+        <p class="section-kicker">03</p>
+        <h2>Desarrollo completo del capítulo</h2>
+      </header>
+      <div class="reading-block">
+<h3 id="3-1-operador-como-aplicacion-entre-espacios">3.1. Operador como aplicación entre espacios</h3>
+<p>Un operador es una regla que asigna a cada elemento de un conjunto de partida otro elemento de un conjunto de llegada. En este tema interesa el caso en que ambos conjuntos son espacios vectoriales, normados o de Hilbert. Se escribe</p>
+<div class="formula-block">\[
+T:D(T)\subset X\longrightarrow Y,
+\]</div>
+<p>donde \(D(T)\) es el dominio de \(T\). La notación \(D(T)\subset X\) es importante: algunos operadores no están definidos sobre todo el espacio. La derivada, por ejemplo, no puede aplicarse a cualquier función continua si se exige derivabilidad.</p>
+<p>El dominio no es un detalle administrativo. Si se cambia el dominio, cambia el operador. La aplicación \(Df=f'\) puede ser acotada o no según la norma escogida y el espacio de partida. Sobre \(C^1[0,1]\) con norma \(\|f\|_{C^1}=\|f\|_\infty+\|f'\|_\infty\), la derivada hacia \(C[0,1]\) sí queda controlada:</p>
+<div class="formula-block">\[
+\|Df\|_\infty=\|f'\|_\infty\leq \|f\|_{C^1}.
+\]</div>
+<p>En cambio, si se mide solo \(\|f\|_\infty\), las funciones \(f_n(x)=\sin(nx)\) tienen tamaño máximo \(1\), pero sus derivadas tienen tamaño máximo \(n\). Por tanto no hay una constante uniforme que controle la derivada.</p>
+<p>La imagen o rango es</p>
+<div class="formula-block">\[
+\operatorname{Im}T=\{Tx:x\in D(T)\}.
+\]</div>
+<p>El núcleo es</p>
+<div class="formula-block">\[
+\ker T=\{x\in D(T):Tx=0\}.
+\]</div>
+<p>Estos conjuntos son los primeros objetos que se calculan. Si \(T\) es lineal, \(\ker T\) es subespacio del dominio y \(\operatorname{Im}T\) es subespacio del espacio de llegada. La razón es directa: si \(Tx=0\) y \(Ty=0\), entonces \(T(\alpha x+\beta y)=\alpha Tx+\beta Ty=0\).</p>
+<p>Como ejemplo, sea \(T:\mathbb{R}^3\to\mathbb{R}^2\), \(T(x,y,z)=(x+y,z)\). Es lineal. Su núcleo viene dado por \(x+y=0\) y \(z=0\), luego</p>
+<div class="formula-block">\[
+\ker T=\{(t,-t,0):t\in\mathbb{R}\}.
+\]</div>
+<p>Su imagen es todo \(\mathbb{R}^2\), porque para cualquier \((a,b)\) basta tomar \((a,0,b)\).</p>
+<h3 id="3-2-linealidad-y-principio-de-superposicion">3.2. Linealidad y principio de superposición</h3>
+<p>Un operador \(T\) es lineal si</p>
+<div class="formula-block">\[
+T(\alpha x+\beta y)=\alpha Tx+\beta Ty
+\]</div>
+<p>para todos los \(x,y\) del dominio y escalares \(\alpha,\beta\). Equivale a exigir que respete sumas y productos por escalares.</p>
+<p>La derivada es lineal:</p>
+<div class="formula-block">\[
+D(\alpha f+\beta g)=\alpha f'+\beta g'.
+\]</div>
+<p>La integral definida también lo es:</p>
+<div class="formula-block">\[
+T(f)=\int_0^1 f(x)\,dx,\qquad
+T(\alpha f+\beta g)=\alpha T(f)+\beta T(g).
+\]</div>
+<p>Una matriz \(A\) define un operador lineal porque</p>
+<div class="formula-block">\[
+A(\alpha x+\beta y)=\alpha Ax+\beta Ay.
+\]</div>
+<p>No toda operación razonable es lineal. La aplicación \(f\mapsto f^2\) no lo es, porque</p>
+<div class="formula-block">\[
+(f+g)^2=f^2+2fg+g^2
+\]</div>
+<p>y aparece el término cruzado. La aplicación \(x\mapsto \|x\|\) tampoco es lineal: aunque mide tamaño, no conserva sumas. La traslación \(x\mapsto x+a\) no es lineal salvo que \(a=0\), porque no lleva el cero al cero.</p>
+<p>La consecuencia práctica de la linealidad es el principio de superposición. Si \(x=\sum c_k e_k\), entonces</p>
+<div class="formula-block">\[
+Tx=\sum c_k Te_k.
+\]</div>
+<p>Por eso, en dimensión finita basta conocer la acción de \(T\) sobre una base. En espacios de funciones ocurre algo análogo con bases ortogonales o sistemas de funciones: si se puede expandir una función en senos, cosenos u otros modos, el operador se estudia mirando su acción sobre esos modos.</p>
+<h3 id="3-3-operadores-matriciales-y-transformaciones">3.3. Operadores matriciales y transformaciones</h3>
+<p>En dimensión finita, fijadas bases, todo operador lineal se representa mediante una matriz. Si \(T:\mathbb{C}^n\to\mathbb{C}^m\), existe una matriz \(A\in M_{m\times n}(\mathbb{C})\) tal que</p>
+<div class="formula-block">\[
+T(x)=Ax.
+\]</div>
+<p>Las columnas de \(A\) son las imágenes de los vectores de la base canónica.</p>
+<p>Esta representación convierte preguntas abstractas en cálculo algebraico. El núcleo se obtiene resolviendo \(Ax=0\). La imagen se obtiene como el subespacio generado por las columnas de \(A\). Los autovalores, si \(m=n\), se obtienen mediante</p>
+<div class="formula-block">\[
+\det(A-\lambda I)=0.
+\]</div>
+<p>La geometría ayuda a interpretar. Una matriz puede rotar, reflejar, proyectar, estirar o combinar coordenadas. Una transformación ortogonal real conserva la norma euclídea:</p>
+<div class="formula-block">\[
+\|Ax\|_2=\|x\|_2.
+\]</div>
+<p>Matricialmente esto equivale a</p>
+<div class="formula-block">\[
+A^TA=I.
+\]</div>
+<p>En complejo, la condición análoga usa la traspuesta conjugada:</p>
+<div class="formula-block">\[
+A^*A=I.
+\]</div>
+<p>Esta idea prepara el concepto de operador unitario en espacios de Hilbert.</p>
+<p>Ejemplo: la matriz</p>
+<div class="formula-block">\[
+R_\theta=
+\begin{pmatrix}
+\cos\theta&-\sin\theta\\
+\sin\theta&\cos\theta
+\end{pmatrix}
+\]</div>
+<p>es ortogonal. Conserva longitudes y ángulos. No cambia el tamaño de los vectores, solo su dirección. Esto anticipa la idea de operador isométrico.</p>
+<h3 id="3-4-operadores-acotados">3.4. Operadores acotados</h3>
+<p>Sean \(X,Y\) espacios normados. Un operador lineal \(T:X\to Y\) es acotado si existe \(C\geq0\) tal que</p>
+<div class="formula-block">\[
+\|Tx\|_Y\leq C\|x\|_X\quad\text{para todo }x\in X.
+\]</div>
+<p>La menor constante posible se llama norma del operador:</p>
+<div class="formula-block">\[
+\|T\|=\sup_{x\neq0}\frac{\|Tx\|}{\|x\|}=\sup_{\|x\|=1}\|Tx\|.
+\]</div>
+<p>Esta definición debe leerse como una estimación uniforme. No basta con que cada \(Tx\) sea finito; hace falta una misma constante \(C\) válida para todos los vectores. En dimensión finita, todo operador lineal es acotado para cualquier norma usual. En dimensión infinita, esto ya no es automático.</p>
+<p>Ejemplo de operador acotado: \(T:C[0,1]\to C[0,1]\), \(Tf(x)=x f(x)\), con norma supremo. Entonces</p>
+<div class="formula-block">\[
+\|Tf\|_\infty=\sup_{x\in[0,1]}|x f(x)|\leq \sup_{x\in[0,1]}|f(x)|=\|f\|_\infty.
+\]</div>
+<p>Así \(\|T\|\leq1\). Además tomando \(f(x)=1\), se obtiene \(\|Tf\|_\infty=1\), luego \(\|T\|=1\).</p>
+<p>Ejemplo de operador no acotado: \(D:C^1[0,1]\to C[0,1]\), \(Df=f'\), si en el dominio se usa \(\|f\|_\infty\). Para \(f_n(x)=\sin(nx)\),</p>
+<div class="formula-block">\[
+\|f_n\|_\infty=1,\qquad \|Df_n\|_\infty=n.
+\]</div>
+<p>Si existiera \(C\), tendría que cumplirse \(n\leq C\) para todo \(n\), imposible.</p>
+<p>En problemas de examen, probar que un operador es acotado suele consistir en encadenar desigualdades hasta obtener \(\|Tx\|\leq C\|x\|\). Probar que no lo es exige construir una sucesión \(x_n\) con \(\|x_n\|=1\) y \(\|Tx_n\|\to\infty\), o al menos con cociente \(\|Tx_n\|/\|x_n\|\to\infty\).</p>
+<h3 id="3-5-continuidad-de-operadores-lineales">3.5. Continuidad de operadores lineales</h3>
+<p>Para operadores lineales entre espacios normados, acotación y continuidad son equivalentes. Esto significa que, si existe \(C\) tal que \(\|Tx\|\leq C\|x\|\), entonces \(T\) es continuo. En efecto,</p>
+<div class="formula-block">\[
+\|Tx-Ty\|=\|T(x-y)\|\leq C\|x-y\|.
+\]</div>
+<p>Por tanto \(x_n\to x\) implica \(Tx_n\to Tx\).</p>
+<p>La equivalencia importa porque simplifica el trabajo. En vez de demostrar continuidad con \(\varepsilon\)-\(\delta\), basta buscar una cota lineal. En sentido inverso, si un operador lineal es continuo en \(0\), entonces es acotado en todo el espacio. La linealidad permite trasladar el comportamiento local en el origen a cualquier punto.</p>
+<p>En dimensión finita, toda aplicación lineal es continua. Pero en espacios de funciones y sucesiones hay que comprobarlo. Esto explica por qué en MM2 aparecen preguntas del tipo: “decidir si \(T\) es acotado y calcular su norma”. En realidad se está preguntando si el operador es estable respecto a la norma del espacio.</p>
+<h3 id="3-6-norma-de-un-operador">3.6. Norma de un operador</h3>
+<p>La norma de operador mide la máxima amplificación de vectores de norma uno:</p>
+<div class="formula-block">\[
+\|T\|=\sup_{\|x\|=1}\|Tx\|.
+\]</div>
+<p>Si el supremo se alcanza, existe un vector unitario que realiza la máxima ampliación. En dimensión finita con la norma euclídea, esto está relacionado con valores singulares. En muchos ejercicios básicos se calcula por desigualdad y ejemplo que iguala.</p>
+<p>Ejemplo: sea \(T:\mathbb{C}^2\to\mathbb{C}^2\),</p>
+<div class="formula-block">\[
+T(z_1,z_2)=(2z_1,-z_2),
+\]</div>
+<p>con norma euclídea. Entonces</p>
+<div class="formula-block">\[
+\|Tz\|_2^2=4|z_1|^2+|z_2|^2\leq4(|z_1|^2+|z_2|^2)=4\|z\|_2^2.
+\]</div>
+<p>Luego \(\|T\|\leq2\). Tomando \(z=(1,0)\), se obtiene \(\|Tz\|=2\|z\|\), así que \(\|T\|=2\).</p>
+<p>Ejemplo en \(L^2\): si \(T f=m f\) en \(L^2(a,b)\) y \(m\) es esencialmente acotada, entonces</p>
+<div class="formula-block">\[
+\|Tf\|_2^2=\int |m(x)|^2|f(x)|^2\,dx\leq \|m\|_\infty^2\|f\|_2^2.
+\]</div>
+<p>Por tanto \(T\) es acotado y \(\|T\|\leq \|m\|_\infty\). En casos sencillos, la igualdad se obtiene tomando funciones concentradas donde \(|m|\) se aproxima a su supremo.</p>
+<h3 id="3-7-operadores-inversos">3.7. Operadores inversos</h3>
+<p>Un operador lineal \(T:D(T)\subset X\to Y\) tiene inverso sobre su imagen si es inyectivo. La condición algebraica básica es</p>
+<div class="formula-block">\[
+\ker T=\{0\}.
+\]</div>
+<p>Si \(Tx=0\) solo ocurre para \(x=0\), entonces dos vectores distintos no pueden tener la misma imagen. En ese caso se puede definir</p>
+<div class="formula-block">\[
+T^{-1}:\operatorname{Im}T\to D(T).
+\]</div>
+<p>Que exista inverso algebraico no garantiza que sea acotado si los espacios son infinitodimensionales. Esta distinción es importante. En dimensión finita, una matriz cuadrada invertible tiene inversa lineal y continua. En espacios de funciones, puede existir una inversa formal que sea inestable: pequeñas variaciones en la imagen pueden producir grandes variaciones en el original.</p>
+<p>Ejemplo finito-dimensional: \(T(x,y)=(x+y,y)\). Si \(T(x,y)=(0,0)\), entonces \(y=0\) y \(x=0\), luego \(T\) es inyectivo. Además su matriz</p>
+<div class="formula-block">\[
+A=\begin{pmatrix}1&1\\0&1\end{pmatrix}
+\]</div>
+<p>tiene determinante \(1\), y el inverso existe en todo \(\mathbb{R}^2\).</p>
+<h3 id="3-8-operadores-en-espacios-con-producto-escalar">3.8. Operadores en espacios con producto escalar</h3>
+<p>Cuando \(X\) es un espacio con producto escalar, la norma asociada es</p>
+<div class="formula-block">\[
+\|x\|=\sqrt{\langle x,x\rangle}.
+\]</div>
+<p>El producto escalar permite hablar de ortogonalidad, proyección, bases ortonormales y adjuntos. Si \(T\) actúa sobre un espacio de Hilbert, no solo interesa cuánto cambia la norma, sino también cómo interactúa con el producto escalar.</p>
+<p>En \(\mathbb{C}^n\), el producto escalar permite caracterizar la traspuesta conjugada. Si \(T(x)=Ax\), entonces</p>
+<div class="formula-block">\[
+\langle Ax,y\rangle=\langle x,A^*y\rangle.
+\]</div>
+<p>La matriz \(A^*\) es la conjugada traspuesta. Esta igualdad no es una definición arbitraria: dice que mover el operador de la primera entrada del producto escalar a la segunda transforma \(A\) en \(A^*\).</p>
+<p>En espacios de funciones ocurre igual. Si \(Tf=m f\) en \(L^2\), entonces</p>
+<div class="formula-block">\[
+\langle Tf,g\rangle=\int m(x)f(x)\overline{g(x)}\,dx
+=\int f(x)\overline{\overline{m(x)}g(x)}\,dx
+=\langle f,T^*g\rangle.
+\]</div>
+<p>Por tanto \(T^*g=\overline{m}g\).</p>
+<h3 id="3-9-operador-adjunto">3.9. Operador adjunto</h3>
+<p>Sea \(T:H_1\to H_2\) un operador lineal acotado entre espacios de Hilbert. El adjunto \(T^*:H_2\to H_1\) se define por la identidad</p>
+<div class="formula-block">\[
+\langle Tx,y\rangle_{H_2}=\langle x,T^*y\rangle_{H_1}
+\]</div>
+<p>para todo \(x\in H_1\) y \(y\in H_2\). En este contexto, el adjunto existe, es único, es lineal y satisface</p>
+<div class="formula-block">\[
+\|T^*\|=\|T\|.
+\]</div>
+<p>La existencia del adjunto usa de fondo la representación de funcionales continuos en espacios de Hilbert. Para estudiar el tema a nivel operativo, basta recordar que en dimensión finita el adjunto es la traspuesta conjugada y que en espacios funcionales se calcula pasando el operador de una entrada a otra del producto escalar.</p>
+<p>Propiedades básicas:</p>
+<div class="formula-block">\[
+(T+S)^*=T^*+S^*,\qquad (\alpha T)^*=\overline{\alpha}T^*,
+\]</div>
+<p>con la convención matemática usual del producto escalar lineal en la primera variable. También</p>
+<div class="formula-block">\[
+(ST)^*=T^*S^*
+\]</div>
+<p>cuando la composición está definida. El orden se invierte, igual que ocurre con matrices:</p>
+<div class="formula-block">\[
+(AB)^*=B^*A^*.
+\]</div>
+<p>Ejemplo: en \(\ell^2\), el desplazamiento a la derecha \(R\) dado por</p>
+<div class="formula-block">\[
+R(x_1,x_2,x_3,\ldots)=(0,x_1,x_2,\ldots)
+\]</div>
+<p>tiene como adjunto el desplazamiento a la izquierda</p>
+<div class="formula-block">\[
+R^*(y_1,y_2,y_3,\ldots)=(y_2,y_3,y_4,\ldots).
+\]</div>
+<p>La comprobación se hace comparando \(\langle Rx,y\rangle\) con \(\langle x,R^*y\rangle\).</p>
+<h3 id="3-10-operadores-autoadjuntos">3.10. Operadores autoadjuntos</h3>
+<p>Un operador \(T:H\to H\) es autoadjunto si</p>
+<div class="formula-block">\[
+T^*=T.
+\]</div>
+<p>En dimensión finita compleja, esto equivale a que su matriz sea hermítica:</p>
+<div class="formula-block">\[
+A^*=A.
+\]</div>
+<p>En dimensión real, equivale a que la matriz sea simétrica:</p>
+<div class="formula-block">\[
+A^T=A.
+\]</div>
+<p>La importancia de los autoadjuntos es doble. Primero, generalizan matrices simétricas, que tienen buenas propiedades algebraicas y geométricas. Segundo, en muchas aplicaciones físicas representan observables o problemas de autovalores reales. A nivel de examen de MM2, las propiedades básicas que conviene dominar son: sus valores propios, cuando aparecen, son reales; los autovectores asociados a autovalores distintos son ortogonales; y la condición \(T=T^*\) puede comprobarse mediante producto escalar.</p>
+<p>Ejemplo: \(A=\begin{pmatrix}2&i\\-i&3\end{pmatrix}\) es hermítica, porque \(A^*=A\). Por tanto el operador inducido en \(\mathbb{C}^2\) con el producto escalar usual es autoadjunto.</p>
+<p>Un error frecuente es creer que “tener entradas reales” implica ser autoadjunto. No basta. La matriz</p>
+<div class="formula-block">\[
+A=\begin{pmatrix}1&2\\0&1\end{pmatrix}
+\]</div>
+<p>es real, pero no es simétrica, luego no define un operador autoadjunto con el producto escalar euclídeo.</p>
+<h3 id="3-11-operadores-unitarios">3.11. Operadores unitarios</h3>
+<p>Un operador \(U:H\to H\) es unitario si es biyectivo y</p>
+<div class="formula-block">\[
+U^*=U^{-1}.
+\]</div>
+<p>Equivalentemente,</p>
+<div class="formula-block">\[
+U^*U=UU^*=I.
+\]</div>
+<p>Los unitarios conservan producto escalar y norma:</p>
+<div class="formula-block">\[
+\langle Ux,Uy\rangle=\langle x,y\rangle,\qquad \|Ux\|=\|x\|.
+\]</div>
+<p>Esto los convierte en la versión compleja y abstracta de las rotaciones y reflexiones ortogonales. En \(\mathbb{R}^n\), las matrices ortogonales cumplen \(A^TA=I\). En \(\mathbb{C}^n\), las unitarias cumplen \(A^*A=I\).</p>
+<p>Ejemplo: \(U:\mathbb{C}\to\mathbb{C}\), \(Uz=e^{it}z\), con \(t\in\mathbb{R}\), es unitario. Multiplica por un número de módulo \(1\), por lo que no cambia longitudes.</p>
+<p>Ejemplo en \(\ell^2\): el desplazamiento bilateral en sucesiones indexadas por \(\mathbb{Z}\),</p>
+<div class="formula-block">\[
+(Ux)_n=x_{n-1},
+\]</div>
+<p>es unitario. En cambio, el desplazamiento unilateral a la derecha en \(\ell^2(\mathbb{N})\) conserva normas pero no es sobreyectivo: ninguna sucesión con primera componente no nula está en su imagen. Por tanto es isométrico, pero no unitario.</p>
+<h3 id="3-12-operadores-normales">3.12. Operadores normales</h3>
+<p>Un operador \(T:H\to H\) es normal si</p>
+<div class="formula-block">\[
+TT^*=T^*T.
+\]</div>
+<p>Todo operador autoadjunto es normal, porque si \(T^*=T\), entonces \(TT^*=T^2=T^*T\). Todo unitario también es normal, porque \(T^*=T^{-1}\).</p>
+<p>La normalidad es una condición de compatibilidad entre un operador y su adjunto. En dimensión finita, las matrices normales son precisamente las que admiten una buena diagonalización unitaria. Para el nivel operativo de este tema, basta distinguir:</p>
+<div class="formula-block">\[
+\text{autoadjunto}\Rightarrow\text{normal},\qquad
+\text{unitario}\Rightarrow\text{normal},
+\]</div>
+<p>pero normal no implica autoadjunto ni unitario.</p>
+<p>Ejemplo: \(T=2iI\) en un espacio complejo es normal, porque conmuta con su adjunto, pero no es autoadjunto ni unitario: su adjunto es \(-2iI\), distinto de \(2iI\), y su norma es \(2\), no \(1\).</p>
+<h3 id="3-13-autovalores-de-operadores">3.13. Autovalores de operadores</h3>
+<p>Un número \(\lambda\) es autovalor de \(T\) si existe \(x\neq0\) tal que</p>
+<div class="formula-block">\[
+Tx=\lambda x.
+\]</div>
+<p>El conjunto de vectores propios asociados, junto con el cero, es</p>
+<div class="formula-block">\[
+E_\lambda=\ker(T-\lambda I).
+\]</div>
+<p>En dimensión finita se calcula resolviendo \(\det(A-\lambda I)=0\). En dimensión infinita, puede haber operadores sin autovalores, o con comportamiento espectral más rico. Para T11 basta dominar el espectro puntual, es decir, los autovalores.</p>
+<p>Ejemplo: en \(\ell^2\), el operador diagonal</p>
+<div class="formula-block">\[
+T(x_1,x_2,x_3,\ldots)=\left(x_1,\frac{x_2}{2},\frac{x_3}{3},\ldots\right)
+\]</div>
+<p>tiene autovalores \(1,1/2,1/3,\ldots\), con autovectores los vectores canónicos \(e_n\). Cada \(e_n\) conserva su dirección y solo cambia de escala.</p>
+<p>En operadores autoadjuntos, los autovalores son reales. Si \(Tx=\lambda x\), entonces</p>
+<div class="formula-block">\[
+\lambda\|x\|^2=\langle Tx,x\rangle=\langle x,Tx\rangle=\overline{\lambda}\|x\|^2,
+\]</div>
+<p>luego \(\lambda=\overline{\lambda}\). Además, si \(Tx=\lambda x\) y \(Ty=\mu y\) con \(\lambda\neq\mu\), se obtiene \(\langle x,y\rangle=0\). Esta es la base matemática de la ortogonalidad de modos.</p>
+<h3 id="3-14-como-se-resuelven-problemas-tipo">3.14. Cómo se resuelven problemas tipo</h3>
+<p>Un problema estándar empieza pidiendo decidir si \(T\) es lineal. La respuesta no debe limitarse a “sí” o “no”: hay que verificar</p>
+<div class="formula-block">\[
+T(\alpha x+\beta y)=\alpha Tx+\beta Ty.
+\]</div>
+<p>Si falla, basta un contraejemplo.</p>
+<p>Si el problema pide acotación, se busca una desigualdad uniforme. Para demostrar que sí:</p>
+<div class="formula-block">\[
+\|Tx\|\leq C\|x\|.
+\]</div>
+<p>Para demostrar que no, se construye una sucesión \(x_n\) con norma controlada pero \(\|Tx_n\|\) no controlada.</p>
+<p>Si pide la norma, se dan dos pasos. Primero una cota superior:</p>
+<div class="formula-block">\[
+\|Tx\|\leq C\|x\|\Rightarrow \|T\|\leq C.
+\]</div>
+<p>Después una cota inferior, normalmente con un vector o sucesión concreta:</p>
+<div class="formula-block">\[
+\frac{\|Tx_0\|}{\|x_0\|}=C
+\]</div>
+<p>o aproximándose a \(C\). Sin esta segunda parte, la norma no está justificada.</p>
+<p>Si pide el adjunto, se parte de la identidad:</p>
+<div class="formula-block">\[
+\langle Tx,y\rangle=\langle x,T^*y\rangle.
+\]</div>
+<p>En matrices, esto suele acabar en \(A^*\). En operadores de multiplicación, el adjunto multiplica por el conjugado. En desplazamientos, el adjunto desplaza en sentido contrario, ajustando la componente perdida o añadida.</p>
+<p>Si pide clasificar como autoadjunto o unitario, no se decide por intuición geométrica, sino por condiciones:</p>
+<div class="formula-block">\[
+T=T^*,\qquad U^*=U^{-1}.
+\]</div>
+<p>En matrices:</p>
+<div class="formula-block">\[
+A=A^*,\qquad A^*A=AA^*=I.
+\]</div>
+      </div>
+    </section>
+    <section id="conceptos" class="page">
+      <header class="section-header">
+        <p class="section-kicker">04</p>
+        <h2>Conceptos clave</h2>
+      </header>
+      <div class="reading-block">
+<h3 id="operador">Operador.</h3>
+<p>Definición precisa: aplicación \(T:D(T)\subset X\to Y\), donde \(X,Y\) son espacios vectoriales, normados o de Hilbert. Explicación desarrollada: es una regla que transforma elementos de un espacio en elementos de otro. Puede estar definido en todo \(X\) o solo en un dominio \(D(T)\). Ejemplo: \(Tf=f'\) transforma funciones derivables en funciones. Relación con otros conceptos: necesita dominio, imagen, núcleo; si además es lineal, se estudia mediante estructura vectorial. Posible forma de preguntarlo en examen: “Indique dominio, imagen y núcleo del operador dado”.</p>
+<h3 id="operador-lineal">Operador lineal.</h3>
+<p>Definición precisa: \(T\) es lineal si \(T(\alpha x+\beta y)=\alpha Tx+\beta Ty\). Explicación desarrollada: respeta combinaciones lineales y permite aplicar superposición. Si se conoce sobre una base, se conoce en todo el espacio generado. Ejemplo: \(T(x,y)=(x-y,2x)\) es lineal. Relación con otros conceptos: todo estudio de acotación, adjunto y autovalores en este tema presupone linealidad. Posible forma de preguntarlo en examen: “Demuestre si la aplicación dada es lineal”.</p>
+<h3 id="dominio">Dominio \(D(T)\).</h3>
+<p>Definición precisa: conjunto de elementos sobre los que está definido \(T\). Explicación desarrollada: forma parte de la definición del operador; cambiar el dominio puede cambiar sus propiedades. Ejemplo: la derivada \(D\) puede tener dominio \(C^1[0,1]\), no \(C[0,1]\). Relación con otros conceptos: la acotación se comprueba para todos los elementos del dominio. Posible forma de preguntarlo en examen: “Determine si \(T:D(T)\subset L^2(\mathbb{R})\to L^2(\mathbb{R})\) está bien definido y si es acotado”.</p>
+<h3 id="nucleo">Núcleo.</h3>
+<p>Definición precisa: \(\ker T=\{x\in D(T):Tx=0\}\). Explicación desarrollada: mide qué información destruye el operador. Si el núcleo solo contiene el cero, \(T\) es inyectivo. Ejemplo: para \(T(x,y)=x\), \(\ker T=\{(0,y)\}\). Relación con otros conceptos: se usa para inversibilidad y autovalores, pues \(E_\lambda=\ker(T-\lambda I)\). Posible forma de preguntarlo en examen: “Calcule el núcleo y decida si el operador es inyectivo”.</p>
+<h3 id="imagen-o-rango">Imagen o rango.</h3>
+<p>Definición precisa: \(\operatorname{Im}T=\{Tx:x\in D(T)\}\). Explicación desarrollada: conjunto de valores alcanzables por el operador. Ejemplo: la proyección \(P(x,y)=(x,0)\) tiene imagen el eje \(x\). Relación con otros conceptos: sirve para estudiar sobreyectividad e inversa. Posible forma de preguntarlo en examen: “Calcule la imagen y su dimensión”.</p>
+<h3 id="operador-acotado">Operador acotado.</h3>
+<p>Definición precisa: \(T:X\to Y\) lineal es acotado si existe \(C\) tal que \(\|Tx\|_Y\leq C\|x\|_X\) para todo \(x\). Explicación desarrollada: un operador acotado no amplifica arbitrariamente vectores de norma pequeña. Ejemplo: \(Tf=xf\) en \(C[0,1]\) con norma supremo es acotado. Relación con otros conceptos: en operadores lineales equivale a continuidad. Posible forma de preguntarlo en examen: “Decida si \(T\) es acotado; en caso afirmativo, calcule o estime su norma”.</p>
+<h3 id="norma-de-operador">Norma de operador.</h3>
+<p>Definición precisa: \(\|T\|=\sup_{\|x\|=1}\|Tx\|\). Explicación desarrollada: es la mejor constante en la desigualdad de acotación. Ejemplo: para \(T(z_1,z_2)=(2z_1,z_2)\) en norma euclídea, \(\|T\|=2\). Relación con otros conceptos: permite cuantificar continuidad y estimar composiciones. Posible forma de preguntarlo en examen: “Calcule la norma del operador inducido por una matriz”.</p>
+<h3 id="continuidad">Continuidad.</h3>
+<p>Definición precisa: \(T\) es continuo si \(x_n\to x\) implica \(Tx_n\to Tx\). Explicación desarrollada: en operadores lineales entre espacios normados, se prueba mediante acotación. Ejemplo: toda matriz sobre \(\mathbb{C}^n\) define un operador continuo. Relación con otros conceptos: continuidad \(\Leftrightarrow\) acotación para operadores lineales. Posible forma de preguntarlo en examen: “Demuestre que la aplicación lineal inducida por \(A\) es continua”.</p>
+<h3 id="adjunto">Adjunto.</h3>
+<p>Definición precisa: si \(T:H_1\to H_2\) es acotado, \(T^*:H_2\to H_1\) satisface \(\langle Tx,y\rangle=\langle x,T^*y\rangle\). Explicación desarrollada: traslada la acción de \(T\) de una entrada del producto escalar a la otra. Ejemplo: si \(T(x)=Ax\), entonces \(T^*(y)=A^*y\). Relación con otros conceptos: define autoadjuntos, unitarios y normales. Posible forma de preguntarlo en examen: “Calcule el adjunto de \(T\)”.</p>
+<h3 id="autoadjunto">Autoadjunto.</h3>
+<p>Definición precisa: \(T=T^*\). Explicación desarrollada: generaliza matrices simétricas reales y hermíticas complejas. Ejemplo: \(A=\begin{pmatrix}1&i\\-i&2\end{pmatrix}\) es hermítica. Relación con otros conceptos: sus autovalores son reales y autovectores de autovalores distintos son ortogonales. Posible forma de preguntarlo en examen: “Compruebe si el operador es autoadjunto”.</p>
+<h3 id="unitario">Unitario.</h3>
+<p>Definición precisa: \(U\) es unitario si es biyectivo y \(U^*=U^{-1}\). Explicación desarrollada: conserva producto escalar y norma; representa rotaciones, cambios ortonormales o fases complejas. Ejemplo: \(Uz=e^{it}z\) en \(\mathbb{C}\). Relación con otros conceptos: todo unitario es normal y tiene norma \(1\) si el espacio no es trivial. Posible forma de preguntarlo en examen: “Demuestre que el operador es unitario para todo \(t\in\mathbb{R}\)”.</p>
+<h3 id="normal">Normal.</h3>
+<p>Definición precisa: \(T\) es normal si \(TT^*=T^*T\). Explicación desarrollada: exige compatibilidad entre \(T\) y su adjunto. Es más débil que ser autoadjunto o unitario. Ejemplo: \(2iI\) es normal, pero no autoadjunto ni unitario. Relación con otros conceptos: autoadjuntos y unitarios son casos particulares de normales. Posible forma de preguntarlo en examen: “Clasifique el operador como autoadjunto, unitario o normal”.</p>
+<h3 id="autovalor">Autovalor.</h3>
+<p>Definición precisa: \(\lambda\) es autovalor de \(T\) si existe \(x\neq0\) con \(Tx=\lambda x\). Explicación desarrollada: detecta direcciones invariantes salvo escala. Ejemplo: \(T e_n=\frac1n e_n\) tiene autovalores \(1/n\). Relación con otros conceptos: el autoespacio es \(\ker(T-\lambda I)\). Posible forma de preguntarlo en examen: “Determine el espectro puntual y una base de cada autoespacio”.</p>
+      </div>
+    </section>
+    <section id="relaciones" class="page">
+      <header class="section-header">
+        <p class="section-kicker">05</p>
+        <h2>Relaciones entre ideas</h2>
+      </header>
+      <div class="reading-block">
+<p>La cadena conceptual empieza con el espacio vectorial. Sin estructura vectorial no tiene sentido exigir linealidad. Una vez existe linealidad, aparecen núcleo e imagen como subespacios naturales. El núcleo mide pérdida de información; la imagen mide alcance. La inversibilidad depende primero de estas dos piezas algebraicas.</p>
+<p>La norma añade análisis. Un operador lineal puede estar perfectamente definido y aun así ser no acotado. La acotación introduce una restricción de estabilidad: el operador no puede transformar una sucesión de vectores pequeños o normalizados en una sucesión de imágenes arbitrariamente grandes. En espacios normados, la continuidad de un operador lineal no se estudia separada de la acotación; son dos caras de la misma propiedad.</p>
+<p>El producto escalar añade geometría. Con él se definen ortogonalidad, proyección y adjunto. El adjunto es el puente entre la acción algebraica de \(T\) y la geometría del producto escalar. En dimensión finita, este puente se ve como la traspuesta conjugada; en espacios de Hilbert, se mantiene mediante la identidad \(\langle Tx,y\rangle=\langle x,T^*y\rangle\).</p>
+<p>Los operadores autoadjuntos y unitarios son dos formas distintas de compatibilidad con el producto escalar. El autoadjunto satisface \(T=T^*\), por lo que se comporta como una matriz hermítica. El unitario satisface \(U^*=U^{-1}\), por lo que conserva norma y producto escalar. El primero está vinculado a valores reales y ortogonalidad de autovectores; el segundo a cambios de base ortonormales, simetrías e invariancia de longitudes.</p>
+<p>La normalidad se sitúa por encima como clase más amplia: \(TT^*=T^*T\). Todo autoadjunto es normal y todo unitario es normal, pero no al revés. Esta jerarquía es importante porque evita confundir condiciones. Ser normal no significa conservar norma; ser unitario no significa ser autoadjunto; ser autoadjunto no significa ser inversible.</p>
+<p>Los autovalores conectan el capítulo con el tema siguiente de espectro. En dimensión finita, hablar de autovalores casi agota el análisis espectral. En dimensión infinita, los autovalores son solo una parte del espectro. Por eso en T11 se debe dominar el cálculo de \(Tx=\lambda x\), mientras que el espectro completo requiere herramientas adicionales.</p>
+      </div>
+    </section>
+    <section id="errores" class="page">
+      <header class="section-header">
+        <p class="section-kicker">06</p>
+        <h2>Errores habituales</h2>
+      </header>
+      <div class="reading-block">
+<h3 id="error-identificar-operador-con-matriz">Error: identificar operador con matriz.</h3>
+<p>Por qué está mal: una matriz representa un operador solo después de elegir bases y en dimensión finita. En espacios de funciones hay operadores sin representación matricial finita. Corrección: decir que una matriz es un caso particular o una representación de un operador lineal. Ejemplo incorrecto: “Todo operador es una matriz”. Ejemplo correcto: “En dimensión finita, fijadas bases, todo operador lineal se representa por una matriz”.</p>
+<h3 id="error-olvidar-comprobar-el-dominio">Error: olvidar comprobar el dominio.</h3>
+<p>Por qué está mal: la derivada, ciertos operadores de multiplicación y muchos operadores en \(L^2\) no están definidos sobre todo el espacio. Corrección: escribir siempre \(T:D(T)\subset X\to Y\) cuando el dominio no sea obvio. Ejemplo incorrecto: “\(Df=f'\) es un operador en \(C[0,1]\)”. Ejemplo correcto: “\(Df=f'\) tiene dominio \(C^1[0,1]\) si la imagen se toma en \(C[0,1]\)”.</p>
+<h3 id="error-pensar-que-lineal-significa-grafica-recta">Error: pensar que lineal significa “gráfica recta”.</h3>
+<p>Por qué está mal: \(f(x)=mx+b\) no es lineal como aplicación vectorial si \(b\neq0\), porque no lleva \(0\) a \(0\). Corrección: usar la definición \(T(\alpha x+\beta y)=\alpha Tx+\beta Ty\). Ejemplo incorrecto: “\(T(x)=2x+1\) es lineal”. Ejemplo correcto: “\(T(x)=2x+1\) no es lineal porque \(T(0)=1\neq0\)”.</p>
+<h3 id="error-probar-acotacion-con-una-constante-que-depende-de">Error: probar acotación con una constante que depende de \(x\).</h3>
+<p>Por qué está mal: la constante debe ser uniforme para todos los vectores del dominio. Corrección: obtener una cota \(C\) fija. Ejemplo incorrecto: “\(\|Tx\|\leq C_x\|x\|\), luego \(T\) es acotado”. Ejemplo correcto: “\(\|Tx\|\leq 3\|x\|\) para todo \(x\), luego \(T\) es acotado”.</p>
+<h3 id="error-dar-solo-una-cota-superior-y-afirmar-que-es-la-norma">Error: dar solo una cota superior y afirmar que es la norma.</h3>
+<p>Por qué está mal: una cota superior prueba \(\|T\|\leq C\), pero no que \(C\) sea la menor constante. Corrección: añadir un vector o sucesión que alcance o aproxime la cota. Ejemplo incorrecto: “\(\|Tx\|\leq2\|x\|\), luego \(\|T\|=2\)”. Ejemplo correcto: “\(\|Tx\|\leq2\|x\|\) y para \(x=e_1\) se cumple \(\|Te_1\|=2\), luego \(\|T\|=2\)”.</p>
+<h3 id="error-confundir-acotado-con-la-imagen-de-cada-vector-es-finita">Error: confundir acotado con “la imagen de cada vector es finita”.</h3>
+<p>Por qué está mal: todo vector concreto puede tener imagen finita y el operador no ser acotado. Corrección: comprobar el cociente \(\|Tx\|/\|x\|\). Ejemplo incorrecto: “\(Df=f'\) es acotado porque \(f'\) existe”. Ejemplo correcto: “Con \(\|f\|_\infty\), \(D\) no es acotado porque \(f_n=\sin(nx)\) tiene \(\|f_n\|_\infty=1\) y \(\|Df_n\|_\infty=n\)”.</p>
+<h3 id="error-calcular-el-adjunto-como-traspuesta-sin-conjugar">Error: calcular el adjunto como traspuesta sin conjugar.</h3>
+<p>Por qué está mal: en espacios complejos el adjunto matricial es la traspuesta conjugada. Corrección: usar \(A^*=\overline{A}^{\,T}\). Ejemplo incorrecto: para \(A=(i)\), “\(A^*=i\)”. Ejemplo correcto: para \(A=(i)\), “\(A^*=-i\)”.</p>
+<h3 id="error-creer-que-una-isometria-siempre-es-unitaria">Error: creer que una isometría siempre es unitaria.</h3>
+<p>Por qué está mal: un operador unitario debe ser además sobreyectivo. Corrección: verificar conservación de norma y sobreyectividad, o directamente \(U^*=U^{-1}\). Ejemplo incorrecto: “El shift unilateral derecho en \(\ell^2\) es unitario porque conserva la norma”. Ejemplo correcto: “Es isométrico, pero no unitario porque no es sobreyectivo”.</p>
+<h3 id="error-confundir-autoadjunto-con-normal">Error: confundir autoadjunto con normal.</h3>
+<p>Por qué está mal: autoadjunto implica normal, pero la implicación inversa no vale. Corrección: verificar la condición exacta: \(T=T^*\) para autoadjunto, \(TT^*=T^*T\) para normal. Ejemplo incorrecto: “\(2iI\) es normal, luego es autoadjunto”. Ejemplo correcto: “\(2iI\) es normal, pero no autoadjunto porque \((2iI)^*=-2iI\)”.</p>
+<h3 id="error-olvidar-que-el-vector-propio-debe-ser-no-nulo">Error: olvidar que el vector propio debe ser no nulo.</h3>
+<p>Por qué está mal: \(T0=\lambda0\) para cualquier \(\lambda\), lo que haría absurda la definición. Corrección: exigir siempre \(x\neq0\). Ejemplo incorrecto: “Como \(T0=5\cdot0\), \(5\) es autovalor”. Ejemplo correcto: “\(\lambda\) es autovalor solo si existe \(x\neq0\) con \(Tx=\lambda x\)”.</p>
+      </div>
+    </section>
+    <section id="preguntas" class="page">
+      <header class="section-header">
+        <p class="section-kicker">07</p>
+        <h2>Preguntas orientadas a examen</h2>
+      </header>
+      <div class="reading-block">
+<h3 id="10-preguntas-faciles">10 preguntas fáciles</h3>
+<p>F1. Defina operador lineal entre espacios vectoriales. F2. Sea \(T(x,y)=(x+y,2x)\). ¿Es lineal? F3. Defina núcleo e imagen de un operador lineal. F4. Calcule \(\ker T\) para \(T(x,y,z)=(x,z)\). F5. ¿Qué significa que un operador lineal sea acotado? F6. Escriba la fórmula de la norma de un operador. F7. ¿Qué relación hay entre acotación y continuidad para operadores lineales? F8. Defina el adjunto \(T^*\) de un operador acotado entre espacios de Hilbert. F9. ¿Cuándo una matriz compleja define un operador autoadjunto en \(\mathbb{C}^n\)? F10. ¿Cuándo un operador es unitario?</p>
+<h3 id="10-preguntas-medias">10 preguntas medias</h3>
+<p>M1. Demuestre que \(T:C[0,1]\to C[0,1]\), \(Tf(x)=x f(x)\), es lineal y acotado con norma \(1\). M2. Demuestre que \(D:C^1[0,1]\to C[0,1]\), \(Df=f'\), no es acotado si en el dominio se usa \(\|f\|_\infty\). M3. Calcule la norma de \(T:\mathbb{C}^2\to\mathbb{C}^2\), \(T(z_1,z_2)=(3z_1,z_2)\), con norma euclídea. M4. Calcule el adjunto de \(A=\begin{pmatrix}1&i\\2&0\end{pmatrix}\). M5. Decida si \(A=\begin{pmatrix}2&i\\-i&4\end{pmatrix}\) es autoadjunta. M6. Decida si \(U=\begin{pmatrix}0&1\\1&0\end{pmatrix}\) es unitario en \(\mathbb{C}^2\). M7. Calcule los autovalores y autoespacios de \(T(x,y)=(2x,-y)\). M8. Sea \(T:\ell^2\to\ell^2\), \(T(x_1,x_2,\ldots)=(0,x_1,x_2,\ldots)\). Calcule \(\|T\|\). M9. Para el operador anterior, calcule formalmente su adjunto. M10. Demuestre que si \(T\) es unitario, entonces \(\|Tx\|=\|x\|\).</p>
+<h3 id="5-preguntas-dificiles">5 preguntas difíciles</h3>
+<p>D1. Sea \(T:L^2(0,1)\to L^2(0,1)\), \(Tf(x)=x f(x)\). Demuestre que \(T\) es acotado y calcule su norma. D2. Sea \(T:L^2(\mathbb{R})\supset D(T)\to L^2(\mathbb{R})\), \(Tf(x)=e^x f(x)\), con \(D(T)\) las funciones de soporte compacto. Decida si es acotado en su dominio con la norma de \(L^2\). D3. Sea \(A=\begin{pmatrix}1&1\\0&1\end{pmatrix}\). Decida si el operador inducido es normal, autoadjunto o unitario en \(\mathbb{C}^2\). D4. Sea \(T\) autoadjunto. Demuestre que sus autovalores son reales. D5. Sea \(T\) autoadjunto. Demuestre que autovectores asociados a autovalores distintos son ortogonales.</p>
+<h3 id="5-preguntas-de-desarrollo-largo">5 preguntas de desarrollo largo</h3>
+<p>L1. Explique la diferencia entre operador lineal, operador acotado y operador continuo. Incluya ejemplos. L2. Desarrolle el concepto de adjunto y explique cómo se calcula en matrices, multiplicadores y desplazamientos. L3. Compare operadores autoadjuntos, unitarios y normales. L4. Explique por qué el dominio forma parte esencial de la definición de un operador. Use la derivada como ejemplo. L5. Explique cómo se aborda un problema de examen en el que se pide linealidad, acotación, norma y adjunto.</p>
+<h3 id="5-preguntas-de-relacion-entre-conceptos">5 preguntas de relación entre conceptos</h3>
+<p>R1. Relacione núcleo e inversibilidad. R2. Relacione acotación y continuidad. R3. Relacione adjunto y producto escalar. R4. Relacione unitarios e isometrías. R5. Relacione autoadjuntos y autovalores reales.</p>
+      </div>
+    </section>
+    <section id="respuestas" class="page">
+      <header class="section-header">
+        <p class="section-kicker">08</p>
+        <h2>Respuestas modelo</h2>
+      </header>
+      <div class="reading-block">
+<h3 id="respuestas-faciles">Respuestas fáciles</h3>
+<p>F1. Un operador \(T:X\to Y\) entre espacios vectoriales es lineal si para todo \(x,y\in X\) y escalares \(\alpha,\beta\) se cumple</p>
+<div class="formula-block">\[
+T(\alpha x+\beta y)=\alpha Tx+\beta Ty.
+\]</div>
+<p>Equivale a preservar sumas y productos por escalares.</p>
+<p>F2. Sí. Si \(u=(x,y)\) y \(v=(a,b)\), entonces</p>
+<div class="formula-block">\[
+T(\alpha u+\beta v)=T(\alpha x+\beta a,\alpha y+\beta b)
+=(\alpha x+\beta a+\alpha y+\beta b,2\alpha x+2\beta a),
+\]</div>
+<p>que coincide con \(\alpha T(u)+\beta T(v)\).</p>
+<p>F3. El núcleo es \(\ker T=\{x:Tx=0\}\). La imagen es \(\operatorname{Im}T=\{Tx:x\in D(T)\}\). Si \(T\) es lineal, ambos son subespacios: el núcleo del dominio y la imagen del codominio.</p>
+<p>F4. \(T(x,y,z)=(x,z)\). Para pertenecer al núcleo debe cumplirse \(x=0\) y \(z=0\). Por tanto</p>
+<div class="formula-block">\[
+\ker T=\{(0,y,0):y\in\mathbb{R}\}.
+\]</div>
+<p>F5. Significa que existe \(C\geq0\) tal que</p>
+<div class="formula-block">\[
+\|Tx\|\leq C\|x\|
+\]</div>
+<p>para todo \(x\) del dominio. La constante debe ser uniforme.</p>
+<p>F6. La norma del operador es</p>
+<div class="formula-block">\[
+\|T\|=\sup_{x\neq0}\frac{\|Tx\|}{\|x\|}=\sup_{\|x\|=1}\|Tx\|.
+\]</div>
+<p>Es la menor constante válida en la desigualdad de acotación.</p>
+<p>F7. Para operadores lineales entre espacios normados, ser acotado equivale a ser continuo. La implicación acotado \(\Rightarrow\) continuo se ve con</p>
+<div class="formula-block">\[
+\|Tx-Ty\|\leq C\|x-y\|.
+\]</div>
+<p>F8. Si \(T:H_1\to H_2\) es acotado entre Hilbert, su adjunto \(T^*:H_2\to H_1\) es el operador que cumple</p>
+<div class="formula-block">\[
+\langle Tx,y\rangle_{H_2}=\langle x,T^*y\rangle_{H_1}
+\]</div>
+<p>para todo \(x\in H_1\), \(y\in H_2\).</p>
+<p>F9. Una matriz compleja \(A\) define un operador autoadjunto en \(\mathbb{C}^n\) con el producto escalar usual si</p>
+<div class="formula-block">\[
+A^*=A,
+\]</div>
+<p>es decir, si es hermítica.</p>
+<p>F10. Un operador \(U:H\to H\) es unitario si es biyectivo y</p>
+<div class="formula-block">\[
+U^*=U^{-1}.
+\]</div>
+<p>Equivalentemente, \(U^*U=UU^*=I\).</p>
+<h3 id="respuestas-medias">Respuestas medias</h3>
+<p>M1. La linealidad es inmediata:</p>
+<div class="formula-block">\[
+T(\alpha f+\beta g)(x)=x(\alpha f(x)+\beta g(x))=\alpha Tf(x)+\beta Tg(x).
+\]</div>
+<p>Además,</p>
+<div class="formula-block">\[
+\|Tf\|_\infty=\sup_{x\in[0,1]}|x f(x)|\leq\|f\|_\infty.
+\]</div>
+<p>Luego \(\|T\|\leq1\). Tomando \(f=1\), \(\|Tf\|_\infty=1=\|f\|_\infty\). Por tanto \(\|T\|=1\).</p>
+<p>M2. Tome \(f_n(x)=\sin(nx)\). Entonces \(\|f_n\|_\infty=1\), pero</p>
+<div class="formula-block">\[
+Df_n(x)=n\cos(nx),\qquad \|Df_n\|_\infty=n.
+\]</div>
+<p>Si \(D\) fuese acotado, existiría \(C\) con \(n\leq C\) para todo \(n\), imposible. Luego no es acotado.</p>
+<p>M3. Se tiene</p>
+<div class="formula-block">\[
+\|Tz\|^2=9|z_1|^2+|z_2|^2\leq9(|z_1|^2+|z_2|^2)=9\|z\|^2.
+\]</div>
+<p>Así \(\|T\|\leq3\). Para \(z=(1,0)\), \(\|Tz\|=3\|z\|\). Por tanto \(\|T\|=3\).</p>
+<p>M4. El adjunto matricial es la traspuesta conjugada:</p>
+<div class="formula-block">\[
+A^*=\overline{A}^{\,T}
+=\begin{pmatrix}1&2\\-i&0\end{pmatrix}.
+\]</div>
+<p>M5. Sí. La traspuesta conjugada de</p>
+<div class="formula-block">\[
+A=\begin{pmatrix}2&i\\-i&4\end{pmatrix}
+\]</div>
+<p>es la misma matriz. Por tanto el operador inducido es autoadjunto.</p>
+<p>M6. Sí. \(U^*=U^T=U\), y</p>
+<div class="formula-block">\[
+U^*U=U^2=I.
+\]</div>
+<p>Luego es unitario. Además intercambia las dos coordenadas, conservando la norma euclídea.</p>
+<p>M7. La matriz es diagonal:</p>
+<div class="formula-block">\[
+A=\begin{pmatrix}2&0\\0&-1\end{pmatrix}.
+\]</div>
+<p>Los autovalores son \(2\) y \(-1\). Para \(\lambda=2\), el autoespacio es \(\operatorname{span}\{(1,0)\}\). Para \(\lambda=-1\), es \(\operatorname{span}\{(0,1)\}\).</p>
+<p>M8. El desplazamiento derecho cumple</p>
+<div class="formula-block">\[
+\|Tx\|_{\ell^2}^2=|0|^2+|x_1|^2+|x_2|^2+\cdots=\|x\|_{\ell^2}^2.
+\]</div>
+<p>Luego \(\|T\|=1\), siempre que el espacio no sea trivial.</p>
+<p>M9. Si \(T(x_1,x_2,\ldots)=(0,x_1,x_2,\ldots)\), entonces</p>
+<div class="formula-block">\[
+T^*(y_1,y_2,y_3,\ldots)=(y_2,y_3,y_4,\ldots).
+\]</div>
+<p>Se comprueba comparando</p>
+<div class="formula-block">\[
+\langle Tx,y\rangle=\sum_{n\geq1}(Tx)_n\overline{y_n}
+=\sum_{n\geq1}x_n\overline{y_{n+1}}
+=\langle x,T^*y\rangle.
+\]</div>
+<p>M10. Si \(T\) es unitario, \(T^*T=I\). Entonces</p>
+<div class="formula-block">\[
+\|Tx\|^2=\langle Tx,Tx\rangle=\langle x,T^*Tx\rangle=\langle x,x\rangle=\|x\|^2.
+\]</div>
+<p>Por tanto \(\|Tx\|=\|x\|\).</p>
+<h3 id="respuestas-dificiles">Respuestas difíciles</h3>
+<p>D1. Para \(Tf(x)=x f(x)\),</p>
+<div class="formula-block">\[
+\|Tf\|_2^2=\int_0^1 x^2|f(x)|^2\,dx\leq \int_0^1 |f(x)|^2\,dx=\|f\|_2^2.
+\]</div>
+<p>Luego \(\|T\|\leq1\). Para ver que la norma es \(1\), tome funciones \(f_n\) normalizadas concentradas cerca de \(x=1\), por ejemplo en \([1-1/n,1]\). En ese intervalo \(x\) se aproxima a \(1\), de modo que \(\|Tf_n\|_2/\|f_n\|_2\to1\). Por tanto \(\|T\|=1\).</p>
+<p>D2. No es acotado. Para cada \(n\), tome \(f_n\) con soporte en \([n,n+1]\) y \(\|f_n\|_2=1\). Entonces</p>
+<div class="formula-block">\[
+\|Tf_n\|_2^2=\int_n^{n+1} e^{2x}|f_n(x)|^2\,dx\geq e^{2n}\int_n^{n+1}|f_n(x)|^2\,dx=e^{2n}.
+\]</div>
+<p>Así \(\|Tf_n\|_2\geq e^n\), que no está acotado. No existe constante \(C\) uniforme.</p>
+<p>D3. Se tiene</p>
+<div class="formula-block">\[
+A=\begin{pmatrix}1&1\\0&1\end{pmatrix},\qquad
+A^*=\begin{pmatrix}1&0\\1&1\end{pmatrix}.
+\]</div>
+<p>No es autoadjunto porque \(A\neq A^*\). No es unitario porque \(A^*A\neq I\). Tampoco es normal:</p>
+<div class="formula-block">\[
+A^*A=\begin{pmatrix}1&1\\1&2\end{pmatrix},\qquad
+AA^*=\begin{pmatrix}2&1\\1&1\end{pmatrix},
+\]</div>
+<p>que no coinciden.</p>
+<p>D4. Sea \(Tx=\lambda x\), con \(x\neq0\), y \(T=T^*\). Entonces</p>
+<div class="formula-block">\[
+\lambda\|x\|^2=\langle \lambda x,x\rangle=\langle Tx,x\rangle.
+\]</div>
+<p>Como \(T\) es autoadjunto,</p>
+<div class="formula-block">\[
+\langle Tx,x\rangle=\langle x,Tx\rangle=\langle x,\lambda x\rangle=\overline{\lambda}\|x\|^2
+\]</div>
+<p>según la convención usual. Como \(\|x\|^2\neq0\), resulta \(\lambda=\overline{\lambda}\). Luego \(\lambda\in\mathbb{R}\).</p>
+<p>D5. Sean \(Tx=\lambda x\), \(Ty=\mu y\), con \(\lambda\neq\mu\), y \(T=T^*\). Entonces</p>
+<div class="formula-block">\[
+\lambda\langle x,y\rangle=\langle Tx,y\rangle=\langle x,Ty\rangle=\overline{\mu}\langle x,y\rangle.
+\]</div>
+<p>Como los autovalores de un autoadjunto son reales, \(\overline{\mu}=\mu\). Así</p>
+<div class="formula-block">\[
+(\lambda-\mu)\langle x,y\rangle=0.
+\]</div>
+<p>Como \(\lambda\neq\mu\), se concluye \(\langle x,y\rangle=0\). Son ortogonales.</p>
+<h3 id="respuestas-de-desarrollo-largo">Respuestas de desarrollo largo</h3>
+<p>L1. Un operador lineal es una aplicación que respeta combinaciones lineales. Esta es una propiedad algebraica. Por ejemplo, \(Tf=f'\) es lineal porque la derivada de una suma es la suma de derivadas y las constantes salen fuera. Un operador acotado es un operador lineal que además satisface una estimación de tamaño: \(\|Tx\|\leq C\|x\|\). Esta ya es una propiedad analítica porque depende de normas. Un operador continuo es aquel que preserva límites. Para operadores lineales entre espacios normados, acotado y continuo son equivalentes. Así, una matriz en \(\mathbb{C}^n\) es lineal y continua; la derivada con norma supremo en el dominio puede ser lineal pero no acotada.</p>
+<p>L2. El adjunto de \(T\) se define mediante el producto escalar:</p>
+<div class="formula-block">\[
+\langle Tx,y\rangle=\langle x,T^*y\rangle.
+\]</div>
+<p>Su función es trasladar \(T\) de una entrada a otra del producto escalar. En matrices, si \(T(x)=Ax\), entonces \(T^*(y)=A^*y\), donde \(A^*\) es la traspuesta conjugada. Para multiplicadores \(Tf=mf\) en \(L^2\), el adjunto es \(T^*g=\overline m g\). Para el shift derecho en \(\ell^2\), el adjunto es el shift izquierdo. En todos los casos, el cálculo correcto consiste en escribir \(\langle Tx,y\rangle\) y reorganizarlo hasta identificar \(T^*y\).</p>
+<p>L3. Un operador autoadjunto cumple \(T=T^*\). Es la generalización de una matriz hermítica y tiene propiedades espectrales favorables: autovalores reales y ortogonalidad de autovectores asociados a autovalores distintos. Un operador unitario cumple \(U^*=U^{-1}\); conserva norma y producto escalar, por lo que representa simetrías o cambios ortonormales. Un operador normal cumple \(TT^*=T^*T\). Todo autoadjunto y todo unitario es normal, pero un normal no tiene por qué ser ninguna de las dos cosas. La diferencia esencial es la condición: igualdad con el adjunto, inversa igual al adjunto o conmutación con el adjunto.</p>
+<p>L4. El dominio forma parte del operador porque determina qué elementos pueden ser transformados y bajo qué normas se estudian. La derivada ilustra bien el problema. Si \(Df=f'\), no tiene sentido definir \(D\) sobre todo \(C[0,1]\), porque muchas funciones continuas no son derivables. Puede definirse sobre \(C^1[0,1]\). Además, con la norma \(\|f\|_{C^1}=\|f\|_\infty+\|f'\|_\infty\), \(D\) es acotado hacia \(C[0,1]\); pero si en el dominio se mide solo \(\|f\|_\infty\), no es acotado. Por tanto, la misma fórmula \(f\mapsto f'\) da lugar a comportamientos distintos según dominio y norma.</p>
+<p>L5. El procedimiento estándar es ordenado. Primero se comprueba linealidad con \(T(\alpha x+\beta y)\). Después se estudia si está bien definido: si \(x\) pertenece al dominio, debe ocurrir que \(Tx\) pertenezca al codominio. Luego se prueba acotación con una desigualdad \(\|Tx\|\leq C\|x\|\), o se refuta con una sucesión normalizada que haga crecer \(\|Tx_n\|\). Si se pide norma, se da una cota superior y una cota inferior que la iguale o aproxime. Si se pide adjunto, se escribe \(\langle Tx,y\rangle\) y se transforma hasta \(\langle x,T^*y\rangle\). Finalmente, si se pide clasificar, se comprueban literalmente \(T=T^*\), \(T^*=T^{-1}\) o \(TT^*=T^*T\).</p>
+<h3 id="respuestas-de-relacion-entre-conceptos">Respuestas de relación entre conceptos</h3>
+<p>R1. Un operador lineal es inyectivo si y solo si su núcleo es \(\{0\}\). Si el núcleo contiene un vector no nulo, entonces dos vectores distintos tienen la misma imagen: \(T0=Tv=0\). Si el núcleo es trivial, \(Tx=Ty\) implica \(T(x-y)=0\), luego \(x-y=0\). Por tanto puede definirse \(T^{-1}\) sobre la imagen.</p>
+<p>R2. Para operadores lineales entre espacios normados, acotación y continuidad son equivalentes. Si \(\|Tx\|\leq C\|x\|\), entonces</p>
+<div class="formula-block">\[
+\|Tx-Ty\|\leq C\|x-y\|,
+\]</div>
+<p>lo que da continuidad. La linealidad permite que basta estudiar continuidad en \(0\). Sin linealidad, esta equivalencia no vale en general.</p>
+<p>R3. El adjunto existe para expresar la acción del operador dentro del producto escalar. La identidad</p>
+<div class="formula-block">\[
+\langle Tx,y\rangle=\langle x,T^*y\rangle
+\]</div>
+<p>dice que aplicar \(T\) al primer vector equivale a aplicar \(T^*\) al segundo. Por eso el adjunto depende del producto escalar escogido.</p>
+<p>R4. Todo unitario es isometría porque conserva la norma. Sin embargo, una isometría no siempre es unitaria: además debe ser sobreyectiva. El shift unilateral derecho en \(\ell^2\) conserva normas, pero no es sobreyectivo; por tanto no es unitario.</p>
+<p>R5. Si \(T\) es autoadjunto y \(Tx=\lambda x\), entonces comparar \(\langle Tx,x\rangle\) con \(\langle x,Tx\rangle\) obliga a \(\lambda=\overline{\lambda}\). Por eso los autovalores de operadores autoadjuntos son reales. Esta propiedad los hace especialmente importantes en problemas físicos y de modos.</p>
+      </div>
+    </section>
+    <section id="resumen" class="page">
+      <header class="section-header">
+        <p class="section-kicker">09</p>
+        <h2>Resumen final de repaso</h2>
+      </header>
+      <div class="reading-block">
+<p>Ideas principales: - Un operador es una aplicación \(T:D(T)\subset X\to Y\). - La linealidad exige conservar combinaciones lineales. - El dominio, núcleo e imagen forman parte esencial del análisis. - La acotación se expresa como \(\|Tx\|\leq C\|x\|\). - La norma del operador es la mejor constante de esa desigualdad. - En operadores lineales, acotación equivale a continuidad. - En espacios de Hilbert, el adjunto se define por \(\langle Tx,y\rangle=\langle x,T^*y\rangle\). - Autoadjunto: \(T=T^*\). - Unitario: \(T^*=T^{-1}\). - Normal: \(TT^*=T^*T\).</p>
+<p>Conceptos imprescindibles: - Dominio \(D(T)\). - Núcleo \(\ker T\). - Imagen \(\operatorname{Im}T\). - Operador lineal. - Operador acotado. - Norma de operador. - Adjunto. - Autoadjunto. - Unitario. - Normal. - Autovalor y autoespacio.</p>
+<p>Relaciones clave: - \(\ker T=\{0\}\) equivale a inyectividad. - Acotado equivale a continuo para operadores lineales. - El adjunto depende del producto escalar. - Toda matriz hermítica define un operador autoadjunto. - Todo unitario conserva norma. - Todo autoadjunto o unitario es normal. - Autovalores de autoadjuntos son reales. - Autovectores de autovalores distintos de un autoadjunto son ortogonales.</p>
+<p>Errores que evitar: - No comprobar el dominio. - Confundir operador con matriz. - Usar una constante de acotación dependiente del vector. - Dar una cota superior como si fuera la norma sin justificar igualdad. - Olvidar el conjugado al calcular \(A^*\). - Confundir isométrico con unitario. - Confundir normal con autoadjunto. - Usar el vector cero como autovector. - Decidir continuidad sin relacionarla con acotación. - No escribir la identidad del adjunto en problemas de cálculo de \(T^*\).</p>
+      </div>
+    </section>
+    <section id="checklist" class="page">
+      <header class="section-header">
+        <p class="section-kicker">10</p>
+        <h2>Checklist de dominio</h2>
+      </header>
+      <div class="reading-block">
+<p>- Si no puedes explicar qué es \(D(T)\), falta repasar dominio y operadores parcialmente definidos. - Si no puedes comprobar \(T(\alpha x+\beta y)=\alpha Tx+\beta Ty\), falta repasar linealidad. - Si confundes \(T(x)=mx+b\) con un operador lineal, revisar la condición \(T0=0\). - Si no puedes calcular \(\ker T\), falta repasar sistemas lineales homogéneos. - Si no puedes calcular \(\operatorname{Im}T\), falta repasar subespacios generados por columnas o imágenes de bases. - Si no puedes demostrar \(\|Tx\|\leq C\|x\|\), falta repasar normas y desigualdades. - Si confundes “imagen finita” con “operador acotado”, revisar la definición uniforme de acotación. - Si no sabes construir una sucesión para probar no acotación, revisar ejemplos con derivada o multiplicación por \(e^x\). - Si no puedes calcular \(\|T\|\), falta practicar el doble paso: cota superior y vector que alcanza o aproxima. - Si confundes continuidad con derivabilidad, revisar continuidad de operadores lineales. - Si no puedes escribir \(\langle Tx,y\rangle=\langle x,T^*y\rangle\), falta repasar producto escalar. - Si calculas \(A^*\) sin conjugar, revisar matrices complejas. - Si no puedes distinguir \(A^T\) de \(A^*\), revisar traspuesta y traspuesta conjugada. - Si confundes autoadjunto con unitario, revisar \(T=T^*\) frente a \(T^*=T^{-1}\). - Si llamas unitario a un operador que solo conserva norma, revisar sobreyectividad. - Si no puedes demostrar que un autoadjunto tiene autovalores reales, falta repasar el uso del producto escalar. - Si no puedes justificar ortogonalidad de autovectores, revisar la identidad de adjunto. - Si puedes decidir linealidad, acotación, norma y adjunto en ejemplos matriciales y funcionales sencillos, el capítulo está suficientemente asentado. - Si puedes resolver un operador de multiplicación en \(L^2\), el bloque de acotación está bien orientado. - Si puedes clasificar un operador como autoadjunto, unitario o normal justificando con fórmulas, el tema está dominado para examen.</p>
+      </div>
+    </section>
+    </main>
+  </div>
+</body>
+</html>
