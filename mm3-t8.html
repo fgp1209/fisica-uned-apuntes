@@ -1,0 +1,810 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="color-scheme" content="light dark" />
+  <title>MM3 — Tema 8: El problema de Sturm-Liouville</title>
+  <meta name="description" content="Guía de estudio de Métodos Matemáticos III sobre el problema de Sturm-Liouville, autovalores, autofunciones, ortogonalidad con peso y aplicaciones a EDP." />
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/icon-32.png" />
+  <link rel="icon" type="image/png" sizes="50x50" href="assets/icons/icon-50.png" />
+  <link rel="apple-touch-icon" sizes="100x100" href="assets/icons/icon-100.png" />
+  <link rel="stylesheet" href="assets/styles.css" />
+  <script>
+window.MathJax = { tex: { inlineMath: [['\\(', '\\)'], ['$', '$']], displayMath: [['\\[', '\\]']], processEscapes: true }, svg: { fontCache: 'global' }, options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] } };
+</script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+  <script defer src="assets/app.js"></script>
+</head>
+<body class="subject-mm1"><div class="wrap">
+<header class="cover"><a class="back-link" href="index.html">← Índice</a><p class="eyebrow">Métodos Matemáticos III</p><h1>El problema de Sturm-Liouville</h1><p class="subtitle">Tema 8 · Forma autoadjunta, autovalores, ortogonalidad con peso y series generalizadas</p><div class="lesson-meta"><span>Asignatura: MM3</span><span>Tema 8</span><span>Estado: completo</span><span>Enfoque: examen UNED</span></div></header>
+<div class="toolbar no-print" aria-label="Navegación del tema"><nav><a href="#mapa">Mapa</a><a href="#prerrequisitos">Prerrequisitos</a><a href="#idea-central">Idea</a><a href="#desarrollo">Desarrollo</a><a href="#conceptos">Conceptos</a><a href="#errores">Errores</a><a href="#preguntas">Preguntas</a><a href="#respuestas">Respuestas</a><a href="#resumen">Resumen</a><a href="#checklist">Checklist</a></nav><div class="toolbar-actions"><button class="btn secondary" onclick="document.querySelectorAll('details').forEach(d=>d.open=true)">Abrir todo</button><button class="btn secondary" onclick="document.querySelectorAll('details').forEach(d=>d.open=false)">Modo repaso</button><button class="btn" onclick="window.print()">Imprimir / PDF</button></div></div>
+<main><section id="mapa" class="page map-page"><header class="section-header"><p class="section-kicker">00</p><h2>Mapa conceptual</h2></header><div class="concept-map">
+          <a class="map-card" href="#desarrollo"><span>Forma S-L</span><small>\((p y’)’+qy+\lambda\sigma y=0\)</small></a>
+          <a class="map-card" href="#desarrollo"><span>Contorno</span><small>condiciones homogéneas y problema regular</small></a>
+          <a class="map-card" href="#desarrollo"><span>Autovalores</span><small>autofunciones, normalización y nodos</small></a>
+          <a class="map-card" href="#desarrollo"><span>Ortogonalidad</span><small>producto con peso y series generalizadas</small></a>
+          <a class="map-card" href="#desarrollo"><span>Signo</span><small>criterios sobre autovalores</small></a>
+          <a class="map-card" href="#desarrollo"><span>EDP</span><small>conexión con separación de variables</small></a>
+          <a class="map-card" href="#preguntas"><span>Examen</span><small>preguntas y respuestas modelo</small></a>
+        </div><div class="reading-block source-block"><p>Tema: MM3 T8 — El problema de Sturm-Liouville. Fuente accesible utilizada: material cargado de exámenes de Métodos Matemáticos III y el texto de Boas, donde aparece la forma Sturm-Liouville, la ortogonalidad con peso y su relación con ecuaciones de la física matemática. El capítulo de Haberman solicitado no aparece entre los ficheros accesibles; por tanto, esta guía no afirma reproducir el contenido específico de Haberman Ch. 5, sino que desarrolla el tema con el material cargado disponible.</p></div></section>
+    <section id="prerrequisitos" class="page">
+      <header class="section-header"><p class="section-kicker">01</p><h2>1. Prerrequisitos mínimos</h2></header>
+      <div class="card-grid">
+<article class="definition-card">
+<h3>Ecuaciones diferenciales lineales de segundo orden.</h3>
+<p>Una ecuación diferencial lineal de segundo orden tiene la forma general \(a_2(x)y''+a_1(x)y'+a_0(x)y=f(x)\), con la incógnita \(y(x)\). Es necesaria porque los problemas de Sturm-Liouville son precisamente problemas de autovalores asociados a ecuaciones lineales de segundo orden. Ejemplo mínimo: \(y''+\lambda y=0\), donde \(\lambda\) actúa como parámetro.</p>
+</article>
+<article class="definition-card">
+<h3>Condiciones de contorno.</h3>
+<p>Una condición de contorno fija información sobre la función o su derivada en los extremos del intervalo. Es necesaria porque, en Sturm-Liouville, los autovalores no vienen solo de la ecuación diferencial, sino de la ecuación junto con las condiciones de contorno. Ejemplo: \(y(0)=0\), \(y(L)=0\), o una condición mixta \(2y(1)-y'(1)=0\).</p>
+</article>
+<article class="definition-card">
+<h3>Problemas de autovalores.</h3>
+<p>Un autovalor es un valor del parámetro para el cual existe una solución no nula que satisface el problema completo. Es necesario porque Sturm-Liouville no pregunta por la solución general para cualquier \(\lambda\), sino por los valores de \(\lambda\) que permiten soluciones no triviales. Ejemplo: en \(y''+\lambda y=0\), \(y(0)=y(L)=0\), los autovalores positivos son \(\lambda_n=(n\pi/L)^2\).</p>
+</article>
+<article class="definition-card">
+<h3>Integración por partes.</h3>
+<p>La integración por partes permite trasladar derivadas entre funciones dentro de una integral. Es necesaria para demostrar la ortogonalidad de autofunciones. Ejemplo mínimo:</p>
+<div class="formula-block">\[
+\int_a^b u'v\,dx=[uv]_a^b-\int_a^b uv'\,dx.
+\]</div>
+</article>
+<article class="definition-card">
+<h3>Ortogonalidad de funciones.</h3>
+<p>Dos funciones son ortogonales en \((a,b)\) con peso \(w(x)\) si</p>
+<div class="formula-block">\[
+\int_a^b w(x)y_m(x)y_n(x)\,dx=0,\qquad m\neq n.
+\]</div>
+<p>Es necesaria porque las autofunciones de un problema regular de Sturm-Liouville forman familias ortogonales, lo que permite expandir funciones como series generalizadas de Fourier.</p>
+</article>
+<article class="definition-card">
+<h3>Separación de variables.</h3>
+<p>Es el método que busca soluciones de una EDP como producto de funciones de una sola variable, por ejemplo \(u(x,t)=X(x)T(t)\). Es necesario porque muchos problemas de calor, ondas y Laplace conducen en la variable espacial a un problema de Sturm-Liouville. Ejemplo: al separar la ecuación del calor con \(u(0,t)=u(L,t)=0\), aparece \(X''+\lambda X=0\), \(X(0)=X(L)=0\).</p>
+</article>
+<article class="definition-card">
+<h3>Funciones trigonométricas e hiperbólicas.</h3>
+<p>Al resolver \(y''+\lambda y=0\), el tipo de solución depende del signo de \(\lambda\): senos y cosenos si \(\lambda&gt;0\), funciones lineales si \(\lambda=0\), senos y cosenos hiperbólicos si \(\lambda&lt;0\). Es necesario porque muchos ejercicios de examen piden estudiar por separado los casos \(\lambda&gt;0\), \(\lambda=0\) y \(\lambda&lt;0\).</p>
+</article>
+<article class="definition-card">
+<h3>Forma autoadjunta.</h3>
+<p>Una ecuación está en forma autoadjunta cuando su parte diferencial principal aparece como \((p(x)y')'\). Es necesaria porque la teoría de Sturm-Liouville se formula en esa forma. Ejemplo:</p>
+<div class="formula-block">\[
+(1-x^2)y''-2xy'+\ell(\ell+1)y=0
+\]</div>
+<p>se reescribe como</p>
+<div class="formula-block">\[
+\big((1-x^2)y'\big)'+\ell(\ell+1)y=0.
+\]</div>
+</article>
+</div>
+    </section>
+    <section id="idea-central" class="page">
+      <header class="section-header"><p class="section-kicker">02</p><h2>2. Idea central del capítulo</h2></header>
+      <div class="reading-block">
+<p>El problema de Sturm-Liouville estudia ecuaciones diferenciales lineales de segundo orden con un parámetro \(\lambda\) y condiciones de contorno homogéneas. No se busca una solución cualquiera. Se buscan los valores especiales de \(\lambda\) para los que existe una solución no nula que respeta simultáneamente la ecuación y las condiciones de contorno. Esos valores se llaman autovalores y las soluciones correspondientes se llaman autofunciones.</p>
+<p>La forma central es</p>
+<div class="formula-block">\[
+(p(x)y')'+q(x)y+\lambda \sigma(x)y=0,\qquad a&lt;x&lt;b,
+\]</div>
+<p>junto con condiciones lineales homogéneas en los extremos, por ejemplo</p>
+<div class="formula-block">\[
+\beta_1y(a)+\beta_2y'(a)=0,\qquad
+\beta_3y(b)+\beta_4y'(b)=0.
+\]</div>
+<p>En algunos textos aparece con signos equivalentes, como</p>
+<div class="formula-block">\[
+-\big(p(x)y'\big)'-q(x)y=\lambda \sigma(x)y.
+\]</div>
+<p>Lo importante no es el signo elegido, sino identificar correctamente qué parte forma el operador, cuál es el peso y dónde aparece el parámetro espectral.</p>
+<p>El papel del capítulo dentro de Métodos Matemáticos III es conectar la resolución de EDP por separación de variables con una teoría general de autovalores. En la ecuación del calor, en la ecuación de ondas o en problemas de Laplace, la parte espacial suele dar una ecuación del tipo Sturm-Liouville. La teoría explica por qué aparecen modos discretos, por qué esos modos son ortogonales y por qué se pueden usar para desarrollar la condición inicial o de contorno en una serie.</p>
+<p>La consecuencia práctica para examen es clara: hay que saber reconocer la forma Sturm-Liouville, comprobar si el problema es regular, obtener autovalores y autofunciones en casos elementales, demostrar ortogonalidad y reescribir ecuaciones clásicas como Legendre, Chebyshev o Laguerre en forma autoadjunta. También hay que saber transformar una ecuación lineal no autoadjunta multiplicándola por un factor integrante.</p>
+</div>
+    </section>
+    <section id="desarrollo" class="page">
+      <header class="section-header"><p class="section-kicker">03</p><h2>3. Desarrollo completo del capítulo</h2></header>
+      <div class="reading-block">
+<h3>3.1. Del problema de contorno al problema de autovalores</h3>
+<p>Una ecuación diferencial ordinaria de segundo orden posee, en general, una familia de soluciones con dos constantes arbitrarias. Cuando se imponen dos condiciones de contorno homogéneas, esas constantes quedan restringidas. Para casi todos los valores de \(\lambda\), la única solución compatible con todo el problema es la trivial \(y\equiv0\). Los autovalores son precisamente los valores excepcionales para los que sobrevive una solución no trivial.</p>
+<p>El ejemplo más básico es</p>
+<div class="formula-block">\[
+y''+\lambda y=0,\qquad 0&lt;x&lt;L,\qquad y(0)=0,\quad y(L)=0.
+\]</div>
+<p>Si \(\lambda=\mu^2&gt;0\), la solución general es</p>
+<div class="formula-block">\[
+y(x)=A\cos(\mu x)+B\sin(\mu x).
+\]</div>
+<p>La condición \(y(0)=0\) fuerza \(A=0\). La condición \(y(L)=0\) exige \(B\sin(\mu L)=0\). Para que la solución no sea trivial, \(B\neq0\), luego \(\sin(\mu L)=0\), es decir \(\mu L=n\pi\). Así aparecen</p>
+<div class="formula-block">\[
+\lambda_n=\left(\frac{n\pi}{L}\right)^2,\qquad y_n(x)=\sin\left(\frac{n\pi x}{L}\right),\qquad n=1,2,\ldots
+\]</div>
+<p>El resultado importante no es solo la fórmula: es el mecanismo. Las condiciones de contorno seleccionan un conjunto discreto de valores permitidos del parámetro.</p>
+<h3>3.2. Forma Sturm-Liouville</h3>
+<p>La forma estándar usada en el tema es</p>
+<div class="formula-block">\[
+(p(x)y')'+q(x)y+\lambda \sigma(x)y=0.
+\]</div>
+<p>Aquí \(p(x)\) controla la parte diferencial autoadjunta, \(q(x)\) actúa como término de potencial o término de orden cero, \(\sigma(x)\) es la función peso y \(\lambda\) es el parámetro espectral.</p>
+<p>La parte \((p y')'\) es crucial. Al desarrollarla,</p>
+<div class="formula-block">\[
+(p y')'=p y''+p'y',
+\]</div>
+<p>se ve que el coeficiente de \(y'\) no es independiente: debe coincidir con \(p'\). Por eso no toda ecuación de segundo orden está ya en forma Sturm-Liouville. Una ecuación como</p>
+<div class="formula-block">\[
+y''+a(x)y'+[\lambda\beta(x)+r(x)]y=0
+\]</div>
+<p>no tiene, en general, la parte principal escrita como \((p y')'\). Para convertirla se multiplica por un factor \(H(x)\) tal que</p>
+<div class="formula-block">\[
+H'(x)=a(x)H(x).
+\]</div>
+<p>Entonces</p>
+<div class="formula-block">\[
+H(x)=C\exp\left(\int a(x)\,dx\right),
+\]</div>
+<p>y, tomando \(C=1\),</p>
+<div class="formula-block">\[
+H y''+H a y'=(H y')'.
+\]</div>
+<p>La ecuación queda</p>
+<div class="formula-block">\[
+(Hy')'+[\lambda H\beta(x)+Hr(x)]y=0.
+\]</div>
+<p>Por comparación con la forma estándar:</p>
+<div class="formula-block">\[
+p(x)=H(x),\qquad \sigma(x)=H(x)\beta(x),\qquad q(x)=H(x)r(x).
+\]</div>
+<p>Este procedimiento aparece en problemas de examen porque obliga a distinguir entre una ecuación lineal cualquiera y una ecuación autoadjunta.</p>
+<h3>3.3. Condiciones de contorno homogéneas</h3>
+<p>Las condiciones típicas son</p>
+<div class="formula-block">\[
+\beta_1y(a)+\beta_2y'(a)=0,\qquad
+\beta_3y(b)+\beta_4y'(b)=0.
+\]</div>
+<p>Son homogéneas porque el segundo miembro es cero. Esta homogeneidad es esencial para hablar de autovalores: si \(y\) es solución, cualquier múltiplo \(Cy\) también lo es. Por eso las autofunciones se determinan salvo constante multiplicativa.</p>
+<p>Casos importantes son:</p>
+<div class="formula-block">\[
+y(a)=0\quad \text{Dirichlet},
+\]</div>
+<div class="formula-block">\[
+y'(a)=0\quad \text{Neumann},
+\]</div>
+<div class="formula-block">\[
+\alpha y(a)+\beta y'(a)=0\quad \text{Robin o mixta}.
+\]</div>
+<p>En examen, una condición como \(2y(1)-y'(1)=0\) no debe tratarse como Dirichlet ni como Neumann. Es una condición mixta y puede alterar de forma decisiva los autovalores, incluso permitiendo autovalores negativos en algunos casos.</p>
+<h3>3.4. Problema regular de Sturm-Liouville</h3>
+<p>Un problema regular se plantea en un intervalo finito \([a,b]\), con coeficientes reales y suficientemente continuos, y con</p>
+<div class="formula-block">\[
+p(x)&gt;0,\qquad \sigma(x)&gt;0
+\]</div>
+<p>en el intervalo considerado. Las condiciones de contorno deben ser lineales, homogéneas y separadas en los extremos.</p>
+<p>La regularidad importa porque garantiza una estructura espectral ordenada: existe una sucesión infinita de autovalores reales que tiende a infinito y las autofunciones tienen propiedades de ortogonalidad y de nodos. En la versión usada en el material de examen, si se ordenan los autovalores</p>
+<div class="formula-block">\[
+\lambda_1&lt;\lambda_2&lt;\cdots,
+\]</div>
+<p>la autofunción asociada a \(\lambda_n\) tiene exactamente \(n-1\) ceros en el intervalo abierto \((a,b)\). Además, bajo hipótesis adicionales de signo sobre \(q\) y sobre los coeficientes de las condiciones de contorno, se puede excluir la presencia de autovalores negativos.</p>
+<p>No todo problema con una ecuación de Sturm-Liouville es regular. La ecuación de Legendre en \([-1,1]\),</p>
+<div class="formula-block">\[
+(1-x^2)y''-2xy'+\ell(\ell+1)y=0,
+\]</div>
+<p>se reescribe como</p>
+<div class="formula-block">\[
+\big((1-x^2)y'\big)'+\ell(\ell+1)y=0.
+\]</div>
+<p>Aquí \(p(x)=1-x^2\). Aunque \(p(x)&gt;0\) en \((-1,1)\), se anula en \(x=\pm1\). Por tanto, en el intervalo cerrado \([-1,1]\) no cumple la regularidad estricta \(p&gt;0\) en todo \([a,b]\). Es un ejemplo típico de ecuación en forma Sturm-Liouville pero no regular en el sentido regular estricto del examen.</p>
+<h3>3.5. Autovalores, autofunciones y normalización</h3>
+<p>Un autovalor \(\lambda_n\) es un valor del parámetro para el que existe una autofunción \(y_n\not\equiv0\). La función nula siempre satisface las condiciones homogéneas, pero no cuenta como autofunción. Este punto es una fuente frecuente de errores.</p>
+<p>Si \(y_n\) es autofunción, también lo es \(Cy_n\), con \(C\neq0\). Por eso, para fijar una representación única se suele normalizar:</p>
+<div class="formula-block">\[
+\int_a^b \sigma(x)y_n(x)^2\,dx=1.
+\]</div>
+<p>La normalización no cambia el autovalor ni la dirección funcional de la solución; solo fija la escala. En problemas de EDP, esta escala se absorbe en los coeficientes de la serie.</p>
+<h3>3.6. Ortogonalidad con peso</h3>
+<p>Sean \(y_m\) e \(y_n\) autofunciones asociadas a autovalores distintos \(\lambda_m\neq\lambda_n\):</p>
+<div class="formula-block">\[
+(p y_m')'+q y_m+\lambda_m\sigma y_m=0,
+\]</div>
+<div class="formula-block">\[
+(p y_n')'+q y_n+\lambda_n\sigma y_n=0.
+\]</div>
+<p>Multiplicamos la primera por \(y_n\), la segunda por \(y_m\), restamos e integramos:</p>
+<div class="formula-block">\[
+\int_a^b\left[y_n(p y_m')'-y_m(p y_n')'\right]dx
++(\lambda_m-\lambda_n)\int_a^b\sigma y_m y_n\,dx=0.
+\]</div>
+<p>La integral de la diferencia de derivadas se reduce al término de borde</p>
+<div class="formula-block">\[
+\left[p(x)(y_ny_m'-y_my_n')\right]_a^b.
+\]</div>
+<p>Para condiciones de contorno de Sturm-Liouville, ese término se anula. Queda</p>
+<div class="formula-block">\[
+(\lambda_m-\lambda_n)\int_a^b\sigma(x)y_m(x)y_n(x)\,dx=0.
+\]</div>
+<p>Como \(\lambda_m\neq\lambda_n\),</p>
+<div class="formula-block">\[
+\int_a^b\sigma(x)y_m(x)y_n(x)\,dx=0.
+\]</div>
+<p>Esta es la relación de ortogonalidad. El peso \(\sigma(x)\) no es un adorno: forma parte de la definición correcta del producto interno asociado al problema.</p>
+<h3>3.7. Nodos y orden de los autovalores</h3>
+<p>En un problema regular, las autofunciones se ordenan por el número de ceros interiores. La primera autofunción no tiene ceros dentro del intervalo; la segunda tiene uno; la tercera tiene dos; y así sucesivamente. Esta propiedad permite relacionar el índice \(n\) con la forma cualitativa del modo.</p>
+<p>En problemas de ondas, los nodos son puntos donde el modo espacial se anula. En problemas térmicos, los modos con mayor \(n\) suelen decaer más rápido porque sus autovalores son mayores. En examen, la propiedad de nodos puede aparecer como pregunta teórica o como herramienta para identificar si un autovalor corresponde al primer, segundo o tercer modo.</p>
+<h3>3.8. Signo de los autovalores</h3>
+<p>No siempre todos los autovalores son positivos. En problemas clásicos con \(y(0)=y(L)=0\), \(p&gt;0\), \(\sigma&gt;0\) y un signo favorable del término \(q\), suelen aparecer autovalores no negativos. Pero las condiciones de contorno mixtas pueden permitir autovalores negativos.</p>
+<p>Considérese</p>
+<div class="formula-block">\[
+\phi''+\lambda\phi=0,\qquad 0&lt;x&lt;1,
+\]</div>
+<div class="formula-block">\[
+\phi(0)=0,\qquad 2\phi(1)-\phi'(1)=0.
+\]</div>
+<p>Si \(\lambda=-\mu^2&lt;0\), entonces</p>
+<div class="formula-block">\[
+\phi(x)=A\sinh(\mu x)+B\cosh(\mu x).
+\]</div>
+<p>La condición \(\phi(0)=0\) implica \(B=0\). La condición en \(x=1\) da</p>
+<div class="formula-block">\[
+2\sinh\mu-\mu\cosh\mu=0,
+\]</div>
+<p>o equivalentemente</p>
+<div class="formula-block">\[
+\mu=2\tanh\mu.
+\]</div>
+<p>No hace falta resolverla exactamente para entender el fenómeno: basta estudiar gráficamente los cortes entre \(\mu\) y \(2\tanh\mu\). Este tipo de razonamiento aparece en exámenes y muestra que el signo de los autovalores no se decide por intuición, sino por las hipótesis del teorema y las condiciones de contorno.</p>
+<h3>3.9. Ecuaciones clásicas en forma Sturm-Liouville</h3>
+<p>La teoría no se limita a \(y''+\lambda y=0\). Muchas ecuaciones especiales de la física matemática se reescriben en forma Sturm-Liouville.</p>
+<p>La ecuación de Legendre:</p>
+<div class="formula-block">\[
+(1-x^2)y''-2xy'+\ell(\ell+1)y=0
+\]</div>
+<p>se convierte en</p>
+<div class="formula-block">\[
+\big((1-x^2)y'\big)'+\ell(\ell+1)y=0.
+\]</div>
+<p>Aquí \(p(x)=1-x^2\), \(q(x)=0\), \(\sigma(x)=1\), \(\lambda=\ell(\ell+1)\).</p>
+<p>La ecuación de Chebyshev:</p>
+<div class="formula-block">\[
+(1-x^2)y''-xy'+n^2y=0
+\]</div>
+<p>se divide por \(\sqrt{1-x^2}\), obteniendo</p>
+<div class="formula-block">\[
+\big(\sqrt{1-x^2}\,y'\big)'+\frac{n^2}{\sqrt{1-x^2}}y=0.
+\]</div>
+<p>Por tanto, \(p(x)=\sqrt{1-x^2}\), \(q(x)=0\), \(\sigma(x)=1/\sqrt{1-x^2}\), \(\lambda=n^2\). En \([-1,1]\) no es regular estricta porque el peso se hace singular en los extremos y \(p\) se anula.</p>
+<p>La ecuación de Laguerre:</p>
+<div class="formula-block">\[
+xy''+(1-x)y'+ny=0
+\]</div>
+<p>se multiplica por \(e^{-x}\):</p>
+<div class="formula-block">\[
+(xe^{-x}y')'+ne^{-x}y=0.
+\]</div>
+<p>Así, \(p(x)=xe^{-x}\), \(q(x)=0\), \(\sigma(x)=e^{-x}\), \(\lambda=n\). En el intervalo \([0,\infty)\) no es regular porque el intervalo no es finito y \(p(0)=0\).</p>
+<p>Estos ejemplos son importantes porque en examen no suele bastar con resolver una EDO. Se pide identificar \(p\), \(q\), \(\sigma\), \(\lambda\) y decidir si el problema es regular.</p>
+<h3>3.10. Conexión con EDP y series de Fourier generalizadas</h3>
+<p>En la ecuación del calor</p>
+<div class="formula-block">\[
+u_t=k u_{xx},
+\]</div>
+<p>con condiciones de contorno homogéneas, la separación \(u(x,t)=X(x)T(t)\) da una ecuación espacial:</p>
+<div class="formula-block">\[
+X''+\lambda X=0,
+\]</div>
+<p>junto con condiciones de contorno en \(X\). Los autovalores determinan las tasas de decaimiento temporal:</p>
+<div class="formula-block">\[
+T_n(t)=e^{-k\lambda_n t}.
+\]</div>
+<p>La solución se expresa como suma de modos:</p>
+<div class="formula-block">\[
+u(x,t)=\sum_{n=1}^\infty c_n X_n(x)e^{-k\lambda_n t}.
+\]</div>
+<p>Los coeficientes se obtienen proyectando la condición inicial sobre las autofunciones.</p>
+<p>En la ecuación de ondas,</p>
+<div class="formula-block">\[
+u_{tt}=c^2u_{xx},
+\]</div>
+<p>la misma parte espacial produce frecuencias modales. Si \(X_n\) satisface \(X_n''+\lambda_nX_n=0\), entonces la parte temporal contiene senos y cosenos con frecuencia proporcional a \(\sqrt{\lambda_n}\). Por eso los autovalores espaciales se interpretan como frecuencias o energías modales según el contexto físico.</p>
+<p>La teoría de Sturm-Liouville justifica que los modos no se mezclan: su ortogonalidad permite calcular cada coeficiente por separado. Este es el puente entre la EDO espectral y la solución de EDP por series.</p>
+</div>
+    </section>
+    <section id="conceptos" class="page">
+      <header class="section-header"><p class="section-kicker">04</p><h2>4. Conceptos clave</h2></header>
+      <div class="card-grid">
+<article class="definition-card">
+<h3>Problema de Sturm-Liouville.</h3>
+<p>Definición precisa: problema formado por una ecuación</p>
+<div class="formula-block">\[
+(p y')'+q y+\lambda\sigma y=0
+\]</div>
+<p>en un intervalo, más condiciones de contorno homogéneas. Explicación: la ecuación por sí sola no define el espectro; el espectro depende de la ecuación y de las condiciones de contorno. Ejemplo: \(y''+\lambda y=0\), \(y(0)=y(L)=0\). Relación: es un problema de autovalores para un operador diferencial. Forma de examen: “Reescriba la ecuación dada como un problema de Sturm-Liouville e identifique \(p,q,\sigma,\lambda\)”.</p>
+</article>
+<article class="definition-card">
+<h3>Forma autoadjunta.</h3>
+<p>Definición precisa: forma en la que el término diferencial principal aparece como \((p y')'\). Explicación: permite obtener identidades de integración por partes y ortogonalidad. Ejemplo: \((1-x^2)y''-2xy'=((1-x^2)y')'\). Relación: es la estructura que hace posible la teoría espectral. Forma de examen: “Explique por qué la ecuación dada no está en forma Sturm-Liouville y encuentre el factor integrante”.</p>
+</article>
+<article class="definition-card">
+<h3>Función \(p(x)\).</h3>
+<p>Definición precisa: coeficiente de la derivada dentro de \((p y')'\). Explicación: determina la parte principal del operador y debe ser positiva en problemas regulares. Ejemplo: en Legendre, \(p(x)=1-x^2\). Relación: su positividad influye en la regularidad. Forma de examen: “Determine si \(p(x)&gt;0\) en el intervalo”.</p>
+</article>
+<article class="definition-card">
+<h3>Función peso \(\sigma(x)\).</h3>
+<p>Definición precisa: coeficiente que multiplica a \(\lambda y\). Explicación: define el producto interno natural:</p>
+<div class="formula-block">\[
+\langle f,g\rangle_\sigma=\int_a^b\sigma fg\,dx.
+\]</div>
+<p>Ejemplo: en Chebyshev, \(\sigma(x)=1/\sqrt{1-x^2}\). Relación: aparece en la ortogonalidad. Forma de examen: “Escriba la relación de ortogonalidad con el peso correcto”.</p>
+</article>
+<article class="definition-card">
+<h3>Autovalor.</h3>
+<p>Definición precisa: valor de \(\lambda\) para el que existe solución no nula del problema de contorno. Explicación: no basta resolver la EDO; hay que imponer las condiciones. Ejemplo: \(\lambda_n=(n\pi/L)^2\) para Dirichlet-Dirichlet. Relación: cada autovalor tiene una o varias autofunciones asociadas. Forma de examen: “Calcule los autovalores positivos y estudie si \(\lambda=0\) es autovalor”.</p>
+</article>
+<article class="definition-card">
+<h3>Autofunción.</h3>
+<p>Definición precisa: solución no trivial asociada a un autovalor. Explicación: se determina salvo multiplicación por una constante no nula. Ejemplo: \(y_n(x)=\sin(n\pi x/L)\). Relación: las autofunciones de autovalores distintos son ortogonales. Forma de examen: “Obtenga las autofunciones correspondientes”.</p>
+</article>
+<article class="definition-card">
+<h3>Problema regular.</h3>
+<p>Definición precisa: problema en intervalo finito con coeficientes reales y continuos, \(p&gt;0\), \(\sigma&gt;0\), y condiciones de contorno lineales homogéneas adecuadas. Explicación: garantiza espectro discreto ordenable y propiedades nodales. Ejemplo: \(y''+\lambda y=0\) en \([0,L]\) con Dirichlet. Relación: contrasta con problemas singulares como Legendre en \([-1,1]\). Forma de examen: “Diga si el problema es regular y justifique”.</p>
+</article>
+<article class="definition-card">
+<h3>Espectro.</h3>
+<p>Definición precisa: conjunto de autovalores del problema. Explicación: en un problema regular hay una sucesión infinita que tiende a infinito. Ejemplo: \(\{(n\pi/L)^2:n=1,2,\ldots\}\). Relación: ordena los modos. Forma de examen: “Use el teorema del espectro para razonar sobre los autovalores”.</p>
+</article>
+<article class="definition-card">
+<h3>Ortogonalidad.</h3>
+<p>Definición precisa:</p>
+<div class="formula-block">\[
+\int_a^b \sigma(x)y_m(x)y_n(x)\,dx=0,\quad m\neq n.
+\]</div>
+<p>Explicación: permite calcular coeficientes de expansión sin resolver sistemas acoplados. Ejemplo: \(\int_0^L \sin(n\pi x/L)\sin(m\pi x/L)dx=0\), \(m\neq n\). Relación: depende del peso y de las condiciones de contorno. Forma de examen: “Demuestre por integración directa que dos autofunciones son ortogonales”.</p>
+</article>
+<article class="definition-card">
+<h3>Nodos.</h3>
+<p>Definición precisa: ceros interiores de una autofunción. Explicación: en problemas regulares, la autofunción \(n\)-ésima tiene \(n-1\) ceros en \((a,b)\). Ejemplo: \(\sin(3\pi x/L)\) tiene dos ceros interiores. Relación: conecta el orden del autovalor con la geometría del modo. Forma de examen: “Indique cuántos ceros interiores tiene la autofunción asociada a \(\lambda_n\)”.</p>
+</article>
+<article class="definition-card">
+<h3>Condición Robin.</h3>
+<p>Definición precisa: condición lineal que mezcla función y derivada, \(\alpha y+\beta y'=0\). Explicación: modifica el espectro respecto a Dirichlet o Neumann. Ejemplo: \(2y(1)-y'(1)=0\). Relación: puede impedir aplicar directamente criterios de positividad. Forma de examen: “Estudie si pueden excluirse autovalores negativos”.</p>
+</article>
+<article class="definition-card">
+<h3>Factor integrante.</h3>
+<p>Definición precisa: función \(H(x)\) que multiplica una ecuación lineal para convertir su parte diferencial en \((p y')'\). Explicación: si la ecuación es \(y''+a y'+(\lambda\beta+r)y=0\), se toma \(H=e^{\int a dx}\). Ejemplo: \(p=H\), \(\sigma=H\beta\), \(q=Hr\). Relación: conecta ecuaciones lineales generales con forma Sturm-Liouville. Forma de examen: “Calcule \(H(x)\), \(p(x)\), \(\sigma(x)\), \(q(x)\)”.</p>
+</article>
+<article class="definition-card">
+<h3>Ecuación singular.</h3>
+<p>Definición precisa: problema que falla alguna hipótesis de regularidad, por ejemplo intervalo infinito, \(p=0\) en un extremo o peso no acotado. Explicación: puede seguir siendo Sturm-Liouville, pero no regular. Ejemplo: Laguerre en \([0,\infty)\). Relación: muchas funciones especiales proceden de problemas singulares. Forma de examen: “Explique por qué no es regular aunque esté en forma Sturm-Liouville”.</p>
+</article>
+</div>
+    </section>
+    <section id="relaciones" class="page">
+      <header class="section-header"><p class="section-kicker">05</p><h2>5. Relaciones entre ideas</h2></header>
+      <div class="reading-block">
+<p>La idea de partida es el problema de contorno. Al introducir un parámetro \(\lambda\), el problema se convierte en un problema de autovalores. La ecuación diferencial da una familia de soluciones, pero las condiciones de contorno seleccionan solo ciertos valores de \(\lambda\). Esta selección produce el espectro.</p>
+<p>La forma autoadjunta es la pieza estructural. Sin ella, no se obtiene de manera natural la identidad que conduce a la ortogonalidad. Por eso se insiste en reescribir ecuaciones como \((p y')'\). El factor integrante sirve para pasar de una ecuación lineal de segundo orden no autoadjunta a una forma Sturm-Liouville.</p>
+<p>La regularidad está jerárquicamente por encima de la forma. Una ecuación puede estar en forma Sturm-Liouville y no ser regular. Para ser regular hacen falta intervalo finito, coeficientes adecuados y positividad de \(p\) y \(\sigma\). Legendre, Chebyshev y Laguerre ilustran esta distinción: todas pueden escribirse en forma Sturm-Liouville, pero presentan singularidades en los extremos o intervalos no finitos.</p>
+<p>La ortogonalidad depende de tres elementos: forma autoadjunta, autovalores distintos y condiciones de contorno que anulan el término de borde. Si falla alguno, no se puede escribir automáticamente la relación de ortogonalidad. El peso \(\sigma\) aparece porque el parámetro \(\lambda\) multiplica a \(\sigma y\), no necesariamente a \(y\).</p>
+<p>La conexión con EDP aparece después: separación de variables transforma una EDP en una ecuación temporal y una espacial. La espacial suele ser un problema de Sturm-Liouville. Sus autofunciones son los modos; sus autovalores determinan decaimientos, frecuencias o energías. Así, el capítulo funciona como puente entre EDO, álgebra espectral y series de Fourier generalizadas.</p>
+<p>La oposición principal es “resolver para cualquier \(\lambda\)” frente a “buscar \(\lambda\) admisibles”. Otra oposición importante es “forma Sturm-Liouville” frente a “problema regular”. También conviene distinguir “ortogonalidad usual” de “ortogonalidad con peso”. En muchos errores de examen se confunden estas parejas.</p>
+</div>
+    </section>
+    <section id="errores" class="page">
+      <header class="section-header"><p class="section-kicker">06</p><h2>6. Errores habituales</h2></header>
+      <div class="card-grid">
+<article class="definition-card">
+<h3>Error: considerar la solución trivial como autofunción.</h3>
+<p>Por qué está mal: la función \(y\equiv0\) satisface cualquier problema homogéneo, pero no define un modo ni un autovalor. Corrección: exigir siempre \(y\not\equiv0\). Respuesta incorrecta: “Para cualquier \(\lambda\), \(y=0\) es solución; luego todo \(\lambda\) es autovalor”. Respuesta correcta: “\(\lambda\) es autovalor solo si existe una solución no nula que cumple las condiciones”.</p>
+</article>
+<article class="definition-card">
+<h3>Error: no separar los casos \(\lambda&gt;0\), \(\lambda=0\), \(\lambda&lt;0\).</h3>
+<p>Por qué está mal: las formas de la solución cambian. Corrección: estudiar cada signo. Respuesta incorrecta: “La solución siempre es \(A\cos(\sqrt{\lambda}x)+B\sin(\sqrt{\lambda}x)\)”. Respuesta correcta: “Si \(\lambda&lt;0\), se escribe \(\lambda=-\mu^2\) y aparecen \(\sinh\) y \(\cosh\)”.</p>
+</article>
+<article class="definition-card">
+<h3>Error: olvidar el peso en la ortogonalidad.</h3>
+<p>Por qué está mal: la ortogonalidad del problema es</p>
+<div class="formula-block">\[
+\int_a^b \sigma y_m y_n\,dx=0,
+\]</div>
+<p>no necesariamente \(\int y_m y_n=0\). Corrección: identificar primero \(\sigma(x)\). Respuesta incorrecta: “Las funciones de Chebyshev son ortogonales con peso 1”. Respuesta correcta: “En la forma obtenida, el peso es \(1/\sqrt{1-x^2}\)”.</p>
+</article>
+<article class="definition-card">
+<h3>Error: llamar regular a cualquier ecuación en forma Sturm-Liouville.</h3>
+<p>Por qué está mal: la regularidad exige condiciones adicionales. Corrección: comprobar intervalo, continuidad y positividad de \(p\) y \(\sigma\). Respuesta incorrecta: “Legendre es regular en \([-1,1]\) porque está en forma Sturm-Liouville”. Respuesta correcta: “No es regular estricta en \([-1,1]\) porque \(p(x)=1-x^2\) se anula en los extremos”.</p>
+</article>
+<article class="definition-card">
+<h3>Error: identificar mal \(p(x)\).</h3>
+<p>Por qué está mal: \(p(x)\) no es el coeficiente de \(y''\) sin más, salvo que la ecuación ya esté en forma autoadjunta. Corrección: escribir explícitamente \((p y')'\). Respuesta incorrecta: “En \(y''+a y'=0\), \(p=1\)”. Respuesta correcta: “Tras multiplicar por \(H=e^{\int a dx}\), \(p=H\)”.</p>
+</article>
+<article class="definition-card">
+<h3>Error: usar condiciones de contorno no homogéneas como si fueran de autovalores.</h3>
+<p>Por qué está mal: las condiciones no homogéneas rompen la invariancia por multiplicación y no definen el mismo problema espectral. Corrección: distinguir problema espectral homogéneo de problema forzado. Respuesta incorrecta: “\(y(0)=1\), \(y(L)=0\) define los autovalores”. Respuesta correcta: “Para Sturm-Liouville espectral se usan condiciones homogéneas; las no homogéneas se tratan separando una solución particular o estacionaria”.</p>
+</article>
+<article class="definition-card">
+<h3>Error: suponer que todos los autovalores son positivos.</h3>
+<p>Por qué está mal: depende de \(q\) y de las condiciones de contorno. Corrección: aplicar el teorema de signo solo si se cumplen sus hipótesis. Respuesta incorrecta: “Como es regular, no hay autovalores negativos”. Respuesta correcta: “La regularidad no basta; hay que comprobar las hipótesis adicionales sobre \(q\) y los coeficientes de contorno”.</p>
+</article>
+<article class="definition-card">
+<h3>Error: imponer mal una condición Robin.</h3>
+<p>Por qué está mal: una condición como \(2y(1)-y'(1)=0\) no equivale a \(y(1)=0\) ni a \(y'(1)=0\). Corrección: sustituir la solución general y su derivada en la condición completa. Respuesta incorrecta: “De \(2y(1)-y'(1)=0\) deduzco \(y(1)=0\)”. Respuesta correcta: “Sustituyo \(y(1)\) e \(y'(1)\) y obtengo una ecuación trascendente para \(\lambda\)”.</p>
+</article>
+<article class="definition-card">
+<h3>Error: confundir autovalor con frecuencia.</h3>
+<p>Por qué está mal: en ondas, la frecuencia suele depender de \(\sqrt{\lambda}\), no de \(\lambda\) directamente. Corrección: derivar la ecuación temporal. Respuesta incorrecta: “La frecuencia del modo es \(\lambda_n\)”. Respuesta correcta: “Si \(T''+c^2\lambda_nT=0\), la frecuencia angular es \(c\sqrt{\lambda_n}\)”.</p>
+</article>
+<article class="definition-card">
+<h3>Error: no justificar la anulación del término de borde en la prueba de ortogonalidad.</h3>
+<p>Por qué está mal: la ortogonalidad no sale solo de restar ecuaciones; hay que usar las condiciones de contorno. Corrección: escribir el término</p>
+<div class="formula-block">\[
+[p(y_ny_m'-y_my_n')]_a^b
+\]</div>
+<p>y explicar por qué se anula. Respuesta incorrecta: “Al restar, queda directamente la ortogonalidad”. Respuesta correcta: “Al restar e integrar aparece un término de borde; las condiciones homogéneas lo hacen cero”.</p>
+</article>
+</div>
+    </section>
+    <section id="preguntas" class="page">
+      <header class="section-header"><p class="section-kicker">07</p><h2>7. Preguntas orientadas a examen</h2></header>
+      <details class="accordion" open>
+<summary>10 preguntas fáciles</summary>
+<div class="reading-block">
+<p>F1. Define un problema de Sturm-Liouville.</p>
+<p>F2. ¿Qué es un autovalor en un problema de contorno?</p>
+<p>F3. ¿Por qué la solución trivial no cuenta como autofunción?</p>
+<p>F4. Escribe la forma estándar \((p y')'+q y+\lambda\sigma y=0\) e identifica el papel de cada función.</p>
+<p>F5. ¿Qué significa que un problema de Sturm-Liouville sea regular?</p>
+<p>F6. ¿Qué es la función peso?</p>
+<p>F7. Escribe la relación de ortogonalidad para dos autofunciones asociadas a autovalores distintos.</p>
+<p>F8. ¿Qué tipo de condición es \(2y(1)-y'(1)=0\)?</p>
+<p>F9. ¿Por qué hay que estudiar por separado \(\lambda&gt;0\), \(\lambda=0\), \(\lambda&lt;0\)?</p>
+<p>F10. ¿Qué propiedad nodal tiene la autofunción asociada al autovalor \(\lambda_n\) en un problema regular?</p>
+</div>
+</details>
+<details class="accordion" open>
+<summary>10 preguntas medias</summary>
+<div class="reading-block">
+<p>M1. Reescribe la ecuación de Legendre</p>
+<div class="formula-block">\[
+(1-x^2)y''-2xy'+\ell(\ell+1)y=0
+\]</div>
+<p>en forma Sturm-Liouville e identifica \(p,q,\sigma,\lambda\).</p>
+<p>M2. Decide si la ecuación de Legendre en \([-1,1]\) define un problema regular en sentido estricto.</p>
+<p>M3. Reescribe la ecuación</p>
+<div class="formula-block">\[
+y''+a(x)y'+[\lambda\beta(x)+r(x)]y=0
+\]</div>
+<p>en forma Sturm-Liouville mediante un factor integrante.</p>
+<p>M4. Para \(y''+\lambda y=0\), \(y(0)=y(L)=0\), halla los autovalores y autofunciones.</p>
+<p>M5. Demuestra la ortogonalidad de \(\sin(n\pi x/L)\) y \(\sin(m\pi x/L)\) para \(m\neq n\).</p>
+<p>M6. Reescribe la ecuación de Laguerre</p>
+<div class="formula-block">\[
+xy''+(1-x)y'+ny=0
+\]</div>
+<p>en forma Sturm-Liouville.</p>
+<p>M7. Explica por qué Laguerre en \([0,\infty)\) no es regular.</p>
+<p>M8. En un problema regular, si una autofunción tiene tres ceros interiores, ¿qué lugar ocupa en la sucesión ordenada?</p>
+<p>M9. Explica por qué las condiciones de contorno homogéneas permiten normalizar una autofunción.</p>
+<p>M10. En separación de variables para el calor, ¿qué papel desempeñan los autovalores espaciales?</p>
+</div>
+</details>
+<details class="accordion" open>
+<summary>5 preguntas difíciles</summary>
+<div class="reading-block">
+<p>D1. Para</p>
+<div class="formula-block">\[
+\phi''+\lambda\phi=0,\qquad \phi(0)=0,\quad 2\phi(1)-\phi'(1)=0,
+\]</div>
+<p>estudia los autovalores negativos.</p>
+<p>D2. Demuestra la ortogonalidad general de autofunciones de un problema Sturm-Liouville regular con peso \(\sigma(x)\).</p>
+<p>D3. Reescribe la ecuación de Chebyshev</p>
+<div class="formula-block">\[
+(1-x^2)y''-xy'+n^2y=0
+\]</div>
+<p>en forma Sturm-Liouville e identifica por qué no es regular en \([-1,1]\).</p>
+<p>D4. Explica por qué una ecuación en forma Sturm-Liouville puede no definir un problema regular.</p>
+<p>D5. Dada una ecuación ya escrita como</p>
+<div class="formula-block">\[
+(p y')'+q y+\lambda\sigma y=0,
+\]</div>
+<p>deduce qué condiciones de signo permiten excluir autovalores negativos según el teorema usado en el curso.</p>
+</div>
+</details>
+<details class="accordion" open>
+<summary>5 preguntas de desarrollo largo</summary>
+<div class="reading-block">
+<p>L1. Desarrolla la teoría básica de un problema regular de Sturm-Liouville: forma, condiciones, autovalores, autofunciones, espectro y nodos.</p>
+<p>L2. Explica cómo la separación de variables en la ecuación del calor conduce a un problema de Sturm-Liouville y cómo se construye la solución por modos.</p>
+<p>L3. Expón la prueba de ortogonalidad de autofunciones y explica el papel del término de borde.</p>
+<p>L4. Compara los casos Dirichlet, Neumann y Robin en un problema de autovalores de segundo orden.</p>
+<p>L5. Analiza la relación entre ecuaciones especiales de la física matemática y la forma Sturm-Liouville, usando Legendre, Chebyshev y Laguerre.</p>
+</div>
+</details>
+<details class="accordion" open>
+<summary>5 preguntas de relación entre conceptos</summary>
+<div class="reading-block">
+<p>R1. Relaciona autovalores, condiciones de contorno y modos normales.</p>
+<p>R2. Relaciona regularidad, espectro discreto y número de ceros de las autofunciones.</p>
+<p>R3. Relaciona ortogonalidad, peso y expansión en series.</p>
+<p>R4. Relaciona factor integrante y forma autoadjunta.</p>
+<p>R5. Relaciona el signo de los autovalores con las hipótesis sobre \(q\) y las condiciones de contorno.</p>
+</div>
+</details>
+    </section>
+    <section id="respuestas" class="page">
+      <header class="section-header"><p class="section-kicker">08</p><h2>8. Respuestas modelo</h2></header>
+      <details class="accordion" open>
+<summary>Respuestas fáciles</summary>
+<div class="reading-block">
+<p>F1. Un problema de Sturm-Liouville es un problema de contorno para una ecuación lineal de segundo orden con parámetro:</p>
+<div class="formula-block">\[
+(p y')'+q y+\lambda\sigma y=0
+\]</div>
+<p>en un intervalo, junto con condiciones de contorno homogéneas. Su objetivo es encontrar los valores de \(\lambda\) para los que existen soluciones no nulas.</p>
+<p>F2. Un autovalor es un valor del parámetro \(\lambda\) para el cual el problema completo, ecuación más condiciones de contorno, admite una solución no trivial.</p>
+<p>F3. Porque la solución trivial satisface cualquier problema homogéneo para cualquier valor de \(\lambda\). Si se aceptara como autofunción, todos los valores serían autovalores, lo cual vaciaría de contenido el problema espectral.</p>
+<p>F4. En</p>
+<div class="formula-block">\[
+(p y')'+q y+\lambda\sigma y=0,
+\]</div>
+<p>\(p\) define la parte diferencial autoadjunta, \(q\) es el término independiente de \(\lambda\), \(\sigma\) es el peso y \(\lambda\) es el parámetro espectral.</p>
+<p>F5. Significa que el intervalo es finito, los coeficientes son reales y continuos, \(p&gt;0\), \(\sigma&gt;0\), y las condiciones de contorno son lineales homogéneas adecuadas. Bajo esas hipótesis se obtienen propiedades espectrales ordenadas.</p>
+<p>F6. Es la función \(\sigma(x)\) que multiplica al término \(\lambda y\). Determina el producto interno natural:</p>
+<div class="formula-block">\[
+\langle f,g\rangle_\sigma=\int_a^b\sigma(x)f(x)g(x)\,dx.
+\]</div>
+<p>F7. Si \(y_m\) e \(y_n\) corresponden a autovalores distintos,</p>
+<div class="formula-block">\[
+\int_a^b\sigma(x)y_m(x)y_n(x)\,dx=0.
+\]</div>
+<p>F8. Es una condición Robin o mixta, porque combina el valor de la función y el de su derivada en el extremo.</p>
+<p>F9. Porque la solución general cambia: para \(\lambda&gt;0\) aparecen senos y cosenos; para \(\lambda=0\), funciones lineales; para \(\lambda&lt;0\), funciones hiperbólicas.</p>
+<p>F10. Si los autovalores se ordenan como \(\lambda_1&lt;\lambda_2&lt;\cdots\), la autofunción asociada a \(\lambda_n\) tiene exactamente \(n-1\) ceros en el intervalo abierto.</p>
+</div>
+</details>
+<details class="accordion" open>
+<summary>Respuestas medias</summary>
+<div class="reading-block">
+<p>M1. Se observa que</p>
+<div class="formula-block">\[
+\big((1-x^2)y'\big)'=(1-x^2)y''-2xy'.
+\]</div>
+<p>Por tanto,</p>
+<div class="formula-block">\[
+\big((1-x^2)y'\big)'+\ell(\ell+1)y=0.
+\]</div>
+<p>Así, \(p(x)=1-x^2\), \(q(x)=0\), \(\sigma(x)=1\) y \(\lambda=\ell(\ell+1)\).</p>
+<p>M2. No es regular estricta en \([-1,1]\), porque \(p(x)=1-x^2\) se anula en los extremos \(x=-1\) y \(x=1\). Aunque \(p&gt;0\) en el intervalo abierto, falla la positividad en el cerrado.</p>
+<p>M3. Se busca \(H\) tal que \(H'=aH\). Entonces</p>
+<div class="formula-block">\[
+H=e^{\int a(x)\,dx}.
+\]</div>
+<p>Multiplicando:</p>
+<div class="formula-block">\[
+(Hy')'+[\lambda H\beta+Hr]y=0.
+\]</div>
+<p>Por tanto, \(p=H\), \(\sigma=H\beta\) y \(q=Hr\).</p>
+<p>M4. Para \(\lambda=\mu^2&gt;0\),</p>
+<div class="formula-block">\[
+y=A\cos\mu x+B\sin\mu x.
+\]</div>
+<p>De \(y(0)=0\) se obtiene \(A=0\). De \(y(L)=0\), \(B\sin(\mu L)=0\). Para \(B\neq0\), \(\mu L=n\pi\). Así,</p>
+<div class="formula-block">\[
+\lambda_n=(n\pi/L)^2,\qquad y_n=\sin(n\pi x/L),\quad n=1,2,\ldots
+\]</div>
+<p>Los casos \(\lambda=0\) y \(\lambda&lt;0\) solo dan la solución trivial.</p>
+<p>M5. Se usa</p>
+<div class="formula-block">\[
+\sin A\sin B=\frac12[\cos(A-B)-\cos(A+B)].
+\]</div>
+<p>Entonces</p>
+<div class="formula-block">\[
+\int_0^L\sin(n\pi x/L)\sin(m\pi x/L)\,dx=0
+\]</div>
+<p>si \(m\neq n\), porque las integrales de los cosenos resultantes completan periodos enteros.</p>
+<p>M6. Multiplicando por \(e^{-x}\):</p>
+<div class="formula-block">\[
+e^{-x}xy''+e^{-x}(1-x)y'+ne^{-x}y=0.
+\]</div>
+<p>Como</p>
+<div class="formula-block">\[
+(xe^{-x}y')'=xe^{-x}y'+(e^{-x}-xe^{-x})y'=xe^{-x}y''+(1-x)e^{-x}y',
+\]</div>
+<p>queda</p>
+<div class="formula-block">\[
+(xe^{-x}y')'+ne^{-x}y=0.
+\]</div>
+<p>Luego \(p=xe^{-x}\), \(q=0\), \(\sigma=e^{-x}\), \(\lambda=n\).</p>
+<p>M7. No es regular porque el intervalo \([0,\infty)\) no es finito y además \(p(x)=xe^{-x}\) se anula en \(x=0\). Por tanto, falla la regularidad estricta aunque la ecuación esté en forma Sturm-Liouville.</p>
+<p>M8. Si tiene tres ceros interiores, corresponde a \(n-1=3\), luego ocupa el cuarto lugar en la sucesión ordenada de autofunciones.</p>
+<p>M9. Si \(y\) es autofunción y \(C\neq0\), entonces \(Cy\) también cumple la ecuación y las condiciones homogéneas. Por tanto, se puede elegir \(C\) para imponer una condición de normalización, por ejemplo</p>
+<div class="formula-block">\[
+\int_a^b\sigma y^2\,dx=1.
+\]</div>
+<p>M10. Los autovalores espaciales determinan los factores temporales. Para el calor,</p>
+<div class="formula-block">\[
+T_n(t)=e^{-k\lambda_n t},
+\]</div>
+<p>de modo que los modos con mayor \(\lambda_n\) decaen más rápido. Las autofunciones espaciales forman la base para expandir la condición inicial.</p>
+</div>
+</details>
+<details class="accordion" open>
+<summary>Respuestas difíciles</summary>
+<div class="reading-block">
+<p>D1. Si \(\lambda=-\mu^2&lt;0\), la ecuación es</p>
+<div class="formula-block">\[
+\phi''-\mu^2\phi=0,
+\]</div>
+<p>con solución</p>
+<div class="formula-block">\[
+\phi=A\sinh(\mu x)+B\cosh(\mu x).
+\]</div>
+<p>La condición \(\phi(0)=0\) da \(B=0\). La condición \(2\phi(1)-\phi'(1)=0\) da</p>
+<div class="formula-block">\[
+2A\sinh\mu-A\mu\cosh\mu=0.
+\]</div>
+<p>Para solución no trivial:</p>
+<div class="formula-block">\[
+2\sinh\mu-\mu\cosh\mu=0,
+\]</div>
+<p>o</p>
+<div class="formula-block">\[
+\mu=2\tanh\mu.
+\]</div>
+<p>Las soluciones positivas no nulas de esta ecuación dan autovalores negativos \(\lambda=-\mu^2\). No se necesita forma cerrada exacta si se justifica gráficamente la existencia de cortes.</p>
+<p>D2. Sean \(y_m,y_n\) soluciones para \(\lambda_m,\lambda_n\). Multiplicamos las ecuaciones cruzadamente y restamos:</p>
+<div class="formula-block">\[
+y_n(p y_m')'-y_m(p y_n')'+(\lambda_m-\lambda_n)\sigma y_my_n=0.
+\]</div>
+<p>Al integrar:</p>
+<div class="formula-block">\[
+[p(y_ny_m'-y_my_n')]_a^b+(\lambda_m-\lambda_n)\int_a^b\sigma y_my_n\,dx=0.
+\]</div>
+<p>Las condiciones de contorno homogéneas anulan el término de borde. Si \(\lambda_m\neq\lambda_n\), queda</p>
+<div class="formula-block">\[
+\int_a^b\sigma y_my_n\,dx=0.
+\]</div>
+<p>D3. Se divide por \(\sqrt{1-x^2}\):</p>
+<div class="formula-block">\[
+\sqrt{1-x^2}\,y''-\frac{x}{\sqrt{1-x^2}}y'+\frac{n^2}{\sqrt{1-x^2}}y=0.
+\]</div>
+<p>Como</p>
+<div class="formula-block">\[
+(\sqrt{1-x^2}\,y')'=\sqrt{1-x^2}\,y'-\frac{x}{\sqrt{1-x^2}}y',
+\]</div>
+<p>corrigiendo la notación:</p>
+<div class="formula-block">\[
+(\sqrt{1-x^2}\,y')'=\sqrt{1-x^2}\,y''-\frac{x}{\sqrt{1-x^2}}y'.
+\]</div>
+<p>Entonces</p>
+<div class="formula-block">\[
+(\sqrt{1-x^2}\,y')'+\frac{n^2}{\sqrt{1-x^2}}y=0.
+\]</div>
+<p>Así \(p=\sqrt{1-x^2}\), \(\sigma=1/\sqrt{1-x^2}\), \(q=0\), \(\lambda=n^2\). No es regular en \([-1,1]\) porque \(p\) se anula en los extremos y \(\sigma\) se hace singular.</p>
+<p>D4. Porque la forma Sturm-Liouville solo exige una estructura diferencial; la regularidad añade condiciones sobre intervalo, continuidad y positividad. Legendre y Chebyshev en \([-1,1]\) están en forma Sturm-Liouville, pero tienen problemas en los extremos. Laguerre está en forma Sturm-Liouville, pero se plantea en un intervalo infinito.</p>
+<p>D5. En la formulación usada en el curso, para un problema regular</p>
+<div class="formula-block">\[
+(p\phi')'+q\phi+\lambda\sigma\phi=0
+\]</div>
+<p>con condiciones</p>
+<div class="formula-block">\[
+\beta_1\phi(a)+\beta_2\phi'(a)=0,\quad
+\beta_3\phi(b)+\beta_4\phi'(b)=0,
+\]</div>
+<p>si \(q(x)&lt;0\), \(\beta_1/\beta_2\leq0\) y \(\beta_3/\beta_4\geq0\), entonces los autovalores satisfacen \(\lambda_n\geq0\). Si alguna condición falla, no se puede excluir automáticamente la existencia de autovalores negativos.</p>
+</div>
+</details>
+<details class="accordion" open>
+<summary>Respuestas de desarrollo largo</summary>
+<div class="reading-block">
+<p>L1. Un problema regular de Sturm-Liouville se escribe como</p>
+<div class="formula-block">\[
+(p y')'+q y+\lambda\sigma y=0,\qquad a&lt;x&lt;b,
+\]</div>
+<p>con condiciones lineales homogéneas en \(a\) y \(b\). La regularidad exige intervalo finito, coeficientes reales continuos y \(p,\sigma&gt;0\). Los autovalores son los valores de \(\lambda\) para los que hay una solución no trivial. Las soluciones correspondientes son autofunciones y se determinan salvo constante. En un problema regular, el espectro es infinito, se puede ordenar y tiende a infinito. Además, la autofunción asociada al \(n\)-ésimo autovalor tiene \(n-1\) ceros interiores. Las autofunciones asociadas a autovalores distintos son ortogonales con respecto al peso \(\sigma\).</p>
+<p>L2. En la ecuación del calor \(u_t=ku_{xx}\), se propone \(u=XT\). Al sustituir:</p>
+<div class="formula-block">\[
+XT'=kX''T.
+\]</div>
+<p>Dividiendo por \(kXT\), se obtiene una igualdad entre una función de \(t\) y una de \(x\), por lo que ambas deben ser constantes. La parte espacial toma la forma</p>
+<div class="formula-block">\[
+X''+\lambda X=0
+\]</div>
+<p>con las condiciones de contorno heredadas de \(u\). Este es un problema de Sturm-Liouville. Sus autovalores \(\lambda_n\) dan factores temporales \(e^{-k\lambda_n t}\), y sus autofunciones \(X_n\) permiten escribir</p>
+<div class="formula-block">\[
+u(x,t)=\sum c_nX_n(x)e^{-k\lambda_n t}.
+\]</div>
+<p>Los coeficientes \(c_n\) se calculan proyectando la condición inicial sobre los modos.</p>
+<p>L3. La ortogonalidad se obtiene usando la forma autoadjunta. Se escriben dos ecuaciones para \(y_m\) e \(y_n\), se multiplican cruzadamente y se restan. La diferencia de términos diferenciales se convierte, por integración, en un término de borde:</p>
+<div class="formula-block">\[
+[p(y_ny_m'-y_my_n')]_a^b.
+\]</div>
+<p>Las condiciones de contorno homogéneas del problema hacen que este término sea cero. Lo que queda es</p>
+<div class="formula-block">\[
+(\lambda_m-\lambda_n)\int_a^b\sigma y_my_n\,dx=0.
+\]</div>
+<p>Si los autovalores son distintos, se concluye la ortogonalidad con peso. El papel del borde es decisivo: sin su anulación, la prueba no funciona.</p>
+<p>L4. Dirichlet fija el valor de la función: \(y(a)=0\). Neumann fija la derivada: \(y'(a)=0\). Robin mezcla ambas: \(\alpha y(a)+\beta y'(a)=0\). En problemas de autovalores, cada tipo de condición cambia la ecuación característica. Dirichlet-Dirichlet suele producir senos puros; Neumann-Neumann permite a menudo un modo constante asociado a \(\lambda=0\); Robin puede producir ecuaciones trascendentes y, en algunos casos, autovalores negativos. En examen, no debe simplificarse una condición Robin eliminando arbitrariamente uno de sus términos.</p>
+<p>L5. Legendre, Chebyshev y Laguerre muestran que muchas ecuaciones especiales son casos de Sturm-Liouville. Legendre se escribe con \(p=1-x^2\), Chebyshev con \(p=\sqrt{1-x^2}\) y peso \(1/\sqrt{1-x^2}\), y Laguerre con \(p=xe^{-x}\) y peso \(e^{-x}\). La importancia está en que la ortogonalidad de los polinomios asociados procede de la forma autoadjunta. Sin embargo, estas ecuaciones suelen ser singulares: Legendre y Chebyshev tienen problemas en los extremos \(\pm1\), y Laguerre se plantea en un intervalo infinito.</p>
+</div>
+</details>
+<details class="accordion" open>
+<summary>Respuestas de relación entre conceptos</summary>
+<div class="reading-block">
+<p>R1. Las condiciones de contorno seleccionan los valores permitidos de \(\lambda\). Cada valor permitido es un autovalor y produce un modo normal o autofunción. En ondas, esos modos determinan las frecuencias; en calor, las tasas de decaimiento.</p>
+<p>R2. La regularidad permite ordenar el espectro en una sucesión infinita y relacionar el índice con los ceros interiores. La autofunción \(n\)-ésima tiene \(n-1\) nodos interiores, lo que conecta análisis espectral y forma geométrica del modo.</p>
+<p>R3. La ortogonalidad con peso permite expandir funciones en series de autofunciones. El peso no es opcional: aparece en el producto interno natural del problema. Por eso los coeficientes se calculan con integrales que incluyen \(\sigma(x)\).</p>
+<p>R4. El factor integrante transforma una ecuación lineal de segundo orden en forma autoadjunta. La condición \(H'=aH\) hace que \(Hy''+Hay'\) se convierta en \((Hy')'\). Así se puede aplicar la teoría de Sturm-Liouville.</p>
+<p>R5. El signo de los autovalores no depende solo de que el problema sea regular. Se necesitan hipótesis adicionales sobre \(q\) y sobre las condiciones de contorno. Si esas hipótesis no se cumplen, puede haber autovalores negativos y hay que estudiarlos directamente.</p>
+</div>
+</details>
+    </section>
+    <section id="resumen" class="page">
+      <header class="section-header"><p class="section-kicker">09</p><h2>9. Resumen final de repaso</h2></header>
+      <div class="reading-block">
+<p>Ideas principales:</p>
+<ul>
+<li>Sturm-Liouville es un problema de autovalores para una EDO lineal de segundo orden.</li>
+<li>La forma esencial es \((p y')'+q y+\lambda\sigma y=0\).</li>
+<li>Las condiciones de contorno homogéneas seleccionan los autovalores.</li>
+<li>Las autofunciones no son únicas: se pueden multiplicar por constantes.</li>
+<li>En problemas regulares, el espectro es infinito y \(\lambda_n\to\infty\).</li>
+<li>La autofunción \(n\)-ésima tiene \(n-1\) ceros interiores.</li>
+<li>Autofunciones de autovalores distintos son ortogonales con peso \(\sigma\).</li>
+<li>El factor integrante convierte ciertas ecuaciones lineales en forma autoadjunta.</li>
+<li>Legendre, Chebyshev y Laguerre se reescriben como Sturm-Liouville, pero no siempre son regulares.</li>
+<li>En EDP, Sturm-Liouville proporciona los modos de separación de variables.</li>
+</ul>
+<p>Conceptos imprescindibles:</p>
+<ul>
+<li>Autovalor.</li>
+<li>Autofunción.</li>
+<li>Forma autoadjunta.</li>
+<li>Peso.</li>
+<li>Problema regular.</li>
+<li>Ortogonalidad.</li>
+<li>Condiciones Dirichlet, Neumann y Robin.</li>
+<li>Factor integrante.</li>
+<li>Espectro.</li>
+<li>Nodos.</li>
+</ul>
+<p>Relaciones clave:</p>
+<ul>
+<li>Contorno homogéneo → selección de autovalores.</li>
+<li>Forma autoadjunta → integración por partes → ortogonalidad.</li>
+<li>Peso \(\sigma\) → producto interno correcto.</li>
+<li>Regularidad → espectro ordenado y propiedades nodales.</li>
+<li>Separación de variables → problema espacial de Sturm-Liouville → serie modal.</li>
+</ul>
+<p>Errores que evitar:</p>
+<ul>
+<li>Contar \(y=0\) como autofunción.</li>
+<li>Olvidar el caso \(\lambda&lt;0\).</li>
+<li>Escribir ortogonalidad sin peso.</li>
+<li>Confundir forma Sturm-Liouville con regularidad.</li>
+<li>Simplificar mal una condición Robin.</li>
+<li>Suponer positividad de autovalores sin comprobar hipótesis.</li>
+<li>Identificar \(p\) antes de poner la ecuación en forma autoadjunta.</li>
+</ul>
+</div>
+    </section>
+    <section id="checklist" class="page">
+      <header class="section-header"><p class="section-kicker">10</p><h2>10. Checklist de dominio</h2></header>
+      <div class="reading-block">
+<ul>
+<li>Si no puedes explicar qué es un autovalor, falta repasar la diferencia entre solución trivial y solución no trivial.</li>
+<li>Si confundes autofunción con solución general, revisar problemas de contorno homogéneos.</li>
+<li>Si no puedes escribir \((p y')'\), falta repasar forma autoadjunta.</li>
+<li>Si identificas \(p(x)\) directamente con el coeficiente de \(y''\) sin comprobar la forma, revisar el desarrollo de \((p y')'\).</li>
+<li>Si no puedes convertir \(y''+a(x)y'+[\lambda\beta(x)+r(x)]y=0\), falta repasar el factor integrante \(H=e^{\int a dx}\).</li>
+<li>Si olvidas \(\sigma(x)\) en la ortogonalidad, revisar producto interno con peso.</li>
+<li>Si llamas regular a Legendre en \([-1,1]\) sin matizar, revisar las condiciones \(p&gt;0\) y \(\sigma&gt;0\) en el intervalo cerrado.</li>
+<li>Si no distingues Dirichlet, Neumann y Robin, revisar condiciones de contorno.</li>
+<li>Si no estudias por separado \(\lambda&gt;0\), \(\lambda=0\), \(\lambda&lt;0\), falta repasar resolución de EDO lineales con coeficientes constantes.</li>
+<li>Si no puedes derivar \(\mu=2\tanh\mu\) en el ejemplo Robin, falta repasar autovalores negativos y funciones hiperbólicas.</li>
+<li>Si no puedes demostrar la ortogonalidad, falta repasar integración por partes y anulación del término de borde.</li>
+<li>Si confundes \(\lambda_n\) con la frecuencia en ondas, revisar la ecuación temporal tras separar variables.</li>
+<li>Si puedes resolver \(y''+\lambda y=0\) con condiciones Dirichlet y obtener \(\lambda_n\) y \(y_n\), el caso elemental está asentado.</li>
+<li>Si puedes reescribir Legendre, Chebyshev y Laguerre en forma Sturm-Liouville, el reconocimiento formal está asentado.</li>
+<li>Si puedes justificar cuándo un problema es regular y cuándo no, el criterio de examen está asentado.</li>
+<li>Si puedes usar la ortogonalidad para calcular coeficientes de una expansión modal, el capítulo está suficientemente asentado para EDP por separación de variables.</li>
+</ul>
+</div>
+    </section>
+</main></div></body></html>

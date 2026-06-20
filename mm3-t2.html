@@ -1,0 +1,968 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="color-scheme" content="light dark" />
+  <title>MM3 — Tema 2: Estabilidad lineal de puntos críticos</title>
+  <meta name="description" content="Guía de estudio de Métodos Matemáticos III sobre estabilidad lineal de puntos críticos, plano de fases, autovalores, linealización y criterio de Hurwitz." />
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/icon-32.png" />
+  <link rel="icon" type="image/png" sizes="50x50" href="assets/icons/icon-50.png" />
+  <link rel="apple-touch-icon" sizes="100x100" href="assets/icons/icon-100.png" />
+  <link rel="stylesheet" href="assets/styles.css" />
+  <script>
+window.MathJax = {
+  tex: {
+    inlineMath: [['\\(', '\\)'], ['$', '$']],
+    displayMath: [['\\[', '\\]']],
+    processEscapes: true
+  },
+  svg: { fontCache: 'global' },
+  options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+};
+</script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+  <script defer src="assets/app.js"></script>
+</head>
+<body class="subject-mm1">
+  <div class="wrap">
+    <header class="cover">
+      <a class="back-link" href="index.html">← Índice</a>
+      <p class="eyebrow">Métodos Matemáticos III</p>
+      <h1>Estabilidad lineal de puntos críticos</h1>
+      <p class="subtitle">Tema 2 · Sistemas autónomos, plano de fases, autovalores, linealización y Hurwitz</p>
+      <div class="lesson-meta">
+        <span>Asignatura: MM3</span>
+        <span>Tema 2</span>
+        <span>Estado: completo</span>
+        <span>Enfoque: examen UNED</span>
+      </div>
+    </header>
+
+    <div class="toolbar no-print" aria-label="Navegación del tema">
+      <nav>
+        <a href="#mapa">Mapa</a><a href="#prerrequisitos">Prerrequisitos</a><a href="#idea-central">Idea</a><a href="#desarrollo">Desarrollo</a><a href="#conceptos">Conceptos</a><a href="#errores">Errores</a><a href="#preguntas">Preguntas</a><a href="#respuestas">Respuestas</a><a href="#resumen">Resumen</a><a href="#checklist">Checklist</a>
+      </nav>
+      <div class="toolbar-actions"><button class="btn secondary" onclick="document.querySelectorAll('details').forEach(d=>d.open=true)">Abrir todo</button><button class="btn secondary" onclick="document.querySelectorAll('details').forEach(d=>d.open=false)">Modo repaso</button><button class="btn" onclick="window.print()">Imprimir / PDF</button></div>
+    </div>
+
+    <main>
+      <section id="mapa" class="page map-page">
+        <header class="section-header"><p class="section-kicker">00</p><h2>Mapa conceptual</h2></header>
+        <div class="concept-map">
+          <a class="map-card" href="#desarrollo"><span>Sistemas autónomos</span><small>plano de fases, trayectorias y retrato fase</small></a>
+          <a class="map-card" href="#desarrollo"><span>Equilibrios</span><small>puntos críticos y traslado al origen</small></a>
+          <a class="map-card" href="#desarrollo"><span>Estabilidad</span><small>estable, asintóticamente estable e inestable</small></a>
+          <a class="map-card" href="#desarrollo"><span>Clasificación lineal</span><small>nodos, sillas, focos y centros</small></a>
+          <a class="map-card" href="#desarrollo"><span>Linealización</span><small>matriz jacobiana y primera aproximación</small></a>
+          <a class="map-card" href="#desarrollo"><span>Hurwitz</span><small>raíces con parte real negativa</small></a>
+          <a class="map-card" href="#preguntas"><span>Examen</span><small>preguntas y respuestas modelo</small></a>
+        </div>
+        <div class="reading-block source-block"><p>Guía de estudio de MM3 centrada en la estabilidad lineal de puntos críticos: sistemas autónomos, plano de fases, clasificación por autovalores, linealización de sistemas no lineales y criterio de Hurwitz.</p></div>
+      </section>
+
+    <section id="prerrequisitos" class="page">
+      <header class="section-header">
+        <p class="section-kicker">01</p>
+        <h2>1. Prerrequisitos mínimos</h2>
+      </header>
+      <div class="card-grid">
+<article class="definition-card">
+<h3>Sistema de ecuaciones diferenciales ordinarias</h3>
+<p>Definición breve: un sistema de EDO expresa varias derivadas en función de varias incógnitas. En este tema se usa sobre todo la forma</p>
+<div class="formula-block">\[
+\frac{dx}{dt}=f(x,y), \qquad \frac{dy}{dt}=g(x,y).
+\]</div>
+<p>Es necesario porque la estabilidad se estudia sobre soluciones de sistemas, no sobre una sola ecuación aislada. El alumno debe saber que una solución es un par de funciones \(x(t),y(t)\) que satisface simultáneamente ambas ecuaciones.</p>
+<p>Ejemplo mínimo: si \(x'=x\), \(y'=y\), entonces \(x(t)=C_1e^t\), \(y(t)=C_2e^t\).</p>
+</article>
+<article class="definition-card">
+<h3>Sistema autónomo</h3>
+<p>Definición breve: es un sistema en el que la variable independiente \(t\) no aparece explícitamente en el segundo miembro:</p>
+<div class="formula-block">\[
+x'=f(x,y),\qquad y'=g(x,y).
+\]</div>
+<p>Es necesario porque el plano de fases se define de forma natural para sistemas autónomos: el campo de direcciones depende solo del punto \((x,y)\), no del instante.</p>
+<p>Ejemplo mínimo:</p>
+<div class="formula-block">\[
+x'=x-y,\qquad y'=2x+y
+\]</div>
+<p>es autónomo. En cambio \(x'=tx\) no lo es.</p>
+</article>
+<article class="definition-card">
+<h3>Álgebra matricial básica</h3>
+<p>Definición breve: manejo de matrices, determinantes, sistemas lineales, autovalores y autovectores. Es necesario porque el sistema lineal</p>
+<div class="formula-block">\[
+X'=AX
+\]</div>
+<p>se clasifica mediante los autovalores de \(A\). Sin autovalores no se puede decidir con seguridad si el punto crítico es nodo, silla, foco o centro.</p>
+<p>Ejemplo mínimo: para</p>
+<div class="formula-block">\[
+A=\begin{pmatrix}-1&amp;0\\0&amp;-2\end{pmatrix},
+\]</div>
+<p>los autovalores son \(-1\) y \(-2\).</p>
+</article>
+<article class="definition-card">
+<h3>Exponenciales y comportamiento límite</h3>
+<p>Definición breve: hay que distinguir si \(e^{kt}\) tiende a cero, crece o permanece oscilando al variar \(t\). Es necesario porque las soluciones lineales se escriben mediante exponenciales reales o complejas.</p>
+<p>Ejemplo mínimo: si \(k&lt;0\), \(e^{kt}\to 0\) cuando \(t\to+\infty\); si \(k&gt;0\), \(e^{kt}\to+\infty\).</p>
+</article>
+<article class="definition-card">
+<h3>Números complejos elementales</h3>
+<p>Definición breve: reconocer raíces complejas conjugadas \(p\pm qi\), su parte real \(p\) y su parte imaginaria \(q\). Es necesario porque los focos y centros aparecen cuando la ecuación característica tiene raíces complejas.</p>
+<p>Ejemplo mínimo: si \(k=-2\pm 3i\), la parte real es negativa, por lo que el factor \(e^{-2t}\) amortigua las oscilaciones.</p>
+</article>
+<article class="definition-card">
+<h3>Derivación parcial y desarrollo de Taylor de primer orden</h3>
+<p>Definición breve: aproximar una función cerca de un punto por su parte lineal. Es necesario para pasar de un sistema no lineal a su sistema linealizado, que conserva información local de estabilidad salvo en casos excepcionales.</p>
+<p>Ejemplo mínimo: cerca de \((0,0)\),</p>
+<div class="formula-block">\[
+f(x,y)=2x+3y+x^2
+\]</div>
+<p>tiene parte lineal \(2x+3y\).</p>
+</article>
+<article class="definition-card">
+<h3>Cambio de origen</h3>
+<p>Definición breve: trasladar un punto crítico \((x_0,y_0)\) al origen mediante</p>
+<div class="formula-block">\[
+u=x-x_0,\qquad v=y-y_0.
+\]</div>
+<p>Es necesario porque la clasificación se formula normalmente para el punto crítico \((0,0)\), pero los problemas pueden dar equilibrios en otros puntos.</p>
+<p>Ejemplo mínimo: si el equilibrio es \((1,-3)\), se escribe \(x=u+1\), \(y=v-3\).</p>
+</article>
+</div>
+    </section>
+    <section id="idea-central" class="page">
+      <header class="section-header">
+        <p class="section-kicker">02</p>
+        <h2>2. Idea central del capítulo</h2>
+      </header>
+      <div class="reading-block">
+<p>El capítulo introduce el estudio cualitativo de sistemas de ecuaciones diferenciales. En capítulos anteriores la pregunta principal era: “¿cuál es la solución?”. Aquí la pregunta cambia: “¿cómo se comportan las soluciones cercanas a un punto de equilibrio?”. Esta diferencia es esencial. A menudo no hace falta conocer explícitamente todas las soluciones para saber si, cerca de un punto, las trayectorias se acercan, se alejan, giran, oscilan o se comportan de manera mixta.</p>
+<p>El concepto organizador es el de estabilidad. Una pequeña variación en las condiciones iniciales puede producir una solución que permanezca cerca de la solución de equilibrio, que además tienda a ella, o que se aleje. Por eso el capítulo se centra en los puntos críticos, también llamados puntos de reposo o de equilibrio. En ellos el sistema no evoluciona: si la trayectoria empieza exactamente en ese punto, permanece allí.</p>
+<p>La herramienta principal para sistemas lineales es el cálculo de autovalores. Para un sistema</p>
+<div class="formula-block">\[
+X'=AX,
+\]</div>
+<p>las soluciones se construyen a partir de expresiones del tipo \(Ue^{kt}\), donde \(k\) es un autovalor y \(U\) un autovector. La naturaleza de los autovalores determina la geometría de las trayectorias: nodos, sillas, focos y centros. Esto convierte un problema dinámico en un problema algebraico.</p>
+<p>El capítulo también explica cómo abordar sistemas no lineales cerca de un punto crítico. La idea consiste en sustituir el sistema por su primera aproximación lineal, formada por los términos lineales del desarrollo de Taylor. Esta técnica es potente, pero tiene límites: cuando los autovalores son reales iguales o imaginarios puros, el sistema linealizado puede no decidir completamente el tipo del punto crítico no lineal.</p>
+<p>Dentro de la asignatura, este tema funciona como puente entre EDO lineales, sistemas, análisis cualitativo y, más adelante, estabilidad, bifurcaciones y problemas de física matemática. Operativamente, para examen, el alumno debe ser capaz de localizar puntos críticos, trasladarlos si hace falta, formar la matriz lineal, calcular autovalores, clasificar el punto y justificar la estabilidad.</p>
+</div>
+    </section>
+    <section id="desarrollo" class="page">
+      <header class="section-header">
+        <p class="section-kicker">03</p>
+        <h2>3. Desarrollo completo del capítulo</h2>
+      </header>
+      <div class="reading-block">
+<h3>3.1. Del análisis cuantitativo al análisis cualitativo</h3>
+<p>El estudio de sistemas de EDO puede hacerse de dos maneras complementarias. El análisis cuantitativo busca soluciones explícitas. Por ejemplo, dado un sistema lineal, se intenta escribir \(x(t)\) e \(y(t)\). El análisis cualitativo, en cambio, estudia la forma general de las trayectorias y su comportamiento sin exigir siempre una fórmula cerrada.</p>
+<p>Esto importa porque muchos sistemas no lineales no se resuelven de forma elemental. Aun así, se puede saber si un equilibrio es estable, si las trayectorias giran alrededor de él o si se alejan. En física, esta información suele ser más relevante que una solución exacta: permite saber si un estado de reposo resiste pequeñas perturbaciones.</p>
+<p>La conexión con lo anterior es directa. Los sistemas lineales ya se resolvían mediante autovalores; ahora esos mismos autovalores se interpretan geométricamente. No solo dan una fórmula: también dicen cómo se mueve el punto \((x(t),y(t))\) en el plano.</p>
+<p>Ejemplo: en</p>
+<div class="formula-block">\[
+X'=\begin{pmatrix}-1&amp;0\\0&amp;-2\end{pmatrix}X,
+\]</div>
+<p>la solución general es \(x=C_1e^{-t}\), \(y=C_2e^{-2t}\). Ambas componentes tienden a cero; por tanto, el origen atrae a las trayectorias próximas.</p>
+<h3>3.2. Sistemas autónomos y plano de fases</h3>
+<p>El capítulo trabaja con sistemas autónomos:</p>
+<div class="formula-block">\[
+x'=f(x,y),\qquad y'=g(x,y).
+\]</div>
+<p>Como \(t\) no aparece explícitamente, el comportamiento en cada punto del plano depende solo de las coordenadas \((x,y)\). Esto permite representar en el plano \(xy\) las trayectorias de las soluciones.</p>
+<p>Una solución del sistema es una curva parametrizada:</p>
+<div class="formula-block">\[
+x=x(t),\qquad y=y(t).
+\]</div>
+<p>Su imagen en el plano \(xy\) se llama trayectoria. El plano en el que se dibujan las trayectorias se llama plano de fases, y el conjunto de trayectorias se llama retrato fase o diagrama de fases.</p>
+<p>Es importante distinguir solución y trayectoria. Dos soluciones distintas pueden recorrer la misma curva con distinta parametrización o con distinto desplazamiento temporal. Lo que el diagrama de fases muestra es la geometría del movimiento, no necesariamente la ley temporal completa.</p>
+<p>La ecuación de las trayectorias se obtiene dividiendo:</p>
+<div class="formula-block">\[
+\frac{dy}{dx}=\frac{g(x,y)}{f(x,y)},
+\]</div>
+<p>cuando \(f(x,y)\neq 0\). Esta ecuación elimina el parámetro \(t\) y describe la familia de curvas del plano fase. La consecuencia es que el estudio de un sistema autónomo puede reducirse, en parte, al estudio de una ecuación diferencial de primer orden para las trayectorias.</p>
+<p>Ejemplo: si \(x'=x\), \(y'=y\), entonces</p>
+<div class="formula-block">\[
+\frac{dy}{dx}=\frac{y}{x},
+\]</div>
+<p>y las trayectorias satisfacen \(y=Cx\). Las soluciones temporales pueden ser distintas, pero las trayectorias son semirrectas.</p>
+<h3>3.3. Puntos críticos o puntos de equilibrio</h3>
+<p>Un punto \((x_0,y_0)\) es crítico si</p>
+<div class="formula-block">\[
+f(x_0,y_0)=0,\qquad g(x_0,y_0)=0.
+\]</div>
+<p>En ese punto las derivadas son nulas. Por tanto, si el sistema parte de \((x_0,y_0)\), permanece allí. La solución correspondiente es constante:</p>
+<div class="formula-block">\[
+x(t)=x_0,\qquad y(t)=y_0.
+\]</div>
+<p>Estos puntos reciben también los nombres de puntos de reposo o puntos de equilibrio. Su importancia procede de que organizan el plano de fases. Las trayectorias cercanas suelen disponerse alrededor de ellos: pueden entrar, salir, rodearlos o separarse en direcciones distintas.</p>
+<p>Ejemplo:</p>
+<div class="formula-block">\[
+x'=x(1-x-y),\qquad y'=y(2-y-3x).
+\]</div>
+<p>Los puntos críticos se obtienen anulando ambas ecuaciones. Hay que resolver simultáneamente</p>
+<div class="formula-block">\[
+x(1-x-y)=0,\qquad y(2-y-3x)=0.
+\]</div>
+<p>El resultado incluye, entre otros, los puntos en los que \(x=0\) o \(y=0\), además de posibles intersecciones de las rectas \(1-x-y=0\) y \(2-y-3x=0\).</p>
+<h3>3.4. Estabilidad, estabilidad asintótica e inestabilidad</h3>
+<p>La estabilidad se define de forma local. Un punto crítico \(P\) es estable si toda trayectoria que comienza suficientemente cerca de \(P\) permanece cerca de \(P\) para tiempos posteriores. La formulación formal usa entornos circulares: para todo radio exterior \(\varepsilon&gt;0\), debe existir un radio inicial \(\delta&gt;0\) tal que si la trayectoria empieza dentro de \(B(P,\delta)\), entonces permanece dentro de \(B(P,\varepsilon)\) para todo \(t&gt;t_0\).</p>
+<p>La estabilidad asintótica añade una condición más fuerte: además de permanecer cerca, la trayectoria debe tender al punto crítico cuando \(t\to+\infty\). Por eso todo punto asintóticamente estable es estable, pero no todo punto estable es asintóticamente estable.</p>
+<p>La inestabilidad significa que la condición de estabilidad falla. En términos geométricos, hay trayectorias que, aun empezando arbitrariamente cerca del punto, acaban saliendo de algún entorno del equilibrio.</p>
+<p>Ejemplo: un centro lineal con trayectorias cerradas alrededor del origen es estable, porque no se aleja si empieza cerca. Pero no es asintóticamente estable, porque las trayectorias no tienden al origen: giran alrededor de él.</p>
+<h3>3.5. Traslado de un punto crítico al origen</h3>
+<p>El análisis se simplifica suponiendo que el punto crítico es \((0,0)\). Si el equilibrio está en \((x_0,y_0)\), se realiza el cambio</p>
+<div class="formula-block">\[
+u=x-x_0,\qquad v=y-y_0.
+\]</div>
+<p>En las nuevas variables, el punto crítico se convierte en \((0,0)\). La estabilidad no cambia: el punto original es estable, asintóticamente estable o inestable si y solo si lo es el origen en el sistema trasladado.</p>
+<p>Esto importa porque muchos ejercicios no presentan el equilibrio en el origen. Saltarse el traslado suele llevar a formar una matriz equivocada o a estudiar el punto incorrecto.</p>
+<p>Ejemplo:</p>
+<div class="formula-block">\[
+x'=x+2y+5,\qquad y'=3x+3y+6.
+\]</div>
+<p>El punto crítico se obtiene resolviendo</p>
+<div class="formula-block">\[
+x+2y+5=0,\qquad 3x+3y+6=0.
+\]</div>
+<p>Si resulta \(P=(1,-3)\), se escribe \(x=u+1\), \(y=v-3\), y se estudia el sistema en \((u,v)\).</p>
+<h3>3.6. Sistema lineal \(X'=AX\)</h3>
+<p>El modelo central es el sistema lineal homogéneo de coeficientes constantes</p>
+<div class="formula-block">\[
+X'=AX,\qquad X=\begin{pmatrix}x(t)\\y(t)\end{pmatrix}.
+\]</div>
+<p>El origen es siempre punto crítico, porque \(AX=0\) cuando \(X=0\).</p>
+<p>Las soluciones elementales se buscan como</p>
+<div class="formula-block">\[
+X=Ue^{kt},
+\]</div>
+<p>donde \(k\) es autovalor de \(A\) y \(U\) es un autovector asociado. Sustituir en \(X'=AX\) lleva a</p>
+<div class="formula-block">\[
+AU=kU,
+\]</div>
+<p>que es precisamente el problema de autovalores.</p>
+<p>La consecuencia es fundamental: la estabilidad del origen se decide por los autovalores. En dimensión dos, la clasificación depende de si los autovalores son reales distintos, reales iguales, complejos conjugados o imaginarios puros.</p>
+<h3>3.7. Autovalores reales y distintos</h3>
+<p>Si los autovalores \(k_1,k_2\) son reales y distintos, la solución general tiene la forma</p>
+<div class="formula-block">\[
+X=C_1U_1e^{k_1t}+C_2U_2e^{k_2t}.
+\]</div>
+<p>El signo de \(k_1\) y \(k_2\) decide el comportamiento.</p>
+<p>Si ambos son negativos, \(e^{k_1t}\) y \(e^{k_2t}\) tienden a cero. Toda trayectoria cercana tiende al origen. El punto crítico es un nodo estable, más precisamente asintóticamente estable.</p>
+<p>Si ambos son positivos, las exponenciales crecen cuando \(t\to+\infty\). Las trayectorias se alejan del origen. El punto crítico es un nodo inestable.</p>
+<p>Si uno es negativo y el otro positivo, hay una dirección de entrada y una dirección de salida. El punto es una silla. Es inestable, porque basta tomar una pequeña componente en la dirección del autovalor positivo para alejarse del origen.</p>
+<p>Ejemplo:</p>
+<div class="formula-block">\[
+A=\begin{pmatrix}-1&amp;0\\0&amp;-3\end{pmatrix}
+\]</div>
+<p>da un nodo estable. En cambio</p>
+<div class="formula-block">\[
+A=\begin{pmatrix}-1&amp;0\\0&amp;2\end{pmatrix}
+\]</div>
+<p>da una silla.</p>
+<h3>3.8. Autovalores reales iguales</h3>
+<p>Si el autovalor es doble, \(k_1=k_2=k\), el signo de \(k\) sigue siendo decisivo para la estabilidad.</p>
+<p>Si \(k&lt;0\), el factor \(e^{kt}\) tiende a cero, y el punto es un nodo estable. Si \(k&gt;0\), el factor crece, y el punto es un nodo inestable.</p>
+<p>La geometría puede presentar variantes. En casos especiales, como una matriz diagonal escalar \(A=aI\), todas las trayectorias son semirrectas que llegan al origen o salen de él. En otros casos, cuando no hay dos autovectores independientes, aparecen expresiones con \(te^{kt}\), y las trayectorias tienen otra forma, aunque la estabilidad sigue gobernada por el signo de \(k\).</p>
+<p>Ejemplo:</p>
+<div class="formula-block">\[
+A=\begin{pmatrix}-2&amp;0\\0&amp;-2\end{pmatrix}
+\]</div>
+<p>produce un nodo estable propio: todas las direcciones son autovectoriales.</p>
+<h3>3.9. Autovalores complejos conjugados</h3>
+<p>Si los autovalores son</p>
+<div class="formula-block">\[
+k=p\pm qi,\qquad q\neq 0,
+\]</div>
+<p>las soluciones contienen senos y cosenos multiplicados por \(e^{pt}\). La parte imaginaria produce giro; la parte real produce acercamiento o alejamiento.</p>
+<p>Si \(p&lt;0\), el factor \(e^{pt}\) tiende a cero. Las trayectorias giran en espiral hacia el origen. El punto es un foco estable o punto espiral asintóticamente estable.</p>
+<p>Si \(p&gt;0\), el factor \(e^{pt}\) crece. Las trayectorias giran alejándose del origen. El punto es un foco inestable.</p>
+<p>Ejemplo:</p>
+<div class="formula-block">\[
+A=\begin{pmatrix}2&amp;8\\-1&amp;-3\end{pmatrix}.
+\]</div>
+<p>Su ecuación característica es</p>
+<div class="formula-block">\[
+k^2+k+2=0,
+\]</div>
+<p>cuyas raíces son</p>
+<div class="formula-block">\[
+k=\frac{-1\pm i\sqrt7}{2}.
+\]</div>
+<p>La parte real es negativa; por tanto, el origen es un foco estable.</p>
+<h3>3.10. Autovalores imaginarios puros y centros</h3>
+<p>Si los autovalores son</p>
+<div class="formula-block">\[
+k=\pm qi,\qquad q\neq 0,
+\]</div>
+<p>la parte real es cero. No aparece factor exponencial de amortiguación ni de crecimiento. Las soluciones son periódicas y las trayectorias son curvas cerradas alrededor del origen. El punto crítico es un centro.</p>
+<p>El centro es estable, pero no asintóticamente estable. La trayectoria que empieza cerca del origen permanece cerca, pero no se acerca al origen; gira alrededor de él.</p>
+<p>Ejemplo:</p>
+<div class="formula-block">\[
+x'=-y,\qquad y'=x.
+\]</div>
+<p>La matriz tiene autovalores \(\pm i\). Las trayectorias satisfacen</p>
+<div class="formula-block">\[
+x^2+y^2=C,
+\]</div>
+<p>por lo que son circunferencias centradas en el origen.</p>
+<h3>3.11. Resumen operativo de clasificación lineal</h3>
+<p>Para un sistema lineal \(X'=AX\), el procedimiento de examen es:</p>
+<ol>
+<li>Escribir la matriz \(A\).</li>
+<li>Calcular la ecuación característica \(\det(A-kI)=0\).</li>
+<li>Hallar o clasificar sus raíces.</li>
+<li>Aplicar la tabla:</li>
+</ol>
+<ul>
+<li>\(k_1,k_2&lt;0\): nodo estable, asintóticamente estable.</li>
+<li>\(k_1,k_2&gt;0\): nodo inestable.</li>
+<li>\(k_1&lt;0&lt;k_2\): punto silla, inestable.</li>
+<li>\(k_1=k_2&lt;0\): nodo estable.</li>
+<li>\(k_1=k_2&gt;0\): nodo inestable.</li>
+<li>\(k=p\pm qi\), \(p&lt;0\): foco estable, asintóticamente estable.</li>
+<li>\(k=p\pm qi\), \(p&gt;0\): foco inestable.</li>
+<li>\(k=\pm qi\): centro, estable no asintóticamente estable.</li>
+</ul>
+<p>La justificación debe mencionar siempre la relación entre los autovalores y el comportamiento de \(e^{kt}\) o de \(e^{pt}\cos qt\), \(e^{pt}\sin qt\). Una respuesta que solo diga “porque la tabla lo dice” es débil.</p>
+<h3>3.12. Sistemas no lineales y primera aproximación</h3>
+<p>Para un sistema no lineal</p>
+<div class="formula-block">\[
+x'=f(x,y),\qquad y'=g(x,y),
+\]</div>
+<p>la estabilidad de un punto crítico puede ser difícil de estudiar directamente. Si el punto crítico es el origen y las funciones admiten desarrollo de Taylor, se conservan los términos lineales:</p>
+<div class="formula-block">\[
+f(x,y)=a_1x+b_1y+\text{términos de orden superior},
+\]</div>
+<div class="formula-block">\[
+g(x,y)=a_2x+b_2y+\text{términos de orden superior}.
+\]</div>
+<p>El sistema linealizado es</p>
+<div class="formula-block">\[
+x'=a_1x+b_1y,\qquad y'=a_2x+b_2y.
+\]</div>
+<p>Equivalentemente, la matriz lineal es la matriz de derivadas parciales en el punto crítico:</p>
+<div class="formula-block">\[
+A=\begin{pmatrix}
+f_x(0,0)&amp;f_y(0,0)\\
+g_x(0,0)&amp;g_y(0,0)
+\end{pmatrix}.
+\]</div>
+<p>Esta última formulación es una aclaración estándar: expresa de forma compacta los coeficientes de la parte lineal del desarrollo de Taylor.</p>
+<p>El sistema linealizado se llama sistema de primera aproximación. Su utilidad es que, salvo casos especiales, el tipo del punto crítico del sistema no lineal coincide con el tipo del sistema linealizado.</p>
+<p>Ejemplo:</p>
+<div class="formula-block">\[
+x'=2x+8y-xy,\qquad y'=-x-3y+xy.
+\]</div>
+<p>La parte lineal es</p>
+<div class="formula-block">\[
+x'=2x+8y,\qquad y'=-x-3y.
+\]</div>
+<p>La ecuación característica es \(k^2+k+2=0\), con parte real negativa. Por tanto, el punto crítico es un foco estable en la primera aproximación, y en este caso también en el sistema no lineal.</p>
+<h3>3.13. Casos en los que la linealización no decide completamente</h3>
+<p>El capítulo advierte dos situaciones delicadas.</p>
+<p>Primera: si las raíces de la ecuación característica del sistema linealizado son reales e iguales, el sistema linealizado da un nodo, pero el sistema no lineal puede comportarse como nodo o como punto espiral. La información lineal no es suficiente para distinguir siempre.</p>
+<p>Segunda: si las raíces son imaginarias puras, el linealizado da un centro, pero el sistema no lineal puede ser centro o punto espiral. En este caso no basta con decir “centro” para el sistema no lineal; hay que estudiar más información, por ejemplo la disposición de trayectorias o métodos de estabilidad que no se desarrollan en el capítulo.</p>
+<p>La consecuencia de examen es clara: si los autovalores tienen parte real no nula y no son un caso degenerado, la linealización decide. Si aparecen autovalores imaginarios puros o reales dobles, hay que formular la conclusión con cautela.</p>
+<h3>3.14. Criterio de Hurwitz</h3>
+<p>El criterio de Hurwitz sirve para decidir si todas las raíces de una ecuación característica tienen parte real negativa sin calcularlas explícitamente. Esto equivale a decidir estabilidad asintótica en sistemas lineales.</p>
+<p>Para una ecuación característica</p>
+<div class="formula-block">\[
+k^n+a_1k^{n-1}+a_2k^{n-2}+\cdots+a_n=0,
+\]</div>
+<p>se construye la matriz de Hurwitz con los coeficientes \(a_i\). La condición necesaria y suficiente para que las raíces tengan parte real negativa es que los menores diagonales principales de esa matriz sean estrictamente positivos.</p>
+<p>En dimensión dos, si</p>
+<div class="formula-block">\[
+k^2+a_1k+a_2=0,
+\]</div>
+<p>el criterio se reduce a</p>
+<div class="formula-block">\[
+a_1&gt;0,\qquad a_2&gt;0.
+\]</div>
+<p>En dimensión tres, para</p>
+<div class="formula-block">\[
+k^3+a_1k^2+a_2k+a_3=0,
+\]</div>
+<p>las condiciones equivalentes son</p>
+<div class="formula-block">\[
+a_1&gt;0,\qquad a_3&gt;0,\qquad a_1a_2&gt;a_3.
+\]</div>
+<p>El criterio importa porque en sistemas de orden superior calcular raíces puede ser largo o inútil. Para decidir estabilidad basta conocer el signo adecuado de ciertas combinaciones de coeficientes.</p>
+</div>
+    </section>
+    <section id="conceptos" class="page">
+      <header class="section-header">
+        <p class="section-kicker">04</p>
+        <h2>4. Conceptos clave</h2>
+      </header>
+      <div class="card-grid">
+<article class="definition-card">
+<h3>Sistema autónomo</h3>
+<p>Definición precisa: sistema de EDO en el que la variable independiente no aparece explícitamente en el segundo miembro:</p>
+<div class="formula-block">\[
+x'=f(x,y),\quad y'=g(x,y).
+\]</div>
+<p>Explicación desarrollada: el sistema autónomo permite asociar a cada punto del plano un vector velocidad. Por eso tiene sentido hablar de trayectorias en el plano de fases sin que el campo cambie con el tiempo.</p>
+<p>Ejemplo:</p>
+<div class="formula-block">\[
+x'=x+y,\qquad y'=x-y.
+\]</div>
+<p>Relación con otros conceptos: es el marco donde se definen plano de fases, trayectoria, punto crítico y estabilidad.</p>
+<p>Forma de examen: “Dado un sistema autónomo, determine sus puntos críticos y describa el plano de fases”.</p>
+</article>
+<article class="definition-card">
+<h3>Trayectoria</h3>
+<p>Definición precisa: imagen en el plano \(xy\) de una solución \(x(t),y(t)\).</p>
+<p>Explicación desarrollada: la solución contiene la parametrización temporal; la trayectoria contiene solo la curva recorrida. Esta diferencia evita confundir fórmulas temporales distintas con movimientos geométricamente distintos.</p>
+<p>Ejemplo: \(x=e^t\), \(y=2e^t\) tiene trayectoria \(y=2x\), \(x&gt;0\).</p>
+<p>Relación con otros conceptos: las trayectorias forman el retrato fase.</p>
+<p>Forma de examen: “Obtener la ecuación general de las trayectorias eliminando \(t\)”.</p>
+</article>
+<article class="definition-card">
+<h3>Plano de fases</h3>
+<p>Definición precisa: plano \(xy\) donde se representan las trayectorias de un sistema autónomo.</p>
+<p>Explicación desarrollada: es el espacio geométrico donde se ve el comportamiento de las soluciones: entrada, salida, giro, equilibrio y separación.</p>
+<p>Ejemplo: para \(x'=-y\), \(y'=x\), el plano de fases contiene circunferencias concéntricas.</p>
+<p>Relación con otros conceptos: contiene puntos críticos, trayectorias y retrato fase.</p>
+<p>Forma de examen: “Dibuje un esquema del plano de fases y clasifique el punto crítico”.</p>
+</article>
+<article class="definition-card">
+<h3>Retrato fase o diagrama de fases</h3>
+<p>Definición precisa: conjunto de trayectorias del sistema representadas en el plano de fases.</p>
+<p>Explicación desarrollada: no se pretende dibujar todas las trayectorias, sino representar las más significativas: direcciones de entrada, salida, espirales, órbitas cerradas o separatrices.</p>
+<p>Ejemplo: una silla tiene dos direcciones especiales: una de aproximación y una de alejamiento.</p>
+<p>Relación con otros conceptos: se construye a partir de autovalores y autovectores en sistemas lineales.</p>
+<p>Forma de examen: “Realizar un esquema aproximado del diagrama de fases”.</p>
+</article>
+<article class="definition-card">
+<h3>Punto crítico</h3>
+<p>Definición precisa: punto \((x_0,y_0)\) tal que \(f(x_0,y_0)=0\) y \(g(x_0,y_0)=0\).</p>
+<p>Explicación desarrollada: en un punto crítico las derivadas se anulan; por tanto, la solución constante es una solución del sistema. Estos puntos estructuran el comportamiento local.</p>
+<p>Ejemplo: para \(x'=x\), \(y'=-y\), el único punto crítico es \((0,0)\).</p>
+<p>Relación con otros conceptos: la estabilidad se define para puntos críticos.</p>
+<p>Forma de examen: “Obtenga los puntos críticos del sistema”.</p>
+</article>
+<article class="definition-card">
+<h3>Estabilidad</h3>
+<p>Definición precisa: un punto crítico \(P\) es estable si toda trayectoria que empieza suficientemente cerca permanece cerca para tiempos posteriores.</p>
+<p>Explicación desarrollada: estabilidad no significa que la trayectoria llegue al punto, sino que no se aleja demasiado si se empieza cerca.</p>
+<p>Ejemplo: un centro es estable porque sus trayectorias cerradas permanecen alrededor del equilibrio.</p>
+<p>Relación con otros conceptos: estabilidad asintótica es una forma más fuerte de estabilidad.</p>
+<p>Forma de examen: “Indique si el punto crítico es estable, asintóticamente estable o inestable”.</p>
+</article>
+<article class="definition-card">
+<h3>Estabilidad asintótica</h3>
+<p>Definición precisa: un punto crítico es asintóticamente estable si es estable y, además, las trayectorias próximas tienden a él cuando \(t\to+\infty\).</p>
+<p>Explicación desarrollada: exige permanencia cerca y convergencia al equilibrio. Es lo que ocurre en nodos estables y focos estables.</p>
+<p>Ejemplo: \(x'=-x\), \(y'=-2y\) tiene origen asintóticamente estable.</p>
+<p>Relación con otros conceptos: está asociada a autovalores con parte real negativa.</p>
+<p>Forma de examen: “Justifique por qué el origen es asintóticamente estable”.</p>
+</article>
+<article class="definition-card">
+<h3>Nodo</h3>
+<p>Definición precisa: punto crítico lineal asociado a autovalores reales del mismo signo, con trayectorias que entran o salen sin giro espiral.</p>
+<p>Explicación desarrollada: si los autovalores reales son negativos, las trayectorias se acercan al punto; si son positivos, se alejan.</p>
+<p>Ejemplo:</p>
+<div class="formula-block">\[
+A=\begin{pmatrix}-1&amp;0\\0&amp;-2\end{pmatrix}
+\]</div>
+<p>da un nodo estable.</p>
+<p>Relación con otros conceptos: se opone al foco, que implica giro por autovalores complejos.</p>
+<p>Forma de examen: “Clasifique el punto según los autovalores reales”.</p>
+</article>
+<article class="definition-card">
+<h3>Punto silla</h3>
+<p>Definición precisa: punto crítico con dos autovalores reales de signos opuestos.</p>
+<p>Explicación desarrollada: combina una dirección estable y otra inestable. Por eso es siempre inestable.</p>
+<p>Ejemplo:</p>
+<div class="formula-block">\[
+A=\begin{pmatrix}-1&amp;0\\0&amp;2\end{pmatrix}.
+\]</div>
+<p>Relación con otros conceptos: los autovectores marcan las direcciones de entrada y salida.</p>
+<p>Forma de examen: “Explique por qué el punto silla es inestable”.</p>
+</article>
+<article class="definition-card">
+<h3>Foco o punto espiral</h3>
+<p>Definición precisa: punto crítico asociado a autovalores complejos conjugados con parte real no nula.</p>
+<p>Explicación desarrollada: la parte imaginaria genera giro; la parte real determina si la espiral entra o sale.</p>
+<p>Ejemplo: \(k=-1\pm 2i\) produce un foco estable.</p>
+<p>Relación con otros conceptos: si la parte real se hace cero, se pasa al caso de centro.</p>
+<p>Forma de examen: “Diga si el punto es foco estable o inestable a partir de \(p\pm qi\)”.</p>
+</article>
+<article class="definition-card">
+<h3>Centro</h3>
+<p>Definición precisa: punto crítico asociado a autovalores imaginarios puros \(\pm qi\).</p>
+<p>Explicación desarrollada: las soluciones son periódicas y las trayectorias cerradas. Es estable, pero no asintóticamente estable.</p>
+<p>Ejemplo:</p>
+<div class="formula-block">\[
+x'=-y,\qquad y'=x.
+\]</div>
+<p>Relación con otros conceptos: en sistemas no lineales, un centro del linealizado no garantiza automáticamente un centro no lineal.</p>
+<p>Forma de examen: “Razone por qué un centro no es asintóticamente estable”.</p>
+</article>
+<article class="definition-card">
+<h3>Sistema linealizado</h3>
+<p>Definición precisa: sistema formado por los términos lineales del desarrollo de Taylor de un sistema no lineal en torno a un punto crítico.</p>
+<p>Explicación desarrollada: aproxima el comportamiento local del sistema cerca del equilibrio. Se usa porque la parte lineal suele dominar a los términos de orden superior cuando \((x,y)\) es pequeño.</p>
+<p>Ejemplo:</p>
+<div class="formula-block">\[
+x'=2x+y+x^2,\qquad y'=-x+3y+xy
+\]</div>
+<p>tiene linealizado</p>
+<div class="formula-block">\[
+x'=2x+y,\qquad y'=-x+3y.
+\]</div>
+<p>Relación con otros conceptos: permite aplicar la clasificación lineal a sistemas no lineales, salvo casos degenerados.</p>
+<p>Forma de examen: “Linealice el sistema en el punto crítico y clasifique la estabilidad si es posible”.</p>
+</article>
+<article class="definition-card">
+<h3>Criterio de Hurwitz</h3>
+<p>Definición precisa: criterio algebraico que determina si todas las raíces de una ecuación característica tienen parte real negativa mediante menores diagonales principales.</p>
+<p>Explicación desarrollada: evita calcular raíces explícitas en polinomios de grado mayor. Si se cumplen las condiciones, el punto crítico lineal es asintóticamente estable.</p>
+<p>Ejemplo: para \(k^2+a_1k+a_2=0\), basta \(a_1&gt;0\), \(a_2&gt;0\).</p>
+<p>Relación con otros conceptos: sustituye el cálculo directo de autovalores cuando solo interesa estabilidad asintótica.</p>
+<p>Forma de examen: “Aplique Hurwitz para decidir la estabilidad según un parámetro”.</p>
+</article>
+</div>
+    </section>
+    <section id="relaciones" class="page">
+      <header class="section-header">
+        <p class="section-kicker">05</p>
+        <h2>5. Relaciones entre ideas</h2>
+      </header>
+      <div class="reading-block">
+<p>El capítulo tiene una jerarquía clara. Primero se define el marco: sistema autónomo. Después se interpreta cada solución como una trayectoria en el plano de fases. Luego se identifican los puntos críticos, que son trayectorias reducidas a un solo punto. Finalmente se pregunta qué hacen las trayectorias cercanas a esos puntos: esa pregunta es la estabilidad.</p>
+<p>La dependencia conceptual más importante es:</p>
+<div class="formula-block">\[
+\text{sistema autónomo} \to \text{trayectorias} \to \text{plano de fases} \to \text{puntos críticos} \to \text{estabilidad}.
+\]</div>
+<p>No se puede clasificar un punto crítico si antes no se ha resuelto \(f=g=0\). Tampoco se puede hablar correctamente de diagrama de fases sin distinguir trayectoria y solución temporal.</p>
+<p>En sistemas lineales, la dependencia operativa es:</p>
+<div class="formula-block">\[
+X'=AX \to \det(A-kI)=0 \to \text{autovalores} \to \text{tipo de punto} \to \text{estabilidad}.
+\]</div>
+<p>Los autovalores son la causa algebraica del comportamiento geométrico. Si son reales, no hay giro esencial. Si son complejos, aparece oscilación. Si tienen parte real negativa, hay acercamiento; si tienen parte real positiva, hay alejamiento.</p>
+<p>La oposición clave es estabilidad frente a estabilidad asintótica. Un centro muestra que permanecer cerca no equivale a tender al equilibrio. Esta distinción aparece de forma natural cuando los autovalores son imaginarios puros.</p>
+<p>Otra oposición importante es lineal frente a no lineal. En un sistema lineal, los autovalores dan una clasificación completa. En un sistema no lineal, los autovalores del sistema linealizado dan una clasificación local, pero no siempre definitiva. Los casos delicados son los autovalores reales iguales y los imaginarios puros.</p>
+<p>También hay una relación entre cálculo explícito y criterio de Hurwitz. Si se pueden calcular autovalores, se clasifican directamente. Si la ecuación característica es complicada, Hurwitz permite decidir si todas las partes reales son negativas. Por tanto, Hurwitz no sustituye al concepto de autovalor, sino que evita su cálculo cuando solo interesa estabilidad asintótica.</p>
+<p>No hay en el capítulo una evolución histórica desarrollada. Sí hay una evolución metodológica: se pasa de resolver ecuaciones a interpretar comportamientos; de fórmulas temporales a geometría en el plano; y de sistemas lineales a aproximaciones lineales de sistemas no lineales.</p>
+</div>
+    </section>
+    <section id="errores" class="page">
+      <header class="section-header">
+        <p class="section-kicker">06</p>
+        <h2>6. Errores habituales</h2>
+      </header>
+      <div class="card-grid">
+<article class="definition-card">
+<h3>Confundir solución con trayectoria</h3>
+<p>Por qué está mal: la solución incluye el parámetro \(t\); la trayectoria es solo la curva en el plano. Dos soluciones pueden tener la misma trayectoria.</p>
+<p>Corrección: escribir primero \(x(t),y(t)\) y luego eliminar \(t\) si se pide la trayectoria.</p>
+<p>Respuesta incorrecta: “La trayectoria es \(x=e^t,\ y=2e^t\)”.</p>
+<p>Respuesta correcta: “La solución es \(x=e^t,\ y=2e^t\); la trayectoria es \(y=2x,\ x&gt;0\)”.</p>
+</article>
+<article class="definition-card">
+<h3>Clasificar estabilidad sin hallar puntos críticos</h3>
+<p>Por qué está mal: la estabilidad se estudia en torno a puntos críticos. Si no se han encontrado, no se sabe qué punto se está clasificando.</p>
+<p>Corrección: resolver siempre \(f(x,y)=0\), \(g(x,y)=0\).</p>
+<p>Respuesta incorrecta: “El sistema es estable porque los coeficientes son negativos”.</p>
+<p>Respuesta correcta: “Primero se obtiene el punto crítico; después se calcula la matriz lineal y sus autovalores”.</p>
+</article>
+<article class="definition-card">
+<h3>Olvidar trasladar el equilibrio al origen</h3>
+<p>Por qué está mal: las fórmulas de clasificación lineal se aplican al origen del sistema trasladado o al sistema linealizado en el punto crítico.</p>
+<p>Corrección: si \(P=(x_0,y_0)\), usar \(u=x-x_0\), \(v=y-y_0\), o evaluar la matriz lineal en \(P\).</p>
+<p>Respuesta incorrecta: “Uso la matriz de coeficientes directamente en \((0,0)\)” aunque el equilibrio sea \((1,-3)\).</p>
+<p>Respuesta correcta: “Traslado \(P\) al origen y clasifico el sistema resultante”.</p>
+</article>
+<article class="definition-card">
+<h3>Decir que estable significa tender al equilibrio</h3>
+<p>Por qué está mal: eso es estabilidad asintótica. La estabilidad solo exige permanecer cerca.</p>
+<p>Corrección: distinguir “permanece cerca” de “tiende al punto”.</p>
+<p>Respuesta incorrecta: “Un centro es inestable porque no tiende al origen”.</p>
+<p>Respuesta correcta: “Un centro es estable, pero no asintóticamente estable”.</p>
+</article>
+<article class="definition-card">
+<h3>Clasificar un centro como asintóticamente estable</h3>
+<p>Por qué está mal: con autovalores imaginarios puros no hay amortiguación. Las trayectorias son cerradas o periódicas en el lineal.</p>
+<p>Corrección: decir “estable no asintóticamente estable”.</p>
+<p>Respuesta incorrecta: “\(\pm i\) implica estabilidad asintótica”.</p>
+<p>Respuesta correcta: “\(\pm i\) implica centro: estable, no asintóticamente estable”.</p>
+</article>
+<article class="definition-card">
+<h3>Confundir foco con centro</h3>
+<p>Por qué está mal: ambos tienen autovalores complejos, pero el foco tiene parte real no nula y el centro tiene parte real cero.</p>
+<p>Corrección: mirar \(p\) en \(p\pm qi\).</p>
+<p>Respuesta incorrecta: “Como los autovalores son complejos, es centro”.</p>
+<p>Respuesta correcta: “Si \(p&lt;0\), foco estable; si \(p&gt;0\), foco inestable; si \(p=0\), centro”.</p>
+</article>
+<article class="definition-card">
+<h3>Decir que una silla es estable porque una dirección entra</h3>
+<p>Por qué está mal: estabilidad exige que todas las trayectorias suficientemente cercanas permanezcan cerca. La dirección asociada al autovalor positivo se aleja.</p>
+<p>Corrección: un solo modo inestable basta para que el punto sea inestable.</p>
+<p>Respuesta incorrecta: “Es parcialmente estable, por tanto estable”.</p>
+<p>Respuesta correcta: “Es un punto silla e inestable”.</p>
+</article>
+<article class="definition-card">
+<h3>Usar el signo del determinante de la matriz sin justificar</h3>
+<p>Por qué está mal: el capítulo clasifica mediante autovalores. El determinante puede ayudar, pero la respuesta debe conectarse con la ecuación característica.</p>
+<p>Corrección: calcular \(\det(A-kI)\) y clasificar raíces.</p>
+<p>Respuesta incorrecta: “Determinante negativo, por tanto no explico más”.</p>
+<p>Respuesta correcta: “La ecuación característica tiene raíces reales de signo opuesto; por tanto, es silla inestable”.</p>
+</article>
+<article class="definition-card">
+<h3>Aplicar la linealización como si siempre decidiera</h3>
+<p>Por qué está mal: con autovalores reales iguales o imaginarios puros, el sistema no lineal puede no coincidir en tipo con el linealizado.</p>
+<p>Corrección: señalar el caso excepcional y no afirmar más de lo que permite el teorema.</p>
+<p>Respuesta incorrecta: “El linealizado es centro, luego el no lineal es centro”.</p>
+<p>Respuesta correcta: “El linealizado es centro; al ser caso de imaginarios puros, no se puede concluir solo con la primera aproximación”.</p>
+</article>
+<article class="definition-card">
+<h3>No justificar el resultado en términos de \(t\to+\infty\)</h3>
+<p>Por qué está mal: estabilidad se refiere al comportamiento futuro de las trayectorias.</p>
+<p>Corrección: mencionar si los factores exponenciales tienden a cero, crecen o permanecen oscilando.</p>
+<p>Respuesta incorrecta: “Autovalores negativos: estable”.</p>
+<p>Respuesta correcta: “Como \(e^{k_1t}\) y \(e^{k_2t}\) tienden a cero al ser \(k_1,k_2&lt;0\), las trayectorias tienden al origen; es nodo asintóticamente estable”.</p>
+</article>
+</div>
+    </section>
+    <section id="preguntas" class="page">
+      <header class="section-header">
+        <p class="section-kicker">07</p>
+        <h2>7. Preguntas orientadas a examen</h2>
+      </header>
+      <details class="accordion" open>
+<summary>10 preguntas fáciles</summary>
+<div class="reading-block">
+<p>F1. Defina sistema autónomo y dé un ejemplo.</p>
+<p>F2. ¿Qué es una trayectoria de un sistema autónomo?</p>
+<p>F3. ¿Qué es el plano de fases?</p>
+<p>F4. Defina punto crítico o punto de equilibrio.</p>
+<p>F5. Explique la diferencia entre estabilidad y estabilidad asintótica.</p>
+<p>F6. ¿Por qué un centro es estable pero no asintóticamente estable?</p>
+<p>F7. En el sistema \(X'=AX\), ¿qué papel desempeñan los autovalores de \(A\)?</p>
+<p>F8. Clasifique el origen si los autovalores son \(-1\) y \(-3\).</p>
+<p>F9. Clasifique el origen si los autovalores son \(2\) y \(-1\).</p>
+<p>F10. Clasifique el origen si los autovalores son \(-2\pm 5i\).</p>
+</div>
+</details>
+<details class="accordion" open>
+<summary>10 preguntas medias</summary>
+<div class="reading-block">
+<p>M1. Obtenga los puntos críticos del sistema</p>
+<div class="formula-block">\[
+x'=x(1-y),\qquad y'=y(x-2).
+\]</div>
+<p>M2. Para</p>
+<div class="formula-block">\[
+A=\begin{pmatrix}-1&amp;0\\0&amp;4\end{pmatrix},
+\]</div>
+<p>clasifique el origen y justifique la estabilidad.</p>
+<p>M3. Para</p>
+<div class="formula-block">\[
+A=\begin{pmatrix}0&amp;-1\\1&amp;0\end{pmatrix},
+\]</div>
+<p>calcule la ecuación característica y clasifique el origen.</p>
+<p>M4. Para</p>
+<div class="formula-block">\[
+A=\begin{pmatrix}2&amp;8\\-1&amp;-3\end{pmatrix},
+\]</div>
+<p>calcule los autovalores y clasifique el origen.</p>
+<p>M5. Explique por qué los autovalores reales de signos opuestos producen un punto silla.</p>
+<p>M6. Dado un punto crítico \(P=(2,-1)\), escriba el cambio de variables que lo traslada al origen.</p>
+<p>M7. Linealice el sistema</p>
+<div class="formula-block">\[
+x'=x+y+x^2,\qquad y'=2x-y+xy
+\]</div>
+<p>en el origen.</p>
+<p>M8. Diga si la linealización decide completamente cuando los autovalores son \(3\) y \(3\).</p>
+<p>M9. Diga si la linealización decide completamente cuando los autovalores son \(-1\pm 2i\).</p>
+<p>M10. Aplique Hurwitz a</p>
+<div class="formula-block">\[
+k^2+5k+6=0
+\]</div>
+<p>para decidir si las raíces tienen parte real negativa.</p>
+</div>
+</details>
+<details class="accordion" open>
+<summary>5 preguntas difíciles</summary>
+<div class="reading-block">
+<p>D1. Para</p>
+<div class="formula-block">\[
+x'=2x+y,\qquad y'=x+2y,
+\]</div>
+<p>obtenga la solución general por autovalores y clasifique el punto crítico.</p>
+<p>D2. Para</p>
+<div class="formula-block">\[
+x'=x+2y+5,\qquad y'=3x+3y+6,
+\]</div>
+<p>halle el punto crítico, trasládelo al origen y clasifique su estabilidad.</p>
+<p>D3. Estudie la estabilidad del origen del sistema no lineal</p>
+<div class="formula-block">\[
+x'=2x+8y-xy,\qquad y'=-x-3y+xy.
+\]</div>
+<p>D4. Aplique el criterio de Hurwitz a</p>
+<div class="formula-block">\[
+k^3+4k^2+5k+2=0
+\]</div>
+<p>y decida si todas las raíces tienen parte real negativa.</p>
+<p>D5. Explique por qué un linealizado con autovalores imaginarios puros no permite concluir necesariamente que el sistema no lineal tenga un centro.</p>
+</div>
+</details>
+<details class="accordion" open>
+<summary>5 preguntas de desarrollo largo</summary>
+<div class="reading-block">
+<p>L1. Desarrolle el procedimiento completo para clasificar un punto crítico de un sistema lineal \(2\times2\).</p>
+<p>L2. Explique la diferencia entre nodo estable, foco estable y centro, relacionando autovalores y geometría de trayectorias.</p>
+<p>L3. Exponga el método de linealización de un sistema no lineal cerca de un punto crítico, incluyendo sus limitaciones.</p>
+<p>L4. Describa la relación entre solución, trayectoria, plano de fases y retrato fase.</p>
+<p>L5. Explique el criterio de Hurwitz y su utilidad en el estudio de estabilidad.</p>
+</div>
+</details>
+<details class="accordion" open>
+<summary>5 preguntas de relación entre conceptos</summary>
+<div class="reading-block">
+<p>R1. Relacione autovalores reales, autovectores y direcciones principales del plano de fases.</p>
+<p>R2. Relacione estabilidad asintótica y parte real de los autovalores.</p>
+<p>R3. Relacione el traslado de origen con la clasificación de puntos críticos no situados en \((0,0)\).</p>
+<p>R4. Relacione centro lineal y limitación de la linealización en sistemas no lineales.</p>
+<p>R5. Relacione el criterio de Hurwitz con la clasificación por autovalores.</p>
+</div>
+</details>
+    </section>
+    <section id="respuestas" class="page">
+      <header class="section-header">
+        <p class="section-kicker">08</p>
+        <h2>8. Respuestas modelo</h2>
+      </header>
+      <details class="accordion" open>
+<summary>Respuestas a las preguntas fáciles</summary>
+<div class="reading-block">
+<p>F1. Un sistema autónomo es aquel en el que la variable independiente no aparece explícitamente en las funciones que definen las derivadas. Tiene la forma \(x'=f(x,y)\), \(y'=g(x,y)\). Por ejemplo, \(x'=x-y\), \(y'=x+y\) es autónomo.</p>
+<p>F2. Una trayectoria es la curva del plano \(xy\) que se obtiene al representar una solución \(x(t),y(t)\). La solución conserva la dependencia temporal; la trayectoria solo muestra la curva recorrida en el plano de fases.</p>
+<p>F3. El plano de fases es el plano \(xy\) donde se representan las trayectorias de las soluciones de un sistema autónomo. Permite estudiar geométricamente el comportamiento de las soluciones.</p>
+<p>F4. Un punto crítico es un punto \((x_0,y_0)\) donde se anulan simultáneamente las derivadas: \(f(x_0,y_0)=0\), \(g(x_0,y_0)=0\). Si el sistema empieza allí, permanece allí.</p>
+<p>F5. Un punto estable mantiene cerca las trayectorias que empiezan suficientemente cerca. Es asintóticamente estable si, además de permanecer cerca, esas trayectorias tienden al punto cuando \(t\to+\infty\).</p>
+<p>F6. Un centro es estable porque las trayectorias cercanas permanecen en curvas cerradas alrededor del equilibrio. No es asintóticamente estable porque esas trayectorias no tienden al punto crítico.</p>
+<p>F7. En \(X'=AX\), los autovalores determinan el tipo de exponenciales que aparecen en la solución y, por tanto, el comportamiento de las trayectorias: acercamiento, alejamiento, silla, giro o centro.</p>
+<p>F8. Si los autovalores son \(-1\) y \(-3\), ambos son reales y negativos. El origen es un nodo estable, asintóticamente estable.</p>
+<p>F9. Si los autovalores son \(2\) y \(-1\), son reales y de signos opuestos. El origen es un punto silla e inestable.</p>
+<p>F10. Si los autovalores son \(-2\pm 5i\), son complejos conjugados con parte real negativa. El origen es un foco estable, asintóticamente estable.</p>
+</div>
+</details>
+<details class="accordion" open>
+<summary>Respuestas a las preguntas medias</summary>
+<div class="reading-block">
+<p>M1. Los puntos críticos satisfacen \(x(1-y)=0\) y \(y(x-2)=0\). De la primera ecuación, \(x=0\) o \(y=1\). De la segunda, \(y=0\) o \(x=2\). Combinando posibilidades compatibles se obtienen \((0,0)\) y \((2,1)\).</p>
+<p>M2. Los autovalores de \(A\) son \(-1\) y \(4\). Como son reales y de signos opuestos, el origen tiene una dirección de aproximación y otra de alejamiento. Es un punto silla e inestable.</p>
+<p>M3. La ecuación característica es</p>
+<div class="formula-block">\[
+\det\begin{pmatrix}-k&amp;-1\\1&amp;-k\end{pmatrix}=k^2+1=0.
+\]</div>
+<p>Sus raíces son \(k=\pm i\). Son imaginarias puras, luego el origen es un centro: estable, no asintóticamente estable.</p>
+<p>M4. La ecuación característica es</p>
+<div class="formula-block">\[
+\det\begin{pmatrix}2-k&amp;8\\-1&amp;-3-k\end{pmatrix}
+=(2-k)(-3-k)+8=k^2+k+2.
+\]</div>
+<p>Sus raíces son</p>
+<div class="formula-block">\[
+k=\frac{-1\pm i\sqrt7}{2}.
+\]</div>
+<p>La parte real es negativa, así que el origen es un foco estable, asintóticamente estable.</p>
+<p>M5. Con autovalores reales de signos opuestos, una componente de la solución contiene \(e^{k_+t}\), que crece, y otra contiene \(e^{k_-t}\), que decae. Por tanto hay una dirección que entra y otra que sale. La existencia de una dirección de salida hace que el punto sea inestable.</p>
+<p>M6. El cambio es</p>
+<div class="formula-block">\[
+u=x-2,\qquad v=y+1.
+\]</div>
+<p>Equivalente: \(x=u+2\), \(y=v-1\). En las variables \(u,v\), el punto \(P=(2,-1)\) pasa a ser \((0,0)\).</p>
+<p>M7. Se conservan los términos lineales. El sistema linealizado es</p>
+<div class="formula-block">\[
+x'=x+y,\qquad y'=2x-y.
+\]</div>
+<p>Los términos \(x^2\) y \(xy\) son de orden superior y se omiten en la primera aproximación.</p>
+<p>M8. No decide completamente en el caso no lineal. Los autovalores reales iguales son uno de los casos excepcionales: el sistema linealizado da un nodo, pero el sistema no lineal puede requerir más análisis para fijar el tipo.</p>
+<p>M9. Sí decide la estabilidad y el tipo local ordinario: como la parte real es negativa y no se trata de un caso degenerado, el punto crítico del sistema no lineal coincide localmente con el foco estable del linealizado.</p>
+<p>M10. Para \(k^2+5k+6=0\), \(a_1=5&gt;0\), \(a_2=6&gt;0\). Por Hurwitz en grado dos, ambas raíces tienen parte real negativa. El equilibrio lineal correspondiente sería asintóticamente estable.</p>
+</div>
+</details>
+<details class="accordion" open>
+<summary>Respuestas a las preguntas difíciles</summary>
+<div class="reading-block">
+<p>D1. La matriz es</p>
+<div class="formula-block">\[
+A=\begin{pmatrix}2&amp;1\\1&amp;2\end{pmatrix}.
+\]</div>
+<p>La ecuación característica es</p>
+<div class="formula-block">\[
+\det(A-kI)=(2-k)^2-1=k^2-4k+3=0.
+\]</div>
+<p>Sus raíces son \(k_1=1\), \(k_2=3\). Para \(k_1=1\), un autovector es \((1,-1)\). Para \(k_2=3\), un autovector es \((1,1)\). La solución general es</p>
+<div class="formula-block">\[
+X(t)=C_1\begin{pmatrix}1\\-1\end{pmatrix}e^t+
+C_2\begin{pmatrix}1\\1\end{pmatrix}e^{3t}.
+\]</div>
+<p>Ambos autovalores son positivos, por lo que el origen es un nodo inestable.</p>
+<p>D2. El punto crítico resuelve</p>
+<div class="formula-block">\[
+x+2y+5=0,\qquad 3x+3y+6=0.
+\]</div>
+<p>De la segunda, \(x+y+2=0\), luego \(x=-y-2\). Sustituyendo en la primera:</p>
+<div class="formula-block">\[
+-y-2+2y+5=0 \Rightarrow y=-3,\qquad x=1.
+\]</div>
+<p>El punto crítico es \(P=(1,-3)\). Trasladamos con \(x=u+1\), \(y=v-3\). Como el sistema es lineal afín, queda</p>
+<div class="formula-block">\[
+u'=u+2v,\qquad v'=3u+3v.
+\]</div>
+<p>La matriz es</p>
+<div class="formula-block">\[
+A=\begin{pmatrix}1&amp;2\\3&amp;3\end{pmatrix}.
+\]</div>
+<p>La ecuación característica es</p>
+<div class="formula-block">\[
+(1-k)(3-k)-6=k^2-4k-3=0,
+\]</div>
+<p>con raíces \(k=2\pm\sqrt7\). Una es positiva y otra negativa. Por tanto, el punto crítico \((1,-3)\) es una silla inestable.</p>
+<p>D3. El origen es punto crítico porque los dos segundos miembros se anulan en \((0,0)\). El sistema linealizado conserva los términos lineales:</p>
+<div class="formula-block">\[
+x'=2x+8y,\qquad y'=-x-3y.
+\]</div>
+<p>La matriz es</p>
+<div class="formula-block">\[
+A=\begin{pmatrix}2&amp;8\\-1&amp;-3\end{pmatrix}.
+\]</div>
+<p>La ecuación característica es</p>
+<div class="formula-block">\[
+k^2+k+2=0,
+\]</div>
+<p>con raíces</p>
+<div class="formula-block">\[
+k=\frac{-1\pm i\sqrt7}{2}.
+\]</div>
+<p>Tienen parte real negativa. No es un caso de imaginarios puros ni de raíz real doble; por tanto, el sistema no lineal tiene en el origen un foco estable, asintóticamente estable.</p>
+<p>D4. Para</p>
+<div class="formula-block">\[
+k^3+4k^2+5k+2=0,
+\]</div>
+<p>tenemos \(a_1=4\), \(a_2=5\), \(a_3=2\). En grado tres, Hurwitz exige</p>
+<div class="formula-block">\[
+a_1&gt;0,\qquad a_3&gt;0,\qquad a_1a_2&gt;a_3.
+\]</div>
+<p>Se cumple:</p>
+<div class="formula-block">\[
+4&gt;0,\qquad 2&gt;0,\qquad 4\cdot5=20&gt;2.
+\]</div>
+<p>Luego todas las raíces tienen parte real negativa. El punto crítico del sistema lineal correspondiente es asintóticamente estable.</p>
+<p>D5. En el caso de autovalores imaginarios puros, el sistema linealizado tiene un centro, porque sus soluciones son periódicas y las trayectorias son cerradas. Sin embargo, en un sistema no lineal los términos de orden superior pueden modificar el comportamiento: las trayectorias pueden seguir siendo cerradas o convertirse en espirales. Por eso la primera aproximación no decide completamente; hay que estudiar más información del sistema.</p>
+</div>
+</details>
+<details class="accordion" open>
+<summary>Respuestas a las preguntas de desarrollo largo</summary>
+<div class="reading-block">
+<p>L1. Para clasificar un punto crítico de un sistema lineal \(2\times2\), se escribe el sistema como \(X'=AX\). El origen es el punto crítico. Después se calcula la ecuación característica \(\det(A-kI)=0\). Si las raíces son reales negativas, hay nodo estable; si son reales positivas, nodo inestable; si son reales de signos opuestos, silla inestable. Si son complejas \(p\pm qi\), entonces \(p&lt;0\) da foco estable y \(p&gt;0\) foco inestable. Si son imaginarias puras, se obtiene un centro estable no asintótico. La justificación se basa en el comportamiento de los factores \(e^{kt}\) o \(e^{pt}\) que aparecen en la solución.</p>
+<p>L2. Nodo estable, foco estable y centro son puntos que no expulsan las trayectorias cercanas, pero lo hacen de forma distinta. En el nodo estable los autovalores son reales negativos y las trayectorias entran sin giro esencial. En el foco estable los autovalores son complejos con parte real negativa; las trayectorias entran girando en espiral. En el centro los autovalores son imaginarios puros; las trayectorias son cerradas y no tienden al origen. Por eso nodo estable y foco estable son asintóticamente estables, mientras que el centro solo es estable.</p>
+<p>L3. Para linealizar un sistema no lineal se localiza primero el punto crítico. Si no está en el origen, se traslada. Después se toma la parte lineal del desarrollo de Taylor de \(f\) y \(g\), o de forma equivalente se calcula la matriz de derivadas parciales en el punto crítico. El sistema resultante es \(X'=AX\). Se clasifican los autovalores de \(A\). Si no hay casos degenerados, el tipo del punto crítico coincide con el del linealizado. Las limitaciones principales aparecen con raíces reales iguales o imaginarias puras, casos en los que la linealización no decide siempre el tipo del punto no lineal.</p>
+<p>L4. Una solución es un par de funciones \(x(t),y(t)\) que satisface el sistema. Al representarla en el plano \(xy\), se obtiene una trayectoria. El plano donde se dibujan estas trayectorias es el plano de fases. El retrato fase es el conjunto de trayectorias que muestra la estructura del sistema. Esta cadena permite pasar de ecuaciones temporales a una lectura geométrica del comportamiento dinámico.</p>
+<p>L5. El criterio de Hurwitz es un método algebraico para decidir si todas las raíces de una ecuación característica tienen parte real negativa. En sistemas lineales, esa condición implica estabilidad asintótica del punto crítico. Su utilidad aparece cuando no conviene resolver explícitamente la ecuación característica, especialmente en grados superiores. En grado dos se reduce a \(a_1&gt;0\), \(a_2&gt;0\), y en grado tres a \(a_1&gt;0\), \(a_3&gt;0\), \(a_1a_2&gt;a_3\).</p>
+</div>
+</details>
+<details class="accordion" open>
+<summary>Respuestas a las preguntas de relación entre conceptos</summary>
+<div class="reading-block">
+<p>R1. Con autovalores reales, los autovectores indican direcciones privilegiadas del plano de fases. Si el autovalor asociado es negativo, la trayectoria se aproxima al origen en esa dirección. Si es positivo, se aleja. En una silla, los autovectores separan la dirección estable de la inestable.</p>
+<p>R2. La estabilidad asintótica en sistemas lineales se corresponde con que todos los autovalores tengan parte real negativa. En ese caso, los factores exponenciales tienden a cero y las trayectorias cercanas convergen al equilibrio.</p>
+<p>R3. El traslado de origen permite aplicar la clasificación estándar aunque el punto crítico no sea \((0,0)\). El cambio \(u=x-x_0\), \(v=y-y_0\) conserva el comportamiento local de las trayectorias, pero sitúa el equilibrio en el origen.</p>
+<p>R4. Un centro lineal aparece cuando los autovalores son imaginarios puros. En un sistema no lineal, esa situación es delicada porque los términos no lineales pueden conservar órbitas cerradas o convertirlas en espirales. Por eso el centro del linealizado no garantiza automáticamente centro no lineal.</p>
+<p>R5. La clasificación por autovalores exige conocer la naturaleza de las raíces de la ecuación característica. Hurwitz permite saber si todas tienen parte real negativa sin calcularlas. Por tanto, Hurwitz sirve para concluir estabilidad asintótica cuando el cálculo directo de autovalores no es práctico.</p>
+</div>
+</details>
+    </section>
+    <section id="resumen" class="page">
+      <header class="section-header">
+        <p class="section-kicker">09</p>
+        <h2>9. Resumen final de repaso</h2>
+      </header>
+      <div class="reading-block">
+<p>Ideas principales:</p>
+<ul>
+<li>El capítulo pasa de resolver sistemas a estudiar cualitativamente sus trayectorias.</li>
+<li>El marco básico es el sistema autónomo \(x'=f(x,y)\), \(y'=g(x,y)\).</li>
+<li>Las soluciones se representan como trayectorias en el plano de fases.</li>
+<li>Los puntos críticos satisfacen \(f=g=0\) y son soluciones constantes.</li>
+<li>La estabilidad mide qué hacen las trayectorias próximas a un punto crítico.</li>
+<li>En sistemas lineales \(X'=AX\), los autovalores de \(A\) clasifican el equilibrio.</li>
+<li>En sistemas no lineales se usa la primera aproximación lineal.</li>
+<li>Hurwitz decide estabilidad asintótica sin calcular raíces explícitas.</li>
+</ul>
+<p>Conceptos imprescindibles:</p>
+<ul>
+<li>Sistema autónomo.</li>
+<li>Trayectoria.</li>
+<li>Plano de fases.</li>
+<li>Diagrama de fases.</li>
+<li>Punto crítico.</li>
+<li>Estabilidad.</li>
+<li>Estabilidad asintótica.</li>
+<li>Nodo.</li>
+<li>Silla.</li>
+<li>Foco.</li>
+<li>Centro.</li>
+<li>Linealización.</li>
+<li>Criterio de Hurwitz.</li>
+</ul>
+<p>Relaciones clave:</p>
+<ul>
+<li>\(f=g=0\) determina puntos críticos.</li>
+<li>\(\det(A-kI)=0\) determina autovalores.</li>
+<li>Autovalores reales negativos \(\Rightarrow\) nodo estable.</li>
+<li>Autovalores reales positivos \(\Rightarrow\) nodo inestable.</li>
+<li>Autovalores reales de signos opuestos \(\Rightarrow\) silla inestable.</li>
+<li>Autovalores complejos con parte real negativa \(\Rightarrow\) foco estable.</li>
+<li>Autovalores complejos con parte real positiva \(\Rightarrow\) foco inestable.</li>
+<li>Autovalores imaginarios puros \(\Rightarrow\) centro estable no asintótico.</li>
+<li>Parte lineal del Taylor \(\Rightarrow\) sistema linealizado.</li>
+<li>Casos delicados: raíz real doble e imaginarios puros.</li>
+</ul>
+<p>Errores que evitar:</p>
+<ul>
+<li>Confundir solución y trayectoria.</li>
+<li>Clasificar sin hallar puntos críticos.</li>
+<li>Olvidar trasladar el equilibrio.</li>
+<li>Llamar asintóticamente estable a un centro.</li>
+<li>Confundir foco con centro.</li>
+<li>Decir que una silla es estable.</li>
+<li>Aplicar la linealización sin advertir casos excepcionales.</li>
+<li>No justificar con autovalores o exponenciales.</li>
+</ul>
+</div>
+    </section>
+    <section id="checklist" class="page">
+      <header class="section-header">
+        <p class="section-kicker">10</p>
+        <h2>10. Checklist de dominio</h2>
+      </header>
+      <div class="reading-block">
+<ul>
+<li>Si no puedes explicar qué es un sistema autónomo, falta repasar plano fase y dependencia respecto de \(t\).</li>
+<li>Si no puedes distinguir solución de trayectoria, falta repasar la eliminación del parámetro \(t\).</li>
+<li>Si no puedes encontrar puntos críticos, falta repasar resolución de sistemas algebraicos \(f=0\), \(g=0\).</li>
+<li>Si confundes estabilidad con estabilidad asintótica, revisar las definiciones con entornos \(B(P,\varepsilon)\) y el ejemplo del centro.</li>
+<li>Si confundes foco con centro, revisar autovalores \(p\pm qi\) y el papel de la parte real \(p\).</li>
+<li>Si confundes nodo con silla, revisar el signo de los autovalores reales.</li>
+<li>Si no puedes clasificar \(X'=AX\), falta repasar ecuación característica y autovalores.</li>
+<li>Si olvidas trasladar un punto crítico no situado en el origen, revisar el cambio \(u=x-x_0\), \(v=y-y_0\).</li>
+<li>Si aplicas la linealización siempre como conclusión definitiva, revisar los casos excepcionales: raíz real doble e imaginarios puros.</li>
+<li>Si no puedes justificar por qué un nodo estable es asintóticamente estable, revisar el límite \(e^{kt}\to0\) para \(k&lt;0\).</li>
+<li>Si no puedes explicar por qué una silla es inestable, revisar la dirección asociada al autovalor positivo.</li>
+<li>Si puedes hallar puntos críticos, calcular autovalores, clasificar nodo/silla/foco/centro y justificar estabilidad en dos líneas, el capítulo está suficientemente asentado.</li>
+<li>Si puedes linealizar un sistema no lineal y detectar cuándo la linealización no decide, el tema está dominado para examen.</li>
+<li>Si puedes aplicar Hurwitz en grados dos y tres, tienes una herramienta adicional para problemas con parámetros.</li>
+</ul>
+</div>
+    </section>
+    </main>
+  </div>
+</body>
+</html>

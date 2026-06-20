@@ -1,0 +1,924 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="color-scheme" content="light dark" />
+  <title>MM3 — Tema 3: Bifurcaciones locales de codimensión 1</title>
+  <meta name="description" content="Guía de estudio de Métodos Matemáticos III sobre bifurcaciones locales de codimensión 1, estabilidad, linealización, silla-nodo, transcrítica, pitchfork y Hopf." />
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/icon-32.png" />
+  <link rel="icon" type="image/png" sizes="50x50" href="assets/icons/icon-50.png" />
+  <link rel="apple-touch-icon" sizes="100x100" href="assets/icons/icon-100.png" />
+  <link rel="stylesheet" href="assets/styles.css" />
+  <script>
+window.MathJax = {
+  tex: {
+    inlineMath: [['\\(', '\\)'], ['$', '$']],
+    displayMath: [['\\[', '\\]']],
+    processEscapes: true
+  },
+  svg: { fontCache: 'global' },
+  options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+};
+</script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+  <script defer src="assets/app.js"></script>
+</head>
+<body class="subject-mm1">
+  <div class="wrap">
+    <header class="cover">
+      <a class="back-link" href="index.html">← Índice</a>
+      <p class="eyebrow">Métodos Matemáticos III</p>
+      <h1>Una simple teoría cualitativa de bifurcaciones locales de codimensión 1</h1>
+      <p class="subtitle">Tema 3 · Parámetros, cambios de estabilidad, formas normales y reconocimiento básico de Hopf</p>
+      <div class="lesson-meta">
+        <span>Asignatura: MM3</span>
+        <span>Tema 3</span>
+        <span>Estado: completo</span>
+        <span>Enfoque: examen UNED</span>
+      </div>
+    </header>
+
+    <div class="toolbar no-print" aria-label="Navegación del tema">
+      <nav>
+        <a href="#mapa">Mapa</a><a href="#prerrequisitos">Prerrequisitos</a><a href="#idea-central">Idea</a><a href="#desarrollo">Desarrollo</a><a href="#conceptos">Conceptos</a><a href="#errores">Errores</a><a href="#preguntas">Preguntas</a><a href="#respuestas">Respuestas</a><a href="#resumen">Resumen</a><a href="#checklist">Checklist</a>
+      </nav>
+      <div class="toolbar-actions"><button class="btn secondary" onclick="document.querySelectorAll('details').forEach(d=>d.open=true)">Abrir todo</button><button class="btn secondary" onclick="document.querySelectorAll('details').forEach(d=>d.open=false)">Modo repaso</button><button class="btn" onclick="window.print()">Imprimir / PDF</button></div>
+    </div>
+
+    <main>
+      <section id="mapa" class="page map-page">
+        <header class="section-header"><p class="section-kicker">00</p><h2>Mapa conceptual</h2></header>
+        <div class="concept-map">
+          <a class="map-card" href="#desarrollo"><span>Estabilidad local</span><small>puntos críticos, trayectorias y linealización</small></a>
+          <a class="map-card" href="#desarrollo"><span>Parámetro</span><small>familias de sistemas y valor crítico</small></a>
+          <a class="map-card" href="#desarrollo"><span>Silla-nodo</span><small>aparición o desaparición de dos equilibrios</small></a>
+          <a class="map-card" href="#desarrollo"><span>Transcrítica</span><small>cruce de ramas e intercambio de estabilidad</small></a>
+          <a class="map-card" href="#desarrollo"><span>Pitchfork</span><small>rama central y ramas simétricas</small></a>
+          <a class="map-card" href="#desarrollo"><span>Hopf</span><small>cruce de autovalores complejos por el eje imaginario</small></a>
+          <a class="map-card" href="#preguntas"><span>Examen</span><small>método, preguntas y respuestas modelo</small></a>
+        </div>
+        <div class="reading-block source-block"><p>Guía de estudio de MM3 centrada en bifurcaciones locales de codimensión 1: cambios cualitativos del retrato de fases al variar un parámetro, con énfasis en equilibrios, estabilidad, formas normales y diagramas de bifurcación.</p></div>
+      </section>
+
+    <section id="prerrequisitos" class="page">
+      <header class="section-header">
+        <p class="section-kicker">01</p>
+        <h2>1. Prerrequisitos mínimos</h2>
+      </header>
+      <div class="card-grid">
+<article class="definition-card">
+<h3>Sistemas autónomos de ecuaciones diferenciales</h3>
+<p>Definición breve: un sistema autónomo es un sistema en el que la variable independiente no aparece explícitamente en el segundo miembro. En dimensión dos se escribe</p>
+<div class="formula-block">\[
+\frac{dx}{dt}=f(x,y),\qquad \frac{dy}{dt}=g(x,y).
+\]</div>
+<p>Es necesario porque el estudio cualitativo de estabilidad y bifurcación se formula sobre trayectorias en el plano de fases, no sobre una solución explícita \(x(t),y(t)\). Ejemplo mínimo: en</p>
+<div class="formula-block">\[
+x'=x-y,\qquad y'=x+y
+\]</div>
+<p>el campo de direcciones depende solo de \((x,y)\), no de \(t\).</p>
+</article>
+<article class="definition-card">
+<h3>Trayectoria, plano de fases y retrato de fases</h3>
+<p>Definición breve: una trayectoria es la representación en el plano \(xy\) de una solución del sistema; el plano de fases es ese plano donde se dibujan las trayectorias; el retrato de fases es el conjunto cualitativo de todas ellas. Es necesario porque una bifurcación se reconoce viendo cómo cambia el retrato de fases al variar un parámetro. Ejemplo mínimo: si las trayectorias entran hacia el origen, el origen actúa como atractor local.</p>
+</article>
+<article class="definition-card">
+<h3>Punto crítico o punto de reposo</h3>
+<p>Definición breve: un punto \((x_0,y_0)\) es crítico si anula simultáneamente los segundos miembros:</p>
+<div class="formula-block">\[
+f(x_0,y_0)=0,\qquad g(x_0,y_0)=0.
+\]</div>
+<p>Es necesario porque la estabilidad y las bifurcaciones locales se estudian alrededor de puntos críticos. Ejemplo mínimo: para</p>
+<div class="formula-block">\[
+x'=x(1-x),
+\]</div>
+<p>los puntos críticos son \(x=0\) y \(x=1\).</p>
+</article>
+<article class="definition-card">
+<h3>Estabilidad de un punto crítico</h3>
+<p>Definición breve: un punto crítico es estable si toda trayectoria que empieza suficientemente cerca permanece cerca para tiempos posteriores. Es asintóticamente estable si, además, las trayectorias cercanas tienden al punto. Es necesario porque muchas bifurcaciones consisten en cambios de estabilidad. Ejemplo mínimo: en \(x'=-x\), el equilibrio \(x=0\) es asintóticamente estable; en \(x'=x\), es inestable.</p>
+</article>
+<article class="definition-card">
+<h3>Autovalores y autovectores</h3>
+<p>Definición breve: para una matriz \(A\), un autovalor \(k\) y un autovector \(v\neq 0\) satisfacen</p>
+<div class="formula-block">\[
+Av=kv.
+\]</div>
+<p>Es necesario porque los sistemas lineales \(X'=AX\) se clasifican por los autovalores de \(A\). Ejemplo mínimo: si \(A=\operatorname{diag}(-1,2)\), las direcciones propias se contraen en una dirección y se expanden en otra.</p>
+</article>
+<article class="definition-card">
+<h3>Linealización</h3>
+<p>Definición breve: cerca de un punto crítico, un sistema no lineal se aproxima por su parte lineal. Si el punto es el origen,</p>
+<div class="formula-block">\[
+x'=f(x,y),\qquad y'=g(x,y),
+\]</div>
+<p>la linealización es</p>
+<div class="formula-block">\[
+\binom{x'}{y'}=J(0,0)\binom{x}{y},
+\]</div>
+<p>donde \(J\) es la matriz jacobiana. Es necesario porque permite estudiar localmente el tipo de punto crítico sin resolver el sistema completo. Ejemplo mínimo: si</p>
+<div class="formula-block">\[
+x'=2x+8y-xy,\qquad y'=-x-3y+xy,
+\]</div>
+<p>la linealización en el origen elimina los términos \(xy\).</p>
+</article>
+<article class="definition-card">
+<h3>Fórmula de Taylor local</h3>
+<p>Definición breve: una función suficientemente regular puede escribirse cerca de un punto como parte lineal más términos de orden superior. Es necesario porque justifica que, cerca del equilibrio, los términos de primer orden suelen dominar. Ejemplo mínimo:</p>
+<div class="formula-block">\[
+\sin x=x-\frac{x^3}{3!}+\cdots,
+\]</div>
+<p>por lo que para valores pequeños de \(x\), \(\sin x\) se aproxima por \(x\).</p>
+</article>
+<article class="definition-card">
+<h3>Parámetro</h3>
+<p>Definición breve: un parámetro es una constante del sistema que puede variar, por ejemplo \(\mu\) en</p>
+<div class="formula-block">\[
+x'=\mu x-x^2.
+\]</div>
+<p>Es necesario porque una bifurcación no es solo un tipo de equilibrio; es un cambio cualitativo al variar un parámetro. Ejemplo mínimo: en \(x'=\mu x-x^2\), los equilibrios dependen de \(\mu\).</p>
+</article>
+<article class="definition-card">
+<h3>Derivada de un campo escalar unidimensional</h3>
+<p>Definición breve: para \(x'=f(x)\), la estabilidad de un equilibrio \(x_0\) se decide, si \(f'(x_0)\neq 0\), por el signo de \(f'(x_0)\). Si \(f'(x_0)&lt;0\), el equilibrio es estable; si \(f'(x_0)&gt;0\), es inestable. Es necesario porque las bifurcaciones elementales de codimensión 1 suelen explicarse primero en dimensión uno. Ejemplo mínimo: en \(x'=x-x^2\), \(x=1\) es estable porque \(f'(1)=-1\).</p>
+</article>
+<article class="definition-card">
+<h3>Ecuación característica</h3>
+<p>Definición breve: en un sistema lineal \(X'=AX\), los autovalores se obtienen de</p>
+<div class="formula-block">\[
+\det(A-kI)=0.
+\]</div>
+<p>Es necesario porque la clasificación local de nodos, sillas, focos y centros depende de esas raíces. Ejemplo mínimo: si la ecuación característica tiene raíces reales de signos opuestos, el punto crítico es una silla.</p>
+</article>
+</div>
+    </section>
+    <section id="idea-central" class="page">
+      <header class="section-header">
+        <p class="section-kicker">02</p>
+        <h2>2. Idea central del capítulo</h2>
+      </header>
+      <div class="reading-block">
+<p>Este tema estudia cómo cambia cualitativamente el comportamiento de un sistema dinámico cuando se modifica un parámetro. El punto de partida no es resolver explícitamente las ecuaciones diferenciales, sino observar el comportamiento local de sus soluciones: hacia dónde se mueven las trayectorias, qué puntos permanecen en reposo, cuáles atraen, cuáles repelen y cuándo cambia esa estructura.</p>
+<p>En el estudio de estabilidad de sistemas autónomos, el objeto fundamental es el punto crítico. Alrededor de él se dibuja el retrato de fases. Si el sistema es lineal, la clasificación es directa mediante autovalores: raíces reales negativas producen nodos estables, raíces reales positivas nodos inestables, raíces de signo opuesto puntos de silla, raíces complejas con parte real negativa focos estables y raíces imaginarias puras centros. Esta clasificación es el vocabulario básico para leer un sistema sin integrarlo completamente.</p>
+<p>En sistemas no lineales, la idea es aproximar localmente por el sistema linealizado. La matriz jacobiana recoge la parte de primer orden de Taylor. Cuando los autovalores de esa matriz no caen en casos degenerados, el punto crítico no lineal tiene el mismo tipo cualitativo que el linealizado. Sin embargo, hay casos en los que la linealización no decide: raíces reales iguales, raíces imaginarias puras y, especialmente para bifurcaciones, aparición de un autovalor nulo. Ahí los términos no lineales dejan de ser un detalle y pueden determinar el comportamiento.</p>
+<p>Una bifurcación local aparece cuando, al variar un parámetro, cambia el número, la estabilidad o el tipo de los equilibrios cerca de un punto. La palabra “local” indica que solo se analiza lo que ocurre en un entorno pequeño del equilibrio y de un valor concreto del parámetro. La expresión “codimensión 1” significa, en este nivel, que basta una condición escalar para producir el fenómeno y, por tanto, un único parámetro genérico puede atravesarlo.</p>
+<p>La teoría cualitativa simple de este tema se reduce a tres operaciones: encontrar equilibrios en función del parámetro, clasificarlos por derivada o autovalores, y comparar el retrato antes, en y después del valor crítico. En dimensión uno aparecen las formas normales más elementales: silla-nodo, transcrítica y pitchfork. En dimensión dos, la transición entre foco estable, centro y foco inestable conduce al reconocimiento básico de Hopf, aunque su análisis completo exige herramientas adicionales que no se desarrollan aquí.</p>
+<p>Dentro de MM3, este bloque enlaza el estudio de estabilidad de sistemas no lineales con la lectura de fenómenos dependientes de parámetros. También prepara el terreno para EDP y separación de variables en un sentido metodológico: antes de calcular soluciones completas, se aprende a extraer información cualitativa de la estructura de la ecuación.</p>
+</div>
+    </section>
+    <section id="desarrollo" class="page">
+      <header class="section-header">
+        <p class="section-kicker">03</p>
+        <h2>3. Desarrollo completo del capítulo</h2>
+      </header>
+      <div class="reading-block">
+<h3>3.1. Del sistema autónomo al problema cualitativo</h3>
+<p>Un sistema autónomo plano tiene la forma</p>
+<div class="formula-block">\[
+x'=f(x,y),\qquad y'=g(x,y).
+\]</div>
+<p>Como \(t\) no aparece explícitamente, el comportamiento depende de la posición en el plano de fases. En cada punto \((x,y)\), el vector \((f(x,y),g(x,y))\) indica la dirección instantánea de la trayectoria que pasa por allí. Por eso el estudio cualitativo se centra en el campo de direcciones y no necesariamente en la solución explícita.</p>
+<p>Esto importa porque muchos sistemas no lineales no se resuelven por fórmulas elementales. Aun así, puede saberse si las soluciones se acercan a un equilibrio, se alejan de él, giran alrededor, o cambian de estructura al variar un parámetro. Esta información suele ser suficiente para responder cuestiones de examen: localizar puntos críticos, linealizar, hallar autovalores y clasificar.</p>
+<p>La conexión con lo anterior es directa. En MM1 y MM2 se ha insistido en resolver ecuaciones diferenciales y sistemas lineales. Aquí se cambia el foco: no se pregunta solo “cuál es la solución”, sino “qué tipo de comportamiento tiene la familia de soluciones”. El lenguaje de trayectoria, plano de fases y punto crítico permite pasar de cálculo explícito a análisis cualitativo.</p>
+<p>Un ejemplo elemental es</p>
+<div class="formula-block">\[
+x'=-x,\qquad y'=-2y.
+\]</div>
+<p>El origen es punto crítico y todas las trayectorias cercanas tienden a él. No hace falta dibujar todas las soluciones para saber que el origen es un nodo estable: basta ver que los autovalores son \(-1\) y \(-2\).</p>
+<h3>3.2. Puntos críticos y estabilidad</h3>
+<p>Un punto crítico es un punto en el que el campo vectorial se anula. En dimensión dos se obtiene resolviendo</p>
+<div class="formula-block">\[
+f(x,y)=0,\qquad g(x,y)=0.
+\]</div>
+<p>Si una solución empieza exactamente en un punto crítico, permanece allí. Por eso se llaman también puntos de reposo.</p>
+<p>La estabilidad mide qué ocurre con soluciones que empiezan cerca, no exactamente en el punto. Un equilibrio puede ser estable sin ser asintóticamente estable. En un centro lineal, por ejemplo, las trayectorias son cerradas: permanecen cerca, pero no tienden al equilibrio. En cambio, en un nodo estable o en un foco estable, las trayectorias cercanas se aproximan al punto.</p>
+<p>Esta distinción importa especialmente en bifurcaciones. Un cambio de estabilidad puede ocurrir aunque el número de equilibrios no cambie. En una bifurcación transcrítica, por ejemplo, dos ramas de equilibrio se cruzan e intercambian estabilidad. En una pitchfork, una rama puede perder estabilidad y generar dos ramas laterales estables o inestables, según el signo de los términos no lineales.</p>
+<p>Ejemplo unidimensional:</p>
+<div class="formula-block">\[
+x'=\mu x-x^2.
+\]</div>
+<p>Los equilibrios son \(x=0\) y \(x=\mu\). Para estudiar su estabilidad se calcula</p>
+<div class="formula-block">\[
+f_x(x,\mu)=\mu-2x.
+\]</div>
+<p>En \(x=0\), \(f_x=\mu\). En \(x=\mu\), \(f_x=-\mu\). Por tanto, al pasar \(\mu\) por cero, las dos ramas intercambian estabilidad. Esa es la estructura típica transcrítica.</p>
+<h3>3.3. Sistemas lineales y clasificación por autovalores</h3>
+<p>El sistema lineal plano homogéneo tiene la forma</p>
+<div class="formula-block">\[
+X'=AX,\qquad X=\binom{x}{y}.
+\]</div>
+<p>Su comportamiento local se lee a partir de la ecuación característica</p>
+<div class="formula-block">\[
+\det(A-kI)=0.
+\]</div>
+<p>Los autovalores determinan las direcciones dominantes y la forma de las trayectorias.</p>
+<p>Si los autovalores son reales, distintos y negativos, las trayectorias tienden al origen: nodo estable. Si son reales, distintos y positivos, se alejan: nodo inestable. Si tienen signos opuestos, el origen es punto de silla: hay direcciones de entrada y de salida, y el punto es inestable. Si los autovalores son complejos conjugados \(p\pm qi\), con \(q\neq 0\), aparece giro. Si \(p&lt;0\), las espirales entran: foco estable. Si \(p&gt;0\), las espirales salen: foco inestable. Si \(p=0\), los autovalores son imaginarios puros y el sistema lineal tiene un centro.</p>
+<p>La consecuencia de esta clasificación es que el examen suele reducir un sistema a una matriz. No basta calcular autovalores; hay que traducirlos a comportamiento cualitativo. Es diferente decir “las raíces son \(-1\) y \(2\)” que concluir “punto de silla inestable”.</p>
+<p>Ejemplo:</p>
+<div class="formula-block">\[
+A=\begin{pmatrix}-1&amp;0\\0&amp;2\end{pmatrix}.
+\]</div>
+<p>La ecuación característica da \(k_1=-1\), \(k_2=2\). Hay contracción en una dirección y expansión en otra. El origen es una silla, por tanto inestable.</p>
+<h3>3.4. Sistemas no lineales y linealización</h3>
+<p>Para un sistema no lineal</p>
+<div class="formula-block">\[
+x'=f(x,y),\qquad y'=g(x,y),
+\]</div>
+<p>con punto crítico en el origen, se desarrolla \(f\) y \(g\) en serie de Taylor:</p>
+<div class="formula-block">\[
+f(x,y)=a_1x+b_1y+\text{términos de orden superior},
+\]</div>
+<div class="formula-block">\[
+g(x,y)=a_2x+b_2y+\text{términos de orden superior}.
+\]</div>
+<p>Al conservar solo la parte lineal se obtiene</p>
+<div class="formula-block">\[
+\binom{x'}{y'}=
+\begin{pmatrix}
+a_1&amp;b_1\\
+a_2&amp;b_2
+\end{pmatrix}
+\binom{x}{y}.
+\]</div>
+<p>Esta matriz es el jacobiano en el punto crítico.</p>
+<p>La razón de este procedimiento es que, cerca del origen, los términos de grado uno suelen dominar a los de grado dos o superior. Por ejemplo, \(x\) es mayor que \(x^2\) cuando \(x\) es pequeño. Por eso la parte lineal suele determinar la forma local de las trayectorias.</p>
+<p>Pero hay excepciones. Si las raíces de la ecuación característica son reales e iguales, el sistema no lineal puede comportarse como nodo o como espiral, aunque el linealizado sea nodo. Si las raíces son imaginarias puras, el linealizado tiene un centro, pero el sistema no lineal puede tener centro o espiral. En estos casos, los términos no lineales importan.</p>
+<p>Para bifurcaciones hay que añadir otra situación crítica: cuando el jacobiano pierde hiperbolicidad, por ejemplo porque aparece un autovalor cero. Entonces el equilibrio no queda decidido por la parte lineal. Esa pérdida de decisión es precisamente el lugar donde puede producirse un cambio cualitativo al variar un parámetro.</p>
+<p>Ejemplo:</p>
+<div class="formula-block">\[
+x'=4y-x^3,\qquad y'=3x-y^3.
+\]</div>
+<p>La linealización es</p>
+<div class="formula-block">\[
+x'=4y,\qquad y'=3x,
+\]</div>
+<p>y se clasifica con la matriz</p>
+<div class="formula-block">\[
+A=\begin{pmatrix}0&amp;4\\3&amp;0\end{pmatrix}.
+\]</div>
+<p>El análisis empieza por los autovalores de \(A\); si estos no caen en un caso excepcional, el tipo local coincide con el del sistema no lineal.</p>
+<h3>3.5. Introducción de un parámetro</h3>
+<p>Una familia de sistemas se escribe</p>
+<div class="formula-block">\[
+X'=F(X,\mu),
+\]</div>
+<p>donde \(X\) representa las variables dinámicas y \(\mu\) es un parámetro real. Los puntos críticos satisfacen</p>
+<div class="formula-block">\[
+F(X,\mu)=0.
+\]</div>
+<p>Por tanto, los equilibrios pueden moverse, aparecer, desaparecer o cambiar de estabilidad cuando cambia \(\mu\).</p>
+<p>La idea de bifurcación local se formula así: existe un valor \(\mu_0\) y un equilibrio \(X_0\) tal que, en cualquier entorno pequeño de \((X_0,\mu_0)\), el retrato de fases para \(\mu&lt;\mu_0\) no es cualitativamente equivalente al retrato para \(\mu&gt;\mu_0\). El cambio puede ser de número de equilibrios, de estabilidad o de aparición de ciclos.</p>
+<p>La codimensión 1 indica que el fenómeno se produce al imponer una condición escalar. En dimensión uno, la condición típica es</p>
+<div class="formula-block">\[
+f_x(x_0,\mu_0)=0,
+\]</div>
+<p>junto con condiciones no degeneradas sobre derivadas superiores. En dimensión dos, una condición típica para Hopf es que la parte real de un par de autovalores complejos cruce cero.</p>
+<p>Ejemplo:</p>
+<div class="formula-block">\[
+x'=\mu-x^2.
+\]</div>
+<p>Los equilibrios satisfacen \(x^2=\mu\). Si \(\mu&lt;0\), no hay equilibrios reales. Si \(\mu=0\), hay un equilibrio doble en \(x=0\). Si \(\mu&gt;0\), hay dos equilibrios, \(x=\pm\sqrt{\mu}\). El número de puntos críticos cambia al pasar por \(\mu=0\). Esa es la bifurcación silla-nodo en su forma escalar.</p>
+<h3>3.6. Método básico para estudiar una bifurcación local</h3>
+<p>El procedimiento operativo es siempre el mismo. Primero se localizan los equilibrios resolviendo \(F(X,\mu)=0\). Después se estudia la estabilidad de cada equilibrio. En dimensión uno se usa \(f_x\). En dimensión dos se usa el jacobiano</p>
+<div class="formula-block">\[
+J(X,\mu)=D_XF(X,\mu).
+\]</div>
+<p>Finalmente se compara la estructura para valores del parámetro antes, en y después del valor crítico.</p>
+<p>Este método importa porque evita resolver la EDO. En un examen, lo normal no es pedir una solución explícita de \(x'=f(x,\mu)\), sino determinar para qué valores de \(\mu\) cambia el número de equilibrios o su estabilidad.</p>
+<p>Ejemplo:</p>
+<div class="formula-block">\[
+x'=\mu x-x^3.
+\]</div>
+<p>Equilibrios:</p>
+<div class="formula-block">\[
+x(\mu-x^2)=0,
+\]</div>
+<p>luego</p>
+<div class="formula-block">\[
+x=0,\qquad x=\pm\sqrt{\mu}\quad(\mu\geq 0).
+\]</div>
+<p>La derivada es</p>
+<div class="formula-block">\[
+f_x=\mu-3x^2.
+\]</div>
+<p>En \(x=0\), \(f_x=\mu\), así que es estable si \(\mu&lt;0\) e inestable si \(\mu&gt;0\). En \(x=\pm\sqrt{\mu}\), \(f_x=\mu-3\mu=-2\mu&lt;0\), luego ambas ramas son estables para \(\mu&gt;0\). Este es el patrón de pitchfork supercrítica.</p>
+<h3>3.7. Bifurcación silla-nodo</h3>
+<p>La forma normal escalar más simple es</p>
+<div class="formula-block">\[
+x'=\mu-x^2.
+\]</div>
+<p>Se llama silla-nodo por analogía con sistemas de dimensión mayor: dos equilibrios colisionan y desaparecen. En dimensión uno no hay literalmente una silla y un nodo, pero sí dos ramas con estabilidad distinta.</p>
+<p>Los equilibrios existen cuando \(\mu\geq 0\):</p>
+<div class="formula-block">\[
+x_\pm=\pm\sqrt{\mu}.
+\]</div>
+<p>La derivada es</p>
+<div class="formula-block">\[
+f_x=-2x.
+\]</div>
+<p>En \(x_+=\sqrt{\mu}\), \(f_x&lt;0\), por tanto el equilibrio es estable. En \(x_-=-\sqrt{\mu}\), \(f_x&gt;0\), por tanto es inestable. Para \(\mu&lt;0\), no hay equilibrios.</p>
+<p>La consecuencia cualitativa es clara: al cruzar \(\mu=0\), aparecen o desaparecen dos puntos críticos. En un diagrama de bifurcación, se dibuja \(x\) frente a \(\mu\). Las ramas estable e inestable se encuentran tangencialmente en el punto crítico.</p>
+<p>Ejemplo de examen: “Estudie los equilibrios de \(x'=a-x^2\) según el parámetro \(a\)”. La respuesta debe incluir tres casos: \(a&lt;0\), \(a=0\), \(a&gt;0\), y la estabilidad de cada rama.</p>
+<h3>3.8. Bifurcación transcrítica</h3>
+<p>La forma normal es</p>
+<div class="formula-block">\[
+x'=\mu x-x^2=x(\mu-x).
+\]</div>
+<p>Aquí siempre existe el equilibrio \(x=0\), y además existe el equilibrio \(x=\mu\). Las ramas se cortan en \((x,\mu)=(0,0)\).</p>
+<p>La derivada es</p>
+<div class="formula-block">\[
+f_x=\mu-2x.
+\]</div>
+<p>En la rama \(x=0\), \(f_x=\mu\). Por tanto, \(x=0\) es estable si \(\mu&lt;0\) e inestable si \(\mu&gt;0\). En la rama \(x=\mu\), \(f_x=-\mu\). Por tanto, esa rama es inestable si \(\mu&lt;0\) y estable si \(\mu&gt;0\).</p>
+<p>La consecuencia es que las dos ramas no nacen ni desaparecen; intercambian estabilidad. Esta diferencia es esencial respecto a la silla-nodo. En silla-nodo cambia el número de equilibrios. En transcrítica se conservan dos ramas, pero cambia cuál atrae y cuál repele.</p>
+<p>Ejemplo: en un modelo con equilibrio trivial \(x=0\) y equilibrio no trivial \(x=\mu\), el valor \(\mu=0\) separa el régimen donde el equilibrio trivial es estable del régimen donde lo estable es el no trivial.</p>
+<h3>3.9. Bifurcación pitchfork</h3>
+<p>La forma supercrítica es</p>
+<div class="formula-block">\[
+x'=\mu x-x^3=x(\mu-x^2).
+\]</div>
+<p>Tiene equilibrio \(x=0\) para todo \(\mu\), y dos equilibrios adicionales</p>
+<div class="formula-block">\[
+x=\pm\sqrt{\mu}
+\]</div>
+<p>cuando \(\mu&gt;0\). La derivada</p>
+<div class="formula-block">\[
+f_x=\mu-3x^2
+\]</div>
+<p>permite clasificar: \(x=0\) es estable para \(\mu&lt;0\) e inestable para \(\mu&gt;0\); las ramas laterales son estables para \(\mu&gt;0\).</p>
+<p>Se llama pitchfork por la forma del diagrama: una rama central se divide en dos ramas simétricas. La simetría \(x\mapsto -x\) suele estar detrás de esta bifurcación. En la versión subcrítica,</p>
+<div class="formula-block">\[
+x'=\mu x+x^3,
+\]</div>
+<p>las ramas laterales existen para \(\mu&lt;0\) y son inestables, mientras que la rama central cambia de estabilidad al cruzar \(\mu=0\).</p>
+<p>Esta distinción importa porque no basta memorizar la forma del dibujo. Hay que calcular. El signo del término cúbico decide si las ramas que aparecen son estables o inestables y a qué lado del parámetro existen.</p>
+<p>Ejemplo de examen: “Determine el tipo de bifurcación de \(x'=rx-x^3\)”. Se resuelven equilibrios, se estudia \(f_x\) y se concluye: pitchfork supercrítica.</p>
+<h3>3.10. Reconocimiento básico de Hopf</h3>
+<p>En sistemas planos, los autovalores complejos del jacobiano tienen la forma</p>
+<div class="formula-block">\[
+k(\mu)=p(\mu)\pm iq(\mu),\qquad q(\mu)\neq 0.
+\]</div>
+<p>Si \(p(\mu)&lt;0\), el equilibrio se comporta como foco estable. Si \(p(\mu)&gt;0\), como foco inestable. Si \(p(\mu)=0\), el linealizado tiene un centro y se entra en uno de los casos en los que la linealización no decide completamente el sistema no lineal.</p>
+<p>La bifurcación de Hopf aparece, en su reconocimiento básico, cuando la parte real de un par de autovalores complejos cruza cero al variar un parámetro. El paso de foco estable a foco inestable puede ir acompañado de aparición o desaparición de una órbita periódica pequeña. El análisis completo de esa órbita exige herramientas adicionales, como métodos de Lyapunov o formas normales, que quedan fuera del tratamiento elemental.</p>
+<p>La conexión con el capítulo de estabilidad es directa: el caso de raíces imaginarias puras ya se señalaba como excepcional. En el sistema lineal se ve un centro; en el no lineal puede haber centro o espiral. La bifurcación de Hopf vive precisamente en esa frontera.</p>
+<p>Ejemplo mínimo:</p>
+<div class="formula-block">\[
+\begin{pmatrix}x'\\y'\end{pmatrix}
+=
+\begin{pmatrix}\mu&amp;-1\\1&amp;\mu\end{pmatrix}
+\begin{pmatrix}x\\y\end{pmatrix}
++\text{términos no lineales}.
+\]</div>
+<p>El jacobiano tiene autovalores \(\mu\pm i\). Para \(\mu&lt;0\), el origen es foco estable; para \(\mu&gt;0\), foco inestable; en \(\mu=0\), la parte lineal tiene un centro.</p>
+<h3>3.11. Diagramas de bifurcación</h3>
+<p>Un diagrama de bifurcación representa los equilibrios en función del parámetro. Normalmente se dibuja el parámetro en el eje horizontal y la variable de equilibrio en el vertical. Las ramas estables e inestables se distinguen con trazos distintos o con una indicación escrita.</p>
+<p>El diagrama no sustituye al cálculo. Debe salir de resolver \(f(x,\mu)=0\) y clasificar con \(f_x\). Sin estabilidad, el diagrama queda incompleto, porque dos problemas pueden tener las mismas ramas pero estabilidad diferente.</p>
+<p>Ejemplo:</p>
+<div class="formula-block">\[
+x'=\mu x-x^3.
+\]</div>
+<p>El diagrama tiene rama central \(x=0\) para todo \(\mu\). Para \(\mu&gt;0\), aparecen dos ramas \(x=\pm\sqrt{\mu}\). La rama central es estable a la izquierda e inestable a la derecha; las ramas laterales son estables.</p>
+<p>En examen, un diagrama correcto debe mostrar tres cosas: valores críticos del parámetro, número de equilibrios en cada zona y estabilidad de cada rama.</p>
+<h3>3.12. Qué se exige en un estudio cualitativo simple</h3>
+<p>Un estudio cualitativo de bifurcación no exige resolver la EDO explícitamente. Exige justificar el cambio de estructura. Para ello hay que presentar el cálculo en orden: equilibrios, valor crítico, linealización o derivada, clasificación, conclusión.</p>
+<p>En dimensión uno, el signo de \(f\) entre equilibrios también ayuda. Si \(f(x)&gt;0\), la trayectoria se mueve hacia la derecha; si \(f(x)&lt;0\), hacia la izquierda. Esto permite comprobar estabilidad sin integrar.</p>
+<p>En dimensión dos, se usa el jacobiano en cada equilibrio:</p>
+<div class="formula-block">\[
+J(x_0,y_0;\mu)=
+\begin{pmatrix}
+f_x&amp;f_y\\
+g_x&amp;g_y
+\end{pmatrix}_{(x_0,y_0;\mu)}.
+\]</div>
+<p>Después se calculan traza y determinante, o directamente los autovalores. El caso de determinante negativo indica silla; determinante positivo con traza negativa suele indicar estabilidad; determinante positivo con traza positiva indica inestabilidad; traza cero con determinante positivo conduce a autovalores imaginarios puros si el discriminante es negativo.</p>
+<p>El cierre correcto de un problema debe decir: “hay bifurcación en \(\mu=\mu_0\) porque cambia el número de equilibrios”, o “porque las ramas intercambian estabilidad”, o “porque la parte real de los autovalores cruza cero”. Sin esa frase, el cálculo queda incompleto.</p>
+</div>
+    </section>
+    <section id="conceptos" class="page">
+      <header class="section-header">
+        <p class="section-kicker">04</p>
+        <h2>4. Conceptos clave</h2>
+      </header>
+      <div class="card-grid">
+<article class="definition-card">
+<h3>Sistema autónomo</h3>
+<p>Definición precisa: sistema de EDO en el que la variable independiente no aparece explícitamente en las funciones del segundo miembro:</p>
+<div class="formula-block">\[
+X'=F(X).
+\]</div>
+<p>Explicación: permite estudiar el movimiento en el espacio de fases como un campo vectorial fijo. La trayectoria depende de la posición, no del instante absoluto. Ejemplo: \(x'=y,\ y'=-x\) es autónomo. Relación: es el marco donde se definen puntos críticos, estabilidad y retrato de fases. Posible pregunta de examen: “Defina sistema autónomo y explique por qué se estudia mediante el plano de fases”.</p>
+</article>
+<article class="definition-card">
+<h3>Trayectoria</h3>
+<p>Definición precisa: curva del plano o espacio de fases descrita por una solución \(X(t)\) del sistema. Explicación: la trayectoria olvida la parametrización temporal exacta y conserva la forma geométrica del movimiento. Ejemplo: para \(x'=-y,\ y'=x\), las trayectorias son circunferencias. Relación: el conjunto de trayectorias forma el retrato de fases. Posible pregunta de examen: “Distinga solución y trayectoria”.</p>
+</article>
+<article class="definition-card">
+<h3>Plano de fases</h3>
+<p>Definición precisa: plano cuyas coordenadas son las variables dinámicas, por ejemplo \((x,y)\), donde se representan las trayectorias. Explicación: sustituye la gráfica temporal por una gráfica del estado del sistema. Ejemplo: en un oscilador, \(x\) puede representar posición e \(y\) velocidad. Relación: los puntos críticos son puntos del plano de fases. Posible pregunta de examen: “¿Qué información da el plano de fases que no se ve directamente en \(x(t)\)?”</p>
+</article>
+<article class="definition-card">
+<h3>Retrato de fases</h3>
+<p>Definición precisa: representación cualitativa del conjunto de trayectorias de un sistema autónomo. Explicación: muestra atracción, repulsión, giro, separatrices y estructura global o local del movimiento. Ejemplo: un retrato con trayectorias que entran en el origen corresponde a un equilibrio atractor. Relación: una bifurcación es un cambio cualitativo del retrato de fases. Posible pregunta de examen: “Explique qué cambia en el retrato de fases en una bifurcación silla-nodo”.</p>
+</article>
+<article class="definition-card">
+<h3>Punto crítico o equilibrio</h3>
+<p>Definición precisa: punto \(X_0\) tal que \(F(X_0)=0\). Explicación: si el sistema se encuentra en \(X_0\), permanece allí. Ejemplo: para \(x'=\mu x-x^2\), los equilibrios son \(x=0\) y \(x=\mu\). Relación: la estabilidad se define respecto a puntos críticos. Posible pregunta de examen: “Calcule los puntos críticos de un sistema dependiente de un parámetro”.</p>
+</article>
+<article class="definition-card">
+<h3>Estabilidad</h3>
+<p>Definición precisa: un equilibrio es estable si las soluciones que empiezan suficientemente cerca permanecen cerca para \(t\) futuro. Es asintóticamente estable si además convergen al equilibrio. Explicación: estabilidad no significa inmovilidad, sino sensibilidad pequeña ante perturbaciones pequeñas. Ejemplo: \(x'=-x\) tiene equilibrio asintóticamente estable en \(0\). Relación: nodos, focos y centros se diferencian por su estabilidad. Posible pregunta de examen: “Explique la diferencia entre estable y asintóticamente estable”.</p>
+</article>
+<article class="definition-card">
+<h3>Linealización</h3>
+<p>Definición precisa: aproximación de un sistema no lineal por su parte lineal de Taylor en un punto crítico. Explicación: se reemplaza el sistema por \(X'=J(X_0)X\) tras trasladar el equilibrio al origen. Ejemplo: en \(x'=x+y+x^2\), \(y'=2x-y+xy\), la linealización en el origen es \(x'=x+y,\ y'=2x-y\). Relación: conecta sistemas no lineales con clasificación por autovalores. Posible pregunta de examen: “Linealice un sistema en un punto crítico y clasifique el equilibrio”.</p>
+</article>
+<article class="definition-card">
+<h3>Jacobiano</h3>
+<p>Definición precisa:</p>
+<div class="formula-block">\[
+J=
+\begin{pmatrix}
+\partial f/\partial x&amp;\partial f/\partial y\\
+\partial g/\partial x&amp;\partial g/\partial y
+\end{pmatrix}.
+\]</div>
+<p>Explicación: contiene las derivadas de primer orden del campo vectorial y da la matriz del sistema linealizado. Ejemplo: si \(f=x^2+y\), \(g=x-y^2\), entonces</p>
+<div class="formula-block">\[
+J=\begin{pmatrix}2x&amp;1\\1&amp;-2y\end{pmatrix}.
+\]</div>
+<p>Relación: sus autovalores clasifican el equilibrio cuando no hay degeneración. Posible pregunta de examen: “Calcule el jacobiano y determine para qué valores del parámetro cambia la estabilidad”.</p>
+</article>
+<article class="definition-card">
+<h3>Nodo</h3>
+<p>Definición precisa: punto crítico de un sistema lineal plano asociado a autovalores reales del mismo signo. Explicación: si ambos son negativos, las trayectorias entran; si ambos son positivos, salen. Ejemplo: \(A=\operatorname{diag}(-1,-3)\) da un nodo estable. Relación: se opone al punto de silla, donde los signos son distintos. Posible pregunta de examen: “Clasifique el origen si los autovalores son \(-2\) y \(-5\)”.</p>
+</article>
+<article class="definition-card">
+<h3>Punto de silla</h3>
+<p>Definición precisa: punto crítico con autovalores reales de signos opuestos. Explicación: hay una dirección estable y otra inestable; por eso el punto es inestable. Ejemplo: \(x'=x,\ y'=-y\). Relación: en bifurcación silla-nodo, una rama estable y una inestable se encuentran. Posible pregunta de examen: “Justifique por qué un punto con autovalores de signos opuestos es inestable”.</p>
+</article>
+<article class="definition-card">
+<h3>Foco o punto espiral</h3>
+<p>Definición precisa: punto crítico con autovalores complejos conjugados con parte real no nula. Explicación: la parte imaginaria produce giro y la parte real determina entrada o salida. Ejemplo: autovalores \(-1\pm 2i\) dan foco estable. Relación: si la parte real cruza cero, aparece el escenario básico de Hopf. Posible pregunta de examen: “Clasifique un equilibrio con autovalores \(1\pm 3i\)”.</p>
+</article>
+<article class="definition-card">
+<h3>Centro</h3>
+<p>Definición precisa: punto crítico lineal con autovalores imaginarios puros. Explicación: en el sistema lineal, las trayectorias son cerradas alrededor del equilibrio. En el sistema no lineal, la linealización no decide necesariamente. Ejemplo: \(x'=-y,\ y'=x\). Relación: es uno de los casos excepcionales de la linealización. Posible pregunta de examen: “Explique por qué los autovalores imaginarios puros no bastan para clasificar un sistema no lineal”.</p>
+</article>
+<article class="definition-card">
+<h3>Bifurcación local</h3>
+<p>Definición precisa: cambio cualitativo del retrato de fases cerca de un equilibrio al variar un parámetro. Explicación: no se estudia todo el espacio, sino un entorno de un punto y de un valor crítico del parámetro. Ejemplo: \(x'=\mu-x^2\) cambia de cero a dos equilibrios al cruzar \(\mu=0\). Relación: requiere estudiar equilibrios y estabilidad como funciones de \(\mu\). Posible pregunta de examen: “Determine si hay bifurcación local y clasifíquela”.</p>
+</article>
+<article class="definition-card">
+<h3>Codimensión 1</h3>
+<p>Definición precisa: situación degenerada que se alcanza imponiendo una condición escalar, de modo que un solo parámetro basta para atravesarla de forma genérica. Explicación: en los ejemplos elementales, el valor crítico \(\mu=0\) representa una frontera entre dos retratos distintos. Ejemplo: \(f_x(0,0)=0\) en \(x'=\mu+x^2\). Relación: silla-nodo, transcrítica, pitchfork y Hopf son patrones de codimensión 1 bajo hipótesis adecuadas. Posible pregunta de examen: “Explique qué significa codimensión 1 en una bifurcación local”.</p>
+</article>
+<article class="definition-card">
+<h3>Bifurcación silla-nodo</h3>
+<p>Definición precisa: bifurcación en la que dos equilibrios, uno estable y otro inestable, colisionan y desaparecen o aparecen. Explicación: en la forma \(x'=\mu-x^2\), no hay equilibrios para \(\mu&lt;0\), hay uno doble para \(\mu=0\) y dos para \(\mu&gt;0\). Ejemplo: \(x'=\mu-x^2\). Relación: el cambio principal es el número de equilibrios. Posible pregunta de examen: “Estudie \(x'=a-x^2\) según \(a\)”.</p>
+</article>
+<article class="definition-card">
+<h3>Bifurcación transcrítica</h3>
+<p>Definición precisa: bifurcación en la que dos ramas de equilibrio se cruzan e intercambian estabilidad. Explicación: no desaparecen ramas; cambia cuál es estable. Ejemplo: \(x'=\mu x-x^2\). Relación: se diferencia de la silla-nodo porque el número de ramas no cambia localmente. Posible pregunta de examen: “Muestre el intercambio de estabilidad en \(x'=rx-x^2\)”.</p>
+</article>
+<article class="definition-card">
+<h3>Bifurcación pitchfork</h3>
+<p>Definición precisa: bifurcación en la que una rama central cambia de estabilidad y aparecen o desaparecen dos ramas simétricas. Explicación: suele asociarse a simetría \(x\mapsto -x\). Ejemplo supercrítico: \(x'=\mu x-x^3\). Relación: combina cambio de estabilidad y creación de ramas. Posible pregunta de examen: “Distinga pitchfork supercrítica y subcrítica”.</p>
+</article>
+<article class="definition-card">
+<h3>Reconocimiento de Hopf</h3>
+<p>Definición precisa: escenario en el que un par de autovalores complejos conjugados cruza el eje imaginario al variar un parámetro. Explicación: la parte real decide si el foco entra o sale; en el cruce, la linealización tiene centro y no decide completamente el no lineal. Ejemplo: autovalores \(\mu\pm i\). Relación: se apoya en la clasificación foco-centro-foco. Posible pregunta de examen: “Indique qué ocurre cuando los autovalores pasan de \(-\alpha\pm i\) a \(\alpha\pm i\)”.</p>
+</article>
+<article class="definition-card">
+<h3>Diagrama de bifurcación</h3>
+<p>Definición precisa: gráfico de ramas de equilibrio frente al parámetro, con indicación de estabilidad. Explicación: resume visualmente el cambio cualitativo. Ejemplo: en \(x'=\mu x-x^3\), rama central y ramas laterales. Relación: debe construirse a partir de equilibrios y derivadas. Posible pregunta de examen: “Dibuje el diagrama de bifurcación y marque ramas estables e inestables”.</p>
+</article>
+<article class="definition-card">
+<h3>Caso degenerado</h3>
+<p>Definición precisa: caso en el que la parte lineal no basta para decidir la dinámica local. Explicación: aparece cuando se anula una condición que normalmente permite clasificar, como \(f_x\neq0\) o autovalores con parte real no nula. Ejemplo: \(x'=x^2\) tiene \(f'(0)=0\). Relación: las bifurcaciones se producen en situaciones degeneradas. Posible pregunta de examen: “Explique por qué \(f_x=0\) en el equilibrio obliga a mirar términos no lineales”.</p>
+</article>
+</div>
+    </section>
+    <section id="relaciones" class="page">
+      <header class="section-header">
+        <p class="section-kicker">05</p>
+        <h2>5. Relaciones entre ideas</h2>
+      </header>
+      <div class="reading-block">
+<p>El tema se organiza en una cadena conceptual. Primero se define el sistema autónomo, porque sin él no hay retrato de fases fijo. Después se localizan los puntos críticos, porque son los objetos alrededor de los cuales se estudia el comportamiento local. Luego se introduce la estabilidad, que permite distinguir puntos que atraen, repelen o mantienen cerca las trayectorias.</p>
+<p>La clasificación lineal por autovalores es la primera jerarquía fuerte. En sistemas lineales, todo gira alrededor de la matriz \(A\). Sus autovalores deciden si el equilibrio es nodo, silla, foco o centro. Esta parte es algebraica: calcular \(\det(A-kI)=0\), resolver y clasificar.</p>
+<p>Los sistemas no lineales dependen de la linealización. La fórmula de Taylor justifica que la parte lineal domine localmente, pero solo si no se está en una situación degenerada. Por eso los autovalores del jacobiano actúan como puente entre álgebra lineal y dinámica no lineal.</p>
+<p>La bifurcación aparece al introducir un parámetro. Antes se estudiaba un sistema fijo; ahora se estudia una familia de sistemas. Los equilibrios ya no son puntos aislados, sino ramas \(X(\mu)\). La estabilidad también depende de \(\mu\). El análisis consiste en comparar retratos de fases para valores próximos del parámetro.</p>
+<p>Hay una dependencia clara entre equilibrio y estabilidad: no se puede estudiar la estabilidad de una rama sin haber encontrado antes la rama. Por eso el primer error en estos ejercicios suele ser calcular autovalores en un punto que no es equilibrio para ese valor del parámetro.</p>
+<p>Hay también una oposición central entre cambio de número de equilibrios y cambio de estabilidad. La silla-nodo cambia el número de equilibrios: dos ramas aparecen o desaparecen. La transcrítica mantiene dos ramas que se cruzan e intercambian estabilidad. La pitchfork mezcla una rama persistente con dos ramas simétricas que aparecen o desaparecen.</p>
+<p>Otra oposición importante es estable frente a asintóticamente estable. Un centro lineal es estable, pero no asintóticamente estable. Un foco estable sí lo es. Esto importa en el reconocimiento de Hopf: cuando la parte real de los autovalores complejos es cero, la linealización da un centro, pero el sistema no lineal puede no conservarlo.</p>
+<p>La jerarquía de métodos es la siguiente. En dimensión uno, se resuelve \(f(x,\mu)=0\) y se usa \(f_x\). En dimensión dos, se resuelve \(F(X,\mu)=0\), se calcula el jacobiano y se clasifican autovalores. Si hay degeneración, se examinan términos no lineales o se reconoce la forma normal elemental.</p>
+<p>La evolución conceptual desde estabilidad hasta bifurcación es natural. Primero se aprende a clasificar un equilibrio fijo. Después se observa que esa clasificación puede cambiar cuando un parámetro atraviesa un valor crítico. La bifurcación es, por tanto, estabilidad comparada a través de un parámetro.</p>
+</div>
+    </section>
+    <section id="errores" class="page">
+      <header class="section-header">
+        <p class="section-kicker">06</p>
+        <h2>6. Errores habituales</h2>
+      </header>
+      <div class="card-grid">
+<article class="definition-card">
+<h3>Error: confundir solución temporal con trayectoria.</h3>
+<p>Por qué está mal: una solución es una función \(X(t)\); una trayectoria es su curva en el plano de fases. Corrección: usar solución para la dependencia temporal y trayectoria para la geometría. Respuesta incorrecta: “La trayectoria es \(x(t)=e^{-t}\)”. Respuesta correcta: “La solución \(x(t)=e^{-t}, y(t)=e^{-2t}\) describe una trayectoria que entra al origen en el plano de fases”.</p>
+</article>
+<article class="definition-card">
+<h3>Error: llamar bifurcación a cualquier cambio numérico en una solución.</h3>
+<p>Por qué está mal: una bifurcación es un cambio cualitativo del retrato de fases o de la estructura de equilibrios. Corrección: identificar número de equilibrios, estabilidad o tipo antes y después del valor crítico. Respuesta incorrecta: “Hay bifurcación porque \(x=\mu\) cambia de valor”. Respuesta correcta: “Hay bifurcación en \(\mu=0\) porque las ramas \(x=0\) y \(x=\mu\) intercambian estabilidad”.</p>
+</article>
+<article class="definition-card">
+<h3>Error: clasificar estabilidad sin comprobar que el punto es crítico.</h3>
+<p>Por qué está mal: la estabilidad se define solo para equilibrios. Corrección: resolver primero \(F(X,\mu)=0\). Respuesta incorrecta: “En \(x=1\), \(f'(1)&lt;0\), luego es estable”, sin verificar \(f(1)=0\). Respuesta correcta: “Como \(f(1)=0\), estudiamos \(f'(1)\); si es negativa, el equilibrio es estable”.</p>
+</article>
+<article class="definition-card">
+<h3>Error: usar solo el signo del parámetro sin calcular derivadas.</h3>
+<p>Por qué está mal: la estabilidad depende de la derivada evaluada en cada rama, no solo de \(\mu\). Corrección: calcular \(f_x(x_*(\mu),\mu)\). Respuesta incorrecta: “Si \(\mu&gt;0\), todos los equilibrios son inestables”. Respuesta correcta: “En \(x=0\), \(f_x=\mu\); en \(x=\mu\), \(f_x=-\mu\). Por tanto, para \(\mu&gt;0\), \(x=0\) es inestable y \(x=\mu\) estable”.</p>
+</article>
+<article class="definition-card">
+<h3>Error: confundir silla-nodo con transcrítica.</h3>
+<p>Por qué está mal: en silla-nodo cambia el número de equilibrios; en transcrítica dos ramas se cruzan e intercambian estabilidad. Corrección: mirar las ramas de equilibrio. Respuesta incorrecta: “\(x'=\mu x-x^2\) es silla-nodo porque hay un punto crítico en \(\mu=0\)”. Respuesta correcta: “Es transcrítica porque las ramas \(x=0\) y \(x=\mu\) existen y se cruzan en \(\mu=0\) intercambiando estabilidad”.</p>
+</article>
+<article class="definition-card">
+<h3>Error: confundir pitchfork supercrítica y subcrítica.</h3>
+<p>Por qué está mal: el signo del término cúbico cambia la existencia y estabilidad de ramas laterales. Corrección: resolver ramas y evaluar \(f_x\). Respuesta incorrecta: “Toda pitchfork tiene ramas laterales estables para \(\mu&gt;0\)”. Respuesta correcta: “En \(x'=\mu x-x^3\) las ramas laterales son estables para \(\mu&gt;0\); en \(x'=\mu x+x^3\) existen para \(\mu&lt;0\) y son inestables”.</p>
+</article>
+<article class="definition-card">
+<h3>Error: decidir un sistema no lineal con autovalores imaginarios puros como si fuera siempre un centro.</h3>
+<p>Por qué está mal: la linealización no decide en ese caso. Corrección: indicar que hace falta análisis adicional. Respuesta incorrecta: “Como \(k=\pm i\), el punto no lineal es un centro”. Respuesta correcta: “El linealizado es un centro; en el sistema no lineal puede ser centro o espiral, por lo que la linealización no basta”.</p>
+</article>
+<article class="definition-card">
+<h3>Error: olvidar el caso \(\mu=0\).</h3>
+<p>Por qué está mal: el valor crítico es precisamente donde ocurre la degeneración. Corrección: estudiar por separado \(\mu&lt;0\), \(\mu=0\), \(\mu&gt;0\). Respuesta incorrecta: “Para \(\mu&gt;0\) hay dos equilibrios y para \(\mu&lt;0\) ninguno”. Respuesta correcta: “Para \(\mu=0\) hay un equilibrio doble en \(x=0\), que es el punto de bifurcación”.</p>
+</article>
+<article class="definition-card">
+<h3>Error: llamar estable a una rama sin especificar intervalo de parámetro.</h3>
+<p>Por qué está mal: la estabilidad puede cambiar al cruzar el valor crítico. Corrección: escribir estabilidad por tramos. Respuesta incorrecta: “La rama \(x=0\) es estable”. Respuesta correcta: “La rama \(x=0\) es estable para \(\mu&lt;0\) e inestable para \(\mu&gt;0\)”.</p>
+</article>
+<article class="definition-card">
+<h3>Error: calcular mal el jacobiano por no evaluar en el equilibrio.</h3>
+<p>Por qué está mal: el jacobiano depende del punto y del parámetro. Corrección: primero calcular \(J(x,y;\mu)\), luego sustituir \((x_*(\mu),y_*(\mu))\). Respuesta incorrecta: “El jacobiano es \(J(x,y)\), sus autovalores son...”. Respuesta correcta: “En el equilibrio \(P(\mu)\), el jacobiano es \(J(P(\mu),\mu)\); sus autovalores determinan la estabilidad local”.</p>
+</article>
+<article class="definition-card">
+<h3>Error: creer que todo autovalor cero implica automáticamente silla-nodo.</h3>
+<p>Por qué está mal: autovalor cero indica degeneración, pero el tipo depende de términos no lineales y de cómo entra el parámetro. Corrección: comparar con formas normales. Respuesta incorrecta: “Hay autovalor cero; por tanto, silla-nodo”. Respuesta correcta: “Hay degeneración. Hay que estudiar ramas y estabilidad; puede ser silla-nodo, transcrítica, pitchfork u otro caso”.</p>
+</article>
+<article class="definition-card">
+<h3>Error: no justificar la codimensión 1.</h3>
+<p>Por qué está mal: codimensión 1 no significa “una variable”, sino que un parámetro basta para atravesar la condición crítica. Corrección: relacionar el fenómeno con una condición escalar, como \(f_x=0\) o \(\operatorname{Re}k=0\). Respuesta incorrecta: “Es de codimensión 1 porque la ecuación es \(x'\)”. Respuesta correcta: “Es de codimensión 1 porque la degeneración se alcanza imponiendo una condición escalar y se despliega con un parámetro \(\mu\)”.</p>
+</article>
+</div>
+    </section>
+    <section id="preguntas" class="page">
+      <header class="section-header">
+        <p class="section-kicker">07</p>
+        <h2>7. Preguntas orientadas a examen</h2>
+      </header>
+      <details class="accordion" open>
+<summary>10 preguntas fáciles</summary>
+<div class="reading-block">
+<p>F1. Defina sistema autónomo y escriba su forma general en dimensión dos.</p>
+<p>F2. ¿Qué es un punto crítico de un sistema autónomo plano?</p>
+<p>F3. ¿Qué diferencia hay entre plano de fases y retrato de fases?</p>
+<p>F4. Defina estabilidad y estabilidad asintótica de forma cualitativa.</p>
+<p>F5. Clasifique un equilibrio lineal con autovalores \(-2\) y \(-5\).</p>
+<p>F6. Clasifique un equilibrio lineal con autovalores \(1\) y \(-3\).</p>
+<p>F7. Clasifique un equilibrio lineal con autovalores \(-1\pm 2i\).</p>
+<p>F8. ¿Qué ocurre en el sistema lineal si los autovalores son imaginarios puros?</p>
+<p>F9. ¿Qué es la linealización de un sistema no lineal en un punto crítico?</p>
+<p>F10. En dimensión uno, ¿cómo se decide la estabilidad de un equilibrio \(x_0\) si \(f'(x_0)\neq0\)?</p>
+</div>
+</details>
+<details class="accordion" open>
+<summary>10 preguntas medias</summary>
+<div class="reading-block">
+<p>M1. Estudie los equilibrios y la estabilidad de</p>
+<div class="formula-block">\[
+x'=\mu-x^2.
+\]</div>
+<p>M2. Estudie los equilibrios y la estabilidad de</p>
+<div class="formula-block">\[
+x'=\mu x-x^2.
+\]</div>
+<p>M3. Estudie los equilibrios y la estabilidad de</p>
+<div class="formula-block">\[
+x'=\mu x-x^3.
+\]</div>
+<p>M4. Estudie los equilibrios y la estabilidad de</p>
+<div class="formula-block">\[
+x'=\mu x+x^3.
+\]</div>
+<p>M5. Linealice en el origen el sistema</p>
+<div class="formula-block">\[
+x'=2x+8y-xy,\qquad y'=-x-3y+xy.
+\]</div>
+<p>M6. Explique por qué el caso de autovalores imaginarios puros es excepcional en sistemas no lineales.</p>
+<p>M7. Para</p>
+<div class="formula-block">\[
+X'=\begin{pmatrix}\mu&amp;-1\\1&amp;\mu\end{pmatrix}X,
+\]</div>
+<p>clasifique el origen según \(\mu&lt;0\), \(\mu=0\), \(\mu&gt;0\).</p>
+<p>M8. Explique la diferencia entre bifurcación silla-nodo y transcrítica.</p>
+<p>M9. Dibuje verbalmente el diagrama de bifurcación de \(x'=\mu x-x^3\), indicando estabilidad.</p>
+<p>M10. ¿Por qué una bifurcación local no exige resolver explícitamente la EDO?</p>
+</div>
+</details>
+<details class="accordion" open>
+<summary>5 preguntas difíciles</summary>
+<div class="reading-block">
+<p>D1. Determine el tipo de bifurcación de</p>
+<div class="formula-block">\[
+x'=r+x^2
+\]</div>
+<p>y clasifique las ramas de equilibrio cuando existan.</p>
+<p>D2. Determine el tipo de bifurcación de</p>
+<div class="formula-block">\[
+x'=rx+x^2
+\]</div>
+<p>y explique el intercambio de estabilidad.</p>
+<p>D3. Considere</p>
+<div class="formula-block">\[
+x'=y,\qquad y'=\mu x-y-x^2.
+\]</div>
+<p>Calcule el jacobiano en el origen y determine para qué valor de \(\mu\) aparece un autovalor cero.</p>
+<p>D4. Explique por qué el hecho de que \(f_x(x_0,\mu_0)=0\) no basta por sí solo para clasificar una bifurcación.</p>
+<p>D5. Para un sistema plano con autovalores \(k(\mu)=\mu\pm i\), explique qué información da la linealización y qué información no da sobre una posible Hopf.</p>
+</div>
+</details>
+<details class="accordion" open>
+<summary>5 preguntas de desarrollo largo</summary>
+<div class="reading-block">
+<p>L1. Desarrolle el método general para estudiar bifurcaciones locales de codimensión 1 en ecuaciones escalares \(x'=f(x,\mu)\).</p>
+<p>L2. Explique la clasificación de puntos críticos en sistemas lineales planos mediante autovalores y relacione cada caso con estabilidad.</p>
+<p>L3. Explique cómo se usa la linealización para estudiar sistemas no lineales y cuáles son sus limitaciones.</p>
+<p>L4. Compare en detalle las bifurcaciones silla-nodo, transcrítica y pitchfork.</p>
+<p>L5. Explique el papel de los autovalores imaginarios puros en estabilidad y en el reconocimiento básico de Hopf.</p>
+</div>
+</details>
+<details class="accordion" open>
+<summary>5 preguntas de relación entre conceptos</summary>
+<div class="reading-block">
+<p>R1. Relacione punto crítico, linealización y autovalores.</p>
+<p>R2. Relacione estabilidad asintótica y signo de la parte real de los autovalores.</p>
+<p>R3. Relacione diagrama de bifurcación y retrato de fases.</p>
+<p>R4. Relacione degeneración de la linealización y necesidad de términos no lineales.</p>
+<p>R5. Relacione codimensión 1 y parámetro de control.</p>
+</div>
+</details>
+    </section>
+    <section id="respuestas" class="page">
+      <header class="section-header">
+        <p class="section-kicker">08</p>
+        <h2>8. Respuestas modelo</h2>
+      </header>
+      <details class="accordion" open>
+<summary>Respuestas fáciles</summary>
+<div class="reading-block">
+<p>F1. Un sistema autónomo es aquel en el que la variable independiente no aparece explícitamente en el segundo miembro. En dimensión dos se escribe</p>
+<div class="formula-block">\[
+x'=f(x,y),\qquad y'=g(x,y).
+\]</div>
+<p>Su estudio cualitativo se realiza en el plano de fases porque el vector de evolución depende solo del punto \((x,y)\).</p>
+<p>F2. Un punto crítico es un punto \((x_0,y_0)\) en el que se anulan simultáneamente los segundos miembros:</p>
+<div class="formula-block">\[
+f(x_0,y_0)=0,\qquad g(x_0,y_0)=0.
+\]</div>
+<p>Si una solución empieza en ese punto, permanece allí para todo tiempo.</p>
+<p>F3. El plano de fases es el plano cuyas coordenadas son las variables dinámicas, por ejemplo \(x\) e \(y\). El retrato de fases es el conjunto cualitativo de trayectorias dibujadas en ese plano, incluyendo la forma en que se acercan, se alejan o rodean los puntos críticos.</p>
+<p>F4. Un punto crítico es estable si toda trayectoria que empieza suficientemente cerca permanece cerca para tiempos posteriores. Es asintóticamente estable si, además de permanecer cerca, tiende al punto cuando \(t\to\infty\). Todo punto asintóticamente estable es estable, pero no al revés.</p>
+<p>F5. Con autovalores \(-2\) y \(-5\), ambos son reales y negativos. El equilibrio es un nodo estable y, además, asintóticamente estable. Las trayectorias cercanas entran hacia el punto crítico.</p>
+<p>F6. Con autovalores \(1\) y \(-3\), hay signos opuestos. El equilibrio es un punto de silla. Es inestable, porque existe una dirección en la que las trayectorias se alejan.</p>
+<p>F7. Con autovalores \(-1\pm 2i\), la parte real es negativa y la parte imaginaria no nula. El equilibrio es un foco estable o punto espiral estable. Las trayectorias giran y se acercan al punto.</p>
+<p>F8. Si los autovalores son imaginarios puros, el sistema lineal tiene un centro. Las trayectorias son cerradas alrededor del equilibrio. En un sistema no lineal, este caso es excepcional: la linealización no basta para asegurar que el equilibrio no lineal sea centro.</p>
+<p>F9. La linealización es el sistema lineal obtenido conservando los términos de primer orden del desarrollo de Taylor del campo vectorial en un punto crítico. Su matriz es el jacobiano evaluado en ese punto.</p>
+<p>F10. En dimensión uno, si \(x_0\) es equilibrio de \(x'=f(x)\) y \(f'(x_0)\neq0\), entonces \(x_0\) es estable si \(f'(x_0)&lt;0\) e inestable si \(f'(x_0)&gt;0\). Si \(f'(x_0)=0\), la prueba lineal no decide.</p>
+</div>
+</details>
+<details class="accordion" open>
+<summary>Respuestas medias</summary>
+<div class="reading-block">
+<p>M1. Los equilibrios satisfacen</p>
+<div class="formula-block">\[
+\mu-x^2=0,
+\]</div>
+<p>luego \(x=\pm\sqrt{\mu}\) si \(\mu\geq0\). Para \(\mu&lt;0\) no hay equilibrios reales. Para \(\mu=0\) hay un equilibrio doble en \(x=0\). La derivada es \(f_x=-2x\). Para \(\mu&gt;0\), \(x=\sqrt{\mu}\) es estable porque \(f_x&lt;0\), y \(x=-\sqrt{\mu}\) es inestable porque \(f_x&gt;0\). Es una bifurcación silla-nodo.</p>
+<p>M2. Los equilibrios son</p>
+<div class="formula-block">\[
+x(\mu-x)=0,
+\]</div>
+<p>por tanto \(x=0\) y \(x=\mu\). La derivada es \(f_x=\mu-2x\). En \(x=0\), \(f_x=\mu\): estable si \(\mu&lt;0\), inestable si \(\mu&gt;0\). En \(x=\mu\), \(f_x=-\mu\): inestable si \(\mu&lt;0\), estable si \(\mu&gt;0\). Las ramas se cruzan e intercambian estabilidad en \(\mu=0\): bifurcación transcrítica.</p>
+<p>M3. Los equilibrios satisfacen</p>
+<div class="formula-block">\[
+x(\mu-x^2)=0.
+\]</div>
+<p>Siempre existe \(x=0\). Para \(\mu&gt;0\), existen además \(x=\pm\sqrt{\mu}\). La derivada es \(f_x=\mu-3x^2\). La rama central es estable si \(\mu&lt;0\) e inestable si \(\mu&gt;0\). Las ramas laterales, cuando existen, tienen \(f_x=-2\mu&lt;0\), luego son estables. Es una pitchfork supercrítica.</p>
+<p>M4. Los equilibrios satisfacen</p>
+<div class="formula-block">\[
+x(\mu+x^2)=0.
+\]</div>
+<p>Siempre existe \(x=0\). Si \(\mu&lt;0\), existen además \(x=\pm\sqrt{-\mu}\). La derivada es \(f_x=\mu+3x^2\). En \(x=0\), es estable si \(\mu&lt;0\) e inestable si \(\mu&gt;0\). En las ramas laterales, \(f_x=\mu+3(-\mu)=-2\mu&gt;0\), luego son inestables para \(\mu&lt;0\). Es una pitchfork subcrítica.</p>
+<p>M5. La parte lineal del sistema es</p>
+<div class="formula-block">\[
+x'=2x+8y,\qquad y'=-x-3y.
+\]</div>
+<p>Por tanto, el jacobiano en el origen es</p>
+<div class="formula-block">\[
+J(0,0)=
+\begin{pmatrix}
+2&amp;8\\
+-1&amp;-3
+\end{pmatrix}.
+\]</div>
+<p>La clasificación se obtiene calculando los autovalores de esta matriz. Los términos \(xy\) son de orden superior y no aparecen en la linealización.</p>
+<p>M6. Los autovalores imaginarios puros dan un centro en el sistema lineal. Sin embargo, en un sistema no lineal los términos de orden superior pueden convertir el comportamiento en una espiral entrante o saliente. Por eso la linealización no decide completamente y hace falta un análisis adicional.</p>
+<p>M7. La matriz tiene autovalores \(\mu\pm i\). Si \(\mu&lt;0\), la parte real es negativa: foco estable. Si \(\mu&gt;0\), la parte real es positiva: foco inestable. Si \(\mu=0\), los autovalores son \(\pm i\): centro en el sistema lineal. El valor \(\mu=0\) es el cruce crítico.</p>
+<p>M8. En una bifurcación silla-nodo, dos equilibrios aparecen o desaparecen al cruzar el parámetro crítico; cambia el número de equilibrios. En una transcrítica, hay dos ramas de equilibrio que se cruzan y se intercambian estabilidad; localmente no desaparecen las dos ramas, sino que cambia cuál es estable.</p>
+<p>M9. Para \(x'=\mu x-x^3\), el diagrama tiene una rama central \(x=0\) para todo \(\mu\). Esta rama es estable para \(\mu&lt;0\) e inestable para \(\mu&gt;0\). Para \(\mu&gt;0\) aparecen dos ramas laterales \(x=\pm\sqrt{\mu}\), ambas estables. El dibujo tiene forma de horquilla supercrítica.</p>
+<p>M10. Una bifurcación local se estudia mediante equilibrios, derivadas, jacobianos y autovalores. No se necesita la solución explícita porque el cambio cualitativo se detecta comparando puntos críticos y estabilidad antes y después del valor crítico del parámetro.</p>
+</div>
+</details>
+<details class="accordion" open>
+<summary>Respuestas difíciles</summary>
+<div class="reading-block">
+<p>D1. Los equilibrios satisfacen \(r+x^2=0\), luego \(x=\pm\sqrt{-r}\) si \(r\leq0\). Para \(r&gt;0\) no hay equilibrios. La derivada es \(f_x=2x\). Para \(r&lt;0\), en \(x=-\sqrt{-r}\) se tiene \(f_x&lt;0\), luego es estable; en \(x=\sqrt{-r}\), \(f_x&gt;0\), luego es inestable. En \(r=0\) los dos equilibrios colisionan en \(x=0\). Es una silla-nodo, con orientación opuesta a \(x'=\mu-x^2\).</p>
+<p>D2. Los equilibrios son</p>
+<div class="formula-block">\[
+x(r+x)=0,
+\]</div>
+<p>por tanto \(x=0\) y \(x=-r\). La derivada es \(f_x=r+2x\). En \(x=0\), \(f_x=r\): estable si \(r&lt;0\), inestable si \(r&gt;0\). En \(x=-r\), \(f_x=-r\): inestable si \(r&lt;0\), estable si \(r&gt;0\). Las ramas se cruzan en \(r=0\) e intercambian estabilidad. Es transcrítica.</p>
+<p>D3. El campo es</p>
+<div class="formula-block">\[
+F(x,y)=\binom{y}{\mu x-y-x^2}.
+\]</div>
+<p>El origen es equilibrio para todo \(\mu\). El jacobiano es</p>
+<div class="formula-block">\[
+J(x,y)=
+\begin{pmatrix}
+0&amp;1\\
+\mu-2x&amp;-1
+\end{pmatrix},
+\]</div>
+<p>y en el origen:</p>
+<div class="formula-block">\[
+J(0,0)=
+\begin{pmatrix}
+0&amp;1\\
+\mu&amp;-1
+\end{pmatrix}.
+\]</div>
+<p>La ecuación característica es</p>
+<div class="formula-block">\[
+\det\begin{pmatrix}-k&amp;1\\ \mu&amp;-1-k\end{pmatrix}
+=k(1+k)-\mu=k^2+k-\mu=0.
+\]</div>
+<p>Hay un autovalor cero cuando el término independiente es cero, es decir, cuando \(-\mu=0\). Por tanto, la degeneración ocurre en \(\mu=0\).</p>
+<p>D4. La condición \(f_x(x_0,\mu_0)=0\) indica que la linealización escalar no decide la estabilidad, pero no distingue por sí sola el tipo de bifurcación. Para clasificar hay que mirar cómo entra el parámetro, si hay ramas de equilibrio que se cruzan, si aparecen o desaparecen equilibrios, y qué signo tienen los términos no lineales dominantes. Un autovalor cero es señal de degeneración, no diagnóstico completo.</p>
+<p>D5. La linealización indica que para \(\mu&lt;0\) el equilibrio es foco estable y para \(\mu&gt;0\) foco inestable. En \(\mu=0\), los autovalores son imaginarios puros y el linealizado tiene un centro. Esto sugiere el escenario de Hopf, pero no demuestra por sí solo la existencia, estabilidad ni sentido de una órbita periódica no lineal. Para eso hacen falta términos no lineales y análisis adicional.</p>
+</div>
+</details>
+<details class="accordion" open>
+<summary>Respuestas de desarrollo largo</summary>
+<div class="reading-block">
+<p>L1. Para estudiar una bifurcación local escalar en</p>
+<div class="formula-block">\[
+x'=f(x,\mu),
+\]</div>
+<p>primero se resuelven los equilibrios mediante \(f(x,\mu)=0\). Es importante expresar las ramas \(x=x_*(\mu)\), si es posible. Después se busca el valor crítico del parámetro, normalmente donde dos ramas se encuentran, una rama cambia de estabilidad o se anula la derivada \(f_x\).</p>
+<p>El siguiente paso es calcular</p>
+<div class="formula-block">\[
+f_x(x_*(\mu),\mu)
+\]</div>
+<p>en cada rama. Si esta derivada es negativa, la rama es estable; si es positiva, inestable. Si se anula en el valor crítico, hay que comparar los casos \(\mu&lt;\mu_0\), \(\mu=\mu_0\) y \(\mu&gt;\mu_0\).</p>
+<p>Finalmente se clasifica el patrón. Si dos equilibrios aparecen o desaparecen, es silla-nodo. Si dos ramas se cruzan e intercambian estabilidad, es transcrítica. Si una rama central cambia de estabilidad y surgen dos ramas simétricas, es pitchfork. La respuesta debe terminar con el diagrama de bifurcación o con una descripción equivalente de ramas y estabilidad.</p>
+<p>L2. En un sistema lineal plano</p>
+<div class="formula-block">\[
+X'=AX,
+\]</div>
+<p>la clasificación del origen se obtiene a partir de los autovalores de \(A\). Si son reales y ambos negativos, el origen es nodo estable; si ambos son positivos, nodo inestable. Si son reales y de signos opuestos, el origen es una silla, por tanto inestable.</p>
+<p>Si los autovalores son complejos conjugados \(p\pm qi\), con \(q\neq0\), la parte imaginaria produce giro. Si \(p&lt;0\), las trayectorias giran entrando hacia el equilibrio: foco estable. Si \(p&gt;0\), giran alejándose: foco inestable. Si \(p=0\), son imaginarios puros y el sistema lineal tiene un centro.</p>
+<p>Esta clasificación es importante porque proporciona el vocabulario básico para los sistemas no lineales. La linealización de un sistema no lineal se clasifica usando exactamente esta tabla, salvo en casos degenerados.</p>
+<p>L3. Para estudiar un sistema no lineal cerca de un punto crítico, se traslada el punto al origen y se desarrolla el campo por Taylor. La parte de primer orden define el sistema linealizado:</p>
+<div class="formula-block">\[
+X'=J(X_0)X.
+\]</div>
+<p>Si los autovalores de \(J(X_0)\) no están en casos excepcionales, el sistema no lineal tiene localmente el mismo tipo cualitativo que el linealizado.</p>
+<p>La limitación aparece cuando la parte lineal no decide. Esto ocurre, en el tratamiento elemental, con raíces reales iguales, con raíces imaginarias puras y, en problemas de bifurcación, cuando aparece un autovalor cero. En estos casos, los términos no lineales pueden cambiar el tipo de equilibrio. Por tanto, no basta decir “el linealizado es un centro” para concluir que el sistema no lineal lo sea.</p>
+<p>L4. La silla-nodo, la transcrítica y la pitchfork son bifurcaciones locales elementales de codimensión 1. Todas se estudian resolviendo equilibrios y clasificando su estabilidad, pero el cambio cualitativo es distinto en cada una.</p>
+<p>En la silla-nodo, como \(x'=\mu-x^2\), no hay equilibrios a un lado del parámetro crítico y hay dos al otro. Una rama es estable y la otra inestable. El fenómeno principal es la creación o destrucción de dos equilibrios.</p>
+<p>En la transcrítica, como \(x'=\mu x-x^2\), hay dos ramas que se cruzan: \(x=0\) y \(x=\mu\). No se trata de aparición de dos ramas desde la nada, sino de intercambio de estabilidad.</p>
+<p>En la pitchfork, como \(x'=\mu x-x^3\), hay una rama central que cambia de estabilidad y dos ramas laterales simétricas que aparecen para un lado del parámetro. En la versión supercrítica, las ramas laterales son estables; en la subcrítica, las laterales son inestables y existen al lado opuesto.</p>
+<p>L5. Los autovalores imaginarios puros ocupan una posición fronteriza. En un sistema lineal plano, indican un centro: las trayectorias son cerradas y el equilibrio es estable pero no asintóticamente estable. Sin embargo, en un sistema no lineal, la linealización con autovalores imaginarios puros no decide por completo.</p>
+<p>Cuando un parámetro hace que los autovalores complejos \(p(\mu)\pm iq(\mu)\) pasen de parte real negativa a positiva, se produce un cambio de foco estable a foco inestable en la aproximación lineal. En el valor en que \(p(\mu)=0\), aparece el caso de centro lineal. Este es el punto donde se reconoce el escenario básico de Hopf. El análisis completo de la órbita periódica que puede aparecer requiere términos no lineales y herramientas adicionales.</p>
+</div>
+</details>
+<details class="accordion" open>
+<summary>Respuestas de relación entre conceptos</summary>
+<div class="reading-block">
+<p>R1. Un punto crítico es el lugar donde se estudia la dinámica local. La linealización aproxima el sistema cerca de ese punto mediante una matriz jacobiana. Los autovalores de esa matriz permiten clasificar el equilibrio si no hay degeneración.</p>
+<p>R2. En sistemas lineales, la estabilidad asintótica está asociada a autovalores con parte real negativa. Si alguna parte real es positiva, aparece inestabilidad. Si la parte real es cero, como en autovalores imaginarios puros, no se puede concluir estabilidad asintótica.</p>
+<p>R3. El diagrama de bifurcación resume cómo varían los equilibrios con el parámetro. El retrato de fases muestra cómo se comportan las trayectorias para un valor concreto del parámetro. La bifurcación se entiende comparando retratos de fases y representando sus equilibrios en el diagrama.</p>
+<p>R4. La degeneración de la linealización aparece cuando la parte lineal no decide el comportamiento. Entonces los términos no lineales, que normalmente se despreciaban como corrección pequeña, pasan a determinar el tipo de equilibrio o el tipo de bifurcación.</p>
+<p>R5. Codimensión 1 significa que la condición crítica se alcanza ajustando un único parámetro. Ese parámetro actúa como control: al cruzar su valor crítico, cambia la estructura local de equilibrios o estabilidad.</p>
+</div>
+</details>
+    </section>
+    <section id="resumen" class="page">
+      <header class="section-header">
+        <p class="section-kicker">09</p>
+        <h2>9. Resumen final de repaso</h2>
+      </header>
+      <div class="reading-block">
+<p>Ideas principales:</p>
+<ul>
+<li>Un sistema autónomo se estudia en el plano de fases.</li>
+<li>Los puntos críticos satisfacen \(F(X)=0\).</li>
+<li>La estabilidad describe qué hacen las trayectorias cercanas.</li>
+<li>En sistemas lineales, los autovalores clasifican nodos, sillas, focos y centros.</li>
+<li>En sistemas no lineales, se usa la linealización mediante el jacobiano.</li>
+<li>La linealización falla o no decide en casos degenerados.</li>
+<li>Una bifurcación local es un cambio cualitativo cerca de un equilibrio al variar un parámetro.</li>
+<li>Codimensión 1 significa que un parámetro basta para atravesar la condición crítica.</li>
+<li>En dimensión uno, la estabilidad se decide con \(f_x\) si \(f_x\neq0\).</li>
+<li>Las formas elementales son silla-nodo, transcrítica y pitchfork.</li>
+<li>Hopf se reconoce cuando un par complejo cruza el eje imaginario.</li>
+</ul>
+<p>Conceptos imprescindibles:</p>
+<ul>
+<li>Sistema autónomo.</li>
+<li>Trayectoria.</li>
+<li>Plano de fases.</li>
+<li>Retrato de fases.</li>
+<li>Punto crítico.</li>
+<li>Estabilidad.</li>
+<li>Estabilidad asintótica.</li>
+<li>Linealización.</li>
+<li>Jacobiano.</li>
+<li>Autovalores.</li>
+<li>Nodo.</li>
+<li>Silla.</li>
+<li>Foco.</li>
+<li>Centro.</li>
+<li>Bifurcación local.</li>
+<li>Codimensión 1.</li>
+<li>Diagrama de bifurcación.</li>
+</ul>
+<p>Relaciones clave:</p>
+<ul>
+<li>Punto crítico → linealización → autovalores → clasificación.</li>
+<li>Parámetro → ramas de equilibrio → cambio de estabilidad → bifurcación.</li>
+<li>Autovalor cero → degeneración → mirar términos no lineales.</li>
+<li>Imaginarios puros → centro lineal → caso no concluyente en no lineales.</li>
+<li>Silla-nodo → cambio de número de equilibrios.</li>
+<li>Transcrítica → intercambio de estabilidad.</li>
+<li>Pitchfork → simetría y ramas laterales.</li>
+</ul>
+<p>Errores que evitar:</p>
+<ul>
+<li>Clasificar estabilidad sin comprobar que el punto es equilibrio.</li>
+<li>Olvidar el caso crítico \(\mu=0\).</li>
+<li>Confundir transcrítica con silla-nodo.</li>
+<li>Decidir sistemas no lineales con imaginarios puros como si fueran siempre centros.</li>
+<li>Dibujar ramas sin indicar estabilidad.</li>
+<li>Usar el jacobiano sin evaluarlo en el equilibrio.</li>
+<li>Llamar bifurcación a un simple cambio continuo de valor.</li>
+</ul>
+</div>
+    </section>
+    <section id="checklist" class="page">
+      <header class="section-header">
+        <p class="section-kicker">10</p>
+        <h2>10. Checklist de dominio</h2>
+      </header>
+      <div class="reading-block">
+<ul>
+<li>Si no puedes definir sistema autónomo, falta repasar plano de fases y campo vectorial.</li>
+<li>Si no puedes encontrar puntos críticos, falta repasar resolución de sistemas algebraicos.</li>
+<li>Si confundes punto crítico con trayectoria, revisar definiciones básicas de sistemas autónomos.</li>
+<li>Si no puedes distinguir estabilidad de estabilidad asintótica, falta repasar nodos, focos y centros.</li>
+<li>Si no puedes clasificar autovalores reales de distinto signo, falta repasar punto de silla.</li>
+<li>Si no puedes clasificar autovalores complejos, falta repasar parte real y parte imaginaria.</li>
+<li>Si confundes centro con foco estable, revisar autovalores imaginarios puros frente a complejos con parte real negativa.</li>
+<li>Si no puedes construir el jacobiano, falta repasar derivadas parciales.</li>
+<li>Si calculas el jacobiano pero no lo evalúas en el equilibrio, revisar el método de linealización.</li>
+<li>Si crees que la linealización siempre decide, revisar los casos excepcionales.</li>
+<li>Si no puedes estudiar \(x'=\mu-x^2\), falta repasar silla-nodo.</li>
+<li>Si confundes \(x'=\mu-x^2\) con \(x'=\mu x-x^2\), revisar diferencia entre aparición de ramas e intercambio de estabilidad.</li>
+<li>Si no puedes estudiar \(x'=\mu x-x^3\), falta repasar pitchfork.</li>
+<li>Si no indicas estabilidad de ramas en un diagrama, falta repasar criterio \(f_x\).</li>
+<li>Si no separas \(\mu&lt;0\), \(\mu=0\), \(\mu&gt;0\), falta repasar análisis por casos.</li>
+<li>Si llamas Hopf a cualquier foco, revisar cruce de la parte real de autovalores complejos.</li>
+<li>Si no puedes explicar codimensión 1, falta repasar el papel del parámetro.</li>
+<li>Si puedes resolver equilibrios, clasificarlos y dibujar ramas con estabilidad, el bloque escalar está suficientemente asentado.</li>
+<li>Si puedes linealizar un sistema plano y detectar autovalor cero o par imaginario puro, el puente hacia bifurcaciones locales está suficientemente asentado.</li>
+<li>Si puedes justificar en dos líneas por qué hay bifurcación, el capítulo está preparado para examen.</li>
+</ul>
+</div>
+    </section>
+    </main>
+  </div>
+</body>
+</html>
