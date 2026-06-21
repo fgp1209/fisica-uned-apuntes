@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="color-scheme" content="light dark" />
+  <title>Técnicas Experimentales II — TE2 T2 — Estadística aplicada a ajustes y a análisis de errores</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/icon-32.png" />
+  <link rel="icon" type="image/png" sizes="50x50" href="assets/icons/icon-50.png" />
+  <link rel="apple-touch-icon" sizes="100x100" href="assets/icons/icon-100.png" />
+  <meta name="theme-color" content="#b45309" />
+  <link rel="stylesheet" href="assets/styles.css" />
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [["\\(","\\)"], ["$", "$"]], displayMath: [["\\[","\\]"]] },
+      svg: { fontCache: "global" }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+  <script defer src="assets/app.js"></script>
+</head>
+<body class="subject-tecnicas">
+  <div class="wrap">
+    <header class="cover">
+      <div class="top-actions">
+        <a class="back-link secondary" href="#preguntas">Preguntas</a>
+        <a class="back-link secondary" href="#checklist">Checklist</a>
+      </div>
+      <p class="eyebrow">Técnicas Experimentales II · UNED · Tema 2</p>
+      <h1>Estadística aplicada a ajustes y a análisis de errores</h1>
+      <p class="subtitle">Guía de estudio desarrollada y orientada a examen.</p>
+      <div class="chips">
+        <span class="chip">apuntes completos</span>
+        <span class="chip">HTML responsive</span>
+        <span class="chip">mapa clicable</span>
+        <span class="chip">orientado a examen</span>
+        <span class="chip">estado: listo</span>
+      </div>
+    </header>
+
+    <div class="toolbar no-print">
+      <nav><a href="#mapa">Mapa</a><a href="#ficha-del-tema">Ficha</a><a href="#prerrequisitos">Prerrequisitos</a><a href="#idea-central">Idea central</a><a href="#desarrollo">Desarrollo</a><a href="#conceptos">Conceptos</a><a href="#relaciones">Relaciones</a><a href="#errores">Errores</a><a href="#preguntas">Preguntas</a><a href="#respuestas">Respuestas</a><a href="#resumen">Resumen</a><a href="#checklist">Checklist</a></nav>
+      <div class="toolbar-actions"><button class="btn" onclick="printReady()">Imprimir / guardar PDF</button></div>
+    </div>
+
+    <main>
+<section class="page" id="mapa">
+  <div class="page-head"><h2>Mapa conceptual clicable</h2><span class="page-no">TE2 T2 · mapa</span></div>
+  <div class="concept-map"><a class="map-node" href="#ficha-del-tema"><span>Ficha del tema</span><small>TE2 T2 — Estadística aplicada a ajustes y a análisis de errores</small></a><a class="map-node" href="#prerrequisitos"><span>Prerrequisitos mínimos</span><small>Incertidumbre experimental: margen cuantitativo asociado a un resultado de medida. Es necesaria porque los ajustes y los errores g…</small></a><a class="map-node" href="#idea-central"><span>Idea central del capítulo</span><small>El tema aplica la estadística al análisis de errores y a los ajustes de datos experimentales. La asignatura no se limita a calcula…</small></a><a class="map-node" href="#desarrollo"><span>Desarrollo completo del capítulo</span><small>El punto de partida es que los errores experimentales no se distribuyen de cualquier manera. Si una medida está afectada por mucha…</small></a><a class="map-node" href="#conceptos"><span>Conceptos clave</span><small>Error gaussiano. <strong>Definición precisa:</strong> error aleatorio modelado mediante una distribución normal alrededor del valor esperado. Expli…</small></a><a class="map-node" href="#relaciones"><span>Relaciones entre ideas</span><small>La cadena conceptual es: errores experimentales → distribución de errores → verosimilitud → estimación de parámetros → análisis de…</small></a><a class="map-node" href="#errores"><span>Errores habituales</span><small>Error: creer que el mejor ajuste es el que pasa por todos los puntos. Por qué está mal: los datos tienen incertidumbre y no se esp…</small></a><a class="map-node" href="#preguntas"><span>Preguntas orientadas a examen</span><small>Preguntas fáciles: 1. ¿Qué es un residuo? 2. ¿Qué caracteriza a una distribución normal? 3. ¿Qué es un parámetro de ajuste? 4. ¿Qu…</small></a><a class="map-node" href="#respuestas"><span>Respuestas modelo</span><small>1. Un residuo es la diferencia entre el valor experimental y el valor predicho por el modelo para el mismo punto. Sirve para medir…</small></a><a class="map-node" href="#resumen"><span>Resumen final de repaso</span><small>Ideas principales: Los errores gaussianos permiten cuantificar compatibilidad entre datos y modelo. La máxima verosimilitud estima…</small></a><a class="map-node" href="#checklist"><span>Checklist de dominio</span><small>Si no puedes explicar qué es un residuo, falta repasar la relación dato-modelo. Si confundes verosimilitud con probabilidad del pa…</small></a></div>
+</section>
+<section class="page" id="ficha-del-tema">
+  <div class="page-head"><h2>Ficha del tema</h2><span class="page-no">TE2 T2 · ficha</span></div>
+  <div class="reading-block"><p>Capítulo trabajado: TE2 T2 — Estadística aplicada a ajustes y a análisis de errores. <strong>Fuente base:</strong> Guía pública UNED 2026/27 de Técnicas Experimentales II, código 61042099. Desarrollo docente basado en los epígrafes oficiales y en aclaraciones estándar estrictamente necesarias.</p></div>
+</section>
+<section class="page" id="prerrequisitos">
+  <div class="page-head"><h2>1. Prerrequisitos mínimos</h2><span class="page-no">TE2 T2</span></div>
+  <div class="reading-block">
+<ul>
+<li>Incertidumbre experimental: margen cuantitativo asociado a un resultado de medida. Es necesaria porque los ajustes y los errores gaussianos se interpretan en función de la dispersión esperada. <strong>Ejemplo:</strong> una tensión medida como 5,02 ± 0,03 V.</li>
+</ul>
+<ul>
+<li>Distribución de probabilidad: función o regla que asigna probabilidades a posibles resultados. Es necesaria porque el tema trata errores y gaussianas. <strong>Ejemplo:</strong> valores cercanos a la media de una distribución normal son más probables que valores muy alejados.</li>
+</ul>
+<ul>
+<li>Media y desviación típica: la media localiza el centro de una serie y la desviación típica mide su dispersión. Son necesarias para entender la gaussiana y el ajuste de datos con errores aleatorios.</li>
+</ul>
+<ul>
+<li>Medida indirecta: magnitud calculada a partir de otras medidas. Es necesaria porque los errores se propagan y los parámetros de ajuste suelen ser magnitudes indirectas. <strong>Ejemplo:</strong> obtener una resistencia a partir de la pendiente de una gráfica V frente a I.</li>
+</ul>
+<ul>
+<li>Modelo matemático: relación funcional entre variables y parámetros. Es necesario porque ajustar datos significa estimar los parámetros de un modelo. <strong>Ejemplo:</strong> y = ax + b para una relación lineal.</li>
+</ul>
+<ul>
+<li>Residuo: diferencia entre un dato experimental y el valor que predice el modelo. Es necesario porque la calidad de un ajuste se estudia a partir de los residuos. <strong>Ejemplo:</strong> si se mide y = 2,1 y el modelo predice 2,0, el residuo es 0,1.</li>
+</ul>
+<ul>
+<li>Regresión lineal: método para ajustar una recta a datos experimentales. Es necesaria porque muchos experimentos se linealizan y se analizan mediante pendiente y ordenada.</li>
+</ul>
+<ul>
+<li>Logaritmos y exponenciales: herramientas matemáticas básicas para trabajar con probabilidades, productos de probabilidades y linealizaciones. Son necesarias para entender la función de verosimilitud y su versión logarítmica.</li>
+</ul>
+  </div>
+</section>
+<section class="page" id="idea-central">
+  <div class="page-head"><h2>2. Idea central del capítulo</h2><span class="page-no">TE2 T2</span></div>
+  <div class="reading-block">
+<p>El tema aplica la estadística al análisis de errores y a los ajustes de datos experimentales. La asignatura no se limita a calcular medias; exige estimar parámetros de modelos físicos a partir de datos con incertidumbre. El problema fundamental es decidir qué valores de los parámetros son más compatibles con los datos medidos.</p>
+<p>La primera parte se centra en errores y gaussianas. En muchas situaciones experimentales, los errores aleatorios se modelan mediante distribuciones normales. Esta hipótesis no convierte todos los errores en gaussianos por definición, pero proporciona un marco muy útil para analizar fluctuaciones pequeñas alrededor de un valor central.</p>
+<p>La segunda parte introduce el método de máxima verosimilitud. Su idea es sencilla: dados unos datos y un modelo con parámetros desconocidos, se buscan los parámetros que hacen que los datos observados resulten más verosímiles. Este planteamiento permite entender por qué ciertos métodos de ajuste, como mínimos cuadrados, no son solo recetas algebraicas sino consecuencias de hipótesis estadísticas.</p>
+<p>La tercera parte conecta distribuciones, errores y ajustes. En una práctica real, los datos tienen barras de error, los modelos tienen parámetros y las conclusiones deben expresar incertidumbre. El capítulo enseña a unir esos elementos: distribución de errores, estimación de parámetros, calidad del ajuste y presentación crítica del resultado.</p>
+  </div>
+</section>
+<section class="page" id="desarrollo">
+  <div class="page-head"><h2>3. Desarrollo completo del capítulo</h2><span class="page-no">TE2 T2</span></div>
+  <div class="reading-block">
+<p>El punto de partida es que los errores experimentales no se distribuyen de cualquier manera. Si una medida está afectada por muchas pequeñas fuentes independientes de variación, es frecuente que los resultados se acumulen alrededor de un valor central y que los valores muy alejados sean poco frecuentes. La distribución normal o gaussiana describe precisamente ese comportamiento: simétrica alrededor de una media y caracterizada por una anchura relacionada con la desviación típica.</p>
+<p>La gaussiana es importante porque convierte la idea cualitativa de "dato compatible" en una afirmación cuantitativa. Un dato cercano al valor esperado es más probable que uno muy alejado si la incertidumbre es pequeña. La distancia relevante no es solo la diferencia absoluta, sino la diferencia comparada con la incertidumbre. Un residuo de 0,1 puede ser grande si la incertidumbre es 0,01, pero pequeño si la incertidumbre es 1.</p>
+<p>En ajustes experimentales, se dispone de pares de datos y de un modelo que los relaciona. Por ejemplo, una ley lineal puede escribirse como y = ax + b. Los parámetros a y b no se conocen directamente; se estiman a partir de los datos. Cada par experimental genera un residuo, que mide cuánto se aparta el dato del valor predicho por el modelo. Un buen ajuste no exige que todos los residuos sean cero, porque los datos tienen incertidumbre, pero sí que los residuos sean compatibles con esa incertidumbre.</p>
+<p>El método de máxima verosimilitud formaliza esta idea. Para cada elección de parámetros, el modelo asigna una probabilidad o densidad de probabilidad a los datos observados. La verosimilitud mide hasta qué punto esos parámetros hacen razonable la muestra obtenida. Estimar por máxima verosimilitud consiste en elegir los parámetros que maximizan esa función.</p>
+<p>Cuando los errores son gaussianos, independientes y con incertidumbres conocidas, maximizar la verosimilitud equivale a minimizar una suma de residuos al cuadrado ponderados por las incertidumbres. Esta es la conexión estadística con el método de mínimos cuadrados. Si todas las incertidumbres son iguales, se minimiza la suma de residuos al cuadrado sin ponderar. Si unas medidas son más precisas que otras, las más precisas deben pesar más en el ajuste.</p>
+<p>La forma logarítmica de la verosimilitud se usa porque transforma productos de probabilidades en sumas. Esto simplifica el cálculo y evita manejar números extremadamente pequeños. En la práctica, se maximiza el logaritmo de la verosimilitud o, de forma equivalente en el caso gaussiano, se minimiza una cantidad proporcional al chi-cuadrado.</p>
+<p>La distribución de errores también sirve para interpretar la calidad del ajuste. Si los residuos son mucho mayores que las incertidumbres, puede haber un modelo físico inadecuado, errores subestimados o datos problemáticos. Si los residuos son mucho menores de lo esperado, quizá las incertidumbres están sobreestimadas o los datos no son independientes. Por tanto, el ajuste no termina cuando se obtiene una pendiente: hay que interpretar residuos, incertidumbres y coherencia física.</p>
+<p>Un ejemplo típico es medir tensión e intensidad para obtener una resistencia. Si se representa V frente a I, la pendiente de la recta es la resistencia. Pero el resultado completo no es solo el valor de la pendiente: debe incluir su incertidumbre, la calidad de la regresión, las unidades y la discusión de si el modelo lineal es adecuado. El capítulo prepara precisamente esa forma de razonar.</p>
+  </div>
+</section>
+<section class="page" id="conceptos">
+  <div class="page-head"><h2>4. Conceptos clave</h2><span class="page-no">TE2 T2</span></div>
+  <div class="reading-block">
+<ul>
+<li>Error gaussiano.</li>
+</ul>
+<p><strong>Definición precisa:</strong> error aleatorio modelado mediante una distribución normal alrededor del valor esperado. Explicación: permite asignar mayor probabilidad a desviaciones pequeñas y menor a desviaciones grandes. <strong>Ejemplo:</strong> fluctuaciones de lectura de una señal estable con ruido moderado. Relación: conecta con verosimilitud y mínimos cuadrados. Pregunta de examen: explicar por qué los errores gaussianos conducen a mínimos cuadrados.</p>
+<ul>
+<li>Distribución normal.</li>
+</ul>
+<p><strong>Definición precisa:</strong> distribución simétrica caracterizada por media y desviación típica. Explicación: describe datos agrupados alrededor de un centro con probabilidad decreciente al alejarse. <strong>Ejemplo:</strong> mediciones repetidas de una longitud con pequeñas fluctuaciones. Relación: proporciona el modelo probabilístico para muchos análisis de errores. Pregunta de examen: interpretar el papel de la desviación típica en una gaussiana.</p>
+<ul>
+<li>Residuo.</li>
+</ul>
+<p><strong>Definición precisa:</strong> diferencia entre un dato experimental y el valor predicho por el modelo. Explicación: mide el desacuerdo local entre datos y modelo. <strong>Ejemplo:</strong> r_i = y_i - (a x_i + b). Relación: los residuos alimentan mínimos cuadrados y análisis de calidad del ajuste. Pregunta de examen: explicar qué indican residuos sistemáticamente positivos.</p>
+<ul>
+<li>Verosimilitud.</li>
+</ul>
+<p><strong>Definición precisa:</strong> función de los parámetros que mide la compatibilidad de los datos observados con un modelo probabilístico. Explicación: no es la probabilidad de que el parámetro sea verdadero; es una función que compara parámetros dados los datos. <strong>Ejemplo:</strong> elegir la pendiente que hace más plausibles los puntos medidos. Relación: su maximización proporciona estimadores. Pregunta de examen: diferenciar probabilidad y verosimilitud en un ajuste.</p>
+<ul>
+<li>Máxima verosimilitud.</li>
+</ul>
+<p><strong>Definición precisa:</strong> método de estimación que escoge los parámetros que maximizan la verosimilitud. Explicación: generaliza la idea de escoger el modelo que mejor explica los datos. <strong>Ejemplo:</strong> estimar la media de una gaussiana a partir de medidas repetidas. Relación: bajo errores gaussianos se relaciona con mínimos cuadrados. Pregunta de examen: explicar el criterio de máxima verosimilitud.</p>
+<ul>
+<li>Mínimos cuadrados.</li>
+</ul>
+<p><strong>Definición precisa:</strong> método de ajuste que minimiza la suma de residuos cuadrados, con o sin pesos. Explicación: penaliza más los residuos grandes y proporciona parámetros de un modelo. <strong>Ejemplo:</strong> ajustar una recta para obtener una resistencia. Relación: es un caso particular de máxima verosimilitud bajo hipótesis gaussianas. Pregunta de examen: justificar por qué se elevan al cuadrado los residuos.</p>
+<ul>
+<li>Peso estadístico.</li>
+</ul>
+<p><strong>Definición precisa:</strong> factor que expresa la importancia relativa de un dato en un ajuste, normalmente relacionado con el inverso de su varianza. Explicación: datos con menor incertidumbre deben influir más. <strong>Ejemplo:</strong> una medida con error de 0,01 pesa más que otra con error de 0,1. Relación: conecta incertidumbre y ajuste ponderado. Pregunta de examen: explicar cuándo usar un ajuste ponderado.</p>
+<ul>
+<li>Chi-cuadrado.</li>
+</ul>
+<p><strong>Definición precisa:</strong> suma de residuos cuadrados normalizados por las incertidumbres. Explicación: mide el desacuerdo global entre modelo y datos en unidades de error. <strong>Ejemplo:</strong> chi² = suma [(y_i - y_modelo_i)/sigma_i]<sup>2</sup>. Relación: aparece al maximizar verosimilitud gaussiana. Pregunta de examen: interpretar un chi-cuadrado excesivamente grande.</p>
+<ul>
+<li>Parámetro de ajuste.</li>
+</ul>
+<p><strong>Definición precisa:</strong> constante del modelo que se estima a partir de datos. Explicación: suele tener significado físico. <strong>Ejemplo:</strong> la pendiente en V = RI es la resistencia. Relación: su incertidumbre forma parte del resultado final. Pregunta de examen: explicar el significado físico de pendiente y ordenada.</p>
+<ul>
+<li>Calidad del ajuste.</li>
+</ul>
+<p><strong>Definición precisa:</strong> grado en que un modelo describe los datos dentro de sus incertidumbres. Explicación: no se juzga solo visualmente, sino mediante residuos, incertidumbres y coherencia física. <strong>Ejemplo:</strong> una recta puede tener alta correlación y aun así no ser adecuada si los residuos muestran curvatura. Relación: depende de modelo, errores y residuos. Pregunta de examen: discutir si un ajuste es aceptable.</p>
+  </div>
+</section>
+<section class="page" id="relaciones">
+  <div class="page-head"><h2>5. Relaciones entre ideas</h2><span class="page-no">TE2 T2</span></div>
+  <div class="reading-block">
+<p>La cadena conceptual es: errores experimentales → distribución de errores → verosimilitud → estimación de parámetros → análisis de residuos → resultado físico. Las gaussianas permiten cuantificar qué desviaciones son razonables. La verosimilitud transforma esa cuantificación en un criterio de estimación. Los mínimos cuadrados aparecen como consecuencia de ese criterio en un caso frecuente.</p>
+<p>La oposición principal es entre ajuste matemático y ajuste físico. Un ajuste matemático puede producir una curva que pasa cerca de los puntos; un ajuste físico debe estar justificado por el modelo del experimento y sus parámetros deben tener sentido. En laboratorio, la pendiente o la ordenada no son solo números: representan magnitudes como resistencia, constante elástica, aceleración o frecuencia característica.</p>
+<p>Otra relación importante es entre incertidumbre y peso. Si todos los datos tienen la misma incertidumbre, todos pesan igual. Si no, el ajuste debe reconocer que una medida precisa aporta más información que una medida muy incierta. Ignorar esta diferencia puede desplazar el resultado y subestimar la incertidumbre final.</p>
+<p>La inferencia de parámetros depende de hipótesis. Si se supone gaussiana, independencia y modelo correcto, el método tiene una interpretación clara. Si esas hipótesis fallan, el resultado puede seguir calculándose, pero su interpretación se debilita. Por eso los residuos no son un trámite: son una prueba de coherencia entre datos, errores y modelo.</p>
+  </div>
+</section>
+<section class="page" id="errores">
+  <div class="page-head"><h2>6. Errores habituales</h2><span class="page-no">TE2 T2</span></div>
+  <div class="reading-block">
+<ul>
+<li>Error: creer que el mejor ajuste es el que pasa por todos los puntos.</li>
+</ul>
+<p>Por qué está mal: los datos tienen incertidumbre y no se espera que todos caigan exactamente en la curva. <strong>Corrección:</strong> el mejor ajuste minimiza un criterio estadístico y debe ser compatible con los errores. <strong>Respuesta incorrecta:</strong> "La recta debe pasar por todos los datos." <strong>Respuesta correcta:</strong> "La recta debe describir los datos dentro de sus incertidumbres y tener residuos razonables."</p>
+<ul>
+<li>Error: ignorar las incertidumbres de los datos.</li>
+</ul>
+<p>Por qué está mal: las incertidumbres determinan la compatibilidad y los pesos del ajuste. <strong>Corrección:</strong> usar errores en el análisis y en la discusión de residuos. <strong>Respuesta incorrecta:</strong> "Todos los puntos valen lo mismo siempre." <strong>Respuesta correcta:</strong> "Si las incertidumbres son distintas, los puntos más precisos deben tener mayor peso."</p>
+<ul>
+<li>Error: confundir probabilidad con verosimilitud.</li>
+</ul>
+<p>Por qué está mal: la probabilidad se refiere a datos dados unos parámetros; la verosimilitud compara parámetros dados los datos observados. <strong>Corrección:</strong> hablar de verosimilitud como función de parámetros. <strong>Respuesta incorrecta:</strong> "La verosimilitud es la probabilidad de que el parámetro sea verdadero." <strong>Respuesta correcta:</strong> "La verosimilitud mide qué tan compatibles son los datos con cada valor del parámetro."</p>
+<ul>
+<li>Error: aceptar un ajuste solo por tener buena apariencia visual.</li>
+</ul>
+<p>Por qué está mal: la vista no evalúa de forma rigurosa incertidumbres ni residuos. <strong>Corrección:</strong> analizar residuos, unidades, parámetros y coherencia física. <strong>Respuesta incorrecta:</strong> "La curva parece buena, luego el ajuste es correcto." <strong>Respuesta correcta:</strong> "Debe comprobarse si los residuos son compatibles con las incertidumbres y si el modelo es físicamente adecuado."</p>
+<ul>
+<li>Error: dar el parámetro sin incertidumbre.</li>
+</ul>
+<p>Por qué está mal: el parámetro procede de datos experimentales y hereda incertidumbre. <strong>Corrección:</strong> expresar parámetro, incertidumbre y unidades. <strong>Respuesta incorrecta:</strong> "R = 101,3 ohmios." <strong>Respuesta correcta:</strong> "R = (101 ± 2) ohmios, con la incertidumbre procedente del ajuste."</p>
+<ul>
+<li>Error: linealizar sin interpretar.</li>
+</ul>
+<p>Por qué está mal: la transformación puede cambiar errores y significado de los parámetros. <strong>Corrección:</strong> explicar qué representa la pendiente y cómo se relaciona con la magnitud física. <strong>Respuesta incorrecta:</strong> "Linealizo y ya está." <strong>Respuesta correcta:</strong> "Linealizo para obtener una recta cuya pendiente se identifica con el parámetro físico buscado."</p>
+  </div>
+</section>
+<section class="page" id="preguntas">
+  <div class="page-head"><h2>7. Preguntas orientadas a examen</h2><span class="page-no">TE2 T2</span></div>
+  <div class="reading-block">
+<p>Preguntas fáciles:</p>
+<ol>
+<li>¿Qué es un residuo?</li>
+<li>¿Qué caracteriza a una distribución normal?</li>
+<li>¿Qué es un parámetro de ajuste?</li>
+<li>¿Qué significa ajustar datos?</li>
+<li>¿Qué es la verosimilitud?</li>
+<li>¿Qué criterio usa la máxima verosimilitud?</li>
+<li>¿Qué minimiza el método de mínimos cuadrados?</li>
+<li>¿Por qué se usan barras de error en un ajuste?</li>
+<li>¿Qué es un ajuste ponderado?</li>
+<li>¿Por qué la pendiente de una recta puede tener significado físico?</li>
+</ol>
+<p>Preguntas medias:</p>
+<ol>
+<li>Explica la relación entre errores gaussianos y mínimos cuadrados.</li>
+<li>¿Por qué un residuo debe compararse con la incertidumbre?</li>
+<li>¿Qué información aportan los residuos sobre el modelo?</li>
+<li>¿Cuándo deben usarse pesos en un ajuste?</li>
+<li>Diferencia ajuste matemático y ajuste físico.</li>
+<li>¿Por qué maximizar la verosimilitud suele hacerse con logaritmos?</li>
+<li>¿Qué significa que un parámetro sea estimado, no medido directamente?</li>
+<li>¿Por qué el resultado de un ajuste debe incluir incertidumbre?</li>
+<li>¿Qué consecuencias tiene subestimar los errores experimentales?</li>
+<li>¿Cómo detectarías que una recta no es un modelo adecuado?</li>
+</ol>
+<p>Preguntas difíciles:</p>
+<ol>
+<li>Deriva conceptualmente por qué la hipótesis gaussiana lleva a minimizar residuos cuadrados.</li>
+<li>Discute la diferencia entre un ajuste no ponderado y uno ponderado.</li>
+<li>Explica por qué un chi-cuadrado grande puede indicar modelo incorrecto o errores mal estimados.</li>
+<li>Razona cómo afecta una transformación de variables a la interpretación del ajuste.</li>
+<li>Explica por qué máxima verosimilitud es un principio general de estimación.</li>
+</ol>
+<p>Preguntas de desarrollo largo:</p>
+<ol>
+<li>Desarrolla el proceso completo de estimación de un parámetro físico mediante ajuste.</li>
+<li>Explica el papel de las gaussianas en el análisis de errores y ajustes.</li>
+<li>Describe cómo evaluarías la calidad de un ajuste en un informe de laboratorio.</li>
+<li>Explica la relación entre verosimilitud, mínimos cuadrados y residuos.</li>
+<li>Analiza los errores que puede cometer un estudiante al presentar una regresión lineal.</li>
+</ol>
+<p>Preguntas de relación entre conceptos:</p>
+<ol>
+<li>Relaciona error gaussiano, residuo y chi-cuadrado.</li>
+<li>Relaciona verosimilitud, estimador y parámetro.</li>
+<li>Relaciona incertidumbre de medida y peso estadístico.</li>
+<li>Relaciona ajuste lineal, pendiente y magnitud física.</li>
+<li>Relaciona residuos, modelo y discusión experimental.</li>
+</ol>
+  </div>
+</section>
+<section class="page" id="respuestas">
+  <div class="page-head"><h2>8. Respuestas modelo</h2><span class="page-no">TE2 T2</span></div>
+  <div class="reading-block">
+<ol>
+<li>Un residuo es la diferencia entre el valor experimental y el valor predicho por el modelo para el mismo punto. Sirve para medir el desacuerdo local entre datos y ajuste.</li>
+</ol>
+<ol>
+<li>Una distribución normal es simétrica, está centrada en una media y su anchura se caracteriza por la desviación típica. Los valores cercanos a la media son más probables que los alejados.</li>
+</ol>
+<ol>
+<li>Es una constante del modelo que se estima a partir de los datos. En una recta y = ax + b, a y b son parámetros de ajuste.</li>
+</ol>
+<ol>
+<li>Ajustar datos significa escoger los parámetros de un modelo para que la relación matemática describa los datos experimentales de forma compatible con sus errores.</li>
+</ol>
+<ol>
+<li>La verosimilitud es una función de los parámetros que mide la compatibilidad de los datos observados con un modelo estadístico.</li>
+</ol>
+<ol>
+<li>Escoge los valores de los parámetros que hacen máxima la verosimilitud, es decir, los que hacen más compatibles los datos observados con el modelo.</li>
+</ol>
+<ol>
+<li>Minimiza la suma de los residuos al cuadrado. Si hay incertidumbres distintas, minimiza residuos cuadrados ponderados por esas incertidumbres.</li>
+</ol>
+<ol>
+<li>Porque indican la incertidumbre de cada dato y permiten juzgar si las desviaciones respecto al modelo son aceptables.</li>
+</ol>
+<ol>
+<li>Es un ajuste en el que cada dato contribuye según su precisión. Normalmente los datos con menor varianza tienen mayor peso.</li>
+</ol>
+<ol>
+<li>Porque en muchos modelos físicos la relación entre variables es lineal o se linealiza. La pendiente puede representar una resistencia, una constante elástica o una aceleración, según el caso.</li>
+</ol>
+<ol>
+<li>Si los errores son gaussianos e independientes, la probabilidad conjunta de los datos depende exponencialmente de los residuos cuadrados. Maximizar esa probabilidad equivale a minimizar la suma de esos residuos cuadrados.</li>
+</ol>
+<ol>
+<li>Porque una diferencia solo es grande o pequeña en relación con el error esperado. Un residuo de 0,1 puede ser irrelevante o grave según la incertidumbre del dato.</li>
+</ol>
+<ol>
+<li>Indican si las desviaciones son aleatorias o si muestran patrones. Una curvatura en los residuos sugiere que el modelo lineal no es adecuado.</li>
+</ol>
+<ol>
+<li>Cuando los datos tienen incertidumbres distintas. En ese caso no todos aportan la misma información y el ajuste debe ponderarlos.</li>
+</ol>
+<ol>
+<li>El ajuste matemático busca una función que se acerque a los puntos. El ajuste físico exige que la función proceda de un modelo y que sus parámetros tengan interpretación física.</li>
+</ol>
+<ol>
+<li>Porque la verosimilitud de datos independientes suele ser un producto de factores. El logaritmo transforma ese producto en una suma y simplifica la optimización.</li>
+</ol>
+<ol>
+<li>Significa que no se obtiene por una lectura directa del instrumento, sino mediante cálculo a partir de un conjunto de datos y un modelo.</li>
+</ol>
+<ol>
+<li>Porque los datos tienen errores y esos errores se transmiten a los parámetros estimados. Sin incertidumbre, el parámetro no es un resultado experimental completo.</li>
+</ol>
+<ol>
+<li>Los residuos parecerán artificialmente grandes en unidades de error y el ajuste puede parecer malo aunque el modelo sea razonable. Además se sobrevalora la precisión de los parámetros.</li>
+</ol>
+<ol>
+<li>Si los residuos no se distribuyen de forma aleatoria alrededor de cero, sino que muestran curvatura, tendencia o estructura sistemática.</li>
+</ol>
+<ol>
+<li>Para errores gaussianos, cada desviación respecto al modelo aparece en el exponente con el cuadrado del residuo dividido por la varianza. La verosimilitud total es el producto de esos factores. Al tomar logaritmos, maximizar la verosimilitud equivale a minimizar la suma de residuos cuadrados normalizados.</li>
+</ol>
+<ol>
+<li>En el ajuste no ponderado todos los puntos influyen igual. En el ponderado, los puntos más precisos influyen más. El ponderado es más adecuado cuando las incertidumbres de los datos no son iguales.</li>
+</ol>
+<ol>
+<li>Puede indicar que los residuos son mayores que lo esperable según las incertidumbres. Esto puede ocurrir porque el modelo no describe el fenómeno, porque faltan efectos físicos o porque las incertidumbres se han subestimado.</li>
+</ol>
+<ol>
+<li>Al transformar variables, por ejemplo tomando logaritmos, se cambia la forma del modelo y también la estructura de los errores. La pendiente puede seguir teniendo significado físico, pero debe reinterpretarse según la transformación realizada.</li>
+</ol>
+<ol>
+<li>Porque no depende de una forma concreta de modelo lineal. Parte de un modelo probabilístico para los datos y escoge los parámetros que mejor explican la observación.</li>
+</ol>
+<ol>
+<li>Primero se elige un modelo físico y se identifican sus parámetros. Después se toman datos con incertidumbres. Se calcula el ajuste, se obtienen los parámetros y sus errores, se analizan residuos y se interpreta el significado físico de los parámetros. El resultado final debe incluir unidades, incertidumbre y discusión de validez.</li>
+</ol>
+<ol>
+<li>Las gaussianas modelan errores aleatorios frecuentes en medidas físicas. Permiten asignar probabilidades a desviaciones y justifican métodos de ajuste como mínimos cuadrados. También permiten interpretar residuos y estimar incertidumbres en parámetros.</li>
+</ol>
+<ol>
+<li>Revisaría la coherencia del modelo, la distribución de residuos, el tamaño de los residuos comparado con las barras de error, la incertidumbre de los parámetros y su significado físico. También comprobaría unidades y cifras significativas.</li>
+</ol>
+<ol>
+<li>La verosimilitud mide la compatibilidad de los datos con los parámetros. Con errores gaussianos, maximizarla lleva a minimizar residuos cuadrados. Los residuos son por tanto el vínculo entre datos, modelo y criterio estadístico.</li>
+</ol>
+<ol>
+<li>Puede no indicar unidades, no dar incertidumbre de pendiente, no explicar el significado físico, confundir correlación con causalidad, ignorar residuos o usar una recta aunque el modelo físico no sea lineal.</li>
+</ol>
+<ol>
+<li>Un error gaussiano define la probabilidad de un residuo. Al normalizar residuos por sus incertidumbres y elevarlos al cuadrado se obtiene la contribución al chi-cuadrado.</li>
+</ol>
+<ol>
+<li>La verosimilitud compara valores posibles de los parámetros. El estimador de máxima verosimilitud es el valor que maximiza esa función. El parámetro es la magnitud desconocida del modelo.</li>
+</ol>
+<ol>
+<li>La incertidumbre determina la confianza en cada dato. Cuanto menor es la incertidumbre, mayor es el peso estadístico que debe tener en el ajuste.</li>
+</ol>
+<ol>
+<li>En un ajuste lineal, la pendiente expresa el cambio de la variable dependiente por unidad de la independiente. Según el modelo físico, puede corresponder a una magnitud como resistencia o constante elástica.</li>
+</ol>
+<ol>
+<li>Los residuos muestran la diferencia entre modelo y datos. Su patrón permite evaluar si el modelo es adecuado y alimentar la discusión experimental del informe.</li>
+</ol>
+  </div>
+</section>
+<section class="page" id="resumen">
+  <div class="page-head"><h2>9. Resumen final de repaso</h2><span class="page-no">TE2 T2</span></div>
+  <div class="reading-block">
+<p>Ideas principales:</p>
+<ul>
+<li>Los errores gaussianos permiten cuantificar compatibilidad entre datos y modelo.</li>
+<li>La máxima verosimilitud estima parámetros buscando la mayor compatibilidad con los datos.</li>
+<li>Mínimos cuadrados aparece como caso gaussiano.</li>
+<li>Los residuos son esenciales para juzgar la calidad del ajuste.</li>
+<li>Un parámetro ajustado debe darse con incertidumbre, unidades e interpretación física.</li>
+</ul>
+<p>Conceptos imprescindibles:</p>
+<ul>
+<li>gaussiana, residuo, verosimilitud, máxima verosimilitud;</li>
+<li>mínimos cuadrados, ajuste ponderado, chi-cuadrado;</li>
+<li>parámetro, incertidumbre del parámetro, calidad del ajuste.</li>
+</ul>
+<p>Relaciones clave:</p>
+<ul>
+<li>gaussiana → residuos cuadrados → mínimos cuadrados;</li>
+<li>incertidumbre pequeña → mayor peso;</li>
+<li>ajuste matemático no basta sin interpretación física;</li>
+<li>residuos estructurados → modelo dudoso.</li>
+</ul>
+<p>Errores que evitar:</p>
+<ul>
+<li>ajustar sin barras de error;</li>
+<li>dar pendiente sin unidades ni incertidumbre;</li>
+<li>aceptar un ajuste solo porque visualmente parece bueno;</li>
+<li>ignorar residuos;</li>
+<li>confundir probabilidad y verosimilitud.</li>
+</ul>
+  </div>
+</section>
+<section class="page" id="checklist">
+  <div class="page-head"><h2>10. Checklist de dominio</h2><span class="page-no">TE2 T2</span></div>
+  <div class="reading-block">
+<ul>
+<li>Si no puedes explicar qué es un residuo, falta repasar la relación dato-modelo.</li>
+<li>Si confundes verosimilitud con probabilidad del parámetro, revisar máxima verosimilitud.</li>
+<li>Si no puedes justificar mínimos cuadrados desde errores gaussianos, revisar gaussianas y residuos.</li>
+<li>Si das un parámetro sin incertidumbre, revisar presentación de resultados experimentales.</li>
+<li>Si no sabes cuándo ponderar un ajuste, revisar incertidumbre y peso estadístico.</li>
+<li>Si no interpretas la pendiente físicamente, revisar el modelo de la práctica.</li>
+<li>Si puedes analizar residuos y decidir si un ajuste es aceptable, el tema está suficientemente asentado.</li>
+</ul>
+  </div>
+</section>
+    </main>
+  </div>
+</body>
+</html>
