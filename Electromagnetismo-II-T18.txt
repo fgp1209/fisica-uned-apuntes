@@ -1,0 +1,1005 @@
+# Guía de estudio — Electromagnetismo II
+
+Capítulo trabajado: EM18 / Tema 6 — Propagación guiada. Líneas de transmisión.
+Fuente principal: Electromagnetismo II, UNED, Tema 6.
+
+## 1. Prerrequisitos mínimos
+
+1. Campo eléctrico y campo magnético.
+Definición breve: el campo eléctrico \(\mathbf{E}\) y el campo magnético \(\mathbf{H}\) describen, respectivamente, la acción eléctrica y magnética del campo electromagnético. En este capítulo se trabaja casi siempre con sus fasores \(\tilde{\mathbf{E}}\) y \(\tilde{\mathbf{H}}\), porque las señales se consideran armónicas.
+Por qué es necesario: una línea de transmisión no es solo un circuito; es una estructura que guía un campo electromagnético. El voltaje y la corriente aparecen como descripciones de circuito de una propagación de campo.
+Ejemplo mínimo: en un modo TEM, \(\mathbf{E}\) y \(\mathbf{H}\) son transversales a la dirección de propagación y no tienen componente longitudinal.
+
+2. Ecuaciones de Maxwell en régimen armónico.
+Definición breve: son las ecuaciones diferenciales que relacionan divergencia y rotacional de los campos. En el capítulo se usan, sin fuentes libres en el medio, en forma fasorial:
+\[
+\nabla\cdot\tilde{\mathbf{E}}=0,\qquad \nabla\cdot\tilde{\mathbf{H}}=0,
+\]
+\[
+\nabla\times\tilde{\mathbf{E}}=-j\omega\mu\tilde{\mathbf{H}},\qquad
+\nabla\times\tilde{\mathbf{H}}=j\omega\varepsilon\tilde{\mathbf{E}}.
+\]
+Por qué es necesario: de ellas salen las relaciones generales entre las componentes transversales y longitudinales de los campos en sistemas con simetría traslacional.
+Ejemplo mínimo: si la onda se propaga en la dirección \(z\), se separan los campos en parte transversal y parte longitudinal: \(\tilde{\mathbf{E}}=\tilde{\mathbf{E}}_t+\tilde E_z\mathbf{u}_z\).
+
+3. Notación fasorial y números complejos.
+Definición breve: una magnitud armónica real se representa mediante un fasor complejo. Por ejemplo,
+\[
+v(z,t)=\Re\{\tilde V(z)e^{j\omega t}\}.
+\]
+Por qué es necesario: las ecuaciones de línea, el coeficiente de reflexión, la impedancia y la carta de Smith se expresan con números complejos.
+Ejemplo mínimo: si \(\tilde\rho=0,5e^{j60^\circ}\), el módulo \(0,5\) mide la intensidad relativa de la reflexión y la fase \(60^\circ\) fija la posición de máximos y mínimos.
+
+4. Condiciones de contorno en conductores perfectos.
+Definición breve: en la superficie metálica, el campo eléctrico tangencial debe anularse y el campo magnético debe ser tangencial a la superficie:
+\[
+\mathbf{u}_n\times\tilde{\mathbf{E}}=0,\qquad \mathbf{u}_n\cdot\tilde{\mathbf{H}}=0.
+\]
+Por qué es necesario: la geometría de los conductores determina qué modos de propagación pueden existir.
+Ejemplo mínimo: una guía hueca monoconductora no puede sostener un modo TEM porque no hay dos conductores entre los que mantener una diferencia de potencial.
+
+5. Ondas electromagnéticas planas en medios ilimitados.
+Definición breve: en un medio homogéneo sin contornos, las ondas electromagnéticas se propagan con número de onda \(k\) y con relación transversal entre \(\mathbf{E}\) y \(\mathbf{H}\).
+Por qué es necesario: el modo TEM en una línea tiene la misma constante de propagación que una onda en el medio libre que llena la línea.
+Ejemplo mínimo: en un medio sin pérdidas, \(k=\omega\sqrt{\mu\varepsilon}\).
+
+6. Teoría elemental de circuitos: voltaje, corriente, impedancia y admitancia.
+Definición breve: la impedancia es el cociente complejo entre voltaje y corriente, \(Z=\tilde V/\tilde I\), y la admitancia es \(Y=1/Z\).
+Por qué es necesario: el capítulo traduce la propagación en una línea TEM a un modelo de circuito de parámetros distribuidos.
+Ejemplo mínimo: si una carga es \(Z_L=50+j100\,\Omega\), su parte real es resistiva y su parte imaginaria es reactiva.
+
+7. Parámetros distribuidos.
+Definición breve: una línea no se representa por una única resistencia, inductancia o capacidad, sino por parámetros por unidad de longitud: \(R\), \(L\), \(G\), \(C\).
+Por qué es necesario: cuando la longitud de la línea no es despreciable frente a la longitud de onda, la corriente y el voltaje dependen de la posición.
+Ejemplo mínimo: una línea coaxial tiene inductancia por unidad de longitud \(L\) y capacidad por unidad de longitud \(C\); por eso su impedancia característica depende de \(L/C\).
+
+8. Funciones trigonométricas y exponenciales complejas.
+Definición breve: las soluciones de las ecuaciones de onda aparecen como \(e^{-j\beta z}\) y \(e^{+j\beta z}\), que representan ondas que viajan en sentidos opuestos.
+Por qué es necesario: la interferencia de esas dos ondas produce máximos y mínimos estacionarios.
+Ejemplo mínimo: \(e^{-j\beta z}\) se asocia a propagación hacia \(+z\), mientras que \(e^{+j\beta z}\) se asocia a propagación hacia \(-z\).
+
+## 2. Idea central del capítulo
+
+El capítulo pasa de la propagación libre de ondas electromagnéticas a la propagación guiada. Hasta este punto, una onda podía imaginarse viajando en un medio ilimitado. Aquí el campo queda condicionado por una estructura material que lo conduce entre dos puntos. Esa estructura puede ser una línea bifilar, un cable coaxial, una línea microstrip, una guía de ondas o una fibra óptica. El rasgo común es que existe una dirección privilegiada de propagación, tomada como eje \(z\), mientras que la sección transversal se conserva a lo largo de la línea.
+
+La idea física principal es que una línea de transmisión no debe entenderse como un simple cable si la frecuencia es suficientemente alta. Cuando las dimensiones del sistema son comparables con la longitud de onda, el voltaje y la corriente no son iguales en todos los puntos a la vez. Se propagan. Por eso aparecen ondas de voltaje y corriente, constantes de propagación, fases, atenuación, reflexión y ondas estacionarias.
+
+El capítulo distingue los modos de propagación. El modo TEM, transversal electromagnético, es el fundamental para las líneas de transmisión de dos o más conductores: ni el campo eléctrico ni el campo magnético tienen componente longitudinal. En cambio, las guías de ondas monoconductoras trabajan con modos TE o TM, que se estudian en el tema siguiente. Esta distinción es esencial: no toda estructura guiada admite TEM.
+
+Una vez identificado el modo TEM, el problema se simplifica. La distribución transversal del campo se reduce a un problema electrostático o magnetostático bidimensional, y la variación longitudinal se trata mediante un modelo de circuito de parámetros distribuidos. De ahí nacen las ecuaciones del telegrafista. Estas ecuaciones son el puente entre el campo electromagnético y las magnitudes de circuito \(\tilde V(z)\) e \(\tilde I(z)\).
+
+A partir de esas ecuaciones se obtiene que una línea puede transportar una onda incidente y una onda reflejada. La onda reflejada aparece cuando la carga no coincide con la impedancia característica de la línea. Esta impedancia característica \(Z_0\) es la carga que absorbería la onda incidente sin devolver señal hacia el generador. Por tanto, buena parte del capítulo gira alrededor de una pregunta práctica: ¿qué ocurre cuando \(Z_L\neq Z_0\) y cómo se corrige?
+
+La reflexión produce ondas estacionarias. Los máximos y mínimos de tensión contienen información sobre el módulo y la fase del coeficiente de reflexión. La razón de onda estacionaria \(S\) mide el grado de desadaptación, pero por sí sola no determina completamente la carga: falta la información de fase. Esa fase se obtiene localizando la posición de mínimos o máximos respecto de la carga.
+
+El final del capítulo introduce la carta de Smith como herramienta gráfica para manejar impedancias, admitancias y coeficientes de reflexión. Aunque hoy el cálculo numérico es inmediato, la carta es muy útil porque obliga a ver la geometría del problema: moverse por una línea sin pérdidas equivale a girar sobre un círculo de \(|\rho|\) constante; pasar de impedancia a admitancia equivale a tomar el punto opuesto; adaptar una línea equivale a llevar la admitancia o impedancia normalizada al centro de la carta.
+
+El último bloque matiza la idealización. Las líneas reales tienen pérdidas. Si las pérdidas son pequeñas, gran parte del análisis sin pérdidas sigue siendo útil, pero el módulo del coeficiente de reflexión deja de ser constante al desplazarse por la línea y la trayectoria en la carta deja de ser una circunferencia para convertirse en una espiral. Esto cierra el capítulo: primero se estudia el caso ideal para entender la estructura del fenómeno, y después se indica cómo se modifica en una línea real.
+
+## 3. Desarrollo completo del capítulo
+
+### 3.1. De la propagación libre a la propagación guiada
+
+El capítulo comienza cambiando el escenario físico. En la propagación libre, una onda electromagnética se desplaza en un medio sin que existan contornos materiales que condicionen su forma. En la propagación guiada, el campo está confinado o al menos dirigido por una estructura. Esa estructura permite transferir energía o información entre dos puntos.
+
+La geometría tiene un papel decisivo. Se supone que la línea conserva su sección transversal al avanzar en \(z\). Esto significa que, si cortamos la línea por planos perpendiculares al eje de propagación, encontramos siempre la misma geometría y los mismos materiales. Esta simetría traslacional permite separar el problema en dos partes: cómo se distribuye el campo en la sección transversal y cómo evoluciona su fase y amplitud a lo largo de \(z\).
+
+Los ejemplos son importantes porque fijan el vocabulario. Una línea bifilar o un cable coaxial son líneas de transmisión en sentido estricto cuando soportan modo TEM. Una guía rectangular o cilíndrica se suele reservar para modos TE o TM. Una fibra óptica también guía energía electromagnética, pero mediante confinamiento dieléctrico. La elección de una u otra estructura depende del modo que se quiere propagar, de las pérdidas, de la frecuencia, de la potencia que se desea transportar y de aspectos prácticos como el coste.
+
+La consecuencia conceptual es clara: una línea de transmisión no se estudia solo con la ley de Ohm. A baja frecuencia puede parecer un conductor que conecta dos circuitos. A alta frecuencia se convierte en un sistema ondulatorio.
+
+### 3.2. Relaciones generales entre \(\mathbf{E}\) y \(\mathbf{H}\)
+
+El análisis se formula en régimen armónico, usando fasores. Se trabaja con medios lineales, homogéneos e isótropos, sin fuentes en la región de propagación. En esas condiciones se emplean las ecuaciones de Maxwell en forma fasorial:
+\[
+\nabla\cdot\tilde{\mathbf{E}}=0,\qquad \nabla\cdot\tilde{\mathbf{H}}=0,
+\]
+\[
+\nabla\times\tilde{\mathbf{E}}=-j\omega\mu\tilde{\mathbf{H}},\qquad
+\nabla\times\tilde{\mathbf{H}}=j\omega\varepsilon\tilde{\mathbf{E}}.
+\]
+
+Como la propagación se produce a lo largo de \(z\), se descomponen los campos en parte transversal y longitudinal:
+\[
+\tilde{\mathbf{E}}=\tilde{\mathbf{E}}_t+\tilde E_z\mathbf{u}_z,\qquad
+\tilde{\mathbf{H}}=\tilde{\mathbf{H}}_t+\tilde H_z\mathbf{u}_z.
+\]
+Lo mismo se hace con el operador \(\nabla\). Esta separación es más que una notación: permite clasificar los modos y obtener las componentes transversales a partir de las longitudinales.
+
+Al resolver por separación de variables aparece una dependencia longitudinal del tipo
+\[
+e^{\pm j\kappa z}.
+\]
+La constante \(\kappa\) es, en general, compleja:
+\[
+\kappa=\beta-j\alpha,
+\]
+donde \(\beta\) es la constante de fase y \(\alpha\) la constante de atenuación. Si no hay pérdidas, \(\alpha=0\) y \(\kappa=\beta\). La velocidad de fase se escribe
+\[
+v_{\mathrm{ph}}=\frac{\omega}{\beta}.
+\]
+Este resultado prepara todo el resto del capítulo: las magnitudes de línea serán ondas progresivas y regresivas con una fase que cambia con \(z\).
+
+### 3.3. Modos de transmisión y modo TEM
+
+El capítulo clasifica las soluciones naturales del campo guiado en tres tipos. En un modo TEM se cumple
+\[
+E_z=0,\qquad H_z=0.
+\]
+En un modo TE se cumple \(E_z=0\), pero \(H_z\) puede no ser nulo. En un modo TM se cumple \(H_z=0\), pero \(E_z\) puede no ser nulo.
+
+El modo TEM es central porque es el que se propaga en líneas con dos o más conductores, como el cable coaxial ideal. Al imponer \(E_z=H_z=0\), el problema transversal queda reducido a un problema estático bidimensional:
+\[
+\nabla_t\cdot\tilde{\mathbf{E}}_t=0,\qquad \nabla_t\times\tilde{\mathbf{E}}_t=0.
+\]
+Esto significa que la forma transversal del campo se parece a la de un problema electrostático de conductores.
+
+Una guía hueca monoconductora no puede propagar TEM. La razón es física: si solo hay un conductor, las condiciones de contorno obligan a una solución transversal estática trivial. Para mantener un campo eléctrico transversal no nulo hace falta una diferencia de potencial entre conductores distintos. Por eso el modo TEM necesita dos o más conductores.
+
+En TEM, la constante de propagación coincide con la de una onda en el medio que llena la línea:
+\[
+\beta=k=\omega\sqrt{\mu\varepsilon}.
+\]
+Además, los campos transversales son perpendiculares entre sí y están relacionados por la impedancia de onda TEM:
+\[
+Z_{\mathrm{TEM}}=\frac{|\tilde{\mathbf{E}}_t|}{|\tilde{\mathbf{H}}_t|}
+=\sqrt{\frac{\mu}{\varepsilon}}.
+\]
+Esta impedancia de onda no debe confundirse sin más con la impedancia característica de una línea, aunque en ciertos contextos estén relacionadas por la geometría del sistema.
+
+### 3.4. Modelo de línea de transmisión
+
+Para estudiar la variación longitudinal en una línea TEM, el capítulo introduce un modelo de parámetros distribuidos. Cada tramo elemental \(\Delta z\) contiene resistencia \(R\Delta z\), inductancia \(L\Delta z\), conductancia \(G\Delta z\) y capacidad \(C\Delta z\). Los parámetros \(R\), \(L\), \(G\), \(C\) son por unidad de longitud:
+\[
+R\,[\Omega/\mathrm{m}],\quad L\,[\mathrm{H}/\mathrm{m}],\quad
+G\,[\mathrm{S}/\mathrm{m}],\quad C\,[\mathrm{F}/\mathrm{m}].
+\]
+
+La inductancia y la capacidad representan almacenamiento de energía magnética y eléctrica. La resistencia y la conductancia representan disipación: pérdidas en los conductores y pérdidas entre conductores.
+
+Aplicando las leyes de circuito al tramo diferencial y pasando al límite, se obtienen las ecuaciones del telegrafista en el dominio temporal:
+\[
+-\frac{\partial v}{\partial z}=L\frac{\partial i}{\partial t}+Ri,
+\]
+\[
+-\frac{\partial i}{\partial z}=C\frac{\partial v}{\partial t}+Gv.
+\]
+Para señales armónicas, con \(v(z,t)=\Re\{\tilde V(z)e^{j\omega t}\}\) e \(i(z,t)=\Re\{\tilde I(z)e^{j\omega t}\}\), quedan:
+\[
+-\frac{d\tilde V}{dz}=(R+j\omega L)\tilde I,
+\]
+\[
+-\frac{d\tilde I}{dz}=(G+j\omega C)\tilde V.
+\]
+Estas ecuaciones son el núcleo técnico del capítulo. Traducen una propagación electromagnética guiada en dos ecuaciones diferenciales para voltaje y corriente.
+
+### 3.5. Ondas de voltaje y corriente
+
+Al desacoplar las ecuaciones del telegrafista se obtienen ecuaciones de onda:
+\[
+\frac{d^2\tilde V}{dz^2}+\kappa^2\tilde V=0,
+\]
+\[
+\frac{d^2\tilde I}{dz^2}+\kappa^2\tilde I=0,
+\]
+con
+\[
+\kappa^2=-(R+j\omega L)(G+j\omega C).
+\]
+
+Las soluciones son la suma de dos ondas:
+\[
+\tilde V(z)=V_0^+e^{-j\kappa z}+V_0^-e^{+j\kappa z}.
+\]
+La primera viaja hacia \(+z\); la segunda hacia \(-z\). La corriente asociada tiene un signo relativo distinto para la onda reflejada:
+\[
+\tilde I(z)=\frac{V_0^+}{Z_0}e^{-j\kappa z}-\frac{V_0^-}{Z_0}e^{+j\kappa z}.
+\]
+Este signo es importante: la onda de corriente reflejada viaja en sentido contrario a la incidente.
+
+La existencia simultánea de onda incidente y reflejada implica interferencia. Si sus amplitudes son comparables, aparecerán máximos y mínimos espaciales: una onda estacionaria.
+
+### 3.6. Impedancia característica
+
+La impedancia característica se define como el cociente entre voltaje y corriente para una onda progresiva que se propaga sin reflexión. En una línea general vale
+\[
+Z_0=\sqrt{\frac{R+j\omega L}{G+j\omega C}}.
+\]
+Depende de la frecuencia y de los parámetros distribuidos de la línea.
+
+Su significado físico es esencial: si se conecta al extremo de la línea una carga igual a \(Z_0\), la onda incidente se absorbe sin reflexión. La línea finita se comporta, desde el punto de vista de la onda, como si continuase indefinidamente.
+
+En una línea sin pérdidas, \(R=0\) y \(G=0\). Entonces:
+\[
+\beta=\omega\sqrt{LC},\qquad Z_0=\sqrt{\frac{L}{C}},
+\]
+y
+\[
+v_{\mathrm{ph}}=\frac{1}{\sqrt{LC}}.
+\]
+Este caso ideal es el que se usa para estudiar con claridad reflexión, ondas estacionarias, potencia y carta de Smith.
+
+### 3.7. Coeficiente de reflexión
+
+El coeficiente de reflexión mide la relación entre la onda reflejada y la onda incidente:
+\[
+\tilde\rho(z)=\frac{\tilde V^-(z)}{\tilde V^+(z)}.
+\]
+En el punto de la carga se escribe \(\tilde\rho_L\). Si se mide la distancia \(l\) desde la carga hacia el generador, en una línea sin pérdidas:
+\[
+\tilde\rho(l)=\tilde\rho_L e^{-j2\beta l}.
+\]
+Por tanto, el módulo de \(\rho\) permanece constante, pero la fase cambia al desplazarse por la línea.
+
+La relación entre impedancia normalizada y coeficiente de reflexión es:
+\[
+Z_N=\frac{Z}{Z_0}=\frac{1+\tilde\rho}{1-\tilde\rho},
+\]
+y la inversa:
+\[
+\tilde\rho=\frac{Z_N-1}{Z_N+1}.
+\]
+En la carga:
+\[
+\tilde\rho_L=\frac{Z_L-Z_0}{Z_L+Z_0}.
+\]
+
+Tres casos fijan la intuición. Si \(Z_L=Z_0\), entonces \(\rho_L=0\): no hay reflexión. Si \(Z_L\to\infty\), circuito abierto, \(\rho_L=+1\): reflexión total en fase para el voltaje. Si \(Z_L=0\), cortocircuito, \(\rho_L=-1\): reflexión total con inversión de fase para el voltaje.
+
+### 3.8. Onda estacionaria y razón de onda estacionaria
+
+La tensión en una línea sin pérdidas puede escribirse como interferencia entre onda incidente y reflejada. El módulo del voltaje resulta:
+\[
+|\tilde V(z)|=|V_0^+|\sqrt{1+\rho^2+2\rho\cos(2\beta z+\theta_L)}.
+\]
+La corriente tiene una expresión análoga con signo opuesto en el término de interferencia:
+\[
+|\tilde I(z)|=\frac{|V_0^+|}{Z_0}\sqrt{1+\rho^2-2\rho\cos(2\beta z+\theta_L)}.
+\]
+
+Los máximos de tensión aparecen cuando las ondas de tensión incidente y reflejada están en fase. Los mínimos aparecen cuando están en oposición de fase. Para el voltaje:
+\[
+V_{\max}=|V_0^+|(1+\rho),\qquad
+V_{\min}=|V_0^+|(1-\rho).
+\]
+
+La razón de onda estacionaria se define como
+\[
+S=\frac{V_{\max}}{V_{\min}}=\frac{1+\rho}{1-\rho}.
+\]
+De aquí:
+\[
+\rho=\frac{S-1}{S+1}.
+\]
+Si \(S=1\), la línea está adaptada. Si \(S\to\infty\), hay reflexión total, como en circuito abierto o cortocircuito.
+
+La ROE proporciona el módulo del coeficiente de reflexión, pero no su fase. Para determinar la fase hace falta conocer la posición de los mínimos o máximos respecto de la carga. Dos mínimos consecutivos están separados por \(\lambda/2\), lo que permite obtener la longitud de onda en la línea.
+
+### 3.9. Impedancia de entrada
+
+La impedancia vista a una distancia \(l\) de la carga, mirando hacia la carga, permite sustituir el tramo de línea por una impedancia equivalente. Para una línea sin pérdidas:
+\[
+Z(l)=Z_0\,\frac{Z_L+jZ_0\tan(\beta l)}{Z_0+jZ_L\tan(\beta l)}.
+\]
+Si la línea tiene longitud total \(l_0\), la impedancia de entrada es:
+\[
+Z_{\mathrm{in}}=Z_0\,\frac{Z_L+jZ_0\tan(\beta l_0)}{Z_0+jZ_L\tan(\beta l_0)}.
+\]
+Este resultado conecta la teoría de líneas con el circuito generador. El generador no “ve” directamente la carga, sino la carga transformada por la línea.
+
+El caso especial \(l=\lambda/4\) no se desarrolla como bloque independiente en el capítulo, pero la fórmula muestra una propiedad típica: un tramo de línea puede transformar impedancias de manera fuerte. Esta idea es la base de la adaptación.
+
+### 3.10. Potencia transmitida
+
+Para señales armónicas interesa la potencia promedio:
+\[
+\langle P\rangle=\frac12\Re\{\tilde V\tilde I^*\}.
+\]
+En una línea sin pérdidas:
+\[
+\langle P\rangle=\frac12\frac{|V_0^+|^2}{Z_0}(1-\rho^2).
+\]
+La potencia incidente es
+\[
+\langle P_i\rangle=\frac12\frac{|V_0^+|^2}{Z_0},
+\]
+y la potencia reflejada es
+\[
+\langle P_r\rangle=\rho^2\langle P_i\rangle.
+\]
+Por tanto, la fracción de potencia reflejada es \(\rho^2\). Esto da sentido físico a la adaptación: minimizar \(\rho\) equivale a maximizar la potencia neta entregada a la carga, siempre dentro de las hipótesis del modelo.
+
+### 3.11. Carta de Smith
+
+La carta de Smith representa impedancias normalizadas en el plano complejo del coeficiente de reflexión. Parte de la relación:
+\[
+Z_N=\frac{1+\tilde\rho}{1-\tilde\rho}.
+\]
+Como \(|\rho|\leq 1\) para cargas pasivas, solo el interior del círculo unidad tiene significado físico.
+
+La impedancia normalizada se escribe:
+\[
+Z_N=R_N+jX_N.
+\]
+Las curvas de \(R_N\) constante y \(X_N\) constante forman familias de circunferencias. La carta superpone esas familias. Así se puede pasar gráficamente de impedancia a coeficiente de reflexión, leer módulos y fases, transformar impedancias a lo largo de la línea y trabajar con admitancias.
+
+El movimiento a lo largo de una línea sin pérdidas conserva \(|\rho|\), por lo que en la carta se representa como un giro sobre una circunferencia centrada en el origen. Girar hacia el generador o hacia la carga se hace con escalas exteriores en longitudes de onda.
+
+La admitancia se obtiene con el punto simétrico respecto del centro de la carta, porque
+\[
+Y_N=\frac{1}{Z_N}.
+\]
+Esto es especialmente útil en adaptaciones con elementos en paralelo, como los sintonizadores.
+
+### 3.12. Adaptación de impedancias
+
+Adaptar una línea significa conseguir que en cierto punto la impedancia vista desde el generador sea \(Z_0\), o equivalentemente que la admitancia normalizada sea \(1\). Entonces no hay onda reflejada desde ese punto hacia el generador.
+
+El capítulo estudia la adaptación mediante sintonizadores. Un sintonizador es un tramo de línea, normalmente acabado en cortocircuito, conectado en paralelo a la línea principal. Si es ideal y sin pérdidas, aporta una admitancia puramente reactiva.
+
+Con un sintonizador simple, el procedimiento consiste en buscar sobre la línea principal un punto donde la admitancia normalizada sea
+\[
+Y_1=1+jb
+\]
+o
+\[
+Y_1=1-jb.
+\]
+Después se añade en paralelo un sintonizador que aporte
+\[
+Y_2=-jb
+\]
+o
+\[
+Y_2=+jb.
+\]
+La suma queda:
+\[
+Y_0=Y_1+Y_2=1.
+\]
+En ese punto la línea queda adaptada.
+
+Con doble sintonizador, las posiciones de los dos sintonizadores están fijadas y se ajustan sus longitudes. El método se resuelve gráficamente en la carta de Smith mediante circunferencias de conductancia constante y desplazamientos en longitudes de onda. El capítulo advierte que puede existir una región de admitancias no adaptable para una separación dada, lo que obliga a modificar la distancia entre sintonizadores.
+
+### 3.13. Líneas con pérdidas
+
+Las líneas reales presentan pérdidas. En el modelo aparecen mediante \(R\) y \(G\), y formalmente modifican la constante de propagación:
+\[
+\kappa=\beta-j\alpha.
+\]
+Para pérdidas pequeñas:
+\[
+\beta\simeq \omega\sqrt{LC},
+\]
+\[
+\alpha\simeq \frac12\sqrt{LC}\left(\frac{R}{L}+\frac{G}{C}\right).
+\]
+
+La consecuencia más importante es que el módulo del coeficiente de reflexión ya no permanece constante al desplazarse:
+\[
+\tilde\rho(l)=\tilde\rho_L e^{-2\alpha l}e^{-j2\beta l}.
+\]
+Al alejarnos de la carga, la onda reflejada se atenúa, y la relación máximo/mínimo de la onda estacionaria disminuye. En la carta de Smith, el movimiento ya no es una circunferencia de radio constante, sino una espiral hacia el centro.
+
+Para pérdidas pequeñas puede seguir usándose una forma parecida a la de línea ideal, introduciendo el factor de atenuación. Para pérdidas apreciables aparece un término adicional asociado a la parte imaginaria de la admitancia característica, que refleja intercambio de energía entre onda incidente y reflejada debido a las pérdidas.
+
+## 4. Conceptos clave
+
+1. Sistema de transmisión con simetría traslacional.
+Definición precisa: estructura que conserva su sección transversal a lo largo de una dirección privilegiada, tomada como eje \(z\), por la que se propaga la onda.
+Explicación desarrollada: esta simetría permite separar la dependencia transversal de la dependencia longitudinal. Sin ella, el análisis sería mucho más complejo.
+Ejemplo: cable coaxial ideal con radio interior y exterior constantes.
+Relación con otros conceptos: es la base para clasificar modos y escribir soluciones \(e^{\pm j\kappa z}\).
+Posible forma de preguntarlo en examen: explicar por qué la conservación de la sección transversal simplifica el problema de propagación guiada.
+
+2. Modo TEM.
+Definición precisa: modo transversal electromagnético con \(E_z=0\) y \(H_z=0\).
+Explicación desarrollada: toda la energía se describe mediante campos transversales. En líneas de dos o más conductores, su distribución transversal se obtiene como un problema estático.
+Ejemplo: modo ideal de propagación en un cable coaxial.
+Relación con otros conceptos: se opone a los modos TE y TM; permite introducir la teoría de líneas de transmisión.
+Posible forma de preguntarlo en examen: justificar por qué una guía hueca monoconductora no admite modo TEM.
+
+3. Modos TE y TM.
+Definición precisa: en un modo TE se cumple \(E_z=0\); en un modo TM se cumple \(H_z=0\).
+Explicación desarrollada: aparecen en guías de ondas, donde la estructura no permite TEM pero sí soluciones con una componente longitudinal no nula.
+Ejemplo: una guía rectangular propaga modos TE o TM, no TEM.
+Relación con otros conceptos: preparan el paso al tema siguiente, dedicado a guías y cavidades.
+Posible forma de preguntarlo en examen: comparar TEM, TE y TM indicando qué componente longitudinal se anula en cada caso.
+
+4. Parámetros distribuidos \(R,L,G,C\).
+Definición precisa: parámetros por unidad de longitud que representan resistencia, inductancia, conductancia y capacidad de la línea.
+Explicación desarrollada: sustituyen a los elementos concentrados cuando la línea no puede tratarse como un único componente. Permiten describir cómo varían \(\tilde V\) e \(\tilde I\) con \(z\).
+Ejemplo: en una línea sin pérdidas se toma \(R=0\), \(G=0\), pero permanecen \(L\) y \(C\).
+Relación con otros conceptos: determinan \(\kappa\) y \(Z_0\).
+Posible forma de preguntarlo en examen: explicar el significado físico de \(R,L,G,C\) y sus unidades.
+
+5. Ecuaciones del telegrafista.
+Definición precisa: ecuaciones diferenciales acopladas:
+\[
+-\frac{d\tilde V}{dz}=(R+j\omega L)\tilde I,\qquad
+-\frac{d\tilde I}{dz}=(G+j\omega C)\tilde V.
+\]
+Explicación desarrollada: describen la propagación longitudinal de voltaje y corriente en una línea de parámetros distribuidos.
+Ejemplo: al desacoplarlas aparece una ecuación de onda para \(\tilde V\).
+Relación con otros conceptos: de ellas salen las ondas incidente y reflejada.
+Posible forma de preguntarlo en examen: derivar la ecuación de onda para \(\tilde V(z)\) a partir de las ecuaciones del telegrafista.
+
+6. Constante de propagación \(\kappa\).
+Definición precisa: cantidad compleja que aparece en la dependencia \(e^{\pm j\kappa z}\), con \(\kappa=\beta-j\alpha\).
+Explicación desarrollada: \(\beta\) mide la variación de fase por unidad de longitud; \(\alpha\) mide la atenuación.
+Ejemplo: en línea sin pérdidas, \(\kappa=\beta=\omega\sqrt{LC}\).
+Relación con otros conceptos: fija longitud de onda, fase de reflexión e impedancia de entrada.
+Posible forma de preguntarlo en examen: explicar el significado de \(\alpha\) y \(\beta\) en una línea con pérdidas.
+
+7. Impedancia característica \(Z_0\).
+Definición precisa:
+\[
+Z_0=\sqrt{\frac{R+j\omega L}{G+j\omega C}}.
+\]
+En línea sin pérdidas, \(Z_0=\sqrt{L/C}\).
+Explicación desarrollada: es el cociente entre voltaje y corriente de una onda progresiva pura. Si una línea termina en \(Z_0\), no hay reflexión.
+Ejemplo: una línea de \(50\,\Omega\) adaptada termina en una carga de \(50\,\Omega\).
+Relación con otros conceptos: aparece en \(\rho_L\), \(Z_N\), potencia e impedancia de entrada.
+Posible forma de preguntarlo en examen: interpretar físicamente \(Z_0\) y distinguirlo de una resistencia óhmica ordinaria.
+
+8. Coeficiente de reflexión \(\tilde\rho\).
+Definición precisa:
+\[
+\tilde\rho=\frac{\tilde V^-}{\tilde V^+}.
+\]
+En la carga:
+\[
+\tilde\rho_L=\frac{Z_L-Z_0}{Z_L+Z_0}.
+\]
+Explicación desarrollada: mide cuánta onda vuelve hacia el generador y con qué fase respecto a la incidente.
+Ejemplo: carga adaptada \(\rho=0\); cortocircuito \(\rho=-1\); circuito abierto \(\rho=+1\).
+Relación con otros conceptos: determina ROE, potencia reflejada y posición de máximos/mínimos.
+Posible forma de preguntarlo en examen: calcular \(\rho_L\) para una carga compleja dada.
+
+9. Impedancia normalizada \(Z_N\).
+Definición precisa:
+\[
+Z_N=\frac{Z}{Z_0}.
+\]
+Explicación desarrollada: elimina las unidades y permite representar cualquier carga en una misma carta de Smith.
+Ejemplo: si \(Z_0=50\,\Omega\) y \(Z_L=75+j25\,\Omega\), entonces \(Z_{LN}=1,5+j0,5\).
+Relación con otros conceptos: se relaciona con \(\rho\) por \(Z_N=(1+\rho)/(1-\rho)\).
+Posible forma de preguntarlo en examen: normalizar una impedancia y obtener su punto en la carta de Smith.
+
+10. Razón de onda estacionaria \(S\).
+Definición precisa:
+\[
+S=\frac{V_{\max}}{V_{\min}}=\frac{1+\rho}{1-\rho}.
+\]
+Explicación desarrollada: cuantifica la severidad de la onda estacionaria. Cuanto mayor es \(S\), peor es la adaptación.
+Ejemplo: si \(S=3\), entonces \(\rho=(3-1)/(3+1)=0,5\).
+Relación con otros conceptos: da el módulo de \(\rho\), pero no su fase.
+Posible forma de preguntarlo en examen: explicar por qué medir solo \(S\) no basta para conocer \(Z_L\).
+
+11. Impedancia de entrada.
+Definición precisa: impedancia que presenta una línea de longitud \(l_0\) terminada en \(Z_L\) vista desde el generador:
+\[
+Z_{\mathrm{in}}=Z_0\,\frac{Z_L+jZ_0\tan(\beta l_0)}{Z_0+jZ_L\tan(\beta l_0)}.
+\]
+Explicación desarrollada: la línea transforma la carga. El generador no ve directamente \(Z_L\), salvo en casos especiales.
+Ejemplo: una misma carga puede parecer inductiva o capacitiva según la longitud de línea interpuesta.
+Relación con otros conceptos: se usa para resolver el circuito generador-línea-carga.
+Posible forma de preguntarlo en examen: calcular \(Z_{\mathrm{in}}\) de una línea sin pérdidas.
+
+12. Potencia promedio transmitida.
+Definición precisa:
+\[
+\langle P\rangle=\frac12\Re\{\tilde V\tilde I^*\}.
+\]
+En línea sin pérdidas:
+\[
+\langle P\rangle=\frac{|V_0^+|^2}{2Z_0}(1-\rho^2).
+\]
+Explicación desarrollada: la potencia neta entregada es la incidente menos la reflejada.
+Ejemplo: si \(\rho=0,5\), la fracción reflejada es \(\rho^2=0,25\).
+Relación con otros conceptos: justifica la adaptación.
+Posible forma de preguntarlo en examen: determinar qué fracción de potencia incidente se refleja en una carga.
+
+13. Carta de Smith.
+Definición precisa: representación gráfica de impedancias normalizadas en el plano complejo del coeficiente de reflexión.
+Explicación desarrollada: convierte problemas de impedancia, admitancia, reflexión y desplazamiento por la línea en construcciones geométricas.
+Ejemplo: desplazarse hacia el generador en una línea sin pérdidas es girar sobre un círculo de \(|\rho|\) constante.
+Relación con otros conceptos: une \(Z_N\), \(Y_N\), \(\rho\), \(S\) y adaptación.
+Posible forma de preguntarlo en examen: describir cómo se obtiene \(Z_L\) a partir de \(S\) y la posición del primer mínimo usando la carta.
+
+14. Sintonizador.
+Definición precisa: tramo de línea conectado normalmente en paralelo a la línea principal, con longitud ajustable, usado para aportar una admitancia reactiva.
+Explicación desarrollada: permite cancelar la parte imaginaria de la admitancia en un punto donde la conductancia normalizada es \(1\).
+Ejemplo: si la línea principal presenta \(Y_1=1+j1,6\), el sintonizador debe aportar \(Y_2=-j1,6\).
+Relación con otros conceptos: es una técnica de adaptación de impedancias.
+Posible forma de preguntarlo en examen: explicar el procedimiento de adaptación con un sintonizador simple.
+
+15. Línea con pérdidas.
+Definición precisa: línea en la que \(R\) y/o \(G\) no son despreciables y aparece atenuación \(\alpha\).
+Explicación desarrollada: la onda reflejada se atenúa al recorrer la línea, por lo que \(|\rho|\) ya no permanece constante con la posición.
+Ejemplo: en la carta de Smith, el desplazamiento ya no es una circunferencia, sino una espiral.
+Relación con otros conceptos: modifica la ROE, la potencia y la lectura directa de la carta.
+Posible forma de preguntarlo en examen: explicar cómo cambian las ondas estacionarias en una línea con pérdidas.
+
+## 5. Relaciones entre ideas
+
+El capítulo tiene una cadena lógica muy marcada. Primero se parte de Maxwell en un sistema con simetría traslacional. Esa simetría permite descomponer los campos en componentes transversales y longitudinales. La existencia o ausencia de estas componentes longitudinales clasifica los modos en TEM, TE y TM.
+
+El modo TEM ocupa una posición jerárquica especial dentro del tema. De Maxwell se deduce que, si \(E_z=H_z=0\), la distribución transversal se comporta como un problema estático. Pero esta posibilidad exige dos o más conductores. Por tanto, la geometría decide el modo: líneas de dos conductores permiten TEM; guías huecas monoconductoras no lo permiten.
+
+Una vez restringido el estudio a líneas TEM, el capítulo cambia de lenguaje. El campo electromagnético se describe mediante voltaje y corriente. Este paso no elimina la física de campos: la resume en los parámetros distribuidos \(R,L,G,C\). Esos parámetros son el puente entre la geometría electromagnética y las ecuaciones de circuito.
+
+Las ecuaciones del telegrafista conducen a ondas progresivas y regresivas. La onda regresiva no aparece por capricho matemático: aparece porque la carga puede no absorber exactamente la onda incidente. Ahí nace el coeficiente de reflexión. La impedancia característica \(Z_0\) es la condición que evita esa reflexión.
+
+La desadaptación produce ondas estacionarias. La onda estacionaria no es un modo nuevo, sino la superposición de dos ondas viajeras en sentidos opuestos. La ROE \(S\) mide el contraste entre máximos y mínimos, y por eso mide el módulo de \(\rho\). Pero la posición de los mínimos es necesaria para recuperar la fase de \(\rho\). Esta dependencia explica por qué una línea ranurada puede servir para determinar una carga desconocida.
+
+La potencia enlaza reflexión con utilidad práctica. Una carga desadaptada devuelve una fracción \(\rho^2\) de la potencia incidente. Por eso la adaptación no es un detalle algebraico: es la condición para entregar energía a la carga de forma eficiente.
+
+La carta de Smith organiza todas estas relaciones en una representación geométrica. La transformación
+\[
+Z_N=\frac{1+\rho}{1-\rho}
+\]
+convierte el plano de impedancias en el plano de reflexión. En línea sin pérdidas, moverse por la línea cambia la fase de \(\rho\), pero no su módulo; por tanto, el movimiento es circular. En línea con pérdidas, el módulo disminuye y el movimiento se vuelve espiral.
+
+Las oposiciones importantes son estas: propagación libre frente a propagación guiada; modo TEM frente a TE/TM; línea sin pérdidas frente a línea con pérdidas; carga adaptada frente a carga desadaptada; impedancia frente a admitancia; descripción algebraica frente a descripción gráfica mediante la carta de Smith.
+
+Históricamente, el capítulo refleja la transición de la teoría de circuitos a la teoría de campos. A baja frecuencia, un cable puede tratarse como conexión ideal o como componente concentrado. A frecuencia alta, los efectos inductivos, capacitivos y de propagación obligan a usar parámetros distribuidos y ondas.
+
+## 6. Errores habituales
+
+1. Error: afirmar que cualquier guía de ondas puede propagar modo TEM.
+Por qué está mal: el modo TEM necesita dos o más conductores para sostener una diferencia de potencial transversal. Una guía hueca monoconductora no lo permite.
+Corrección: distinguir línea de transmisión TEM y guía de ondas TE/TM.
+Respuesta incorrecta: “Una guía rectangular puede propagar TEM porque la onda va por dentro.”
+Respuesta correcta: “Una guía rectangular hueca monoconductora no propaga TEM; sus modos son TE o TM.”
+
+2. Error: confundir \(Z_{\mathrm{TEM}}\) con \(Z_0\).
+Por qué está mal: \(Z_{\mathrm{TEM}}=\sqrt{\mu/\varepsilon}\) relaciona campos en el medio; \(Z_0=\sqrt{L/C}\) en línea sin pérdidas relaciona voltaje y corriente y depende de la geometría de la línea.
+Corrección: usar cada impedancia en su contexto.
+Respuesta incorrecta: “La impedancia característica de cualquier coaxial lleno de aire es \(377\,\Omega\).”
+Respuesta correcta: “\(377\,\Omega\) es la impedancia de onda del aire; la impedancia característica del coaxial depende de su geometría y de \(L/C\).”
+
+3. Error: olvidar normalizar la impedancia antes de usar la carta de Smith.
+Por qué está mal: la carta representa \(Z_N=Z/Z_0\), no \(Z\) en ohmios.
+Corrección: dividir siempre por \(Z_0\) antes de situar el punto.
+Respuesta incorrecta: “Marco \(75+j25\) directamente en la carta.”
+Respuesta correcta: “Si \(Z_0=50\,\Omega\), marco \(Z_N=1,5+j0,5\).”
+
+4. Error: invertir los signos de reflexión en circuito abierto y cortocircuito.
+Por qué está mal: para el voltaje, circuito abierto da \(\rho=+1\) y cortocircuito da \(\rho=-1\).
+Corrección: recordar que en cortocircuito la tensión total en la carga debe anularse.
+Respuesta incorrecta: “En cortocircuito la reflexión de tensión está en fase.”
+Respuesta correcta: “En cortocircuito la tensión reflejada debe cancelar la incidente, por eso \(\rho=-1\).”
+
+5. Error: creer que \(S\) determina completamente la carga.
+Por qué está mal: \(S\) solo determina \(|\rho|\), no la fase.
+Corrección: medir también la posición de un mínimo o máximo respecto de la carga.
+Respuesta incorrecta: “Si \(S=3\), la carga ya queda determinada.”
+Respuesta correcta: “Si \(S=3\), entonces \(|\rho|=0,5\), pero falta la fase para conocer \(Z_L\).”
+
+6. Error: olvidar el signo negativo de la corriente reflejada.
+Por qué está mal: la corriente de la onda reflejada viaja en sentido contrario, por eso aparece con signo opuesto en la expresión total.
+Corrección: escribir
+\[
+\tilde I(z)=\frac{V_0^+}{Z_0}e^{-j\beta z}-\frac{V_0^-}{Z_0}e^{j\beta z}.
+\]
+Respuesta incorrecta: “\(\tilde I\) tiene los dos términos con signo positivo.”
+Respuesta correcta: “La onda reflejada de corriente entra con signo negativo respecto de la incidente.”
+
+7. Error: usar \(\rho\) complejo directamente en la potencia.
+Por qué está mal: la fracción de potencia reflejada depende de \(|\rho|^2\).
+Corrección: usar el módulo cuadrado.
+Respuesta incorrecta: “Si \(\tilde\rho=0,5e^{j60^\circ}\), se refleja una potencia compleja.”
+Respuesta correcta: “La fracción reflejada es \(|\rho|^2=0,25\).”
+
+8. Error: moverse en la carta de Smith en el sentido equivocado.
+Por qué está mal: la escala distingue desplazamiento hacia el generador y hacia la carga.
+Corrección: leer la escala exterior adecuada y respetar el sentido.
+Respuesta incorrecta: “Para hallar la impedancia a \(0,2\lambda\) de la carga uso la escala hacia la carga.”
+Respuesta correcta: “Si el punto está entre carga y generador, desde la carga debo moverme hacia el generador.”
+
+9. Error: usar impedancias cuando el sintonizador está en paralelo.
+Por qué está mal: en paralelo se suman admitancias, no impedancias.
+Corrección: pasar a la carta de admitancias o tomar el punto simétrico para trabajar con \(Y_N\).
+Respuesta incorrecta: “Sumo la reactancia del sintonizador a \(Z_1\).”
+Respuesta correcta: “Como el sintonizador está en paralelo, sumo \(Y_1+Y_2\).”
+
+10. Error: pensar que una línea con pérdidas conserva \(|\rho|\) al desplazarse.
+Por qué está mal: en presencia de atenuación,
+\[
+|\rho(l)|=|\rho_L|e^{-2\alpha l}.
+\]
+Corrección: en líneas con pérdidas pequeñas se puede aproximar, pero no afirmar constancia exacta.
+Respuesta incorrecta: “En toda línea se gira sobre una circunferencia de \(|\rho|\) constante.”
+Respuesta correcta: “Eso es exacto en línea sin pérdidas; con pérdidas la trayectoria se aproxima a una espiral.”
+
+11. Error: confundir adaptación con hacer \(Z_L\) real.
+Por qué está mal: una carga real pero distinta de \(Z_0\) sigue reflejando.
+Corrección: adaptar exige \(Z_{\mathrm{vista}}=Z_0\), no solo anular la parte imaginaria.
+Respuesta incorrecta: “Si la carga queda en \(100\,\Omega\), ya está adaptada.”
+Respuesta correcta: “Solo está adaptada si \(Z_0=100\,\Omega\); si \(Z_0=50\,\Omega\), sigue habiendo reflexión.”
+
+12. Error: interpretar una onda estacionaria como ausencia de transporte de energía en todos los casos.
+Por qué está mal: con reflexión parcial hay onda estacionaria parcial y potencia neta hacia la carga.
+Corrección: solo con reflexión total ideal la potencia neta entregada puede anularse.
+Respuesta incorrecta: “Si hay máximos y mínimos, no se transmite potencia.”
+Respuesta correcta: “Con \(|\rho|<1\), hay onda estacionaria parcial y potencia neta \(\propto 1-\rho^2\).”
+
+## 7. Preguntas orientadas a examen
+
+### 10 preguntas fáciles
+
+F1. ¿Qué se entiende por sistema de transmisión con simetría traslacional?
+F2. Define modo TEM.
+F3. ¿Qué diferencia básica hay entre modo TEM, modo TE y modo TM?
+F4. ¿Qué significan los parámetros distribuidos \(R,L,G,C\)?
+F5. Escribe las ecuaciones del telegrafista en régimen armónico.
+F6. ¿Qué es la impedancia característica de una línea?
+F7. ¿Qué valor tiene el coeficiente de reflexión si \(Z_L=Z_0\)?
+F8. ¿Qué valores toma \(\rho\) para circuito abierto y cortocircuito?
+F9. Define la razón de onda estacionaria.
+F10. ¿Para qué sirve la carta de Smith?
+
+### 10 preguntas medias
+
+M1. Explica por qué una guía hueca monoconductora no puede propagar modo TEM.
+M2. A partir de las ecuaciones del telegrafista, indica qué forma tienen las soluciones de \(\tilde V(z)\).
+M3. Para una línea sin pérdidas, deduce \(Z_0\), \(\beta\) y \(v_{\mathrm{ph}}\).
+M4. Calcula \(\tilde\rho_L\) para \(Z_0=50\,\Omega\) y \(Z_L=100\,\Omega\).
+M5. Calcula \(\tilde\rho_L\) para \(Z_0=50\,\Omega\) y \(Z_L=25-j25\,\Omega\).
+M6. Si \(S=4\), calcula \(|\rho|\).
+M7. Si \(|\rho|=0,3\), calcula la fracción de potencia incidente reflejada.
+M8. Explica por qué los mínimos de tensión permiten determinar mejor la fase que los máximos.
+M9. Escribe la impedancia de entrada de una línea sin pérdidas de longitud \(l_0\).
+M10. Explica cómo se obtiene la admitancia normalizada en la carta de Smith a partir de la impedancia normalizada.
+
+### 5 preguntas difíciles
+
+D1. Describe el procedimiento completo para obtener \(Z_L\) a partir de una medida de \(S\) y de la posición del primer mínimo respecto de la carga.
+D2. Una línea sin pérdidas de \(Z_0=50\,\Omega\) termina en \(Z_L=25+j25\,\Omega\). Calcula \(\tilde\rho_L\), \(|\rho|\), \(S\) y la fracción de potencia reflejada.
+D3. Explica el método de adaptación con sintonizador simple en paralelo usando admitancias normalizadas.
+D4. Explica el método de adaptación con doble sintonizador e indica por qué pueden existir cargas no adaptables para una separación fija.
+D5. Compara el comportamiento de \(\rho\), la ROE y la carta de Smith en líneas sin pérdidas y con pérdidas.
+
+### 5 preguntas de desarrollo largo
+
+L1. Desarrolla el paso desde las ecuaciones de Maxwell hasta la clasificación de modos TEM, TE y TM en sistemas de transmisión.
+L2. Explica cómo el modelo de parámetros distribuidos conduce a las ecuaciones del telegrafista y qué significado físico tiene cada parámetro.
+L3. Desarrolla la teoría de reflexión en una línea de transmisión sin pérdidas: \(Z_0\), \(\rho\), casos de carga adaptada, circuito abierto y cortocircuito.
+L4. Explica la formación de ondas estacionarias en una línea y cómo se relacionan con \(S\), \(|\rho|\), potencia y posición de mínimos.
+L5. Explica el papel de la carta de Smith en el análisis y adaptación de líneas de transmisión.
+
+### 5 preguntas de relación entre conceptos
+
+R1. Relaciona modo TEM, necesidad de dos conductores e impedancia característica.
+R2. Relaciona coeficiente de reflexión, potencia reflejada y adaptación.
+R3. Relaciona impedancia normalizada, carta de Smith y desplazamiento por la línea.
+R4. Relaciona ROE, posición de mínimos y determinación de la impedancia de carga.
+R5. Relaciona pérdidas, atenuación, espiral en la carta de Smith y reducción del contraste de onda estacionaria.
+
+## 8. Respuestas modelo
+
+### Respuestas fáciles
+
+F1. Un sistema de transmisión con simetría traslacional es una estructura cuya sección transversal se mantiene constante a lo largo de una dirección privilegiada, normalmente el eje \(z\). Esa dirección coincide con la propagación de la onda. La simetría permite separar el problema en una distribución transversal de campo y una evolución longitudinal.
+
+F2. Un modo TEM es un modo transversal electromagnético. Se caracteriza porque no hay componente longitudinal ni del campo eléctrico ni del campo magnético:
+\[
+E_z=0,\qquad H_z=0.
+\]
+Los campos son transversales a la dirección de propagación.
+
+F3. En TEM se anulan ambas componentes longitudinales, \(E_z=H_z=0\). En TE se anula la componente longitudinal del campo eléctrico, \(E_z=0\), pero puede existir \(H_z\). En TM se anula la componente longitudinal del campo magnético, \(H_z=0\), pero puede existir \(E_z\).
+
+F4. \(R,L,G,C\) son parámetros por unidad de longitud de la línea. \(R\) representa pérdidas resistivas en los conductores, \(L\) almacenamiento magnético, \(G\) pérdidas por conducción entre conductores y \(C\) almacenamiento eléctrico entre conductores.
+
+F5. En régimen armónico:
+\[
+-\frac{d\tilde V}{dz}=(R+j\omega L)\tilde I,
+\]
+\[
+-\frac{d\tilde I}{dz}=(G+j\omega C)\tilde V.
+\]
+Estas son las ecuaciones del telegrafista.
+
+F6. La impedancia característica \(Z_0\) es el cociente entre voltaje y corriente de una onda progresiva pura en la línea. También es la impedancia que, conectada como carga al final de la línea, elimina la reflexión. En general:
+\[
+Z_0=\sqrt{\frac{R+j\omega L}{G+j\omega C}}.
+\]
+
+F7. Si \(Z_L=Z_0\), entonces
+\[
+\tilde\rho_L=\frac{Z_L-Z_0}{Z_L+Z_0}=0.
+\]
+La carga está adaptada y no hay onda reflejada.
+
+F8. En circuito abierto \(Z_L\to\infty\), luego \(\rho=+1\). En cortocircuito \(Z_L=0\), luego \(\rho=-1\). Ambos casos son de reflexión total para el voltaje, pero con fase distinta.
+
+F9. La razón de onda estacionaria es
+\[
+S=\frac{V_{\max}}{V_{\min}}.
+\]
+En una línea sin pérdidas:
+\[
+S=\frac{1+\rho}{1-\rho}.
+\]
+Mide el grado de desadaptación.
+
+F10. La carta de Smith sirve para representar impedancias normalizadas, admitancias y coeficientes de reflexión en un mismo diagrama. Permite transformar impedancias a lo largo de una línea, calcular \(\rho\), trabajar con ROE y diseñar adaptaciones.
+
+### Respuestas medias
+
+M1. Una guía hueca monoconductora no puede propagar TEM porque un modo TEM exigiría un campo transversal electrostático no nulo. En una sección con un solo conductor y condiciones de contorno homogéneas, el potencial transversal queda constante y el campo eléctrico transversal se anula. Para sostener un TEM hace falta una diferencia de potencial entre dos o más conductores.
+
+M2. Al desacoplar las ecuaciones del telegrafista se obtiene:
+\[
+\frac{d^2\tilde V}{dz^2}+\kappa^2\tilde V=0.
+\]
+La solución es suma de dos ondas:
+\[
+\tilde V(z)=V_0^+e^{-j\kappa z}+V_0^-e^{+j\kappa z}.
+\]
+La primera viaja hacia \(+z\) y la segunda hacia \(-z\).
+
+M3. En línea sin pérdidas \(R=0\) y \(G=0\). Entonces:
+\[
+Z_0=\sqrt{\frac{j\omega L}{j\omega C}}=\sqrt{\frac{L}{C}},
+\]
+\[
+\beta=\omega\sqrt{LC},
+\]
+\[
+v_{\mathrm{ph}}=\frac{\omega}{\beta}=\frac{1}{\sqrt{LC}}.
+\]
+
+M4. Con \(Z_0=50\,\Omega\) y \(Z_L=100\,\Omega\):
+\[
+\tilde\rho_L=\frac{100-50}{100+50}=\frac{50}{150}=\frac13.
+\]
+La reflexión es real y positiva.
+
+M5. Con \(Z_0=50\,\Omega\) y \(Z_L=25-j25\,\Omega\):
+\[
+\tilde\rho_L=\frac{25-j25-50}{25-j25+50}
+=\frac{-25-j25}{75-j25}.
+\]
+Multiplicando por el conjugado:
+\[
+\tilde\rho_L=\frac{(-25-j25)(75+j25)}{75^2+25^2}
+=\frac{-1250-j2500}{6250}
+=-0,2-j0,4.
+\]
+Por tanto \(|\rho|=\sqrt{0,2^2+0,4^2}\simeq0,447\).
+
+M6. Si \(S=4\):
+\[
+|\rho|=\frac{S-1}{S+1}=\frac{4-1}{4+1}=\frac35=0,6.
+\]
+
+M7. La fracción de potencia reflejada es \(|\rho|^2\). Si \(|\rho|=0,3\):
+\[
+|\rho|^2=0,09.
+\]
+Se refleja el 9 % de la potencia incidente.
+
+M8. Cerca de un mínimo la variación espacial de la tensión es más acusada que cerca de un máximo. Por eso, experimentalmente, localizar un mínimo suele ser más preciso que localizar un máximo. La posición del mínimo permite obtener la fase del coeficiente de reflexión.
+
+M9. Para una línea sin pérdidas de longitud \(l_0\):
+\[
+Z_{\mathrm{in}}=Z_0\,\frac{Z_L+jZ_0\tan(\beta l_0)}{Z_0+jZ_L\tan(\beta l_0)}.
+\]
+Esta es la impedancia que ve el generador.
+
+M10. En la carta de Smith, la admitancia normalizada se obtiene tomando el punto simétrico respecto del centro. Esto equivale a calcular:
+\[
+Y_N=\frac{1}{Z_N}.
+\]
+Se usa especialmente cuando se añaden elementos en paralelo, porque en paralelo se suman admitancias.
+
+### Respuestas difíciles
+
+D1. Primero se mide la razón de onda estacionaria \(S\). Con ella se calcula:
+\[
+|\rho|=\frac{S-1}{S+1}.
+\]
+Eso fija en la carta de Smith un círculo de \(|\rho|\) constante. Después se localiza la posición del primer mínimo respecto de la carga. El mínimo corresponde al semieje real negativo del plano de \(\rho\). Desde ese punto se desplaza en la carta hacia la carga una distancia igual a la posición medida del mínimo, expresada en longitudes de onda. La intersección con el círculo de \(|\rho|\) constante da la impedancia normalizada \(Z_{LN}\). Finalmente:
+\[
+Z_L=Z_{LN}Z_0.
+\]
+
+D2. Con \(Z_0=50\,\Omega\) y \(Z_L=25+j25\,\Omega\):
+\[
+\tilde\rho_L=\frac{25+j25-50}{25+j25+50}
+=\frac{-25+j25}{75+j25}.
+\]
+Multiplicando por el conjugado:
+\[
+\tilde\rho_L=\frac{(-25+j25)(75-j25)}{75^2+25^2}
+=\frac{-1250+j2500}{6250}
+=-0,2+j0,4.
+\]
+Por tanto:
+\[
+|\rho|=\sqrt{(-0,2)^2+0,4^2}=\sqrt{0,20}\simeq0,447.
+\]
+La razón de onda estacionaria es:
+\[
+S=\frac{1+0,447}{1-0,447}\simeq2,62.
+\]
+La fracción de potencia reflejada es:
+\[
+|\rho|^2=0,20.
+\]
+Se refleja el 20 % de la potencia incidente.
+
+D3. En un sintonizador simple paralelo se trabaja con admitancias. Primero se normaliza la carga y se pasa a admitancia \(Y_{LN}\). Después se avanza por la línea hacia el generador hasta encontrar un punto donde la admitancia de la línea principal tenga conductancia normalizada unidad:
+\[
+Y_1=1+jb
+\]
+o
+\[
+Y_1=1-jb.
+\]
+En ese punto se conecta un tramo de línea cortocircuitado que aporta una admitancia puramente reactiva:
+\[
+Y_2=-jb
+\]
+o
+\[
+Y_2=+jb.
+\]
+La suma queda \(Y_0=1\). Esto significa que la admitancia vista está adaptada a la línea y no hay reflexión desde ese punto hacia el generador.
+
+D4. En el doble sintonizador las posiciones de los dos sintonizadores están fijadas. Se ajustan sus longitudes para que el primer sintonizador transforme la admitancia hasta un punto que, tras propagarse la distancia fija hasta el segundo, pueda corregirse con una segunda susceptancia. Gráficamente, se usan circunferencias de conductancia constante y desplazamientos sobre la carta de Smith. Puede haber cargas no adaptables para una separación dada porque ciertas admitancias caen en una región que no puede llevarse a la circunferencia \(G_N=1\) mediante las susceptancias disponibles. La solución es cambiar la separación entre sintonizadores.
+
+D5. En una línea sin pérdidas, \(\alpha=0\), de modo que:
+\[
+\tilde\rho(l)=\tilde\rho_L e^{-j2\beta l}.
+\]
+El módulo de \(\rho\) se conserva y el movimiento en la carta de Smith es una circunferencia. La ROE es constante a lo largo de la línea. En una línea con pérdidas:
+\[
+\tilde\rho(l)=\tilde\rho_L e^{-2\alpha l}e^{-j2\beta l}.
+\]
+El módulo disminuye al alejarnos de la carga, la ROE cambia con la posición y el movimiento en la carta se convierte en una espiral hacia el centro. Además, el contraste entre máximos y mínimos de la onda estacionaria disminuye.
+
+### Respuestas de desarrollo largo
+
+L1. En sistemas de transmisión con simetría traslacional se toma la dirección de propagación como eje \(z\). Los campos se descomponen en componentes transversales y longitudinales:
+\[
+\tilde{\mathbf{E}}=\tilde{\mathbf{E}}_t+\tilde E_z\mathbf{u}_z,\qquad
+\tilde{\mathbf{H}}=\tilde{\mathbf{H}}_t+\tilde H_z\mathbf{u}_z.
+\]
+Al introducir esta descomposición en las ecuaciones de Maxwell, las componentes transversales pueden relacionarse con las longitudinales. Esto permite clasificar las soluciones. Si \(E_z=H_z=0\), el modo es TEM. Si \(E_z=0\), el modo es TE. Si \(H_z=0\), el modo es TM. El modo TEM reduce la distribución transversal a un problema estático y requiere dos o más conductores. Los modos TE y TM aparecen en guías donde no puede mantenerse un TEM.
+
+L2. La línea se modela por un tramo diferencial \(\Delta z\) con \(R\Delta z\), \(L\Delta z\), \(G\Delta z\) y \(C\Delta z\). La resistencia \(R\) y la conductancia \(G\) representan pérdidas; la inductancia \(L\) y la capacidad \(C\) representan almacenamiento de energía magnética y eléctrica. Aplicando las leyes de circuito al tramo y tomando el límite \(\Delta z\to0\) se obtienen:
+\[
+-\frac{\partial v}{\partial z}=L\frac{\partial i}{\partial t}+Ri,
+\]
+\[
+-\frac{\partial i}{\partial z}=C\frac{\partial v}{\partial t}+Gv.
+\]
+En régimen armónico:
+\[
+-\frac{d\tilde V}{dz}=(R+j\omega L)\tilde I,\qquad
+-\frac{d\tilde I}{dz}=(G+j\omega C)\tilde V.
+\]
+Estas ecuaciones describen cómo se propagan voltaje y corriente a lo largo de la línea.
+
+L3. La impedancia característica es:
+\[
+Z_0=\sqrt{\frac{R+j\omega L}{G+j\omega C}}.
+\]
+En una línea sin pérdidas:
+\[
+Z_0=\sqrt{\frac{L}{C}}.
+\]
+La tensión total es suma de una onda incidente y otra reflejada:
+\[
+\tilde V(z)=V_0^+e^{-j\beta z}+V_0^-e^{j\beta z}.
+\]
+El coeficiente de reflexión en la carga es:
+\[
+\tilde\rho_L=\frac{Z_L-Z_0}{Z_L+Z_0}.
+\]
+Si \(Z_L=Z_0\), \(\rho=0\) y no hay reflexión. Si \(Z_L\to\infty\), \(\rho=+1\) y la reflexión de tensión es total en fase. Si \(Z_L=0\), \(\rho=-1\) y la reflexión de tensión es total en oposición de fase.
+
+L4. Una onda estacionaria se forma por superposición de una onda incidente y una reflejada. En una línea sin pérdidas:
+\[
+V_{\max}=|V_0^+|(1+\rho),\qquad
+V_{\min}=|V_0^+|(1-\rho).
+\]
+Por eso:
+\[
+S=\frac{V_{\max}}{V_{\min}}=\frac{1+\rho}{1-\rho}.
+\]
+La potencia neta entregada a la carga es:
+\[
+\langle P\rangle=\frac{|V_0^+|^2}{2Z_0}(1-\rho^2).
+\]
+La posición de los mínimos proporciona la fase de \(\rho\). Dos mínimos consecutivos están separados por \(\lambda/2\). Por tanto, la onda estacionaria no solo indica que existe reflexión: también permite medir la carga si se conoce \(Z_0\).
+
+L5. La carta de Smith representa la relación entre impedancia normalizada y coeficiente de reflexión:
+\[
+Z_N=\frac{1+\rho}{1-\rho}.
+\]
+Su utilidad es que transforma cálculos complejos en desplazamientos geométricos. Una carga se representa como \(Z_{LN}\). La distancia al centro da \(|\rho|\), y la escala angular da su fase. Moverse por una línea sin pérdidas es girar sobre un círculo de \(|\rho|\) constante. La admitancia se obtiene con el punto opuesto respecto del centro. La adaptación con sintonizadores se resuelve buscando puntos donde la conductancia normalizada sea \(1\) y añadiendo una susceptancia que cancele la parte imaginaria.
+
+### Respuestas de relación entre conceptos
+
+R1. El modo TEM exige \(E_z=H_z=0\) y solo puede mantenerse en líneas con dos o más conductores, porque hace falta una diferencia de potencial transversal. En esas líneas, la propagación longitudinal puede describirse con voltaje y corriente, y aparece la impedancia característica \(Z_0\), que relaciona ambas magnitudes para una onda progresiva.
+
+R2. El coeficiente de reflexión mide la onda devuelta por la carga. La potencia reflejada es una fracción \(|\rho|^2\) de la potencia incidente. Adaptar significa hacer \(\rho=0\), lo que equivale a que la carga vista sea \(Z_0\). Por eso adaptación y máxima transferencia útil de potencia están directamente relacionadas.
+
+R3. La impedancia normalizada \(Z_N=Z/Z_0\) permite usar una carta universal. La carta de Smith representa \(Z_N\) en el plano de \(\rho\). En una línea sin pérdidas, desplazarse por la línea no cambia \(|\rho|\), solo su fase; por eso el movimiento se dibuja como un giro sobre un círculo centrado en la carta.
+
+R4. La ROE da el módulo de \(\rho\). La posición de los mínimos proporciona la fase. Con ambas cosas se obtiene el coeficiente de reflexión completo y, mediante
+\[
+Z_N=\frac{1+\rho}{1-\rho},
+\]
+se determina la impedancia de carga normalizada y después \(Z_L\).
+
+R5. Las pérdidas introducen una constante de atenuación \(\alpha\). Por eso la onda reflejada se atenúa al alejarse de la carga y \(|\rho|\) disminuye según \(e^{-2\alpha l}\). El contraste de la onda estacionaria se reduce y, en la carta de Smith, el desplazamiento deja de ser una circunferencia y pasa a ser una espiral hacia el centro.
+
+## 9. Resumen final de repaso
+
+Ideas principales:
+- La propagación guiada aparece cuando una estructura conduce energía electromagnética a lo largo de una dirección privilegiada.
+- Las líneas TEM requieren dos o más conductores; las guías monoconductoras trabajan con modos TE o TM.
+- Una línea TEM puede describirse por parámetros distribuidos \(R,L,G,C\).
+- Las ecuaciones del telegrafista conducen a ondas incidente y reflejada.
+- La impedancia característica \(Z_0\) es la carga que evita reflexiones.
+- La desadaptación produce coeficiente de reflexión, onda estacionaria y potencia reflejada.
+- La ROE mide \(|\rho|\), pero no su fase.
+- La carta de Smith representa \(Z_N\), \(Y_N\), \(\rho\), desplazamientos por la línea y adaptación.
+- La adaptación con sintonizadores se hace mejor en admitancias cuando el elemento se conecta en paralelo.
+- Las pérdidas hacen que \(|\rho|\) disminuya al alejarnos de la carga y convierten los círculos de Smith en espirales.
+
+Conceptos imprescindibles:
+- TEM, TE, TM.
+- \(R,L,G,C\) por unidad de longitud.
+- Ecuaciones del telegrafista.
+- \(\kappa=\beta-j\alpha\).
+- \(Z_0=\sqrt{(R+j\omega L)/(G+j\omega C)}\).
+- En línea sin pérdidas: \(Z_0=\sqrt{L/C}\), \(\beta=\omega\sqrt{LC}\).
+- \(\rho_L=(Z_L-Z_0)/(Z_L+Z_0)\).
+- \(Z_N=(1+\rho)/(1-\rho)\).
+- \(S=(1+\rho)/(1-\rho)\).
+- \(\langle P_r\rangle/\langle P_i\rangle=|\rho|^2\).
+- \(Z_{\mathrm{in}}=Z_0\,(Z_L+jZ_0\tan\beta l)/(Z_0+jZ_L\tan\beta l)\).
+
+Relaciones clave:
+- Maxwell + simetría traslacional -> modos.
+- TEM -> teoría de líneas.
+- Parámetros distribuidos -> ecuaciones del telegrafista.
+- Carga desadaptada -> reflexión.
+- Reflexión -> onda estacionaria.
+- ROE + posición de mínimos -> carga.
+- Carta de Smith -> transformación gráfica de impedancias y adaptación.
+- Pérdidas -> atenuación y variación de \(|\rho|\).
+
+Errores que evitar:
+- Decir que una guía hueca propaga TEM.
+- No normalizar antes de usar Smith.
+- Confundir circuito abierto con cortocircuito en el signo de \(\rho\).
+- Creer que \(S\) determina toda la carga.
+- Sumar impedancias cuando el sintonizador está en paralelo.
+- Usar \(\rho\) complejo en potencia en lugar de \(|\rho|^2\).
+- Aplicar \(|\rho|\) constante a líneas con pérdidas.
+
+## 10. Checklist de dominio
+
+- Si no puedes explicar por qué el modo TEM necesita dos conductores, falta repasar la relación entre condiciones de contorno, potencial transversal y modo TEM.
+- Si confundes TEM con TE o TM, revisar la definición de componentes longitudinales \(E_z\) y \(H_z\).
+- Si no puedes escribir las ecuaciones del telegrafista, falta repasar el modelo de parámetros distribuidos.
+- Si no sabes qué representan \(R,L,G,C\), falta repasar el significado energético y disipativo de cada parámetro.
+- Si confundes \(Z_{\mathrm{TEM}}\) con \(Z_0\), revisar impedancia de onda frente a impedancia característica de línea.
+- Si no puedes calcular \(\rho_L\) a partir de \(Z_L\) y \(Z_0\), falta repasar normalización e impedancia característica.
+- Si no sabes explicar qué ocurre en circuito abierto y cortocircuito, revisar las condiciones de tensión y corriente en la carga.
+- Si calculas la potencia reflejada usando \(\rho\) en vez de \(|\rho|^2\), revisar potencia promedio en líneas sin pérdidas.
+- Si crees que \(S\) da directamente \(Z_L\), revisar la necesidad de conocer la fase mediante la posición de mínimos.
+- Si te pierdes en la carta de Smith, revisar primero \(Z_N\), \(Y_N\), \(\rho\) y el sentido hacia generador/carga.
+- Si usas impedancias en un sintonizador paralelo, revisar admitancias normalizadas.
+- Si no puedes describir el procedimiento de un sintonizador simple, falta repasar la condición \(Y_1=1\pm jb\) y la cancelación con \(Y_2=\mp jb\).
+- Si no sabes qué cambia en una línea con pérdidas, revisar \(\kappa=\beta-j\alpha\) y \(|\rho(l)|=|\rho_L|e^{-2\alpha l}\).
+- Si puedes resolver un problema con \(Z_L\), \(Z_0\), \(\rho\), \(S\), potencia reflejada e impedancia de entrada, el núcleo del capítulo está suficientemente asentado.
+- Si puedes interpretar una adaptación en la carta de Smith sin perder el sentido de giro ni confundir impedancia con admitancia, el capítulo está bien preparado para examen.

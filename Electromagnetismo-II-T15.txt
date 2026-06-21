@@ -1,0 +1,1214 @@
+# Guía de estudio — Electromagnetismo II
+
+T15 — Energía magnética
+Fuente principal: López Rodríguez, Montoya Lirola y Pancorbo Castro, Electromagnetismo II, Tema 3: “Energía magnética”.
+
+## 1. Prerrequisitos mínimos
+
+- Concepto: corriente cuasi-estacionaria.
+  Definición breve: una corriente cuasi-estacionaria es una corriente que puede variar lentamente con el tiempo, de forma que los efectos de radiación y los retardos de propagación se pueden despreciar.
+  Por qué es necesario: el capítulo calcula la energía necesaria para establecer corrientes en circuitos suponiendo que el proceso es suficientemente lento. Sin esta hipótesis no bastaría con hablar solo de energía magnética almacenada: habría que tener en cuenta energía radiada.
+  Ejemplo mínimo: si se hace crecer lentamente la corriente en una bobina desde \(0\) hasta \(I\), el campo magnético asociado también crece lentamente y puede tratarse mediante relaciones magnetostáticas en cada instante.
+
+- Concepto: flujo magnético.
+  Definición breve: el flujo magnético a través de una superficie \(S\) es
+  \[
+  \Phi=\int_S \mathbf B\cdot d\mathbf s.
+  \]
+  Por qué es necesario: la energía magnética se obtiene inicialmente a partir del trabajo necesario para modificar los flujos enlazados por circuitos con corriente.
+  Ejemplo mínimo: en una espira plana dentro de un campo uniforme, \(\Phi=BS\cos\theta\), donde \(\theta\) es el ángulo entre \(\mathbf B\) y la normal de la espira.
+
+- Concepto: fuerza electromotriz inducida.
+  Definición breve: una variación temporal del flujo magnético enlazado por un circuito induce una f.e.m.
+  \[
+  \mathcal E=-\frac{d\Phi}{dt}.
+  \]
+  Por qué es necesario: al establecer una corriente, el flujo cambia y aparece una f.e.m. inducida que se opone al cambio. La energía magnética sale precisamente del trabajo reversible que las fuentes realizan contra esa inducción.
+  Ejemplo mínimo: al aumentar la corriente en un inductor, aparece una f.e.m. de autoinducción opuesta al incremento de corriente.
+
+- Concepto: autoinducción e inducción mutua.
+  Definición breve: la autoinducción \(L\) relaciona el flujo de un circuito consigo mismo con la corriente que lo recorre; la inducción mutua \(M_{ij}\) relaciona el flujo enlazado por un circuito \(i\) con la corriente que circula por otro circuito \(j\).
+  Por qué es necesario: una parte central del capítulo expresa la energía como
+  \[
+  W_m=\frac12\sum_i\sum_j M_{ij}I_iI_j,
+  \]
+  y en el caso de un solo circuito como
+  \[
+  W_m=\frac12LI^2.
+  \]
+  Ejemplo mínimo: una bobina aislada tiene energía \(W_m=\frac12LI^2\); dos bobinas próximas añaden términos de inducción mutua.
+
+- Concepto: campos \(\mathbf B\) y \(\mathbf H\).
+  Definición breve: \(\mathbf B\) es el campo magnético o densidad de flujo magnético; \(\mathbf H\) es la intensidad de campo magnético. En medios lineales se relacionan mediante
+  \[
+  \mathbf B=\mu \mathbf H.
+  \]
+  Por qué es necesario: el capítulo pasa de una descripción de circuitos a una descripción de campo. La energía se expresa en función de \(\mathbf B\) y \(\mathbf H\).
+  Ejemplo mínimo: en un medio lineal, la densidad de energía magnética es
+  \[
+  w_m=\frac12\mathbf H\cdot\mathbf B.
+  \]
+
+- Concepto: teorema de Ampère en medios materiales.
+  Definición breve: en régimen magnetostático o cuasi-estacionario, la circulación de \(\mathbf H\) alrededor de un contorno cerrado está relacionada con la corriente que atraviesa la superficie apoyada en ese contorno.
+  Por qué es necesario: permite calcular \(\mathbf H\) en geometrías con simetría, como conductores cilíndricos o cables coaxiales, y luego integrar la densidad de energía.
+  Ejemplo mínimo: para un conductor largo con simetría cilíndrica, \(\mathbf H\) es tangencial y depende de la distancia al eje.
+
+- Concepto: medios lineales y medios no lineales.
+  Definición breve: en un medio lineal, \(\mathbf B=\mu\mathbf H\) con \(\mu\) constante. En un medio no lineal, la relación entre \(\mathbf B\) y \(\mathbf H\) depende de la curva de imanación.
+  Por qué es necesario: la fórmula \(w_m=\frac12\mathbf H\cdot\mathbf B\) solo es válida en medios lineales. En medios no lineales debe usarse una integral a lo largo de la curva de imanación.
+  Ejemplo mínimo: un material ferromagnético no se puede tratar, en general, con una permeabilidad constante si se recorre una curva de histéresis.
+
+- Concepto: trabajo y energía potencial.
+  Definición breve: el trabajo elemental de una fuerza es \(dW=\mathbf F\cdot d\mathbf l\). Si el sistema rota alrededor de un eje, el trabajo puede expresarse mediante el par y el ángulo.
+  Por qué es necesario: el capítulo calcula fuerzas y pares magnéticos a partir de variaciones virtuales de la energía magnética.
+  Ejemplo mínimo: si solo cambia una coordenada \(x\), una fuerza puede obtenerse como derivada de la energía respecto a \(x\), con el signo adecuado según las condiciones impuestas.
+
+- Concepto: condiciones en los límites magnéticos.
+  Definición breve: en una frontera entre medios, las componentes normales de \(\mathbf B\) y las componentes tangenciales de \(\mathbf H\) obedecen condiciones de continuidad determinadas por las ecuaciones del campo.
+  Por qué es necesario: la presión magnética sobre una frontera entre medios depende de si el campo es tangencial o normal a la superficie.
+  Ejemplo mínimo: si el campo es tangencial a la frontera, se usa la continuidad de \(H_t\); si es normal, se usa la continuidad de \(B_n\).
+
+
+## 2. Idea central del capítulo
+
+El capítulo estudia cómo se almacena energía en un campo magnético cuando se establecen corrientes en circuitos. La idea de partida es paralela a la electrostática: allí se interpreta la energía como el trabajo necesario para colocar cargas; aquí se interpreta como el trabajo reversible necesario para establecer corrientes y los campos magnéticos que producen. La comparación es útil, pero no debe llevar a confusión: en magnetismo interviene la inducción electromagnética, porque mientras la corriente cambia también cambia el flujo magnético enlazado.
+
+El problema físico central es separar tres cosas que aparecen simultáneamente cuando se alimenta un circuito: la energía que suministran las fuentes, la energía que se disipa por efecto Joule y la energía que queda almacenada en el campo magnético. El capítulo excluye deliberadamente la energía perdida por calentamiento resistivo cuando define la energía magnética. Por eso habla de trabajo reversible: interesa la parte que se puede asociar al campo y no a pérdidas irreversibles.
+
+La primera formulación se hace con circuitos filiformes y coeficientes de inducción. Para un sistema de circuitos, el flujo enlazado por cada uno depende de todas las corrientes, tanto de la propia como de las de los demás. De ahí aparecen los coeficientes de autoinducción e inducción mutua. El resultado más conocido, \(W_m=\frac12LI^2\), es solo el caso particular de un circuito aislado en un medio lineal.
+
+Después el capítulo da el paso importante: expresar la energía en función de los campos \(\mathbf B\) y \(\mathbf H\). Esto permite tratar situaciones en las que no resulta cómodo hablar solo de circuitos filiformes o de coeficientes de inducción. La energía deja de estar localizada conceptualmente “en el inductor” y pasa a describirse mediante una densidad de energía distribuida por el espacio donde existe campo magnético.
+
+El capítulo distingue con cuidado entre medios lineales y no lineales. En medios lineales, la energía tiene una expresión cuadrática sencilla. En medios no lineales, especialmente ferromagnéticos, no basta sustituir \(\mu\) por un número: hay que integrar a lo largo de la curva de imanación. Si existe histéresis, parte de la energía suministrada no se recupera, sino que se disipa como calor. Esta es una diferencia esencial respecto al tratamiento ideal lineal.
+
+La última parte usa la energía magnética para calcular fuerzas, pares y presiones. El procedimiento es de desplazamientos virtuales: se imagina un pequeño desplazamiento o giro del sistema, se calcula cómo cambia la energía magnética y se obtiene la fuerza correspondiente. Aquí aparece una distinción crítica de examen: no da igual mantener constante la corriente que mantener constante el flujo. Con corriente constante, la fuerza se asocia al gradiente positivo de la energía; con flujo constante, aparece el signo contrario. Esta diferencia no es un detalle algebraico, sino una consecuencia de qué hacen las fuentes externas durante el desplazamiento.
+
+
+## 3. Desarrollo completo del capítulo
+
+### 3.1. Energía magnética de un sistema de corrientes
+
+El capítulo empieza definiendo la energía magnética de un circuito filiforme como el trabajo necesario para establecer una corriente \(I\) en ese circuito, excluyendo la energía disipada por efecto Joule. La palabra “establecer” es importante: no se calcula la energía de una corriente que aparece de golpe, sino el trabajo reversible realizado al hacer crecer la corriente desde cero hasta su valor final.
+
+Mientras la corriente crece, también cambia el campo magnético y, por tanto, el flujo magnético enlazado por el circuito. Este cambio de flujo induce una f.e.m. que se opone al proceso. Por eso la fuente externa debe realizar trabajo adicional para vencer esa oposición. Si el circuito \(C_i\) transporta una corriente instantánea \(i_i\), el incremento elemental de energía magnética asociado a un incremento de flujo es
+\[
+dW_{mi}=i_i\,d\Phi_i.
+\]
+Para un sistema de \(N\) circuitos, el incremento total es
+\[
+dW_m=\sum_{i=1}^{N} i_i\,d\Phi_i.
+\]
+
+Esta expresión todavía es diferencial. Para integrarla de forma sencilla el capítulo supone medios lineales. En un sistema lineal, al hacer crecer todas las corrientes de forma proporcional desde cero hasta su valor final, los flujos también crecen proporcionalmente. Si la corriente instantánea es \(i_i=\alpha I_i\), con \(\alpha\) variando de \(0\) a \(1\), el flujo cambia como \(d\Phi_i=\Phi_i\,d\alpha\). Al integrar se obtiene
+\[
+W_m=\frac12\sum_{i=1}^{N} I_i\Phi_i.
+\]
+El factor \(1/2\) no es decorativo. Aparece porque durante el proceso la corriente no ha valido siempre \(I_i\), sino que ha crecido desde cero hasta \(I_i\).
+
+Como el flujo enlazado por un circuito puede depender de todas las corrientes, se introduce
+\[
+\Phi_i=\sum_{j=1}^{N}M_{ij}I_j,
+\]
+donde \(M_{ii}=L_i\) representa la autoinducción del circuito \(i\) y \(M_{ij}\), con \(i\neq j\), la inducción mutua entre circuitos. Sustituyendo en la expresión anterior:
+\[
+W_m=\frac12\sum_{i=1}^{N}\sum_{j=1}^{N}M_{ij}I_iI_j.
+\]
+
+En el caso de un solo circuito aislado, queda la fórmula más conocida:
+\[
+W_m=\frac12LI^2.
+\]
+Esta fórmula es nuclear para examen, pero debe recordarse con sus hipótesis: circuito aislado, medio lineal y corriente cuasi-estacionaria. No es una fórmula universal para cualquier material ni para cualquier régimen temporal.
+
+Un ejemplo que fija la idea es una bobina ideal. Cuando la corriente en la bobina aumenta, la fuente realiza trabajo contra la f.e.m. inducida. La parte reversible de ese trabajo queda almacenada como energía magnética. Si se desconecta idealmente la fuente y la energía se devuelve al circuito, se manifiesta que esa energía no era una pérdida térmica, sino energía almacenada en el campo.
+
+
+### 3.2. Energía en función de \(\mathbf B\) y \(\mathbf H\)
+
+Después de obtener la energía mediante flujos y corrientes, el capítulo reescribe el resultado en términos de campos. Esta transición es importante porque el campo magnético no solo existe “dentro de una bobina” o “en un cable”; está distribuido por regiones del espacio, y su energía también.
+
+Se parte de un sistema con densidad de corriente \(\mathbf J\), conductividad \(\gamma\), y un campo no conservativo \(\mathbf E'\) producido por generadores. La relación usada es
+\[
+\mathbf J=\gamma(\mathbf E'+\mathbf E),
+\]
+de donde
+\[
+\mathbf E'=\frac{1}{\gamma}\mathbf J-\mathbf E.
+\]
+Al multiplicar por \(\mathbf J\) e integrar sobre el volumen se obtiene un balance de potencia:
+\[
+\int_V \mathbf E'\cdot\mathbf J\,dv
+=
+\frac1\gamma\int_V J^2\,dv
+-
+\int_V \mathbf E\cdot\mathbf J\,dv.
+\]
+El primer miembro representa la potencia suministrada por los generadores. El primer término del segundo miembro representa potencia disipada por efecto Joule. El segundo término se transforma mediante \(\nabla\times\mathbf H=\mathbf J\), una identidad vectorial, el teorema de Gauss y la ley de Faraday. En régimen cuasi-estático se desprecia el flujo de energía hacia el infinito, porque no se está tratando radiación electromagnética.
+
+El resultado relevante es
+\[
+\int_V \mathbf E'\cdot\mathbf J\,dv
+=
+\frac1\gamma\int_V J^2\,dv
++
+\int_V \mathbf H\cdot\frac{\partial \mathbf B}{\partial t}\,dv.
+\]
+Aquí queda separada la potencia térmica de la potencia que aumenta la energía magnética. Por tanto, el incremento de energía del campo magnético es
+\[
+\delta W_m=\int_V \mathbf H\cdot\delta\mathbf B\,dv.
+\]
+
+Para obtener la energía total hay que saber cómo se ha pasado de campo nulo al campo final. En general,
+\[
+W_m=\int_V\left(\int_0^{\mathbf B}\mathbf H\cdot d\mathbf B\right)dv.
+\]
+Esta expresión es más general que la fórmula cuadrática, porque no presupone una relación lineal entre \(\mathbf B\) y \(\mathbf H\).
+
+En un medio lineal,
+\[
+\mathbf B=\mu\mathbf H,
+\]
+con \(\mu\) constante. Entonces:
+\[
+W_m=\frac12\int_V \mu H^2\,dv
+=
+\frac12\int_V \mathbf H\cdot\mathbf B\,dv.
+\]
+Se define la densidad de energía magnética como
+\[
+w_m=\frac{dW_m}{dv}.
+\]
+En general,
+\[
+w_m=\int_0^{\mathbf B}\mathbf H\cdot d\mathbf B,
+\]
+y en un medio lineal:
+\[
+w_m=\frac12\mathbf H\cdot\mathbf B
+=
+\frac12\mu H^2
+=
+\frac{1}{2\mu}B^2.
+\]
+Sus unidades son \(\mathrm{J/m^3}\).
+
+Esta forma permite calcular energía integrando solo en las zonas donde hay campo. Si el campo es nulo en una región, esa región no aporta energía. Si hay varios medios, se debe usar en cada región el parámetro magnético correspondiente. En problemas de examen, este punto evita errores típicos: no se puede integrar con una \(\mu\) única si hay materiales distintos.
+
+El capítulo también muestra una forma análoga a la energía electrostática escrita con potencial:
+\[
+W_m=\frac12\int_V \mathbf A\cdot\mathbf J\,dv.
+\]
+Aquí \(\mathbf A\) es el potencial vector magnético y se usa que \(\mathbf B=\nabla\times\mathbf A\). Esta expresión no es la herramienta principal para todos los ejercicios, pero refuerza la idea de correspondencia formal entre electrostática y magnetismo: en electrostática aparece la densidad de carga y el potencial escalar; aquí aparece la densidad de corriente y el potencial vector.
+
+
+### 3.3. Energía en medios no lineales
+
+La fórmula
+\[
+w_m=\frac12\mathbf H\cdot\mathbf B
+\]
+solo es válida si el medio es lineal. En un medio no lineal, como un ferromagnético, la relación entre \(\mathbf B\) y \(\mathbf H\) no es una recta con pendiente constante. Por eso la energía no se obtiene multiplicando el valor final de \(B\) por el valor final de \(H\) y dividiendo entre dos.
+
+En un medio no lineal, el incremento elemental de densidad de energía es
+\[
+\delta w_m=\mathbf H\cdot\delta\mathbf B.
+\]
+Si el campo pasa de \(0\) a un valor final \(B_0\), la densidad de energía se calcula mediante
+\[
+w_m=\int_0^{B_0}\mathbf H\cdot d\mathbf B.
+\]
+Geométricamente, si se representa \(B\) frente a \(H\), esta integral corresponde al área adecuada bajo la curva de imanación expresada en las variables de la integral. La energía depende del camino seguido en la magnetización.
+
+Cuando el material presenta histéresis, al completar un ciclo cerrado no se recupera toda la energía suministrada. La energía disipada por unidad de volumen en cada ciclo es
+\[
+w_m=\oint_{\text{ciclo}}\mathbf H\cdot d\mathbf B.
+\]
+Como
+\[
+\mathbf B=\mu_0(\mathbf H+\mathbf M),
+\]
+se obtiene también
+\[
+w_m=\mu_0\oint_{\text{ciclo}}\mathbf H\cdot d\mathbf M.
+\]
+El término asociado al trabajo en el vacío se anula al recorrer un ciclo cerrado; queda la contribución relacionada con la imanación del material.
+
+La interpretación física es clara: al recorrer el ciclo de histéresis, parte de la energía suministrada en un tramo se devuelve al disminuir el campo, pero no toda. La diferencia se disipa como calor. El capítulo lo atribuye al comportamiento interno de los dominios magnéticos, cuya orientación cambia con retraso y con fricción interna. Por eso un material ferromagnético sometido a corriente alterna puede calentarse: en cada ciclo se pierde una energía proporcional al área del ciclo de histéresis.
+
+
+### 3.4. Coeficiente de autoinducción a partir de la energía
+
+La fórmula de Neumann para la autoinducción no siempre es cómoda. El capítulo propone entonces definir el coeficiente de autoinducción mediante la energía:
+\[
+L=\frac{2W_m}{I^2}.
+\]
+Esta relación se deduce de
+\[
+W_m=\frac12LI^2,
+\]
+pero se usa al revés: primero se calcula \(W_m\) integrando los campos y después se obtiene \(L\).
+
+Si el conductor tiene extensión finita, la energía puede dividirse en una parte interior y otra exterior:
+\[
+W_m=W_{mi}+W_{me}.
+\]
+De forma correspondiente,
+\[
+L=L_i+L_e.
+\]
+Las expresiones son
+\[
+L_i=\frac1{I^2}\int_{V_i}\mathbf B\cdot\mathbf H\,dv,
+\]
+\[
+L_e=\frac1{I^2}\int_{V_e}\mathbf B\cdot\mathbf H\,dv.
+\]
+Obsérvese que no aparece el factor \(1/2\) en estas dos expresiones porque ya se ha usado la definición \(L=2W_m/I^2\) y, para medios lineales, \(W_m=\frac12\int\mathbf B\cdot\mathbf H\,dv\).
+
+El ejemplo del conductor cilíndrico indefinido muestra cómo funciona el método. Si la corriente está distribuida uniformemente dentro de un conductor de radio \(a\), el campo interno se calcula con Ampère. Al integrar la energía en el volumen interior se obtiene, para la autoinducción interna por unidad de longitud,
+\[
+\frac{L_i}{l}=\frac{\mu}{8\pi}.
+\]
+El resultado no depende del radio del conductor. Pero esta afirmación está ligada a la hipótesis de corriente cuasi-estacionaria y distribución uniforme. A frecuencias altas la corriente no se distribuye igual en el conductor, por lo que la energía interna cambia.
+
+El ejercicio del cable coaxial ilustra la suma de contribuciones. Para un coaxial con conductor interior de radio \(R_1\) y conductor exterior a radio \(R_2\), con el espacio entre ambos lleno de un material de permeabilidad \(\mu\), el campo exterior al conductor externo se anula porque la corriente encerrada total es cero. La autoinducción por unidad de longitud queda:
+\[
+\frac{L}{l}=\frac{\mu_0}{8\pi}+\frac{\mu}{2\pi}\ln\frac{R_2}{R_1}.
+\]
+El primer término corresponde al interior del conductor central; el segundo, al campo en la región entre conductores.
+
+
+### 3.5. Fuerza y par de fuerzas mediante desplazamientos virtuales
+
+El capítulo pasa después al cálculo de fuerzas. Ya se podrían calcular fuerzas magnéticas mediante la fuerza de Lorentz o mediante la fuerza sobre corrientes, pero esos métodos pueden ser difíciles si la geometría no es sencilla. El método energético evita calcular directamente la distribución local de fuerzas: se calcula cómo varía la energía magnética ante un desplazamiento virtual.
+
+La idea base es la conservación de la energía. En un desplazamiento virtual:
+\[
+dW_b=\mathbf F\cdot d\mathbf l+dW_m.
+\]
+Aquí \(dW_b\) es la energía suministrada por las fuentes, \(\mathbf F\cdot d\mathbf l\) es el trabajo mecánico y \(dW_m\) es la variación de energía magnética.
+
+A partir de esta ecuación aparecen dos casos distintos.
+
+#### 3.5.1. Corriente constante
+
+Si las baterías mantienen constantes las corrientes durante el desplazamiento, los flujos pueden cambiar. La energía aportada por las fuentes es
+\[
+dW_b=\sum_{i=1}^{N}I_i\,d\Phi_i.
+\]
+La variación de energía magnética es
+\[
+dW_m=\frac12\sum_{i=1}^{N}I_i\,d\Phi_i.
+\]
+Al sustituir en el balance:
+\[
+\mathbf F\cdot d\mathbf l=dW_m.
+\]
+Por tanto:
+\[
+\mathbf F=(\nabla W_m)_I.
+\]
+El subíndice \(I\) indica que el gradiente se toma manteniendo constantes las corrientes. Si el sistema solo puede girar alrededor de un eje \(z\), el par será
+\[
+T_z=\left(\frac{\partial W_m}{\partial\varphi}\right)_I.
+\]
+
+La consecuencia física es que, con corriente constante, la fuerza tiende a llevar el sistema hacia configuraciones de mayor energía magnética. Esto puede parecer contrario a la intuición de “mínima energía”, pero la clave es que las fuentes externas están trabajando para mantener la corriente. Por ejemplo, una espira en un campo uniforme tiende a orientarse de forma que el flujo que la atraviesa sea máximo.
+
+
+#### 3.5.2. Flujo constante
+
+En el segundo caso se supone que durante el desplazamiento virtual los flujos permanecen constantes. Entonces la f.e.m. inducida es nula y las fuentes no suministran energía adicional al sistema, salvo pérdidas que aquí no se consideran. Por tanto:
+\[
+dW_b=0.
+\]
+El balance se reduce a
+\[
+dW+dW_m=0,
+\]
+o equivalentemente:
+\[
+\mathbf F\cdot d\mathbf l=-dW_m.
+\]
+Por tanto:
+\[
+\mathbf F=-(\nabla W_m)_\Phi.
+\]
+Si el sistema gira alrededor del eje \(z\):
+\[
+T_z=-\left(\frac{\partial W_m}{\partial\varphi}\right)_\Phi.
+\]
+
+La consecuencia es la opuesta: con flujo constante, el trabajo mecánico se realiza a costa de disminuir la energía magnética del sistema. En examen, equivocarse de signo aquí suele significar que no se ha identificado correctamente la condición física del desplazamiento.
+
+
+### 3.6. Presión magnética
+
+La presión magnética se introduce como fuerza por unidad de superficie asociada a una discontinuidad o cambio del campo magnético. El capítulo la presenta primero con el ejemplo de dos placas conductoras planas, paralelas e indefinidas, recorridas por densidades de corriente superficial opuestas. Entre las placas existe campo magnético y fuera se anula.
+
+Aplicando Ampère, el campo entre placas es
+\[
+\mathbf B=\mu_0K\,\mathbf u_x.
+\]
+La energía magnética en un paralelepípedo de base \(dx\,dy\) y altura \(dz\) es
+\[
+W_m=\frac12\frac{B^2}{\mu_0}\,dx\,dy\,dz.
+\]
+Como la corriente se mantiene constante:
+\[
+F=\frac{dW_m}{dz}
+=
+\frac12\frac{B^2}{\mu_0}\,dx\,dy.
+\]
+La presión es
+\[
+p=\frac{F}{dx\,dy}
+=
+\frac12\frac{B^2}{\mu_0}.
+\]
+En este ejemplo, la presión coincide con la densidad de energía magnética entre las placas, porque el campo exterior es nulo.
+
+Después el capítulo generaliza a una superficie que separa dos medios de permeabilidades \(\mu_1\) y \(\mu_2\). Hay que distinguir si el campo es tangencial o normal a la superficie.
+
+Si el campo es tangencial a la superficie, se conserva la componente tangencial de \(\mathbf H\):
+\[
+H_{t1}=H_{t2}=H_t.
+\]
+El desplazamiento corresponde al caso de corriente constante, y la presión resulta
+\[
+p_I=\frac12(\mu_2-\mu_1)H_t^2.
+\]
+
+Si el campo es normal a la superficie, se conserva la componente normal de \(\mathbf B\):
+\[
+B_{n1}=B_{n2}=B_n.
+\]
+El desplazamiento corresponde al caso de flujo constante, y la presión es
+\[
+p_\Phi=\frac12B_n^2\frac{\mu_2-\mu_1}{\mu_2\mu_1}.
+\]
+
+En el caso general, con componentes tangencial y normal, la presión se obtiene combinando ambas contribuciones:
+\[
+p=
+\frac12(\mu_2-\mu_1)
+\left(
+H_t^2+\frac{B_n^2}{\mu_2\mu_1}
+\right).
+\]
+La presión se dirige del medio 2 al medio 1. Lo importante no es memorizar sin más esta expresión, sino entender de dónde salen sus dos partes: una se vincula a corriente constante y componente tangencial; la otra, a flujo constante y componente normal.
+
+
+## 4. Conceptos clave
+
+- Energía magnética.
+  Definición precisa: energía reversible asociada al establecimiento de corrientes y del campo magnético que producen, excluida la energía disipada por efecto Joule.
+  Explicación desarrollada: se calcula como el trabajo que deben realizar las fuentes para llevar las corrientes desde cero hasta sus valores finales, teniendo en cuenta la f.e.m. inducida por los cambios de flujo. No es calor ni trabajo mecánico ya realizado, sino energía almacenada en el campo.
+  Ejemplo: en un inductor lineal aislado, \(W_m=\frac12LI^2\).
+  Relación con otros conceptos: depende del flujo magnético, la autoinducción, la inducción mutua y la relación entre \(\mathbf B\) y \(\mathbf H\).
+  Posible forma de preguntarlo en examen: “Defina la energía magnética de un circuito filiforme y deduzca la expresión \(W_m=\frac12LI^2\) indicando las hipótesis.”
+
+- Trabajo reversible.
+  Definición precisa: parte del trabajo suministrado por las fuentes que no se disipa por efecto Joule y que puede asociarse al establecimiento del campo magnético.
+  Explicación desarrollada: al alimentar un circuito real, una parte de la energía se transforma en calor. El capítulo separa esa parte y define la energía magnética a partir del trabajo reversible.
+  Ejemplo: en \(dW_i= -\mathcal E_i i_i dt+Ri_i^2dt\), el término resistivo no se incluye en \(dW_m\).
+  Relación con otros conceptos: conecta energía magnética, f.e.m. inducida y balance de potencia.
+  Posible forma de preguntarlo en examen: “¿Por qué la energía disipada por efecto Joule no forma parte de la energía magnética almacenada?”
+
+- Flujo enlazado.
+  Definición precisa: flujo magnético que atraviesa la superficie asociada a un circuito y que interviene en la inducción electromagnética de ese circuito.
+  Explicación desarrollada: el trabajo necesario para modificar una corriente se expresa mediante incrementos de flujo. En un sistema de varios circuitos, cada flujo depende de todas las corrientes.
+  Ejemplo: para \(N\) circuitos, \(dW_m=\sum_i i_i\,d\Phi_i\).
+  Relación con otros conceptos: es la magnitud que conecta Faraday con la energía magnética.
+  Posible forma de preguntarlo en examen: “Explique por qué al establecer una corriente hay que tener en cuenta la variación del flujo magnético.”
+
+- Coeficiente de inducción mutua.
+  Definición precisa: coeficiente \(M_{ij}\) que relaciona la corriente del circuito \(j\) con el flujo enlazado por el circuito \(i\).
+  Explicación desarrollada: permite escribir el flujo como una suma de contribuciones debidas a todas las corrientes del sistema.
+  Ejemplo:
+  \[
+  \Phi_i=\sum_jM_{ij}I_j.
+  \]
+  Relación con otros conceptos: aparece en la energía de sistemas de varios circuitos.
+  Posible forma de preguntarlo en examen: “Escriba la energía magnética de un sistema de circuitos lineales en función de \(M_{ij}\) e \(I_i\).”
+
+- Autoinducción.
+  Definición precisa: coeficiente que relaciona el flujo propio de un circuito con su corriente, y que también puede definirse mediante \(L=2W_m/I^2\).
+  Explicación desarrollada: mide la capacidad de un circuito para almacenar energía magnética al ser recorrido por una corriente.
+  Ejemplo: para un circuito aislado, \(W_m=\frac12LI^2\).
+  Relación con otros conceptos: puede calcularse con fórmulas geométricas, con Neumann o mediante integración de energía de campo.
+  Posible forma de preguntarlo en examen: “Calcule \(L\) a partir de la energía magnética almacenada en una región.”
+
+- Densidad de energía magnética.
+  Definición precisa: energía magnética por unidad de volumen:
+  \[
+  w_m=\frac{dW_m}{dv}.
+  \]
+  Explicación desarrollada: permite localizar la energía en las regiones donde existe campo magnético. En medios lineales se reduce a una expresión cuadrática.
+  Ejemplo:
+  \[
+  w_m=\frac12\mathbf H\cdot\mathbf B.
+  \]
+  Relación con otros conceptos: se integra sobre el volumen para obtener \(W_m\).
+  Posible forma de preguntarlo en examen: “Obtenga la energía magnética total de un sistema conocido \(\mathbf B\) o \(\mathbf H\).”
+
+- Medio lineal.
+  Definición precisa: medio en el que \(\mathbf B=\mu\mathbf H\) con \(\mu\) constante.
+  Explicación desarrollada: permite integrar la energía de forma directa y obtener \(w_m=\frac12\mathbf H\cdot\mathbf B\).
+  Ejemplo: una región homogénea de permeabilidad constante entre los conductores de un coaxial.
+  Relación con otros conceptos: simplifica el cálculo de energía y autoinducción.
+  Posible forma de preguntarlo en examen: “Indique bajo qué hipótesis se puede usar \(w_m=B^2/(2\mu)\).”
+
+- Medio no lineal.
+  Definición precisa: medio en el que la relación entre \(\mathbf B\) y \(\mathbf H\) no es proporcional con permeabilidad constante.
+  Explicación desarrollada: la energía se calcula integrando sobre la curva de imanación, no mediante una fórmula cuadrática.
+  Ejemplo:
+  \[
+  w_m=\int_0^{B_0}\mathbf H\cdot d\mathbf B.
+  \]
+  Relación con otros conceptos: conduce al estudio de histéresis y pérdidas.
+  Posible forma de preguntarlo en examen: “Explique por qué en un ferromagnético no basta usar \(w_m=\frac12BH\).”
+
+- Histéresis.
+  Definición precisa: fenómeno por el cual la relación \(B-H\) depende de la historia del material y forma un ciclo cerrado al variar periódicamente el campo.
+  Explicación desarrollada: al recorrer un ciclo, el material no devuelve toda la energía suministrada; la pérdida por unidad de volumen es el área asociada al ciclo.
+  Ejemplo:
+  \[
+  w_m=\oint_{\text{ciclo}}\mathbf H\cdot d\mathbf B.
+  \]
+  Relación con otros conceptos: pertenece a medios no lineales y explica calentamiento en materiales ferromagnéticos sometidos a corriente alterna.
+  Posible forma de preguntarlo en examen: “Relacione el área del ciclo de histéresis con la energía disipada por unidad de volumen.”
+
+- Potencial vector magnético.
+  Definición precisa: campo vectorial \(\mathbf A\) tal que \(\mathbf B=\nabla\times\mathbf A\).
+  Explicación desarrollada: en medios lineales permite escribir la energía como una integral de \(\mathbf A\cdot\mathbf J\), de forma análoga a la energía electrostática.
+  Ejemplo:
+  \[
+  W_m=\frac12\int_V\mathbf A\cdot\mathbf J\,dv.
+  \]
+  Relación con otros conceptos: conecta campo magnético y corrientes desde una formulación de potencial.
+  Posible forma de preguntarlo en examen: “Demuestre la forma \(W_m=\frac12\int\mathbf A\cdot\mathbf J\,dv\) indicando por qué se anula el término de superficie.”
+
+- Desplazamiento virtual.
+  Definición precisa: pequeño desplazamiento hipotético usado para relacionar variaciones de energía con fuerzas o pares.
+  Explicación desarrollada: se calcula cómo cambia \(W_m\) ante el desplazamiento, y se usa conservación de la energía para obtener la fuerza.
+  Ejemplo:
+  \[
+  dW_b=\mathbf F\cdot d\mathbf l+dW_m.
+  \]
+  Relación con otros conceptos: base del cálculo de fuerza magnética y presión magnética.
+  Posible forma de preguntarlo en examen: “Explique cómo se calcula una fuerza magnética por el método energético.”
+
+- Fuerza a corriente constante.
+  Definición precisa: fuerza obtenida cuando las fuentes mantienen constantes las corrientes durante el desplazamiento virtual.
+  Explicación desarrollada: las fuentes suministran energía adicional para compensar la variación de flujo; el resultado es
+  \[
+  \mathbf F=(\nabla W_m)_I.
+  \]
+  Ejemplo: una espira con corriente constante tiende a orientarse para aumentar el flujo enlazado.
+  Relación con otros conceptos: depende del balance energético con fuentes activas.
+  Posible forma de preguntarlo en examen: “Justifique el signo de la fuerza cuando se mantiene constante la corriente.”
+
+- Fuerza a flujo constante.
+  Definición precisa: fuerza obtenida cuando el flujo se mantiene constante durante el desplazamiento virtual.
+  Explicación desarrollada: las fuentes no aportan energía adicional; el trabajo mecánico se realiza a costa de disminuir \(W_m\).
+  Ejemplo:
+  \[
+  \mathbf F=-(\nabla W_m)_\Phi.
+  \]
+  Relación con otros conceptos: contrasta con el caso de corriente constante.
+  Posible forma de preguntarlo en examen: “Compare el cálculo de fuerzas a corriente constante y a flujo constante.”
+
+- Presión magnética.
+  Definición precisa: fuerza magnética por unidad de superficie asociada a un campo magnético en una superficie o frontera entre medios.
+  Explicación desarrollada: puede obtenerse como variación de la energía magnética ante un desplazamiento virtual de la superficie. En el caso de placas con campo solo entre ellas:
+  \[
+  p=\frac12\frac{B^2}{\mu_0}.
+  \]
+  Ejemplo: presión sobre placas paralelas recorridas por corrientes superficiales opuestas.
+  Relación con otros conceptos: combina densidad de energía, condiciones en los límites y método de trabajo virtual.
+  Posible forma de preguntarlo en examen: “Deduzca la presión magnética entre dos placas paralelas indefinidas con corrientes superficiales opuestas.”
+
+
+## 5. Relaciones entre ideas
+
+El capítulo tiene una estructura acumulativa. Primero se define la energía magnética a partir de circuitos, corrientes y flujos. Después se expresa esa misma energía mediante campos. Luego se corrige la fórmula según el tipo de medio. Finalmente se usa la energía para calcular fuerzas y presiones.
+
+La dependencia conceptual más importante es:
+\[
+\text{Faraday} \rightarrow dW_m=i\,d\Phi \rightarrow W_m=\frac12\sum I_i\Phi_i \rightarrow W_m=\frac12\sum_{ij}M_{ij}I_iI_j.
+\]
+La ley de Faraday entra porque una corriente variable produce un flujo variable, y un flujo variable induce una f.e.m. El trabajo contra esa f.e.m. es lo que se almacena como energía magnética.
+
+La segunda cadena conceptual es:
+\[
+\text{Ampère}+\text{Faraday}+\text{balance de potencia}
+\rightarrow
+\delta W_m=\int\mathbf H\cdot\delta\mathbf B\,dv
+\rightarrow
+w_m.
+\]
+Aquí se abandona la visión de circuitos y se pasa a una visión de campo. Esto permite tratar geometrías extensas, medios materiales y distribuciones de corriente no estrictamente filiformes.
+
+La jerarquía entre fórmulas es fundamental. La expresión más general del capítulo para la densidad de energía es
+\[
+w_m=\int_0^{\mathbf B}\mathbf H\cdot d\mathbf B.
+\]
+La fórmula
+\[
+w_m=\frac12\mathbf H\cdot\mathbf B
+\]
+es un caso particular para medios lineales. La fórmula
+\[
+w_m=\frac{B^2}{2\mu}
+\]
+es todavía más particular, porque además presupone una permeabilidad escalar constante y que \(\mathbf B\) y \(\mathbf H\) están relacionados de forma simple.
+
+La oposición conceptual más delicada es corriente constante frente a flujo constante. En ambos casos se usa desplazamiento virtual, pero no se conserva lo mismo. A corriente constante, las fuentes intervienen y la fuerza se relaciona con \(+\nabla W_m\). A flujo constante, el trabajo mecánico sale de la energía almacenada, y aparece \(-\nabla W_m\). Esta oposición explica por qué no se puede aplicar una regla memorística de “el sistema va a menor energía” sin preguntar antes qué magnitud se mantiene fija.
+
+La presión magnética reúne todas las ideas anteriores. Para calcularla se usa energía de campo; para decidir el caso adecuado se usan condiciones en los límites; para obtener el signo se usan desplazamientos virtuales; y para interpretar el resultado se compara energía por volumen con fuerza por superficie.
+
+La evolución interna del capítulo es, por tanto: energía de circuitos, energía de campos, materiales no lineales, cálculo de \(L\), fuerzas, presión. Cada bloque depende del anterior. Si se entiende \(W_m=\frac12LI^2\) pero no se entiende \(w_m\), no se podrán resolver problemas con campos distribuidos. Si se entiende \(w_m\) pero no las condiciones de corriente o flujo constante, se fallarán los signos en fuerzas y presiones.
+
+
+## 6. Errores habituales
+
+- Error: usar siempre \(W_m=\frac12LI^2\).
+  Por qué está mal: esta fórmula vale para un circuito aislado lineal. No describe directamente sistemas con varios circuitos ni medios no lineales.
+  Corrección: en sistemas de varios circuitos usar
+  \[
+  W_m=\frac12\sum_i\sum_jM_{ij}I_iI_j.
+  \]
+  En medios no lineales usar
+  \[
+  w_m=\int_0^{\mathbf B}\mathbf H\cdot d\mathbf B.
+  \]
+  Respuesta incorrecta: “La energía magnética siempre es \(\frac12LI^2\).”
+  Respuesta correcta: “Para un circuito aislado lineal es \(\frac12LI^2\); en general debo considerar flujos, coeficientes mutuos o energía de campo.”
+
+- Error: confundir energía magnética con energía disipada por Joule.
+  Por qué está mal: la energía magnética es reversible; la energía Joule se transforma en calor.
+  Corrección: separar en el balance la potencia \(\frac1\gamma\int J^2dv\) de la potencia transferida al campo \(\int \mathbf H\cdot\partial\mathbf B/\partial t\,dv\).
+  Respuesta incorrecta: “La batería entrega energía magnética igual a \(RI^2t\).”
+  Respuesta correcta: “\(RI^2t\) es energía disipada; la energía magnética almacenada en un inductor lineal es \(\frac12LI^2\).”
+
+- Error: aplicar \(w_m=\frac12\mathbf H\cdot\mathbf B\) en ferromagnéticos con histéresis.
+  Por qué está mal: esa fórmula exige linealidad. En un ciclo de histéresis la energía depende del camino.
+  Corrección: usar
+  \[
+  w_m=\oint\mathbf H\cdot d\mathbf B
+  \]
+  para la energía disipada por ciclo.
+  Respuesta incorrecta: “La pérdida por histéresis es \(\frac12BH\).”
+  Respuesta correcta: “La pérdida por histéresis por unidad de volumen es el área asociada al ciclo, expresada por \(\oint\mathbf H\cdot d\mathbf B\).”
+
+- Error: olvidar el factor \(1/2\) en \(W_m=\frac12\sum I_i\Phi_i\).
+  Por qué está mal: la corriente y el flujo crecen desde cero; no han tenido su valor final durante todo el proceso.
+  Corrección: integrar el proceso de establecimiento desde \(\alpha=0\) hasta \(\alpha=1\).
+  Respuesta incorrecta: “\(W_m=\sum I_i\Phi_i\).”
+  Respuesta correcta: “En un sistema lineal, \(W_m=\frac12\sum I_i\Phi_i\).”
+
+- Error: escribir mal la suma de inducciones mutuas.
+  Por qué está mal: el flujo de cada circuito depende de la corriente de todos los circuitos, no solo de sí mismo.
+  Corrección: escribir
+  \[
+  \Phi_i=\sum_jM_{ij}I_j.
+  \]
+  Respuesta incorrecta: “\(\Phi_i=M_{ii}I_i\) siempre.”
+  Respuesta correcta: “\(\Phi_i\) incluye autoinducción y contribuciones mutuas de otros circuitos.”
+
+- Error: calcular \(L\) integrando solo donde hay conductor.
+  Por qué está mal: la energía magnética puede estar dentro y fuera del conductor.
+  Corrección: integrar en todas las regiones donde \(\mathbf B\) o \(\mathbf H\) no sean nulos.
+  Respuesta incorrecta: “En un coaxial solo integro dentro del conductor central.”
+  Respuesta correcta: “Integro dentro del conductor si hay campo interno y también en la región entre conductores; fuera del coaxial el campo puede anularse.”
+
+- Error: no distinguir \(L_i\) y \(L_e\).
+  Por qué está mal: la autoinducción total puede tener contribución interna y externa.
+  Corrección:
+  \[
+  L=L_i+L_e.
+  \]
+  Respuesta incorrecta: “La inductancia del conductor cilíndrico es solo externa.”
+  Respuesta correcta: “A corriente cuasi-estacionaria uniforme hay energía interna y puede definirse \(L_i/l=\mu/(8\pi)\).”
+
+- Error: usar el signo de fuerza equivocado.
+  Por qué está mal: el signo depende de si se mantiene constante la corriente o el flujo.
+  Corrección:
+  \[
+  \mathbf F=(\nabla W_m)_I,\qquad
+  \mathbf F=-(\nabla W_m)_\Phi.
+  \]
+  Respuesta incorrecta: “La fuerza magnética siempre es \(-\nabla W_m\).”
+  Respuesta correcta: “A corriente constante es \(+\nabla W_m\); a flujo constante es \(-\nabla W_m\).”
+
+- Error: aplicar el caso de corriente constante cuando el flujo se conserva.
+  Por qué está mal: son condiciones físicas distintas y las fuentes intercambian energía de forma diferente.
+  Corrección: identificar primero qué magnitud permanece fija durante el desplazamiento virtual.
+  Respuesta incorrecta: “Como hay desplazamiento, siempre uso corriente constante.”
+  Respuesta correcta: “Si el desplazamiento conserva el flujo y no hay f.e.m. inducida neta, uso el caso de flujo constante.”
+
+- Error: interpretar la presión magnética como una presión escalar universal sin atender a la frontera.
+  Por qué está mal: en una frontera entre medios intervienen las componentes tangenciales de \(\mathbf H\) y normales de \(\mathbf B\).
+  Corrección: usar
+  \[
+  p=\frac12(\mu_2-\mu_1)\left(H_t^2+\frac{B_n^2}{\mu_2\mu_1}\right).
+  \]
+  Respuesta incorrecta: “La presión siempre es \(B^2/(2\mu_0)\).”
+  Respuesta correcta: “\(B^2/(2\mu_0)\) vale para el ejemplo de placas en vacío; en una frontera general hay que separar componentes.”
+
+- Error: no indicar unidades.
+  Por qué está mal: en problemas de energía y presión es fácil mezclar \(W_m\), \(w_m\) y \(p\).
+  Corrección: \(W_m\) se mide en J, \(w_m\) en \(\mathrm{J/m^3}\), y la presión en Pa, equivalente a \(\mathrm{J/m^3}\).
+  Respuesta incorrecta: “\(w_m=3\,\mathrm J\).”
+  Respuesta correcta: “\(w_m=3\,\mathrm{J/m^3}\); si se interpreta como presión, \(3\,\mathrm{Pa}\).”
+
+
+## 7. Preguntas orientadas a examen
+
+### 10 preguntas fáciles
+
+1. Defina energía magnética en un circuito filiforme.
+2. ¿Por qué se excluye la energía disipada por efecto Joule al definir \(W_m\)?
+3. Escriba la expresión diferencial de la energía magnética para un circuito.
+4. Escriba la energía magnética de un sistema lineal de \(N\) circuitos en función de \(I_i\) y \(\Phi_i\).
+5. ¿Cuál es la energía almacenada en un inductor lineal aislado?
+6. Defina densidad de energía magnética.
+7. Escriba \(w_m\) para un medio lineal.
+8. ¿Qué unidades tiene \(w_m\)?
+9. ¿Qué representa el área de un ciclo de histéresis en el plano \(B-H\)?
+10. Escriba la presión magnética entre dos placas paralelas con campo solo entre ellas.
+
+### 10 preguntas medias
+
+11. Deduzca por qué aparece el factor \(1/2\) en \(W_m=\frac12\sum_iI_i\Phi_i\).
+12. Explique cómo se expresa \(\Phi_i\) mediante coeficientes de autoinducción e inducción mutua.
+13. Obtenga la expresión \(W_m=\frac12\sum_i\sum_jM_{ij}I_iI_j\).
+14. Explique el significado físico de la ecuación \(\delta W_m=\int_V\mathbf H\cdot\delta\mathbf B\,dv\).
+15. Compare la energía magnética en medios lineales y no lineales.
+16. Explique por qué en un medio no lineal la energía depende de la curva de imanación.
+17. Defina \(L\) a partir de la energía magnética.
+18. Explique la diferencia entre autoinducción interna y externa.
+19. Enuncie el método de desplazamientos virtuales para calcular fuerzas magnéticas.
+20. Compare las expresiones de la fuerza a corriente constante y a flujo constante.
+
+### 5 preguntas difíciles
+
+21. A partir del balance de potencia con \(\mathbf J=\gamma(\mathbf E'+\mathbf E)\), explique cómo se identifica el término que corresponde a la variación temporal de la energía magnética.
+22. Justifique la expresión \(W_m=\frac12\int_V\mathbf A\cdot\mathbf J\,dv\) en medios lineales, indicando qué ocurre con el término de superficie.
+23. Explique por qué la autoinducción interna por unidad de longitud de un conductor cilíndrico indefinido con corriente uniforme no depende del radio.
+24. Razone por qué a corriente constante la fuerza tiende a aumentar la energía magnética, aunque a menudo se diga que los sistemas tienden a minimizar su energía.
+25. Deduzca la presión magnética general en una frontera entre dos medios, separando los casos de campo tangencial y campo normal.
+
+### 5 preguntas de desarrollo largo
+
+26. Desarrolle la obtención de la energía magnética de un sistema de \(N\) circuitos lineales desde \(dW_m=\sum_i i_i\,d\Phi_i\) hasta la expresión con coeficientes \(M_{ij}\).
+27. Explique el paso de la energía magnética expresada mediante circuitos a la energía expresada mediante \(\mathbf B\) y \(\mathbf H\).
+28. Desarrolle el tratamiento de la energía magnética en medios no lineales y explique el significado físico de las pérdidas por histéresis.
+29. Explique cómo se calcula el coeficiente de autoinducción a partir de la energía, usando como referencia un conductor cilíndrico o un cable coaxial.
+30. Desarrolle el método energético para calcular fuerzas, pares y presión magnética, indicando las condiciones físicas de aplicación.
+
+### 5 preguntas de relación entre conceptos
+
+31. Relacione f.e.m. inducida, flujo magnético y energía magnética.
+32. Relacione densidad de energía magnética y presión magnética.
+33. Relacione linealidad del medio, permeabilidad y validez de \(w_m=\frac12\mathbf H\cdot\mathbf B\).
+34. Relacione histéresis, dominios magnéticos y disipación de energía.
+35. Relacione condiciones en los límites magnéticos con los dos términos de la presión general en una frontera.
+
+
+## 8. Respuestas modelo
+
+1. La energía magnética de un circuito filiforme es el trabajo reversible necesario para establecer en él una corriente \(I\), excluyendo la energía disipada por efecto Joule. Durante el proceso cambia el flujo enlazado por el circuito y aparece una f.e.m. inducida; la fuente debe realizar trabajo contra esa f.e.m. Ese trabajo queda asociado al campo magnético.
+
+2. Se excluye porque el efecto Joule transforma energía eléctrica en calor de forma irreversible. La energía magnética almacenada es la parte reversible del trabajo de las fuentes. En un balance de potencia, el término resistivo y el término de energía de campo deben separarse.
+
+3. Para un circuito:
+\[
+dW_m=i\,d\Phi.
+\]
+Para un sistema de circuitos:
+\[
+dW_m=\sum_i i_i\,d\Phi_i.
+\]
+
+4. En un sistema lineal de \(N\) circuitos:
+\[
+W_m=\frac12\sum_{i=1}^{N}I_i\Phi_i.
+\]
+El factor \(1/2\) aparece porque corrientes y flujos se establecen gradualmente desde cero hasta sus valores finales.
+
+5. Para un inductor lineal aislado:
+\[
+W_m=\frac12LI^2.
+\]
+Esta expresión presupone medio lineal, corriente cuasi-estacionaria y un único circuito aislado.
+
+6. La densidad de energía magnética es la energía magnética por unidad de volumen:
+\[
+w_m=\frac{dW_m}{dv}.
+\]
+En general se calcula mediante
+\[
+w_m=\int_0^{\mathbf B}\mathbf H\cdot d\mathbf B.
+\]
+
+7. En un medio lineal:
+\[
+w_m=\frac12\mathbf H\cdot\mathbf B
+=
+\frac12\mu H^2
+=
+\frac{B^2}{2\mu}.
+\]
+
+8. Sus unidades son \(\mathrm{J/m^3}\). Esta unidad es dimensionalmente equivalente al pascal, por eso en algunos ejemplos la densidad de energía coincide numéricamente con una presión.
+
+9. Representa la energía disipada por unidad de volumen en cada ciclo de imanación:
+\[
+w_m=\oint_{\text{ciclo}}\mathbf H\cdot d\mathbf B.
+\]
+Esa energía se transforma en calor en el material.
+
+10. En el ejemplo de dos placas paralelas con campo magnético solo entre ellas:
+\[
+p=\frac12\frac{B^2}{\mu_0}.
+\]
+Coincide con la densidad de energía magnética entre placas.
+
+11. Supóngase que el sistema es lineal y que las corrientes crecen proporcionalmente: \(i_i=\alpha I_i\), con \(0\leq\alpha\leq1\). Los flujos también crecen proporcionalmente, de modo que \(d\Phi_i=\Phi_i\,d\alpha\). Entonces:
+\[
+dW_m=\sum_i I_i\Phi_i\,\alpha\,d\alpha.
+\]
+Integrando de \(0\) a \(1\):
+\[
+W_m=\sum_iI_i\Phi_i\int_0^1\alpha\,d\alpha
+=\frac12\sum_iI_i\Phi_i.
+\]
+
+12. En un sistema lineal, el flujo del circuito \(i\) es suma de las contribuciones debidas a todas las corrientes:
+\[
+\Phi_i=\sum_jM_{ij}I_j.
+\]
+El término \(M_{ii}\) es la autoinducción del circuito \(i\); los términos \(M_{ij}\) con \(i\neq j\) son inducciones mutuas.
+
+13. Se parte de
+\[
+W_m=\frac12\sum_iI_i\Phi_i.
+\]
+Sustituyendo
+\[
+\Phi_i=\sum_jM_{ij}I_j,
+\]
+queda
+\[
+W_m=\frac12\sum_i\sum_jM_{ij}I_iI_j.
+\]
+Esta expresión recoge tanto las energías propias como las interacciones mutuas entre circuitos.
+
+14. La ecuación
+\[
+\delta W_m=\int_V\mathbf H\cdot\delta\mathbf B\,dv
+\]
+dice que el incremento de energía magnética se obtiene sumando, en todo el volumen, el trabajo elemental de magnetización asociado al cambio de \(\mathbf B\). Es la forma de campo de la energía magnética y permite calcular \(W_m\) sin reducir el problema a circuitos filiformes.
+
+15. En medios lineales, \(\mathbf B=\mu\mathbf H\), y la integral de energía se puede hacer directamente:
+\[
+w_m=\frac12\mathbf H\cdot\mathbf B.
+\]
+En medios no lineales, la relación \(B-H\) no es proporcional, y debe usarse
+\[
+w_m=\int_0^{\mathbf B}\mathbf H\cdot d\mathbf B.
+\]
+La energía depende de la curva seguida.
+
+16. Porque en un medio no lineal el valor de \(\mathbf H\) no es proporcional al de \(\mathbf B\) durante todo el proceso. La energía se obtiene acumulando incrementos \(\mathbf H\cdot d\mathbf B\), y esos incrementos dependen del recorrido en la curva de imanación.
+
+17. Para un circuito lineal:
+\[
+L=\frac{2W_m}{I^2}.
+\]
+Se calcula primero la energía magnética, normalmente mediante
+\[
+W_m=\frac12\int \mathbf B\cdot\mathbf H\,dv,
+\]
+y después se despeja \(L\).
+
+18. La autoinducción interna procede de la energía magnética almacenada dentro del conductor. La externa procede de la energía almacenada fuera del conductor. En conjunto:
+\[
+L=L_i+L_e.
+\]
+Esta separación es útil cuando el campo tiene expresiones distintas en regiones distintas.
+
+19. El método consiste en imaginar un desplazamiento virtual \(d\mathbf l\), calcular la variación de energía magnética \(dW_m\), y usar el balance:
+\[
+dW_b=\mathbf F\cdot d\mathbf l+dW_m.
+\]
+Según las condiciones físicas, se obtiene la fuerza a corriente constante o a flujo constante.
+
+20. A corriente constante:
+\[
+\mathbf F=(\nabla W_m)_I.
+\]
+A flujo constante:
+\[
+\mathbf F=-(\nabla W_m)_\Phi.
+\]
+La diferencia de signo se debe a que, en el primer caso, las fuentes suministran energía para mantener las corrientes; en el segundo, el trabajo mecánico se realiza a costa de la energía magnética almacenada.
+
+21. Se parte de
+\[
+\mathbf J=\gamma(\mathbf E'+\mathbf E),
+\]
+de donde
+\[
+\mathbf E'=\frac1\gamma\mathbf J-\mathbf E.
+\]
+Al multiplicar por \(\mathbf J\) e integrar:
+\[
+\int\mathbf E'\cdot\mathbf J\,dv
+=
+\frac1\gamma\int J^2\,dv
+-
+\int\mathbf E\cdot\mathbf J\,dv.
+\]
+El primer término del segundo miembro es potencia Joule. El segundo se transforma usando \(\mathbf J=\nabla\times\mathbf H\), una identidad vectorial y \(\nabla\times\mathbf E=-\partial\mathbf B/\partial t\). En régimen cuasi-estático se anula el término de superficie y queda:
+\[
+\int\mathbf E'\cdot\mathbf J\,dv
+=
+\frac1\gamma\int J^2\,dv
++
+\int\mathbf H\cdot\frac{\partial\mathbf B}{\partial t}\,dv.
+\]
+El último término es la potencia transferida al campo magnético.
+
+22. En medios lineales:
+\[
+W_m=\frac12\int\mathbf H\cdot\mathbf B\,dv.
+\]
+Como \(\mathbf B=\nabla\times\mathbf A\):
+\[
+W_m=\frac12\int\mathbf H\cdot(\nabla\times\mathbf A)\,dv.
+\]
+Usando la identidad
+\[
+\nabla\cdot(\mathbf H\times\mathbf A)=\mathbf A\cdot(\nabla\times\mathbf H)-\mathbf H\cdot(\nabla\times\mathbf A),
+\]
+se transforma la integral en un término con \(\mathbf A\cdot\mathbf J\) más un término de superficie. Al integrar en todo el espacio, el término de superficie se anula por el decrecimiento de los campos con la distancia. Como \(\nabla\times\mathbf H=\mathbf J\), resulta:
+\[
+W_m=\frac12\int\mathbf A\cdot\mathbf J\,dv.
+\]
+
+23. Para un conductor cilíndrico indefinido con corriente uniforme, el campo interno crece linealmente con la distancia al eje:
+\[
+B_i=\frac{\mu I}{2\pi a^2}\rho.
+\]
+Al calcular la energía interna se integra \(B\cdot H\) sobre el volumen cilíndrico, cuyo elemento contiene un factor \(\rho\,d\rho\). La dependencia con \(a\) se cancela al integrar de \(0\) a \(a\). El resultado por unidad de longitud es
+\[
+\frac{L_i}{l}=\frac{\mu}{8\pi}.
+\]
+La independencia respecto al radio solo vale bajo la hipótesis de corriente uniforme cuasi-estacionaria.
+
+24. A corriente constante, las fuentes actúan durante el desplazamiento para mantener las corrientes. Si cambia el flujo, las fuentes deben suministrar energía. El balance energético conduce a
+\[
+\mathbf F\cdot d\mathbf l=dW_m,
+\]
+y por tanto
+\[
+\mathbf F=(\nabla W_m)_I.
+\]
+El sistema puede moverse hacia mayor energía magnética porque la energía adicional la aportan las fuentes. No es un sistema aislado que minimice una energía sin intercambio externo.
+
+25. En una frontera entre medios, se separan los casos tangencial y normal. Si el campo es tangencial, se conserva \(H_t\) y el desplazamiento corresponde a corriente constante:
+\[
+p_I=\frac12(\mu_2-\mu_1)H_t^2.
+\]
+Si el campo es normal, se conserva \(B_n\) y el desplazamiento corresponde a flujo constante:
+\[
+p_\Phi=\frac12B_n^2\frac{\mu_2-\mu_1}{\mu_2\mu_1}.
+\]
+En el caso general se suman ambas contribuciones:
+\[
+p=\frac12(\mu_2-\mu_1)\left(H_t^2+\frac{B_n^2}{\mu_2\mu_1}\right).
+\]
+
+26. Para un sistema de \(N\) circuitos, el incremento elemental de energía magnética es
+\[
+dW_m=\sum_i i_i\,d\Phi_i.
+\]
+En un medio lineal puede imaginarse un proceso en el que todas las corrientes crecen proporcionalmente desde cero hasta sus valores finales:
+\[
+i_i=\alpha I_i,\qquad 0\leq\alpha\leq1.
+\]
+Los flujos también son proporcionales:
+\[
+d\Phi_i=\Phi_i\,d\alpha.
+\]
+Sustituyendo:
+\[
+dW_m=\sum_iI_i\Phi_i\alpha\,d\alpha.
+\]
+Al integrar:
+\[
+W_m=\frac12\sum_iI_i\Phi_i.
+\]
+Como el flujo de cada circuito depende de todas las corrientes,
+\[
+\Phi_i=\sum_jM_{ij}I_j.
+\]
+Por tanto:
+\[
+W_m=\frac12\sum_i\sum_jM_{ij}I_iI_j.
+\]
+Esta expresión incluye autoinducción e inducción mutua y es válida bajo las hipótesis de linealidad y régimen cuasi-estacionario.
+
+27. La expresión mediante circuitos es útil cuando los conductores son filiformes y se conocen los flujos enlazados. Sin embargo, la energía magnética reside en el campo. Para obtener una formulación de campo se parte de un balance de potencia con generadores, corrientes y disipación Joule. Usando \(\mathbf J=\gamma(\mathbf E'+\mathbf E)\), \(\nabla\times\mathbf H=\mathbf J\) y la ley de Faraday, se identifica el término
+\[
+\int_V\mathbf H\cdot\frac{\partial\mathbf B}{\partial t}\,dv
+\]
+como potencia transferida al campo. Por tanto:
+\[
+\delta W_m=\int_V\mathbf H\cdot\delta\mathbf B\,dv.
+\]
+Al integrar desde campo nulo hasta el campo final:
+\[
+W_m=\int_V\left(\int_0^{\mathbf B}\mathbf H\cdot d\mathbf B\right)dv.
+\]
+Si el medio es lineal, se obtiene
+\[
+W_m=\frac12\int_V\mathbf H\cdot\mathbf B\,dv.
+\]
+Esta forma permite resolver problemas con campos distribuidos y medios materiales.
+
+28. En un medio no lineal no existe una constante \(\mu\) que permita escribir \(\mathbf B=\mu\mathbf H\) durante todo el proceso. Por eso la energía por unidad de volumen no puede calcularse como \(\frac12BH\). El incremento elemental es
+\[
+\delta w_m=\mathbf H\cdot\delta\mathbf B.
+\]
+Si el campo pasa de cero a \(B_0\),
+\[
+w_m=\int_0^{B_0}\mathbf H\cdot d\mathbf B.
+\]
+En materiales con histéresis, al recorrer un ciclo cerrado en el plano \(B-H\), la energía devuelta al disminuir el campo es menor que la suministrada al aumentarlo. La energía perdida por unidad de volumen y ciclo es
+\[
+w_m=\oint_{\text{ciclo}}\mathbf H\cdot d\mathbf B.
+\]
+También puede escribirse
+\[
+w_m=\mu_0\oint_{\text{ciclo}}\mathbf H\cdot d\mathbf M.
+\]
+Esta pérdida se transforma en calor y se asocia al reajuste irreversible o retardado de los dominios magnéticos.
+
+29. Para calcular \(L\) a partir de la energía se parte de
+\[
+W_m=\frac12LI^2,
+\]
+de donde
+\[
+L=\frac{2W_m}{I^2}.
+\]
+Luego se calcula \(W_m\) mediante la energía de campo:
+\[
+W_m=\frac12\int\mathbf B\cdot\mathbf H\,dv.
+\]
+Si hay varias regiones, se separan las integrales. En un conductor cilíndrico con corriente uniforme, el campo interno obtenido con Ampère permite integrar dentro del conductor y obtener
+\[
+\frac{L_i}{l}=\frac{\mu}{8\pi}.
+\]
+En un coaxial, además de la contribución interna del conductor central, hay una contribución externa en la región entre radios \(R_1\) y \(R_2\):
+\[
+\frac{L}{l}=\frac{\mu_0}{8\pi}+\frac{\mu}{2\pi}\ln\frac{R_2}{R_1}.
+\]
+El procedimiento exige identificar correctamente dónde existe campo.
+
+30. El método energético parte del balance
+\[
+dW_b=\mathbf F\cdot d\mathbf l+dW_m.
+\]
+Si la corriente se mantiene constante, las fuentes aportan energía al variar el flujo. Se obtiene:
+\[
+\mathbf F=(\nabla W_m)_I,
+\qquad
+T_z=\left(\frac{\partial W_m}{\partial\varphi}\right)_I.
+\]
+Si el flujo se mantiene constante, no hay aporte adicional de las fuentes:
+\[
+\mathbf F=-(\nabla W_m)_\Phi,
+\qquad
+T_z=-\left(\frac{\partial W_m}{\partial\varphi}\right)_\Phi.
+\]
+La presión magnética se calcula aplicando el mismo razonamiento a una superficie. En placas paralelas con campo solo entre ellas:
+\[
+p=\frac12\frac{B^2}{\mu_0}.
+\]
+En una frontera general:
+\[
+p=\frac12(\mu_2-\mu_1)\left(H_t^2+\frac{B_n^2}{\mu_2\mu_1}\right).
+\]
+El punto crítico es elegir la condición física correcta antes de derivar la energía.
+
+31. La f.e.m. inducida aparece cuando cambia el flujo magnético:
+\[
+\mathcal E=-\frac{d\Phi}{dt}.
+\]
+Al establecer una corriente, el flujo enlazado por el circuito cambia y la fuente debe realizar trabajo contra esa f.e.m. Ese trabajo reversible es la energía magnética. Por eso el incremento elemental se escribe \(dW_m=i\,d\Phi\).
+
+32. La densidad de energía magnética mide energía por unidad de volumen. En el ejemplo de placas paralelas con campo solo entre ellas:
+\[
+w_m=\frac12\frac{B^2}{\mu_0}.
+\]
+La presión sobre las placas resulta
+\[
+p=\frac12\frac{B^2}{\mu_0}.
+\]
+Coinciden porque al desplazar una placa aumenta o disminuye el volumen ocupado por el campo, y la fuerza por unidad de superficie equivale a la variación de energía por unidad de volumen.
+
+33. La linealidad implica \(\mathbf B=\mu\mathbf H\) con \(\mu\) constante. Entonces la integral
+\[
+w_m=\int_0^{\mathbf B}\mathbf H\cdot d\mathbf B
+\]
+se puede hacer y da
+\[
+w_m=\frac12\mathbf H\cdot\mathbf B.
+\]
+Si \(\mu\) no es constante o la curva \(B-H\) no es lineal, esta fórmula deja de ser válida.
+
+34. En un ferromagnético existen dominios magnéticos. Al aplicar un campo, esos dominios cambian su orientación de forma no instantánea ni completamente reversible. Por eso la curva de imanación presenta histéresis. Al completar un ciclo, la energía no recuperada se disipa como calor:
+\[
+w_m=\oint\mathbf H\cdot d\mathbf B.
+\]
+
+35. En una frontera entre medios, las condiciones en los límites determinan qué componente se conserva. Para campo tangencial se conserva \(H_t\), y el cálculo corresponde al caso de corriente constante:
+\[
+p_I=\frac12(\mu_2-\mu_1)H_t^2.
+\]
+Para campo normal se conserva \(B_n\), y el cálculo corresponde al caso de flujo constante:
+\[
+p_\Phi=\frac12B_n^2\frac{\mu_2-\mu_1}{\mu_2\mu_1}.
+\]
+La presión general suma ambas contribuciones.
+
+
+## 9. Resumen final de repaso
+
+Ideas principales:
+- La energía magnética es el trabajo reversible necesario para establecer corrientes y campos magnéticos.
+- En circuitos lineales:
+  \[
+  W_m=\frac12\sum_iI_i\Phi_i.
+  \]
+- En un inductor aislado:
+  \[
+  W_m=\frac12LI^2.
+  \]
+- En forma de campo:
+  \[
+  W_m=\int_V\left(\int_0^{\mathbf B}\mathbf H\cdot d\mathbf B\right)dv.
+  \]
+- En medios lineales:
+  \[
+  w_m=\frac12\mathbf H\cdot\mathbf B
+  =
+  \frac12\mu H^2
+  =
+  \frac{B^2}{2\mu}.
+  \]
+- En medios no lineales no se usa la fórmula cuadrática: se integra sobre la curva de imanación.
+- En histéresis:
+  \[
+  w_m=\oint\mathbf H\cdot d\mathbf B.
+  \]
+- La autoinducción puede calcularse con:
+  \[
+  L=\frac{2W_m}{I^2}.
+  \]
+- A corriente constante:
+  \[
+  \mathbf F=(\nabla W_m)_I.
+  \]
+- A flujo constante:
+  \[
+  \mathbf F=-(\nabla W_m)_\Phi.
+  \]
+- La presión entre placas con campo solo entre ellas:
+  \[
+  p=\frac12\frac{B^2}{\mu_0}.
+  \]
+
+Conceptos imprescindibles:
+- flujo magnético;
+- f.e.m. inducida;
+- autoinducción;
+- inducción mutua;
+- densidad de energía;
+- medio lineal;
+- curva de imanación;
+- ciclo de histéresis;
+- desplazamiento virtual;
+- corriente constante frente a flujo constante;
+- presión magnética.
+
+Relaciones clave:
+- Faraday explica por qué establecer corriente exige trabajo reversible.
+- Ampère permite calcular \(\mathbf H\), y con \(\mathbf B\) se integra la energía.
+- La linealidad permite pasar de \(\int\mathbf H\cdot d\mathbf B\) a \(\frac12\mathbf H\cdot\mathbf B\).
+- La histéresis convierte parte de la energía en calor.
+- Las fuerzas y presiones se obtienen derivando energía, pero el signo depende de la condición física.
+
+Errores que evitar:
+- usar \(W_m=\frac12LI^2\) fuera de sus hipótesis;
+- olvidar el factor \(1/2\);
+- confundir energía almacenada con energía Joule;
+- aplicar \(w_m=\frac12BH\) en medios no lineales;
+- calcular \(L\) sin integrar todas las regiones donde hay campo;
+- usar \(-\nabla W_m\) siempre;
+- tratar \(B^2/(2\mu_0)\) como fórmula universal de presión.
+
+
+## 10. Checklist de dominio
+
+- Si no puedes explicar por qué aparece una f.e.m. inducida al establecer una corriente, falta repasar inducción electromagnética y flujo magnético.
+
+- Si no puedes deducir \(dW_m=i\,d\Phi\), falta repasar el balance entre f.e.m., trabajo de la fuente y energía reversible.
+
+- Si no puedes justificar el factor \(1/2\) en \(W_m=\frac12\sum_iI_i\Phi_i\), falta repasar el proceso de crecimiento lineal de corrientes y flujos.
+
+- Si confundes autoinducción con inducción mutua, revisar la expresión \(\Phi_i=\sum_jM_{ij}I_j\).
+
+- Si usas \(W_m=\frac12LI^2\) para cualquier sistema, falta repasar sistemas de varios circuitos y medios no lineales.
+
+- Si no puedes pasar de energía de circuitos a energía de campo, falta repasar \(\nabla\times\mathbf H=\mathbf J\), ley de Faraday y balance de potencia.
+
+- Si no puedes explicar qué representa \(\int\mathbf H\cdot d\mathbf B\), falta repasar la interpretación de la energía en medios materiales.
+
+- Si confundes \(W_m\) con \(w_m\), revisar unidades: \(W_m\) en J y \(w_m\) en \(\mathrm{J/m^3}\).
+
+- Si aplicas \(w_m=\frac12\mathbf H\cdot\mathbf B\) en un ferromagnético con histéresis, revisar medios no lineales y curva de imanación.
+
+- Si no puedes explicar por qué el área del ciclo de histéresis es energía disipada, falta repasar el recorrido cerrado \(B-H\).
+
+- Si no sabes calcular \(L\) con \(L=2W_m/I^2\), falta practicar integración de \(B\cdot H\) por regiones.
+
+- Si olvidas la contribución exterior en un conductor o coaxial, revisar autoinducción interna y externa.
+
+- Si confundes fuerza a corriente constante con fuerza a flujo constante, revisar el balance
+  \[
+  dW_b=\mathbf F\cdot d\mathbf l+dW_m.
+  \]
+
+- Si usas siempre \(\mathbf F=-\nabla W_m\), revisar que a corriente constante el resultado es
+  \[
+  \mathbf F=(\nabla W_m)_I.
+  \]
+
+- Si no puedes justificar la presión \(p=B^2/(2\mu_0)\), falta repasar densidad de energía y desplazamiento virtual de placas.
+
+- Si no sabes cuándo usar \(H_t\) o \(B_n\) en presión magnética, revisar condiciones en los límites.
+
+- Si puedes resolver el cálculo de \(L/l\) de un coaxial separando regiones, el bloque de energía de campo está suficientemente asentado.
+
+- Si puedes explicar el signo de la fuerza en los dos casos, corriente constante y flujo constante, el bloque de fuerzas está suficientemente asentado.
+
+- Si puedes relacionar histéresis, energía disipada y calentamiento, el bloque de medios no lineales está suficientemente asentado.
+
+- Si puedes responder una pregunta larga que conecte energía, autoinducción, fuerza y presión sin mezclar hipótesis, el capítulo está suficientemente dominado.

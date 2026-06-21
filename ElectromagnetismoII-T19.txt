@@ -1,0 +1,1327 @@
+# Guía de estudio — Electromagnetismo II
+
+Capítulo trabajado: EM19 / Tema 7 — Propagación guiada: guías de ondas y cavidades resonantes.
+Fuente principal: Electromagnetismo II, UNED, Tema 7.
+
+## 1. Prerrequisitos mínimos
+
+1. Campo eléctrico y campo magnético.
+
+Definición breve: el campo eléctrico \(\mathbf{E}\) y el campo magnético \(\mathbf{H}\) describen la parte eléctrica y magnética de una onda electromagnética. En propagación guiada no basta con saber que existen: hay que distinguir sus componentes transversales y longitudinales respecto a la dirección de propagación.
+
+Por qué es necesario: en una guía que se toma orientada según \(z\), el análisis separa los campos en componentes transversales, \(\mathbf{E}_t,\mathbf{H}_t\), y componentes longitudinales, \(E_z,H_z\). Los modos TE y TM se definen precisamente por anular una de esas componentes longitudinales.
+
+Ejemplo mínimo: si una onda se propaga según \(+z\), una componente \(E_y\) es transversal, mientras que \(E_z\) es longitudinal.
+
+2. Fasores y régimen sinusoidal.
+
+Definición breve: un fasor representa la amplitud compleja de una magnitud sinusoidal. La dependencia temporal se sobreentiende como \(e^{j\omega t}\), mientras que la dependencia espacial de una onda progresiva puede escribirse como \(e^{-j\beta z}\).
+
+Por qué es necesario: el capítulo trabaja con expresiones como
+\[
+E_z(x,y,z)=e_z(x,y)e^{-j\beta z},
+\]
+y con productos complejos conjugados para calcular potencias medias.
+
+Ejemplo mínimo: si \(\hat E_y=E_0e^{-j\beta z}\), el campo físico asociado se obtiene tomando la parte real de \(\hat E_y e^{j\omega t}\).
+
+3. Ecuación de ondas.
+
+Definición breve: en un medio homogéneo y sin pérdidas, los campos electromagnéticos satisfacen ecuaciones diferenciales de tipo ondulatorio. En una guía, la ecuación se reduce a una ecuación transversal de autovalores.
+
+Por qué es necesario: las funciones transversales \(e_z(x,y)\) y \(h_z(x,y)\) satisfacen ecuaciones del tipo
+\[
+(\nabla_t^2+k_c^2)e_z=0,\qquad
+(\nabla_t^2+k_c^2)h_z=0.
+\]
+Estas ecuaciones, junto con las condiciones de contorno, seleccionan los modos posibles.
+
+Ejemplo mínimo: en una guía rectangular aparecen senos y cosenos porque la ecuación transversal se resuelve por separación de variables en \(x\) e \(y\).
+
+4. Condiciones de contorno en conductores perfectos.
+
+Definición breve: en una pared conductora perfecta, el campo eléctrico tangencial debe anularse y el campo magnético debe ser tangencial a la pared si no se consideran campos dentro del metal ideal.
+
+Por qué es necesario: estas condiciones determinan si la solución longitudinal debe ser tipo seno o tipo coseno. En modos TM se impone \(E_z=0\) en la pared; en modos TE se impone \(\partial H_z/\partial n=0\) en la pared.
+
+Ejemplo mínimo: en una guía rectangular, para modos TM se obtiene \(E_z\propto \sin(m\pi x/a)\sin(n\pi y/b)\), porque \(E_z\) debe anularse en \(x=0,a\) e \(y=0,b\).
+
+5. Separación de variables.
+
+Definición breve: método para resolver ecuaciones diferenciales suponiendo que la solución puede factorizarse en funciones de cada coordenada, por ejemplo \(e_z(x,y)=X(x)Y(y)\).
+
+Por qué es necesario: permite convertir la ecuación transversal en ecuaciones ordinarias y obtener los números de onda transversales permitidos.
+
+Ejemplo mínimo: en guía rectangular,
+\[
+k_c^2=k_x^2+k_y^2,
+\]
+con \(k_x=m\pi/a\) y \(k_y=n\pi/b\).
+
+6. Coordenadas cilíndricas y funciones de Bessel.
+
+Definición breve: las coordenadas cilíndricas \((r,\varphi,z)\) son adecuadas para sistemas con sección circular. Las funciones de Bessel aparecen al resolver la parte radial de la ecuación de ondas en esa geometría.
+
+Por qué es necesario: la guía circular no se resuelve con senos y cosenos en \(r\), sino con \(J_n(k_cr)\). Las frecuencias de corte dependen de los ceros de \(J_n\) o de \(J_n'\).
+
+Ejemplo mínimo: en modos TM de guía circular se impone \(J_n(k_ca)=0\); en modos TE se impone \(J_n'(k_ca)=0\).
+
+7. Vector de Poynting y potencia media.
+
+Definición breve: el vector de Poynting representa el flujo de energía electromagnética. En fasores, la potencia media que atraviesa la sección transversal se calcula con un producto \(\mathbf{E}\times\mathbf{H}^*\).
+
+Por qué es necesario: el capítulo conecta la distribución modal con la potencia transportada, la energía almacenada y la atenuación.
+
+Ejemplo mínimo:
+\[
+\langle P\rangle=\frac12\int_{S_T}(\mathbf{E}_t\times\mathbf{H}_t^*)\cdot d\mathbf{s}.
+\]
+
+8. Medios con pérdidas y profundidad de penetración.
+
+Definición breve: un conductor real tiene conductividad finita. Los campos penetran una pequeña distancia en él, llamada profundidad de penetración o espesor de piel.
+
+Por qué es necesario: las guías reales no tienen paredes perfectamente conductoras. Parte de la energía entra en las paredes y se disipa por efecto Joule, dando lugar a atenuación.
+
+Ejemplo mínimo:
+\[
+\delta=\left(\frac{2}{\omega\mu_0\gamma}\right)^{1/2}
+\]
+para paredes no magnéticas de conductividad \(\gamma\).
+
+## 2. Idea central del capítulo
+
+El capítulo estudia cómo se propagan ondas electromagnéticas dentro de estructuras conductoras huecas, llamadas guías de ondas, y cómo esas mismas ideas permiten construir cavidades resonantes. La diferencia esencial respecto a la propagación libre es que ahora las paredes imponen condiciones de contorno. Esas condiciones no son un detalle matemático: seleccionan qué distribuciones espaciales de campo son posibles y para qué frecuencias pueden propagarse.
+
+La guía de ondas transforma un problema de propagación en un problema de autovalores. Las componentes longitudinales \(E_z\) o \(H_z\) satisfacen una ecuación transversal; la geometría de la guía fija los valores permitidos de \(k_c\), llamados números de onda de corte. Cada valor de \(k_c\) define un modo. Si la frecuencia de trabajo supera la frecuencia de corte de ese modo, la constante de propagación \(\beta\) es real y el modo se propaga. Si no la supera, \(\beta\) se hace imaginaria y la onda se atenúa: el modo es evanescente.
+
+El capítulo distingue dos familias principales de modos de orden alto. Los modos TE, o transversales eléctricos, tienen \(E_z=0\), pero \(H_z\neq 0\). Los modos TM, o transversales magnéticos, tienen \(H_z=0\), pero \(E_z\neq 0\). El cálculo se organiza de forma económica: en TE se resuelve \(H_z\) y de él se deducen las demás componentes; en TM se resuelve \(E_z\) y de él se deducen las demás componentes.
+
+Después se aplican estas ideas a dos geometrías concretas. En la guía rectangular, el método de separación de variables conduce a funciones seno para los modos TM y coseno para los modos TE. En una guía rectangular de lados \(a\) y \(b\), con \(a>b\), el modo dominante es \(TE_{10}\). Esto es fundamental en examen: muchas preguntas de guías se reducen a ordenar frecuencias de corte y decidir qué modos se propagan.
+
+En la guía circular el papel de la geometría es más visible: las soluciones radiales son funciones de Bessel. Los modos TM dependen de los ceros de \(J_n\), y los TE de los ceros de \(J_n'\). El modo fundamental de una guía cilíndrica es \(TE_{11}\), pero el margen de operación monomodo es más estrecho que en la rectangular.
+
+El capítulo también trata la potencia y las pérdidas. En una guía ideal, la energía se propaga sin atenuación si el modo está por encima de corte. En una guía real, la conductividad finita de las paredes y las pérdidas dieléctricas producen atenuación. La idea física es directa: el campo magnético tangencial induce corrientes en la pared; al no ser la pared perfecta, esas corrientes disipan energía por efecto Joule. La amplitud del campo decae como \(e^{-\alpha z}\) y la potencia como \(e^{-2\alpha z}\).
+
+Finalmente se introducen las cavidades resonantes. Una cavidad puede verse como un tramo de guía cerrado por paredes conductoras. Al cerrar la guía se forma una onda estacionaria y aparece una cuantización también en la dirección longitudinal. Por eso la cavidad no tiene una sola resonancia, sino un conjunto discreto de frecuencias de resonancia. El factor de calidad \(Q\) mide cuán selectiva es la cavidad: un \(Q\) alto significa pocas pérdidas y banda estrecha.
+
+## 3. Desarrollo completo del capítulo
+
+### 3.1. De la propagación libre a la propagación guiada
+
+El capítulo parte de una situación ya preparada en el tema anterior: una onda electromagnética que se propaga según el eje \(z\) dentro de una estructura conductora. En vez de resolver directamente las seis componentes de \(\mathbf{E}\) y \(\mathbf{H}\), se separa el problema en componentes longitudinales y transversales. Para una señal propagante se escribe
+\[
+E_z(x,y,z)=e_z(x,y)e^{-j\beta z},\qquad
+H_z(x,y,z)=h_z(x,y)e^{-j\beta z}.
+\]
+La dependencia \(e^{-j\beta z}\) describe la propagación a lo largo de la guía, mientras que \(e_z(x,y)\) y \(h_z(x,y)\) describen la forma del campo en la sección transversal.
+
+La ecuación de ondas queda reducida a
+\[
+(\nabla_t^2+k_c^2)e_z=0,\qquad
+(\nabla_t^2+k_c^2)h_z=0.
+\]
+El símbolo \(\nabla_t^2\) indica que sólo se derivan las coordenadas transversales. La cantidad \(k_c\) aparece como autovalor del problema transversal y se relaciona con la constante de propagación mediante
+\[
+k_c^2=\omega^2\mu\epsilon-\beta^2.
+\]
+Esta relación es el centro técnico del capítulo. No hay propagación guiada real hasta que \(\beta\) es real. Si para un modo concreto \(k_c\) ya está fijado por la geometría, la frecuencia debe ser suficientemente alta para que \(\omega^2\mu\epsilon>k_c^2\).
+
+La consecuencia conceptual es importante: una guía no transmite cualquier modo a cualquier frecuencia. La geometría crea un espectro discreto de modos y cada modo tiene su propia frecuencia de corte.
+
+### 3.2. Modos TE
+
+Un modo TE se define por
+\[
+E_z=0.
+\]
+El campo eléctrico es completamente transversal, pero el campo magnético puede tener componente longitudinal. Por eso el libro también los llama modos \(H\).
+
+En estos modos se resuelve primero \(H_z\). A partir de \(H_z\), mediante derivadas transversales, se obtienen \(\mathbf{H}_t\) y \(\mathbf{E}_t\). La condición de contorno relevante es
+\[
+\frac{\partial H_z}{\partial n}=0
+\]
+sobre las paredes metálicas. Aquí \(n\) es la dirección normal al contorno.
+
+La impedancia de onda del modo TE es
+\[
+Z_{TE}=\left(\frac{\mu}{\epsilon}\right)^{1/2}\frac{k}{\beta},
+\]
+donde \(k=\omega\sqrt{\mu\epsilon}\). Como \(\beta\) tiende a cero en el corte, \(Z_{TE}\) crece mucho al aproximarse a la frecuencia de corte.
+
+La idea física es que las componentes transversales \(\mathbf{E}_t\) y \(\mathbf{H}_t\) son perpendiculares entre sí y, junto con la dirección de propagación, forman un triedro directo. Esto asegura que el transporte de energía se produce en la dirección de avance de la guía.
+
+### 3.3. Modos TM
+
+Un modo TM se define por
+\[
+H_z=0.
+\]
+El campo magnético es completamente transversal, pero el campo eléctrico puede tener componente longitudinal. Por eso el libro también los llama modos \(E\).
+
+En estos modos se resuelve primero \(E_z\). La condición de contorno en las paredes metálicas es
+\[
+E_z=0.
+\]
+Esta condición selecciona funciones que se anulan en el contorno de la sección.
+
+La impedancia de onda del modo TM es
+\[
+Z_{TM}=\left(\frac{\mu}{\epsilon}\right)^{1/2}\frac{\beta}{k}.
+\]
+Al acercarse al corte, \(\beta\to0\), por lo que \(Z_{TM}\to0\). Este comportamiento es opuesto al de \(Z_{TE}\).
+
+En examen conviene no memorizar sólo los nombres. Hay que recordar qué componente longitudinal se anula y qué condición de contorno se aplica. El error de intercambiar \(E_z\) y \(H_z\) destruye todo el desarrollo.
+
+### 3.4. Relación de dispersión y frecuencia de corte
+
+Para cada modo,
+\[
+\beta^2=\omega^2\mu\epsilon-k_c^2.
+\]
+La frecuencia de corte aparece cuando
+\[
+\beta=0.
+\]
+Por tanto,
+\[
+\omega_c=\frac{k_c}{\sqrt{\mu\epsilon}},\qquad
+f_c=\frac{k_c}{2\pi\sqrt{\mu\epsilon}}.
+\]
+
+Si \(\omega>\omega_c\), entonces \(\beta\) es real y el modo se propaga. Si \(\omega<\omega_c\), entonces \(\beta\) es imaginaria pura y el modo no transporta potencia indefinidamente por la guía: es evanescente y su amplitud decrece exponencialmente.
+
+En función de la frecuencia de corte,
+\[
+\beta=\frac{\omega}{v_0}\sqrt{1-\left(\frac{\omega_c}{\omega}\right)^2},
+\]
+donde
+\[
+v_0=\frac{1}{\sqrt{\mu\epsilon}}
+\]
+es la velocidad de fase que tendría una onda en el medio ilimitado.
+
+Se define la longitud de onda en la guía como
+\[
+\lambda_g=\frac{2\pi}{\beta},
+\]
+y se relaciona con la longitud de onda en el medio libre \(\lambda\) y la longitud de onda de corte \(\lambda_c\) mediante
+\[
+\frac{1}{\lambda_g^2}=\frac{1}{\lambda^2}-\frac{1}{\lambda_c^2}.
+\]
+
+La velocidad de fase en la guía es
+\[
+v_{ph}=\frac{\omega}{\beta}
+      =\frac{v_0}{\sqrt{1-(\omega_c/\omega)^2}},
+\]
+y la velocidad de grupo es
+\[
+v_g=v_0\sqrt{1-(\omega_c/\omega)^2}.
+\]
+El producto verifica
+\[
+v_{ph}v_g=v_0^2.
+\]
+Esto explica una aparente paradoja: la velocidad de fase puede superar \(v_0\), pero la velocidad de grupo, asociada al transporte de energía, es menor que \(v_0\). Cerca del corte, \(v_g\to0\) y \(v_{ph}\to\infty\). A frecuencias muy superiores a la de corte, ambas se aproximan a \(v_0\).
+
+### 3.5. Guía rectangular
+
+La guía rectangular se describe con coordenadas cartesianas. Su sección tiene lados \(a\) y \(b\), y la propagación se toma según \(z\). Las ecuaciones transversales para \(e_z(x,y)\) y \(h_z(x,y)\) se resuelven por separación de variables.
+
+Para modos TM, al imponer \(E_z=0\) en las paredes, se obtiene
+\[
+E_z=E_0\sin\left(\frac{m\pi x}{a}\right)
+        \sin\left(\frac{n\pi y}{b}\right)e^{-j\beta z}.
+\]
+Los autovalores son
+\[
+k_{c,mn}=
+\sqrt{\left(\frac{m\pi}{a}\right)^2+
+      \left(\frac{n\pi}{b}\right)^2}.
+\]
+En modos TM, \(m\) y \(n\) no pueden ser nulos, porque si uno de los senos desaparece el campo longitudinal se anula trivialmente.
+
+Para modos TE, al imponer \(\partial H_z/\partial n=0\), aparece
+\[
+H_z=H_0\cos\left(\frac{m\pi x}{a}\right)
+        \cos\left(\frac{n\pi y}{b}\right)e^{-j\beta z}.
+\]
+El mismo \(k_{c,mn}\) determina la frecuencia de corte:
+\[
+f_{c,mn}=
+\frac{v_0}{2}
+\sqrt{\left(\frac{m}{a}\right)^2+
+      \left(\frac{n}{b}\right)^2}.
+\]
+En modos TE, \(m\) y \(n\) no pueden ser ambos nulos a la vez, pero sí puede ser nulo uno de ellos. Esta diferencia es la razón por la que el modo dominante de una guía rectangular es TE y no TM.
+
+Si \(a>b\), el modo de menor frecuencia de corte es
+\[
+TE_{10}.
+\]
+Su frecuencia de corte es
+\[
+f_{c,10}=\frac{v_0}{2a}.
+\]
+Este modo es fundamental porque usa la mayor dimensión de la guía y sólo tiene una variación transversal en \(x\). En él,
+\[
+H_z=H_0\cos\left(\frac{\pi x}{a}\right)e^{-j\beta z},
+\]
+\[
+H_x=j\frac{\beta}{\pi/a}H_0\sin\left(\frac{\pi x}{a}\right)e^{-j\beta z},
+\]
+\[
+E_y=-j\frac{\omega\mu}{\pi/a}H_0\sin\left(\frac{\pi x}{a}\right)e^{-j\beta z}.
+\]
+El campo eléctrico sólo tiene componente \(y\) y no depende de \(y\). Esta simplicidad explica por qué se usa preferentemente el régimen monomodo.
+
+Para que la guía opere sólo con el modo dominante, la frecuencia de trabajo debe estar entre el corte del \(TE_{10}\) y el corte del primer modo superior. Si aparece más de un modo, la descripción del campo se complica y la guía deja de comportarse como un canal simple.
+
+El capítulo destaca que en la práctica se suelen escoger proporciones próximas a
+\[
+a=2b.
+\]
+Si \(b\) se hace demasiado pequeño, aumentan las pérdidas; si la sección fuera cuadrada, aparecerían degeneraciones indeseadas como \(TE_{10}\) y \(TE_{01}\) con igual frecuencia de corte.
+
+### 3.6. Interpretación del modo \(TE_{10}\)
+
+El modo \(TE_{10}\) puede interpretarse como superposición de dos ondas TEM que se reflejan sucesivamente en las paredes de la guía. La propagación efectiva se produce en zig-zag. Esta imagen ayuda a entender por qué aparece la dispersión: el avance de la energía a lo largo del eje \(z\) no coincide con la velocidad de una onda libre en el medio, sino con la componente axial del movimiento de esas ondas reflejadas.
+
+La velocidad de fase axial puede ser mayor que \(v_0\), pero eso no implica transmisión superlumínica de energía. La energía se transporta con la velocidad de grupo, que es menor que \(v_0\).
+
+### 3.7. Guía circular
+
+La guía circular se estudia con coordenadas cilíndricas \((r,\varphi,z)\). La ecuación transversal para \(E_z\) o \(H_z\) conduce a una ecuación de Bessel. La solución angular exige que el índice \(n\) sea entero, porque los campos deben ser continuos al pasar de \(\varphi\) a \(\varphi+2\pi\).
+
+La parte radial válida en el interior de la guía es \(J_n(k_cr)\). Las funciones de Bessel de segunda especie se descartan porque son singulares en el origen, y en el interior de la guía no hay fuentes que justifiquen una singularidad.
+
+En modos TM se impone
+\[
+E_z=0\quad\text{en } r=a,
+\]
+por lo que
+\[
+J_n(k_ca)=0.
+\]
+Si \(p_{nm}\) es el \(m\)-ésimo cero de \(J_n\),
+\[
+k_{c,nm}=\frac{p_{nm}}{a}.
+\]
+
+En modos TE se impone
+\[
+\frac{\partial H_z}{\partial r}=0\quad\text{en }r=a,
+\]
+por lo que
+\[
+J_n'(k_ca)=0.
+\]
+Si \(p'_{nm}\) es el \(m\)-ésimo cero de \(J_n'\),
+\[
+k_{c,nm}=\frac{p'_{nm}}{a}.
+\]
+
+El modo fundamental de una guía cilíndrica es
+\[
+TE_{11},
+\]
+porque el primer cero relevante de \(J_n'\) es aproximadamente \(1,841\). Su frecuencia de corte angular es
+\[
+\omega_{c,TE_{11}}=v_0\frac{1,841}{a}.
+\]
+El modo siguiente es \(TM_{01}\), con el cero \(2,405\), de modo que
+\[
+\omega_{c,TM_{01}}=v_0\frac{2,405}{a}.
+\]
+La separación entre ambos cortes no es grande; por eso el intervalo de funcionamiento monomodo en una guía circular es reducido frente al de una rectangular.
+
+El capítulo señala además el interés de los modos \(TE_{0m}\): al carecer de cierta componente magnética azimutal, permiten configuraciones en las que las pérdidas de pared disminuyen con la frecuencia. Esto los hace útiles conceptualmente para transmisión guiada de larga distancia, aunque no elimina las dificultades prácticas de selección modal.
+
+### 3.8. Potencia transmitida y energía almacenada
+
+Una vez conocida la distribución de campo, la potencia media transportada por la guía se calcula con
+\[
+\langle P\rangle=
+\frac12\int_{S_T}(\mathbf{E}_t\times \mathbf{H}_t^*)\cdot d\mathbf{s}.
+\]
+Sólo las componentes transversales intervienen en el flujo axial de potencia.
+
+Para modos propagantes, la energía eléctrica media y la energía magnética media almacenadas por unidad de longitud son iguales. Se escriben como
+\[
+\langle W_H\rangle=
+\frac14\int_{S_T}\mu\,\mathbf{H}\cdot\mathbf{H}^*\,ds,
+\]
+\[
+\langle W_E\rangle=
+\frac14\int_{S_T}\epsilon\,\mathbf{E}\cdot\mathbf{E}^*\,ds.
+\]
+La energía total media por unidad de longitud satisface
+\[
+\langle W\rangle=2\langle W_E\rangle=2\langle W_H\rangle.
+\]
+La relación central es
+\[
+\langle P\rangle=\langle W\rangle v_g.
+\]
+Esta igualdad da significado físico a la velocidad de grupo: es la velocidad con la que se transporta energía por la guía.
+
+En modos evanescentes la igualdad entre energía eléctrica y magnética no se mantiene. El capítulo señala que, por debajo del corte, la energía magnética domina en TE y la eléctrica en TM.
+
+### 3.9. Atenuación en guías reales
+
+Una guía ideal no pierde potencia, pero una guía real sí. Hay dos mecanismos tratados en el capítulo: pérdidas en las paredes metálicas y pérdidas en el dieléctrico que rellena la guía.
+
+Si la amplitud del campo decae como
+\[
+e^{-\alpha z},
+\]
+la potencia decae como
+\[
+e^{-2\alpha z}.
+\]
+Si \(\langle P_D'\rangle\) es la potencia disipada por unidad de longitud, entonces
+\[
+\alpha=\frac{\langle P_D'\rangle}{2\langle P\rangle}.
+\]
+
+En las paredes metálicas, el campo magnético tangencial induce corrientes. Como la conductividad no es infinita, esas corrientes llevan asociado un campo eléctrico tangencial y se produce disipación por efecto Joule. La energía que entra en la pared aparece como flujo del vector de Poynting hacia el conductor. La aproximación usada en el capítulo es perturbativa: se supone que las pérdidas son pequeñas y que la distribución del campo sigue siendo, en primera aproximación, la de una guía ideal.
+
+La profundidad de penetración en una pared no magnética es
+\[
+\delta=\left(\frac{2}{\omega\mu_0\gamma}\right)^{1/2}.
+\]
+La validez de la aproximación exige que \(\delta\) sea pequeña frente a la escala en la que varía el campo sobre la pared.
+
+En el dieléctrico disipativo se introduce una permitividad compleja
+\[
+\epsilon=\epsilon'-j\epsilon'',
+\]
+y la tangente de pérdidas
+\[
+\tan\delta=\frac{\epsilon''}{\epsilon'}.
+\]
+Si las pérdidas son pequeñas,
+\[
+\kappa=\beta-j\alpha,
+\]
+y el factor de atenuación queda
+\[
+\alpha=\frac{\omega^2\mu_0\epsilon''}{2\beta}
+      =\frac{\beta^2+k_c^2}{2\beta}\tan\delta.
+\]
+La constante de fase y la longitud de onda apenas cambian respecto a la guía sin pérdidas, pero aparece atenuación.
+
+La dependencia con la frecuencia no es trivial. Cerca del corte, como \(\beta\) es pequeño, la atenuación puede ser grande. Al aumentar la frecuencia, puede disminuir hasta un mínimo y luego crecer según el mecanismo dominante. En los modos \(TE_{0m}\) de guía circular aparece una propiedad especial: las pérdidas pueden disminuir monótonamente con la frecuencia.
+
+### 3.10. Cavidades resonantes
+
+Una cavidad resonante es una región dieléctrica encerrada por paredes conductoras. A frecuencias de microondas cumple un papel análogo al de un circuito resonante de baja frecuencia, pero con una diferencia importante: una cavidad tiene un conjunto discreto indefinido de frecuencias de resonancia, no una sola.
+
+El capítulo construye la cavidad a partir de un tramo de guía. Si en una guía se coloca un cortocircuito metálico perpendicular al eje \(z\), la onda incidente se refleja y forma una onda estacionaria. Si se coloca un segundo cortocircuito en una posición compatible con los nodos del campo eléctrico transversal, se obtiene una cavidad que puede almacenar energía por reflexiones sucesivas.
+
+La condición longitudinal es
+\[
+\sin(\beta L)=0,
+\]
+de donde
+\[
+\beta=\frac{p\pi}{L},\qquad p=1,2,\ldots
+\]
+Al combinar esto con la relación de dispersión,
+\[
+\beta^2=\omega^2\mu\epsilon-k_{c,mn}^2,
+\]
+se obtiene la frecuencia angular de resonancia
+\[
+\omega_{mnp}=v_0\sqrt{k_{c,mn}^2+\left(\frac{p\pi}{L}\right)^2}.
+\]
+Los modos de cavidad se identifican como \(TE_{mnp}\) o \(TM_{mnp}\) según procedan de modos TE o TM de la guía.
+
+Para una cavidad rectangular construida desde el modo \(TE_{10}\),
+\[
+\omega_{10p}=v_0\sqrt{\left(\frac{\pi}{a}\right)^2+
+                       \left(\frac{p\pi}{L}\right)^2}.
+\]
+La cavidad selecciona frecuencias por condiciones de contorno en las tres direcciones.
+
+### 3.11. Factor de calidad
+
+Una cavidad ideal tendría pérdidas nulas y respondería sólo exactamente en sus frecuencias de resonancia. Una cavidad real tiene pérdidas: por conductividad finita de las paredes, por pérdidas dieléctricas y, en menor medida, por radiación a través de los orificios necesarios para excitar o extraer energía.
+
+El factor de calidad se define como
+\[
+Q=2\pi\frac{\text{energía media almacenada}}
+             {\text{energía disipada por ciclo en } \omega=\omega_0},
+\]
+o equivalentemente,
+\[
+Q=\omega_0
+\frac{\text{energía media almacenada}}
+     {\text{energía disipada por segundo}}.
+\]
+También puede expresarse mediante el ancho de banda:
+\[
+Q=\frac{\omega_0}{\Delta\omega}.
+\]
+Un \(Q\) alto significa que la cavidad pierde poca energía por ciclo y que su curva de resonancia es estrecha. Un \(Q\) bajo significa más pérdidas y una respuesta menos selectiva.
+
+La potencia almacenada alrededor de la resonancia se describe mediante una curva de tipo
+\[
+\langle P(\omega)\rangle=
+\frac{\langle P(\omega_0)\rangle}
+{1+\left[2Q\frac{\omega-\omega_0}{\omega_0}\right]^2}.
+\]
+El ancho de banda \(\Delta\omega\) se mide entre los puntos de semipotencia.
+
+## 4. Conceptos clave
+
+1. Modo de propagación.
+
+Definición precisa: distribución espacial permitida del campo electromagnético en una guía, asociada a un autovalor \(k_c\) y a una constante de propagación \(\beta\).
+
+Explicación desarrollada: la guía no admite cualquier distribución de campo. Las paredes imponen condiciones de contorno que seleccionan patrones transversales concretos. Cada patrón es un modo. En una guía rectangular se etiquetan como \(TE_{mn}\) o \(TM_{mn}\); en una cavidad se añade un tercer índice longitudinal.
+
+Ejemplo: \(TE_{10}\) en guía rectangular es el modo dominante cuando \(a>b\).
+
+Relación con otros conceptos: un modo tiene frecuencia de corte, impedancia de onda, velocidad de fase, velocidad de grupo y distribución de potencia.
+
+Posible forma de preguntarlo en examen: “Indique qué modos se propagan en una guía rectangular de dimensiones dadas a una frecuencia determinada”.
+
+2. Número de onda de corte \(k_c\).
+
+Definición precisa: autovalor transversal que aparece al resolver la ecuación de ondas en la sección de la guía.
+
+Explicación desarrollada: \(k_c\) depende de la geometría y de los índices del modo. No depende de la frecuencia de excitación. Una vez fijado \(k_c\), la relación de dispersión determina \(\beta\).
+
+Ejemplo: en guía rectangular,
+\[
+k_{c,mn}=
+\sqrt{\left(\frac{m\pi}{a}\right)^2+
+      \left(\frac{n\pi}{b}\right)^2}.
+\]
+
+Relación con otros conceptos: fija la frecuencia de corte mediante \(f_c=k_c/(2\pi\sqrt{\mu\epsilon})\).
+
+Posible forma de preguntarlo en examen: “Obtenga la frecuencia de corte del modo \(TE_{10}\) o \(TM_{11}\)”.
+
+3. Frecuencia de corte.
+
+Definición precisa: frecuencia para la cual \(\beta=0\) en un modo dado.
+
+Explicación desarrollada: separa el régimen propagante del evanescente. Por encima de corte el modo transporta energía a lo largo de la guía; por debajo, el campo decae exponencialmente.
+
+Ejemplo:
+\[
+f_{c,10}=\frac{v_0}{2a}
+\]
+para el modo \(TE_{10}\) rectangular.
+
+Relación con otros conceptos: depende de \(k_c\), de \(\epsilon\), de \(\mu\) y de las dimensiones de la guía.
+
+Posible forma de preguntarlo en examen: “Calcule el intervalo de frecuencias para transmisión monomodo”.
+
+4. Modo TE.
+
+Definición precisa: modo transversal eléctrico, caracterizado por \(E_z=0\).
+
+Explicación desarrollada: el campo eléctrico no tiene componente longitudinal. El campo magnético sí puede tener \(H_z\), y esa componente se usa para generar todas las demás componentes.
+
+Ejemplo: \(TE_{10}\) en guía rectangular.
+
+Relación con otros conceptos: satisface \(\partial H_z/\partial n=0\) en las paredes conductoras.
+
+Posible forma de preguntarlo en examen: “Aplique las condiciones de frontera al modo TE en una guía rectangular”.
+
+5. Modo TM.
+
+Definición precisa: modo transversal magnético, caracterizado por \(H_z=0\).
+
+Explicación desarrollada: el campo magnético no tiene componente longitudinal. La componente clave es \(E_z\), que se anula en las paredes.
+
+Ejemplo: \(TM_{11}\) es el modo TM de orden más bajo en guía rectangular.
+
+Relación con otros conceptos: sus índices \(m,n\) no pueden ser nulos.
+
+Posible forma de preguntarlo en examen: “Determine el modo TM de orden más bajo y su frecuencia de corte”.
+
+6. Modo evanescente.
+
+Definición precisa: modo que opera por debajo de su frecuencia de corte, con \(\beta\) imaginaria.
+
+Explicación desarrollada: no se propaga como una onda progresiva real a lo largo de la guía. Su amplitud disminuye exponencialmente.
+
+Ejemplo: si \(f<f_{c,10}\), ni siquiera el modo dominante se propaga en una guía rectangular.
+
+Relación con otros conceptos: aparece cuando \(\omega^2\mu\epsilon<k_c^2\).
+
+Posible forma de preguntarlo en examen: “Explique qué ocurre si la frecuencia de trabajo es inferior a la de corte”.
+
+7. Modo dominante.
+
+Definición precisa: modo con la frecuencia de corte más baja.
+
+Explicación desarrollada: es el primero que puede propagarse al aumentar la frecuencia. En la guía rectangular ordinaria con \(a>b\), es \(TE_{10}\). En la guía circular, es \(TE_{11}\).
+
+Ejemplo: en guía rectangular vacía, \(TE_{10}\) empieza a propagarse cuando \(f>c/(2a)\).
+
+Relación con otros conceptos: define el límite inferior del intervalo monomodo.
+
+Posible forma de preguntarlo en examen: “Analice el modo fundamental en una guía rectangular”.
+
+8. Impedancia de onda modal.
+
+Definición precisa: relación entre las amplitudes de los campos transversales eléctrico y magnético en un modo.
+
+Explicación desarrollada: no es simplemente la impedancia del medio libre; depende de si el modo es TE o TM y de la relación entre \(\beta\) y \(k\).
+
+Ejemplo:
+\[
+Z_{TE}=Z\frac{k}{\beta},\qquad
+Z_{TM}=Z\frac{\beta}{k},
+\]
+donde \(Z=\sqrt{\mu/\epsilon}\).
+
+Relación con otros conceptos: cambia al acercarse a la frecuencia de corte.
+
+Posible forma de preguntarlo en examen: “Calcule la impedancia de onda del modo que se propaga”.
+
+9. Velocidad de fase.
+
+Definición precisa:
+\[
+v_{ph}=\frac{\omega}{\beta}.
+\]
+
+Explicación desarrollada: mide el avance de una superficie de fase constante. En guías puede superar \(v_0\), pero no representa la velocidad de transporte de energía.
+
+Ejemplo:
+\[
+v_{ph}=\frac{v_0}{\sqrt{1-(\omega_c/\omega)^2}}.
+\]
+
+Relación con otros conceptos: se relaciona con \(v_g\) mediante \(v_{ph}v_g=v_0^2\).
+
+Posible forma de preguntarlo en examen: “Discuta si \(v_{ph}\) puede ser mayor que la velocidad de la luz en el medio”.
+
+10. Velocidad de grupo.
+
+Definición precisa:
+\[
+v_g=\frac{d\omega}{d\beta}.
+\]
+
+Explicación desarrollada: es la velocidad asociada al transporte de energía o información en la guía.
+
+Ejemplo:
+\[
+v_g=v_0\sqrt{1-(\omega_c/\omega)^2}.
+\]
+
+Relación con otros conceptos: \(\langle P\rangle=\langle W\rangle v_g\).
+
+Posible forma de preguntarlo en examen: “Interprete físicamente la velocidad de grupo en una guía”.
+
+11. Guía rectangular.
+
+Definición precisa: guía de ondas con sección transversal rectangular \(a\times b\).
+
+Explicación desarrollada: permite soluciones separables en senos y cosenos. Es especialmente útil porque se puede elegir \(a>b\) para evitar degeneraciones y operar en modo dominante.
+
+Ejemplo: la guía estándar de banda X tiene dimensiones del orden de centímetros y opera en microondas.
+
+Relación con otros conceptos: su modo dominante es \(TE_{10}\).
+
+Posible forma de preguntarlo en examen: “Ordene los primeros modos de una guía rectangular”.
+
+12. Guía circular.
+
+Definición precisa: guía de ondas con sección transversal circular de radio \(a\).
+
+Explicación desarrollada: las soluciones se expresan con funciones de Bessel. Las condiciones de contorno se traducen en ceros de \(J_n\) o \(J_n'\).
+
+Ejemplo: \(TE_{11}\) es el modo fundamental.
+
+Relación con otros conceptos: el margen monomodo es más estrecho que en guía rectangular.
+
+Posible forma de preguntarlo en examen: “Determine los modos que se propagan en una guía cilíndrica a una frecuencia dada”.
+
+13. Potencia media transmitida.
+
+Definición precisa: flujo medio de energía electromagnética a través de la sección transversal de la guía.
+
+Explicación desarrollada: se calcula integrando el vector de Poynting medio sobre la sección. En modos propagantes, se relaciona con la energía almacenada y la velocidad de grupo.
+
+Ejemplo:
+\[
+\langle P\rangle=\frac12\int_{S_T}(\mathbf{E}_t\times\mathbf{H}_t^*)\cdot d\mathbf{s}.
+\]
+
+Relación con otros conceptos: sirve para definir la atenuación cuando hay pérdidas.
+
+Posible forma de preguntarlo en examen: “Obtenga la potencia transportada por el modo \(TE_{10}\)”.
+
+14. Atenuación.
+
+Definición precisa: constante \(\alpha\) que mide el decaimiento de la amplitud del campo como \(e^{-\alpha z}\).
+
+Explicación desarrollada: aparece por pérdidas en paredes conductoras reales o en dieléctricos disipativos. La potencia decae como \(e^{-2\alpha z}\).
+
+Ejemplo:
+\[
+\alpha=\frac{\langle P_D'\rangle}{2\langle P\rangle}.
+\]
+
+Relación con otros conceptos: depende del modo, de la frecuencia, de la conductividad de las paredes y de la tangente de pérdidas del dieléctrico.
+
+Posible forma de preguntarlo en examen: “Explique el origen físico de la atenuación en una guía”.
+
+15. Cavidad resonante.
+
+Definición precisa: región dieléctrica cerrada por paredes conductoras que almacena energía electromagnética a frecuencias discretas.
+
+Explicación desarrollada: puede construirse conceptualmente cerrando un tramo de guía. La onda progresiva se convierte en onda estacionaria. La cuantización transversal se combina con la cuantización longitudinal.
+
+Ejemplo:
+\[
+\omega_{mnp}=v_0\sqrt{k_{c,mn}^2+\left(\frac{p\pi}{L}\right)^2}.
+\]
+
+Relación con otros conceptos: procede directamente de los modos de guía.
+
+Posible forma de preguntarlo en examen: “Calcule la frecuencia de resonancia de una cavidad rectangular”.
+
+16. Factor de calidad \(Q\).
+
+Definición precisa:
+\[
+Q=2\pi\frac{\text{energía media almacenada}}
+             {\text{energía disipada por ciclo}},
+\]
+evaluado en resonancia.
+
+Explicación desarrollada: mide la selectividad de la cavidad. Un \(Q\) alto indica poca disipación y banda estrecha.
+
+Ejemplo:
+\[
+Q=\frac{\omega_0}{\Delta\omega}.
+\]
+
+Relación con otros conceptos: conecta pérdidas, energía almacenada y ancho de banda.
+
+Posible forma de preguntarlo en examen: “Defina el factor de calidad y relacione \(Q\) con el ancho de banda”.
+
+## 5. Relaciones entre ideas
+
+La estructura lógica del capítulo es muy clara. Primero se plantea una ecuación de ondas en un sistema con paredes conductoras. Después se observa que las condiciones de contorno transforman el problema en uno de autovalores. Ese paso es el origen de todo lo demás: modos discretos, frecuencias de corte, dispersión, régimen evanescente y resonancias.
+
+Los modos TE y TM dependen de la misma idea, pero se oponen en la componente longitudinal que se anula. En TE se anula \(E_z\) y se resuelve \(H_z\); en TM se anula \(H_z\) y se resuelve \(E_z\). Esta oposición se refleja también en las condiciones de contorno: Neumann para \(H_z\) en TE, Dirichlet para \(E_z\) en TM. También se refleja en la impedancia modal: \(Z_{TE}\) aumenta al acercarse al corte, mientras que \(Z_{TM}\) disminuye.
+
+La frecuencia de corte conecta geometría y propagación. La geometría fija \(k_c\); \(k_c\) fija \(f_c\); \(f_c\) decide si el modo se propaga. Esta cadena conceptual es examinable. Si se rompe en cualquiera de sus pasos, el resultado suele ser físicamente absurdo.
+
+La dispersión nace porque \(\beta\) no es simplemente \(k=\omega\sqrt{\mu\epsilon}\), sino
+\[
+\beta=\sqrt{\omega^2\mu\epsilon-k_c^2}.
+\]
+Esto hace que la velocidad de fase y la de grupo dependan de la frecuencia. La consecuencia práctica es que una guía se comporta de forma distinta cerca del corte que muy por encima del corte.
+
+La guía rectangular y la circular son aplicaciones de la misma teoría. La rectangular conduce a senos y cosenos; la circular conduce a funciones de Bessel. No son dos teorías distintas. Cambia la geometría y, por tanto, cambian los autovalores. En rectangular, el modo dominante es \(TE_{10}\); en circular, \(TE_{11}\).
+
+La potencia transmitida depende de la distribución modal. No se calcula con una fórmula escalar aislada, sino integrando el flujo de Poynting. A partir de ahí se define la atenuación: si hay potencia disipada por unidad de longitud, la potencia transmitida debe disminuir a lo largo de \(z\).
+
+Las cavidades resonantes son la continuación natural de las guías. Una guía permite propagación; una cavidad, al cerrarse, impone nodos y forma ondas estacionarias. El espectro discreto transversal se completa con un índice longitudinal \(p\). Por eso los modos pasan de \(TE_{mn}\) a \(TE_{mnp}\), o de \(TM_{mn}\) a \(TM_{mnp}\).
+
+El factor \(Q\) une energía, pérdidas y selectividad. Una cavidad almacena energía, pero las pérdidas reales ensanchan la resonancia. Cuanta menos energía se pierde por ciclo, mayor es \(Q\) y más estrecha es la banda de resonancia.
+
+No hay una evolución histórica desarrollada en el capítulo. La evolución es conceptual: de propagación libre a propagación guiada, de guía ideal a guía con pérdidas, y de guía abierta longitudinalmente a cavidad cerrada resonante.
+
+## 6. Errores habituales
+
+1. Confundir modo TE con modo TM.
+
+Formulación del error: decir que en TE se anula \(H_z\) o que en TM se anula \(E_z\).
+
+Por qué está mal: las siglas se refieren al campo que es transversal. TE significa campo eléctrico transversal, por tanto \(E_z=0\). TM significa campo magnético transversal, por tanto \(H_z=0\).
+
+Corrección: recordar:
+\[
+TE:\ E_z=0,\qquad TM:\ H_z=0.
+\]
+
+Ejemplo de respuesta incorrecta: “En un modo TE se resuelve \(E_z\) porque el campo eléctrico es el importante”.
+
+Ejemplo de respuesta correcta: “En un modo TE se resuelve \(H_z\), ya que \(E_z=0\), y después se obtienen las componentes transversales”.
+
+2. Permitir índices nulos en modos TM rectangulares.
+
+Formulación del error: aceptar \(TM_{10}\) o \(TM_{01}\) en una guía rectangular.
+
+Por qué está mal: en TM,
+\[
+E_z\propto \sin(m\pi x/a)\sin(n\pi y/b).
+\]
+Si \(m=0\) o \(n=0\), la solución se anula.
+
+Corrección: en modos TM rectangulares, \(m,n\geq1\). En TE, uno puede ser cero, pero no ambos.
+
+Ejemplo de respuesta incorrecta: “El modo TM dominante en rectangular es \(TM_{10}\)”.
+
+Ejemplo de respuesta correcta: “El modo TM de orden más bajo en rectangular es \(TM_{11}\)”.
+
+3. Decir que la guía transmite por debajo de corte.
+
+Formulación del error: calcular campos sinusoidales propagantes aunque \(f<f_c\).
+
+Por qué está mal: si \(f<f_c\), \(\beta\) no es real. La onda no se propaga indefinidamente; es evanescente.
+
+Corrección: comprobar siempre \(f>f_c\) antes de afirmar que un modo se transmite.
+
+Ejemplo de respuesta incorrecta: “Como hay un modo \(TE_{10}\), se propaga siempre”.
+
+Ejemplo de respuesta correcta: “El modo \(TE_{10}\) sólo se propaga si \(f>f_{c,10}\)”.
+
+4. Confundir \(\lambda\), \(\lambda_c\) y \(\lambda_g\).
+
+Formulación del error: usar la longitud de onda libre como si fuera la longitud de onda en la guía.
+
+Por qué está mal: en la guía la constante de propagación es \(\beta\), no \(k\). Por eso \(\lambda_g=2\pi/\beta\).
+
+Corrección:
+\[
+\frac{1}{\lambda_g^2}=\frac{1}{\lambda^2}-\frac{1}{\lambda_c^2}.
+\]
+
+Ejemplo de respuesta incorrecta: “La longitud de onda en la guía es \(c/f\)”.
+
+Ejemplo de respuesta correcta: “\(c/f\) es la longitud de onda en aire libre; en la guía hay que usar \(\lambda_g=2\pi/\beta\)”.
+
+5. Interpretar \(v_{ph}>c\) como transporte superlumínico de energía.
+
+Formulación del error: concluir que la guía transmite energía a velocidad mayor que la de la luz porque \(v_{ph}>v_0\).
+
+Por qué está mal: \(v_{ph}\) es velocidad de fase. La velocidad asociada a energía e información es \(v_g\), que es menor que \(v_0\).
+
+Corrección:
+\[
+v_{ph}v_g=v_0^2.
+\]
+
+Ejemplo de respuesta incorrecta: “La energía viaja más rápido que la luz en la guía”.
+
+Ejemplo de respuesta correcta: “La fase puede avanzar con velocidad mayor que \(v_0\), pero la energía se transporta con \(v_g<v_0\)”.
+
+6. Olvidar que la geometría fija los modos.
+
+Formulación del error: usar fórmulas de guía rectangular en una guía circular, o al revés.
+
+Por qué está mal: los autovalores dependen de las condiciones de contorno y de la geometría. En rectangular aparecen senos/cosenos; en circular, funciones de Bessel.
+
+Corrección: elegir primero el sistema de coordenadas y la geometría.
+
+Ejemplo de respuesta incorrecta: “Para una guía circular uso \(k_c=\pi/a\)”.
+
+Ejemplo de respuesta correcta: “Para una guía circular, \(k_c\) se obtiene de ceros de \(J_n\) o \(J_n'\)”.
+
+7. Creer que una cavidad tiene una sola frecuencia de resonancia.
+
+Formulación del error: tratar la cavidad como un circuito RLC con una única resonancia.
+
+Por qué está mal: una cavidad tiene un conjunto discreto indefinido de resonancias, asociadas a índices \(m,n,p\).
+
+Corrección:
+\[
+\omega_{mnp}=v_0\sqrt{k_{c,mn}^2+(p\pi/L)^2}.
+\]
+
+Ejemplo de respuesta incorrecta: “La cavidad resuena a su frecuencia natural única”.
+
+Ejemplo de respuesta correcta: “La cavidad presenta una familia discreta de frecuencias de resonancia”.
+
+8. Definir mal el factor \(Q\).
+
+Formulación del error: decir que \(Q\) es simplemente una frecuencia o una potencia.
+
+Por qué está mal: \(Q\) es adimensional y compara energía almacenada con energía perdida por ciclo, o frecuencia de resonancia con ancho de banda.
+
+Corrección:
+\[
+Q=\omega_0\frac{W}{P_{\text{perdida}}}=\frac{\omega_0}{\Delta\omega}.
+\]
+
+Ejemplo de respuesta incorrecta: “\(Q\) es la energía que guarda la cavidad”.
+
+Ejemplo de respuesta correcta: “\(Q\) mide cuántas oscilaciones efectivas puede sostener la cavidad antes de disipar una fracción significativa de energía”.
+
+9. Calcular atenuación sin distinguir pérdidas de pared y pérdidas dieléctricas.
+
+Formulación del error: meter todas las pérdidas en una sola constante sin justificar el mecanismo.
+
+Por qué está mal: las paredes producen pérdidas superficiales ligadas a \(H_t\); el dieléctrico disipativo introduce \(\epsilon\) compleja y tangente de pérdidas.
+
+Corrección: identificar primero el origen de la pérdida.
+
+Ejemplo de respuesta incorrecta: “La atenuación se debe siempre al dieléctrico”.
+
+Ejemplo de respuesta correcta: “En una guía metálica real puede haber atenuación por conductividad finita de paredes y por pérdidas en el material de relleno”.
+
+10. No ordenar los modos antes de decidir el régimen monomodo.
+
+Formulación del error: suponer que basta con \(f>f_{c,10}\).
+
+Por qué está mal: eso garantiza que el modo dominante se propaga, pero no que sea el único.
+
+Corrección: exigir
+\[
+f_{c,\text{dominante}}<f<f_{c,\text{siguiente}}.
+\]
+
+Ejemplo de respuesta incorrecta: “Si \(f>f_{c,10}\), la guía opera monomodo”.
+
+Ejemplo de respuesta correcta: “Opera monomodo sólo si \(f\) está por encima de \(TE_{10}\) y por debajo del primer modo superior”.
+
+## 7. Preguntas orientadas a examen
+
+### 10 preguntas fáciles
+
+F1. ¿Qué problema físico estudia una guía de ondas?
+
+F2. Defina modo TE y modo TM.
+
+F3. ¿Qué es el número de onda de corte \(k_c\)?
+
+F4. ¿Qué condición define la frecuencia de corte?
+
+F5. ¿Qué significa que un modo sea evanescente?
+
+F6. Escriba la relación de dispersión de un modo en una guía sin pérdidas.
+
+F7. ¿Cuál es el modo dominante en una guía rectangular con \(a>b\)?
+
+F8. ¿Cuál es el modo dominante en una guía circular?
+
+F9. ¿Qué representa el factor de calidad \(Q\) de una cavidad?
+
+F10. ¿Cómo se relacionan \(Q\) y el ancho de banda?
+
+### 10 preguntas medias
+
+M1. Explique por qué los modos de una guía forman un espectro discreto.
+
+M2. Obtenga la frecuencia de corte de un modo \(TE_{mn}\) o \(TM_{mn}\) en una guía rectangular.
+
+M3. Justifique por qué \(TM_{10}\) no existe en una guía rectangular.
+
+M4. Explique el significado físico de \(v_{ph}\) y \(v_g\) en una guía.
+
+M5. Deduzca el intervalo de funcionamiento monomodo de una guía rectangular.
+
+M6. Explique cómo se determinan los modos de una guía circular.
+
+M7. Compare el comportamiento de \(Z_{TE}\) y \(Z_{TM}\) cerca de la frecuencia de corte.
+
+M8. Explique el origen físico de la atenuación por paredes metálicas reales.
+
+M9. Explique cómo se calcula la atenuación debida a un dieléctrico disipativo.
+
+M10. Explique cómo se obtiene una cavidad resonante a partir de una guía.
+
+### 5 preguntas difíciles
+
+D1. Derive la relación entre frecuencia de corte, constante de propagación, velocidad de fase y velocidad de grupo.
+
+D2. Para una guía rectangular de dimensiones \(a\times b\), con \(a>b\), ordene los primeros modos y discuta qué relación entre \(a\) y \(b\) favorece el funcionamiento monomodo.
+
+D3. En una guía circular, explique por qué los ceros de \(J_n\) corresponden a modos TM y los ceros de \(J_n'\) a modos TE.
+
+D4. Razone la relación \(\langle P\rangle=\langle W\rangle v_g\) y su significado físico.
+
+D5. Explique por qué las pérdidas de una cavidad real producen un ancho de banda finito y cómo se refleja esto en \(Q\).
+
+### 5 preguntas de desarrollo largo
+
+L1. Desarrolle la teoría general de los modos TE y TM en una guía de ondas sin pérdidas.
+
+L2. Estudie la guía rectangular: ecuación transversal, condiciones de contorno, frecuencias de corte y modo dominante.
+
+L3. Estudie la guía circular: aparición de funciones de Bessel, condiciones de contorno y modo fundamental.
+
+L4. Explique la potencia transmitida y la atenuación en guías reales.
+
+L5. Desarrolle la teoría de cavidades resonantes y factor de calidad.
+
+### 5 preguntas de relación entre conceptos
+
+R1. Relacione geometría de la guía, condiciones de contorno y frecuencia de corte.
+
+R2. Relacione modos TE/TM con impedancia de onda y comportamiento cerca del corte.
+
+R3. Relacione frecuencia de corte, modo evanescente y transmisión monomodo.
+
+R4. Relacione potencia media, energía almacenada y velocidad de grupo.
+
+R5. Relacione cavidad resonante, onda estacionaria, pérdidas y factor \(Q\).
+
+## 8. Respuestas modelo
+
+### Respuestas a preguntas fáciles
+
+F1. Una guía de ondas estudia la propagación de ondas electromagnéticas dentro de una estructura conductora que impone condiciones de contorno. El problema no es sólo que la onda avance, sino determinar qué configuraciones de campo pueden existir y a qué frecuencias se propagan.
+
+F2. Un modo TE es un modo transversal eléctrico: \(E_z=0\). Un modo TM es un modo transversal magnético: \(H_z=0\). En TE se resuelve normalmente \(H_z\); en TM se resuelve \(E_z\).
+
+F3. \(k_c\) es el autovalor transversal de la ecuación de ondas en la sección de la guía. Depende de la geometría y de los índices del modo. Fija la frecuencia de corte.
+
+F4. La frecuencia de corte se define por \(\beta=0\). En ese punto,
+\[
+\omega_c=\frac{k_c}{\sqrt{\mu\epsilon}}.
+\]
+
+F5. Un modo evanescente es un modo por debajo de su frecuencia de corte. Su constante de propagación no es real, por lo que el campo no se propaga como onda progresiva sino que decae exponencialmente.
+
+F6. La relación de dispersión es
+\[
+\beta^2=\omega^2\mu\epsilon-k_c^2.
+\]
+
+F7. En una guía rectangular con \(a>b\), el modo dominante es \(TE_{10}\).
+
+F8. En una guía circular, el modo dominante es \(TE_{11}\).
+
+F9. El factor \(Q\) mide la relación entre energía almacenada y energía perdida por ciclo en una cavidad. Un \(Q\) alto indica bajas pérdidas y gran selectividad en frecuencia.
+
+F10. Se relacionan por
+\[
+Q=\frac{\omega_0}{\Delta\omega}.
+\]
+Un ancho de banda pequeño implica un \(Q\) alto.
+
+### Respuestas a preguntas medias
+
+M1. Los modos forman un espectro discreto porque la sección de la guía está limitada por paredes conductoras. La ecuación transversal de ondas, junto con las condiciones de contorno, sólo admite ciertos autovalores \(k_c\). Cada autovalor corresponde a un modo.
+
+M2. En una guía rectangular,
+\[
+k_{c,mn}=
+\sqrt{\left(\frac{m\pi}{a}\right)^2+
+      \left(\frac{n\pi}{b}\right)^2}.
+\]
+Por tanto,
+\[
+f_{c,mn}=\frac{1}{2\pi\sqrt{\mu\epsilon}}k_{c,mn}
+        =\frac{v_0}{2}
+\sqrt{\left(\frac{m}{a}\right)^2+
+      \left(\frac{n}{b}\right)^2}.
+\]
+
+M3. En modos TM,
+\[
+E_z=E_0\sin\left(\frac{m\pi x}{a}\right)
+        \sin\left(\frac{n\pi y}{b}\right)e^{-j\beta z}.
+\]
+Si \(m=0\) o \(n=0\), uno de los senos es cero en toda la sección y el campo se anula. Por eso \(TM_{10}\) no es un modo físico de la guía rectangular.
+
+M4. La velocidad de fase es \(v_{ph}=\omega/\beta\) y mide el avance de la fase. La velocidad de grupo es \(v_g=d\omega/d\beta\) y se asocia al transporte de energía. En guías,
+\[
+v_{ph}=\frac{v_0}{\sqrt{1-(\omega_c/\omega)^2}},
+\qquad
+v_g=v_0\sqrt{1-(\omega_c/\omega)^2}.
+\]
+Así, \(v_{ph}>v_0\) y \(v_g<v_0\) por encima del corte.
+
+M5. Para operar monomodo en una guía rectangular con \(a>b\), la frecuencia debe cumplir
+\[
+f_{c,10}<f<f_{c,\text{siguiente}}.
+\]
+El modo dominante es \(TE_{10}\), con \(f_{c,10}=v_0/(2a)\). El siguiente corte será el menor entre \(TE_{20}\), \(TE_{01}\) y, si procede, otros modos superiores. En la práctica se compara \(v_0/a\) con \(v_0/(2b)\).
+
+M6. En guía circular se resuelve la ecuación transversal en coordenadas cilíndricas. La parte angular exige índices enteros y la parte radial da funciones de Bessel \(J_n(k_cr)\). En TM se imponen ceros de \(J_n\); en TE se imponen ceros de \(J_n'\). De esos ceros se obtienen los \(k_c\) y las frecuencias de corte.
+
+M7. Para TE,
+\[
+Z_{TE}=Z\frac{k}{\beta}.
+\]
+Al acercarse al corte, \(\beta\to0\), luego \(Z_{TE}\to\infty\). Para TM,
+\[
+Z_{TM}=Z\frac{\beta}{k},
+\]
+y por tanto \(Z_{TM}\to0\) cerca del corte.
+
+M8. La atenuación por paredes aparece porque las paredes no son conductores perfectos. El campo magnético tangencial induce corrientes superficiales; al ser la conductividad finita, esas corrientes disipan energía por efecto Joule. Esa energía sale de la onda guiada, por lo que la amplitud decae como \(e^{-\alpha z}\).
+
+M9. Si el dieléctrico tiene permitividad compleja \(\epsilon=\epsilon'-j\epsilon''\), la constante de propagación también se hace compleja:
+\[
+\kappa=\beta-j\alpha.
+\]
+Para pérdidas pequeñas,
+\[
+\alpha=\frac{\omega^2\mu_0\epsilon''}{2\beta}
+      =\frac{\beta^2+k_c^2}{2\beta}\tan\delta.
+\]
+La fase cambia poco, pero aparece atenuación.
+
+M10. Una cavidad se obtiene cerrando un tramo de guía con paredes conductoras transversales. La onda incidente y la reflejada forman una onda estacionaria. La condición de nodos en los extremos exige
+\[
+\beta=\frac{p\pi}{L},
+\]
+y con la dispersión se obtienen frecuencias discretas de resonancia.
+
+### Respuestas a preguntas difíciles
+
+D1. Partimos de
+\[
+\beta^2=\omega^2\mu\epsilon-k_c^2.
+\]
+El corte se da cuando \(\beta=0\), de modo que
+\[
+\omega_c=\frac{k_c}{\sqrt{\mu\epsilon}}.
+\]
+Definiendo \(v_0=1/\sqrt{\mu\epsilon}\),
+\[
+\beta=\frac{\omega}{v_0}\sqrt{1-(\omega_c/\omega)^2}.
+\]
+Entonces
+\[
+v_{ph}=\frac{\omega}{\beta}
+=\frac{v_0}{\sqrt{1-(\omega_c/\omega)^2}},
+\]
+y derivando la relación de dispersión,
+\[
+v_g=\frac{d\omega}{d\beta}
+=v_0\sqrt{1-(\omega_c/\omega)^2}.
+\]
+Por tanto,
+\[
+v_{ph}v_g=v_0^2.
+\]
+La interpretación es que la fase puede avanzar más rápido que \(v_0\), pero la energía se transporta con \(v_g\), menor que \(v_0\).
+
+D2. En una guía rectangular,
+\[
+f_{c,mn}=\frac{v_0}{2}
+\sqrt{\left(\frac{m}{a}\right)^2+\left(\frac{n}{b}\right)^2}.
+\]
+Si \(a>b\), el menor corte permitido es \(TE_{10}\), porque los modos TE permiten que un índice sea cero. Sus cortes relevantes son
+\[
+f_{c,10}=\frac{v_0}{2a},\quad
+f_{c,20}=\frac{v_0}{a},\quad
+f_{c,01}=\frac{v_0}{2b}.
+\]
+Para tener margen monomodo se busca separar \(f_{c,10}\) del primer modo superior, sin hacer \(b\) demasiado pequeño porque aumentarían las pérdidas. El capítulo señala que una elección práctica habitual es \(a=2b\).
+
+D3. En la guía circular la solución longitudinal radial es \(J_n(k_cr)\). Para modos TM se impone \(E_z=0\) en la pared \(r=a\). Por eso debe cumplirse \(J_n(k_ca)=0\), y los autovalores proceden de los ceros de \(J_n\). Para modos TE se impone \(\partial H_z/\partial r=0\) en \(r=a\). Por eso debe cumplirse \(J_n'(k_ca)=0\), y los autovalores proceden de los ceros de \(J_n'\).
+
+D4. La potencia media transportada se obtiene integrando el vector de Poynting medio sobre la sección transversal. La energía media almacenada por unidad de longitud se obtiene integrando las densidades eléctrica y magnética. En modos propagantes ambas energías medias son iguales. La relación
+\[
+\langle P\rangle=\langle W\rangle v_g
+\]
+significa que la potencia es energía por unidad de longitud multiplicada por la velocidad con la que esa energía avanza. Por eso \(v_g\), no \(v_{ph}\), es la velocidad relevante para transporte energético.
+
+D5. Una cavidad ideal sin pérdidas almacenaría energía indefinidamente y respondería sólo en frecuencias discretas exactas. Una cavidad real pierde energía en paredes, dieléctrico y aberturas de acoplo. Esa pérdida hace que la respuesta en frecuencia tenga anchura finita alrededor de \(\omega_0\). El factor
+\[
+Q=\omega_0\frac{W}{P_{\text{perdida}}}
+\]
+mide cuánta energía se mantiene frente a la que se pierde. Como
+\[
+Q=\frac{\omega_0}{\Delta\omega},
+\]
+un \(Q\) grande corresponde a una resonancia estrecha.
+
+### Respuestas a preguntas de desarrollo largo
+
+L1. En una guía sin pérdidas se separa la dependencia longitudinal mediante \(e^{-j\beta z}\). Las componentes longitudinales satisfacen
+\[
+(\nabla_t^2+k_c^2)e_z=0,\qquad
+(\nabla_t^2+k_c^2)h_z=0.
+\]
+Las condiciones de contorno convierten estas ecuaciones en problemas de autovalores. En modos TE, \(E_z=0\), se resuelve \(H_z\) y se impone \(\partial H_z/\partial n=0\). En modos TM, \(H_z=0\), se resuelve \(E_z\) y se impone \(E_z=0\) en las paredes. Para cada autovalor,
+\[
+\beta^2=\omega^2\mu\epsilon-k_c^2.
+\]
+La frecuencia de corte separa propagación de evanescencia. Los campos transversales se obtienen derivando las componentes longitudinales, y las impedancias modales son distintas para TE y TM.
+
+L2. En guía rectangular se usan coordenadas \(x,y,z\). La sección es \(a\times b\). Por separación de variables, los modos TM tienen
+\[
+E_z=E_0\sin\left(\frac{m\pi x}{a}\right)
+\sin\left(\frac{n\pi y}{b}\right)e^{-j\beta z},
+\]
+con \(m,n\geq1\). Los modos TE tienen
+\[
+H_z=H_0\cos\left(\frac{m\pi x}{a}\right)
+\cos\left(\frac{n\pi y}{b}\right)e^{-j\beta z},
+\]
+con \(m,n\) no nulos simultáneamente. En ambos casos,
+\[
+k_{c,mn}=
+\sqrt{\left(\frac{m\pi}{a}\right)^2+
+      \left(\frac{n\pi}{b}\right)^2},
+\]
+y
+\[
+f_{c,mn}=\frac{v_0}{2}
+\sqrt{\left(\frac{m}{a}\right)^2+
+      \left(\frac{n}{b}\right)^2}.
+\]
+Si \(a>b\), el modo dominante es \(TE_{10}\), con \(f_c=v_0/(2a)\). La operación monomodo exige trabajar por encima de ese corte y por debajo del primer modo superior.
+
+L3. En guía circular se usan coordenadas cilíndricas. La ecuación transversal separada conduce a una parte angular \(e^{jn\varphi}\), con \(n\) entero, y a una parte radial que satisface la ecuación de Bessel. Se descartan las funciones de segunda especie por ser singulares en el origen. Para TM,
+\[
+J_n(k_ca)=0,
+\]
+por lo que \(k_c=p_{nm}/a\). Para TE,
+\[
+J_n'(k_ca)=0,
+\]
+por lo que \(k_c=p'_{nm}/a\). El primer cero relevante de \(J_n'\) es aproximadamente \(1,841\), lo que da como modo fundamental \(TE_{11}\). El siguiente modo es \(TM_{01}\), asociado al cero \(2,405\). El intervalo monomodo es relativamente estrecho.
+
+L4. La potencia media se calcula mediante el flujo del vector de Poynting:
+\[
+\langle P\rangle=\frac12\int_{S_T}(\mathbf{E}_t\times\mathbf{H}_t^*)\cdot d\mathbf{s}.
+\]
+La energía almacenada por unidad de longitud se obtiene integrando las densidades eléctrica y magnética medias:
+\[
+\langle W_E\rangle=\frac14\int\epsilon\mathbf{E}\cdot\mathbf{E}^*ds,
+\quad
+\langle W_H\rangle=\frac14\int\mu\mathbf{H}\cdot\mathbf{H}^*ds.
+\]
+En modos propagantes, ambas son iguales y
+\[
+\langle P\rangle=\langle W\rangle v_g.
+\]
+En guías reales hay atenuación por paredes y por dieléctrico. Si la amplitud decae como \(e^{-\alpha z}\), la potencia decae como \(e^{-2\alpha z}\), y
+\[
+\alpha=\frac{\langle P_D'\rangle}{2\langle P\rangle}.
+\]
+Las pérdidas de pared proceden de corrientes inducidas y efecto Joule; las pérdidas dieléctricas se describen con \(\epsilon=\epsilon'-j\epsilon''\).
+
+L5. Una cavidad resonante puede construirse cerrando un tramo de guía. La onda progresiva y la reflejada forman una onda estacionaria. La condición de contorno en los extremos impone
+\[
+\beta=\frac{p\pi}{L}.
+\]
+Como el modo transversal ya tenía \(k_{c,mn}\), la frecuencia de resonancia queda
+\[
+\omega_{mnp}=v_0\sqrt{k_{c,mn}^2+\left(\frac{p\pi}{L}\right)^2}.
+\]
+Así aparecen modos \(TE_{mnp}\) o \(TM_{mnp}\). En una cavidad real hay pérdidas, por lo que la resonancia no es infinitamente estrecha. El factor de calidad se define como
+\[
+Q=2\pi\frac{W}{W_{\text{perdida por ciclo}}}
+=\omega_0\frac{W}{P_{\text{perdida}}},
+\]
+y también
+\[
+Q=\frac{\omega_0}{\Delta\omega}.
+\]
+Cuanto mayor es \(Q\), más selectiva es la cavidad.
+
+### Respuestas a preguntas de relación entre conceptos
+
+R1. La geometría fija las condiciones de contorno. Las condiciones de contorno seleccionan los autovalores \(k_c\). Los autovalores fijan las frecuencias de corte. Por eso cambiar de guía rectangular a circular cambia la familia de modos y sus cortes.
+
+R2. En TE se anula \(E_z\), se resuelve \(H_z\) y \(Z_{TE}=Zk/\beta\). En TM se anula \(H_z\), se resuelve \(E_z\) y \(Z_{TM}=Z\beta/k\). Cerca del corte \(\beta\to0\): \(Z_{TE}\) crece y \(Z_{TM}\) tiende a cero.
+
+R3. La frecuencia de corte decide si un modo se propaga. Por debajo del corte el modo es evanescente. Para transmisión monomodo no basta con estar por encima del corte dominante; hay que estar por debajo del siguiente corte.
+
+R4. La potencia media es el flujo de energía por la sección. La energía almacenada media por unidad de longitud mide cuánta energía contiene el tramo de guía. La relación \(\langle P\rangle=\langle W\rangle v_g\) identifica \(v_g\) como velocidad de transporte de energía.
+
+R5. Una cavidad resonante es una guía cerrada que forma ondas estacionarias. Las pérdidas reales impiden una resonancia infinitamente aguda. El factor \(Q\) compara energía almacenada con energía perdida y se relaciona con el ancho de banda por \(Q=\omega_0/\Delta\omega\).
+
+## 9. Resumen final de repaso
+
+Ideas principales:
+
+- Las guías de ondas convierten la propagación electromagnética en un problema de modos.
+- Las condiciones de contorno seleccionan autovalores \(k_c\).
+- Cada modo tiene una frecuencia de corte.
+- Por encima de corte el modo se propaga; por debajo es evanescente.
+- En modos TE, \(E_z=0\); en modos TM, \(H_z=0\).
+- La guía rectangular se resuelve con senos y cosenos.
+- La guía circular se resuelve con funciones de Bessel.
+- La potencia se obtiene con el vector de Poynting.
+- Las pérdidas producen atenuación.
+- Una cavidad resonante es una guía cerrada con ondas estacionarias.
+- El factor \(Q\) mide pérdidas y selectividad.
+
+Conceptos imprescindibles:
+
+- \(\beta^2=\omega^2\mu\epsilon-k_c^2\).
+- \(\omega_c=k_c/\sqrt{\mu\epsilon}\).
+- \(v_{ph}=\omega/\beta\).
+- \(v_g=d\omega/d\beta\).
+- \(v_{ph}v_g=v_0^2\).
+- \(TE:\ E_z=0\).
+- \(TM:\ H_z=0\).
+- Rectangular:
+\[
+k_{c,mn}=\sqrt{(m\pi/a)^2+(n\pi/b)^2}.
+\]
+- Circular:
+\[
+TM:\ J_n(k_ca)=0,\qquad TE:\ J_n'(k_ca)=0.
+\]
+- Cavidad:
+\[
+\omega_{mnp}=v_0\sqrt{k_{c,mn}^2+(p\pi/L)^2}.
+\]
+- Factor de calidad:
+\[
+Q=\omega_0/\Delta\omega.
+\]
+
+Relaciones clave:
+
+- Geometría \(\rightarrow\) condiciones de contorno \(\rightarrow\) autovalores \(\rightarrow\) modos \(\rightarrow\) frecuencias de corte.
+- Frecuencia de corte \(\rightarrow\) propagación o evanescencia.
+- Distribución de campo \(\rightarrow\) potencia transportada.
+- Pérdidas \(\rightarrow\) atenuación \(\rightarrow\) ancho de banda finito en cavidades.
+- Cavidad resonante \(\rightarrow\) guía cerrada \(\rightarrow\) cuantización longitudinal.
+
+Errores que evitar:
+
+- Confundir TE con TM.
+- Admitir \(TM_{10}\) en guía rectangular.
+- Usar \(\lambda=c/f\) como si fuera \(\lambda_g\).
+- Decir que \(v_{ph}>c\) implica transporte de energía superlumínico.
+- Olvidar comparar con el siguiente modo para decidir si hay operación monomodo.
+- Aplicar fórmulas rectangulares a una guía circular.
+- Definir \(Q\) como energía en vez de como relación entre energía almacenada y energía disipada.
+
+## 10. Checklist de dominio
+
+- Si no puedes explicar por qué aparecen frecuencias de corte, falta repasar el problema de autovalores transversal.
+
+- Si confundes \(E_z=0\) con \(H_z=0\), revisar la definición de modos TE y TM.
+
+- Si no sabes decidir si un modo se propaga, falta repasar la condición \(f>f_c\).
+
+- Si calculas \(\lambda_g\) como \(c/f\), revisar la relación entre \(\lambda\), \(\lambda_c\) y \(\lambda_g\).
+
+- Si aceptas \(TM_{10}\) en guía rectangular, revisar las condiciones de contorno de los modos TM.
+
+- Si no puedes justificar por qué el dominante rectangular es \(TE_{10}\), falta repasar la fórmula de \(f_{c,mn}\).
+
+- Si no sabes por qué en guía circular aparecen funciones de Bessel, falta repasar separación de variables en coordenadas cilíndricas.
+
+- Si confundes los ceros de \(J_n\) y \(J_n'\), revisar la diferencia entre condiciones TM y TE en guía circular.
+
+- Si dices que \(v_{ph}>v_0\) transmite energía más rápido que \(v_0\), revisar velocidad de grupo.
+
+- Si puedes ordenar los cortes \(TE_{10}\), \(TE_{20}\), \(TE_{01}\), \(TE_{11}\), \(TM_{11}\) para una guía rectangular, el bloque de guía rectangular está razonablemente asentado.
+
+- Si puedes decidir el intervalo monomodo de una guía, el criterio de corte está dominado.
+
+- Si puedes explicar físicamente la atenuación por paredes, el bloque de pérdidas está asentado.
+
+- Si no puedes escribir \(\alpha=\langle P_D'\rangle/(2\langle P\rangle)\), falta repasar el vínculo entre disipación y decaimiento de potencia.
+
+- Si no sabes construir mentalmente una cavidad a partir de una guía cerrada, falta repasar ondas estacionarias en guías.
+
+- Si confundes frecuencia de corte con frecuencia de resonancia, revisar la diferencia entre guía abierta y cavidad cerrada.
+
+- Si puedes calcular \(\omega_{mnp}\) a partir de \(k_{c,mn}\) y \(L\), el bloque de cavidades está suficientemente asentado.
+
+- Si no puedes definir \(Q\) de dos formas equivalentes, revisar factor de calidad.
+
+- Si puedes relacionar \(Q\) alto con banda estrecha y pocas pérdidas, el concepto de cavidad real está asentado.
+
+- Si puedes responder sin formulario qué componente longitudinal se resuelve en TE y en TM, el núcleo del tema está preparado para examen.
+
+- Si puedes resolver un problema de modos propagantes en guía rectangular con datos numéricos, el capítulo está suficientemente asentado para empezar problemas de examen.

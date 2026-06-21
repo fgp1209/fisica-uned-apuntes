@@ -1,0 +1,1208 @@
+# Guía de estudio — Electromagnetismo II / UNED
+
+Capítulo trabajado: **EM20 — Radiación electromagnética**. En el libro de *Electromagnetismo II* corresponde al **Tema 8: Radiación electromagnética**. El capítulo estudia los potenciales retardados, la radiación del dipolo corto, la potencia radiada, los parámetros básicos de antenas, antenas lineales y de cuadro, antenas frente a tierra y agrupaciones lineales de antenas.
+
+Fuente principal: *Electromagnetismo II*, Victoriano López Rodríguez, María del Mar Montoya Lirola y Manuel Pancorbo Castro, UNED.
+
+## 1. Prerrequisitos mínimos
+
+**Campos escalares y vectoriales.**  
+Un campo escalar asigna un número a cada punto del espacio, como el potencial eléctrico \(V(\mathbf r,t)\). Un campo vectorial asigna un vector, como \(\mathbf E\), \(\mathbf H\), \(\mathbf A\) o \(\mathbf J\). Es necesario porque el capítulo formula la radiación mediante potenciales y campos que dependen de la posición y del tiempo. Por ejemplo, el potencial vector \(\mathbf A(\mathbf r,t)\) permite obtener el campo magnético mediante un rotacional.
+
+**Cálculo vectorial diferencial.**  
+Hay que manejar gradiente, divergencia, rotacional y laplaciano. Es necesario porque las ecuaciones de onda de los potenciales se escriben con \(\nabla^2\), y los campos se recuperan mediante derivadas:
+\[
+\mathbf H=\frac{1}{\mu_0}\nabla\times \mathbf A,
+\qquad
+\mathbf E=-\nabla V-\frac{\partial \mathbf A}{\partial t}.
+\]
+En régimen fasorial, la derivada temporal se sustituye por un factor \(j\omega\).
+
+**Coordenadas esféricas.**  
+La radiación se estudia a grandes distancias de la fuente, por lo que es natural describir el punto de observación mediante \((r,\theta,\varphi)\). El ángulo \(\theta\) mide la inclinación respecto al eje del dipolo o de la agrupación. Es imprescindible para interpretar factores como \(\sin\theta\), \(d\Omega=\sin\theta\,d\theta\,d\varphi\) y diagramas de radiación.
+
+**Notación fasorial.**  
+Una magnitud sinusoidal se representa como la parte real de un fasor multiplicado por \(e^{j\omega t}\):
+\[
+i(t)=\Re\{\hat I e^{j\omega t}\}.
+\]
+Es necesaria porque el capítulo pasa al dominio de la frecuencia para escribir los potenciales retardados como integrales con el factor \(e^{-jkR}\). Ejemplo: una corriente \(i(t)=I_0\cos\omega t\) se representa con \(\hat I=I_0\).
+
+**Ecuaciones de Maxwell y potenciales electrodinámicos.**  
+El capítulo no empieza desde Maxwell, sino desde las ecuaciones de onda para \(V\) y \(\mathbf A\), obtenidas antes en el libro. Debe saberse que las fuentes son \(\rho\) y \(\mathbf J\), y que las perturbaciones electromagnéticas se propagan con velocidad finita. Sin esto, los potenciales retardados parecerían una fórmula arbitraria.
+
+**Ondas electromagnéticas en el vacío.**  
+Hay que recordar que una onda plana en el vacío es transversal, que \(\mathbf E\), \(\mathbf H\) y la dirección de propagación son mutuamente perpendiculares, y que
+\[
+Z_0=\sqrt{\frac{\mu_0}{\varepsilon_0}}
+\]
+es la impedancia característica del vacío. Esto se reutiliza al estudiar los campos lejanos de un dipolo, que localmente se comportan como una onda transversal.
+
+**Vector de Poynting.**  
+El vector de Poynting representa flujo de energía electromagnética. En régimen sinusoidal se usa el valor medio:
+\[
+\langle \mathbf S\rangle=\frac12\Re\{\hat{\mathbf E}\times \hat{\mathbf H}^*\}.
+\]
+Es necesario porque la potencia radiada se calcula integrando \(\langle \mathbf S\rangle\) sobre una superficie esférica que encierra a la fuente.
+
+**Principio de superposición.**  
+Los campos de una antena lineal y de una agrupación de antenas se obtienen sumando contribuciones elementales. En una antena lineal se suma el campo de muchos dipolos cortos; en una agrupación se suman los campos de varios radiadores. Es necesario para entender por qué aparecen factores de antena y factores de agrupación.
+
+**Líneas de transmisión y onda guiada.**  
+La antena se presenta como el dispositivo que adapta una onda guiada a una onda que se propaga en el espacio libre. Conviene saber qué es una línea de transmisión, qué significa alimentar una antena y por qué la antena puede estudiarse también como impedancia vista desde sus bornes.
+
+## 2. Idea central del capítulo
+
+El capítulo aborda el paso desde la teoría general del campo electromagnético hasta la emisión real de ondas por sistemas de cargas y corrientes variables. En temas anteriores se había estudiado la propagación de ondas electromagnéticas sin insistir en su origen. Aquí el problema cambia: ya no basta con describir una onda que se propaga, sino que hay que explicar cómo nace a partir de fuentes dependientes del tiempo.
+
+La primera idea fuerte es que el campo no responde instantáneamente a las fuentes. Si una distribución de carga o corriente cambia, la perturbación tarda un tiempo finito en llegar al punto de observación. Este hecho conduce a los potenciales retardados. El potencial en un punto y en un instante \(t\) depende del estado de la fuente en un instante anterior \(t-R/c\), donde \(R\) es la distancia entre la fuente elemental y el punto de observación. La palabra “retardado” no es decorativa: expresa causalidad física.
+
+La segunda idea es que una fuente oscilante no produce un único tipo de campo. Cerca de la fuente dominan términos que recuerdan a los campos cuasiestáticos; a distancias intermedias aparecen términos de inducción; y lejos de la fuente quedan los términos que decrecen como \(1/r\), que son los únicos capaces de transportar energía media a distancias grandes. Estos últimos son los campos de radiación.
+
+La tercera idea es que una antena es un sistema diseñado para controlar esa radiación. No se trata solo de que “emita”: interesa cuánto emite, en qué direcciones, con qué eficiencia, con qué resistencia de radiación y con qué anchura de haz. El capítulo introduce los parámetros mínimos para describir una antena como sistema radiante y como elemento de circuito.
+
+La última parte del capítulo muestra que la directividad se puede construir por interferencia. Al agrupar antenas, la dirección en la que los campos se suman en fase se refuerza, mientras que otras direcciones se atenúan o anulan. De aquí sale el factor de agrupación, que separa el efecto del radiador individual del efecto geométrico y fasorial de la distribución de antenas.
+
+Dentro de la asignatura, este capítulo cierra el recorrido desde Maxwell hasta aplicaciones físicas concretas: radiación, antenas y emisión de energía electromagnética. Es un tema de síntesis: usa potenciales, ondas, Poynting, fasores, superposición y condiciones de contorno.
+
+## 3. Desarrollo completo del capítulo
+
+### 3.1. Potenciales retardados
+
+El punto de partida son las ecuaciones de onda no homogéneas para el potencial escalar \(V\) y el potencial vector \(\mathbf A\). En el vacío, para el potencial escalar se escribe:
+\[
+\nabla^2V-\mu_0\varepsilon_0\frac{\partial^2V}{\partial t^2}
+=-\frac{\rho}{\varepsilon_0}.
+\]
+La diferencia esencial respecto a electrostática está en la derivada segunda temporal. Si el potencial no dependiera del tiempo, la ecuación se reduciría a la ecuación de Poisson. Pero cuando las fuentes varían, no se puede tomar la solución electrostática y sustituir simplemente \(\rho(\mathbf r')\) por \(\rho(\mathbf r',t)\). Esa sustitución ignoraría el tiempo de propagación.
+
+Para ver el origen del retardo, el capítulo considera primero una carga elemental situada en el origen. Fuera de la carga, la ecuación es homogénea y, por simetría esférica, el potencial depende solo de \(r\) y \(t\). Al introducir
+\[
+V(r,t)=\frac{\phi(r,t)}{r},
+\]
+la ecuación se convierte en una ecuación de ondas unidimensional para \(\phi\):
+\[
+\frac{\partial^2\phi}{\partial r^2}
+-\frac{1}{c^2}\frac{\partial^2\phi}{\partial t^2}=0,
+\qquad
+c=\frac{1}{\sqrt{\mu_0\varepsilon_0}}.
+\]
+Sus soluciones tienen la forma \(f(t-r/c)\) o \(f(t+r/c)\). La solución \(f(t-r/c)\) representa una perturbación que sale de la fuente y llega más tarde al punto de observación. La solución \(f(t+r/c)\) sería avanzada: el potencial dependería del estado futuro de la fuente. Matemáticamente puede aparecer, pero físicamente se escoge la solución retardada por causalidad.
+
+Para una distribución arbitraria de carga, el resultado es:
+\[
+V(\mathbf r,t)=\frac{1}{4\pi\varepsilon_0}
+\int_{V'}\frac{\rho(\mathbf r',t-R/c)}{R}\,dv',
+\qquad
+R=|\mathbf r-\mathbf r'|.
+\]
+El potencial vector retardado queda de forma análoga:
+\[
+\mathbf A(\mathbf r,t)=\frac{\mu_0}{4\pi}
+\int_{V'}\frac{\mathbf J(\mathbf r',t-R/c)}{R}\,dv'.
+\]
+Estas expresiones muestran que cada elemento de fuente contribuye con el valor que tenía en el tiempo retardado correspondiente. Si dos elementos de la fuente están a distintas distancias del observador, sus contribuciones llegan con fases distintas.
+
+Cuando las fuentes son armónicas, se usan fasores:
+\[
+\rho(\mathbf r,t)=\Re\{\hat\rho(\mathbf r)e^{j\omega t}\},
+\qquad
+\mathbf J(\mathbf r,t)=\Re\{\hat{\mathbf J}(\mathbf r)e^{j\omega t}\}.
+\]
+Entonces aparecen las expresiones fasoriales:
+\[
+\hat V(\mathbf r)=\frac{1}{4\pi\varepsilon_0}
+\int_{V'}\frac{\hat\rho(\mathbf r')e^{-jkR}}{R}\,dv',
+\]
+\[
+\hat{\mathbf A}(\mathbf r)=\frac{\mu_0}{4\pi}
+\int_{V'}\frac{\hat{\mathbf J}(\mathbf r')e^{-jkR}}{R}\,dv',
+\qquad
+k=\frac{\omega}{c}.
+\]
+El factor \(e^{-jkR}\) contiene la fase acumulada durante la propagación. A partir de aquí, el capítulo utiliza los potenciales para obtener los campos radiados.
+
+### 3.2. Radiación de un dipolo corto
+
+El dipolo corto, también llamado dipolo hertziano, es el modelo elemental de radiación. Consiste en un conductor lineal de longitud \(l\) muy pequeña comparada con la longitud de onda \(\lambda\). Esta condición permite suponer que la corriente es uniforme a lo largo de todo el dipolo:
+\[
+i(t)=I_0\cos\omega t.
+\]
+Situado en el origen y orientado según \(z\), su elemento de corriente fasorial se escribe:
+\[
+\hat{\mathbf J}(\mathbf r')\,dv'=\mathbf u_z I_0\,dz'.
+\]
+
+Al sustituir en el potencial vector retardado, se obtiene una integral sobre la longitud del dipolo. Para resolverla se hacen dos aproximaciones distintas. En el denominador \(R\), si el punto de observación está lejos del dipolo, \(r\gg l\), se puede tomar \(R\simeq r\). En la fase \(e^{-jkR}\), la aproximación exige más cuidado porque pequeñas variaciones de fase pueden cambiar mucho la suma de contribuciones. Para el dipolo corto se usa además \(l\ll\lambda\), de modo que también en la fase puede tomarse \(R\simeq r\). Con estas hipótesis:
+\[
+\hat{\mathbf A}(\mathbf r)=\frac{\mu_0}{4\pi}\,lI_0\,\frac{e^{-jkr}}{r}\,\mathbf u_z.
+\]
+Esta fórmula no es universal: depende de \(r\gg l\) y \(l\ll\lambda\). Si no se cumplen, los campos derivados de ella no son válidos.
+
+Para obtener los campos se expresa \(\mathbf u_z\) en coordenadas esféricas:
+\[
+\mathbf u_z=\mathbf u_r\cos\theta-\mathbf u_\theta\sin\theta.
+\]
+El potencial no tiene componente \(\varphi\), por simetría cilíndrica. El campo magnético se obtiene con:
+\[
+\hat{\mathbf H}=\frac{1}{\mu_0}\nabla\times\hat{\mathbf A}.
+\]
+El resultado tiene solo componente azimutal:
+\[
+\hat{\mathbf H}=
+\mathbf u_\varphi\frac{lI_0}{4\pi}k^2\sin\theta\,e^{-jkr}
+\left[\frac{j}{kr}+\frac{1}{(kr)^2}\right].
+\]
+El campo eléctrico se obtiene a partir de Maxwell, en forma fasorial:
+\[
+\hat{\mathbf E}=-\frac{j}{\omega\varepsilon_0}\nabla\times\hat{\mathbf H}
+\]
+según la convención temporal usada en el libro. Sus componentes son \(E_r\) y \(E_\theta\), sin componente \(\varphi\):
+\[
+\hat E_r=
+\frac{k^3}{\omega\varepsilon_0}\frac{lI_0}{2\pi}\cos\theta\,e^{-jkr}
+\left[\frac{1}{(kr)^2}-\frac{j}{(kr)^3}\right],
+\]
+\[
+\hat E_\theta=
+\frac{k^3}{\omega\varepsilon_0}\frac{lI_0}{4\pi}\sin\theta\,e^{-jkr}
+\left[\frac{j}{kr}+\frac{1}{(kr)^2}-\frac{j}{(kr)^3}\right].
+\]
+
+Estas expresiones permiten separar tres zonas. En la zona cuasiestática, cerca del dipolo, dominan los términos de mayor potencia negativa en \(kr\): \(1/(kr)^3\) para el campo eléctrico y \(1/(kr)^2\) para el campo magnético. En la zona de inducción o transición no puede despreciarse ningún término. En la zona de radiación, donde \(kr\gg 1\), solo sobreviven los términos proporcionales a \(1/r\).
+
+En la zona de radiación:
+\[
+\hat{\mathbf H}=
+\mathbf u_\varphi\frac{lI_0}{4\pi}\frac{jk}{r}e^{-jkr}\sin\theta,
+\]
+\[
+\hat{\mathbf E}=
+\mathbf u_\theta Z_0\frac{lI_0}{4\pi}\frac{jk}{r}e^{-jkr}\sin\theta.
+\]
+Los campos son transversales: \(\mathbf E\), \(\mathbf H\) y \(\mathbf u_r\) son mutuamente perpendiculares. Además están en fase y sus módulos cumplen:
+\[
+\frac{E_\theta}{H_\varphi}=Z_0.
+\]
+Esto conecta con las ondas planas estudiadas antes: en campo lejano, la onda es esférica, pero localmente se comporta como una onda transversal en el vacío.
+
+### 3.3. Potencia radiada por un dipolo corto
+
+La potencia media radiada se obtiene integrando el valor medio del vector de Poynting sobre una esfera centrada en el dipolo y de radio suficientemente grande:
+\[
+\langle\mathbf S\rangle=\frac12\Re\{\hat{\mathbf E}\times\hat{\mathbf H}^*\}.
+\]
+En la zona lejana, los campos de radiación decrecen como \(1/r\), de modo que \(\langle S\rangle\) decrece como \(1/r^2\). Al multiplicar por el área de una esfera, que crece como \(r^2\), la potencia total resulta independiente de \(r\). Esta independencia solo es compatible con los términos \(1/r\); los términos que decrecen más rápido no transportan energía neta a grandes distancias, sino que corresponden a energía almacenada que sale y vuelve a la fuente durante la oscilación.
+
+Para el dipolo corto:
+\[
+\langle\mathbf S\rangle=
+\frac12\,\mathbf u_r\,Z_0
+\left(\frac{lI_0}{4\pi}\right)^2
+\frac{k^2}{r^2}\sin^2\theta.
+\]
+La potencia media radiada resulta:
+\[
+\langle P\rangle=\frac{1}{12\pi}Z_0k^2(lI_0)^2.
+\]
+El resultado muestra tres dependencias importantes. La potencia aumenta con el cuadrado de la corriente de excitación, con el cuadrado de la longitud del dipolo y con el cuadrado del número de onda \(k\), es decir, con el cuadrado de la frecuencia para un medio dado. Además, la radiación no es isotrópica: tiene dependencia angular \(\sin^2\theta\). Es máxima en el plano perpendicular al dipolo y nula sobre el eje del dipolo.
+
+### 3.4. Parámetros de antenas
+
+El capítulo introduce la antena como dispositivo diseñado para radiar o recibir energía electromagnética con eficacia. En transmisión, adapta una onda guiada a una onda que se propaga en el espacio libre; en recepción, realiza el proceso inverso. Por eso una antena se estudia a la vez como sistema radiante y como elemento de circuito.
+
+El diagrama de radiación representa cómo se distribuye la densidad de potencia radiada según la dirección \((\theta,\varphi)\). Se trabaja en campo lejano, donde el vector de Poynting es radial. La potencia radiada a través de un área elemental de una esfera es:
+\[
+dP_{\rm rad}=S\,r^2\sin\theta\,d\theta\,d\varphi.
+\]
+El ángulo sólido diferencial es:
+\[
+d\Omega=\sin\theta\,d\theta\,d\varphi,
+\]
+y la intensidad de radiación se define como potencia por unidad de ángulo sólido:
+\[
+I=\frac{dP_{\rm rad}}{d\Omega}=Sr^2.
+\]
+La intensidad normalizada es:
+\[
+F(\theta,\varphi)=\frac{I(\theta,\varphi)}{I_{\max}}
+=\frac{S(\theta,\varphi)}{S_{\max}}.
+\]
+Para el dipolo corto, como \(S\propto\sin^2\theta\), se obtiene:
+\[
+F(\theta)=\sin^2\theta.
+\]
+
+El ángulo sólido patrón es:
+\[
+\Omega_P=\int F(\theta,\varphi)\,d\Omega.
+\]
+Representa el cono equivalente en el que se concentraría toda la radiación si se emitiera con intensidad igual a la máxima.
+
+La anchura del lóbulo principal se caracteriza de dos formas. La primera es el ancho entre primeros nulos, BWFN. La segunda, más usada, es el ancho a media potencia, HPBW, definido por las direcciones donde la intensidad cae a la mitad del máximo. Este parámetro mide la resolución angular de la antena cuando trabaja como receptora.
+
+La directividad mide cuánto concentra la antena la radiación en su dirección máxima:
+\[
+D=\frac{4\pi}{\Omega_P}
+=\frac{4\pi r^2S_{\max}}{P_{\rm rad}}.
+\]
+Una antena isotrópica ideal tendría \(D=1\). Una antena más directiva concentra la potencia en menos ángulo sólido.
+
+La eficiencia de radiación compara la potencia radiada con la potencia total suministrada:
+\[
+\xi=\frac{P_{\rm rad}}{P_t}.
+\]
+La ganancia se define como:
+\[
+G=\frac{4\pi r^2S_{\max}}{P_t},
+\]
+y se relaciona con la directividad por:
+\[
+G=\xi D.
+\]
+La directividad describe distribución angular; la ganancia incorpora pérdidas.
+
+La resistencia de radiación es la resistencia equivalente que disiparía una potencia igual a la potencia radiada:
+\[
+R_{\rm rad}=\frac{2P_{\rm rad}}{I_0^2},
+\]
+si \(I_0\) es la amplitud de la corriente sinusoidal. La resistencia de pérdidas representa la potencia transformada en calor. Con ellas:
+\[
+\xi=\frac{R_{\rm rad}}{R_{\rm rad}+R_{\rm per}}.
+\]
+Esto conecta la antena con circuitos: desde la línea de transmisión, la antena aparece como una impedancia.
+
+### 3.5. Antena lineal
+
+Una antena lineal alimentada en el centro se modeliza como una sucesión de dipolos cortos alineados. La distribución de corriente no es arbitraria: en una antena delgada abierta se aproxima por una onda estacionaria sinusoidal que se anula en los extremos. Para una antena de longitud total \(2h\), alimentada en el centro:
+\[
+\hat I(z')=
+\begin{cases}
+I_0\sin k(h-z'), & 0<z'<h,\\
+I_0\sin k(h+z'), & -h<z'<0.
+\end{cases}
+\]
+Cada elemento \(I(z')dz'\) contribuye al campo lejano. En el denominador puede tomarse \(R\simeq r\), pero en la fase debe mantenerse la diferencia \(R\simeq r-z'\cos\theta\). Integrando todas las contribuciones:
+\[
+\hat E_\theta=
+j\frac{Z_0I_0}{2\pi r}e^{-jkr}
+\left[
+\frac{\cos(kh\cos\theta)-\cos kh}{\sin\theta}
+\right],
+\qquad
+\hat H_\varphi=\frac{\hat E_\theta}{Z_0}.
+\]
+El factor angular
+\[
+f(\theta)=\frac{\cos(kh\cos\theta)-\cos kh}{\sin\theta}
+\]
+es el factor de antena. Controla cómo varía el campo con \(\theta\).
+
+La potencia total radiada por la antena lineal se expresa como:
+\[
+P=\frac{Z_0I_0^2}{4\pi}
+\int_0^\pi [f(\theta)]^2\sin\theta\,d\theta.
+\]
+El capítulo señala que esta integral, en general, no se resuelve analíticamente y debe evaluarse numéricamente.
+
+El caso más importante es la antena de media longitud de onda. Para \(h=\lambda/4\):
+\[
+\hat E_\theta=
+j\frac{60I_0}{r}e^{-jkr}
+\left[
+\frac{\cos\left(\frac{\pi}{2}\cos\theta\right)}{\sin\theta}
+\right],
+\]
+tomando \(Z_0=120\pi\). Su resistencia de radiación es aproximadamente:
+\[
+R_{\rm rad}=73{,}1\,\Omega,
+\]
+y su directividad:
+\[
+D_{1/2}=1{,}64.
+\]
+Es una antena moderadamente direccional y se usa mucho como elemento básico, especialmente cuando se agrupa con otras antenas similares.
+
+### 3.6. Antena de cuadro
+
+La antena de cuadro consiste en un conductor cerrado en lazo. Se usa con frecuencia como receptora y, en particular, como sonda de campo magnético. Si sus dimensiones son pequeñas comparadas con la longitud de onda, puede suponerse que la corriente es uniforme en todo el lazo.
+
+Para un cuadro circular de radio \(b\), en la aproximación \(\lambda\gg b\), el potencial vector en campo lejano es:
+\[
+\hat{\mathbf A}(\mathbf r)\simeq
+\frac{\mu_0b^2k\sin\theta}{4}I_0
+\frac{e^{-jkr}}{r}\,\mathbf u_\varphi.
+\]
+Los campos radiados son:
+\[
+\hat{\mathbf H}\simeq
+\frac{k^2b^2I_0e^{-jkr}\sin\theta}{4r}\,\mathbf u_\theta,
+\]
+\[
+\hat{\mathbf E}\simeq
+\frac{Z_0k^2b^2I_0e^{-jkr}\sin\theta}{4r}\,\mathbf u_\varphi.
+\]
+La dependencia angular vuelve a ser \(\sin\theta\), pero las direcciones de \(\mathbf E\) y \(\mathbf H\) están intercambiadas respecto al dipolo eléctrico corto. Por eso el capítulo dice que los campos son duales de los de un dipolo colocado según \(z\).
+
+La densidad media de potencia es:
+\[
+\langle\mathbf S\rangle=
+\frac{Z_0(kb)^4I_0^2}{32r^2}\sin^2\theta\,\mathbf u_r,
+\]
+y la potencia radiada:
+\[
+P_{\rm rad}=\frac{\pi Z_0(kb)^4I_0^2}{12}.
+\]
+En espacio libre:
+\[
+P_{\rm rad}=10\pi^2(kb)^4I_0^2,
+\qquad
+R_{\rm rad}=20\pi^2(kb)^4,
+\qquad
+D_{\rm lazo}=1{,}5.
+\]
+
+### 3.7. Antenas frente a tierra
+
+Muchas antenas reales están cerca de una superficie conductora, normalmente la tierra. El campo de la antena induce cargas y corrientes en esa superficie. Calcular el problema real es complicado, pero si se aproxima la tierra como conductor perfecto plano, se puede usar el método de las imágenes.
+
+La antena real se sustituye, en el semiespacio superior, por la antena real más su imagen. Las cargas imagen tienen signo opuesto respecto a las reales, y las corrientes imagen se eligen de forma simétrica y con sentido adecuado para satisfacer las condiciones en el plano conductor.
+
+En el plano conductor se obtiene:
+\[
+\hat E_t=0,\qquad \hat B_n=0.
+\]
+En el semiespacio donde está la antena real, la componente normal de \(\mathbf E\) y la tangencial de \(\mathbf B\) resultan duplicadas respecto a la contribución real. Para una antena lineal vertical de altura \(h\) alimentada por la base, situada sobre el plano de tierra, el campo en el semiespacio superior coincide con el que produciría una antena de longitud \(2h\) alimentada en el centro. Sin embargo, como solo se radia al semiespacio superior, la potencia radiada y la resistencia de radiación de la antena real son aproximadamente la mitad de las de la antena equivalente completa.
+
+### 3.8. Agrupaciones de antenas lineales
+
+Una antena lineal aislada tiene directividad limitada. Si interesa concentrar la radiación en una dirección concreta, se agrupan varios radiadores. En una agrupación, la radiación resultante se debe a interferencias: en unas direcciones los campos se suman en fase y en otras se cancelan parcial o totalmente. Por eso importan la posición de cada elemento, la amplitud de alimentación y la fase relativa.
+
+El capítulo introduce el principio de multiplicación de diagramas. Para \(N\) antenas iguales, con la misma orientación y distribuciones de corriente similares, el campo total en zona de radiación se puede escribir como:
+\[
+\hat{\mathbf E}(\mathbf r)=\hat{\mathbf E}_{\rm ref}(\mathbf r)\,f(\theta,\varphi),
+\]
+\[
+\hat{\mathbf H}(\mathbf r)=\hat{\mathbf H}_{\rm ref}(\mathbf r)\,f(\theta,\varphi).
+\]
+El factor
+\[
+f(\theta,\varphi)=\sum_{m=1}^{N}C_m e^{jk\mathbf u_r\cdot \mathbf r_m}
+\]
+es el factor de agrupación. Depende de los coeficientes complejos de excitación \(C_m\) y de las posiciones relativas \(\mathbf r_m\), pero no del tipo de radiador individual. El diagrama total se interpreta como producto entre el diagrama de un elemento y el diagrama de una agrupación de elementos isótropos.
+
+Esta factorización es muy útil, pero el capítulo advierte que en la práctica debe usarse con cuidado, porque la presencia de otros radiadores puede modificar el diagrama individual de cada antena.
+
+Para una red tridimensional regular con \(N_i\) elementos en cada dirección, aparecen factores:
+\[
+f_i=\sum_{m_i=0}^{N_i-1}e^{jm_i\psi_i}
+=
+e^{j(N_i-1)\psi_i/2}
+\frac{\sin(N_i\psi_i/2)}{\sin(\psi_i/2)},
+\]
+donde
+\[
+\psi_1=kd_1\sin\theta\cos\varphi+\delta_1,
+\]
+\[
+\psi_2=kd_2\sin\theta\sin\varphi+\delta_2,
+\]
+\[
+\psi_3=kd_3\cos\theta+\delta_3.
+\]
+El módulo del campo queda controlado por los módulos de estos factores.
+
+Para una agrupación vertical lineal:
+\[
+\psi=\delta+kd\cos\theta,
+\qquad
+f(\theta)=\frac{\sin(N\psi/2)}{\sin(\psi/2)}.
+\]
+Para una agrupación horizontal, aparece el ángulo \(\gamma\) con el eje de la agrupación:
+\[
+\cos\gamma=\sin\theta\sin\varphi,
+\]
+y el factor depende de \(\delta+kd\cos\gamma\).
+
+Los nulos del diagrama se obtienen cuando se anula el numerador:
+\[
+\frac{N\psi}{2}=p\pi,
+\qquad p=1,2,\ldots,N-1,
+\]
+excepto el caso \(\psi=0\), que corresponde al máximo principal.
+
+Dos configuraciones son especialmente importantes. En la agrupación transversal o **broadside**, todos los elementos se alimentan en fase, \(\delta=0\), y la máxima radiación es perpendicular al eje de la agrupación:
+\[
+\theta_{\max}=\frac{\pi}{2}.
+\]
+En la agrupación longitudinal o **endfire**, se busca que la máxima radiación coincida con el eje de la agrupación:
+\[
+\theta_{\max}=0 \ \text{o}\ \pi,
+\]
+lo que exige:
+\[
+\delta=\pm\frac{2\pi d}{\lambda}.
+\]
+
+La anchura entre primeros nulos, para agrupaciones uniformes muy directivas, es:
+\[
+{\rm BWFN}_{\rm broadside}=\frac{2\lambda}{Nd},
+\]
+\[
+{\rm BWFN}_{\rm endfire}=2\sqrt{\frac{2\lambda}{Nd}}.
+\]
+El capítulo concluye que el haz se estrecha al aumentar \(Nd/\lambda\), pero que también hay que vigilar los lóbulos secundarios, porque energía radiada en direcciones no deseadas puede ser perjudicial.
+
+## 4. Conceptos clave
+
+**Potencial retardado.**  
+Definición precisa: potencial cuyo valor en \((\mathbf r,t)\) depende de las fuentes en el tiempo anterior \(t-R/c\).  
+Explicación: expresa que la información electromagnética se propaga con velocidad finita. No es una corrección pequeña, sino la base de la radiación.  
+Ejemplo: si una corriente cambia en una antena, un observador situado a distancia \(R\) detecta el efecto tras un tiempo \(R/c\).  
+Relación: conecta ecuaciones de onda, causalidad y campos radiados.  
+Pregunta de examen: “Comente la necesidad física de los potenciales retardados y escriba su expresión matemática.”
+
+**Potencial avanzado.**  
+Definición precisa: solución matemática dependiente de \(t+R/c\).  
+Explicación: implicaría que el efecto aparece antes que la causa. Por eso no se toma para la radiación física ordinaria.  
+Ejemplo: un observador conocería un cambio de corriente antes de que ocurriera.  
+Relación: se opone al potencial retardado.  
+Pregunta de examen: “¿Son los potenciales retardados y avanzados soluciones matemáticas? ¿Por qué se elige uno?”
+
+**Tiempo de retardo.**  
+Definición precisa: intervalo \(R/c\) que tarda la perturbación en recorrer la distancia entre fuente y observador.  
+Explicación: no todos los elementos de una fuente extensa contribuyen con la misma fase.  
+Ejemplo: en una antena lineal, los extremos no están a la misma distancia efectiva del observador para todas las direcciones.  
+Relación: produce el factor \(e^{-jkR}\).  
+Pregunta de examen: “Explique el significado de \(R/c\) en los potenciales retardados.”
+
+**Dipolo corto.**  
+Definición precisa: conductor lineal de longitud \(l\ll\lambda\), con corriente aproximadamente uniforme.  
+Explicación: es el modelo elemental para introducir radiación.  
+Ejemplo: \(\hat{\mathbf A}=(\mu_0/4\pi)lI_0e^{-jkr}\mathbf u_z/r\).  
+Relación: sirve como elemento diferencial para antenas lineales.  
+Pregunta de examen: “Indique las hipótesis bajo las que se obtiene el campo de un dipolo corto.”
+
+**Campo lejano o zona de radiación.**  
+Definición precisa: región \(kr\gg 1\) donde solo se conservan términos \(1/r\).  
+Explicación: en esa zona los campos son transversales y transportan potencia media neta.  
+Ejemplo: \(E_\theta\propto \sin\theta/r\), \(H_\varphi=E_\theta/Z_0\).  
+Relación: es la región donde se definen diagramas de radiación y parámetros de antena.  
+Pregunta de examen: “Describa las propiedades del campo lejano de un dipolo corto.”
+
+**Zona cuasiestática.**  
+Definición precisa: región próxima al dipolo donde dominan los términos de mayor potencia negativa en \(kr\).  
+Explicación: los campos se parecen a los obtenidos por Coulomb y Biot-Savart.  
+Ejemplo: en \(E_r\) domina el término \(1/(kr)^3\).  
+Relación: se opone a la zona de radiación.  
+Pregunta de examen: “Distinga zona cuasiestática, zona de inducción y zona de radiación.”
+
+**Zona de inducción.**  
+Definición precisa: región intermedia donde no se pueden despreciar ni los términos cercanos ni los radiativos.  
+Explicación: contiene energía almacenada durante la oscilación, pero no es la responsable de la transmisión neta a largas distancias.  
+Ejemplo: términos \(1/(kr)^2\).  
+Relación: conecta campo cercano y campo lejano.  
+Pregunta de examen: “¿Por qué los términos de inducción no determinan la potencia radiada a infinito?”
+
+**Potencia radiada.**  
+Definición precisa: flujo medio de energía electromagnética a través de una superficie cerrada lejana.  
+Explicación: se obtiene integrando \(\langle\mathbf S\rangle\cdot d\mathbf s\).  
+Ejemplo: para el dipolo corto, \(\langle P\rangle=(1/12\pi)Z_0k^2(lI_0)^2\).  
+Relación: define la resistencia de radiación.  
+Pregunta de examen: “Derive la potencia media radiada por un dipolo corto a partir del vector de Poynting.”
+
+**Diagrama de radiación.**  
+Definición precisa: representación angular de la densidad de potencia radiada o de la intensidad de radiación.  
+Explicación: muestra en qué direcciones una antena emite o recibe con más intensidad.  
+Ejemplo: para un dipolo corto, \(F(\theta)=\sin^2\theta\).  
+Relación: permite definir lóbulos, directividad y anchura de haz.  
+Pregunta de examen: “Obtenga el diagrama normalizado de un dipolo corto.”
+
+**Intensidad de radiación.**  
+Definición precisa: potencia media radiada por unidad de ángulo sólido:
+\[
+I=Sr^2.
+\]
+Explicación: elimina la dependencia radial \(1/r^2\) de \(S\) en campo lejano.  
+Ejemplo: para el dipolo corto, \(I\propto \sin^2\theta\).  
+Relación: se normaliza para obtener \(F(\theta,\varphi)\).  
+Pregunta de examen: “Defina intensidad de radiación y explique sus unidades.”
+
+**Ángulo sólido patrón.**  
+Definición precisa: integral de la intensidad normalizada:
+\[
+\Omega_P=\int F\,d\Omega.
+\]
+Explicación: representa el ángulo sólido equivalente donde se concentraría la radiación si fuese máxima y uniforme.  
+Ejemplo: cuanto menor es \(\Omega_P\), mayor es la directividad.  
+Relación: \(D=4\pi/\Omega_P\).  
+Pregunta de examen: “Calcule \(\Omega_P\) a partir de un patrón \(F(\theta)\).”
+
+**Directividad.**  
+Definición precisa: cociente entre la intensidad máxima y la intensidad media sobre toda la esfera:
+\[
+D=\frac{4\pi r^2S_{\max}}{P_{\rm rad}}.
+\]
+Explicación: mide concentración angular, no pérdidas.  
+Ejemplo: antena de media onda, \(D=1{,}64\).  
+Relación: se diferencia de ganancia porque no incluye eficiencia.  
+Pregunta de examen: “Distinga directividad y ganancia.”
+
+**Ganancia.**  
+Definición precisa:
+\[
+G=\frac{4\pi r^2S_{\max}}{P_t}.
+\]
+Explicación: compara la máxima densidad radiada con la que radiaría una isotrópica ideal alimentada con la misma potencia total.  
+Ejemplo: si \(\xi<1\), entonces \(G<D\).  
+Relación: \(G=\xi D\).  
+Pregunta de examen: “Explique por qué la ganancia puede ser menor que la directividad.”
+
+**Resistencia de radiación.**  
+Definición precisa: resistencia equivalente que disiparía la potencia radiada:
+\[
+R_{\rm rad}=2P_{\rm rad}/I_0^2.
+\]
+Explicación: permite tratar la antena desde el punto de vista de circuitos.  
+Ejemplo: dipolo de media onda, \(R_{\rm rad}=73{,}1\,\Omega\).  
+Relación: interviene en la eficiencia junto con la resistencia de pérdidas.  
+Pregunta de examen: “Defina resistencia de radiación y relaciónela con la eficiencia.”
+
+**Factor de antena.**  
+Definición precisa: función angular que determina el patrón de una antena lineal.  
+Explicación: aparece al integrar las contribuciones de todos los dipolos elementales.  
+Ejemplo:
+\[
+f(\theta)=\frac{\cos(kh\cos\theta)-\cos kh}{\sin\theta}.
+\]
+Relación: forma parte del diagrama del radiador individual.  
+Pregunta de examen: “Obtenga el factor angular de una antena lineal alimentada en el centro.”
+
+**Factor de agrupación.**  
+Definición precisa:
+\[
+f(\theta,\varphi)=\sum_{m=1}^{N}C_m e^{jk\mathbf u_r\cdot \mathbf r_m}.
+\]
+Explicación: mide el efecto de posiciones y fases relativas de los radiadores.  
+Ejemplo: agrupación vertical uniforme:
+\[
+f(\theta)=\frac{\sin(N\psi/2)}{\sin(\psi/2)},\quad \psi=\delta+kd\cos\theta.
+\]
+Relación: multiplica el campo de la antena de referencia.  
+Pregunta de examen: “Describa el principio de multiplicación de diagramas.”
+
+**Agrupación broadside.**  
+Definición precisa: agrupación con máxima radiación perpendicular al eje.  
+Explicación: se obtiene típicamente con alimentación en fase, \(\delta=0\).  
+Ejemplo: \(\theta_{\max}=\pi/2\).  
+Relación: suele tener haz más estrecho que una endfire comparable.  
+Pregunta de examen: “Determine la dirección de máxima radiación de una agrupación broadside.”
+
+**Agrupación endfire.**  
+Definición precisa: agrupación con máxima radiación sobre el eje de la agrupación.  
+Explicación: exige un desfase progresivo para compensar la diferencia de camino.  
+Ejemplo:
+\[
+\delta=\pm 2\pi d/\lambda.
+\]
+Relación: se compara con broadside en anchura de haz y lóbulos secundarios.  
+Pregunta de examen: “Calcule el desfase necesario para una agrupación endfire.”
+
+## 5. Relaciones entre ideas
+
+El capítulo se organiza como una cadena. Primero se parte de las ecuaciones de onda para los potenciales. De ahí se obtiene que la respuesta electromagnética no puede ser instantánea: debe incluir el tiempo de propagación. Los potenciales retardados son, por tanto, la herramienta que conecta fuentes variables con campos radiados.
+
+El dipolo corto es la primera aplicación porque simplifica la distribución de corriente. Sus hipótesis \(l\ll\lambda\) y \(r\gg l\) permiten sacar la corriente y la fase de la integral del potencial vector. Esta simplificación conduce a campos con varios términos en \(1/(kr)\), \(1/(kr)^2\) y \(1/(kr)^3\). La clasificación espacial en zona cuasiestática, inducción y radiación nace directamente de esas potencias de \(kr\).
+
+La potencia radiada depende solo de los campos de radiación porque solo los términos \(1/r\) producen un flujo medio no nulo a través de esferas grandes. Esto enlaza el cálculo local de campos con una magnitud global: la energía que abandona la fuente por unidad de tiempo. El vector de Poynting es el puente conceptual entre campos y potencia.
+
+La teoría de antenas traduce esa potencia y su distribución angular a parámetros medibles. El diagrama de radiación nace de \(\langle\mathbf S\rangle\). La intensidad de radiación elimina la dependencia radial. El ángulo sólido patrón resume el diagrama en un número. La directividad compara la emisión máxima con la media. La ganancia incorpora pérdidas. La resistencia de radiación permite ver la antena como una impedancia.
+
+La antena lineal depende del principio de superposición: se considera como suma de dipolos cortos. La fase de cada elemento no se puede despreciar porque determina interferencias en el campo lejano. Por eso aparece el factor de antena, que es una consecuencia directa de integrar contribuciones con fases diferentes.
+
+La antena de cuadro se relaciona con el dipolo corto por dualidad: tiene dependencia angular semejante, pero los papeles direccionales de \(\mathbf E\) y \(\mathbf H\) se intercambian. Esto refuerza la idea de que no basta con memorizar \(F(\theta)\); hay que saber qué campo tiene qué dirección.
+
+Las antenas frente a tierra conectan radiación con condiciones de contorno. El método de imágenes, ya conocido en electrostática, reaparece para construir una configuración equivalente que satisface las condiciones sobre un conductor perfecto. La consecuencia práctica es muy importante: una antena vertical sobre tierra se comporta como media antena más su imagen.
+
+Las agrupaciones de antenas llevan la superposición al nivel de sistemas discretos. Si en una antena lineal se suman dipolos elementales a lo largo de un conductor, en una agrupación se suman antenas completas. El factor de agrupación separa la física del elemento individual de la geometría y alimentación del conjunto. La oposición entre broadside y endfire resume dos formas de controlar la dirección de máxima radiación: sumar en fase perpendicularmente al eje o introducir desfase para sumar sobre el eje.
+
+Históricamente, el cierre conceptual del capítulo es la confirmación del modelo de Maxwell: cargas aceleradas generan campos que se desprenden de la fuente y transportan energía. Hertz comprobó experimentalmente esta predicción. El tema convierte esa idea general en fórmulas de cálculo para radiadores y antenas.
+
+## 6. Errores habituales
+
+**Error 1. Creer que basta sustituir \(\rho(\mathbf r')\) por \(\rho(\mathbf r',t)\) en el potencial electrostático.**  
+Por qué está mal: ignora la derivada temporal de la ecuación de onda y la propagación finita.  
+Corrección: usar \(\rho(\mathbf r',t-R/c)\).  
+Respuesta incorrecta: “El potencial variable es \(V=(1/4\pi\varepsilon_0)\int \rho(\mathbf r',t)/R\,dv'\).”  
+Respuesta correcta: “Debe usarse el potencial retardado \(V=(1/4\pi\varepsilon_0)\int \rho(\mathbf r',t-R/c)/R\,dv'\).”
+
+**Error 2. Tratar el potencial avanzado como físicamente equivalente al retardado.**  
+Por qué está mal: aunque sea solución matemática, viola la causalidad física en la descripción ordinaria de radiación.  
+Corrección: elegir la solución retardada porque el efecto debe ocurrir después de la causa.  
+Respuesta incorrecta: “Da igual usar \(t+R/c\) o \(t-R/c\).”  
+Respuesta correcta: “Matemáticamente pueden aparecer ambas, pero para radiación física se toma \(t-R/c\).”
+
+**Error 3. Olvidar las hipótesis del dipolo corto.**  
+Por qué está mal: las fórmulas de \(\hat{\mathbf A}\), \(\hat{\mathbf E}\) y \(\hat{\mathbf H}\) no valen si \(l\) no es mucho menor que \(\lambda\).  
+Corrección: comprobar \(l\ll\lambda\) y \(r\gg l\).  
+Respuesta incorrecta: “Uso el dipolo corto para cualquier longitud.”  
+Respuesta correcta: “Solo puedo usarlo si la corriente puede considerarse uniforme y la fase apenas cambia a lo largo del dipolo.”
+
+**Error 4. Despreciar la fase \(e^{-jkR}\) demasiado pronto.**  
+Por qué está mal: en integrales de antenas la fase determina el patrón angular.  
+Corrección: en el denominador puede aproximarse \(R\simeq r\), pero en la fase suele conservarse \(R\simeq r-z'\cos\theta\).  
+Respuesta incorrecta: “Como \(r\gg z'\), tomo \(R=r\) en toda la integral de la antena lineal.”  
+Respuesta correcta: “En el denominador sí, pero en la fase mantengo \(e^{jkz'\cos\theta}\).”
+
+**Error 5. Pensar que todos los términos del campo transportan potencia radiada.**  
+Por qué está mal: los términos \(1/r^2\) y \(1/r^3\) no dan flujo medio finito a grandes distancias.  
+Corrección: la potencia radiada lejana se calcula con los términos \(1/r\).  
+Respuesta incorrecta: “La potencia radiada sale de sumar todos los términos del campo cercano.”  
+Respuesta correcta: “La potencia radiada a grandes distancias la determinan los campos de radiación.”
+
+**Error 6. Colocar el máximo del dipolo corto sobre su eje.**  
+Por qué está mal: el patrón es \(\sin^2\theta\), que se anula en \(\theta=0,\pi\).  
+Corrección: el máximo está en \(\theta=\pi/2\).  
+Respuesta incorrecta: “El dipolo radia máximo en la dirección del hilo.”  
+Respuesta correcta: “El dipolo radia máximo en el plano perpendicular al hilo.”
+
+**Error 7. Confundir directividad con ganancia.**  
+Por qué está mal: la directividad no incluye pérdidas; la ganancia sí.  
+Corrección: usar \(G=\xi D\).  
+Respuesta incorrecta: “Si una antena es directiva, su ganancia es necesariamente igual a la directividad.”  
+Respuesta correcta: “Solo si \(\xi=1\), ganancia y directividad coinciden.”
+
+**Error 8. Confundir resistencia de radiación con resistencia de pérdidas.**  
+Por qué está mal: la resistencia de radiación representa potencia emitida, no calor.  
+Corrección: separar \(R_{\rm rad}\) y \(R_{\rm per}\).  
+Respuesta incorrecta: “La resistencia de radiación calienta la antena.”  
+Respuesta correcta: “La resistencia de radiación es equivalente circuital de la potencia radiada.”
+
+**Error 9. Usar el diagrama de campo como si fuera diagrama de potencia.**  
+Por qué está mal: la potencia depende del cuadrado del campo.  
+Corrección: si \(E\propto f(\theta)\), entonces \(S\propto |f(\theta)|^2\).  
+Respuesta incorrecta: “El patrón de potencia del dipolo es \(\sin\theta\).”  
+Respuesta correcta: “El campo es proporcional a \(\sin\theta\); la potencia normalizada es \(\sin^2\theta\).”
+
+**Error 10. Olvidar que el factor de agrupación es complejo.**  
+Por qué está mal: la fase decide máximos y nulos.  
+Corrección: trabajar con \(f(\theta,\varphi)\) complejo y luego tomar \(|f|^2\) para potencia.  
+Respuesta incorrecta: “Sumo solo módulos de campos.”  
+Respuesta correcta: “Sumo fasores; después calculo el módulo cuadrado.”
+
+**Error 11. Creer que broadside y endfire dependen solo de la separación.**  
+Por qué está mal: la fase de alimentación \(\delta\) es decisiva.  
+Corrección: broadside típico: \(\delta=0\); endfire: \(\delta=\pm 2\pi d/\lambda\).  
+Respuesta incorrecta: “Toda agrupación lineal radia perpendicular al eje.”  
+Respuesta correcta: “Radia perpendicular si los elementos están en fase; puede radiar sobre el eje con desfase adecuado.”
+
+**Error 12. Aplicar el método de imágenes sin conductor perfecto.**  
+Por qué está mal: el resultado simple del capítulo depende de aproximar la tierra como plano conductor perfecto.  
+Corrección: indicar la hipótesis.  
+Respuesta incorrecta: “Cualquier tierra real se sustituye exactamente por una imagen.”  
+Respuesta correcta: “Con la aproximación de conductor perfecto, el método de imágenes da una solución útil.”
+
+## 7. Preguntas orientadas a examen
+
+### 10 preguntas fáciles
+
+1. ¿Qué significa que un potencial sea retardado?
+2. ¿Qué representa el tiempo \(R/c\) en los potenciales retardados?
+3. Escriba la expresión del potencial vector retardado en el vacío.
+4. ¿Qué hipótesis definen un dipolo corto?
+5. ¿En qué dirección radia máximo un dipolo corto orientado según \(z\)?
+6. ¿Qué relación cumplen los módulos de \(\hat E_\theta\) y \(\hat H_\varphi\) en la zona de radiación?
+7. Defina intensidad de radiación.
+8. Defina directividad de una antena.
+9. ¿Qué diferencia hay entre directividad y ganancia?
+10. ¿Qué es el factor de agrupación?
+
+### 10 preguntas medias
+
+1. Explique por qué la solución avanzada se descarta físicamente en radiación.
+2. Justifique por qué los campos de radiación son los términos proporcionales a \(1/r\).
+3. A partir del campo lejano del dipolo corto, obtenga su patrón normalizado \(F(\theta)\).
+4. Explique por qué en una antena lineal se aproxima \(R\simeq r\) en el denominador pero no en la fase.
+5. Escriba la distribución de corriente de una antena lineal alimentada en el centro y abierta en los extremos.
+6. Defina resistencia de radiación y relaciónela con la potencia radiada.
+7. Explique el significado físico del ángulo sólido patrón.
+8. Describa las propiedades de la antena de media longitud de onda.
+9. Explique cómo se aplica el método de imágenes a una antena vertical sobre tierra.
+10. Para una agrupación vertical uniforme, escriba \(\psi\) y \(f(\theta)\).
+
+### 5 preguntas difíciles
+
+1. Derive la expresión de la potencia media radiada por un dipolo corto a partir de los campos lejanos.
+2. Analice las tres zonas espaciales alrededor de un dipolo oscilante y relacione cada una con los términos de campo.
+3. Demuestre cualitativamente el principio de multiplicación de diagramas para una agrupación de antenas iguales.
+4. Determine las condiciones de máximo y nulo para una agrupación lineal vertical uniforme.
+5. Compare la anchura de haz de una agrupación broadside y una endfire con el mismo \(N\), \(d\) y \(\lambda\).
+
+### 5 preguntas de desarrollo largo
+
+1. Desarrolle el concepto de potencial retardado desde la ecuación de onda del potencial escalar y explique su papel en la radiación electromagnética.
+2. Exponga el estudio del dipolo corto: hipótesis, potencial vector, campos, zonas espaciales y potencia radiada.
+3. Explique los parámetros fundamentales de antenas: diagrama de radiación, intensidad, ángulo sólido patrón, anchura de haz, directividad, ganancia, eficiencia y resistencia de radiación.
+4. Desarrolle el modelo de antena lineal alimentada en el centro, incluyendo distribución de corriente, factor de antena y caso de media longitud de onda.
+5. Explique las agrupaciones de antenas lineales, el factor de agrupación y las configuraciones broadside y endfire.
+
+### 5 preguntas de relación entre conceptos
+
+1. Relacione potenciales retardados, fase \(e^{-jkR}\) y diagramas de radiación.
+2. Relacione campo lejano, vector de Poynting y potencia radiada.
+3. Relacione factor de antena y factor de agrupación.
+4. Relacione método de imágenes y condiciones de contorno en antenas frente a tierra.
+5. Relacione directividad, ganancia, eficiencia y resistencias de radiación y pérdidas.
+
+## 8. Respuestas modelo
+
+### Respuestas a las 10 preguntas fáciles
+
+**1. ¿Qué significa que un potencial sea retardado?**  
+Significa que el potencial en un punto \(\mathbf r\) y en un instante \(t\) depende del valor que tenía la fuente en un instante anterior. Para un elemento de fuente situado en \(\mathbf r'\), el instante relevante es \(t-R/c\), con \(R=|\mathbf r-\mathbf r'|\). El retardo expresa que la perturbación electromagnética tarda un tiempo finito en propagarse.
+
+**2. ¿Qué representa el tiempo \(R/c\) en los potenciales retardados?**  
+Representa el tiempo que tarda la señal electromagnética en recorrer la distancia \(R\) entre la fuente elemental y el punto de observación. Es una consecuencia directa de que la propagación en el vacío ocurre a velocidad \(c\).
+
+**3. Escriba la expresión del potencial vector retardado en el vacío.**  
+La expresión es:
+\[
+\mathbf A(\mathbf r,t)=\frac{\mu_0}{4\pi}
+\int_{V'}\frac{\mathbf J(\mathbf r',t-R/c)}{R}\,dv',
+\qquad R=|\mathbf r-\mathbf r'|.
+\]
+En fasores:
+\[
+\hat{\mathbf A}(\mathbf r)=\frac{\mu_0}{4\pi}
+\int_{V'}\frac{\hat{\mathbf J}(\mathbf r')e^{-jkR}}{R}\,dv'.
+\]
+
+**4. ¿Qué hipótesis definen un dipolo corto?**  
+Un dipolo corto tiene longitud \(l\) mucho menor que la longitud de onda, \(l\ll\lambda\). Gracias a eso se considera que la corriente es uniforme a lo largo del dipolo. Además, para usar la expresión simplificada del potencial en un punto de observación debe cumplirse \(r\gg l\).
+
+**5. ¿En qué dirección radia máximo un dipolo corto orientado según \(z\)?**  
+Radia máximo en el plano perpendicular al eje del dipolo, es decir, para \(\theta=\pi/2\). No radia sobre el eje, \(\theta=0,\pi\), porque el patrón de potencia es proporcional a \(\sin^2\theta\).
+
+**6. ¿Qué relación cumplen los módulos de \(\hat E_\theta\) y \(\hat H_\varphi\) en la zona de radiación?**  
+Cumplen:
+\[
+\frac{E_\theta}{H_\varphi}=Z_0,
+\]
+donde \(Z_0=\sqrt{\mu_0/\varepsilon_0}\) es la impedancia característica del vacío.
+
+**7. Defina intensidad de radiación.**  
+La intensidad de radiación es la potencia media radiada por unidad de ángulo sólido:
+\[
+I=\frac{dP_{\rm rad}}{d\Omega}=Sr^2.
+\]
+En campo lejano es útil porque elimina la dependencia radial de la densidad de potencia.
+
+**8. Defina directividad de una antena.**  
+La directividad mide la concentración angular de la radiación. Se define como:
+\[
+D=\frac{4\pi r^2S_{\max}}{P_{\rm rad}}
+=\frac{4\pi}{\Omega_P}.
+\]
+Compara la intensidad máxima con la intensidad media sobre toda la esfera.
+
+**9. ¿Qué diferencia hay entre directividad y ganancia?**  
+La directividad solo describe cómo se reparte angularmente la potencia radiada. La ganancia incorpora además la eficiencia de radiación. Se relacionan por:
+\[
+G=\xi D.
+\]
+Si hay pérdidas, \(\xi<1\), y la ganancia es menor que la directividad.
+
+**10. ¿Qué es el factor de agrupación?**  
+Es el factor complejo que recoge el efecto de las posiciones y fases de los elementos de una agrupación:
+\[
+f(\theta,\varphi)=\sum_{m=1}^N C_m e^{jk\mathbf u_r\cdot\mathbf r_m}.
+\]
+Multiplica el campo de una antena de referencia para obtener el campo total de la agrupación.
+
+### Respuestas a las 10 preguntas medias
+
+**1. Explique por qué la solución avanzada se descarta físicamente en radiación.**  
+La solución avanzada depende de \(t+R/c\), es decir, del estado futuro de la fuente. Aunque aparece como solución matemática de la ecuación de ondas, no respeta la causalidad física ordinaria: el efecto se observaría antes que la causa. En radiación se escoge la solución retardada porque la perturbación se origina en la fuente y llega después al observador.
+
+**2. Justifique por qué los campos de radiación son los términos proporcionales a \(1/r\).**  
+La potencia media que atraviesa una esfera lejana debe ser finita e independiente del radio en un medio sin pérdidas. Como el área de la esfera crece como \(r^2\), la densidad de potencia debe decrecer como \(1/r^2\). Dado que \(S\sim EH\), los campos responsables de esa potencia deben decrecer como \(1/r\). Los términos \(1/r^2\) o \(1/r^3\) decrecen demasiado rápido y no transportan potencia media neta a grandes distancias.
+
+**3. A partir del campo lejano del dipolo corto, obtenga su patrón normalizado \(F(\theta)\).**  
+En campo lejano:
+\[
+E_\theta\propto \frac{\sin\theta}{r}.
+\]
+La densidad de potencia es proporcional al cuadrado del campo:
+\[
+S(\theta)\propto \sin^2\theta.
+\]
+El máximo ocurre en \(\theta=\pi/2\), donde \(\sin^2\theta=1\). Por tanto:
+\[
+F(\theta)=\frac{S(\theta)}{S_{\max}}=\sin^2\theta.
+\]
+
+**4. Explique por qué en una antena lineal se aproxima \(R\simeq r\) en el denominador pero no en la fase.**  
+En el denominador, \(R\) aparece como variación lenta de amplitud. Si \(r\gg h\), tomar \(R\simeq r\) produce un error pequeño. En la fase, sin embargo, \(R\) aparece multiplicado por \(k\) dentro de una exponencial. Pequeñas diferencias de camino producen diferencias de fase apreciables y determinan interferencias. Por eso se mantiene \(R\simeq r-z'\cos\theta\) en \(e^{-jkR}\).
+
+**5. Escriba la distribución de corriente de una antena lineal alimentada en el centro y abierta en los extremos.**  
+Para una antena de longitud total \(2h\):
+\[
+\hat I(z')=
+\begin{cases}
+I_0\sin k(h-z'), & 0<z'<h,\\
+I_0\sin k(h+z'), & -h<z'<0.
+\end{cases}
+\]
+La corriente es continua en el punto de alimentación y se anula en los extremos abiertos.
+
+**6. Defina resistencia de radiación y relaciónela con la potencia radiada.**  
+La resistencia de radiación es la resistencia equivalente que disiparía una potencia igual a la radiada por la antena. Si \(I_0\) es la amplitud de la corriente:
+\[
+R_{\rm rad}=\frac{2P_{\rm rad}}{I_0^2}.
+\]
+No representa una pérdida térmica: representa potencia que abandona la antena como radiación electromagnética.
+
+**7. Explique el significado físico del ángulo sólido patrón.**  
+El ángulo sólido patrón
+\[
+\Omega_P=\int F(\theta,\varphi)\,d\Omega
+\]
+es el ángulo sólido equivalente en el que se concentraría toda la radiación si se emitiera con intensidad igual a la máxima. Cuanto menor sea \(\Omega_P\), más concentrada está la radiación y mayor es la directividad.
+
+**8. Describa las propiedades de la antena de media longitud de onda.**  
+Es una antena lineal con longitud total \(\lambda/2\), alimentada en el centro. Su campo lejano tiene factor angular
+\[
+\frac{\cos\left(\frac{\pi}{2}\cos\theta\right)}{\sin\theta}.
+\]
+Tiene resistencia de radiación aproximada \(73{,}1\,\Omega\) y directividad \(1{,}64\). Es moderadamente direccional y suele usarse como radiador básico, también en agrupaciones.
+
+**9. Explique cómo se aplica el método de imágenes a una antena vertical sobre tierra.**  
+Si la tierra se aproxima como conductor perfecto plano, la antena real se sustituye por la antena real más su imagen bajo el plano. Para una antena vertical de altura \(h\) alimentada en la base, el campo en el semiespacio superior coincide con el de una antena de longitud \(2h\) alimentada en el centro. La radiación solo existe en el semiespacio superior, por lo que la potencia y la resistencia de radiación son aproximadamente la mitad de las de la antena equivalente completa.
+
+**10. Para una agrupación vertical uniforme, escriba \(\psi\) y \(f(\theta)\).**  
+Para separación \(d\), desfase progresivo \(\delta\) y \(N\) elementos:
+\[
+\psi=\delta+kd\cos\theta,
+\]
+\[
+f(\theta)=\frac{\sin(N\psi/2)}{\sin(\psi/2)}.
+\]
+El módulo de este factor determina máximos y nulos del patrón de agrupación.
+
+### Respuestas a las 5 preguntas difíciles
+
+**1. Derive la expresión de la potencia media radiada por un dipolo corto a partir de los campos lejanos.**  
+En la zona de radiación:
+\[
+\hat H_\varphi=\frac{lI_0}{4\pi}\frac{jk}{r}e^{-jkr}\sin\theta,
+\]
+\[
+\hat E_\theta=Z_0\hat H_\varphi.
+\]
+Entonces:
+\[
+\langle\mathbf S\rangle=\frac12\Re\{\hat{\mathbf E}\times\hat{\mathbf H}^*\}
+=\frac12 Z_0\left|\hat H_\varphi\right|^2\mathbf u_r.
+\]
+Como \(|j e^{-jkr}|=1\),
+\[
+\langle\mathbf S\rangle=
+\frac12 Z_0\left(\frac{lI_0}{4\pi}\right)^2\frac{k^2}{r^2}\sin^2\theta\,\mathbf u_r.
+\]
+La potencia total se obtiene integrando sobre una esfera:
+\[
+P=\int \langle\mathbf S\rangle\cdot d\mathbf s
+=\frac12 Z_0\left(\frac{lI_0}{4\pi}\right)^2k^2
+\int_0^{2\pi}d\varphi\int_0^\pi \sin^3\theta\,d\theta.
+\]
+Como
+\[
+\int_0^{2\pi}d\varphi=2\pi,\qquad
+\int_0^\pi\sin^3\theta\,d\theta=\frac43,
+\]
+queda:
+\[
+P=\frac{1}{12\pi}Z_0k^2(lI_0)^2.
+\]
+
+**2. Analice las tres zonas espaciales alrededor de un dipolo oscilante y relacione cada una con los términos de campo.**  
+Las expresiones completas de los campos contienen términos con distintas potencias de \(1/(kr)\). En la zona cuasiestática, próxima al dipolo, dominan los términos de mayor potencia negativa: en el campo eléctrico aparece el comportamiento \(1/(kr)^3\) y en el magnético \(1/(kr)^2\). Estos términos se parecen a los campos de Coulomb y Biot-Savart, porque la variación temporal no domina la descripción local.
+
+En la zona de inducción, los términos intermedios, especialmente \(1/(kr)^2\), no pueden despreciarse. Esta zona almacena energía durante la oscilación: energía que no se pierde definitivamente, sino que intercambia la fuente con el campo.
+
+En la zona de radiación, \(kr\gg1\), solo quedan los términos \(1/(kr)\). Allí los campos son transversales, están en fase, cumplen \(E/H=Z_0\) y transportan potencia media neta. Es la zona relevante para diagramas de radiación y antenas.
+
+**3. Demuestre cualitativamente el principio de multiplicación de diagramas para una agrupación de antenas iguales.**  
+En campo lejano, cada antena de una agrupación produce un campo con la misma forma angular que la antena de referencia, salvo por dos factores: su excitación compleja \(C_m\) y la fase debida a su posición \(\mathbf r_m\). Esa fase se expresa como \(e^{jk\mathbf u_r\cdot\mathbf r_m}\). Al sumar todos los campos:
+\[
+\hat{\mathbf E}=\hat{\mathbf E}_{\rm ref}\sum_{m=1}^NC_m e^{jk\mathbf u_r\cdot\mathbf r_m}.
+\]
+El primer factor depende del radiador individual. La suma depende solo de la geometría y alimentación del conjunto. Por eso:
+\[
+\hat{\mathbf E}=\hat{\mathbf E}_{\rm ref}f(\theta,\varphi).
+\]
+El diagrama total se obtiene multiplicando el diagrama del elemento por el efecto de agrupación.
+
+**4. Determine las condiciones de máximo y nulo para una agrupación lineal vertical uniforme.**  
+Para una agrupación vertical:
+\[
+f(\theta)=\frac{\sin(N\psi/2)}{\sin(\psi/2)},
+\qquad
+\psi=\delta+kd\cos\theta.
+\]
+El máximo principal se obtiene cuando \(\psi=0\), porque numerador y denominador se anulan simultáneamente y el límite vale \(N\). Los nulos aparecen cuando se anula el numerador sin anularse el denominador:
+\[
+\frac{N\psi}{2}=p\pi,
+\qquad p=1,2,\ldots,N-1.
+\]
+Entre nulos aparecen máximos secundarios. La posición angular concreta se obtiene resolviendo \(\psi=\delta+kd\cos\theta\) para cada condición.
+
+**5. Compare la anchura de haz de una agrupación broadside y una endfire con el mismo \(N\), \(d\) y \(\lambda\).**  
+Para una agrupación broadside:
+\[
+{\rm BWFN}=\frac{2\lambda}{Nd}.
+\]
+Para una agrupación endfire:
+\[
+{\rm BWFN}=2\sqrt{\frac{2\lambda}{Nd}}.
+\]
+Con los mismos \(N\), \(d\) y \(\lambda\), la expresión endfire decrece como la raíz de \(\lambda/(Nd)\), mientras que broadside decrece linealmente con \(\lambda/(Nd)\). En las condiciones tratadas en el capítulo, broadside resulta más directiva, es decir, presenta un lóbulo principal más estrecho. No obstante, el diseño no se decide solo por anchura: también importan lóbulos secundarios y dirección deseada de radiación.
+
+### Respuestas a las 5 preguntas de desarrollo largo
+
+**1. Desarrolle el concepto de potencial retardado desde la ecuación de onda del potencial escalar y explique su papel en la radiación electromagnética.**  
+El potencial escalar en el vacío satisface:
+\[
+\nabla^2V-\mu_0\varepsilon_0\frac{\partial^2V}{\partial t^2}
+=-\frac{\rho}{\varepsilon_0}.
+\]
+Si no hay dependencia temporal, se recupera Poisson. Pero con fuentes variables, la derivada segunda temporal obliga a resolver un problema de propagación. Para una carga elemental en el origen, fuera de la fuente la solución es esférica. Escribiendo \(V=\phi/r\), se obtiene una ecuación de ondas para \(\phi\), cuyas soluciones son \(f(t-r/c)\) y \(f(t+r/c)\). La primera es retardada; la segunda, avanzada.
+
+La solución física ordinaria es la retardada porque respeta la causalidad: el cambio en la fuente precede al cambio observado en el campo. Para una distribución:
+\[
+V(\mathbf r,t)=\frac{1}{4\pi\varepsilon_0}
+\int\frac{\rho(\mathbf r',t-R/c)}{R}\,dv'.
+\]
+El potencial vector tiene forma análoga con \(\mathbf J\). En régimen armónico, el retardo aparece como fase \(e^{-jkR}\). Esta fase es decisiva para radiación, porque determina cómo se suman las contribuciones de fuentes extensas y, por tanto, los diagramas de radiación de antenas.
+
+**2. Exponga el estudio del dipolo corto: hipótesis, potencial vector, campos, zonas espaciales y potencia radiada.**  
+El dipolo corto es un conductor lineal de longitud \(l\ll\lambda\) con corriente sinusoidal uniforme. Se coloca según el eje \(z\). Además, el punto de observación está lejos respecto a la longitud del dipolo, \(r\gg l\). Bajo estas hipótesis:
+\[
+\hat{\mathbf A}=
+\frac{\mu_0}{4\pi}lI_0\frac{e^{-jkr}}{r}\mathbf u_z.
+\]
+Al expresar \(\mathbf u_z\) en coordenadas esféricas y tomar el rotacional, se obtiene un campo magnético con componente \(\varphi\). El campo eléctrico tiene componentes \(r\) y \(\theta\). Las expresiones completas contienen términos \(1/(kr)\), \(1/(kr)^2\) y \(1/(kr)^3\).
+
+Estos términos separan tres regiones. Cerca del dipolo domina el campo cuasiestático; en la región intermedia aparece la zona de inducción; lejos, \(kr\gg1\), quedan los campos radiativos:
+\[
+\hat H_\varphi=
+\frac{lI_0}{4\pi}\frac{jk}{r}e^{-jkr}\sin\theta,
+\]
+\[
+\hat E_\theta=Z_0\hat H_\varphi.
+\]
+Son campos transversales y en fase. La potencia radiada se obtiene con Poynting:
+\[
+\langle\mathbf S\rangle=
+\frac12Z_0\left(\frac{lI_0}{4\pi}\right)^2\frac{k^2}{r^2}\sin^2\theta\,\mathbf u_r,
+\]
+\[
+\langle P\rangle=\frac{1}{12\pi}Z_0k^2(lI_0)^2.
+\]
+El patrón normalizado es \(F(\theta)=\sin^2\theta\).
+
+**3. Explique los parámetros fundamentales de antenas: diagrama de radiación, intensidad, ángulo sólido patrón, anchura de haz, directividad, ganancia, eficiencia y resistencia de radiación.**  
+El diagrama de radiación describe la distribución angular de potencia radiada. En campo lejano el vector de Poynting es radial, por lo que la potencia emitida en un ángulo sólido diferencial se expresa mediante \(S r^2 d\Omega\). De ahí se define la intensidad de radiación:
+\[
+I=Sr^2.
+\]
+La intensidad normalizada es:
+\[
+F(\theta,\varphi)=I/I_{\max}.
+\]
+El ángulo sólido patrón:
+\[
+\Omega_P=\int F\,d\Omega
+\]
+resume el ancho angular equivalente del diagrama. Si \(\Omega_P\) es pequeño, la antena concentra la radiación.
+
+La anchura de haz mide el tamaño del lóbulo principal. Puede definirse entre primeros nulos, BWFN, o a media potencia, HPBW. Es esencial para la resolución angular y para valorar cuánta energía se dirige cerca de la dirección deseada.
+
+La directividad es:
+\[
+D=4\pi/\Omega_P=4\pi r^2S_{\max}/P_{\rm rad}.
+\]
+No incluye pérdidas. La eficiencia es:
+\[
+\xi=P_{\rm rad}/P_t.
+\]
+La ganancia incorpora pérdidas:
+\[
+G=\xi D.
+\]
+Finalmente, la resistencia de radiación traduce la potencia radiada a un equivalente de circuito:
+\[
+R_{\rm rad}=2P_{\rm rad}/I_0^2.
+\]
+Junto con la resistencia de pérdidas permite escribir:
+\[
+\xi=\frac{R_{\rm rad}}{R_{\rm rad}+R_{\rm per}}.
+\]
+
+**4. Desarrolle el modelo de antena lineal alimentada en el centro, incluyendo distribución de corriente, factor de antena y caso de media longitud de onda.**  
+Una antena lineal abierta y delgada se modeliza como una línea de transmisión abierta. La corriente se anula en los extremos y es continua en el punto de alimentación. Para longitud total \(2h\), la distribución aproximada es:
+\[
+\hat I(z')=
+\begin{cases}
+I_0\sin k(h-z'), & 0<z'<h,\\
+I_0\sin k(h+z'), & -h<z'<0.
+\end{cases}
+\]
+El campo lejano se obtiene sumando los campos de dipolos elementales \(I(z')dz'\). En la amplitud puede tomarse \(R\simeq r\), pero en la fase se conserva \(R\simeq r-z'\cos\theta\). La integración conduce a:
+\[
+\hat E_\theta=
+j\frac{Z_0I_0}{2\pi r}e^{-jkr}
+\frac{\cos(kh\cos\theta)-\cos kh}{\sin\theta}.
+\]
+El factor de antena es:
+\[
+f(\theta)=\frac{\cos(kh\cos\theta)-\cos kh}{\sin\theta}.
+\]
+Para la antena de media onda, \(h=\lambda/4\), queda:
+\[
+\hat E_\theta=
+j\frac{60I_0}{r}e^{-jkr}
+\frac{\cos\left(\frac{\pi}{2}\cos\theta\right)}{\sin\theta}.
+\]
+Sus valores característicos son \(R_{\rm rad}=73{,}1\,\Omega\) y \(D=1{,}64\). Es una antena base porque combina tamaño razonable, resistencia de radiación útil y patrón sencillo.
+
+**5. Explique las agrupaciones de antenas lineales, el factor de agrupación y las configuraciones broadside y endfire.**  
+Una agrupación se forma con varios radiadores, normalmente iguales, alimentados con amplitudes y fases controladas. En campo lejano, el campo total se expresa como el producto del campo de una antena de referencia por un factor que solo depende de geometría y excitación:
+\[
+\hat{\mathbf E}=\hat{\mathbf E}_{\rm ref}f(\theta,\varphi).
+\]
+El factor de agrupación es:
+\[
+f(\theta,\varphi)=\sum_{m=1}^NC_m e^{jk\mathbf u_r\cdot\mathbf r_m}.
+\]
+Este factor permite diseñar máximos y nulos mediante interferencia.
+
+Para una agrupación lineal vertical uniforme:
+\[
+\psi=\delta+kd\cos\theta,
+\qquad
+f(\theta)=\frac{\sin(N\psi/2)}{\sin(\psi/2)}.
+\]
+Los máximos principales se asocian a \(\psi=0\), y los nulos a \(N\psi/2=p\pi\). Si \(\delta=0\), el máximo principal ocurre en \(\theta=\pi/2\): es una agrupación broadside. Si se quiere máximo sobre el eje, \(\theta=0\) o \(\pi\), se elige:
+\[
+\delta=\pm\frac{2\pi d}{\lambda},
+\]
+obteniendo una agrupación endfire. Broadside suele producir un haz más estrecho para los mismos parámetros, pero el diseño final debe tener en cuenta lóbulos secundarios y dirección de radiación deseada.
+
+### Respuestas a las 5 preguntas de relación entre conceptos
+
+**1. Relacione potenciales retardados, fase \(e^{-jkR}\) y diagramas de radiación.**  
+Los potenciales retardados introducen la dependencia \(t-R/c\). En régimen fasorial, eso se traduce en el factor \(e^{-jkR}\). En una fuente extensa, distintos elementos tienen distintos \(R\), de modo que sus contribuciones llegan con fases diferentes. La suma de esas fases produce interferencias que determinan el diagrama de radiación.
+
+**2. Relacione campo lejano, vector de Poynting y potencia radiada.**  
+En campo lejano los campos decrecen como \(1/r\), son transversales y están en fase. El vector de Poynting medio decrece como \(1/r^2\). Al integrarlo sobre una esfera de área proporcional a \(r^2\), se obtiene una potencia total independiente de \(r\), que es la potencia radiada.
+
+**3. Relacione factor de antena y factor de agrupación.**  
+El factor de antena describe el patrón angular de un radiador individual, por ejemplo una antena lineal. El factor de agrupación describe el efecto de colocar varios radiadores con determinadas posiciones y fases. En una agrupación ideal de elementos iguales, el diagrama total se obtiene multiplicando ambos efectos.
+
+**4. Relacione método de imágenes y condiciones de contorno en antenas frente a tierra.**  
+El método de imágenes sustituye el plano conductor perfecto por fuentes imagen colocadas simétricamente. La construcción se elige para satisfacer las condiciones de contorno: campo eléctrico tangencial nulo y campo magnético normal nulo en el plano. Así se calcula el campo en el semiespacio superior sin resolver directamente las corrientes inducidas reales.
+
+**5. Relacione directividad, ganancia, eficiencia y resistencias de radiación y pérdidas.**  
+La directividad mide concentración angular de la potencia radiada. La eficiencia mide qué fracción de la potencia suministrada se radia:
+\[
+\xi=P_{\rm rad}/P_t.
+\]
+La ganancia combina ambas:
+\[
+G=\xi D.
+\]
+Desde el punto de vista de circuito:
+\[
+\xi=\frac{R_{\rm rad}}{R_{\rm rad}+R_{\rm per}}.
+\]
+Una antena puede ser muy directiva pero tener poca ganancia si sus pérdidas son grandes.
+
+## 9. Resumen final de repaso
+
+**Ideas principales.**
+- Las fuentes variables generan potenciales retardados: el campo observado depende de la fuente en \(t-R/c\).
+- En régimen fasorial, el retardo aparece como fase \(e^{-jkR}\).
+- El dipolo corto es el radiador elemental y exige \(l\ll\lambda\).
+- La zona de radiación contiene solo términos \(1/r\), que transportan potencia media a grandes distancias.
+- El patrón del dipolo corto es \(F(\theta)=\sin^2\theta\).
+- Una antena se caracteriza por patrón, intensidad, anchura de haz, directividad, ganancia, eficiencia y resistencia de radiación.
+- La antena lineal se obtiene por superposición de dipolos cortos.
+- La antena de media onda tiene \(R_{\rm rad}\simeq73{,}1\,\Omega\) y \(D\simeq1{,}64\).
+- La antena de cuadro pequeña es dual del dipolo corto en cuanto a direcciones de \(\mathbf E\) y \(\mathbf H\).
+- Una antena vertical frente a tierra se trata mediante imágenes si la tierra se aproxima como conductor perfecto.
+- En agrupaciones, el patrón total se separa en patrón del elemento y factor de agrupación.
+- Broadside radia perpendicular al eje; endfire radia sobre el eje.
+
+**Conceptos imprescindibles.**
+- Potencial retardado.
+- Tiempo de retardo.
+- Campo lejano.
+- Vector de Poynting medio.
+- Intensidad de radiación.
+- Diagrama normalizado.
+- Ángulo sólido patrón.
+- Directividad.
+- Ganancia.
+- Resistencia de radiación.
+- Factor de antena.
+- Factor de agrupación.
+- Broadside y endfire.
+
+**Relaciones clave.**
+- \(t-R/c\) produce \(e^{-jkR}\).
+- Campos \(1/r\) producen \(S\sim1/r^2\) y potencia finita.
+- Campo \(\propto\sin\theta\) implica potencia \(\propto\sin^2\theta\).
+- \(D=4\pi/\Omega_P\).
+- \(G=\xi D\).
+- \(\xi=R_{\rm rad}/(R_{\rm rad}+R_{\rm per})\).
+- \(\hat{\mathbf E}_{\rm total}=\hat{\mathbf E}_{\rm ref}f(\theta,\varphi)\).
+- \(f(\theta)=\sin(N\psi/2)/\sin(\psi/2)\), con \(\psi=\delta+kd\cos\theta\) para agrupación vertical.
+
+**Errores que evitar.**
+- Usar potencial instantáneo en vez de retardado.
+- Confundir campo cercano con campo radiado.
+- Olvidar que el patrón de potencia es el cuadrado del patrón de campo.
+- Despreciar la fase en integrales de antenas.
+- Confundir ganancia y directividad.
+- Confundir resistencia de radiación con pérdidas Joule.
+- Aplicar imágenes sin indicar conductor perfecto.
+- Sumar módulos en agrupaciones en vez de sumar fasores.
+- Llamar broadside a una agrupación con desfase endfire.
+
+## 10. Checklist de dominio
+
+- Si no puedes explicar por qué aparece \(t-R/c\), falta repasar potenciales retardados.
+- Si confundes potencial retardado con potencial avanzado, revisar causalidad en la ecuación de ondas.
+- Si no puedes escribir \(V(\mathbf r,t)\) y \(\mathbf A(\mathbf r,t)\) retardados, falta repasar la sección 1.
+- Si no sabes cuándo vale el modelo de dipolo corto, falta repasar las hipótesis \(l\ll\lambda\) y \(r\gg l\).
+- Si colocas el máximo del dipolo sobre su eje, revisar el patrón \(\sin^2\theta\).
+- Si no puedes distinguir zona cuasiestática, inducción y radiación, falta repasar los términos en potencias de \(1/(kr)\).
+- Si no sabes justificar por qué solo los términos \(1/r\) transportan potencia lejana, revisar Poynting y la integral sobre una esfera.
+- Si confundes \(E/H=Z_0\) con una relación válida en cualquier región, revisar campo lejano.
+- Si no puedes derivar \(F(\theta)=\sin^2\theta\), falta repasar campo lejano del dipolo corto.
+- Si no puedes calcular una potencia radiada integrando \(S r^2\sin\theta\,d\theta\,d\varphi\), falta repasar vector de Poynting.
+- Si confundes intensidad de radiación con densidad de potencia, revisar \(I=Sr^2\).
+- Si confundes \(\Omega_P\) con anchura de haz, revisar definiciones de antenas.
+- Si confundes directividad con ganancia, revisar \(G=\xi D\).
+- Si confundes resistencia de radiación con resistencia de pérdidas, revisar el modelo circuital de antena.
+- Si no puedes explicar por qué la fase no se desprecia en una antena lineal, falta repasar la deducción de \(E_\theta\).
+- Si no puedes escribir el factor de antena \(f(\theta)\), falta repasar antena lineal.
+- Si no recuerdas \(R_{\rm rad}=73{,}1\,\Omega\) y \(D=1{,}64\) para media onda, falta fijar el caso canónico.
+- Si no puedes explicar la antena de cuadro como dual del dipolo corto, revisar direcciones de \(\mathbf E\) y \(\mathbf H\).
+- Si no puedes aplicar imágenes a una antena vertical frente a tierra, revisar condiciones de contorno en conductor perfecto.
+- Si no puedes escribir \(f(\theta,\varphi)=\sum C_m e^{jk\mathbf u_r\cdot \mathbf r_m}\), falta repasar agrupaciones.
+- Si sumas intensidades antes que campos fasoriales en una agrupación coherente, revisar superposición compleja.
+- Si no puedes localizar nulos con \(N\psi/2=p\pi\), falta repasar análisis del factor de agrupación.
+- Si confundes broadside con endfire, revisar el papel de \(\delta\).
+- Si puedes derivar el patrón del dipolo corto, calcular una directividad desde \(F\), explicar una antena de media onda y analizar una agrupación uniforme, el capítulo está suficientemente asentado.
