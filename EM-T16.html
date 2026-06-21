@@ -1,0 +1,1380 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="color-scheme" content="light dark" />
+  <title>Electromagnetismo II — EM16 — Campo electromagnético y ecuaciones de Maxwell</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/icon-32.png" />
+  <link rel="icon" type="image/png" sizes="50x50" href="assets/icons/icon-50.png" />
+  <link rel="apple-touch-icon" sizes="100x100" href="assets/icons/icon-100.png" />
+  <meta name="theme-color" content="#7c2d12" />
+  <link rel="stylesheet" href="assets/styles.css" />
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [["\\(","\\)"], ["$", "$"]],
+        displayMath: [["\\[","\\]"]]
+      },
+      svg: { fontCache: "global" }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+  <script defer src="assets/app.js"></script>
+</head>
+<body class="subject-electromagnetismo">
+  <div class="wrap">
+    <header class="cover">
+      <div class="top-actions">
+        <a class="back-link secondary" href="#preguntas">Preguntas</a>
+        <a class="back-link secondary" href="#checklist">Checklist</a>
+      </div>
+      <p class="eyebrow">Electromagnetismo II · UNED · Tema 16</p>
+      <h1>Campo electromagnético y ecuaciones de Maxwell</h1>
+      <p class="subtitle">Fuente principal: Tema 4, Campo electromagnético, de Electromagnetismo II, UNED.. Objetivo: guía de estudio desarrollada y orientada a examen.</p>
+      <div class="chips">
+        <span class="chip">apuntes completos</span>
+        <span class="chip">MathJax</span>
+        <span class="chip">mapa clicable</span>
+        <span class="chip">orientado a examen</span>
+        <span class="chip">estado: listo</span>
+      </div>
+    </header>
+
+    <div class="toolbar no-print">
+      <nav><a href="#ficha-del-tema">Ficha del tema</a><a href="#prerrequisitos">Prerrequisitos</a><a href="#idea-central">Idea central</a><a href="#desarrollo">Desarrollo</a><a href="#conceptos">Conceptos</a><a href="#relaciones">Relaciones</a><a href="#errores">Errores</a><a href="#preguntas">Preguntas</a><a href="#respuestas">Respuestas</a><a href="#resumen">Resumen</a><a href="#checklist">Checklist</a></nav>
+      <div class="toolbar-actions">
+        <button class="btn" onclick="printReady()">Imprimir / guardar PDF</button>
+      </div>
+    </div>
+
+    <main>
+      <section class="page" id="mapa">
+        <div class="page-head"><h2>Mapa conceptual clicable</h2><span class="page-no">T16 · mapa</span></div>
+        <div class="concept-map">
+          <a class="map-node" href="#ficha-del-tema"><span>Ficha del tema</span><small>Tema trabajado: T16 — Campo electromagnético y ecuaciones de Maxwell.</small></a><a class="map-node" href="#prerrequisitos"><span>Prerrequisitos</span><small>- Cálculo vectorial.</small></a><a class="map-node" href="#idea-central"><span>Idea central</span><small>El capítulo resuelve un problema de fondo: las leyes eléctricas y magnéticas estudiadas por separado no forman todavía u</small></a><a class="map-node" href="#desarrollo"><span>Desarrollo</span><small>3.1. De las leyes separadas al campo electromagnético</small></a><a class="map-node" href="#conceptos"><span>Conceptos</span><small>- Corriente de desplazamiento.</small></a><a class="map-node" href="#relaciones"><span>Relaciones</span><small>La estructura lógica del capítulo empieza en la conservación de la carga. La ecuación de continuidad no es una ecuación </small></a><a class="map-node" href="#errores"><span>Errores</span><small>- Error 1: creer que la corriente de desplazamiento es siempre movimiento real de cargas.</small></a><a class="map-node" href="#preguntas"><span>Preguntas</span><small>10 preguntas fáciles</small></a><a class="map-node" href="#respuestas"><span>Respuestas</span><small>1. La corriente de desplazamiento es el término \(\partial\mathbf{D}/\partial t\) introducido por Maxwell en la ley de A</small></a><a class="map-node" href="#resumen"><span>Resumen</span><small>- Ideas principales:</small></a><a class="map-node" href="#checklist"><span>Checklist</span><small>- Si no puedes explicar por qué falla la ley de Ampère magnetostática en un condensador en carga, falta repasar corrient</small></a>
+        </div>
+      </section>
+
+      <section class="page" id="ficha-del-tema">
+  <div class="page-head"><h2>Ficha del tema</h2><span class="page-no">T16 · ·</span></div>
+  <div class="reading-block">
+<p>Tema trabajado: T16 — Campo electromagnético y ecuaciones de Maxwell. Fuente principal: Tema 4, Campo electromagnético, de Electromagnetismo II, UNED. Fuente complementaria puntual: capítulo 13 del libro de Problemas resueltos de Electromagnetismo, solo para la noción de momento electromagnético.</p>
+  </div>
+</section><section class="page" id="prerrequisitos">
+  <div class="page-head"><h2>1. Prerrequisitos mínimos</h2><span class="page-no">T16 · 1</span></div>
+  <div class="reading-block">
+<ul>
+<li>Cálculo vectorial.</li>
+</ul>
+<p>Definición breve: conjunto de operaciones diferenciales e integrales sobre campos escalares y vectoriales: gradiente, divergencia, rotacional, integral de línea, integral de superficie y teoremas de Gauss y Stokes.</p>
+<p>Por qué es necesario: las ecuaciones de Maxwell aparecen en forma diferencial y en forma integral. Sin controlar qué mide una divergencia, qué mide un rotacional y cómo se pasa de una forma a otra, el capítulo se convierte en una lista de fórmulas sin contenido físico.</p>
+<p>Ejemplo mínimo: si \(\nabla\cdot\mathbf{D}=\rho\), al integrar en un volumen y aplicar Gauss se obtiene \(\oint_S \mathbf{D}\cdot d\mathbf{s}=\int_V \rho\,dv\). Esa igualdad dice que el flujo de \(\mathbf{D}\) mide la carga libre encerrada.</p>
+<ul>
+<li>Campo eléctrico y vector desplazamiento eléctrico.</li>
+</ul>
+<p>Definición breve: \(\mathbf{E}\) describe la fuerza eléctrica por unidad de carga; \(\mathbf{D}\) es el campo auxiliar que permite separar, en medios materiales, el papel de la carga libre y de la polarización.</p>
+<p>Por qué es necesario: la corriente de desplazamiento se introduce como \(\partial\mathbf{D}/\partial t\). No basta con recordar \(\mathbf{E}\); hay que saber qué papel juega \(\mathbf{D}\) en el teorema de Gauss.</p>
+<p>Ejemplo mínimo: en un dieléctrico lineal, homogéneo e isótropo se usa \(\mathbf{D}=\varepsilon\mathbf{E}\). En un medio material general se escribe \(\mathbf{D}=\varepsilon_0\mathbf{E}+\mathbf{P}\).</p>
+<ul>
+<li>Campo magnético, \(\mathbf{B}\) y \(\mathbf{H}\).</li>
+</ul>
+<p>Definición breve: \(\mathbf{B}\) es el campo magnético que aparece en la fuerza de Lorentz; \(\mathbf{H}\) es la intensidad de campo magnético útil para escribir la ley de Ampère en medios materiales.</p>
+<p>Por qué es necesario: una de las ecuaciones de Maxwell relaciona \(\nabla\times\mathbf{H}\) con la corriente de conducción y la corriente de desplazamiento. Además, las condiciones de contorno distinguen entre \(\mathbf{B}\) normal y \(\mathbf{H}\) tangencial.</p>
+<p>Ejemplo mínimo: en un medio lineal, homogéneo e isótropo, \(\mathbf{B}=\mu\mathbf{H}\).</p>
+<ul>
+<li>Ley de Faraday.</li>
+</ul>
+<p>Definición breve: un flujo magnético variable induce circulación del campo eléctrico:</p>
+<div class="formula-block">  \[
+  \oint_C \mathbf{E}\cdot d\mathbf{l}=-\frac{\partial}{\partial t}\int_S \mathbf{B}\cdot d\mathbf{s}.
+  \]</div>
+<p>Por qué es necesario: en electrodinámica el campo eléctrico no es, en general, conservativo. Por eso no puede escribirse siempre como \(\mathbf{E}=-\nabla V\).</p>
+<p>Ejemplo mínimo: si \(\partial\mathbf{B}/\partial t\neq 0\), entonces \(\nabla\times\mathbf{E}=-\partial\mathbf{B}/\partial t\neq 0\), y la integral de línea de \(\mathbf{E}\) depende del camino.</p>
+<ul>
+<li>Ley de Ampère magnetostática.</li>
+</ul>
+<p>Definición breve: en régimen estacionario, la circulación de \(\mathbf{H}\) alrededor de una curva cerrada mide la corriente de conducción que atraviesa una superficie apoyada en esa curva:</p>
+<div class="formula-block">  \[
+  \oint_C \mathbf{H}\cdot d\mathbf{l}=\int_S \mathbf{J}\cdot d\mathbf{s}.
+  \]</div>
+<p>Por qué es necesario: el capítulo muestra que esta ley falla si se aplica sin modificación a circuitos abiertos o corrientes variables. La corrección de Maxwell es precisamente añadir \(\partial\mathbf{D}/\partial t\).</p>
+<p>Ejemplo mínimo: en la carga de un condensador, hay corriente de conducción en los cables, pero no entre las placas. Sin corriente de desplazamiento, la circulación de \(\mathbf{H}\) dependería de la superficie elegida, lo cual es inaceptable.</p>
+<ul>
+<li>Ecuación de continuidad.</li>
+</ul>
+<p>Definición breve: expresa la conservación local de la carga:</p>
+<div class="formula-block">  \[
+  \nabla\cdot\mathbf{J}=-\frac{\partial\rho}{\partial t}.
+  \]</div>
+<p>Por qué es necesario: Maxwell introduce la corriente de desplazamiento para que la ecuación de Ampère sea compatible con la conservación de la carga.</p>
+<p>Ejemplo mínimo: si una carga se acumula en una placa de un condensador, la corriente que llega a la placa no desaparece: cambia la carga almacenada y, por tanto, modifica el campo eléctrico.</p>
+<ul>
+<li>Ecuaciones constitutivas.</li>
+</ul>
+<p>Definición breve: relaciones que conectan los campos con la respuesta del medio:</p>
+<div class="formula-block">  \[
+  \mathbf{D}=\varepsilon\mathbf{E},\qquad \mathbf{B}=\mu\mathbf{H},\qquad \mathbf{J}=\gamma\mathbf{E}.
+  \]</div>
+<p>Por qué es necesario: las ecuaciones de Maxwell dan relaciones generales, pero para resolver un problema concreto se necesita saber cómo responde el material.</p>
+<p>Ejemplo mínimo: en un buen dieléctrico ideal \(\gamma\) es despreciable; en un conductor \(\gamma\) es grande y aparece disipación Joule.</p>
+<ul>
+<li>Potenciales electrostático y vector magnético.</li>
+</ul>
+<p>Definición breve: en electrostática se introduce \(V\) con \(\mathbf{E}=-\nabla V\); en magnetostática se introduce \(\mathbf{A}\) con \(\mathbf{B}=\nabla\times\mathbf{A}\).</p>
+<p>Por qué es necesario: en campos variables se conservan los potenciales, pero cambia la relación entre \(\mathbf{E}\), \(V\) y \(\mathbf{A}\):</p>
+<div class="formula-block">  \[
+  \mathbf{E}=-\nabla V-\frac{\partial\mathbf{A}}{\partial t}.
+  \]</div>
+<p>Ejemplo mínimo: si \(\mathbf{A}\) depende del tiempo, el voltaje entre dos puntos no coincide simplemente con la diferencia de potencial escalar.</p>
+<ul>
+<li>Fasores y valores medios temporales.</li>
+</ul>
+<p>Definición breve: representación compleja de campos armónicos, por ejemplo \(\mathbf{E}(\mathbf{r},t)=\Re(\hat{\mathbf{E}}(\mathbf{r})e^{j\omega t})\).</p>
+<p>Por qué es necesario: el teorema de Poynting en forma compleja se formula con fasores y permite separar potencia media y energía reactiva.</p>
+<p>Ejemplo mínimo: para campos sinusoidales, \(\langle\cos^2\omega t\rangle=1/2\). Por eso las densidades medias de energía llevan factores \(1/4\) cuando se expresan con amplitudes complejas.</p>
+  </div>
+</section><section class="page" id="idea-central">
+  <div class="page-head"><h2>2. Idea central del capítulo</h2><span class="page-no">T16 · 2</span></div>
+  <div class="reading-block">
+<p>El capítulo resuelve un problema de fondo: las leyes eléctricas y magnéticas estudiadas por separado no forman todavía una teoría completa para campos dependientes del tiempo. La electrostática describe cargas en reposo; la magnetostática describe corrientes estacionarias; Faraday introduce campos eléctricos inducidos por campos magnéticos variables. Pero falta cerrar la simetría dinámica: si un campo magnético variable produce campo eléctrico, también debe analizarse cómo un campo eléctrico variable interviene en la producción del campo magnético.</p>
+<p>La pieza decisiva es la corriente de desplazamiento. Al aplicar la ley de Ampère magnetostática a un circuito abierto, como el proceso de carga de un condensador, aparece una contradicción: la circulación de \(\mathbf{H}\) podría dar un valor u otro según la superficie elegida. Maxwell corrige la ley añadiendo el término \(\partial\mathbf{D}/\partial t\). Así la fuente de \(\mathbf{H}\) ya no es solo la corriente de conducción \(\mathbf{J}\), sino la corriente total</p>
+<div class="formula-block">\[
+\mathbf{J}_t=\mathbf{J}+\frac{\partial\mathbf{D}}{\partial t}.
+\]</div>
+<p>Esta modificación no es un retoque formal. Es la entrada de los campos eléctricos variables como fuentes del campo magnético.</p>
+<p>A partir de ahí se obtiene el conjunto de ecuaciones de Maxwell. El capítulo las presenta como síntesis macroscópica de la teoría clásica del electromagnetismo. Junto con las ecuaciones constitutivas y la fuerza de Lorentz, permiten estudiar la interacción entre partículas cargadas, corrientes, materiales y campos. El papel de las condiciones de contorno es fundamental: cuando hay más de un medio, resolver Maxwell dentro de cada región no basta; hay que enlazar las soluciones en la frontera.</p>
+<p>El capítulo también introduce los potenciales electrodinámicos. En campos variables, \(\mathbf{E}\) no puede depender solo de \(V\), porque su rotacional no tiene por qué ser nulo. Se conserva \(\mathbf{B}=\nabla\times\mathbf{A}\), pero el campo eléctrico queda como</p>
+<div class="formula-block">\[
+\mathbf{E}=-\nabla V-\frac{\partial\mathbf{A}}{\partial t}.
+\]</div>
+<p>Esto lleva a ecuaciones de onda para los potenciales y a la idea de norma o gauge: distintos potenciales pueden representar los mismos campos. La norma de Lorenz simplifica las ecuaciones y muestra que los potenciales obedecen ecuaciones con propagación finita.</p>
+<p>El cierre físico del capítulo es el teorema de Poynting. Las ecuaciones de Maxwell no solo describen campos: también imponen un balance de energía. El vector</p>
+<div class="formula-block">\[
+\mathbf{S}=\mathbf{E}\times\mathbf{H}
+\]</div>
+<p>representa flujo de potencia electromagnética. Su divergencia aparece en el balance entre energía almacenada, potencia disipada, potencia suministrada por fuentes y energía que atraviesa la superficie que limita un volumen. En régimen armónico, la forma compleja del teorema separa potencia media real y energía reactiva.</p>
+<p>El tema ocupa una posición de bisagra dentro de la asignatura. Cierra electrostática, magnetostática e inducción, y abre la propagación de ondas electromagnéticas, líneas de transmisión, guías de ondas y radiación. Si este capítulo se estudia como una lista de ecuaciones, no se domina. Hay que saber qué ecuación usar, qué término aparece por conservación de la carga, qué condición de contorno aplicar y qué significado energético tiene el resultado.</p>
+  </div>
+</section><section class="page" id="desarrollo">
+  <div class="page-head"><h2>3. Desarrollo completo del capítulo</h2><span class="page-no">T16 · 3</span></div>
+  <div class="reading-block">
+<h3 id="31-de-las-leyes-separadas-al-campo-electromagnetico">3.1. De las leyes separadas al campo electromagnético</h3>
+<p>Hasta este punto del curso se han estudiado leyes que describen partes del fenómeno electromagnético. La ley de Coulomb y el teorema de Gauss describen cómo las cargas son fuente del campo eléctrico. La ley de Biot-Savart y la ley de Ampère describen cómo las corrientes estacionarias generan campo magnético. La ley de Faraday introduce una relación nueva: un campo magnético variable genera un campo eléctrico con rotacional no nulo.</p>
+<p>El conjunto inicial de ecuaciones tiene un desequilibrio. Faraday permite pasar de variación temporal de \(\mathbf{B}\) a rotacional de \(\mathbf{E}\):</p>
+<div class="formula-block">\[
+\nabla\times\mathbf{E}=-\frac{\partial\mathbf{B}}{\partial t}.
+\]</div>
+<p>Pero la ley de Ampère magnetostática aparece como</p>
+<div class="formula-block">\[
+\nabla\times\mathbf{H}=\mathbf{J}.
+\]</div>
+<p>En ella no figura ninguna variación temporal de \(\mathbf{D}\). Si se acepta esta forma sin más, un campo eléctrico variable no produciría campo magnético. El capítulo muestra que esto es incompatible con la conservación de la carga.</p>
+<p>El ejemplo físico que fija la idea es el circuito abierto asociado a un condensador. En los cables hay corriente de conducción. Entre las placas no hay corriente de conducción si el dieléctrico es ideal. Sin embargo, el campo eléctrico entre placas cambia mientras el condensador se carga. Si se calcula \(\oint_C\mathbf{H}\cdot d\mathbf{l}\) usando una superficie que corta el cable, aparece la corriente \(I\). Si se usa una superficie que pasa entre las placas y no corta ningún conductor, saldría cero. Una misma curva no puede dar dos circulaciones distintas. El fallo está en haber usado una ley incompleta.</p>
+<h3 id="32-corriente-de-desplazamiento">3.2. Corriente de desplazamiento</h3>
+<p class="section-label"><strong>La ecuación de continuidad es el punto de partida</strong></p>
+<div class="formula-block">\[
+\nabla\cdot\mathbf{J}=-\frac{\partial\rho}{\partial t}.
+\]</div>
+<p>En forma integral, aplicada a una superficie cerrada, indica que el flujo neto de corriente de conducción está relacionado con la variación temporal de la carga encerrada. Si se combina con el teorema de Gauss para \(\mathbf{D}\),</p>
+<div class="formula-block">\[
+\oint_S\mathbf{D}\cdot d\mathbf{s}=\int_V\rho\,dv,
+\]</div>
+<p>se obtiene que el flujo de \(\mathbf{J}+\partial\mathbf{D}/\partial t\) a través de una superficie cerrada es nulo. Por eso Maxwell define la corriente total como</p>
+<div class="formula-block">\[
+\mathbf{J}_t=\mathbf{J}+\frac{\partial\mathbf{D}}{\partial t}.
+\]</div>
+<p>El segundo término es la corriente de desplazamiento.</p>
+<p>La palabra "corriente" puede inducir a error. No siempre representa transporte de cargas libres a través del material. En el vacío o en un dieléctrico ideal entre placas de un condensador no hay conducción, pero sí puede cambiar \(\mathbf{D}\). Ese cambio temporal actúa, en la ley de Ampère-Maxwell, como fuente de \(\mathbf{H}\). En problemas de examen hay que distinguir cuidadosamente entre corriente de conducción \(\mathbf{J}\), corriente de desplazamiento \(\partial\mathbf{D}/\partial t\) y corriente total.</p>
+<p class="section-label"><strong>La ley de Ampère corregida queda</strong></p>
+<div class="formula-block">\[
+\oint_C\mathbf{H}\cdot d\mathbf{l}
+=
+\int_S\left(\mathbf{J}+\frac{\partial\mathbf{D}}{\partial t}\right)\cdot d\mathbf{s}.
+\]</div>
+<p class="section-label"><strong>En forma diferencial</strong></p>
+<div class="formula-block">\[
+\nabla\times\mathbf{H}=\mathbf{J}+\frac{\partial\mathbf{D}}{\partial t}.
+\]</div>
+<p>Esta ecuación completa la interdependencia entre \(\mathbf{E}\) y \(\mathbf{B}\). Faraday dice que un \(\mathbf{B}\) variable genera circulación de \(\mathbf{E}\). Maxwell añade que un \(\mathbf{D}\) variable contribuye a generar circulación de \(\mathbf{H}\). Con ambas ecuaciones, el campo electromagnético se convierte en una entidad dinámica.</p>
+<h3 id="33-ecuaciones-de-maxwell-lorentz">3.3. Ecuaciones de Maxwell-Lorentz</h3>
+<p>El capítulo presenta las ecuaciones de Maxwell en forma integral y diferencial. En forma diferencial son:</p>
+<div class="formula-block">\[
+\nabla\cdot\mathbf{D}=\rho,
+\]</div>
+<div class="formula-block">\[
+\nabla\times\mathbf{E}=-\frac{\partial\mathbf{B}}{\partial t},
+\]</div>
+<div class="formula-block">\[
+\nabla\cdot\mathbf{B}=0,
+\]</div>
+<div class="formula-block">\[
+\nabla\times\mathbf{H}=\mathbf{J}+\frac{\partial\mathbf{D}}{\partial t}.
+\]</div>
+<p>La primera expresa que la carga libre es fuente de \(\mathbf{D}\). La segunda es la ley de Faraday: la variación temporal de \(\mathbf{B}\) induce un campo eléctrico rotacional. La tercera expresa la inexistencia de monopolos magnéticos dentro de esta teoría clásica: las líneas de \(\mathbf{B}\) no nacen ni mueren. La cuarta es la ley de Ampère-Maxwell: las fuentes de la circulación de \(\mathbf{H}\) son la corriente de conducción y la corriente de desplazamiento.</p>
+<p>Estas ecuaciones no bastan por sí solas para resolver un problema en medios materiales. Hay que añadir ecuaciones constitutivas. Para medios lineales, homogéneos e isótropos:</p>
+<div class="formula-block">\[
+\mathbf{D}=\varepsilon\mathbf{E},\qquad
+\mathbf{B}=\mu\mathbf{H},\qquad
+\mathbf{J}=\gamma\mathbf{E}.
+\]</div>
+<p>Con ellas se relacionan los campos con los parámetros macroscópicos del medio: permitividad, permeabilidad y conductividad.</p>
+<p class="section-label"><strong>El sistema se completa con la fuerza de Lorentz</strong></p>
+<div class="formula-block">\[
+\mathbf{F}=q(\mathbf{E}+\mathbf{v}\times\mathbf{B}),
+\]</div>
+<p>y con la segunda ley de Newton:</p>
+<div class="formula-block">\[
+\mathbf{F}=m\frac{d\mathbf{v}}{dt}=\frac{d\mathbf{p}}{dt}.
+\]</div>
+<p>Las ecuaciones de Maxwell describen cómo se generan y evolucionan los campos. La fuerza de Lorentz describe cómo esos campos actúan sobre cargas.</p>
+<h3 id="34-maxwell-en-medios-materiales">3.4. Maxwell en medios materiales</h3>
+<p>En medios materiales se trabaja de forma macroscópica. No se resuelve el movimiento de cada carga ligada en cada átomo. Se introducen campos medios y se consideran distribuciones continuas de fuentes y de parámetros. Aparecen la polarización \(\mathbf{P}\) y la imanación \(\mathbf{M}\):</p>
+<div class="formula-block">\[
+\mathbf{D}=\varepsilon_0\mathbf{E}+\mathbf{P},
+\]</div>
+<div class="formula-block">\[
+\mathbf{B}=\mu_0(\mathbf{H}+\mathbf{M}).
+\]</div>
+<p>La polarización representa la respuesta eléctrica ligada a cargas atómicas o moleculares. La imanación representa corrientes ligadas y momentos magnéticos microscópicos.</p>
+<p>Al sustituir estas relaciones en la ecuación de Ampère-Maxwell se obtiene una expresión donde aparecen distintas fuentes del campo magnético:</p>
+<div class="formula-block">\[
+\nabla\times\mathbf{B}
+=
+\mu_0\left(
+\mathbf{J}+\nabla\times\mathbf{M}+\frac{\partial\mathbf{P}}{\partial t}
+\right)
++\varepsilon_0\mu_0\frac{\partial\mathbf{E}}{\partial t}.
+\]</div>
+<p>Aquí se identifican la corriente libre \(\mathbf{J}\), la corriente de imanación \(\nabla\times\mathbf{M}\), la corriente de polarización \(\partial\mathbf{P}/\partial t\) y el término de desplazamiento en el vacío \(\varepsilon_0\partial\mathbf{E}/\partial t\).</p>
+<p>El capítulo limita el tratamiento a medios lineales, homogéneos, isótropos y en reposo. Esto es importante. En medios no lineales, como ferroeléctricos y ferromagnéticos, las relaciones entre \(\mathbf{D}\) y \(\mathbf{E}\), o entre \(\mathbf{B}\) y \(\mathbf{H}\), no son proporcionales simples. En ese caso las ecuaciones de Maxwell siguen siendo el marco general, pero las ecuaciones constitutivas se complican y el principio de superposición puede dejar de ser aplicable.</p>
+<h3 id="35-principio-de-superposicion-y-unicidad">3.5. Principio de superposición y unicidad</h3>
+<p>Las ecuaciones de Maxwell en el vacío son lineales: no aparecen productos entre campos como \(\mathbf{E}\cdot\mathbf{B}\) o \(\mathbf{E}^2\) dentro de las ecuaciones de evolución. Por eso, si \((\mathbf{E}_1,\mathbf{B}_1)\) y \((\mathbf{E}_2,\mathbf{B}_2)\) son soluciones compatibles con ciertas fuentes, la suma también puede ser solución para la suma de fuentes, siempre que el medio mantenga respuesta lineal.</p>
+<p>El principio de superposición es útil para construir soluciones a partir de soluciones más simples. Pero su validez no es universal. En medios no lineales, las ecuaciones constitutivas rompen la proporcionalidad. También hay limitaciones en dominios subatómicos, donde aparecen efectos cuánticos y no lineales que quedan fuera del tratamiento clásico macroscópico del capítulo.</p>
+<p>La unicidad afirma que, dadas las fuentes y las condiciones de contorno apropiadas, la solución de las ecuaciones de Maxwell es única. Esto tiene consecuencias prácticas: si se propone una solución y se comprueba que cumple Maxwell y las condiciones de frontera, no hace falta demostrar que no hay otra. Esta idea es clave en problemas, porque permite validar soluciones construidas por simetría, por potenciales o por métodos indirectos.</p>
+<h3 id="36-condiciones-en-los-limites">3.6. Condiciones en los límites</h3>
+<p>Cuando el espacio contiene dos medios, se resuelven los campos en cada región y se conectan mediante condiciones en la frontera. El vector \(\mathbf{n}\) se toma normal a la superficie de separación, orientado del medio 1 al medio 2.</p>
+<p class="section-label"><strong>Para las componentes normales del campo eléctrico auxiliar</strong></p>
+<div class="formula-block">\[
+\mathbf{n}\cdot(\mathbf{D}_2-\mathbf{D}_1)=\rho_s.
+\]</div>
+<p class="section-label"><strong>Si los medios son lineales</strong></p>
+<div class="formula-block">\[
+\mathbf{n}\cdot(\varepsilon_2\mathbf{E}_2-\varepsilon_1\mathbf{E}_1)=\rho_s.
+\]</div>
+<p>Esto dice que la componente normal de \(\mathbf{D}\) salta si hay densidad superficial de carga libre.</p>
+<p class="section-label"><strong>Para el campo magnético</strong></p>
+<div class="formula-block">\[
+\mathbf{n}\cdot(\mathbf{B}_2-\mathbf{B}_1)=0.
+\]</div>
+<p>La componente normal de \(\mathbf{B}\) es continua porque no hay monopolos magnéticos. En términos de \(\mathbf{H}\):</p>
+<div class="formula-block">\[
+\mathbf{n}\cdot(\mu_2\mathbf{H}_2-\mu_1\mathbf{H}_1)=0.
+\]</div>
+<p>La ecuación de continuidad da la condición para la corriente normal:</p>
+<div class="formula-block">\[
+\mathbf{n}\cdot(\mathbf{J}_2-\mathbf{J}_1)
+=
+-\frac{\partial\rho_s}{\partial t}.
+\]</div>
+<p class="section-label"><strong>Con \(\mathbf{J}=\gamma\mathbf{E}\)</strong></p>
+<div class="formula-block">\[
+\mathbf{n}\cdot(\gamma_2\mathbf{E}_2-\gamma_1\mathbf{E}_1)
+=
+-\frac{\partial\rho_s}{\partial t}.
+\]</div>
+<p>Esta condición no debe confundirse con la condición de \(\mathbf{D}\). Una se refiere a salto de desplazamiento eléctrico por carga superficial; la otra, a acumulación temporal de carga superficial por desequilibrio de corrientes normales.</p>
+<p class="section-label"><strong>Para las componentes tangenciales</strong></p>
+<div class="formula-block">\[
+\mathbf{n}\times(\mathbf{E}_2-\mathbf{E}_1)=0,
+\]</div>
+<p>si el término de Faraday permanece acotado en la frontera. Es decir, la componente tangencial de \(\mathbf{E}\) es continua.</p>
+<p class="section-label"><strong>Para \(\mathbf{H}\)</strong></p>
+<div class="formula-block">\[
+\mathbf{n}\times(\mathbf{H}_2-\mathbf{H}_1)=\mathbf{K},
+\]</div>
+<p>donde \(\mathbf{K}\) es densidad de corriente superficial. En términos de \(\mathbf{B}\):</p>
+<div class="formula-block">\[
+\mathbf{n}\times\left(\frac{\mathbf{B}_2}{\mu_2}-\frac{\mathbf{B}_1}{\mu_1}\right)=\mathbf{K}.
+\]</div>
+<p>Si no hay corriente superficial, la componente tangencial de \(\mathbf{H}\) es continua.</p>
+<p>En examen, estas condiciones suelen ser fuente de errores de signo y de elección de componente. La pregunta correcta no es "¿qué campo es continuo?", sino "¿qué componente del campo es continua y bajo qué hipótesis?".</p>
+<h3 id="37-potenciales-electrodinamicos">3.7. Potenciales electrodinámicos</h3>
+<p>Resolver directamente las ecuaciones de Maxwell puede ser difícil. Por eso se introducen potenciales. Como \(\nabla\cdot\mathbf{B}=0\), se puede seguir escribiendo:</p>
+<div class="formula-block">\[
+\mathbf{B}=\nabla\times\mathbf{A}.
+\]</div>
+<p>Pero en campos variables el campo eléctrico no puede escribirse solo como \(-\nabla V\), porque \(\nabla\times\mathbf{E}\) puede ser distinto de cero. Al sustituir \(\mathbf{B}=\nabla\times\mathbf{A}\) en Faraday:</p>
+<div class="formula-block">\[
+\nabla\times\mathbf{E}
+=
+-\frac{\partial}{\partial t}(\nabla\times\mathbf{A}),
+\]</div>
+<p>se obtiene</p>
+<div class="formula-block">\[
+\nabla\times\left(\mathbf{E}+\frac{\partial\mathbf{A}}{\partial t}\right)=0.
+\]</div>
+<p>El término entre paréntesis es irrotacional, luego puede escribirse como el gradiente negativo de un potencial escalar:</p>
+<div class="formula-block">\[
+\mathbf{E}+\frac{\partial\mathbf{A}}{\partial t}=-\nabla V.
+\]</div>
+<p class="section-label"><strong>Por tanto</strong></p>
+<div class="formula-block">\[
+\mathbf{E}=-\nabla V-\frac{\partial\mathbf{A}}{\partial t}.
+\]</div>
+<p>Esta expresión es esencial. En electrostática, el voltaje entre dos puntos coincide con la diferencia de potencial. En electrodinámica, si \(\partial\mathbf{A}/\partial t\neq 0\), la integral de línea de \(\mathbf{E}\) contiene también la contribución del potencial vector variable.</p>
+<p>En el vacío, al introducir los potenciales en las ecuaciones de Maxwell se obtienen:</p>
+<div class="formula-block">\[
+\nabla^2V+\frac{\partial}{\partial t}(\nabla\cdot\mathbf{A})=-\frac{\rho}{\varepsilon_0},
+\]</div>
+<p>y</p>
+<div class="formula-block">\[
+\left(\nabla^2\mathbf{A}-\mu_0\varepsilon_0\frac{\partial^2\mathbf{A}}{\partial t^2}\right)
+-\nabla\left(\nabla\cdot\mathbf{A}+\mu_0\varepsilon_0\frac{\partial V}{\partial t}\right)
+=-\mu_0\mathbf{J}.
+\]</div>
+<p>Estas ecuaciones muestran que \(V\) y \(\mathbf{A}\) aparecen acoplados. La presencia de derivadas temporales de segundo orden anticipa el carácter ondulatorio y la propagación finita de las perturbaciones.</p>
+<h3 id="38-transformaciones-de-norma-o-gauge">3.8. Transformaciones de norma o gauge</h3>
+<p>Los potenciales no son únicos. Si se cambia el potencial vector mediante</p>
+<div class="formula-block">\[
+\mathbf{A}'=\mathbf{A}+\nabla\phi,
+\]</div>
+<p>el campo magnético no cambia, porque \(\nabla\times\nabla\phi=0\). Para que tampoco cambie \(\mathbf{E}\), hay que transformar el potencial escalar como</p>
+<div class="formula-block">\[
+V'=V-\frac{\partial\phi}{\partial t}.
+\]</div>
+<p>Estas transformaciones dejan invariantes \(\mathbf{E}\) y \(\mathbf{B}\). Por tanto, no todos los grados de libertad de \(V\) y \(\mathbf{A}\) son físicos. La elección de norma se utiliza para simplificar las ecuaciones.</p>
+<p class="section-label"><strong>El capítulo trabaja la norma de Lorenz, definida por</strong></p>
+<div class="formula-block">\[
+\nabla\cdot\mathbf{A}+\mu_0\varepsilon_0\frac{\partial V}{\partial t}=0.
+\]</div>
+<p>Con esta condición, las ecuaciones de los potenciales se desacoplan:</p>
+<div class="formula-block">\[
+\nabla^2\mathbf{A}-\mu_0\varepsilon_0\frac{\partial^2\mathbf{A}}{\partial t^2}
+=
+-\mu_0\mathbf{J},
+\]</div>
+<div class="formula-block">\[
+\nabla^2V-\mu_0\varepsilon_0\frac{\partial^2V}{\partial t^2}
+=
+-\frac{\rho}{\varepsilon_0}.
+\]</div>
+<p>Ambas tienen la misma estructura de ecuación de onda no homogénea. Si se introduce la d'Alembertiana:</p>
+<div class="formula-block">\[
+\square^2\equiv \nabla^2-\mu_0\varepsilon_0\frac{\partial^2}{\partial t^2},
+\]</div>
+<p>se escriben como</p>
+<div class="formula-block">\[
+\square^2\mathbf{A}=-\mu_0\mathbf{J},\qquad
+\square^2V=-\frac{\rho}{\varepsilon_0}.
+\]</div>
+<p>La norma de Lorenz no elimina por completo la libertad de los potenciales. Restringe las transformaciones admisibles a funciones \(\phi\) que cumplan una ecuación de onda homogénea. Pero para el nivel del capítulo, lo esencial es entender que la norma no cambia los campos; cambia la representación matemática.</p>
+<p>En la frontera entre medios, bajo las hipótesis indicadas en el texto, se obtiene continuidad del potencial escalar:</p>
+<div class="formula-block">\[
+V_2=V_1,
+\]</div>
+<p>y continuidad del potencial vector:</p>
+<div class="formula-block">\[
+\mathbf{A}_2=\mathbf{A}_1.
+\]</div>
+<p>Estas condiciones se apoyan en la finitud de los campos y en la condición de Lorenz.</p>
+<h3 id="39-teorema-de-poynting">3.9. Teorema de Poynting</h3>
+<p>El teorema de Poynting es el balance de energía del campo electromagnético. Se parte de la potencia que el campo eléctrico entrega a las cargas de un volumen:</p>
+<div class="formula-block">\[
+P=\int_V\mathbf{E}\cdot\mathbf{J}\,dv.
+\]</div>
+<p>La fuerza magnética no realiza trabajo, porque \(\mathbf{v}\times\mathbf{B}\) es perpendicular a la velocidad. Por eso el término de potencia mecánica procede de \(\mathbf{E}\cdot\mathbf{J}\).</p>
+<p class="section-label"><strong>Utilizando las ecuaciones de Maxwell se obtiene</strong></p>
+<div class="formula-block">\[
+\int_V \mathbf{E}\cdot\mathbf{J}\,dv
+=
+-\oint_S(\mathbf{E}\times\mathbf{H})\cdot d\mathbf{s}
+-\frac{\partial}{\partial t}
+\int_V\left(
+\frac{1}{2}\mathbf{E}\cdot\mathbf{D}
++
+\frac{1}{2}\mathbf{H}\cdot\mathbf{B}
+\right)dv.
+\]</div>
+<p>Se define el vector de Poynting como</p>
+<div class="formula-block">\[
+\mathbf{S}=\mathbf{E}\times\mathbf{H}.
+\]</div>
+<p>Sus unidades son potencia por unidad de área. Su flujo a través de una superficie mide potencia electromagnética que atraviesa esa superficie.</p>
+<p>La densidad de energía electromagnética usada en el balance es:</p>
+<div class="formula-block">\[
+w=\frac{1}{2}\mathbf{E}\cdot\mathbf{D}
++
+\frac{1}{2}\mathbf{H}\cdot\mathbf{B}.
+\]</div>
+<p>Por tanto, el teorema puede leerse así: la disminución de energía electromagnética dentro de un volumen se invierte en trabajo o disipación sobre cargas y en energía que sale por la frontera.</p>
+<p>Si hay fuentes externas no conservativas, como baterías, se introduce un campo adicional \(\mathbf{E}'\) de origen químico o electromecánico. Entonces la potencia suministrada por esas fuentes aparece en el balance:</p>
+<div class="formula-block">\[
+\int_V \mathbf{E}'\cdot\mathbf{J}\,dv
+-
+\frac{\partial}{\partial t}
+\int_V w\,dv
+=
+\int_V \mathbf{E}\cdot\mathbf{J}\,dv
++
+\oint_S \mathbf{S}\cdot d\mathbf{s}.
+\]</div>
+<p>Esta expresión separa potencia suministrada, potencia disipada, variación de energía almacenada y flujo electromagnético.</p>
+<p>El ejemplo típico del capítulo es el condensador que se carga. El vector de Poynting entra lateralmente en el espacio entre placas. Esto no es un adorno conceptual: muestra que la energía almacenada en el condensador puede entenderse como energía que entra en la región donde existe campo eléctrico.</p>
+<h3 id="310-teorema-de-poynting-en-forma-compleja">3.10. Teorema de Poynting en forma compleja</h3>
+<p class="section-label"><strong>Cuando los campos son armónicos, se usan fasores</strong></p>
+<div class="formula-block">\[
+\mathbf{E}(\mathbf{r},t)=\Re(\hat{\mathbf{E}}(\mathbf{r})e^{j\omega t}).
+\]</div>
+<p>Las derivadas temporales se convierten en multiplicaciones por \(j\omega\). Las ecuaciones de Maxwell en forma fasorial contienen términos como</p>
+<div class="formula-block">\[
+\nabla\times\hat{\mathbf{E}}=-j\omega\hat{\mathbf{B}},
+\]</div>
+<div class="formula-block">\[
+\nabla\times\hat{\mathbf{H}}=\hat{\mathbf{J}}+j\omega\hat{\mathbf{D}}.
+\]</div>
+<p class="section-label"><strong>El vector complejo de Poynting se define como</strong></p>
+<div class="formula-block">\[
+\hat{\mathbf{S}}=\frac{1}{2}\hat{\mathbf{E}}\times\hat{\mathbf{H}}^*.
+\]</div>
+<p>Su parte real es el valor medio temporal del vector de Poynting:</p>
+<div class="formula-block">\[
+\langle\mathbf{S}\rangle=\Re(\hat{\mathbf{S}}).
+\]</div>
+<p>Las densidades medias de energía eléctrica y magnética se escriben:</p>
+<div class="formula-block">\[
+\langle w_e\rangle=\frac{1}{4}\Re(\hat{\mathbf{E}}\cdot\hat{\mathbf{D}}^*),
+\]</div>
+<div class="formula-block">\[
+\langle w_m\rangle=\frac{1}{4}\Re(\hat{\mathbf{B}}\cdot\hat{\mathbf{H}}^*).
+\]</div>
+<p>La parte real del teorema describe potencia media transferida o disipada. La parte imaginaria se relaciona con la diferencia entre la energía eléctrica y magnética almacenadas. Esa parte imaginaria es análoga a la potencia reactiva en circuitos RLC: no representa disipación neta, sino intercambio reversible de energía entre formas eléctrica y magnética.</p>
+<p>En materiales con pérdidas, el capítulo introduce permitividad y permeabilidad complejas:</p>
+<div class="formula-block">\[
+\varepsilon=\varepsilon'-j\varepsilon'',
+\]</div>
+<div class="formula-block">\[
+\mu=\mu'-j\mu''.
+\]</div>
+<p>La parte imaginaria recoge pérdidas dieléctricas o magnéticas. Entonces el balance de Poynting incorpora términos de disipación adicionales, aparte de la conductividad libre.</p>
+<h3 id="311-momento-electromagnetico-como-complemento">3.11. Momento electromagnético como complemento</h3>
+<p>El Tema 4 del libro de teoría señala que no desarrolla el momento lineal del campo electromagnético, por considerarlo más propio de Electrodinámica Clásica y de un tratamiento relativista. Como lo has incluido en el bloque a estudiar, conviene fijar solo la idea mínima apoyada en el libro de problemas.</p>
+<p>El campo electromagnético no solo transporta energía; también puede asociarse a una cantidad de movimiento. En el vacío, la densidad de momento electromagnético se expresa como</p>
+<div class="formula-block">\[
+\mathbf{g}=\varepsilon_0(\mathbf{E}\times\mathbf{B}).
+\]</div>
+<p>Como en el vacío \(\mathbf{S}=\mathbf{E}\times\mathbf{H}\) y \(\mathbf{B}=\mu_0\mathbf{H}\), se obtiene la relación</p>
+<div class="formula-block">\[
+\mathbf{g}=\frac{\mathbf{S}}{c^2}.
+\]</div>
+<p>El momento electromagnético total en un volumen se escribe como una integral de esa densidad:</p>
+<div class="formula-block">\[
+\mathbf{p}_{em}=\int_V \mathbf{g}\,dv.
+\]</div>
+<p>También puede definirse la densidad de momento angular electromagnético:</p>
+<div class="formula-block">\[
+\mathbf{L}=\mathbf{r}\times\mathbf{g}
+=
+\varepsilon_0\,\mathbf{r}\times(\mathbf{E}\times\mathbf{B}).
+\]</div>
+<p>Para examen de este tema, lo prudente es no convertir esta parte en el núcleo del estudio. Lo nuclear es Maxwell, condiciones de contorno, potenciales y Poynting. El momento electromagnético sirve para reconocer que el campo puede transportar cantidad de movimiento además de energía.</p>
+  </div>
+</section><section class="page" id="conceptos">
+  <div class="page-head"><h2>4. Conceptos clave</h2><span class="page-no">T16 · 4</span></div>
+  <div class="reading-block">
+<ul>
+<li>Corriente de desplazamiento.</li>
+</ul>
+<p>Definición precisa: término \(\partial\mathbf{D}/\partial t\) que Maxwell añade a la corriente de conducción en la ley de Ampère para formar la corriente total.</p>
+<p>Explicación desarrollada: no es necesariamente transporte de carga libre. Representa el efecto magnético de un campo eléctrico variable. Su introducción evita que la circulación de \(\mathbf{H}\) dependa de la superficie elegida en circuitos abiertos, como durante la carga de un condensador.</p>
+<p>Ejemplo: entre las placas de un condensador ideal no hay \(\mathbf{J}\), pero mientras cambia la carga de las placas sí hay \(\partial\mathbf{D}/\partial t\).</p>
+<p>Relación con otros conceptos: depende de \(\mathbf{D}\), de la conservación de la carga y de la ley de Ampère-Maxwell.</p>
+<p>Posible forma de preguntarlo en examen: "Explique por qué Maxwell introduce la corriente de desplazamiento y aplíquelo al caso de un condensador en carga."</p>
+<ul>
+<li>Corriente total.</li>
+</ul>
+<p class="section-label"><strong>Definición precisa</strong></p>
+<div class="formula-block">  \[
+  \mathbf{J}_t=\mathbf{J}+\frac{\partial\mathbf{D}}{\partial t}.
+  \]</div>
+<p>Explicación desarrollada: es la magnitud que aparece como fuente de \(\nabla\times\mathbf{H}\). Su flujo a través de una superficie cerrada es nulo cuando se combina la continuidad de la carga con el teorema de Gauss para \(\mathbf{D}\).</p>
+<p>Ejemplo: en un circuito con condensador, en el hilo domina \(\mathbf{J}\); entre placas domina \(\partial\mathbf{D}/\partial t\).</p>
+<p>Relación con otros conceptos: une continuidad de la carga, Gauss y Ampère-Maxwell.</p>
+<p>Posible forma de preguntarlo en examen: "Compare corriente de conducción, corriente de desplazamiento y corriente total."</p>
+<ul>
+<li>Ecuaciones de Maxwell.</li>
+</ul>
+<p>Definición precisa: sistema de cuatro ecuaciones que relaciona campos, fuentes y variación temporal:</p>
+<div class="formula-block">  \[
+  \nabla\cdot\mathbf{D}=\rho,\quad
+  \nabla\times\mathbf{E}=-\frac{\partial\mathbf{B}}{\partial t},\quad
+  \nabla\cdot\mathbf{B}=0,\quad
+  \nabla\times\mathbf{H}=\mathbf{J}+\frac{\partial\mathbf{D}}{\partial t}.
+  \]</div>
+<p>Explicación desarrollada: sintetizan los fenómenos eléctricos y magnéticos clásicos a escala macroscópica. No son cuatro fórmulas independientes sin conexión: la cuarta se construye para ser compatible con la conservación de la carga.</p>
+<p>Ejemplo: en el vacío sin fuentes, las ecuaciones permiten deducir ondas electromagnéticas.</p>
+<p>Relación con otros conceptos: requieren ecuaciones constitutivas para resolver problemas en medios.</p>
+<p>Posible forma de preguntarlo en examen: "Escriba las ecuaciones de Maxwell en forma diferencial e interprete físicamente cada una."</p>
+<ul>
+<li>Ecuaciones constitutivas.</li>
+</ul>
+<p>Definición precisa: relaciones entre campos que dependen del medio:</p>
+<div class="formula-block">  \[
+  \mathbf{D}=\varepsilon\mathbf{E},\quad
+  \mathbf{B}=\mu\mathbf{H},\quad
+  \mathbf{J}=\gamma\mathbf{E}.
+  \]</div>
+<p>Explicación desarrollada: Maxwell da la estructura general; las constitutivas dicen cómo se comporta el material. En medios no lineales estas relaciones dejan de ser proporcionales simples.</p>
+<p>Ejemplo: en un dieléctrico ideal, \(\gamma\approx 0\); en un conductor, \(\gamma\) es grande y aparece disipación.</p>
+<p>Relación con otros conceptos: determinan si hay superposición lineal y cómo se aplican condiciones de contorno.</p>
+<p>Posible forma de preguntarlo en examen: "¿Por qué las ecuaciones de Maxwell no bastan para resolver un problema en un medio material?"</p>
+<ul>
+<li>Condiciones de contorno.</li>
+</ul>
+<p>Definición precisa: relaciones que conectan los campos a ambos lados de una superficie de separación entre medios.</p>
+<p>Explicación desarrollada: se obtienen aplicando las formas integrales de Maxwell a cajas o caminos infinitesimales atravesando la frontera. Distinguen entre componentes normales y tangenciales.</p>
+<p>Ejemplo: \(\mathbf{n}\cdot(\mathbf{D}_2-\mathbf{D}_1)=\rho_s\) y \(\mathbf{n}\times(\mathbf{H}_2-\mathbf{H}_1)=\mathbf{K}\).</p>
+<p>Relación con otros conceptos: son necesarias para aplicar unicidad y resolver problemas por regiones.</p>
+<p>Posible forma de preguntarlo en examen: "Derive las condiciones de contorno para las componentes normales de \(\mathbf{D}\) y \(\mathbf{B}\)."</p>
+<ul>
+<li>Principio de superposición.</li>
+</ul>
+<p>Definición precisa: si las ecuaciones son lineales, la suma de soluciones es solución para la suma de fuentes.</p>
+<p>Explicación desarrollada: se aplica en el vacío y en medios lineales. No se puede usar sin control en materiales con respuesta no lineal.</p>
+<p>Ejemplo: dos ondas electromagnéticas en el vacío pueden sumarse campo a campo.</p>
+<p>Relación con otros conceptos: depende de la linealidad de Maxwell más constitutivas.</p>
+<p>Posible forma de preguntarlo en examen: "Explique el ámbito de validez del principio de superposición en Maxwell."</p>
+<ul>
+<li>Unicidad.</li>
+</ul>
+<p>Definición precisa: una solución de Maxwell que cumple las condiciones de contorno del problema es única.</p>
+<p>Explicación desarrollada: permite validar soluciones obtenidas por métodos indirectos. Si una solución cumple ecuaciones y frontera, no hay otra distinta compatible.</p>
+<p>Ejemplo: una solución construida por simetría en una región con fronteras dadas queda aceptada si satisface Maxwell y las condiciones de contorno.</p>
+<p>Relación con otros conceptos: depende de fuentes, geometría y condiciones de frontera.</p>
+<p>Posible forma de preguntarlo en examen: "¿Por qué las condiciones de contorno son esenciales para asegurar la unicidad?"</p>
+<ul>
+<li>Potencial vector \(\mathbf{A}\).</li>
+</ul>
+<p>Definición precisa: campo vectorial tal que</p>
+<div class="formula-block">  \[
+  \mathbf{B}=\nabla\times\mathbf{A}.
+  \]</div>
+<p>Explicación desarrollada: existe porque \(\nabla\cdot\mathbf{B}=0\). En electrodinámica no solo describe \(\mathbf{B}\), sino que contribuye al campo eléctrico mediante \(-\partial\mathbf{A}/\partial t\).</p>
+<p>Ejemplo: si \(\mathbf{A}\) cambia con el tiempo, puede inducir contribución eléctrica aunque no se exprese como gradiente de \(V\).</p>
+<p>Relación con otros conceptos: aparece en los potenciales electrodinámicos y en las transformaciones de norma.</p>
+<p>Posible forma de preguntarlo en examen: "Demuestre cómo se obtiene \(\mathbf{E}=-\nabla V-\partial\mathbf{A}/\partial t\)."</p>
+<ul>
+<li>Potencial escalar \(V\).</li>
+</ul>
+<p>Definición precisa: potencial que aparece en la parte irrotacional de \(\mathbf{E}+\partial\mathbf{A}/\partial t\).</p>
+<p>Explicación desarrollada: en electrostática basta para describir \(\mathbf{E}\). En electrodinámica no basta solo, porque \(\nabla\times\mathbf{E}\) puede ser distinto de cero.</p>
+<p>Ejemplo: el voltaje entre dos puntos incluye una integral de \(\partial\mathbf{A}/\partial t\) si \(\mathbf{A}\) depende del tiempo.</p>
+<p>Relación con otros conceptos: se acopla a \(\mathbf{A}\) salvo que se elija una norma conveniente.</p>
+<p>Posible forma de preguntarlo en examen: "Explique por qué en campos variables el campo eléctrico no puede escribirse siempre como \(-\nabla V\)."</p>
+<ul>
+<li>Transformación de norma o gauge.</li>
+</ul>
+<p class="section-label"><strong>Definición precisa</strong></p>
+<div class="formula-block">  \[
+  \mathbf{A}'=\mathbf{A}+\nabla\phi,\qquad
+  V'=V-\frac{\partial\phi}{\partial t}.
+  \]</div>
+<p>Explicación desarrollada: modifica los potenciales sin modificar los campos \(\mathbf{E}\) y \(\mathbf{B}\). Permite elegir una representación matemática más cómoda.</p>
+<p>Ejemplo: la norma de Lorenz usa esta libertad para desacoplar las ecuaciones de los potenciales.</p>
+<p>Relación con otros conceptos: muestra que los potenciales no son únicos, pero los campos sí son observables.</p>
+<p>Posible forma de preguntarlo en examen: "¿Qué transformaciones dejan invariantes los campos electrodinámicos?"</p>
+<ul>
+<li>Norma de Lorenz.</li>
+</ul>
+<p class="section-label"><strong>Definición precisa</strong></p>
+<div class="formula-block">  \[
+  \nabla\cdot\mathbf{A}+\mu_0\varepsilon_0\frac{\partial V}{\partial t}=0.
+  \]</div>
+<p>Explicación desarrollada: condición que simplifica las ecuaciones acopladas de \(V\) y \(\mathbf{A}\), llevándolas a ecuaciones de onda no homogéneas.</p>
+<p class="section-label"><strong>Ejemplo</strong></p>
+<div class="formula-block">  \[
+  \square^2\mathbf{A}=-\mu_0\mathbf{J},\qquad
+  \square^2 V=-\rho/\varepsilon_0.
+  \]</div>
+<p>Relación con otros conceptos: usa la libertad gauge y anticipa la propagación finita del campo.</p>
+<p>Posible forma de preguntarlo en examen: "Defina la norma de Lorenz e indique qué ventaja proporciona."</p>
+<ul>
+<li>Vector de Poynting.</li>
+</ul>
+<p class="section-label"><strong>Definición precisa</strong></p>
+<div class="formula-block">  \[
+  \mathbf{S}=\mathbf{E}\times\mathbf{H}.
+  \]</div>
+<p>Explicación desarrollada: representa flujo de potencia electromagnética, es decir, energía por unidad de tiempo y unidad de área.</p>
+<p>Ejemplo: durante la carga de un condensador, \(\mathbf{S}\) apunta hacia la región entre placas, donde aumenta la energía eléctrica almacenada.</p>
+<p>Relación con otros conceptos: aparece en el teorema de conservación de la energía electromagnética.</p>
+<p>Posible forma de preguntarlo en examen: "Defina el vector de Poynting e interprete su flujo a través de una superficie cerrada."</p>
+<ul>
+<li>Densidad de energía electromagnética.</li>
+</ul>
+<p class="section-label"><strong>Definición precisa</strong></p>
+<div class="formula-block">  \[
+  w=\frac{1}{2}\mathbf{E}\cdot\mathbf{D}
+  +
+  \frac{1}{2}\mathbf{H}\cdot\mathbf{B}.
+  \]</div>
+<p>Explicación desarrollada: suma de la energía asociada al campo eléctrico y al campo magnético en medios lineales.</p>
+<p>Ejemplo: en un condensador ideal cargado, domina la parte eléctrica \(\frac{1}{2}\mathbf{E}\cdot\mathbf{D}\).</p>
+<p>Relación con otros conceptos: su variación temporal aparece en el teorema de Poynting.</p>
+<p>Posible forma de preguntarlo en examen: "Escriba la densidad de energía electromagnética usada en el teorema de Poynting."</p>
+<ul>
+<li>Vector complejo de Poynting.</li>
+</ul>
+<p class="section-label"><strong>Definición precisa</strong></p>
+<div class="formula-block">  \[
+  \hat{\mathbf{S}}=\frac{1}{2}\hat{\mathbf{E}}\times\hat{\mathbf{H}}^*.
+  \]</div>
+<p>Explicación desarrollada: herramienta fasorial para campos armónicos. Su parte real da el valor medio del flujo de potencia.</p>
+<p>Ejemplo: en una onda armónica, \(\langle\mathbf{S}\rangle=\Re(\hat{\mathbf{S}})\).</p>
+<p>Relación con otros conceptos: separa potencia media real y energía reactiva.</p>
+<p>Posible forma de preguntarlo en examen: "Explique el significado de la parte real e imaginaria del vector complejo de Poynting."</p>
+<ul>
+<li>Permitividad y permeabilidad complejas.</li>
+</ul>
+<p class="section-label"><strong>Definición precisa</strong></p>
+<div class="formula-block">  \[
+  \varepsilon=\varepsilon'-j\varepsilon'',\qquad
+  \mu=\mu'-j\mu''.
+  \]</div>
+<p>Explicación desarrollada: representan pérdidas en materiales sometidos a campos armónicos. La parte imaginaria recoge el retraso de la respuesta material y la disipación.</p>
+<p>Ejemplo: un dieléctrico real a alta frecuencia puede disipar energía por relajación dieléctrica.</p>
+<p>Relación con otros conceptos: modifica el teorema de Poynting complejo añadiendo términos de pérdidas.</p>
+<p>Posible forma de preguntarlo en examen: "¿Por qué se introduce una permitividad compleja en un dieléctrico con pérdidas?"</p>
+<ul>
+<li>Momento electromagnético.</li>
+</ul>
+<p class="section-label"><strong>Definición precisa</strong></p>
+<div class="formula-block">  \[
+  \mathbf{g}=\varepsilon_0(\mathbf{E}\times\mathbf{B})=\frac{\mathbf{S}}{c^2}
+  \]</div>
+<p>en el vacío.</p>
+<p>Explicación desarrollada: representa cantidad de movimiento por unidad de volumen asociada al campo electromagnético. En este tema es complementario, no el núcleo.</p>
+<p>Ejemplo: una onda electromagnética que transporta energía también transporta momento.</p>
+<p>Relación con otros conceptos: está ligado al vector de Poynting y a la propagación de energía.</p>
+<p>Posible forma de preguntarlo en examen: "Relacione densidad de momento electromagnético y vector de Poynting en el vacío."</p>
+  </div>
+</section><section class="page" id="relaciones">
+  <div class="page-head"><h2>5. Relaciones entre ideas</h2><span class="page-no">T16 · 5</span></div>
+  <div class="reading-block">
+<p>La estructura lógica del capítulo empieza en la conservación de la carga. La ecuación de continuidad no es una ecuación secundaria: es la razón por la que la ley de Ampère debe modificarse. Si se mantiene \(\nabla\times\mathbf{H}=\mathbf{J}\), al tomar divergencia se obtiene \(\nabla\cdot\mathbf{J}=0\), lo cual solo es compatible con corrientes estacionarias. En campos variables, \(\nabla\cdot\mathbf{J}\) puede ser distinto de cero porque la densidad de carga puede cambiar con el tiempo. La corriente de desplazamiento corrige exactamente ese fallo.</p>
+<p>La corriente de desplazamiento conecta el teorema de Gauss con la ley de Ampère. Gauss dice que \(\mathbf{D}\) está ligado a la carga. Si la carga cambia, cambia el flujo de \(\mathbf{D}\). Ese cambio temporal aparece como término adicional en la fuente de \(\mathbf{H}\). Por eso Maxwell no introduce un término arbitrario; introduce el que hace compatible la teoría con la continuidad de la carga.</p>
+<p>Las cuatro ecuaciones de Maxwell forman dos pares con significado claro. Las ecuaciones de divergencia indican fuentes normales o de flujo: \(\rho\) para \(\mathbf{D}\), ausencia de monopolos para \(\mathbf{B}\). Las ecuaciones de rotacional indican campos inducidos o circulatorios: \(\partial\mathbf{B}/\partial t\) genera rotacional de \(\mathbf{E}\), y \(\mathbf{J}+\partial\mathbf{D}/\partial t\) genera rotacional de \(\mathbf{H}\).</p>
+<p>Las ecuaciones constitutivas están jerárquicamente por debajo de Maxwell, pero son imprescindibles para calcular. Maxwell fija la forma general; el medio fija la respuesta. En el vacío, las relaciones son simples. En materiales lineales, se introducen \(\varepsilon\), \(\mu\) y \(\gamma\). En materiales no lineales, la relación deja de ser proporcional y se pierden herramientas como la superposición.</p>
+<p>Las condiciones de contorno son la traducción local de Maxwell en fronteras. No son reglas memorizadas independientes. La condición normal de \(\mathbf{D}\) procede de Gauss. La normal de \(\mathbf{B}\) procede de \(\nabla\cdot\mathbf{B}=0\). La tangencial de \(\mathbf{E}\) procede de Faraday. La tangencial de \(\mathbf{H}\) procede de Ampère-Maxwell. Esta dependencia conceptual ayuda a recordar qué componente se aplica en cada caso.</p>
+<p>Los potenciales aparecen como método de solución. La condición \(\nabla\cdot\mathbf{B}=0\) permite introducir \(\mathbf{A}\). Faraday obliga a modificar la relación electrostática y da</p>
+<div class="formula-block">\[
+\mathbf{E}=-\nabla V-\frac{\partial\mathbf{A}}{\partial t}.
+\]</div>
+<p>Así, la electrodinámica conserva los potenciales, pero ya no los interpreta igual que en electrostática.</p>
+<p>La norma de Lorenz se apoya en la no unicidad de los potenciales. Cambiar \(V\) y \(\mathbf{A}\) mediante una función \(\phi\) no cambia los campos. La libertad gauge se usa para simplificar. Con Lorenz, las ecuaciones de los potenciales adquieren forma de onda, lo que prepara el paso natural al tema siguiente: ondas electromagnéticas.</p>
+<p>El teorema de Poynting depende de Maxwell, pero cambia la pregunta. Ya no pregunta "¿cuáles son los campos?", sino "¿cómo se conserva la energía?". El vector \(\mathbf{S}\) aparece como flujo de energía; la densidad \(w\) como energía almacenada; \(\mathbf{E}\cdot\mathbf{J}\) como potencia transferida a cargas o disipada. Es una relación de balance, no una ecuación nueva independiente de Maxwell.</p>
+<p>La forma compleja del teorema de Poynting se apoya en el tratamiento fasorial de campos armónicos. La parte real tiene significado de potencia media neta. La parte imaginaria se interpreta como energía reactiva, equivalente al intercambio reversible entre almacenamiento eléctrico y magnético. En materiales con pérdidas, las partes imaginarias de \(\varepsilon\) y \(\mu\) introducen disipación real.</p>
+<p>Históricamente, la evolución conceptual es clara: Coulomb, Ampère, Biot-Savart y Faraday describen fenómenos parciales; Maxwell detecta la necesidad de completar Ampère con la corriente de desplazamiento; la teoría resultante predice la propagación electromagnética y permite interpretar la luz como onda electromagnética. En el curso, esta historia coincide con la progresión matemática: de campos estáticos a campos dependientes del tiempo y, después, a ondas.</p>
+  </div>
+</section><section class="page" id="errores">
+  <div class="page-head"><h2>6. Errores habituales</h2><span class="page-no">T16 · 6</span></div>
+  <div class="reading-block">
+<ul>
+<li>Error 1: creer que la corriente de desplazamiento es siempre movimiento real de cargas.</li>
+</ul>
+<p>Por qué está mal: \(\partial\mathbf{D}/\partial t\) puede existir en el vacío o en un dieléctrico ideal sin transporte de carga libre.</p>
+<p>Corrección: distinguir corriente de conducción \(\mathbf{J}\) y corriente de desplazamiento \(\partial\mathbf{D}/\partial t\).</p>
+<p>Respuesta incorrecta: "Entre las placas de un condensador no hay corriente, luego no puede haber campo magnético."</p>
+<p>Respuesta correcta: "Entre las placas no hay corriente de conducción si el dieléctrico es ideal, pero sí hay corriente de desplazamiento si \(\mathbf{D}\) varía con el tiempo; esta contribuye a \(\nabla\times\mathbf{H}\)."</p>
+<ul>
+<li>Error 2: aplicar \(\nabla\times\mathbf{H}=\mathbf{J}\) en régimen variable.</li>
+</ul>
+<p>Por qué está mal: esa forma solo es válida en magnetostática o si \(\partial\mathbf{D}/\partial t=0\).</p>
+<p>Corrección: usar siempre</p>
+<div class="formula-block">  \[
+  \nabla\times\mathbf{H}=\mathbf{J}+\frac{\partial\mathbf{D}}{\partial t}
+  \]</div>
+<p>si hay dependencia temporal.</p>
+<p>Respuesta incorrecta: "Como en el dieléctrico \(\mathbf{J}=0\), entonces \(\nabla\times\mathbf{H}=0\)."</p>
+<p>Respuesta correcta: "Aunque \(\mathbf{J}=0\), puede existir \(\partial\mathbf{D}/\partial t\), luego \(\nabla\times\mathbf{H}\) no tiene por qué ser nulo."</p>
+<ul>
+<li>Error 3: escribir \(\mathbf{E}=-\nabla V\) en cualquier situación.</li>
+</ul>
+<p>Por qué está mal: si \(\partial\mathbf{B}/\partial t\neq0\), \(\nabla\times\mathbf{E}\neq0\).</p>
+<p>Corrección: en electrodinámica:</p>
+<div class="formula-block">  \[
+  \mathbf{E}=-\nabla V-\frac{\partial\mathbf{A}}{\partial t}.
+  \]</div>
+<p>Respuesta incorrecta: "El campo eléctrico inducido por un campo magnético variable procede de un potencial escalar."</p>
+<p>Respuesta correcta: "El campo eléctrico inducido tiene rotacional no nulo; no puede describirse solo mediante \(-\nabla V\)."</p>
+<ul>
+<li>Error 4: confundir \(\mathbf{B}\) y \(\mathbf{H}\) en las condiciones de contorno.</li>
+</ul>
+<p>Por qué está mal: la componente normal continua es la de \(\mathbf{B}\), no necesariamente la de \(\mathbf{H}\). La componente tangencial que salta con corriente superficial es la de \(\mathbf{H}\), no directamente la de \(\mathbf{B}\).</p>
+<p>Corrección: recordar:</p>
+<div class="formula-block">  \[
+  \mathbf{n}\cdot(\mathbf{B}_2-\mathbf{B}_1)=0,\qquad
+  \mathbf{n}\times(\mathbf{H}_2-\mathbf{H}_1)=\mathbf{K}.
+  \]</div>
+<p>Respuesta incorrecta: "La componente normal de \(\mathbf{H}\) es siempre continua."</p>
+<p>Respuesta correcta: "La componente normal continua es \(\mathbf{B}\); \(\mu H_n\) es continuo si \(\mathbf{B}=\mu\mathbf{H}\)."</p>
+<ul>
+<li>Error 5: decir que la componente normal de \(\mathbf{D}\) siempre es continua.</li>
+</ul>
+<p>Por qué está mal: salta si hay densidad superficial de carga libre.</p>
+<p class="section-label"><strong>Corrección</strong></p>
+<div class="formula-block">  \[
+  \mathbf{n}\cdot(\mathbf{D}_2-\mathbf{D}_1)=\rho_s.
+  \]</div>
+<p>Respuesta incorrecta: "Como el campo es físico, \(\mathbf{D}_n\) no puede saltar."</p>
+<p>Respuesta correcta: "\(\mathbf{D}_n\) salta precisamente cuando hay carga libre superficial."</p>
+<ul>
+<li>Error 6: usar superposición en medios no lineales sin justificar.</li>
+</ul>
+<p>Por qué está mal: si \(\mathbf{D}\) no es proporcional a \(\mathbf{E}\) o \(\mathbf{B}\) no es proporcional a \(\mathbf{H}\), la suma de respuestas no coincide con la respuesta a la suma.</p>
+<p>Corrección: comprobar si el medio es lineal, homogéneo e isótropo antes de sumar soluciones.</p>
+<p>Respuesta incorrecta: "En un ferromagnético basta sumar los campos de cada fuente."</p>
+<p>Respuesta correcta: "En ferromagnéticos la relación \(B(H)\) puede ser no lineal; la superposición puede no aplicarse."</p>
+<ul>
+<li>Error 7: creer que los potenciales son únicos.</li>
+</ul>
+<p>Por qué está mal: las transformaciones de norma cambian \(V\) y \(\mathbf{A}\) sin cambiar \(\mathbf{E}\) y \(\mathbf{B}\).</p>
+<p>Corrección: los campos son invariantes bajo</p>
+<div class="formula-block">  \[
+  \mathbf{A}'=\mathbf{A}+\nabla\phi,\qquad
+  V'=V-\partial\phi/\partial t.
+  \]</div>
+<p>Respuesta incorrecta: "Si cambia \(\mathbf{A}\), cambia necesariamente \(\mathbf{B}\)."</p>
+<p>Respuesta correcta: "Si \(\mathbf{A}\) cambia en un gradiente, \(\mathbf{B}\) no cambia."</p>
+<ul>
+<li>Error 8: interpretar el vector de Poynting como una fuerza.</li>
+</ul>
+<p>Por qué está mal: \(\mathbf{S}\) tiene unidades de potencia por unidad de área, no de fuerza.</p>
+<p>Corrección: \(\mathbf{S}\) representa flujo de energía electromagnética.</p>
+<p>Respuesta incorrecta: "El vector de Poynting empuja las cargas."</p>
+<p>Respuesta correcta: "El vector de Poynting indica dirección e intensidad del transporte de energía electromagnética."</p>
+<ul>
+<li>Error 9: olvidar el conjugado complejo en el vector complejo de Poynting.</li>
+</ul>
+<p>Por qué está mal: en régimen fasorial, el valor medio correcto usa \(\hat{\mathbf{H}}^*\).</p>
+<p class="section-label"><strong>Corrección</strong></p>
+<div class="formula-block">  \[
+  \hat{\mathbf{S}}=\frac{1}{2}\hat{\mathbf{E}}\times\hat{\mathbf{H}}^*.
+  \]</div>
+<p>Respuesta incorrecta: "\(\hat{\mathbf{S}}=\frac12\hat{\mathbf{E}}\times\hat{\mathbf{H}}\)."</p>
+<p>Respuesta correcta: "\(\hat{\mathbf{S}}=\frac12\hat{\mathbf{E}}\times\hat{\mathbf{H}}^*\), y su parte real da \(\langle\mathbf{S}\rangle\)."</p>
+<ul>
+<li>Error 10: tratar las pérdidas materiales solo como conductividad.</li>
+</ul>
+<p>Por qué está mal: en dieléctricos y medios magnéticos con campos armónicos puede haber pérdidas representadas por \(\varepsilon''\) y \(\mu''\).</p>
+<p>Corrección: usar permitividad y permeabilidad complejas cuando el medio presenta pérdidas dieléctricas o magnéticas.</p>
+<p>Respuesta incorrecta: "Si \(\gamma=0\), no hay pérdidas."</p>
+<p>Respuesta correcta: "Aunque \(\gamma=0\), puede haber pérdidas dieléctricas o magnéticas si \(\varepsilon\) o \(\mu\) tienen parte imaginaria."</p>
+  </div>
+</section><section class="page" id="preguntas">
+  <div class="page-head"><h2>7. Preguntas orientadas a examen</h2><span class="page-no">T16 · 7</span></div>
+  <div class="reading-block">
+<h3 id="10-preguntas-faciles">10 preguntas fáciles</h3>
+<ol>
+<li>Defina corriente de desplazamiento y escriba su expresión matemática.</li>
+</ol>
+<ol>
+<li>Escriba las cuatro ecuaciones de Maxwell en forma diferencial.</li>
+</ol>
+<ol>
+<li>¿Qué ecuación de Maxwell expresa la ausencia de monopolos magnéticos?</li>
+</ol>
+<ol>
+<li>¿Qué relación existe entre \(\mathbf{D}\) y \(\mathbf{E}\) en un medio lineal, homogéneo e isótropo?</li>
+</ol>
+<ol>
+<li>Escriba la fuerza de Lorentz.</li>
+</ol>
+<ol>
+<li>¿Cuál es la expresión del vector de Poynting?</li>
+</ol>
+<ol>
+<li>¿Qué significa físicamente \(\mathbf{E}\cdot\mathbf{J}\)?</li>
+</ol>
+<ol>
+<li>¿Por qué en campos variables no siempre puede escribirse \(\mathbf{E}=-\nabla V\)?</li>
+</ol>
+<ol>
+<li>Escriba la condición de Lorenz.</li>
+</ol>
+<ol>
+<li>¿Qué representa la parte real del vector complejo de Poynting?</li>
+</ol>
+<h3 id="10-preguntas-medias">10 preguntas medias</h3>
+<ol>
+<li>Explique la contradicción que aparece al aplicar la ley de Ampère magnetostática a un condensador en carga.</li>
+</ol>
+<ol>
+<li>Deduzca la necesidad de introducir \(\mathbf{J}_t=\mathbf{J}+\partial\mathbf{D}/\partial t\) a partir de la ecuación de continuidad y del teorema de Gauss.</li>
+</ol>
+<ol>
+<li>Interprete físicamente cada una de las cuatro ecuaciones de Maxwell.</li>
+</ol>
+<ol>
+<li>Escriba las condiciones de contorno para las componentes normales de \(\mathbf{D}\), \(\mathbf{B}\) y \(\mathbf{J}\).</li>
+</ol>
+<ol>
+<li>Escriba las condiciones de contorno para las componentes tangenciales de \(\mathbf{E}\) y \(\mathbf{H}\).</li>
+</ol>
+<ol>
+<li>Explique el principio de superposición en el contexto de Maxwell e indique sus limitaciones.</li>
+</ol>
+<ol>
+<li>Obtenga la relación \(\mathbf{E}=-\nabla V-\partial\mathbf{A}/\partial t\).</li>
+</ol>
+<ol>
+<li>Explique qué es una transformación de norma y por qué no cambia los campos.</li>
+</ol>
+<ol>
+<li>Indique cómo la norma de Lorenz simplifica las ecuaciones de los potenciales.</li>
+</ol>
+<ol>
+<li>Explique la interpretación física del teorema de Poynting en un volumen cerrado.</li>
+</ol>
+<h3 id="5-preguntas-dificiles">5 preguntas difíciles</h3>
+<ol>
+<li>A partir de \(\nabla\times\mathbf{H}=\mathbf{J}+\partial\mathbf{D}/\partial t\), demuestre que la ecuación de continuidad está contenida en las ecuaciones de Maxwell.</li>
+</ol>
+<ol>
+<li>Derive las ecuaciones de onda para \(V\) y \(\mathbf{A}\) en el vacío usando la norma de Lorenz.</li>
+</ol>
+<ol>
+<li>En una frontera entre dos medios lineales, explique bajo qué hipótesis son continuas las componentes tangenciales de \(\mathbf{E}\) y cómo cambia la condición de \(\mathbf{H}\) si hay corriente superficial.</li>
+</ol>
+<ol>
+<li>Explique la diferencia entre potencia media real y energía reactiva en la forma compleja del teorema de Poynting.</li>
+</ol>
+<ol>
+<li>Relacione el vector de Poynting y la densidad de momento electromagnético en el vacío.</li>
+</ol>
+<h3 id="5-preguntas-de-desarrollo-largo">5 preguntas de desarrollo largo</h3>
+<ol>
+<li>Desarrolle el papel de la corriente de desplazamiento en la construcción de las ecuaciones de Maxwell.</li>
+</ol>
+<ol>
+<li>Exponga las ecuaciones de Maxwell en medios materiales y explique el papel de \(\mathbf{P}\), \(\mathbf{M}\), \(\varepsilon\), \(\mu\) y \(\gamma\).</li>
+</ol>
+<ol>
+<li>Desarrolle las condiciones de contorno del campo electromagnético y explique su origen en las formas integrales de Maxwell.</li>
+</ol>
+<ol>
+<li>Exponga la teoría de potenciales electrodinámicos, transformaciones de norma y norma de Lorenz.</li>
+</ol>
+<ol>
+<li>Desarrolle el teorema de Poynting, su interpretación energética y su forma compleja para campos armónicos.</li>
+</ol>
+<h3 id="5-preguntas-de-relacion-entre-conceptos">5 preguntas de relación entre conceptos</h3>
+<ol>
+<li>Relacione ecuación de continuidad, corriente de desplazamiento y ley de Ampère-Maxwell.</li>
+</ol>
+<ol>
+<li>Relacione condiciones de contorno y unicidad de las soluciones.</li>
+</ol>
+<ol>
+<li>Relacione potenciales electrodinámicos, gauge y propagación finita.</li>
+</ol>
+<ol>
+<li>Relacione vector de Poynting, densidad de energía electromagnética y potencia disipada.</li>
+</ol>
+<ol>
+<li>Relacione pérdidas materiales, permitividad compleja y potencia media en el teorema de Poynting.</li>
+</ol>
+  </div>
+</section><section class="page" id="respuestas">
+  <div class="page-head"><h2>8. Respuestas modelo</h2><span class="page-no">T16 · 8</span></div>
+  <div class="reading-block">
+<ol>
+<li>La corriente de desplazamiento es el término \(\partial\mathbf{D}/\partial t\) introducido por Maxwell en la ley de Ampère. Representa la contribución de un campo eléctrico variable a la generación de campo magnético. Su expresión es:</li>
+</ol>
+<div class="formula-block">\[
+\mathbf{J}_d=\frac{\partial\mathbf{D}}{\partial t}.
+\]</div>
+<p>No debe confundirse con corriente de conducción: puede existir aunque no haya transporte de cargas libres.</p>
+<ol>
+<li>Las ecuaciones de Maxwell en forma diferencial son:</li>
+</ol>
+<div class="formula-block">\[
+\nabla\cdot\mathbf{D}=\rho,
+\]</div>
+<div class="formula-block">\[
+\nabla\times\mathbf{E}=-\frac{\partial\mathbf{B}}{\partial t},
+\]</div>
+<div class="formula-block">\[
+\nabla\cdot\mathbf{B}=0,
+\]</div>
+<div class="formula-block">\[
+\nabla\times\mathbf{H}=\mathbf{J}+\frac{\partial\mathbf{D}}{\partial t}.
+\]</div>
+<p>Relacionan fuentes, campos y variaciones temporales del campo electromagnético.</p>
+<ol>
+<li>La ausencia de monopolos magnéticos se expresa mediante</li>
+</ol>
+<div class="formula-block">\[
+\nabla\cdot\mathbf{B}=0.
+\]</div>
+<p class="section-label"><strong>En forma integral</strong></p>
+<div class="formula-block">\[
+\oint_S\mathbf{B}\cdot d\mathbf{s}=0.
+\]</div>
+<p>Significa que el flujo magnético neto a través de cualquier superficie cerrada es nulo.</p>
+<ol>
+<li>En un medio lineal, homogéneo e isótropo:</li>
+</ol>
+<div class="formula-block">\[
+\mathbf{D}=\varepsilon\mathbf{E}.
+\]</div>
+<p>La constante \(\varepsilon\) es la permitividad del medio. Si el medio no es lineal, esta relación simple puede no ser válida.</p>
+<ol>
+<li>La fuerza de Lorentz sobre una carga \(q\) que se mueve con velocidad \(\mathbf{v}\) es:</li>
+</ol>
+<div class="formula-block">\[
+\mathbf{F}=q(\mathbf{E}+\mathbf{v}\times\mathbf{B}).
+\]</div>
+<p>La parte eléctrica puede realizar trabajo. La parte magnética, al ser perpendicular a \(\mathbf{v}\), no realiza trabajo sobre la carga puntual.</p>
+<ol>
+<li>El vector de Poynting es:</li>
+</ol>
+<div class="formula-block">\[
+\mathbf{S}=\mathbf{E}\times\mathbf{H}.
+\]</div>
+<p>Representa flujo de potencia electromagnética, es decir, energía por unidad de tiempo y unidad de superficie.</p>
+<ol>
+<li>\(\mathbf{E}\cdot\mathbf{J}\) es la densidad de potencia entregada por el campo eléctrico a las cargas. Integrada en un volumen,</li>
+</ol>
+<div class="formula-block">\[
+P=\int_V\mathbf{E}\cdot\mathbf{J}\,dv,
+\]</div>
+<p>representa potencia transferida a partículas o disipada, por ejemplo, por efecto Joule.</p>
+<ol>
+<li>Porque si el campo magnético varía con el tiempo, la ley de Faraday da</li>
+</ol>
+<div class="formula-block">\[
+\nabla\times\mathbf{E}=-\frac{\partial\mathbf{B}}{\partial t}.
+\]</div>
+<p>Si \(\partial\mathbf{B}/\partial t\neq0\), entonces \(\nabla\times\mathbf{E}\neq0\). Un campo que es solo \(-\nabla V\) tiene rotacional nulo, luego no puede describir ese caso.</p>
+<ol>
+<li>La condición de Lorenz es:</li>
+</ol>
+<div class="formula-block">\[
+\nabla\cdot\mathbf{A}+\mu_0\varepsilon_0\frac{\partial V}{\partial t}=0.
+\]</div>
+<p>Permite desacoplar las ecuaciones de los potenciales electrodinámicos en el vacío.</p>
+<ol>
+<li>La parte real del vector complejo de Poynting representa el valor medio temporal del flujo de potencia electromagnética:</li>
+</ol>
+<div class="formula-block">\[
+\langle\mathbf{S}\rangle=\Re(\hat{\mathbf{S}}),
+\]</div>
+<p>donde</p>
+<div class="formula-block">\[
+\hat{\mathbf{S}}=\frac12\hat{\mathbf{E}}\times\hat{\mathbf{H}}^*.
+\]</div>
+<ol>
+<li>En un condensador en carga, una superficie apoyada en una curva cerrada puede cortar el hilo conductor y encerrar corriente de conducción \(I\). Otra superficie con la misma frontera puede pasar entre las placas, donde no hay corriente de conducción. Si se usa la ley magnetostática</li>
+</ol>
+<div class="formula-block">\[
+\oint_C\mathbf{H}\cdot d\mathbf{l}=\int_S\mathbf{J}\cdot d\mathbf{s},
+\]</div>
+<p>se obtienen dos valores distintos para la misma circulación. La contradicción se elimina añadiendo la corriente de desplazamiento entre placas.</p>
+<ol>
+<li>La ecuación de continuidad es</li>
+</ol>
+<div class="formula-block">\[
+\nabla\cdot\mathbf{J}=-\frac{\partial\rho}{\partial t}.
+\]</div>
+<p>Como \(\nabla\cdot\mathbf{D}=\rho\), entonces</p>
+<div class="formula-block">\[
+\nabla\cdot\mathbf{J}=-\frac{\partial}{\partial t}(\nabla\cdot\mathbf{D})
+=-\nabla\cdot\frac{\partial\mathbf{D}}{\partial t}.
+\]</div>
+<p class="section-label"><strong>Por tanto</strong></p>
+<div class="formula-block">\[
+\nabla\cdot\left(\mathbf{J}+\frac{\partial\mathbf{D}}{\partial t}\right)=0.
+\]</div>
+<p>Esto justifica definir una corriente total de divergencia nula:</p>
+<div class="formula-block">\[
+\mathbf{J}_t=\mathbf{J}+\frac{\partial\mathbf{D}}{\partial t}.
+\]</div>
+<ol>
+<li>\(\nabla\cdot\mathbf{D}=\rho\) dice que la carga libre es fuente de \(\mathbf{D}\). \(\nabla\times\mathbf{E}=-\partial\mathbf{B}/\partial t\) expresa inducción electromagnética: un campo magnético variable genera un campo eléctrico rotacional. \(\nabla\cdot\mathbf{B}=0\) expresa ausencia de monopolos magnéticos. \(\nabla\times\mathbf{H}=\mathbf{J}+\partial\mathbf{D}/\partial t\) dice que la circulación de \(\mathbf{H}\) procede de corrientes de conducción y de campos eléctricos variables.</li>
+</ol>
+<ol>
+<li>Las condiciones normales son:</li>
+</ol>
+<div class="formula-block">\[
+\mathbf{n}\cdot(\mathbf{D}_2-\mathbf{D}_1)=\rho_s,
+\]</div>
+<div class="formula-block">\[
+\mathbf{n}\cdot(\mathbf{B}_2-\mathbf{B}_1)=0,
+\]</div>
+<div class="formula-block">\[
+\mathbf{n}\cdot(\mathbf{J}_2-\mathbf{J}_1)=-\frac{\partial\rho_s}{\partial t}.
+\]</div>
+<p>La primera procede de Gauss para \(\mathbf{D}\), la segunda de la ausencia de monopolos magnéticos y la tercera de la continuidad de la carga.</p>
+<ol>
+<li>Las condiciones tangenciales son:</li>
+</ol>
+<div class="formula-block">\[
+\mathbf{n}\times(\mathbf{E}_2-\mathbf{E}_1)=0,
+\]</div>
+<p>si el término de Faraday está acotado en la frontera, y</p>
+<div class="formula-block">\[
+\mathbf{n}\times(\mathbf{H}_2-\mathbf{H}_1)=\mathbf{K}.
+\]</div>
+<p>Si no hay corriente superficial, \(\mathbf{H}_t\) es continua.</p>
+<ol>
+<li>El principio de superposición dice que en un sistema lineal la suma de soluciones es solución para la suma de fuentes. Maxwell en el vacío es lineal, y también lo es en medios lineales si las ecuaciones constitutivas son proporcionales. No se puede aplicar sin más en medios ferroeléctricos, ferromagnéticos o en regímenes no lineales.</li>
+</ol>
+<ol>
+<li>Como \(\nabla\cdot\mathbf{B}=0\), se introduce \(\mathbf{B}=\nabla\times\mathbf{A}\). En Faraday:</li>
+</ol>
+<div class="formula-block">\[
+\nabla\times\mathbf{E}=-\frac{\partial}{\partial t}(\nabla\times\mathbf{A}).
+\]</div>
+<p class="section-label"><strong>Entonces</strong></p>
+<div class="formula-block">\[
+\nabla\times\left(\mathbf{E}+\frac{\partial\mathbf{A}}{\partial t}\right)=0.
+\]</div>
+<p>El campo entre paréntesis es irrotacional y se escribe como \(-\nabla V\). Por tanto:</p>
+<div class="formula-block">\[
+\mathbf{E}=-\nabla V-\frac{\partial\mathbf{A}}{\partial t}.
+\]</div>
+<ol>
+<li>Una transformación de norma cambia los potenciales así:</li>
+</ol>
+<div class="formula-block">\[
+\mathbf{A}'=\mathbf{A}+\nabla\phi,\qquad
+V'=V-\frac{\partial\phi}{\partial t}.
+\]</div>
+<p>No cambia \(\mathbf{B}\) porque el rotacional de un gradiente es nulo. Tampoco cambia \(\mathbf{E}\), porque la variación introducida en \(-\nabla V\) se cancela con la variación de \(-\partial\mathbf{A}/\partial t\).</p>
+<ol>
+<li>La norma de Lorenz impone</li>
+</ol>
+<div class="formula-block">\[
+\nabla\cdot\mathbf{A}+\mu_0\varepsilon_0\frac{\partial V}{\partial t}=0.
+\]</div>
+<p>Con ella, las ecuaciones acopladas de los potenciales se transforman en:</p>
+<div class="formula-block">\[
+\nabla^2\mathbf{A}-\mu_0\varepsilon_0\frac{\partial^2\mathbf{A}}{\partial t^2}
+=-\mu_0\mathbf{J},
+\]</div>
+<div class="formula-block">\[
+\nabla^2V-\mu_0\varepsilon_0\frac{\partial^2V}{\partial t^2}
+=-\frac{\rho}{\varepsilon_0}.
+\]</div>
+<p>La ventaja es que ambas tienen forma de ecuación de onda.</p>
+<ol>
+<li>El teorema de Poynting expresa conservación de energía electromagnética. En ausencia de fuentes externas:</li>
+</ol>
+<div class="formula-block">\[
+-\frac{\partial}{\partial t}\int_V w\,dv
+=
+\int_V\mathbf{E}\cdot\mathbf{J}\,dv
++
+\oint_S\mathbf{S}\cdot d\mathbf{s}.
+\]</div>
+<p>La energía electromagnética que disminuye dentro del volumen se transforma en potencia entregada a cargas o sale por la frontera como flujo electromagnético.</p>
+<ol>
+<li>Tomamos divergencia en la ley de Ampère-Maxwell:</li>
+</ol>
+<div class="formula-block">\[
+\nabla\cdot(\nabla\times\mathbf{H})
+=
+\nabla\cdot\mathbf{J}+\frac{\partial}{\partial t}(\nabla\cdot\mathbf{D}).
+\]</div>
+<p>La divergencia de un rotacional es cero, y \(\nabla\cdot\mathbf{D}=\rho\). Por tanto:</p>
+<div class="formula-block">\[
+0=\nabla\cdot\mathbf{J}+\frac{\partial\rho}{\partial t}.
+\]</div>
+<p>Esto es exactamente la ecuación de continuidad. Así se ve que la conservación de la carga está contenida en Maxwell si se incluye la corriente de desplazamiento.</p>
+<ol>
+<li>Se parte de:</li>
+</ol>
+<div class="formula-block">\[
+\mathbf{B}=\nabla\times\mathbf{A},\qquad
+\mathbf{E}=-\nabla V-\frac{\partial\mathbf{A}}{\partial t}.
+\]</div>
+<p class="section-label"><strong>Al sustituir en Gauss se obtiene</strong></p>
+<div class="formula-block">\[
+\nabla^2V+\frac{\partial}{\partial t}(\nabla\cdot\mathbf{A})=-\frac{\rho}{\varepsilon_0}.
+\]</div>
+<p>Al sustituir en Ampère-Maxwell se obtiene una ecuación para \(\mathbf{A}\) con un término \(\nabla(\nabla\cdot\mathbf{A}+\mu_0\varepsilon_0\partial V/\partial t)\). Si se impone Lorenz, ese término se anula y quedan:</p>
+<div class="formula-block">\[
+\nabla^2\mathbf{A}-\mu_0\varepsilon_0\frac{\partial^2\mathbf{A}}{\partial t^2}
+=-\mu_0\mathbf{J},
+\]</div>
+<div class="formula-block">\[
+\nabla^2V-\mu_0\varepsilon_0\frac{\partial^2V}{\partial t^2}
+=-\frac{\rho}{\varepsilon_0}.
+\]</div>
+<ol>
+<li>La continuidad de la componente tangencial de \(\mathbf{E}\) se obtiene de la forma integral de Faraday aplicada a un rectángulo infinitesimal que cruza la frontera. Si la derivada temporal del flujo de \(\mathbf{B}\) no produce una contribución singular al hacer tender la altura del rectángulo a cero, queda:</li>
+</ol>
+<div class="formula-block">\[
+\mathbf{n}\times(\mathbf{E}_2-\mathbf{E}_1)=0.
+\]</div>
+<p class="section-label"><strong>Para \(\mathbf{H}\), la ley de Ampère-Maxwell da</strong></p>
+<div class="formula-block">\[
+\mathbf{n}\times(\mathbf{H}_2-\mathbf{H}_1)=\mathbf{K}.
+\]</div>
+<p>Si hay corriente superficial \(\mathbf{K}\), la componente tangencial de \(\mathbf{H}\) salta; si no la hay, es continua.</p>
+<ol>
+<li>En forma compleja:</li>
+</ol>
+<div class="formula-block">\[
+\hat{\mathbf{S}}=\frac12\hat{\mathbf{E}}\times\hat{\mathbf{H}}^*.
+\]</div>
+<p>La parte real representa potencia media transportada o disipada. La parte imaginaria no representa potencia neta consumida, sino intercambio reversible de energía almacenada. En analogía con circuitos, la parte real corresponde a potencia activa y la imaginaria a energía reactiva asociada al desfase entre almacenamiento eléctrico y magnético.</p>
+<ol>
+<li>En el vacío, la densidad de momento electromagnético es:</li>
+</ol>
+<div class="formula-block">\[
+\mathbf{g}=\varepsilon_0(\mathbf{E}\times\mathbf{B}).
+\]</div>
+<p>Como \(\mathbf{S}=\mathbf{E}\times\mathbf{H}\), \(\mathbf{B}=\mu_0\mathbf{H}\) y \(c^2=1/(\mu_0\varepsilon_0)\), se obtiene:</p>
+<div class="formula-block">\[
+\mathbf{g}=\frac{\mathbf{S}}{c^2}.
+\]</div>
+<p>Así, un campo que transporta energía también transporta cantidad de movimiento.</p>
+<ol>
+<li>La corriente de desplazamiento aparece al exigir compatibilidad entre la ley de Ampère y la conservación de la carga. En régimen estacionario, \(\nabla\times\mathbf{H}=\mathbf{J}\) funciona porque \(\nabla\cdot\mathbf{J}=0\). Pero si las cargas varían con el tiempo, la ecuación de continuidad exige \(\nabla\cdot\mathbf{J}=-\partial\rho/\partial t\). Al usar \(\nabla\cdot\mathbf{D}=\rho\), se observa que la combinación \(\mathbf{J}+\partial\mathbf{D}/\partial t\) tiene divergencia nula. Maxwell sustituye la corriente de conducción por esta corriente total en Ampère. El resultado es:</li>
+</ol>
+<div class="formula-block">\[
+\nabla\times\mathbf{H}=\mathbf{J}+\frac{\partial\mathbf{D}}{\partial t}.
+\]</div>
+<p>Esto resuelve el caso del condensador en carga y completa la simetría dinámica del campo electromagnético: campos magnéticos variables generan campo eléctrico y campos eléctricos variables contribuyen a generar campo magnético.</p>
+<ol>
+<li>En medios materiales, Maxwell se aplica a campos macroscópicos. Se introducen \(\mathbf{P}\) y \(\mathbf{M}\) para representar la respuesta media de cargas y corrientes ligadas:</li>
+</ol>
+<div class="formula-block">\[
+\mathbf{D}=\varepsilon_0\mathbf{E}+\mathbf{P},
+\]</div>
+<div class="formula-block">\[
+\mathbf{B}=\mu_0(\mathbf{H}+\mathbf{M}).
+\]</div>
+<p>Si el medio es lineal, homogéneo e isótropo, se usan relaciones simples:</p>
+<div class="formula-block">\[
+\mathbf{D}=\varepsilon\mathbf{E},\quad
+\mathbf{B}=\mu\mathbf{H},\quad
+\mathbf{J}=\gamma\mathbf{E}.
+\]</div>
+<p>La polarización variable aporta corriente de polarización \(\partial\mathbf{P}/\partial t\); la imanación aporta corriente de imanación \(\nabla\times\mathbf{M}\). En medios no lineales, \(\varepsilon\), \(\mu\) o \(\gamma\) pueden no bastar como constantes, y la superposición puede fallar.</p>
+<ol>
+<li>Las condiciones de contorno proceden de aplicar Maxwell en forma integral a superficies y caminos infinitesimales que cruzan la frontera. Para componentes normales:</li>
+</ol>
+<div class="formula-block">\[
+\mathbf{n}\cdot(\mathbf{D}_2-\mathbf{D}_1)=\rho_s,
+\]</div>
+<div class="formula-block">\[
+\mathbf{n}\cdot(\mathbf{B}_2-\mathbf{B}_1)=0,
+\]</div>
+<div class="formula-block">\[
+\mathbf{n}\cdot(\mathbf{J}_2-\mathbf{J}_1)=-\frac{\partial\rho_s}{\partial t}.
+\]</div>
+<p class="section-label"><strong>Para componentes tangenciales</strong></p>
+<div class="formula-block">\[
+\mathbf{n}\times(\mathbf{E}_2-\mathbf{E}_1)=0,
+\]</div>
+<div class="formula-block">\[
+\mathbf{n}\times(\mathbf{H}_2-\mathbf{H}_1)=\mathbf{K}.
+\]</div>
+<p>Estas condiciones son necesarias para enlazar soluciones por regiones. En problemas, hay que identificar si existe carga superficial, corriente superficial y si los campos son finitos en la frontera.</p>
+<ol>
+<li>En electrodinámica se mantiene</li>
+</ol>
+<div class="formula-block">\[
+\mathbf{B}=\nabla\times\mathbf{A},
+\]</div>
+<p>porque \(\nabla\cdot\mathbf{B}=0\). Faraday lleva a</p>
+<div class="formula-block">\[
+\mathbf{E}=-\nabla V-\frac{\partial\mathbf{A}}{\partial t}.
+\]</div>
+<p>Los potenciales no son únicos. Las transformaciones</p>
+<div class="formula-block">\[
+\mathbf{A}'=\mathbf{A}+\nabla\phi,\qquad
+V'=V-\frac{\partial\phi}{\partial t}
+\]</div>
+<p>dejan invariantes \(\mathbf{E}\) y \(\mathbf{B}\). La norma de Lorenz impone</p>
+<div class="formula-block">\[
+\nabla\cdot\mathbf{A}+\mu_0\varepsilon_0\frac{\partial V}{\partial t}=0,
+\]</div>
+<p>y con ella \(V\) y \(\mathbf{A}\) cumplen ecuaciones de onda no homogéneas. Esto simplifica el cálculo y muestra que las perturbaciones electromagnéticas se propagan con velocidad finita.</p>
+<ol>
+<li>El teorema de Poynting se obtiene combinando Maxwell con la potencia entregada a cargas:</li>
+</ol>
+<div class="formula-block">\[
+P=\int_V\mathbf{E}\cdot\mathbf{J}\,dv.
+\]</div>
+<p>El resultado introduce</p>
+<div class="formula-block">\[
+\mathbf{S}=\mathbf{E}\times\mathbf{H}
+\]</div>
+<p>y</p>
+<div class="formula-block">\[
+w=\frac12\mathbf{E}\cdot\mathbf{D}+\frac12\mathbf{H}\cdot\mathbf{B}.
+\]</div>
+<p class="section-label"><strong>La forma básica es</strong></p>
+<div class="formula-block">\[
+-\frac{\partial}{\partial t}\int_Vw\,dv
+=
+\int_V\mathbf{E}\cdot\mathbf{J}\,dv+
+\oint_S\mathbf{S}\cdot d\mathbf{s}.
+\]</div>
+<p>En régimen armónico se usa</p>
+<div class="formula-block">\[
+\hat{\mathbf{S}}=\frac12\hat{\mathbf{E}}\times\hat{\mathbf{H}}^*.
+\]</div>
+<p>La parte real da potencia media; la parte imaginaria se asocia con energía reactiva. En materiales con pérdidas se introducen \(\varepsilon=\varepsilon'-j\varepsilon''\) y \(\mu=\mu'-j\mu''\), apareciendo términos adicionales de disipación.</p>
+<ol>
+<li>La ecuación de continuidad exige conservación local de la carga. La ley de Ampère magnetostática no es compatible con ella cuando \(\rho\) varía con el tiempo. Al usar Gauss, \(\rho=\nabla\cdot\mathbf{D}\), se descubre que \(\mathbf{J}+\partial\mathbf{D}/\partial t\) es la combinación adecuada. La ley de Ampère-Maxwell incorpora esa corriente total y hace que Maxwell implique la continuidad.</li>
+</ol>
+<ol>
+<li>Las condiciones de contorno fijan cómo se conectan las soluciones en regiones distintas. La unicidad dice que una solución que cumple Maxwell y esas condiciones es la solución del problema. Sin condiciones de contorno, las ecuaciones diferenciales admiten muchas soluciones matemáticas; con ellas, el problema físico queda determinado.</li>
+</ol>
+<ol>
+<li>Los potenciales electrodinámicos permiten escribir los campos como derivados de \(V\) y \(\mathbf{A}\). La libertad gauge muestra que esos potenciales no son únicos. La norma de Lorenz usa esa libertad para convertir sus ecuaciones en ecuaciones de onda. La presencia del operador \(\nabla^2-\mu_0\varepsilon_0\partial^2/\partial t^2\) indica propagación finita de las perturbaciones.</li>
+</ol>
+<ol>
+<li>El vector de Poynting representa flujo de energía; la densidad \(w\) representa energía electromagnética almacenada; \(\mathbf{E}\cdot\mathbf{J}\) representa potencia entregada a cargas o disipada. El teorema de Poynting los une en un balance: la energía que pierde un volumen sale por la frontera o se transforma dentro del volumen.</li>
+</ol>
+<ol>
+<li>En campos armónicos, las pérdidas materiales pueden representarse mediante partes imaginarias de \(\varepsilon\) y \(\mu\). La permitividad compleja recoge retraso y disipación en la polarización; la permeabilidad compleja recoge pérdidas magnéticas. En el teorema de Poynting complejo, estas partes imaginarias añaden términos de potencia media disipada dentro del material.</li>
+</ol>
+  </div>
+</section><section class="page" id="resumen">
+  <div class="page-head"><h2>9. Resumen final de repaso</h2><span class="page-no">T16 · 9</span></div>
+  <div class="reading-block">
+<ul>
+<li>Ideas principales:</li>
+<li>La ley de Ampère magnetostática es insuficiente en campos variables.</li>
+<li>Maxwell introduce la corriente de desplazamiento \(\partial\mathbf{D}/\partial t\).</li>
+<li>Las ecuaciones de Maxwell unifican electricidad, magnetismo e inducción.</li>
+<li>En materiales hay que añadir ecuaciones constitutivas.</li>
+<li>Las condiciones de contorno conectan soluciones entre medios.</li>
+<li>Los potenciales electrodinámicos son \(V\) y \(\mathbf{A}\), con \(\mathbf{B}=\nabla\times\mathbf{A}\) y \(\mathbf{E}=-\nabla V-\partial\mathbf{A}/\partial t\).</li>
+<li>Las transformaciones gauge cambian potenciales, no campos.</li>
+<li>La norma de Lorenz desacopla las ecuaciones de los potenciales.</li>
+<li>El vector de Poynting \(\mathbf{S}=\mathbf{E}\times\mathbf{H}\) mide flujo de potencia.</li>
+<li>En régimen armónico, el Poynting complejo separa potencia media y energía reactiva.</li>
+</ul>
+<ul>
+<li>Conceptos imprescindibles:</li>
+<li>\(\mathbf{J}_t=\mathbf{J}+\partial\mathbf{D}/\partial t\).</li>
+<li>\(\nabla\cdot\mathbf{D}=\rho\).</li>
+<li>\(\nabla\times\mathbf{E}=-\partial\mathbf{B}/\partial t\).</li>
+<li>\(\nabla\cdot\mathbf{B}=0\).</li>
+<li>\(\nabla\times\mathbf{H}=\mathbf{J}+\partial\mathbf{D}/\partial t\).</li>
+<li>\(\mathbf{D}=\varepsilon\mathbf{E}\), \(\mathbf{B}=\mu\mathbf{H}\), \(\mathbf{J}=\gamma\mathbf{E}\).</li>
+<li>\(\mathbf{n}\cdot(\mathbf{D}_2-\mathbf{D}_1)=\rho_s\).</li>
+<li>\(\mathbf{n}\cdot(\mathbf{B}_2-\mathbf{B}_1)=0\).</li>
+<li>\(\mathbf{n}\times(\mathbf{E}_2-\mathbf{E}_1)=0\).</li>
+<li>\(\mathbf{n}\times(\mathbf{H}_2-\mathbf{H}_1)=\mathbf{K}\).</li>
+<li>\(\mathbf{S}=\mathbf{E}\times\mathbf{H}\).</li>
+<li>\(w=\frac12\mathbf{E}\cdot\mathbf{D}+\frac12\mathbf{H}\cdot\mathbf{B}\).</li>
+</ul>
+<ul>
+<li>Relaciones clave:</li>
+<li>Continuidad de carga \(\rightarrow\) corriente de desplazamiento \(\rightarrow\) Ampère-Maxwell.</li>
+<li>Faraday \(\rightarrow\) \(\mathbf{E}\) no conservativo \(\rightarrow\) potencial vector en \(\mathbf{E}\).</li>
+<li>Gauge \(\rightarrow\) potenciales no únicos \(\rightarrow\) norma de Lorenz.</li>
+<li>Maxwell + Lorentz \(\rightarrow\) dinámica clásica de cargas.</li>
+<li>Maxwell + producto \(\mathbf{E}\cdot\mathbf{J}\) \(\rightarrow\) teorema de Poynting.</li>
+<li>Fasores \(\rightarrow\) Poynting complejo \(\rightarrow\) potencia media y energía reactiva.</li>
+<li>Poynting \(\rightarrow\) densidad de momento \(\mathbf{g}=\mathbf{S}/c^2\) en el vacío.</li>
+</ul>
+<ul>
+<li>Errores que evitar:</li>
+<li>Usar \(\nabla\times\mathbf{H}=\mathbf{J}\) en campos variables.</li>
+<li>Confundir corriente de desplazamiento con conducción.</li>
+<li>Escribir siempre \(\mathbf{E}=-\nabla V\).</li>
+<li>Cambiar condiciones normales y tangenciales en la frontera.</li>
+<li>Olvidar \(\mathbf{K}\) en la condición tangencial de \(\mathbf{H}\).</li>
+<li>Aplicar superposición en medios no lineales.</li>
+<li>Olvidar el conjugado en \(\hat{\mathbf{S}}\).</li>
+<li>Interpretar \(\mathbf{S}\) como fuerza en vez de flujo de potencia.</li>
+</ul>
+  </div>
+</section><section class="page" id="checklist">
+  <div class="page-head"><h2>10. Checklist de dominio</h2><span class="page-no">T16 · 10</span></div>
+  <div class="reading-block">
+<ul>
+<li>Si no puedes explicar por qué falla la ley de Ampère magnetostática en un condensador en carga, falta repasar corriente de desplazamiento y ecuación de continuidad.</li>
+</ul>
+<ul>
+<li>Si no puedes escribir \(\mathbf{J}_t=\mathbf{J}+\partial\mathbf{D}/\partial t\) e interpretar cada término, falta repasar Ampère-Maxwell.</li>
+</ul>
+<ul>
+<li>Si confundes \(\mathbf{D}\) con \(\mathbf{E}\), revisar ecuaciones constitutivas y papel de la polarización.</li>
+</ul>
+<ul>
+<li>Si confundes \(\mathbf{B}\) con \(\mathbf{H}\), revisar permeabilidad, imanación y condiciones de contorno magnéticas.</li>
+</ul>
+<ul>
+<li>Si no puedes escribir las cuatro ecuaciones de Maxwell en forma diferencial sin mirar, falta repasar el núcleo del tema.</li>
+</ul>
+<ul>
+<li>Si no puedes pasar de forma integral a diferencial, falta repasar Gauss, Stokes y cálculo vectorial.</li>
+</ul>
+<ul>
+<li>Si no puedes decidir qué condición de contorno aplicar en una frontera, falta repasar componentes normales y tangenciales.</li>
+</ul>
+<ul>
+<li>Si dices que \(\mathbf{D}_n\) siempre es continua, revisar carga superficial libre.</li>
+</ul>
+<ul>
+<li>Si dices que \(\mathbf{H}_t\) siempre es continua, revisar corriente superficial \(\mathbf{K}\).</li>
+</ul>
+<ul>
+<li>Si escribes \(\mathbf{E}=-\nabla V\) cuando hay campos variables, falta repasar Faraday y potenciales electrodinámicos.</li>
+</ul>
+<ul>
+<li>Si no puedes deducir \(\mathbf{E}=-\nabla V-\partial\mathbf{A}/\partial t\), falta repasar la relación entre \(\mathbf{A}\), \(\mathbf{B}\) y la ley de Faraday.</li>
+</ul>
+<ul>
+<li>Si crees que \(V\) y \(\mathbf{A}\) son únicos, revisar transformaciones gauge.</li>
+</ul>
+<ul>
+<li>Si no puedes escribir la condición de Lorenz, falta repasar norma de Lorenz y ecuaciones de onda de los potenciales.</li>
+</ul>
+<ul>
+<li>Si no sabes qué representa \(\mathbf{S}=\mathbf{E}\times\mathbf{H}\), falta repasar teorema de Poynting.</li>
+</ul>
+<ul>
+<li>Si confundes \(\mathbf{E}\cdot\mathbf{J}\) con flujo de energía, revisar el balance energético: \(\mathbf{E}\cdot\mathbf{J}\) es potencia por unidad de volumen transferida a cargas.</li>
+</ul>
+<ul>
+<li>Si no puedes explicar el signo del flujo de Poynting en un condensador que se carga, falta repasar orientación de superficies y sentido físico del flujo de energía.</li>
+</ul>
+<ul>
+<li>Si no puedes escribir \(\hat{\mathbf{S}}=\frac12\hat{\mathbf{E}}\times\hat{\mathbf{H}}^*\), falta repasar fasores y valores medios.</li>
+</ul>
+<ul>
+<li>Si confundes potencia media real con energía reactiva, revisar la forma compleja del teorema de Poynting.</li>
+</ul>
+<ul>
+<li>Si ignoras \(\varepsilon''\) y \(\mu''\) en medios con pérdidas, revisar permitividad y permeabilidad complejas.</li>
+</ul>
+<ul>
+<li>Si puedes justificar la corriente de desplazamiento, escribir Maxwell, aplicar condiciones de contorno, deducir los potenciales electrodinámicos y explicar Poynting, el capítulo está suficientemente asentado.</li>
+</ul>
+<ul>
+<li>Si puedes resolver un problema de condensador en carga calculando \(\partial\mathbf{D}/\partial t\), \(\mathbf{H}\) y el flujo de \(\mathbf{S}\), el bloque operativo de examen está bien encaminado.</li>
+</ul>
+<ul>
+<li>Si puedes detectar cuándo la superposición falla por no linealidad del medio, el dominio conceptual es sólido.</li>
+</ul>
+<ul>
+<li>Si puedes relacionar \(\mathbf{S}\) con \(\mathbf{g}=\mathbf{S}/c^2\) sin convertir el momento electromagnético en el centro del tema, el complemento de momento está controlado.</li>
+</ul>
+  </div>
+</section>
+    </main>
+  </div>
+</body>
+</html>
