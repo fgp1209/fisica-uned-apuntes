@@ -1,0 +1,1135 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="color-scheme" content="light dark" />
+  <title>MM4 — Tema 8: Curvatura y torsión</title>
+  <meta name="description" content="Guía de estudio de Métodos Matemáticos IV sobre curvatura, torsión, tangente, normal, binormal, triedro móvil y planos asociados a curvas espaciales." />
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/icon-32.png" />
+  <link rel="icon" type="image/png" sizes="50x50" href="assets/icons/icon-50.png" />
+  <link rel="apple-touch-icon" sizes="100x100" href="assets/icons/icon-100.png" />
+  <link rel="stylesheet" href="assets/styles.css" />
+  <script>window.MathJax = { tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']], processEscapes: true }, svg: { fontCache: 'global' } };</script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+  <script defer src="assets/app.js"></script>
+</head>
+<body class="subject-mm4">
+  <div class="wrap">
+    <header class="cover">
+      <a class="back-link" href="index.html">← Índice</a>
+      <p class="eyebrow">Métodos Matemáticos IV</p>
+      <h1>Curvatura y torsión</h1>
+      <p class="subtitle">Tema 8 · Geometría diferencial · tangente, normal, binormal, plano osculador, curvatura y torsión</p>
+      <div class="lesson-meta"><span>Asignatura: MM4</span><span>Tema 8</span><span>Estado: completo</span><span>Enfoque: examen UNED</span></div>
+    </header>
+    <div class="toolbar no-print" aria-label="Navegación del tema"><nav><a href="#mapa">Mapa</a><a href="#prerrequisitos">Prerrequisitos</a><a href="#desarrollo">Desarrollo</a><a href="#conceptos">Conceptos</a><a href="#errores">Errores</a><a href="#preguntas">Preguntas</a><a href="#respuestas">Respuestas</a><a href="#resumen">Resumen</a><a href="#checklist">Checklist</a></nav><div class="toolbar-actions"><button class="btn secondary" onclick="document.querySelectorAll('details').forEach(d=>d.open=true)">Abrir todo</button><button class="btn secondary" onclick="document.querySelectorAll('details').forEach(d=>d.open=false)">Modo repaso</button><button class="btn" onclick="window.print()">Imprimir / PDF</button></div></div>
+    <main>
+      <section id="mapa" class="page map-page"><header class="section-header"><p class="section-kicker">00</p><h2>Mapa conceptual</h2></header><div class="concept-map"><a class="map-card" href="#prerrequisitos"><span>1. Prerrequisitos mínimos</span><small>Ir a la sección</small></a><a class="map-card" href="#idea"><span>2. Idea central del capítulo</span><small>Ir a la sección</small></a><a class="map-card" href="#desarrollo"><span>3. Desarrollo completo del capítulo</span><small>Ir a la sección</small></a><a class="map-card" href="#conceptos"><span>4. Conceptos clave</span><small>Ir a la sección</small></a><a class="map-card" href="#relaciones"><span>5. Relaciones entre ideas</span><small>Ir a la sección</small></a><a class="map-card" href="#errores"><span>6. Errores habituales</span><small>Ir a la sección</small></a><a class="map-card" href="#preguntas"><span>7. Preguntas orientadas a examen</span><small>Ir a la sección</small></a><a class="map-card" href="#respuestas"><span>8. Respuestas modelo</span><small>Ir a la sección</small></a><a class="map-card" href="#resumen"><span>9. Resumen final de repaso</span><small>Ir a la sección</small></a><a class="map-card" href="#checklist"><span>10. Checklist de dominio</span><small>Ir a la sección</small></a></div><div class="reading-block source-block"><p>Fuente de trabajo: Guía de estudio — Lipschutz / Métodos Matemáticos IV · Tema: T8 — Curvatura y torsión. La página conserva el orden del apunte original y lo convierte en una guía HTML navegable.</p></div></section>
+<section id="prerrequisitos" class="page"><header class="section-header"><p class="section-kicker">01</p><h2>1. Prerrequisitos mínimos</h2></header><div class="reading-block"><ol>
+<li>Curva parametrizada regular.</li>
+</ol>
+<p>Una curva en el espacio euclídeo se representa mediante una función vectorial</p>
+<div class="formula-block">\[
+x=x(t)=(x_1(t),x_2(t),x_3(t)).
+\]</div>
+<p>Es regular cuando su derivada no se anula:</p>
+<div class="formula-block">\[
+x'(t)\neq 0.
+\]</div>
+<p>Este requisito es necesario porque el capítulo define tangente, plano normal, curvatura y torsión a partir de las derivadas de la curva. Si \(x'(t)=0\), no hay dirección tangente bien definida. Ejemplo mínimo: \(x(t)=(\cos t,\sin t,t)\) es regular porque \(x'(t)=(-\sin t,\cos t,1)\neq 0\).</p>
+<ol>
+<li>Parámetro longitud de arco.</li>
+</ol>
+<p>El parámetro natural \(s\) mide la longitud recorrida sobre la curva. Si la curva está dada por \(x(t)\), entonces</p>
+<div class="formula-block">\[
+\frac{ds}{dt}=|x'(t)|.
+\]</div>
+<p>Es necesario porque las definiciones geométricas más limpias del capítulo se hacen derivando respecto de \(s\), no respecto de un parámetro arbitrario. Ejemplo mínimo: en una circunferencia \(x(t)=(a\cos t,a\sin t)\), se tiene \(|x'(t)|=a\), luego \(s=at+\text{constante}\).</p>
+<ol>
+<li>Derivación de funciones vectoriales.</li>
+</ol>
+<p>Si \(x(t)\) es vectorial, sus derivadas se calculan componente a componente:</p>
+<div class="formula-block">\[
+x'(t)=(x_1'(t),x_2'(t),x_3'(t)),\qquad x''(t)=(x_1''(t),x_2''(t),x_3''(t)).
+\]</div>
+<p>Es necesario porque curvatura y torsión dependen de \(x'\), \(x''\) y, para la torsión, también de \(x'''\). Ejemplo mínimo: si \(x(t)=(t,t^2,t^3)\), entonces \(x'(t)=(1,2t,3t^2)\).</p>
+<ol>
+<li>Producto escalar.</li>
+</ol>
+<p>El producto escalar permite medir longitudes, ángulos y ortogonalidad:</p>
+<div class="formula-block">\[
+u\cdot v=|u||v|\cos\theta.
+\]</div>
+<p>Es necesario para definir planos normales, planos rectificantes, planos osculadores y para expresar la torsión como producto escalar. Ejemplo mínimo: \(u=(1,0,0)\) y \(v=(0,1,0)\) son ortogonales porque \(u\cdot v=0\).</p>
+<ol>
+<li>Producto vectorial.</li>
+</ol>
+<p>El producto vectorial \(u\times v\) da un vector perpendicular a \(u\) y \(v\). Su módulo es el área del paralelogramo generado por ambos:</p>
+<div class="formula-block">\[
+|u\times v|=|u||v|\sin\theta.
+\]</div>
+<p>Es necesario para construir la binormal, el plano osculador y las fórmulas prácticas de curvatura y torsión. Ejemplo mínimo: \(e_1\times e_2=e_3\).</p>
+<ol>
+<li>Triple producto escalar.</li>
+</ol>
+<p>El triple producto</p>
+<div class="formula-block">\[
+[u,v,w]=(u\times v)\cdot w
+\]</div>
+<p>mide el volumen orientado del paralelepípedo determinado por \(u,v,w\). Es necesario para escribir el plano osculador y para calcular la torsión mediante</p>
+<div class="formula-block">\[
+\tau=\frac{[x',x'',x''']}{|x'\times x''|^2}.
+\]</div>
+<p>Ejemplo mínimo: \([e_1,e_2,e_3]=1\).</p>
+<ol>
+<li>Rectas y planos en forma vectorial.</li>
+</ol>
+<p>Una recta que pasa por \(p\) con dirección \(v\) se escribe</p>
+<div class="formula-block">\[
+y=p+\lambda v.
+\]</div>
+<p>Un plano que pasa por \(p\) con normal \(n\) se escribe</p>
+<div class="formula-block">\[
+(y-p)\cdot n=0.
+\]</div>
+<p>Es necesario porque el capítulo define recta tangente, recta normal principal, recta binormal, plano normal, plano osculador y plano rectificante mediante estas formas.</p>
+<ol>
+<li>Orientación de una curva.</li>
+</ol>
+<p>Elegir una orientación significa decidir el sentido creciente del parámetro natural. Cambiar la orientación cambia el signo de algunos vectores, especialmente la tangente, pero no debe cambiar las propiedades geométricas intrínsecas bien definidas. Es necesario para entender por qué la torsión tiene un signo intrínseco y por qué la normal principal puede requerir una elección de signo.</p></div></section>
+<section id="idea" class="page"><header class="section-header"><p class="section-kicker">02</p><h2>2. Idea central del capítulo</h2></header><div class="reading-block"><p>El capítulo aborda una cuestión básica de la geometría diferencial de curvas: cómo medir, de manera local y cuantitativa, la forma de una curva espacial. No basta con saber por dónde pasa la curva. Hay que saber cómo cambia su dirección y cómo se aparta de un plano. Para eso se introducen dos magnitudes escalares: la curvatura y la torsión.</p>
+<p>La curvatura mide la rapidez con que cambia la dirección tangente cuando se avanza sobre la curva. Una recta tiene curvatura nula porque su tangente no cambia. Una circunferencia pequeña tiene curvatura grande porque su tangente gira rápidamente respecto a la longitud recorrida. En una circunferencia de radio \(a\), la curvatura es \(1/a\).</p>
+<p>La torsión mide otro fenómeno: el abandono del plano osculador. Una curva plana puede curvarse mucho, pero no torsiona; permanece siempre en un mismo plano. Una hélice, en cambio, no sólo gira: también asciende y su plano osculador va rotando. Por eso la torsión distingue curvas espaciales verdaderas de curvas planas.</p>
+<p>El capítulo construye progresivamente los objetos geométricos asociados a una curva: vector tangente unitario, vector curvatura, normal principal, plano osculador, binormal y triedro móvil. El triedro móvil \((t,n,b)\) es una base ortonormal adaptada a la curva en cada punto. No es una base fija del espacio: va cambiando al avanzar por la curva.</p>
+<p>Dentro de la asignatura, este capítulo sirve de puente entre la geometría elemental de curvas y la teoría estructural posterior. Antes de estudiar las ecuaciones de Frenet, las ecuaciones intrínsecas y la teoría de superficies, hay que dominar estos objetos. En examen, el capítulo se traduce en cálculos concretos: hallar tangente, plano normal, curvatura, torsión, normal, binormal y plano osculador de curvas dadas en forma paramétrica.</p></div></section>
+<section id="desarrollo" class="page"><header class="section-header"><p class="section-kicker">03</p><h2>3. Desarrollo completo del capítulo</h2></header><div class="reading-block"><h3>3.1. Vector tangente unitario</h3>
+<p>El capítulo parte de una curva regular escrita con parámetro natural:</p>
+<div class="formula-block">\[
+x=x(s).
+\]</div>
+<p>Como \(s\) mide longitud de arco, la derivada</p>
+<div class="formula-block">\[
+t(s)=\frac{dx}{ds}
+\]</div>
+<p>tiene norma unidad:</p>
+<div class="formula-block">\[
+|t(s)|=1.
+\]</div>
+<p>Este vector es el vector tangente unitario. Su dirección coincide con la dirección instantánea de la curva. Geométricamente, aparece como el límite de las secantes entre dos puntos cercanos de la curva cuando esos puntos se aproximan.</p>
+<p>La importancia de \(t\) es doble. Primero, fija la dirección local de la curva. Segundo, permite definir la curvatura como variación de esa dirección. Si una curva se mueve siempre con el mismo \(t\), es una recta.</p>
+<p>Cuando la curva no está dada en parámetro natural sino como \(x=x(t)\), se usa la relación</p>
+<div class="formula-block">\[
+\frac{ds}{dt}=|x'(t)|.
+\]</div>
+<p>Entonces la tangente unitaria es</p>
+<div class="formula-block">\[
+t=\frac{x'(t)}{|x'(t)|}.
+\]</div>
+<p>Esta fórmula es la que se usa normalmente en problemas.</p>
+<p>Ejemplo: para la hélice</p>
+<div class="formula-block">\[
+x(t)=a\cos t\,e_1+a\sin t\,e_2+bt\,e_3,
+\]</div>
+<p>se tiene</p>
+<div class="formula-block">\[
+x'(t)=-a\sin t\,e_1+a\cos t\,e_2+b\,e_3,\qquad |x'(t)|=\sqrt{a^2+b^2}.
+\]</div>
+<p>Por tanto,</p>
+<div class="formula-block">\[
+t(t)=\frac{-a\sin t\,e_1+a\cos t\,e_2+b\,e_3}{\sqrt{a^2+b^2}}.
+\]</div>
+<p>La tangente forma un ángulo constante con el eje \(e_3\). Esa propiedad anticipa la idea de hélice general.</p>
+<h3>3.2. Recta tangente y plano normal</h3>
+<p>Una vez conocida la tangente, se definen dos objetos geométricos elementales.</p>
+<p>La recta tangente a la curva en el punto \(x\) es la recta que pasa por \(x\) y tiene dirección \(t\):</p>
+<div class="formula-block">\[
+y=x+\lambda t,\qquad -\infty&lt;\lambda&lt;\infty.
+\]</div>
+<p>Si se trabaja con un parámetro cualquiera, también puede escribirse</p>
+<div class="formula-block">\[
+y=x+\lambda x',
+\]</div>
+<p>porque \(x'\) y \(t\) son paralelos.</p>
+<p>El plano normal en \(x\) es el plano perpendicular a la tangente:</p>
+<div class="formula-block">\[
+(y-x)\cdot t=0.
+\]</div>
+<p>Con parámetro cualquiera:</p>
+<div class="formula-block">\[
+(y-x)\cdot x'=0.
+\]</div>
+<p>Esta pareja recta-plano fija la primera aproximación local a la curva: la recta tangente dice hacia dónde va la curva; el plano normal reúne las direcciones ortogonales a ese avance.</p>
+<p>Ejemplo: si</p>
+<div class="formula-block">\[
+x(t)=(1+t)e_1+(1-t^2)e_2+(1+t^3)e_3,
+\]</div>
+<p>en \(t=1\) se calcula primero \(x(1)\) y \(x'(1)\). La recta tangente es \(y=x(1)+\lambda x'(1)\), y el plano normal es \((y-x(1))\cdot x'(1)=0\). El método importa más que la forma concreta del resultado.</p>
+<h3>3.3. Vector curvatura y curvatura</h3>
+<p>El siguiente paso es derivar la tangente unitaria respecto de la longitud de arco:</p>
+<div class="formula-block">\[
+k(s)=\frac{dt}{ds}.
+\]</div>
+<p>Este es el vector curvatura. Como \(t\) tiene norma unidad, su derivada es ortogonal a \(t\). En efecto, de \(t\cdot t=1\) se deduce</p>
+<div class="formula-block">\[
+2t\cdot t'=0,
+\]</div>
+<p>luego \(t'\perp t\). Por eso el vector curvatura vive en el plano normal.</p>
+<p>La curvatura no orientada es el módulo de ese vector:</p>
+<div class="formula-block">\[
+|k(s)|=\left|\frac{dt}{ds}\right|.
+\]</div>
+<p>El radio de curvatura se define como</p>
+<div class="formula-block">\[
+\rho=\frac{1}{|k|},
+\]</div>
+<p>cuando \(|k|\neq 0\). Si la curvatura es grande, el radio de curvatura es pequeño; la curva gira mucho en poca longitud.</p>
+<p>Un punto donde \(k=0\) se denomina punto de inflexión. En él la dirección de la tangente cambia de manera tal que la normal principal puede no estar bien determinada.</p>
+<p>Ejemplo: para una circunferencia de radio \(a\),</p>
+<div class="formula-block">\[
+x(t)=a\cos t\,e_1+a\sin t\,e_2,
+\]</div>
+<p>se obtiene</p>
+<div class="formula-block">\[
+|k|=\frac{1}{a}.
+\]</div>
+<p>Así se confirma la interpretación geométrica: el radio de curvatura coincide con el radio ordinario de la circunferencia.</p>
+<p>Una consecuencia esencial es el criterio de recta:</p>
+<div class="formula-block">\[
+\text{una curva regular de clase } C^2 \text{ es una recta si y sólo si su curvatura es idénticamente nula.}
+\]</div>
+<p>Si \(k=0\), entonces \(t\) es constante, y al integrar se obtiene \(x(s)=as+b\). Recíprocamente, una recta tiene tangente constante, luego curvatura nula.</p>
+<h3>3.4. Fórmula de curvatura con parámetro arbitrario</h3>
+<p>Aunque la definición más clara usa \(s\), en los problemas la curva suele venir como \(x=x(t)\). El capítulo da una fórmula práctica:</p>
+<div class="formula-block">\[
+|k|=\frac{|x'(t)\times x''(t)|}{|x'(t)|^3}.
+\]</div>
+<p>Esta fórmula evita reparametrizar por longitud de arco.</p>
+<p>La conexión con lo anterior es directa: \(t=x'/|x'|\), se deriva usando la regla de la cadena y se simplifica con el producto vectorial. La fórmula muestra que la curvatura depende de cuánto se separan \(x'\) y \(x''\): si son linealmente dependientes, el producto vectorial se anula y la curvatura es cero.</p>
+<p>Ejemplo: para la hélice</p>
+<div class="formula-block">\[
+x(t)=a\cos t\,e_1+a\sin t\,e_2+bt\,e_3,
+\]</div>
+<p>se obtiene</p>
+<div class="formula-block">\[
+|k|=\frac{a}{a^2+b^2}.
+\]</div>
+<p>Si \(b=0\), queda la circunferencia de radio \(a\), con curvatura \(1/a\). Si \(b\) crece, la hélice se estira verticalmente y su curvatura disminuye.</p>
+<h3>3.5. Vector normal principal</h3>
+<p>Cuando \(k\neq 0\), se puede tomar el vector unitario en la dirección de \(k\):</p>
+<div class="formula-block">\[
+n=\frac{k}{|k|}.
+\]</div>
+<p>Este es el vector normal principal. Es perpendicular a \(t\) y señala hacia el lado hacia el que gira la curva.</p>
+<p>Sin embargo, el capítulo insiste en un detalle técnico importante: en puntos de inflexión, donde \(k=0\), la normal puede no estar definida por esta fórmula. A veces se puede escoger una normal continua a través del punto; otras veces no. Por eso se habla de escoger un vector unitario paralelo a \(k\) de manera continua cuando sea posible.</p>
+<p>Una vez elegida una normal principal \(n\), se escribe</p>
+<div class="formula-block">\[
+k=\kappa n,
+\]</div>
+<p>donde \(\kappa\) es una curvatura con signo relativo a la elección de \(n\). En cambio, \(|k|\) es intrínseca y no depende de esa elección local.</p>
+<p>La recta normal principal en \(x\) es</p>
+<div class="formula-block">\[
+y=x+\lambda n.
+\]</div>
+<p>Esta recta apunta en la dirección de curvatura de la curva.</p>
+<p>Ejemplo: en una circunferencia centrada en el origen, el vector normal principal apunta hacia el centro si se escoge la orientación habitual. Eso explica que el vector curvatura sea radial hacia dentro.</p>
+<h3>3.6. Plano osculador</h3>
+<p>El plano osculador es el plano generado por la tangente \(t\) y la normal principal \(n\). Es el plano que mejor se ajusta a la curva hasta segundo orden en el punto. Su normal es la binormal \(b=t\times n\), así que su ecuación es</p>
+<div class="formula-block">\[
+(y-x)\cdot b=0.
+\]</div>
+<p>Equivalente:</p>
+<div class="formula-block">\[
+[y-x,t,n]=0.
+\]</div>
+<p>Si \(x'\) y \(x''\) son linealmente independientes, también se puede escribir</p>
+<div class="formula-block">\[
+[y-x,x',x'']=0.
+\]</div>
+<p>Esta última forma es muy útil en problemas, porque evita calcular explícitamente \(n\).</p>
+<p>La idea geométrica es la siguiente: la recta tangente aproxima la curva en primer orden; el plano osculador contiene la dirección de avance y la dirección principal de giro. En una curva plana, el plano osculador coincide con el plano que contiene toda la curva.</p>
+<p>Ejemplo: en la hélice circular, el plano osculador va cambiando con \(t\). Esa variación del plano osculador es precisamente lo que la torsión cuantificará.</p>
+<h3>3.7. Binormal y triedro móvil</h3>
+<p>Con \(t\) y \(n\) definidos, se introduce el vector binormal:</p>
+<div class="formula-block">\[
+b=t\times n.
+\]</div>
+<p>Los tres vectores \((t,n,b)\) forman una terna ortonormal dextrógira. Esta terna se llama triedro móvil porque cambia al recorrer la curva.</p>
+<p>Cada vector del triedro determina una recta característica:</p>
+<p>Recta tangente:</p>
+<div class="formula-block">\[
+y=x+\lambda t.
+\]</div>
+<p>Recta normal principal:</p>
+<div class="formula-block">\[
+y=x+\lambda n.
+\]</div>
+<p>Recta binormal:</p>
+<div class="formula-block">\[
+y=x+\lambda b.
+\]</div>
+<p>Y también aparecen tres planos característicos:</p>
+<p>Plano normal:</p>
+<div class="formula-block">\[
+(y-x)\cdot t=0.
+\]</div>
+<p>Plano rectificante:</p>
+<div class="formula-block">\[
+(y-x)\cdot n=0.
+\]</div>
+<p>Plano osculador:</p>
+<div class="formula-block">\[
+(y-x)\cdot b=0.
+\]</div>
+<p>El plano rectificante contiene \(t\) y \(b\); el plano osculador contiene \(t\) y \(n\); el plano normal contiene \(n\) y \(b\). Esta organización es una de las partes más examinables del capítulo.</p>
+<h3>3.8. Torsión</h3>
+<p>La torsión mide cómo cambia la binormal al recorrer la curva. El capítulo define la torsión \(\tau\) mediante</p>
+<div class="formula-block">\[
+b'=-\tau n,
+\]</div>
+<p>donde la derivada es respecto de \(s\). Equivalentemente,</p>
+<div class="formula-block">\[
+\tau=-b'\cdot n.
+\]</div>
+<p>El signo de \(\tau\) no depende de cambiar simultáneamente el sentido de \(n\) y \(b\), ni de invertir la orientación de la curva. Por eso la torsión tiene carácter intrínseco como magnitud orientada.</p>
+<p>La fórmula práctica con parámetro arbitrario es</p>
+<div class="formula-block">\[
+\tau=\frac{[x',x'',x''']}{|x'\times x''|^2},
+\]</div>
+<p>en puntos donde \(x'\times x''\neq 0\). Esta fórmula exige derivadas hasta orden tres, a diferencia de la curvatura, que sólo necesita hasta orden dos.</p>
+<p>Ejemplo: en la hélice</p>
+<div class="formula-block">\[
+x(t)=a\cos t\,e_1+a\sin t\,e_2+bt\,e_3,
+\]</div>
+<p>se obtiene</p>
+<div class="formula-block">\[
+\tau=\frac{b}{a^2+b^2}.
+\]</div>
+<p>Si \(b&gt;0\), la hélice tiene torsión positiva con la orientación usual; si \(b&lt;0\), torsión negativa. Si \(b=0\), la curva es una circunferencia plana y la torsión es cero.</p>
+<h3>3.9. Curvas planas y torsión nula</h3>
+<p>Una de las consecuencias principales es:</p>
+<div class="formula-block">\[
+\text{una curva regular suficientemente suave es plana si y sólo si su torsión es idénticamente nula.}
+\]</div>
+<p>Si \(\tau=0\), entonces \(b'=0\), luego \(b\) es constante. Como \(t\cdot b=0\), al integrar se obtiene</p>
+<div class="formula-block">\[
+x(s)\cdot b=\text{constante},
+\]</div>
+<p>que es la ecuación de un plano. Por tanto, toda la curva está contenida en un plano.</p>
+<p>Recíprocamente, si la curva está en un plano fijo, su binormal es constante, luego \(b'=0\) y \(\tau=0\). Esta relación es clave: la curvatura detecta si la curva deja de ser recta; la torsión detecta si la curva deja de ser plana.</p>
+<h3>3.10. Hélice general</h3>
+<p>El capítulo introduce la hélice general como una curva cuyas tangentes forman un ángulo constante con una dirección fija del espacio. Esa dirección se llama eje de la hélice.</p>
+<p>El criterio diferencial que aparece en los problemas es:</p>
+<div class="formula-block">\[
+\text{la curva es una hélice general si y sólo si } \frac{\tau}{\kappa} \text{ es constante},
+\]</div>
+<p>con las salvedades técnicas indicadas en el capítulo para los puntos donde \(\kappa=0\).</p>
+<p>Esta proposición conecta la geometría visual con los invariantes locales. Una hélice no se caracteriza sólo por “parecer una espiral”; se caracteriza porque la relación entre torsión y curvatura permanece constante.</p>
+<h3>3.11. Indicatrices esféricas</h3>
+<p>Los vectores unitarios \(t(s)\), \(n(s)\) y \(b(s)\), al variar sobre la curva, describen curvas sobre la esfera unidad. Estas curvas se llaman indicatrices esféricas de la tangente, de la normal y de la binormal.</p>
+<p>La indicatriz tangente es</p>
+<div class="formula-block">\[
+x_1(s)=t(s).
+\]</div>
+<p>Como \(t\) tiene norma unidad, sus extremos se mueven sobre la esfera unidad. Su tangente está relacionada con \(n\), porque</p>
+<div class="formula-block">\[
+t'=\kappa n.
+\]</div>
+<p>Por eso la indicatriz tangente traduce visualmente cómo gira la dirección de la curva original.</p>
+<p>El capítulo no desarrolla aquí una teoría completa de las indicatrices, pero sí las usa como ejercicio para relacionar curvatura, torsión y movimiento del triedro móvil sobre la esfera.</p></div></section>
+<section id="conceptos" class="page"><header class="section-header"><p class="section-kicker">04</p><h2>4. Conceptos clave</h2></header><div class="reading-block"><ol>
+<li>Vector tangente unitario.<p>Definición precisa:</p></li>
+</ol>
+<div class="formula-block">\[
+t=\frac{dx}{ds}
+\]</div>
+<p>si \(s\) es longitud de arco, y</p>
+<div class="formula-block">\[
+t=\frac{x'}{|x'|}
+\]</div>
+<p>si se usa un parámetro arbitrario.</p>
+<p>Explicación: representa la dirección instantánea de avance sobre la curva. Es unitario y depende de la orientación elegida.</p>
+<p>Ejemplo: para \(x(t)=(\cos t,\sin t,t)\),</p>
+<div class="formula-block">\[
+t=\frac{(-\sin t,\cos t,1)}{\sqrt2}.
+\]</div>
+<p>Relación con otros conceptos: al derivar \(t\) respecto de \(s\) aparece el vector curvatura.</p>
+<p>Forma de examen: “Hallar la recta tangente a la curva en \(t=t_0\)” o “calcular el vector tangente unitario”.</p>
+<ol>
+<li>Plano normal.<p>Definición precisa:</p></li>
+</ol>
+<div class="formula-block">\[
+(y-x)\cdot t=0.
+\]</div>
+<p>Explicación: es el plano perpendicular a la dirección tangente. Contiene todas las direcciones normales a la curva en ese punto.</p>
+<p>Ejemplo: si en \(t_0\), \(x(t_0)=p\) y \(x'(t_0)=v\), entonces el plano normal es</p>
+<div class="formula-block">\[
+(y-p)\cdot v=0.
+\]</div>
+<p>Relación con otros conceptos: contiene la normal principal \(n\) y la binormal \(b\).</p>
+<p>Forma de examen: “Obtener el plano normal a una curva en un punto”.</p>
+<ol>
+<li>Vector curvatura.<p>Definición precisa:</p></li>
+</ol>
+<div class="formula-block">\[
+k=\frac{dt}{ds}.
+\]</div>
+<p>Explicación: mide el cambio vectorial de la tangente por unidad de longitud de arco. Es perpendicular a \(t\).</p>
+<p>Ejemplo: en una circunferencia de radio \(a\), su módulo es \(1/a\) y apunta hacia el centro.</p>
+<p>Relación con otros conceptos: si \(k=0\), la curva es localmente rectilínea; si \(k\neq 0\), define la normal principal.</p>
+<p>Forma de examen: “Demostrar que una curva con curvatura nula es una recta”.</p>
+<ol>
+<li>Curvatura.<p>Definición precisa:</p></li>
+</ol>
+<div class="formula-block">\[
+\kappa_0=|k|=\left|\frac{dt}{ds}\right|.
+\]</div>
+<p>Con parámetro cualquiera:</p>
+<div class="formula-block">\[
+\kappa_0=\frac{|x'\times x''|}{|x'|^3}.
+\]</div>
+<p>Explicación: mide la rapidez con que gira la tangente. Es una magnitud no negativa.</p>
+<p>Ejemplo: la circunferencia de radio \(a\) tiene \(\kappa_0=1/a\).</p>
+<p>Relación con otros conceptos: su recíproco es el radio de curvatura; junto con la torsión describe la forma local de la curva.</p>
+<p>Forma de examen: “Calcular la curvatura de una curva parametrizada”.</p>
+<ol>
+<li>Radio de curvatura.<p>Definición precisa:</p></li>
+</ol>
+<div class="formula-block">\[
+\rho=\frac{1}{\kappa_0}.
+\]</div>
+<p>Explicación: representa el radio de la circunferencia que aproxima localmente a la curva en el sentido de curvatura.</p>
+<p>Ejemplo: en una circunferencia de radio \(a\), \(\rho=a\).</p>
+<p>Relación con otros conceptos: se hace infinito en puntos de curvatura nula.</p>
+<p>Forma de examen: “Relacionar curvatura y radio de curvatura”.</p>
+<ol>
+<li>Punto de inflexión.<p>Definición precisa: punto de la curva donde</p></li>
+</ol>
+<div class="formula-block">\[
+k=0.
+\]</div>
+<p>Explicación: en ese punto se anula el vector curvatura. La normal principal puede no estar bien determinada o puede cambiar de sentido.</p>
+<p>Ejemplo: una curva plana tipo cúbica tiene un punto de inflexión donde cambia la concavidad.</p>
+<p>Relación con otros conceptos: complica la definición continua de \(n\).</p>
+<p>Forma de examen: “Explicar por qué la normal principal puede fallar en un punto de inflexión”.</p>
+<ol>
+<li>Normal principal.<p>Definición precisa: vector unitario \(n\), perpendicular a \(t\), paralelo al vector curvatura cuando \(k\neq0\), elegido de forma continua cuando sea posible.</p><p>Explicación: señala la dirección principal hacia la que gira la curva.</p><p>Ejemplo: en una circunferencia centrada en el origen, \(n\) apunta radialmente hacia el centro si se elige la orientación habitual.</p><p>Relación con otros conceptos: permite escribir</p></li>
+</ol>
+<div class="formula-block">\[
+k=\kappa n.
+\]</div>
+<p>Forma de examen: “Hallar una normal principal unitaria continua”.</p>
+<ol>
+<li>Recta normal principal.<p>Definición precisa:</p></li>
+</ol>
+<div class="formula-block">\[
+y=x+\lambda n.
+\]</div>
+<p>Explicación: es la recta que pasa por la curva en dirección normal principal.</p>
+<p>Ejemplo: en una circunferencia, la recta normal principal pasa por el centro.</p>
+<p>Relación con otros conceptos: pertenece al plano normal y al plano osculador.</p>
+<p>Forma de examen: “Calcular la normal principal y su recta asociada”.</p>
+<ol>
+<li>Plano osculador.<p>Definición precisa:</p></li>
+</ol>
+<div class="formula-block">\[
+(y-x)\cdot b=0,\qquad b=t\times n.
+\]</div>
+<p>Si \(x'\) y \(x''\) son independientes:</p>
+<div class="formula-block">\[
+[y-x,x',x'']=0.
+\]</div>
+<p>Explicación: es el plano determinado por la tangente y la normal principal. Es la mejor aproximación plana de segundo orden.</p>
+<p>Ejemplo: en una curva plana, el plano osculador es el mismo plano de la curva.</p>
+<p>Relación con otros conceptos: su variación está relacionada con la torsión.</p>
+<p>Forma de examen: “Hallar el plano osculador en \(t=t_0\)”.</p>
+<ol>
+<li>Binormal.<p>Definición precisa:</p></li>
+</ol>
+<div class="formula-block">\[
+b=t\times n.
+\]</div>
+<p>Explicación: completa el triedro móvil y es perpendicular al plano osculador.</p>
+<p>Ejemplo: en una curva plana contenida en el plano \(xy\), la binormal es paralela a \(e_3\), salvo elección de signo.</p>
+<p>Relación con otros conceptos: su derivada define la torsión.</p>
+<p>Forma de examen: “Calcular el vector binormal unitario”.</p>
+<ol>
+<li>Triedro móvil.<p>Definición precisa: terna ortonormal</p></li>
+</ol>
+<div class="formula-block">\[
+(t,n,b).
+\]</div>
+<p>Explicación: es una base adaptada a la curva, que se desplaza y rota al recorrerla.</p>
+<p>Ejemplo: en una hélice, los tres vectores cambian con \(t\).</p>
+<p>Relación con otros conceptos: organiza tangente, normal, binormal, planos normal, osculador y rectificante.</p>
+<p>Forma de examen: “Construir el triedro móvil de una curva”.</p>
+<ol>
+<li>Plano rectificante.<p>Definición precisa:</p></li>
+</ol>
+<div class="formula-block">\[
+(y-x)\cdot n=0.
+\]</div>
+<p>Explicación: es el plano generado por \(t\) y \(b\).</p>
+<p>Ejemplo: en la hélice, el plano rectificante varía con el parámetro.</p>
+<p>Relación con otros conceptos: completa el trío de planos característicos junto con el normal y el osculador.</p>
+<p>Forma de examen: “Escribir los tres planos asociados al triedro móvil”.</p>
+<ol>
+<li>Torsión.<p>Definición precisa:</p></li>
+</ol>
+<div class="formula-block">\[
+b'=-\tau n,\qquad \tau=-b'\cdot n.
+\]</div>
+<p>Con parámetro arbitrario:</p>
+<div class="formula-block">\[
+\tau=\frac{[x',x'',x''']}{|x'\times x''|^2}.
+\]</div>
+<p>Explicación: mide la variación del plano osculador o, equivalentemente, la tendencia de la curva a salirse de un plano.</p>
+<p>Ejemplo: la hélice \(x(t)=(a\cos t,a\sin t,bt)\) tiene</p>
+<div class="formula-block">\[
+\tau=\frac{b}{a^2+b^2}.
+\]</div>
+<p>Relación con otros conceptos: \(\tau=0\) caracteriza curvas planas bajo las hipótesis del capítulo.</p>
+<p>Forma de examen: “Calcular la torsión y decidir si la curva es plana”.</p>
+<ol>
+<li>Hélice general.<p>Definición precisa: curva cuyas tangentes forman un ángulo constante con una dirección fija.</p><p>Explicación: generaliza la hélice circular. Su rasgo diferencial es que la relación \(\tau/\kappa\) permanece constante, cuando \(\kappa\neq0\).</p><p>Ejemplo: la hélice circular de radio \(a\) y paso \(b\) cumple</p></li>
+</ol>
+<div class="formula-block">\[
+\frac{\tau}{\kappa}=\frac{b}{a}.
+\]</div>
+<p>Relación con otros conceptos: conecta curvatura, torsión y dirección constante del eje.</p>
+<p>Forma de examen: “Demostrar que una curva es hélice general si y sólo si \(\tau/\kappa\) es constante”.</p>
+<ol>
+<li>Indicatriz esférica.<p>Definición precisa: curva sobre la esfera unidad descrita por los extremos de un vector unitario asociado a la curva, por ejemplo \(t(s)\), \(n(s)\) o \(b(s)\).</p><p>Explicación: permite estudiar la variación angular de los vectores del triedro móvil como curvas esféricas.</p><p>Ejemplo: la indicatriz tangente es \(x_1(s)=t(s)\).</p><p>Relación con otros conceptos: la tangente de la indicatriz tangente es paralela a la normal principal.</p></li>
+</ol>
+<p>Forma de examen: “Demostrar que la tangente a la indicatriz tangente es paralela a \(n\)”.</p></div></section>
+<section id="relaciones" class="page"><header class="section-header"><p class="section-kicker">05</p><h2>5. Relaciones entre ideas</h2></header><div class="reading-block"><p>El capítulo tiene una estructura jerárquica muy marcada. Todo empieza con una curva regular. La regularidad permite definir la tangente. La tangente unitaria permite definir el vector curvatura. El vector curvatura, cuando no se anula, permite definir la normal principal. La tangente y la normal principal permiten construir la binormal. Finalmente, la variación de la binormal permite definir la torsión.</p>
+<p>La dependencia conceptual es:</p>
+<div class="formula-block">\[
+x(s)\longrightarrow t\longrightarrow k=t'\longrightarrow n\longrightarrow b=t\times n\longrightarrow \tau.
+\]</div>
+<p>Si falla un eslabón, los siguientes pueden quedar indeterminados. Por ejemplo, si \(k=0\), la normal principal no está definida por \(k/|k|\), y por tanto tampoco quedan automáticamente definidos \(b\), plano osculador y torsión.</p>
+<p>Hay una oposición central entre rectitud, curvatura y torsión. La recta se caracteriza por curvatura nula. La curva plana se caracteriza por torsión nula. La curva espacial genuina tiene, en general, curvatura no nula y torsión no nula. Por tanto, curvatura y torsión responden a preguntas distintas: la curvatura pregunta si la tangente cambia; la torsión pregunta si el plano osculador cambia.</p>
+<p>También hay una relación entre objetos vectoriales y objetos geométricos. El vector \(t\) define la recta tangente y el plano normal. El vector \(n\) define la recta normal principal y el plano rectificante. El vector \(b\) define la recta binormal y el plano osculador. Por eso conviene memorizar no sólo las fórmulas, sino el papel geométrico de cada vector.</p>
+<p>El capítulo trabaja constantemente entre dos niveles: definiciones limpias con parámetro natural y fórmulas prácticas con parámetro arbitrario. Conceptualmente:</p>
+<div class="formula-block">\[
+t=\frac{dx}{ds},\qquad k=\frac{dt}{ds},\qquad b'=-\tau n.
+\]</div>
+<p>Operativamente, para examen:</p>
+<div class="formula-block">\[
+t=\frac{x'}{|x'|},\qquad \kappa_0=\frac{|x'\times x''|}{|x'|^3},\qquad
+\tau=\frac{[x',x'',x''']}{|x'\times x''|^2}.
+\]</div>
+<p>El alumno debe saber pasar de un nivel al otro.</p>
+<p>La evolución histórica no se desarrolla en detalle en el capítulo, pero el problema que guía el contenido es clásico: encontrar invariantes locales de una curva espacial. La curvatura y la torsión son los dos invariantes básicos que, en la teoría posterior, permitirán caracterizar una curva salvo movimientos rígidos.</p></div></section>
+<section id="errores" class="page"><header class="section-header"><p class="section-kicker">06</p><h2>6. Errores habituales</h2></header><div class="reading-block"><details class="accordion" open><summary>Contenido de 6. Errores habituales</summary><div class="accordion-body"><ol>
+<li>Confundir \(x'(t)\) con la tangente unitaria.<p>Por qué está mal: \(x'(t)\) da una dirección tangente, pero no tiene por qué tener norma uno. Sólo es tangente unitaria si el parámetro es longitud de arco.</p><p>Corrección: usar</p></li>
+</ol>
+<div class="formula-block">\[
+t=\frac{x'}{|x'|}.
+\]</div>
+<p>Respuesta incorrecta: “La tangente unitaria es \(x'(t)\)”.</p>
+<p>Respuesta correcta: “El vector \(x'(t)\) es tangente; la tangente unitaria es \(x'(t)/|x'(t)|\)”.</p>
+<ol>
+<li>Derivar respecto de \(t\) como si fuese \(s\).<p>Por qué está mal: las definiciones del capítulo usan derivadas respecto de longitud de arco.</p><p>Corrección: si el parámetro no es natural, usar \(ds/dt=|x'|\) o las fórmulas con parámetro arbitrario.</p><p>Respuesta incorrecta: “La curvatura es \(|x''(t)|\)”.</p><p>Respuesta correcta: “La curvatura es \(|x'\times x''|/|x'|^3\)”.</p></li>
+<li>Olvidar que \(k=t'\) es perpendicular a \(t\).<p>Por qué está mal: de \(t\cdot t=1\) se deduce \(t'\cdot t=0\).</p><p>Corrección: cualquier componente de \(k\) paralela a \(t\) indica un error de cálculo.</p><p>Respuesta incorrecta: “El vector curvatura tiene componente tangencial”.</p><p>Respuesta correcta: “El vector curvatura está en el plano normal”.</p></li>
+<li>Llamar curvatura al vector \(k\) sin distinguirlo de su módulo.<p>Por qué está mal: el capítulo usa tanto vector curvatura como curvatura escalar.</p><p>Corrección: escribir explícitamente si se habla de \(k=dt/ds\), de \(|k|\), o de \(\kappa\) con signo relativo a una elección de \(n\).</p><p>Respuesta incorrecta: “La curvatura es un vector”.</p><p>Respuesta correcta: “El vector curvatura es \(k\); la curvatura no orientada es \(|k|\)”.</p></li>
+<li>Calcular la normal principal en un punto de inflexión dividiendo por cero.<p>Por qué está mal: si \(k=0\), \(k/|k|\) no existe.</p><p>Corrección: estudiar si puede elegirse una normal continua por otro procedimiento, o indicar que no está determinada por esa fórmula.</p><p>Respuesta incorrecta: “En el punto de inflexión \(n=k/|k|\)”.</p><p>Respuesta correcta: “En el punto de inflexión \(k=0\), por tanto \(n=k/|k|\) no está definida”.</p></li>
+<li>Confundir plano normal y plano osculador.<p>Por qué está mal: el plano normal es perpendicular a \(t\); el plano osculador contiene \(t\).</p><p>Corrección: recordar:</p></li>
+</ol>
+<div class="formula-block">\[
+\text{plano normal: }(y-x)\cdot t=0,\qquad
+\text{plano osculador: }(y-x)\cdot b=0.
+\]</div>
+<p>Respuesta incorrecta: “El plano osculador es perpendicular a la tangente”.</p>
+<p>Respuesta correcta: “El plano osculador contiene la tangente y la normal principal”.</p>
+<ol>
+<li>Confundir binormal con normal principal.<p>Por qué está mal: \(n\) está en la dirección de curvatura; \(b\) es perpendicular al plano osculador.</p><p>Corrección:</p></li>
+</ol>
+<div class="formula-block">\[
+b=t\times n.
+\]</div>
+<p>Respuesta incorrecta: “La binormal apunta hacia el centro de curvatura”.</p>
+<p>Respuesta correcta: “La normal principal apunta hacia el centro de curvatura; la binormal es perpendicular al plano osculador”.</p>
+<ol>
+<li>Usar la fórmula de torsión cuando \(x'\times x''=0\).<p>Por qué está mal: el denominador se anula y el plano osculador no está determinado por \(x'\) y \(x''\).</p><p>Corrección: comprobar antes que \(x'\times x''\neq0\).</p><p>Respuesta incorrecta: “Sustituyo directamente en \(\tau=[x',x'',x''']/|x'\times x''|^2\)” aunque el denominador sea cero.</p><p>Respuesta correcta: “La fórmula sólo es válida en puntos donde \(x'\times x''\neq0\)”.</p></li>
+<li>Creer que torsión nula implica recta.<p>Por qué está mal: torsión nula implica curva plana, no necesariamente recta.</p><p>Corrección: recta equivale a curvatura nula; curva plana equivale a torsión nula.</p><p>Respuesta incorrecta: “Si \(\tau=0\), la curva es una recta”.</p><p>Respuesta correcta: “Si \(\tau=0\), la curva es plana; será recta sólo si además \(\kappa=0\)”.</p></li>
+<li>Creer que curvatura nula implica curva plana pero no recta.<p>Por qué está mal: si la curvatura es idénticamente nula, la tangente es constante y la curva es una recta.</p><p>Corrección: aplicar el teorema de curvatura nula.</p><p>Respuesta incorrecta: “La curva puede ser plana cualquiera”.</p><p>Respuesta correcta: “Curvatura idénticamente nula implica recta”.</p></li>
+<li>Perder el signo de la torsión de una hélice.<p>Por qué está mal: el signo de \(b\) o del paso de la hélice afecta a la orientación espacial.</p><p>Corrección: usar la fórmula</p></li>
+</ol>
+<div class="formula-block">\[
+\tau=\frac{b}{a^2+b^2}
+\]</div>
+<p>para \(x(t)=(a\cos t,a\sin t,bt)\).</p>
+<p>Respuesta incorrecta: “La torsión de una hélice siempre es positiva”.</p>
+<p>Respuesta correcta: “La torsión cambia de signo si cambia el signo de \(b\)”.</p>
+<ol>
+<li>No justificar que una curva es hélice general.<p>Por qué está mal: no basta con que “parezca” una hélice.</p><p>Corrección: probar que las tangentes forman ángulo constante con un vector fijo, o que \(\tau/\kappa\) es constante.</p><p>Respuesta incorrecta: “Es hélice porque tiene senos y cosenos”.</p><p>Respuesta correcta: “Es hélice general porque \(\tau/\kappa\) es constante”.</p></li>
+</ol></div></details></div></section>
+<section id="preguntas" class="page"><header class="section-header"><p class="section-kicker">07</p><h2>7. Preguntas orientadas a examen</h2></header><div class="reading-block"><h3>10 preguntas fáciles</h3>
+<ol>
+<li>Define el vector tangente unitario de una curva parametrizada por longitud de arco.</li>
+<li>Escribe la recta tangente a una curva \(x=x(t)\) en el punto \(t=t_0\).</li>
+<li>Escribe la ecuación del plano normal a una curva en un punto.</li>
+<li>Define el vector curvatura.</li>
+<li>¿Qué significa que un punto sea de inflexión?</li>
+<li>Define el vector normal principal cuando el vector curvatura no se anula.</li>
+<li>Define el vector binormal.</li>
+<li>¿Qué tres vectores forman el triedro móvil?</li>
+<li>Define la torsión mediante la derivada de la binormal.</li>
+<li>¿Qué caracteriza a una curva plana en términos de torsión?</li>
+</ol>
+<h3>10 preguntas medias</h3>
+<ol>
+<li>Demuestra que el vector curvatura es perpendicular a la tangente unitaria.</li>
+<li>Calcula la curvatura de una circunferencia de radio \(a\).</li>
+<li>Calcula la tangente unitaria de la hélice \(x(t)=(a\cos t,a\sin t,bt)\).</li>
+<li>Calcula la curvatura de la hélice \(x(t)=(a\cos t,a\sin t,bt)\).</li>
+<li>Calcula la torsión de la hélice \(x(t)=(a\cos t,a\sin t,bt)\).</li>
+<li>Escribe las ecuaciones del plano normal, plano osculador y plano rectificante en función de \(t,n,b\).</li>
+<li>Justifica que una recta tiene curvatura nula.</li>
+<li>Justifica que una curva de curvatura idénticamente nula es una recta.</li>
+<li>Escribe la fórmula de curvatura con parámetro arbitrario y explica cuándo se puede usar.</li>
+<li>Escribe la fórmula de torsión con parámetro arbitrario y explica cuándo se puede usar.</li>
+</ol>
+<h3>5 preguntas difíciles</h3>
+<ol>
+<li>Demuestra que una curva regular de clase suficiente es plana si y sólo si su torsión es idénticamente nula.</li>
+<li>Demuestra que una curva es hélice general si y sólo si \(\tau/\kappa\) es constante, bajo las hipótesis adecuadas.</li>
+<li>Demuestra que el plano osculador puede escribirse como</li>
+</ol>
+<div class="formula-block">\[
+[y-x,x',x'']=0
+\]</div>
+<p>cuando \(x'\) y \(x''\) son linealmente independientes.</p>
+<ol>
+<li>Analiza por qué la normal principal puede no existir de forma continua en un punto de inflexión.</li>
+<li>Demuestra que la tangente a la indicatriz esférica tangente es paralela a la normal principal de la curva original.</li>
+</ol>
+<h3>5 preguntas de desarrollo largo</h3>
+<ol>
+<li>Desarrolla la construcción del triedro móvil desde una curva regular parametrizada por longitud de arco.</li>
+<li>Explica la diferencia geométrica entre curvatura y torsión, incluyendo ejemplos de recta, circunferencia y hélice.</li>
+<li>Expón el procedimiento completo para calcular tangente, normal principal, binormal, planos característicos, curvatura y torsión de una curva \(x=x(t)\).</li>
+<li>Explica el papel de los puntos de inflexión en la definición de la normal principal.</li>
+<li>Desarrolla la interpretación geométrica de las indicatrices esféricas asociadas a \(t\), \(n\) y \(b\).</li>
+</ol>
+<h3>5 preguntas de relación entre conceptos</h3>
+<ol>
+<li>Relaciona curvatura nula, recta, torsión nula y curva plana.</li>
+<li>Relaciona los vectores \(t,n,b\) con los tres planos característicos.</li>
+<li>Relaciona la fórmula conceptual de curvatura \(k=dt/ds\) con la fórmula práctica \(|x'\times x''|/|x'|^3\).</li>
+<li>Relaciona la hélice circular con el criterio de hélice general \(\tau/\kappa=\text{constante}\).</li>
+<li>Relaciona la variación del plano osculador con la definición de torsión.</li>
+</ol></div></section>
+<section id="respuestas" class="page"><header class="section-header"><p class="section-kicker">08</p><h2>8. Respuestas modelo</h2></header><div class="reading-block"><details class="accordion" open><summary>Contenido de 8. Respuestas modelo</summary><div class="accordion-body"><ol>
+<li>El vector tangente unitario de una curva \(x=x(s)\), parametrizada por longitud de arco, es</li>
+</ol>
+<div class="formula-block">\[
+t(s)=\frac{dx}{ds}.
+\]</div>
+<p>Tiene norma unidad porque \(s\) mide longitud de arco. Representa la dirección instantánea de la curva en el sentido de la orientación elegida.</p>
+<ol>
+<li>Si \(x=x(t)\) y \(x'(t_0)\neq0\), la recta tangente en \(t=t_0\) es</li>
+</ol>
+<div class="formula-block">\[
+y=x(t_0)+\lambda x'(t_0),\qquad \lambda\in\mathbb{R}.
+\]</div>
+<p>También puede escribirse con la tangente unitaria:</p>
+<div class="formula-block">\[
+y=x(t_0)+\lambda t(t_0).
+\]</div>
+<ol>
+<li>El plano normal en \(t=t_0\) es el plano que pasa por \(x(t_0)\) y es perpendicular a la tangente:</li>
+</ol>
+<div class="formula-block">\[
+(y-x(t_0))\cdot x'(t_0)=0.
+\]</div>
+<p>Si se usa la tangente unitaria, queda</p>
+<div class="formula-block">\[
+(y-x(t_0))\cdot t(t_0)=0.
+\]</div>
+<ol>
+<li>El vector curvatura es</li>
+</ol>
+<div class="formula-block">\[
+k(s)=\frac{dt}{ds}=\frac{d^2x}{ds^2}.
+\]</div>
+<p>Mide el cambio de la dirección tangente por unidad de longitud de arco. Su módulo es la curvatura no orientada.</p>
+<ol>
+<li>Un punto de inflexión es un punto de la curva donde el vector curvatura se anula:</li>
+</ol>
+<div class="formula-block">\[
+k=0.
+\]</div>
+<p>En ese punto la normal principal no puede obtenerse como \(k/|k|\), por lo que puede quedar indeterminada.</p>
+<ol>
+<li>Si \(k\neq0\), el vector normal principal es</li>
+</ol>
+<div class="formula-block">\[
+n=\frac{k}{|k|}.
+\]</div>
+<p>Es unitario, perpendicular a \(t\), y señala la dirección principal en la que gira la curva.</p>
+<ol>
+<li>El vector binormal es</li>
+</ol>
+<div class="formula-block">\[
+b=t\times n.
+\]</div>
+<p>Es unitario y perpendicular tanto a \(t\) como a \(n\). Además, es normal al plano osculador.</p>
+<ol>
+<li>El triedro móvil está formado por</li>
+</ol>
+<div class="formula-block">\[
+(t,n,b),
+\]</div>
+<p>donde \(t\) es la tangente unitaria, \(n\) la normal principal y \(b\) la binormal. Es una terna ortonormal adaptada a la curva.</p>
+<ol>
+<li>La torsión se define mediante</li>
+</ol>
+<div class="formula-block">\[
+b'=-\tau n,
+\]</div>
+<p>donde la derivada es respecto de \(s\). Equivalentemente,</p>
+<div class="formula-block">\[
+\tau=-b'\cdot n.
+\]</div>
+<p>Mide la variación de la binormal y, por tanto, la variación del plano osculador.</p>
+<ol>
+<li>Una curva regular suficientemente suave es plana si y sólo si su torsión es idénticamente nula:</li>
+</ol>
+<div class="formula-block">\[
+\tau\equiv0.
+\]</div>
+<p>Torsión nula significa que la binormal es constante, de modo que la curva queda contenida en un plano fijo.</p>
+<ol>
+<li>Como \(t\) es unitario,</li>
+</ol>
+<div class="formula-block">\[
+t\cdot t=1.
+\]</div>
+<p>Derivando respecto de \(s\),</p>
+<div class="formula-block">\[
+2t\cdot t'=0.
+\]</div>
+<p>Luego</p>
+<div class="formula-block">\[
+t\cdot t'=0.
+\]</div>
+<p>Pero \(k=t'\), por tanto el vector curvatura es perpendicular a la tangente unitaria.</p>
+<ol>
+<li>Para</li>
+</ol>
+<div class="formula-block">\[
+x(t)=a\cos t\,e_1+a\sin t\,e_2
+\]</div>
+<p>se tiene \(|x'|=a\). Usando la fórmula de curvatura,</p>
+<div class="formula-block">\[
+\kappa_0=\frac{|x'\times x''|}{|x'|^3}.
+\]</div>
+<p>En el plano, el numerador equivale a \(a^2\), y el denominador a \(a^3\). Por tanto,</p>
+<div class="formula-block">\[
+\kappa_0=\frac1a.
+\]</div>
+<ol>
+<li>Para</li>
+</ol>
+<div class="formula-block">\[
+x(t)=a\cos t\,e_1+a\sin t\,e_2+bt\,e_3,
+\]</div>
+<div class="formula-block">\[
+x'(t)=-a\sin t\,e_1+a\cos t\,e_2+b\,e_3.
+\]</div>
+<p>Como</p>
+<div class="formula-block">\[
+|x'(t)|=\sqrt{a^2+b^2},
+\]</div>
+<p>la tangente unitaria es</p>
+<div class="formula-block">\[
+t(t)=\frac{-a\sin t\,e_1+a\cos t\,e_2+b\,e_3}{\sqrt{a^2+b^2}}.
+\]</div>
+<ol>
+<li>Para la hélice anterior,</li>
+</ol>
+<div class="formula-block">\[
+x' =(-a\sin t,a\cos t,b),\qquad x''=(-a\cos t,-a\sin t,0).
+\]</div>
+<p>Se obtiene</p>
+<div class="formula-block">\[
+|x'\times x''|=a\sqrt{a^2+b^2},
+\]</div>
+<p>y</p>
+<div class="formula-block">\[
+|x'|^3=(a^2+b^2)^{3/2}.
+\]</div>
+<p>Por tanto,</p>
+<div class="formula-block">\[
+\kappa_0=\frac{a}{a^2+b^2}.
+\]</div>
+<ol>
+<li>Para la hélice</li>
+</ol>
+<div class="formula-block">\[
+x(t)=(a\cos t,a\sin t,bt),
+\]</div>
+<p>se usa</p>
+<div class="formula-block">\[
+\tau=\frac{[x',x'',x''']}{|x'\times x''|^2}.
+\]</div>
+<p>El triple producto vale \(a^2b\) y</p>
+<div class="formula-block">\[
+|x'\times x''|^2=a^2(a^2+b^2).
+\]</div>
+<p>Por tanto,</p>
+<div class="formula-block">\[
+\tau=\frac{b}{a^2+b^2}.
+\]</div>
+<ol>
+<li>Con el triedro móvil \((t,n,b)\), los planos característicos son:</li>
+</ol>
+<div class="formula-block">\[
+\text{plano normal: }(y-x)\cdot t=0,
+\]</div>
+<div class="formula-block">\[
+\text{plano rectificante: }(y-x)\cdot n=0,
+\]</div>
+<div class="formula-block">\[
+\text{plano osculador: }(y-x)\cdot b=0.
+\]</div>
+<p>Cada plano es perpendicular al vector que no contiene.</p>
+<ol>
+<li>Una recta puede escribirse como</li>
+</ol>
+<div class="formula-block">\[
+x(s)=as+b,
+\]</div>
+<p>con \(a\) constante y \(|a|=1\) si \(s\) es longitud de arco. Entonces</p>
+<div class="formula-block">\[
+t=x'=a,
+\]</div>
+<p>por lo que</p>
+<div class="formula-block">\[
+k=t'=0.
+\]</div>
+<p>Así, su curvatura es nula.</p>
+<ol>
+<li>Si la curvatura es idénticamente nula, entonces</li>
+</ol>
+<div class="formula-block">\[
+k=t'=0.
+\]</div>
+<p>Por tanto, \(t\) es constante. Integrando,</p>
+<div class="formula-block">\[
+x(s)=as+b.
+\]</div>
+<p>Esta es la ecuación de una recta. Luego una curva regular de clase \(C^2\) con curvatura nula es una recta.</p>
+<ol>
+<li>La fórmula de curvatura con parámetro arbitrario es</li>
+</ol>
+<div class="formula-block">\[
+\kappa_0=\frac{|x'\times x''|}{|x'|^3}.
+\]</div>
+<p>Se puede usar cuando \(x'(t)\neq0\), es decir, cuando la curva es regular. Si el numerador se anula, la curvatura es cero en ese punto.</p>
+<ol>
+<li>La fórmula de torsión con parámetro arbitrario es</li>
+</ol>
+<div class="formula-block">\[
+\tau=\frac{[x',x'',x''']}{|x'\times x''|^2}.
+\]</div>
+<p>Se puede usar en puntos donde \(x'\times x''\neq0\). Si ese producto se anula, el plano osculador no queda determinado por \(x'\) y \(x''\), y la fórmula no es válida.</p>
+<ol>
+<li>Supongamos primero que \(\tau\equiv0\). Entonces</li>
+</ol>
+<div class="formula-block">\[
+b'=-\tau n=0,
+\]</div>
+<p>luego \(b=b_0\) es constante. Como \(t=x'\) y \(t\cdot b_0=0\), se tiene</p>
+<div class="formula-block">\[
+\frac{d}{ds}(x\cdot b_0)=x'\cdot b_0=t\cdot b_0=0.
+\]</div>
+<p>Por tanto,</p>
+<div class="formula-block">\[
+x\cdot b_0=C,
+\]</div>
+<p>que es la ecuación de un plano. La curva está contenida en ese plano.</p>
+<p>Recíprocamente, si la curva está en un plano fijo, la normal al plano es constante y coincide, salvo signo, con la binormal. Entonces \(b'=0\), luego</p>
+<div class="formula-block">\[
+0=b'=-\tau n.
+\]</div>
+<p>Como \(n\neq0\), se deduce \(\tau=0\). Por tanto, la curva es plana si y sólo si su torsión es nula.</p>
+<ol>
+<li>Si la curva es una hélice general, existe un vector unitario fijo \(u\) tal que</li>
+</ol>
+<div class="formula-block">\[
+t\cdot u=\cos\alpha
+\]</div>
+<p>es constante. Derivando:</p>
+<div class="formula-block">\[
+t'\cdot u=0.
+\]</div>
+<p>Como \(t'=\kappa n\), resulta</p>
+<div class="formula-block">\[
+n\cdot u=0
+\]</div>
+<p>cuando \(\kappa\neq0\). Por tanto, \(u\) está en el plano generado por \(t\) y \(b\):</p>
+<div class="formula-block">\[
+u=t\cos\alpha+b\sin\alpha.
+\]</div>
+<p>Derivando y usando \(t'=\kappa n\), \(b'=-\tau n\):</p>
+<div class="formula-block">\[
+0=u'=\kappa n\cos\alpha-\tau n\sin\alpha.
+\]</div>
+<p>Luego</p>
+<div class="formula-block">\[
+\frac{\tau}{\kappa}=\cot\alpha,
+\]</div>
+<p>constante.</p>
+<p>Recíprocamente, si \(\tau/\kappa=c\) es constante, se elige \(\alpha\) tal que \(\cot\alpha=c\) y se define</p>
+<div class="formula-block">\[
+u=t\cos\alpha+b\sin\alpha.
+\]</div>
+<p>Derivando:</p>
+<div class="formula-block">\[
+u'=\kappa n\cos\alpha-\tau n\sin\alpha=0.
+\]</div>
+<p>Así \(u\) es constante y \(t\cdot u=\cos\alpha\). La curva es una hélice general.</p>
+<ol>
+<li>El plano osculador contiene las direcciones \(t\) y \(n\). Si \(x'\) y \(x''\) son linealmente independientes, entonces \(x'\) es paralelo a \(t\) y \(x''\) pertenece al plano generado por \(t\) y \(n\). Por tanto, \(x'\) y \(x''\) generan el plano osculador. Un punto \(y\) está en ese plano si y sólo si los tres vectores</li>
+</ol>
+<div class="formula-block">\[
+y-x,\quad x',\quad x''
+\]</div>
+<p>son linealmente dependientes. Eso equivale a</p>
+<div class="formula-block">\[
+[y-x,x',x'']=0.
+\]</div>
+<ol>
+<li>La normal principal se define, cuando \(k\neq0\), mediante</li>
+</ol>
+<div class="formula-block">\[
+n=\frac{k}{|k|}.
+\]</div>
+<p>En un punto de inflexión se tiene \(k=0\), por lo que esta fórmula no tiene sentido. Además, al aproximarse al punto desde un lado y desde el otro, la dirección de \(k\) puede cambiar bruscamente. En ese caso no existe una elección continua de \(n\) en todo un entorno. En curvas analíticas no rectilíneas el capítulo indica que puede construirse una normal principal continua en un entorno adecuado, pero en curvas menos regulares puede fallar.</p>
+<ol>
+<li>La indicatriz tangente se define por</li>
+</ol>
+<div class="formula-block">\[
+x_1(s)=t(s).
+\]</div>
+<p>Su vector tangente es</p>
+<div class="formula-block">\[
+x_1'(s)=t'(s)=k(s)=\kappa(s)n(s).
+\]</div>
+<p>Cuando \(\kappa\neq0\), este vector es paralelo a \(n(s)\). Por tanto, la tangente a la indicatriz esférica de la tangente es paralela a la normal principal de la curva original.</p>
+<ol>
+<li>Para construir el triedro móvil se parte de una curva regular \(x=x(s)\) parametrizada por longitud de arco. Primero se define</li>
+</ol>
+<div class="formula-block">\[
+t=x'(s).
+\]</div>
+<p>Como \(s\) es longitud de arco, \(|t|=1\). Después se deriva:</p>
+<div class="formula-block">\[
+k=t'.
+\]</div>
+<p>Si \(k\neq0\), se toma</p>
+<div class="formula-block">\[
+n=\frac{k}{|k|}.
+\]</div>
+<p>Este vector es unitario y perpendicular a \(t\). Luego se define</p>
+<div class="formula-block">\[
+b=t\times n.
+\]</div>
+<p>Así se obtiene una terna ortonormal \((t,n,b)\). La tangente describe el avance, la normal principal describe el giro de la tangente y la binormal es perpendicular al plano osculador. Esta terna varía con \(s\), por eso se llama triedro móvil.</p>
+<ol>
+<li>La curvatura mide el cambio de la dirección tangente respecto de la longitud de arco:</li>
+</ol>
+<div class="formula-block">\[
+\kappa_0=\left|\frac{dt}{ds}\right|.
+\]</div>
+<p>La torsión mide el cambio de la binormal:</p>
+<div class="formula-block">\[
+\tau=-b'\cdot n.
+\]</div>
+<p>Una recta tiene \(\kappa_0=0\), porque su tangente es constante. Una circunferencia tiene curvatura constante \(1/a\) y torsión nula, porque está contenida en un plano. Una hélice tiene curvatura y torsión constantes no nulas:</p>
+<div class="formula-block">\[
+\kappa_0=\frac{a}{a^2+b^2},\qquad \tau=\frac{b}{a^2+b^2}.
+\]</div>
+<p>Por tanto, la curvatura distingue recta de curva, y la torsión distingue curva plana de curva espacial.</p>
+<ol>
+<li>Para una curva \(x=x(t)\), el procedimiento operativo es:</li>
+</ol>
+<p>Primero se calcula \(x'\), \(x''\) y, si se pide torsión, \(x'''\). Se comprueba que \(x'\neq0\). La tangente unitaria es</p>
+<div class="formula-block">\[
+t=\frac{x'}{|x'|}.
+\]</div>
+<p>La curvatura es</p>
+<div class="formula-block">\[
+\kappa_0=\frac{|x'\times x''|}{|x'|^3}.
+\]</div>
+<p>Si \(x'\times x''\neq0\), se calcula la binormal como</p>
+<div class="formula-block">\[
+b=\frac{x'\times x''}{|x'\times x''|}
+\]</div>
+<p>salvo posible signo según la elección de \(n\). La normal principal puede obtenerse de</p>
+<div class="formula-block">\[
+n=b\times t
+\]</div>
+<p>o de la dirección del vector curvatura. Los planos son:</p>
+<div class="formula-block">\[
+(y-x)\cdot t=0,\qquad (y-x)\cdot n=0,\qquad (y-x)\cdot b=0.
+\]</div>
+<p>La torsión se calcula con</p>
+<div class="formula-block">\[
+\tau=\frac{[x',x'',x''']}{|x'\times x''|^2}.
+\]</div>
+<ol>
+<li>En un punto de inflexión se anula el vector curvatura. Como la normal principal se define por la dirección de ese vector, el cociente \(k/|k|\) no existe. El problema no es sólo algebraico; es geométrico. La curva puede llegar al punto de inflexión con una normal límite por un lado y salir con otra dirección límite por el otro. Si esas direcciones no son compatibles, no hay normal principal continua. Por eso el capítulo distingue entre la curvatura no orientada \(|k|\), que sí puede anularse, y la elección de una normal principal continua, que requiere condiciones adicionales.</li>
+<li>Las indicatrices esféricas son curvas sobre la esfera unidad obtenidas siguiendo los extremos de vectores unitarios del triedro móvil. La indicatriz tangente es \(t(s)\), la de la normal es \(n(s)\) y la de la binormal es \(b(s)\). Como todos esos vectores tienen norma uno, sus extremos pertenecen a la esfera unidad. La indicatriz tangente registra cómo cambia la dirección de avance de la curva. Su tangente es paralela a \(n\), porque \(t'=\kappa n\). La indicatriz binormal registra cómo cambia el plano osculador, pues \(b\) es normal a ese plano.</li>
+<li>Curvatura nula y torsión nula no significan lo mismo. Si \(\kappa_0\equiv0\), la curva es una recta. Si \(\tau\equiv0\), la curva es plana. Toda recta es plana, pero no toda curva plana es recta. Una circunferencia tiene torsión nula, pero curvatura no nula.</li>
+<li>El vector \(t\) define la recta tangente y es normal al plano normal. El vector \(n\) define la recta normal principal y es normal al plano rectificante. El vector \(b\) define la recta binormal y es normal al plano osculador. Así:</li>
+</ol>
+<div class="formula-block">\[
+(y-x)\cdot t=0,\qquad (y-x)\cdot n=0,\qquad (y-x)\cdot b=0.
+\]</div>
+<ol>
+<li>La fórmula conceptual</li>
+</ol>
+<div class="formula-block">\[
+k=\frac{dt}{ds}
+\]</div>
+<p>se basa en el parámetro natural. Si la curva viene como \(x(t)\), se usa</p>
+<div class="formula-block">\[
+t=\frac{x'}{|x'|},\qquad \frac{d}{ds}=\frac{1}{|x'|}\frac{d}{dt}.
+\]</div>
+<p>Al derivar y simplificar, se obtiene la fórmula práctica:</p>
+<div class="formula-block">\[
+\kappa_0=|k|=\frac{|x'\times x''|}{|x'|^3}.
+\]</div>
+<p>Ambas expresan la misma idea: cambio de dirección por unidad de longitud.</p>
+<ol>
+<li>En la hélice circular</li>
+</ol>
+<div class="formula-block">\[
+x(t)=(a\cos t,a\sin t,bt)
+\]</div>
+<p>se obtiene</p>
+<div class="formula-block">\[
+\kappa_0=\frac{a}{a^2+b^2},\qquad \tau=\frac{b}{a^2+b^2}.
+\]</div>
+<p>Luego</p>
+<div class="formula-block">\[
+\frac{\tau}{\kappa_0}=\frac{b}{a},
+\]</div>
+<p>que es constante. Esto encaja con el criterio de hélice general: las tangentes forman un ángulo constante con un eje fijo si y sólo si \(\tau/\kappa\) es constante.</p>
+<ol>
+<li>El plano osculador tiene normal \(b\). Si el plano osculador no cambia, su normal \(b\) es constante y entonces \(b'=0\). Como</li>
+</ol>
+<div class="formula-block">\[
+b'=-\tau n,
+\]</div>
+<p>se deduce \(\tau=0\). Si \(b\) cambia, el plano osculador rota, y esa rotación se mide mediante la torsión. Por tanto, la torsión cuantifica la variación del plano osculador a lo largo de la curva.</p></div></details></div></section>
+<section id="resumen" class="page"><header class="section-header"><p class="section-kicker">09</p><h2>9. Resumen final de repaso</h2></header><div class="reading-block"><p>Ideas principales:</p>
+<ul>
+<li>Una curva regular permite definir una dirección tangente.</li>
+<li>Con parámetro natural, \(t=dx/ds\).</li>
+<li>La curvatura mide \(dt/ds\).</li>
+<li>La normal principal apunta en la dirección del vector curvatura.</li>
+<li>La binormal es \(b=t\times n\).</li>
+<li>El triedro móvil es \((t,n,b)\).</li>
+<li>La torsión mide la variación de la binormal.</li>
+<li>Curvatura nula equivale a recta.</li>
+<li>Torsión nula equivale a curva plana.</li>
+<li>En una hélice circular:</li>
+</ul>
+<div class="formula-block">\[
+\kappa=\frac{a}{a^2+b^2},\qquad \tau=\frac{b}{a^2+b^2}.
+\]</div>
+<p>Conceptos imprescindibles:</p>
+<ul>
+<li>Curva regular.</li>
+<li>Parámetro longitud de arco.</li>
+<li>Vector tangente unitario.</li>
+<li>Recta tangente.</li>
+<li>Plano normal.</li>
+<li>Vector curvatura.</li>
+<li>Curvatura.</li>
+<li>Radio de curvatura.</li>
+<li>Punto de inflexión.</li>
+<li>Normal principal.</li>
+<li>Plano osculador.</li>
+<li>Binormal.</li>
+<li>Triedro móvil.</li>
+<li>Plano rectificante.</li>
+<li>Torsión.</li>
+<li>Hélice general.</li>
+<li>Indicatriz esférica.</li>
+</ul>
+<p>Relaciones clave:</p>
+<ul>
+<li>\(t=x'\) si \(s\) es longitud de arco.</li>
+<li>\(k=t'\).</li>
+<li>\(k=\kappa n\).</li>
+<li>\(b=t\times n\).</li>
+<li>\(b'=-\tau n\).</li>
+<li>\(\kappa=|x'\times x''|/|x'|^3\).</li>
+<li>\(\tau=[x',x'',x''']/|x'\times x''|^2\).</li>
+<li>Plano normal: perpendicular a \(t\).</li>
+<li>Plano osculador: perpendicular a \(b\).</li>
+<li>Plano rectificante: perpendicular a \(n\).</li>
+<li>\(\kappa=0\) implica recta.</li>
+<li>\(\tau=0\) implica curva plana.</li>
+</ul>
+<p>Errores que evitar:</p>
+<ul>
+<li>Usar \(x'\) como si fuera unitario.</li>
+<li>Confundir derivada respecto de \(t\) con derivada respecto de \(s\).</li>
+<li>Confundir vector curvatura con curvatura escalar.</li>
+<li>Dividir por \(|k|\) en puntos de inflexión.</li>
+<li>Confundir plano normal con plano osculador.</li>
+<li>Confundir normal principal con binormal.</li>
+<li>Aplicar la fórmula de torsión si \(x'\times x''=0\).</li>
+<li>Pensar que torsión nula significa recta.</li>
+<li>No justificar las hipótesis de regularidad.</li>
+<li>Olvidar el signo de la torsión.</li>
+</ul></div></section>
+<section id="checklist" class="page"><header class="section-header"><p class="section-kicker">10</p><h2>10. Checklist de dominio</h2></header><div class="reading-block"><ul>
+<li>Si no puedes explicar qué mide \(t\), falta repasar tangente unitaria y parámetro longitud de arco.</li>
+<li>Si no puedes pasar de \(x'(t)\) a \(t\), falta repasar normalización de vectores.</li>
+<li>Si confundes \(x'(t)\) con \(dx/ds\), revisar la relación \(ds/dt=|x'(t)|\).</li>
+<li>Si no puedes escribir la recta tangente, falta repasar ecuaciones vectoriales de rectas.</li>
+<li>Si no puedes escribir el plano normal, falta repasar producto escalar y planos perpendiculares.</li>
+<li>Si no puedes demostrar que \(k\perp t\), falta repasar la derivada de \(t\cdot t=1\).</li>
+<li>Si no puedes calcular \(\kappa\) con parámetro arbitrario, falta practicar</li>
+</ul>
+<div class="formula-block">\[
+\kappa=\frac{|x'\times x''|}{|x'|^3}.
+\]</div>
+<ul>
+<li>Si confundes curvatura con radio de curvatura, revisar \(\rho=1/\kappa\).</li>
+<li>Si divides por \(|k|\) en un punto de inflexión, revisar la definición de normal principal.</li>
+<li>Si no puedes construir \(b\), falta repasar producto vectorial y \(b=t\times n\).</li>
+<li>Si confundes plano osculador y plano normal, revisar qué vector es normal a cada plano.</li>
+<li>Si no puedes escribir el plano osculador como \([y-x,x',x'']=0\), falta repasar triple producto escalar.</li>
+<li>Si no puedes calcular \(\tau\), falta practicar</li>
+</ul>
+<div class="formula-block">\[
+\tau=\frac{[x',x'',x''']}{|x'\times x''|^2}.
+\]</div>
+<ul>
+<li>Si crees que \(\tau=0\) implica recta, revisar la diferencia entre recta y curva plana.</li>
+<li>Si crees que \(\kappa=0\) sólo implica curva plana, revisar el teorema de curvatura nula.</li>
+<li>Si no puedes explicar la hélice circular, falta repasar el ejemplo</li>
+</ul>
+<div class="formula-block">\[
+x(t)=(a\cos t,a\sin t,bt).
+\]</div>
+<ul>
+<li>Si no puedes justificar que una curva es hélice general, revisar el criterio \(\tau/\kappa=\text{constante}\).</li>
+<li>Si puedes calcular \(t,n,b,\kappa,\tau\) para una hélice, el núcleo operativo del capítulo está asentado.</li>
+<li>Si puedes decidir si una curva es recta, plana o hélice general a partir de \(\kappa\) y \(\tau\), el capítulo está suficientemente dominado.</li>
+<li>Si puedes resolver un problema completo con recta tangente, plano normal, plano osculador, curvatura y torsión sin mirar apuntes, estás preparado para preguntas estándar de examen.</li>
+</ul></div></section>
+    </main>
+  </div>
+</body>
+</html>

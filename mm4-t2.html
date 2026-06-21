@@ -1,0 +1,919 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="color-scheme" content="light dark" />
+  <title>MM4 — Tema 2: Cambios de base y álgebra lineal para tensores</title>
+  <meta name="description" content="Guía de estudio de Métodos Matemáticos IV sobre cambios de base, álgebra lineal básica, matrices, formas cuadráticas y coordenadas para tensores." />
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/icon-32.png" />
+  <link rel="icon" type="image/png" sizes="50x50" href="assets/icons/icon-50.png" />
+  <link rel="apple-touch-icon" sizes="100x100" href="assets/icons/icon-100.png" />
+  <link rel="stylesheet" href="assets/styles.css" />
+  <script>window.MathJax = { tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']], processEscapes: true }, svg: { fontCache: 'global' } };</script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+  <script defer src="assets/app.js"></script>
+</head>
+<body class="subject-mm4">
+  <div class="wrap">
+    <header class="cover">
+      <a class="back-link" href="index.html">← Índice</a>
+      <p class="eyebrow">Métodos Matemáticos IV</p>
+      <h1>Cambios de base y álgebra lineal básica para tensores</h1>
+      <p class="subtitle">Tema 2 · Kay · notación matricial, transformaciones lineales, formas cuadráticas, distancia transformada y regla de la cadena</p>
+      <div class="lesson-meta"><span>Asignatura: MM4</span><span>Tema 2</span><span>Estado: completo</span><span>Enfoque: examen UNED</span></div>
+    </header>
+    <div class="toolbar no-print" aria-label="Navegación del tema"><nav><a href="#mapa">Mapa</a><a href="#prerrequisitos">Prerrequisitos</a><a href="#desarrollo">Desarrollo</a><a href="#conceptos">Conceptos</a><a href="#errores">Errores</a><a href="#preguntas">Preguntas</a><a href="#respuestas">Respuestas</a><a href="#resumen">Resumen</a><a href="#checklist">Checklist</a></nav><div class="toolbar-actions"><button class="btn secondary" onclick="document.querySelectorAll('details').forEach(d=>d.open=true)">Abrir todo</button><button class="btn secondary" onclick="document.querySelectorAll('details').forEach(d=>d.open=false)">Modo repaso</button><button class="btn" onclick="window.print()">Imprimir / PDF</button></div></div>
+    <main>
+      <section id="mapa" class="page map-page"><header class="section-header"><p class="section-kicker">00</p><h2>Mapa conceptual</h2></header><div class="concept-map"><a class="map-card" href="#prerrequisitos"><span>1. Prerrequisitos mínimos</span><small>Ir a la sección</small></a><a class="map-card" href="#idea"><span>2. Idea central del capítulo</span><small>Ir a la sección</small></a><a class="map-card" href="#desarrollo"><span>3. Desarrollo completo del capítulo</span><small>Ir a la sección</small></a><a class="map-card" href="#conceptos"><span>4. Conceptos clave</span><small>Ir a la sección</small></a><a class="map-card" href="#relaciones"><span>5. Relaciones entre ideas</span><small>Ir a la sección</small></a><a class="map-card" href="#errores"><span>6. Errores habituales</span><small>Ir a la sección</small></a><a class="map-card" href="#preguntas"><span>7. Preguntas orientadas a examen</span><small>Ir a la sección</small></a><a class="map-card" href="#respuestas"><span>8. Respuestas modelo</span><small>Ir a la sección</small></a><a class="map-card" href="#resumen"><span>9. Resumen final de repaso</span><small>Ir a la sección</small></a><a class="map-card" href="#checklist"><span>10. Checklist de dominio</span><small>Ir a la sección</small></a></div><div class="reading-block source-block"><p>Fuente de trabajo: Guía de estudio — Cálculo Tensorial / Métodos Matemáticos IV · Tema T2: Kay, cambios de base y álgebra lineal básica para tensores. La página conserva el orden del apunte original y lo convierte en una guía HTML navegable.</p></div></section>
+<section id="prerrequisitos" class="page"><header class="section-header"><p class="section-kicker">01</p><h2>1. Prerrequisitos mínimos</h2></header><div class="reading-block"><ul>
+<li>Convenio de suma de Einstein.<p>Definición breve: cuando un índice aparece repetido dos veces en un término, se entiende suma sobre todos sus valores. Por ejemplo, \(a_{ij}x_j\) representa \(\sum_j a_{ij}x_j\). Es necesario porque el capítulo escribe productos de matrices, sistemas lineales, productos escalares y cambios de coordenadas en notación de índices. Ejemplo mínimo: si \(i\) queda libre y \(j=1,2,3\), entonces \(y_i=a_{ij}x_j\) representa tres ecuaciones.</p></li>
+</ul>
+<ul>
+<li>Índice libre e índice mudo.<p>Definición breve: un índice libre identifica las componentes de una expresión; un índice mudo es el índice repetido sobre el que se suma. Es necesario para no confundir una ecuación escalar con una familia de ecuaciones. Ejemplo mínimo: en \(a_{ij}x_j=b_i\), \(i\) es libre y \(j\) es mudo.</p></li>
+</ul>
+<ul>
+<li>Delta de Kronecker.<p>Definición breve: \(\delta_{ij}=1\) si \(i=j\) y \(\delta_{ij}=0\) si \(i\ne j\). Es necesario porque permite escribir la matriz identidad y simplificar contracciones. Ejemplo mínimo: \(\delta_{ij}x_j=x_i\).</p></li>
+</ul>
+<ul>
+<li>Matrices y producto matricial.<p>Definición breve: una matriz \(A=[a_{ij}]\) es una tabla de números; el producto \(AB\) se define por suma sobre el índice interior: \((AB)_{ij}=a_{ir}b_{rj}\). Es necesario porque los cambios lineales de coordenadas y las leyes de transformación se expresan matricialmente. Ejemplo mínimo: si \(A\) es \(m\times n\) y \(B\) es \(n\times k\), entonces \(AB\) es \(m\times k\).</p></li>
+</ul>
+<ul>
+<li>Vector como columna de componentes.<p>Definición breve: un vector de \(\mathbb{R}^n\) se representa por una columna de \(n\) componentes reales. Es necesario porque el capítulo distingue entre el objeto geométrico y sus componentes en un sistema de coordenadas. Ejemplo mínimo: \(v=(x_1,x_2,x_3)\).</p></li>
+</ul>
+<ul>
+<li>Determinante.<p>Definición breve: escalar asociado a una matriz cuadrada que mide, entre otras cosas, si la matriz es invertible. Es necesario para decidir si un cambio lineal de coordenadas es admisible. Ejemplo mínimo: una matriz \(2\times 2\), \(A=\begin{pmatrix}a&amp;b\\c&amp;d\end{pmatrix}\), es invertible si \(ad-bc\ne0\).</p></li>
+</ul>
+<ul>
+<li>Matriz inversa.<p>Definición breve: si \(A\) es cuadrada, \(A^{-1}\) es la matriz que cumple \(AA^{-1}=A^{-1}A=I\). Es necesaria para pasar de coordenadas nuevas a antiguas y para resolver sistemas \(Ax=b\). Ejemplo mínimo: si \(\bar{x}=Ax\), entonces \(x=A^{-1}\bar{x}\).</p></li>
+</ul>
+<ul>
+<li>Producto escalar euclídeo.<p>Definición breve: para \(u=(x_i)\) y \(v=(y_i)\), \(u\cdot v=x_i y_i\). Es necesario porque el capítulo lo usa para definir norma, ángulo, ortogonalidad y distancia en coordenadas rectangulares. Ejemplo mínimo: \(u\cdot v=0\) significa ortogonalidad euclídea.</p></li>
+</ul>
+<ul>
+<li>Derivadas parciales y regla de la cadena.<p>Definición breve: si \(w=f(x_1,\ldots,x_n)\) y \(x_i=x_i(u_1,\ldots,u_m)\), entonces \(\partial w/\partial u_j=(\partial f/\partial x_i)(\partial x_i/\partial u_j)\). Es necesaria porque el paso a coordenadas curvilíneas exige saber cómo cambian las derivadas. Ejemplo mínimo: si \(x=r\cos\theta\), \(y=r\sin\theta\), entonces \(\partial f/\partial r=f_x\cos\theta+f_y\sin\theta\).</p></li>
+</ul></div></section>
+<section id="idea" class="page"><header class="section-header"><p class="section-kicker">02</p><h2>2. Idea central del capítulo</h2></header><div class="reading-block"><p>El capítulo construye la base algebraica que se necesita antes de hablar propiamente de tensores. Su objetivo no es hacer un curso completo de álgebra lineal, sino seleccionar las herramientas que después permitirán formular leyes de transformación de componentes. La idea principal es que muchas expresiones de la física y de la geometría no dependen del nombre de las coordenadas, pero sus componentes sí cambian cuando cambiamos de sistema. Para controlar ese cambio hacen falta matrices, inversas, determinantes, formas cuadráticas, transformaciones lineales y regla de la cadena.</p>
+<p>El texto empieza fijando una notación. Kay introduce una escritura matricial compatible con la notación tensorial: los índices indican filas y columnas, y el convenio de suma permite escribir productos de matrices sin símbolos de sumatorio. Esta decisión no es cosmética. En cálculo tensorial, las leyes importantes se expresan por contracciones de índices; por tanto, dominar la posición y repetición de índices es una condición previa para leer fórmulas tensoriales sin perderse.</p>
+<p>Después aparecen las operaciones básicas: producto de matrices, identidad, inversa, traspuesta, matrices simétricas, antisimétricas y ortogonales, determinantes, cofactores, producto escalar, norma, ángulo y producto vectorial. Cada una tiene una función posterior. La inversa permite deshacer cambios de coordenadas. La traspuesta permite formular propiedades de simetría. Las matrices ortogonales representan cambios que conservan la distancia euclídea. El determinante decide cuándo una transformación es invertible y prepara el papel del jacobiano. El producto escalar conecta álgebra y geometría.</p>
+<p>La parte más importante para tensores es el paso de una expresión algebraica a una transformación de coordenadas. Una ecuación como \(\bar{x}=Ax\) puede interpretarse de dos formas: como movimiento de puntos o como cambio de nombres coordenados para los mismos puntos. Kay señala que en cálculo tensorial interesa sobre todo la segunda interpretación. El punto geométrico no cambia; cambian sus componentes. Esta distinción sostiene todo el cálculo tensorial posterior.</p>
+<p>El capítulo también muestra que la distancia euclídea no siempre tiene la misma forma cuando se usan coordenadas transformadas. Si el cambio es ortogonal, la fórmula pitagórica se conserva. Si el cambio lineal no es ortogonal, aparece una matriz \(G=(AA^T)^{-1}\), de modo que la distancia se escribe como \(d^2=g_{ij}\Delta \bar{x}_i\Delta \bar{x}_j\). Esta aparición de \(g_{ij}\) anticipa el tensor métrico: una misma distancia geométrica puede tener componentes distintas según el sistema de coordenadas.</p>
+<p>La última parte abre la puerta a coordenadas generales. Kay introduce la idea de que una aplicación \(T\) puede definir nuevas coordenadas si es biyectiva sobre la región considerada. Si la transformación es lineal, el sistema se llama afín; si es un movimiento rígido, cartesiano o rectangular; si no es afín, curvilíneo. Para estas transformaciones aparece de manera natural la regla de la cadena, que en capítulos posteriores se convertirá en la matriz jacobiana y en las leyes de transformación de vectores y tensores.</p>
+<p>Dentro de Métodos Matemáticos IV, este capítulo cumple una función de cimentación. Sin esta base, las fórmulas de tensores covariantes, contravariantes, métrica, Christoffel y derivada covariante parecen reglas arbitrarias. Con ella, se entiende que todo nace de una pregunta concreta: cómo se escriben los mismos objetos geométricos cuando cambiamos de coordenadas.</p></div></section>
+<section id="desarrollo" class="page"><header class="section-header"><p class="section-kicker">03</p><h2>3. Desarrollo completo del capítulo</h2></header><div class="reading-block"><h3>3.1. Notación matricial compatible con tensores</h3>
+<p>El capítulo comienza recordando que una matriz se representa por componentes \(a_{ij}\). El primer índice identifica la fila y el segundo la columna. Esta convención se mantiene aunque aparezcan índices superiores o mixtos. Lo importante es que la posición del índice no se usa aún con todo su significado tensorial, pero sí se prepara al alumno para leer expresiones con índices.</p>
+<p>Una matriz \(A=[a_{ij}]_{mn}\) tiene \(m\) filas y \(n\) columnas. Un vector real \(n\)-dimensional se trata como una columna de componentes reales. La colección de todos esos vectores forma \(\mathbb{R}^n\). La suma de vectores y matrices se hace componente a componente; el producto por escalar multiplica todas las componentes.</p>
+<p>Esto importa porque los tensores se estudiarán mediante sus componentes. No basta saber que una matriz tiene entradas: hay que saber cómo se combinan esas entradas cuando se multiplica, se invierte o se transforma. Por ejemplo, si \(A=[a_{ij}]\) y \(B=[b_{ij}]\), el producto no se obtiene multiplicando entrada a entrada, sino contrayendo el índice interior:</p>
+<div class="formula-block">\[
+(AB)_{ij}=a_{ir}b_{rj}.
+\]</div>
+<p>Aquí \(i,j\) son libres y \(r\) es mudo. Esta fórmula contiene el esquema de muchas operaciones tensoriales posteriores: aparecen índices libres que sobreviven y un índice repetido que se suma.</p>
+<p>El ejemplo más sencillo es un sistema lineal:</p>
+<div class="formula-block">\[
+a_{ij}x_j=b_i.
+\]</div>
+<p>La expresión representa tantas ecuaciones como valores tenga \(i\). La notación compacta evita escribir largas listas, pero exige disciplina: no se puede cambiar un índice libre sin cambiar el significado de la ecuación.</p>
+<h3>3.2. Producto de matrices, identidad e inversa</h3>
+<p>Kay presenta el producto matricial como una fórmula de contracción. Si \(A\) es \(m\times n\) y \(B\) es \(n\times k\), entonces \(AB\) es \(m\times k\) y sus entradas son \(a_{ir}b_{rj}\). El índice \(r\) desaparece porque se suma.</p>
+<p>La matriz identidad se expresa mediante la delta de Kronecker. En componentes, la identidad tiene entradas \(\delta_{ij}\), y cumple:</p>
+<div class="formula-block">\[
+\delta_{ir}a_{rj}=a_{ij}, \qquad a_{ir}\delta_{rj}=a_{ij}.
+\]</div>
+<p>Esta propiedad es esencial: la delta actúa como un selector de componentes. Cuando aparece en una contracción, iguala índices y elimina términos.</p>
+<p>La inversa de una matriz cuadrada \(A\) es una matriz \(B\) que cumple:</p>
+<div class="formula-block">\[
+a_{ir}b_{rj}=\delta_{ij}, \qquad b_{ir}a_{rj}=\delta_{ij}.
+\]</div>
+<p>Esta definición en componentes es más importante para tensores que la fórmula de cálculo de la inversa. El punto conceptual es que una transformación invertible se puede deshacer. Si \(\bar{x}=Ax\), entonces \(x=A^{-1}\bar{x}\). Sin inversa, no hay equivalencia completa entre ambos sistemas de coordenadas.</p>
+<p>Un riesgo típico es olvidar que \(AB=I\) y \(BA=I\) son condiciones distintas en general, aunque para matrices cuadradas invertibles ambas se cumplen. En cálculo tensorial esto se traduce en una vigilancia constante del orden de los factores. Las matrices no conmutan: \(AB\) no tiene por qué coincidir con \(BA\).</p>
+<h3>3.3. Traspuesta, simetría, antisimetría y ortogonalidad</h3>
+<p>La traspuesta de \(A\) intercambia filas y columnas:</p>
+<div class="formula-block">\[
+(A^T)_{ij}=a_{ji}.
+\]</div>
+<p>Si \(A^T=A\), la matriz es simétrica. Si \(A^T=-A\), es antisimétrica. Esta distinción es importante porque muchos objetos tensoriales relevantes tienen simetrías: una forma cuadrática se representa mediante una matriz simétrica; el símbolo alternante se relaciona con antisimetría; los tensores métricos serán simétricos.</p>
+<p>Una matriz ortogonal cumple:</p>
+<div class="formula-block">\[
+A^T=A^{-1},
+\]</div>
+<p>equivalentemente:</p>
+<div class="formula-block">\[
+A^T A=AA^T=I.
+\]</div>
+<p>Geométricamente, estas matrices representan rotaciones o reflexiones que conservan longitudes y ángulos. En el lenguaje de cambios de coordenadas, un cambio ortogonal no deforma la fórmula euclídea de la distancia.</p>
+<p>Este punto conecta con la idea de invariancia. Si cambiamos de ejes mediante una matriz ortogonal, el producto escalar ordinario conserva su forma. Pero si usamos un cambio lineal general, la distancia se sigue conservando como cantidad geométrica, aunque su fórmula en componentes cambia. Esa diferencia anticipa la necesidad del tensor métrico.</p>
+<h3>3.4. Símbolo de permutación, determinante y cofactores</h3>
+<p>Kay introduce el símbolo de permutación \(e_{ijk\ldots}\). Su valor es cero si hay índices repetidos; vale \(+1\) o \(-1\) según la paridad de la permutación. Con este símbolo se puede escribir el determinante de forma compacta. En dimensión \(n\), el determinante de \(A=[a_{ij}]\) queda expresado como una suma alternante sobre productos de entradas, seleccionando una entrada de cada fila y cada columna.</p>
+<p>El determinante cumple propiedades fundamentales. La que más importa aquí es:</p>
+<div class="formula-block">\[
+\det(AB)=\det(A)\det(B).
+\]</div>
+<p>También permite caracterizar la invertibilidad: una matriz cuadrada es invertible si y sólo si su determinante no es cero.</p>
+<p>El desarrollo de Laplace usa cofactores. Si \(A_{ij}\) es el cofactor de \(a_{ij}\), entonces se puede desarrollar el determinante por filas o por columnas. En la práctica, esto permite calcular determinantes e inversas para matrices pequeñas. Conceptualmente, prepara el uso de determinantes jacobianos en cambios generales de coordenadas.</p>
+<p>La conexión con el cambio de base es clara: una matriz con determinante nulo aplasta direcciones y pierde información. Por tanto, no puede servir como cambio reversible de coordenadas. En cambio, una matriz con determinante no nulo permite pasar de un sistema a otro sin perder puntos ni identificar puntos distintos.</p>
+<h3>3.5. Producto escalar, norma, ángulo y producto vectorial</h3>
+<p>Para dos vectores \(u=(x_i)\) y \(v=(y_i)\), el producto escalar euclídeo es:</p>
+<div class="formula-block">\[
+u\cdot v=x_i y_i.
+\]</div>
+<p>Si \(u=v\), se obtiene \(u\cdot u=x_i x_i\). La norma se define como:</p>
+<div class="formula-block">\[
+\|u\|=\sqrt{x_i x_i}.
+\]</div>
+<p>El ángulo entre dos vectores no nulos se obtiene mediante:</p>
+<div class="formula-block">\[
+\cos\theta=\frac{u\cdot v}{\|u\|\|v\|}.
+\]</div>
+<p>La ortogonalidad queda caracterizada por \(u\cdot v=0\).</p>
+<p>Estas fórmulas son familiares, pero en el capítulo tienen un papel de transición. En coordenadas rectangulares, el producto escalar tiene la forma simple \(x_i y_i\). En coordenadas no rectangulares o transformadas no ortogonalmente, la forma del producto escalar cambia. El capítulo aún no desarrolla el tensor métrico completo, pero ya muestra la necesidad de introducir coeficientes \(g_{ij}\) para describir distancias en un sistema transformado.</p>
+<p>En dimensión tres aparece el producto vectorial. Kay lo expresa mediante determinantes y, en componentes, mediante el símbolo de permutación. La forma compacta es:</p>
+<div class="formula-block">\[
+(u\times v)_i=e_{ijk}x_jy_k.
+\]</div>
+<p>La importancia de esta expresión no es sólo calcular productos vectoriales, sino ver cómo la antisimetría se codifica con índices. Si se intercambian \(u\) y \(v\), el signo cambia:</p>
+<div class="formula-block">\[
+u\times v=-(v\times u).
+\]</div>
+<h3>3.6. Resolución matricial de sistemas lineales</h3>
+<p>Un sistema lineal de \(m\) ecuaciones con \(n\) incógnitas puede escribirse como:</p>
+<div class="formula-block">\[
+a_{ij}x_j=b_i.
+\]</div>
+<p>En forma matricial:</p>
+<div class="formula-block">\[
+Ax=b.
+\]</div>
+<p>Si el sistema es cuadrado y \(A\) es invertible, entonces:</p>
+<div class="formula-block">\[
+x=A^{-1}b.
+\]</div>
+<p>Esta parte parece elemental, pero es básica para tensores porque muchas relaciones entre componentes son sistemas lineales. Cambiar de coordenadas, pasar de una base a otra, subir o bajar índices y resolver coeficientes de una combinación lineal son operaciones del mismo tipo: multiplicar por una matriz o por su inversa.</p>
+<p>El punto de examen suele estar en reconocer qué matriz se debe invertir y en no cambiar el orden de multiplicación. Si \(\bar{x}=Ax\), entonces \(x=A^{-1}\bar{x}\); no se escribe \(\bar{x}=xA\) si se están usando vectores columna.</p>
+<h3>3.7. Formas cuadráticas y matrices simétricas</h3>
+<p>Una forma cuadrática es una expresión homogénea de grado dos en las variables. En notación matricial:</p>
+<div class="formula-block">\[
+Q=x^T A x.
+\]</div>
+<p>En componentes:</p>
+<div class="formula-block">\[
+Q=a_{ij}x_i x_j.
+\]</div>
+<p>Kay recalca que la matriz que representa una forma cuadrática no es única si no se impone simetría. Como \(x_i x_j=x_j x_i\), la parte antisimétrica no contribuye. Por eso puede sustituirse \(A\) por:</p>
+<div class="formula-block">\[
+B=\frac12(A+A^T).
+\]</div>
+<p>La matriz \(B\) es simétrica y representa la misma forma cuadrática.</p>
+<p>Este resultado importa porque la métrica y muchas magnitudes geométricas se expresan como formas cuadráticas. Por ejemplo, una distancia al cuadrado o un elemento de línea tendrá una forma del tipo:</p>
+<div class="formula-block">\[
+ds^2=g_{ij}dx_i dx_j.
+\]</div>
+<p>Si los productos diferenciales son simétricos, sólo la parte simétrica de \(g_{ij}\) afecta a la longitud.</p>
+<p>Ejemplo: una expresión como</p>
+<div class="formula-block">\[
+3x^2+y^2-2z^2-5xy-6yz
+\]</div>
+<p>se representa con una matriz simétrica colocando la mitad de los coeficientes mixtos en posiciones simétricas:</p>
+<div class="formula-block">\[
+A=
+\begin{pmatrix}
+3 &amp; -5/2 &amp; 0\\
+-5/2 &amp; 1 &amp; -3\\
+0 &amp; -3 &amp; -2
+\end{pmatrix}.
+\]</div>
+<p>Así, \(x^T A x\) reproduce la forma cuadrática.</p>
+<h3>3.8. Transformaciones lineales y doble interpretación</h3>
+<p>Una transformación lineal se escribe:</p>
+<div class="formula-block">\[
+\bar{x}=Ax.
+\]</div>
+<p>En componentes:</p>
+<div class="formula-block">\[
+\bar{x}_i=a_{ij}x_j.
+\]</div>
+<p>Kay subraya que hay dos lecturas posibles. En la primera, \(A\) mueve puntos: a cada punto \(x\) le asigna una nueva posición \(\bar{x}\). En la segunda, \(A\) cambia las coordenadas con las que describimos el mismo punto. En cálculo tensorial predomina la segunda: no se está cambiando el objeto geométrico, sino su descripción.</p>
+<p>Esta distinción es decisiva. Si se interpreta como movimiento activo, el punto cambia. Si se interpreta como cambio pasivo de coordenadas, el punto permanece, pero sus componentes son diferentes. La física y la geometría tensorial buscan formular leyes que no dependan del sistema elegido. Por eso hay que saber cómo cambian las componentes.</p>
+<p>La transformación debe ser uno a uno si quiere servir como sistema de coordenadas. En el caso lineal, eso equivale a \(\det A\ne0\). Si \(A\) no es invertible, dos puntos distintos pueden recibir las mismas coordenadas nuevas, y el sistema deja de ser válido.</p>
+<h3>3.9. Distancia en un sistema de coordenadas transformado</h3>
+<p>Si \(\bar{x}=Ax\) es un cambio lineal invertible, la distancia euclídea ordinaria en coordenadas sin barra es:</p>
+<div class="formula-block">\[
+d^2=(x-y)^T(x-y).
+\]</div>
+<p>Como \(x=A^{-1}\bar{x}\), se obtiene:</p>
+<div class="formula-block">\[
+d^2=(\bar{x}-\bar{y})^T G(\bar{x}-\bar{y}),
+\]</div>
+<p>donde:</p>
+<div class="formula-block">\[
+G=(AA^T)^{-1}.
+\]</div>
+<p>En componentes:</p>
+<div class="formula-block">\[
+d^2=g_{ij}\Delta \bar{x}_i \Delta \bar{x}_j.
+\]</div>
+<p>Este resultado es uno de los más importantes del capítulo. Muestra que la distancia geométrica no cambia, pero su fórmula en componentes sí. Si \(A\) es ortogonal, \(AA^T=I\) y entonces \(G=I\). La fórmula vuelve a ser la pitagórica. Si \(A\) no es ortogonal, aparecen coeficientes cruzados o escalas distintas.</p>
+<p>La consecuencia para tensores es inmediata: las componentes \(g_{ij}\) no son un adorno, sino el mecanismo que conserva el valor geométrico de la distancia bajo un cambio de coordenadas. Más adelante, esos coeficientes serán las componentes del tensor métrico.</p>
+<p>Ejemplo sencillo. Sea:</p>
+<div class="formula-block">\[
+A=\begin{pmatrix}1&amp;0\\2&amp;1\end{pmatrix}.
+\]</div>
+<p>Entonces:</p>
+<div class="formula-block">\[
+AA^T=
+\begin{pmatrix}
+1&amp;2\\
+2&amp;5
+\end{pmatrix},
+\qquad
+G=(AA^T)^{-1}=
+\begin{pmatrix}
+5&amp;-2\\
+-2&amp;1
+\end{pmatrix}.
+\]</div>
+<p>La distancia en coordenadas con barra no es simplemente \((\Delta\bar{x})^2+(\Delta\bar{y})^2\), sino:</p>
+<div class="formula-block">\[
+d^2=5(\Delta\bar{x})^2-4\Delta\bar{x}\Delta\bar{y}+(\Delta\bar{y})^2.
+\]</div>
+<h3>3.10. Coordenadas generales: biyección, afines, rectangulares y curvilíneas</h3>
+<p>El capítulo generaliza la idea de transformación. Una transformación \(T\) puede escribirse en forma vectorial:</p>
+<div class="formula-block">\[
+\bar{x}=T(x),
+\]</div>
+<p>o en componentes:</p>
+<div class="formula-block">\[
+\bar{x}_i=T_i(x_1,\ldots,x_n).
+\]</div>
+<p>Para que esas nuevas cantidades funcionen como coordenadas, la aplicación debe distinguir puntos: si \(x\ne y\), entonces \(T(x)\ne T(y)\) dentro de la región considerada. Esta es la condición de biyectividad sobre el dominio relevante.</p>
+<p>Kay clasifica sistemas coordenados según la transformación. Si \(T\) es lineal, el sistema se llama afín. Si \(T\) es un movimiento rígido, el sistema es rectangular o cartesiano. Si \(T\) no es afín, se habla de coordenadas curvilíneas. En dos dimensiones, las polares son el ejemplo básico; en tres, las cilíndricas y esféricas.</p>
+<p>La idea importante es que una misma región puede describirse con coordenadas muy distintas. Algunas simplifican la ecuación de una curva o superficie. Por ejemplo, una circunferencia centrada en el origen tiene una forma más sencilla en polares que en cartesianas. Este es uno de los motivos prácticos del cálculo tensorial: permitir usar las coordenadas convenientes sin perder el control de las cantidades geométricas.</p>
+<h3>3.11. Regla de la cadena en notación tensorial</h3>
+<p>La parte final del capítulo introduce la regla de la cadena en varias variables usando índices. Si:</p>
+<div class="formula-block">\[
+w=f(x_1,\ldots,x_n),
+\]</div>
+<p>y:</p>
+<div class="formula-block">\[
+x_i=x_i(u_1,\ldots,u_m),
+\]</div>
+<p>entonces:</p>
+<div class="formula-block">\[
+\frac{\partial w}{\partial u_j}
+=
+\frac{\partial f}{\partial x_i}
+\frac{\partial x_i}{\partial u_j}.
+\]</div>
+<p>El índice \(i\) se repite y se suma; \(j\) queda libre.</p>
+<p>Esta fórmula prepara la matriz jacobiana, aunque el capítulo siguiente la desarrollará más. Es la herramienta que explica cómo cambian derivadas, gradientes, campos vectoriales tangentes y, finalmente, componentes tensoriales. En coordenadas curvilíneas no se puede transformar correctamente una derivada sin la regla de la cadena.</p>
+<p>La conexión con el cambio de base es directa. La matriz de derivadas parciales mide cómo varían unas coordenadas respecto de otras. En transformaciones lineales, esa matriz es constante y coincide con la matriz \(A\). En transformaciones curvilíneas, cambia de punto a punto. Por eso en geometría diferencial las bases naturales, las métricas y los símbolos de Christoffel dependen de la posición.</p></div></section>
+<section id="conceptos" class="page"><header class="section-header"><p class="section-kicker">04</p><h2>4. Conceptos clave</h2></header><div class="reading-block"><ul>
+<li>Notación matricial con índices.<p>Definición precisa: escritura de las entradas de una matriz mediante \(a_{ij}\), donde \(i\) señala la fila y \(j\) la columna.</p><p>Explicación desarrollada: esta notación permite traducir operaciones matriciales a contracciones de índices. Es el puente entre álgebra lineal y cálculo tensorial. El alumno debe saber identificar qué índices quedan libres y cuáles se suman.</p><p>Ejemplo: \((AB)_{ij}=a_{ir}b_{rj}\).</p><p>Relación con otros conceptos: se apoya en el convenio de suma y en la delta de Kronecker.</p><p>Posible pregunta de examen: “Escriba en notación de índices el producto de dos matrices y determine qué índices son libres y cuáles mudos.”</p></li>
+</ul>
+<ul>
+<li>Vector en \(\mathbb{R}^n\).<p>Definición precisa: columna de \(n\) componentes reales.</p><p>Explicación desarrollada: el capítulo trabaja con vectores a través de sus componentes, pero el objetivo posterior será distinguir el vector geométrico de sus componentes en una base.</p><p>Ejemplo: \(v=(v_1,\ldots,v_n)\).</p><p>Relación con otros conceptos: producto escalar, norma, transformaciones lineales.</p><p>Posible pregunta de examen: “Explique qué cambia y qué no cambia de un vector al cambiar de sistema de coordenadas.”</p></li>
+</ul>
+<ul>
+<li>Producto matricial.<p>Definición precisa: si \(A=[a_{ij}]\) y \(B=[b_{ij}]\), entonces \((AB)_{ij}=a_{ir}b_{rj}\).</p><p>Explicación desarrollada: el producto matricial no es componente a componente; combina filas con columnas. Su orden importa.</p><p>Ejemplo: \(AB\ne BA\) en general.</p><p>Relación con otros conceptos: sistemas lineales, cambios de coordenadas, inversa.</p><p>Posible pregunta de examen: “Demuestre con índices que \((AB)^T=B^T A^T\).”</p></li>
+</ul>
+<ul>
+<li>Matriz identidad.<p>Definición precisa: matriz \(I\) con componentes \(\delta_{ij}\).</p><p>Explicación desarrollada: actúa como elemento neutro del producto matricial y como selector de componentes en notación de índices.</p><p>Ejemplo: \(\delta_{ij}x_j=x_i\).</p><p>Relación con otros conceptos: inversa, delta de Kronecker.</p><p>Posible pregunta de examen: “Use \(\delta_{ij}\) para simplificar una contracción.”</p></li>
+</ul>
+<ul>
+<li>Matriz inversa.<p>Definición precisa: \(A^{-1}\) satisface \(AA^{-1}=A^{-1}A=I\).</p><p>Explicación desarrollada: representa la posibilidad de deshacer una transformación lineal. Para cambios de coordenadas es imprescindible.</p><p>Ejemplo: si \(\bar{x}=Ax\), entonces \(x=A^{-1}\bar{x}\).</p><p>Relación con otros conceptos: determinante no nulo, sistemas lineales.</p><p>Posible pregunta de examen: “Dado un cambio lineal de coordenadas, escriba el cambio inverso.”</p></li>
+</ul>
+<ul>
+<li>Traspuesta.<p>Definición precisa: \((A^T)_{ij}=a_{ji}\).</p><p>Explicación desarrollada: intercambia filas y columnas. Permite definir matrices simétricas, antisimétricas y ortogonales.</p><p>Ejemplo: si \(A=\begin{pmatrix}1&amp;2\\3&amp;4\end{pmatrix}\), entonces \(A^T=\begin{pmatrix}1&amp;3\\2&amp;4\end{pmatrix}\).</p><p>Relación con otros conceptos: ortogonalidad, formas cuadráticas.</p><p>Posible pregunta de examen: “Pruebe que \(B^TB\) es simétrica.”</p></li>
+</ul>
+<ul>
+<li>Matriz simétrica.<p>Definición precisa: \(A^T=A\).</p><p>Explicación desarrollada: sus entradas cumplen \(a_{ij}=a_{ji}\). Las formas cuadráticas pueden representarse siempre con matrices simétricas.</p><p>Ejemplo: \(\begin{pmatrix}2&amp;-1\\-1&amp;3\end{pmatrix}\).</p><p>Relación con otros conceptos: formas cuadráticas, tensor métrico.</p><p>Posible pregunta de examen: “Represente una forma cuadrática mediante una matriz simétrica.”</p></li>
+</ul>
+<ul>
+<li>Matriz antisimétrica.<p>Definición precisa: \(A^T=-A\).</p><p>Explicación desarrollada: sus entradas cumplen \(a_{ij}=-a_{ji}\), por lo que su diagonal es cero. Su parte no contribuye a una forma cuadrática \(x^TAx\).</p><p>Ejemplo: \(\begin{pmatrix}0&amp;a\\-a&amp;0\end{pmatrix}\).</p><p>Relación con otros conceptos: símbolo de permutación, producto vectorial.</p><p>Posible pregunta de examen: “Explique por qué la parte antisimétrica de una matriz no aporta nada a \(x^TAx\).”</p></li>
+</ul>
+<ul>
+<li>Matriz ortogonal.<p>Definición precisa: \(A^T=A^{-1}\).</p><p>Explicación desarrollada: conserva producto escalar, longitudes y ángulos en coordenadas euclídeas.</p><p>Ejemplo: una rotación plana \(\begin{pmatrix}\cos\theta&amp;-\sin\theta\\\sin\theta&amp;\cos\theta\end{pmatrix}\).</p><p>Relación con otros conceptos: distancia invariante, coordenadas rectangulares.</p><p>Posible pregunta de examen: “¿Por qué en un cambio ortogonal la distancia conserva su fórmula pitagórica?”</p></li>
+</ul>
+<ul>
+<li>Símbolo de permutación.<p>Definición precisa: \(e_{ijk\ldots}\) vale cero si hay índices repetidos, \(+1\) para permutaciones pares y \(-1\) para impares.</p><p>Explicación desarrollada: codifica alternancia y permite escribir determinantes y productos vectoriales en notación de índices.</p><p>Ejemplo: en tres dimensiones, \(e_{123}=1\), \(e_{213}=-1\), \(e_{112}=0\).</p><p>Relación con otros conceptos: determinante, producto vectorial, antisimetría.</p><p>Posible pregunta de examen: “Use \(e_{ijk}\) para escribir el producto vectorial.”</p></li>
+</ul>
+<ul>
+<li>Determinante.<p>Definición precisa: escalar asociado a una matriz cuadrada, expresable mediante el símbolo de permutación.</p><p>Explicación desarrollada: indica si la matriz es invertible. En cambios de coordenadas, un determinante cero significa pérdida de información.</p><p>Ejemplo: para \(2\times2\), \(\det A=ad-bc\).</p><p>Relación con otros conceptos: inversa, jacobiano.</p><p>Posible pregunta de examen: “Explique por qué un cambio de coordenadas lineal requiere determinante no nulo.”</p></li>
+</ul>
+<ul>
+<li>Cofactor.<p>Definición precisa: \(A_{ij}=(-1)^{i+j}\) por el menor obtenido al eliminar fila \(i\) y columna \(j\).</p><p>Explicación desarrollada: permite desarrollar determinantes por Laplace y escribir fórmulas de inversión para matrices pequeñas.</p><p>Ejemplo: en \(3\times3\), el cofactor de \(a_{12}\) cambia de signo.</p><p>Relación con otros conceptos: determinante, matriz inversa.</p><p>Posible pregunta de examen: “Calcule una inversa \(3\times3\) usando cofactores.”</p></li>
+</ul>
+<ul>
+<li>Producto escalar.<p>Definición precisa: \(u\cdot v=x_i y_i\) en coordenadas rectangulares euclídeas.</p><p>Explicación desarrollada: mide proyección, ortogonalidad y ángulo. En sistemas no rectangulares su forma general se modifica.</p><p>Ejemplo: \((1,2)\cdot(3,-1)=1\).</p><p>Relación con otros conceptos: norma, ángulo, métrica.</p><p>Posible pregunta de examen: “Determine si dos vectores son ortogonales.”</p></li>
+</ul>
+<ul>
+<li>Norma.<p>Definición precisa: \(\|u\|=\sqrt{u\cdot u}\).</p><p>Explicación desarrollada: mide longitud euclídea de un vector en coordenadas rectangulares.</p><p>Ejemplo: \(\|(3,4)\|=5\).</p><p>Relación con otros conceptos: producto escalar, distancia.</p><p>Posible pregunta de examen: “Calcule la norma y el ángulo entre dos vectores.”</p></li>
+</ul>
+<ul>
+<li>Forma cuadrática.<p>Definición precisa: expresión \(Q=x^T A x=a_{ij}x_i x_j\).</p><p>Explicación desarrollada: representa cantidades de grado dos, como distancias al cuadrado o energías cuadráticas.</p><p>Ejemplo: \(3x^2-2xy+y^2\).</p><p>Relación con otros conceptos: matriz simétrica, tensor métrico.</p><p>Posible pregunta de examen: “Escriba una forma cuadrática como \(x^TAx\).”</p></li>
+</ul>
+<ul>
+<li>Transformación lineal.<p>Definición precisa: aplicación \(\bar{x}=Ax\).</p><p>Explicación desarrollada: asocia linealmente unas coordenadas a otras. Si \(A\) es invertible, define un cambio reversible.</p><p>Ejemplo: \(\bar{x}=2x+y,\ \bar{y}=x-y\).</p><p>Relación con otros conceptos: matriz inversa, cambio de coordenadas.</p><p>Posible pregunta de examen: “Interprete \(\bar{x}=Ax\) como cambio de coordenadas.”</p></li>
+</ul>
+<ul>
+<li>Cambio de coordenadas.<p>Definición precisa: asignación invertible que da nuevas coordenadas a los puntos de una región.</p><p>Explicación desarrollada: no altera el punto geométrico, sino su descripción numérica.</p><p>Ejemplo: cartesianas a polares.</p><p>Relación con otros conceptos: transformación lineal, biyección, jacobiano.</p><p>Posible pregunta de examen: “Explique la diferencia entre mover un punto y cambiar sus coordenadas.”</p></li>
+</ul>
+<ul>
+<li>Distancia en coordenadas transformadas.<p>Definición precisa: si \(\bar{x}=Ax\), entonces \(d^2=g_{ij}\Delta\bar{x}_i\Delta\bar{x}_j\), con \(G=(AA^T)^{-1}\).</p><p>Explicación desarrollada: conserva la distancia geométrica aunque cambie su expresión en componentes.</p><p>Ejemplo: si \(A\) no es ortogonal, aparecen términos cruzados.</p><p>Relación con otros conceptos: matriz ortogonal, métrica.</p><p>Posible pregunta de examen: “Deduzca la matriz \(G\) de la distancia tras un cambio lineal.”</p></li>
+</ul>
+<ul>
+<li>Coordenadas afines.<p>Definición precisa: coordenadas obtenidas mediante una transformación lineal invertible.</p><p>Explicación desarrollada: son más generales que las rectangulares; pueden deformar ángulos y longitudes en su fórmula de componentes.</p><p>Ejemplo: \(\bar{x}=x,\ \bar{y}=2x+y\).</p><p>Relación con otros conceptos: transformaciones lineales, matriz \(G\).</p><p>Posible pregunta de examen: “Distinga coordenadas afines de rectangulares.”</p></li>
+</ul>
+<ul>
+<li>Coordenadas rectangulares.<p>Definición precisa: coordenadas en las que la distancia euclídea tiene forma pitagórica.</p><p>Explicación desarrollada: se conservan bajo transformaciones ortogonales.</p><p>Ejemplo: ejes cartesianos rotados.</p><p>Relación con otros conceptos: matriz ortogonal, producto escalar.</p><p>Posible pregunta de examen: “Explique qué propiedad caracteriza un sistema rectangular.”</p></li>
+</ul>
+<ul>
+<li>Coordenadas curvilíneas.<p>Definición precisa: coordenadas obtenidas mediante transformaciones no afines.</p><p>Explicación desarrollada: sus líneas coordenadas pueden ser curvas. Exigen regla de la cadena y, más adelante, jacobiano y métrica.</p><p>Ejemplo: polares, cilíndricas, esféricas.</p><p>Relación con otros conceptos: regla de la cadena, matriz jacobiana.</p><p>Posible pregunta de examen: “Dé un ejemplo de coordenadas curvilíneas y explique por qué no son afines.”</p></li>
+</ul>
+<ul>
+<li>Regla de la cadena.<p>Definición precisa: \(\partial w/\partial u_j=(\partial f/\partial x_i)(\partial x_i/\partial u_j)\).</p><p>Explicación desarrollada: permite transformar derivadas al cambiar variables.</p><p>Ejemplo: \(f(x(r,\theta),y(r,\theta))\).</p><p>Relación con otros conceptos: jacobiano, transformación de gradientes y vectores.</p><p>Posible pregunta de examen: “Escriba la regla de la cadena en notación de Einstein.”</p></li>
+</ul></div></section>
+<section id="relaciones" class="page"><header class="section-header"><p class="section-kicker">05</p><h2>5. Relaciones entre ideas</h2></header><div class="reading-block"><p>La estructura del capítulo es acumulativa. Primero se fija el lenguaje de índices; después se traduce el álgebra lineal a ese lenguaje; finalmente se aplica a cambios de coordenadas. No se puede entender la última parte sin la primera, porque una transformación como \(\bar{x}_i=a_{ij}x_j\) sólo es clara si se distingue el índice libre \(i\) del índice mudo \(j\).</p>
+<p>El producto de matrices depende del convenio de suma. La matriz identidad depende de la delta de Kronecker. La inversa se define con identidad. La invertibilidad se controla mediante el determinante. Por tanto, determinante, inversa y cambio de coordenadas forman una cadena conceptual: para cambiar coordenadas de forma válida, la transformación debe poder invertirse; para que una matriz lineal sea invertible, su determinante debe ser no nulo.</p>
+<p>La traspuesta conecta con simetría y ortogonalidad. Si una matriz es ortogonal, su inversa coincide con su traspuesta. Esto tiene una consecuencia geométrica: conserva productos escalares y distancias. Si el cambio no es ortogonal, la distancia no desaparece, pero ya no se escribe con \(\delta_{ij}\); aparece una matriz \(g_{ij}\). Aquí nace la necesidad de la métrica.</p>
+<p>La forma cuadrática es la primera aparición sistemática de expresiones del tipo \(a_{ij}x_i x_j\). Como la parte antisimétrica no contribuye, se puede usar una matriz simétrica. Más adelante, el elemento de línea y el tensor métrico tendrán esta misma forma. Por eso la forma cuadrática sirve de puente entre álgebra lineal y geometría.</p>
+<p>Hay una oposición importante entre coordenadas rectangulares y curvilíneas. En coordenadas rectangulares la distancia, los ángulos y las componentes se manejan con fórmulas simples. En coordenadas curvilíneas, las coordenadas pueden simplificar la descripción de curvas o superficies, pero complican las fórmulas diferenciales. La regla de la cadena es el mecanismo que permite pasar de unas a otras sin perder rigor.</p>
+<p>También hay una oposición entre transformación activa y transformación pasiva. En la transformación activa se mueve el punto. En la pasiva se cambia el sistema de coordenadas. El cálculo tensorial trabaja principalmente con la segunda: las magnitudes geométricas son las mismas, pero sus componentes se transforman.</p>
+<p>Históricamente, este tipo de formalismo surge para expresar leyes físicas y geométricas de modo independiente de las coordenadas. El capítulo no desarrolla esa historia, pero prepara su herramienta esencial: escribir ecuaciones que sigan siendo significativas después de cambiar la base o el sistema de coordenadas.</p></div></section>
+<section id="errores" class="page"><header class="section-header"><p class="section-kicker">06</p><h2>6. Errores habituales</h2></header><div class="reading-block"><details class="accordion" open><summary>Contenido de 6. Errores habituales</summary><div class="accordion-body"><ul>
+<li>Confundir índice libre con índice mudo.<p>Por qué está mal: un índice libre determina las componentes de la expresión; un índice mudo sólo indica suma. Cambiarlos altera el significado.</p><p>Corrección: en \(a_{ij}x_j=b_i\), \(i\) queda libre y \(j\) se suma.</p><p>Respuesta incorrecta: “La expresión \(a_{ij}x_j\) es un número.”</p><p>Respuesta correcta: “La expresión \(a_{ij}x_j\) define una familia de componentes indexadas por \(i\).”</p></li>
+</ul>
+<ul>
+<li>Creer que el producto de matrices es conmutativo.<p>Por qué está mal: en general \(AB\ne BA\), e incluso uno de los productos puede no estar definido.</p><p>Corrección: respetar el orden de las matrices.</p><p>Respuesta incorrecta: “Como \(A^{-1}A=I\), puedo cambiar el orden libremente.”</p><p>Respuesta correcta: “El orden debe mantenerse; \(A^{-1}A=I\) y \(AA^{-1}=I\) se verifican para la inversa, pero no justifican conmutar matrices arbitrarias.”</p></li>
+</ul>
+<ul>
+<li>Confundir trasponer con invertir.<p>Por qué está mal: sólo en matrices ortogonales se cumple \(A^T=A^{-1}\).</p><p>Corrección: comprobar la condición de ortogonalidad.</p><p>Respuesta incorrecta: “La inversa de cualquier matriz es su traspuesta.”</p><p>Respuesta correcta: “La inversa coincide con la traspuesta sólo si la matriz es ortogonal.”</p></li>
+</ul>
+<ul>
+<li>Pensar que toda transformación lineal conserva distancias.<p>Por qué está mal: sólo las transformaciones ortogonales conservan la fórmula euclídea simple.</p><p>Corrección: para un cambio lineal general usar \(G=(AA^T)^{-1}\).</p><p>Respuesta incorrecta: “Si cambio de coordenadas, \(d^2=(\Delta \bar{x})^2+(\Delta \bar{y})^2\).”</p><p>Respuesta correcta: “En general \(d^2=g_{ij}\Delta\bar{x}_i\Delta\bar{x}_j\).”</p></li>
+</ul>
+<ul>
+<li>Usar una matriz no invertible como cambio de coordenadas.<p>Por qué está mal: una matriz con determinante cero identifica puntos distintos o pierde dimensiones.</p><p>Corrección: exigir \(\det A\ne0\).</p><p>Respuesta incorrecta: “\(\bar{x}=x,\ \bar{y}=2x\) es un cambio de coordenadas en el plano.”</p><p>Respuesta correcta: “No es un cambio válido en el plano porque no permite recuperar \(y\).”</p></li>
+</ul>
+<ul>
+<li>Colocar mal los términos mixtos de una forma cuadrática.<p>Por qué está mal: en \(x^TAx\), los términos \(a_{ij}x_i x_j\) y \(a_{ji}x_jx_i\) se suman.</p><p>Corrección: repartir la mitad del coeficiente mixto en las posiciones simétricas.</p><p>Respuesta incorrecta: “Para \(-6yz\) pongo \(a_{23}=-6\) y \(a_{32}=-6\).”</p><p>Respuesta correcta: “Si la matriz es simétrica, pongo \(a_{23}=a_{32}=-3\).”</p></li>
+</ul>
+<ul>
+<li>Pensar que la parte antisimétrica contribuye a \(x^TAx\).<p>Por qué está mal: \(x_i x_j\) es simétrico en \(i,j\), por lo que la contracción con una matriz antisimétrica se anula.</p><p>Corrección: sustituir \(A\) por \((A+A^T)/2\).</p><p>Respuesta incorrecta: “La matriz de una forma cuadrática puede tener cualquier parte antisimétrica relevante.”</p><p>Respuesta correcta: “La parte antisimétrica no cambia la forma cuadrática.”</p></li>
+</ul>
+<ul>
+<li>Confundir coordenadas afines con coordenadas rectangulares.<p>Por qué está mal: toda coordenada rectangular obtenida por rotación es afín, pero no toda afín es rectangular.</p><p>Corrección: rectangular exige conservación de la forma euclídea de la distancia.</p><p>Respuesta incorrecta: “Todo cambio lineal produce coordenadas rectangulares.”</p><p>Respuesta correcta: “Un cambio lineal produce coordenadas afines; será rectangular si la matriz es ortogonal.”</p></li>
+</ul>
+<ul>
+<li>Aplicar la regla de la cadena sin sumar el índice intermedio.<p>Por qué está mal: una variable dependiente puede depender de varias variables intermedias.</p><p>Corrección: sumar sobre todas las \(x_i\).</p><p>Respuesta incorrecta: “\(\partial w/\partial u_j=(\partial f/\partial x_j)(\partial x_j/\partial u_j)\).”</p><p>Respuesta correcta: “\(\partial w/\partial u_j=(\partial f/\partial x_i)(\partial x_i/\partial u_j)\), sumando en \(i\).”</p></li>
+</ul>
+<ul>
+<li>Interpretar siempre \(\bar{x}=Ax\) como movimiento de puntos.<p>Por qué está mal: en cálculo tensorial se usa principalmente como cambio de coordenadas del mismo punto.</p><p>Corrección: distinguir interpretación activa y pasiva.</p><p>Respuesta incorrecta: “El punto físico se ha movido a \(\bar{x}\).”</p><p>Respuesta correcta: “Puede interpretarse como que el mismo punto recibe nuevas coordenadas \(\bar{x}\).”</p></li>
+</ul></div></details></div></section>
+<section id="preguntas" class="page"><header class="section-header"><p class="section-kicker">07</p><h2>7. Preguntas orientadas a examen</h2></header><div class="reading-block"><h3>10 preguntas fáciles</h3>
+<ol>
+<li>Defina una matriz \(A=[a_{ij}]_{mn}\) e indique qué representan los índices \(i\) y \(j\).</li>
+</ol>
+<ol>
+<li>Escriba el producto de matrices \(C=AB\) en notación de índices.</li>
+</ol>
+<ol>
+<li>¿Qué es la delta de Kronecker y cómo representa la matriz identidad?</li>
+</ol>
+<ol>
+<li>Defina matriz inversa en componentes.</li>
+</ol>
+<ol>
+<li>¿Qué significa que una matriz sea simétrica?</li>
+</ol>
+<ol>
+<li>¿Qué significa que una matriz sea ortogonal?</li>
+</ol>
+<ol>
+<li>Escriba el producto escalar de dos vectores \(u=(x_i)\) y \(v=(y_i)\).</li>
+</ol>
+<ol>
+<li>¿Qué condición deben cumplir dos vectores no nulos para ser ortogonales?</li>
+</ol>
+<ol>
+<li>Escriba un sistema lineal en forma matricial.</li>
+</ol>
+<ol>
+<li>Enuncie la regla de la cadena en varias variables usando notación de Einstein.</li>
+</ol>
+<h3>10 preguntas medias</h3>
+<ol>
+<li>Demuestre en notación de índices que \((AB)^T=B^T A^T\).</li>
+</ol>
+<ol>
+<li>Explique por qué en general \(AB\ne BA\).</li>
+</ol>
+<ol>
+<li>Dada una forma cuadrática \(Q=x^TAx\), explique por qué puede representarse con una matriz simétrica.</li>
+</ol>
+<ol>
+<li>Represente mediante matriz simétrica la forma \(Q=2x^2+4xy-3y^2\).</li>
+</ol>
+<ol>
+<li>Explique por qué una matriz con determinante cero no sirve como cambio lineal de coordenadas.</li>
+</ol>
+<ol>
+<li>Si \(\bar{x}=Ax\) y \(A\) es invertible, escriba la relación inversa.</li>
+</ol>
+<ol>
+<li>Deduzca la fórmula de la distancia en coordenadas con barra para un cambio lineal \(\bar{x}=Ax\).</li>
+</ol>
+<ol>
+<li>Explique la diferencia entre coordenadas afines y coordenadas rectangulares.</li>
+</ol>
+<ol>
+<li>Explique por qué un cambio ortogonal conserva la distancia euclídea.</li>
+</ol>
+<ol>
+<li>Diga qué papel tiene la regla de la cadena en el paso a coordenadas curvilíneas.</li>
+</ol>
+<h3>5 preguntas difíciles</h3>
+<ol>
+<li>Sea \(A\) una matriz antisimétrica. Demuestre que \(x^TAx=0\) para todo vector real \(x\).</li>
+</ol>
+<ol>
+<li>Sea \(\bar{x}=Ax\) con \(A\) invertible. Pruebe que la matriz que aparece en la distancia expresada con coordenadas con barra es \(G=(AA^T)^{-1}\).</li>
+</ol>
+<ol>
+<li>Si \(A\) es ortogonal, pruebe que \(G=I\) en la fórmula anterior.</li>
+</ol>
+<ol>
+<li>Use el símbolo de permutación para justificar que el producto vectorial cambia de signo al intercambiar los factores.</li>
+</ol>
+<ol>
+<li>Explique por qué una transformación curvilínea puede ser válida sólo en una región y no globalmente.</li>
+</ol>
+<h3>5 preguntas de desarrollo largo</h3>
+<ol>
+<li>Desarrolle la relación entre producto matricial, convenio de suma e identidad de Kronecker, y explique por qué esta notación es natural para tensores.</li>
+</ol>
+<ol>
+<li>Explique el papel del determinante, la inversa y la biyectividad en los cambios de coordenadas.</li>
+</ol>
+<ol>
+<li>Desarrolle cómo una forma cuadrática se representa matricialmente y por qué la simetrización de la matriz no cambia la forma.</li>
+</ol>
+<ol>
+<li>Explique detalladamente cómo cambia la expresión de la distancia euclídea bajo un cambio lineal general de coordenadas.</li>
+</ol>
+<ol>
+<li>Desarrolle la diferencia entre transformaciones lineales, coordenadas afines, coordenadas rectangulares y coordenadas curvilíneas.</li>
+</ol>
+<h3>5 preguntas de relación entre conceptos</h3>
+<ol>
+<li>Relacione matriz ortogonal, producto escalar y conservación de ángulos.</li>
+</ol>
+<ol>
+<li>Relacione forma cuadrática, matriz simétrica y tensor métrico.</li>
+</ol>
+<ol>
+<li>Relacione determinante no nulo, inversa y validez de un cambio de coordenadas.</li>
+</ol>
+<ol>
+<li>Relacione regla de la cadena, matriz jacobiana y transformación de componentes.</li>
+</ol>
+<ol>
+<li>Relacione interpretación activa/pasiva de \(\bar{x}=Ax\) con el objetivo del cálculo tensorial.</li>
+</ol></div></section>
+<section id="respuestas" class="page"><header class="section-header"><p class="section-kicker">08</p><h2>8. Respuestas modelo</h2></header><div class="reading-block"><details class="accordion" open><summary>Contenido de 8. Respuestas modelo</summary><div class="accordion-body"><ol>
+<li>Una matriz \(A=[a_{ij}]_{mn}\) es una colección rectangular de \(m\) filas y \(n\) columnas. El índice \(i\) indica la fila y el índice \(j\) indica la columna. La entrada \(a_{ij}\) está en la fila \(i\), columna \(j\).</li>
+</ol>
+<ol>
+<li>Si \(A=[a_{ij}]\) y \(B=[b_{ij}]\), entonces \(C=AB\) tiene componentes</li>
+</ol>
+<div class="formula-block">\[
+c_{ij}=a_{ir}b_{rj}.
+\]</div>
+<p>El índice \(r\) está repetido y se suma. Los índices \(i,j\) quedan libres.</p>
+<ol>
+<li>La delta de Kronecker se define por \(\delta_{ij}=1\) si \(i=j\) y \(\delta_{ij}=0\) si \(i\ne j\). Representa la matriz identidad porque sus entradas diagonales son uno y las no diagonales son cero. Además, \(\delta_{ij}x_j=x_i\).</li>
+</ol>
+<ol>
+<li>Una matriz cuadrada \(A=[a_{ij}]\) tiene inversa \(B=[b_{ij}]\) si cumple</li>
+</ol>
+<div class="formula-block">\[
+a_{ir}b_{rj}=\delta_{ij},
+\qquad
+b_{ir}a_{rj}=\delta_{ij}.
+\]</div>
+<p>En ese caso \(B=A^{-1}\).</p>
+<ol>
+<li>Una matriz es simétrica si coincide con su traspuesta:</li>
+</ol>
+<div class="formula-block">\[
+A^T=A.
+\]</div>
+<p>En componentes, esto significa \(a_{ij}=a_{ji}\) para todo par de índices.</p>
+<ol>
+<li>Una matriz es ortogonal si su traspuesta coincide con su inversa:</li>
+</ol>
+<div class="formula-block">\[
+A^T=A^{-1}.
+\]</div>
+<p>Equivalentemente, \(A^TA=AA^T=I\). Geométricamente conserva longitudes y ángulos en el caso euclídeo.</p>
+<ol>
+<li>El producto escalar de \(u=(x_i)\) y \(v=(y_i)\) en coordenadas euclídeas rectangulares es:</li>
+</ol>
+<div class="formula-block">\[
+u\cdot v=x_i y_i.
+\]</div>
+<p>El índice \(i\) se suma.</p>
+<ol>
+<li>Dos vectores no nulos son ortogonales si su producto escalar es cero:</li>
+</ol>
+<div class="formula-block">\[
+u\cdot v=0.
+\]</div>
+<p>En componentes rectangulares, esto es \(x_i y_i=0\).</p>
+<ol>
+<li>Un sistema lineal se escribe como:</li>
+</ol>
+<div class="formula-block">\[
+a_{ij}x_j=b_i.
+\]</div>
+<p>En forma matricial:</p>
+<div class="formula-block">\[
+Ax=b.
+\]</div>
+<p>Si \(A\) es cuadrada e invertible, la solución es \(x=A^{-1}b\).</p>
+<ol>
+<li>Si \(w=f(x_1,\ldots,x_n)\) y \(x_i=x_i(u_1,\ldots,u_m)\), entonces:</li>
+</ol>
+<div class="formula-block">\[
+\frac{\partial w}{\partial u_j}
+=
+\frac{\partial f}{\partial x_i}
+\frac{\partial x_i}{\partial u_j}.
+\]</div>
+<p>Se suma sobre \(i\), mientras que \(j\) queda libre.</p>
+<ol>
+<li>Sea \(C=AB\), con \(c_{ij}=a_{ir}b_{rj}\). Entonces:</li>
+</ol>
+<div class="formula-block">\[
+(C^T)_{ij}=c_{ji}=a_{jr}b_{ri}.
+\]</div>
+<p>Por otro lado,</p>
+<div class="formula-block">\[
+(B^T A^T)_{ij}=(B^T)_{ir}(A^T)_{rj}=b_{ri}a_{jr}.
+\]</div>
+<p>Como las entradas son escalares, \(b_{ri}a_{jr}=a_{jr}b_{ri}\). Por tanto, \((AB)^T=B^T A^T\).</p>
+<ol>
+<li>El producto de matrices combina filas con columnas. Al cambiar el orden, se combinan objetos distintos:</li>
+</ol>
+<div class="formula-block">\[
+(AB)_{ij}=a_{ir}b_{rj},
+\qquad
+(BA)_{ij}=b_{ir}a_{rj}.
+\]</div>
+<p>No hay razón para que esas sumas coincidan. Además, puede ocurrir que \(AB\) esté definido y \(BA\) no.</p>
+<ol>
+<li>En \(Q=x^TAx=a_{ij}x_i x_j\), el producto \(x_i x_j\) es simétrico al intercambiar \(i\) y \(j\). La parte antisimétrica de \(A\) se anula al contraer con \(x_i x_j\). Por eso \(A\) puede sustituirse por:</li>
+</ol>
+<div class="formula-block">\[
+B=\frac12(A+A^T),
+\]</div>
+<p>que es simétrica y da la misma forma cuadrática.</p>
+<ol>
+<li>La forma es:</li>
+</ol>
+<div class="formula-block">\[
+Q=2x^2+4xy-3y^2.
+\]</div>
+<p>La matriz simétrica debe tener \(a_{11}=2\), \(a_{22}=-3\) y \(2a_{12}=4\), luego \(a_{12}=a_{21}=2\). Por tanto:</p>
+<div class="formula-block">\[
+A=
+\begin{pmatrix}
+2&amp;2\\
+2&amp;-3
+\end{pmatrix}.
+\]</div>
+<ol>
+<li>Si \(\det A=0\), la matriz no es invertible. Eso significa que no se puede recuperar \(x\) a partir de \(\bar{x}=Ax\). En un cambio de coordenadas esto es inadmisible, porque las coordenadas nuevas deben identificar de forma única cada punto de la región.</li>
+</ol>
+<ol>
+<li>Si:</li>
+</ol>
+<div class="formula-block">\[
+\bar{x}=Ax
+\]</div>
+<p>y \(A\) es invertible, entonces:</p>
+<div class="formula-block">\[
+x=A^{-1}\bar{x}.
+\]</div>
+<p>En componentes:</p>
+<div class="formula-block">\[
+x_i=(A^{-1})_{ij}\bar{x}_j.
+\]</div>
+<ol>
+<li>En coordenadas originales:</li>
+</ol>
+<div class="formula-block">\[
+d^2=(x-y)^T(x-y).
+\]</div>
+<p>Como \(\bar{x}=Ax\), se tiene \(x=A^{-1}\bar{x}\). Llamando \(B=A^{-1}\):</p>
+<div class="formula-block">\[
+x-y=B(\bar{x}-\bar{y}).
+\]</div>
+<p>Entonces:</p>
+<div class="formula-block">\[
+d^2=(\bar{x}-\bar{y})^T B^T B(\bar{x}-\bar{y}).
+\]</div>
+<p>Como \(B^TB=(A^{-1})^T A^{-1}=(AA^T)^{-1}\), resulta:</p>
+<div class="formula-block">\[
+G=(AA^T)^{-1}.
+\]</div>
+<ol>
+<li>Las coordenadas afines proceden de una transformación lineal invertible. Las rectangulares son un caso especial en el que la transformación conserva la distancia euclídea en forma pitagórica. En términos matriciales, el cambio rectangular se asocia a matrices ortogonales; el afín general no necesariamente.</li>
+</ol>
+<ol>
+<li>Si \(A\) es ortogonal, entonces \(A^T A=I\). Para dos vectores \(u,v\), sus imágenes satisfacen:</li>
+</ol>
+<div class="formula-block">\[
+(Au)\cdot(Av)=u^T A^T A v=u^T v.
+\]</div>
+<p>Por tanto, se conservan productos escalares, normas, ángulos y distancias.</p>
+<ol>
+<li>En coordenadas curvilíneas, las nuevas coordenadas dependen de manera no lineal de las antiguas. Para transformar derivadas hay que aplicar:</li>
+</ol>
+<div class="formula-block">\[
+\frac{\partial w}{\partial u_j}
+=
+\frac{\partial f}{\partial x_i}
+\frac{\partial x_i}{\partial u_j}.
+\]</div>
+<p>Esta fórmula introduce la matriz de derivadas parciales que después se interpreta como jacobiana.</p>
+<ol>
+<li>Si \(A\) es antisimétrica, \(a_{ij}=-a_{ji}\). Entonces:</li>
+</ol>
+<div class="formula-block">\[
+x^TAx=a_{ij}x_i x_j.
+\]</div>
+<p>Intercambiando los nombres de los índices mudos:</p>
+<div class="formula-block">\[
+a_{ij}x_i x_j=a_{ji}x_j x_i.
+\]</div>
+<p>Como \(x_jx_i=x_ix_j\) y \(a_{ji}=-a_{ij}\), resulta:</p>
+<div class="formula-block">\[
+a_{ij}x_i x_j=-a_{ij}x_i x_j.
+\]</div>
+<p>Por tanto, la expresión es igual a su opuesta y debe ser cero.</p>
+<ol>
+<li>Partimos de \(\bar{x}=Ax\), luego \(x=A^{-1}\bar{x}\). Para dos puntos:</li>
+</ol>
+<div class="formula-block">\[
+\Delta x=A^{-1}\Delta\bar{x}.
+\]</div>
+<p>La distancia euclídea es:</p>
+<div class="formula-block">\[
+d^2=(\Delta x)^T\Delta x.
+\]</div>
+<p>Sustituyendo:</p>
+<div class="formula-block">\[
+d^2=(A^{-1}\Delta\bar{x})^T(A^{-1}\Delta\bar{x})
+=
+(\Delta\bar{x})^T(A^{-1})^T A^{-1}\Delta\bar{x}.
+\]</div>
+<p>Como \((A^{-1})^T=(A^T)^{-1}\), se obtiene:</p>
+<div class="formula-block">\[
+G=(A^T)^{-1}A^{-1}=(AA^T)^{-1}.
+\]</div>
+<ol>
+<li>Si \(A\) es ortogonal, entonces \(A^T=A^{-1}\) y \(AA^T=I\). Por tanto:</li>
+</ol>
+<div class="formula-block">\[
+G=(AA^T)^{-1}=I^{-1}=I.
+\]</div>
+<p>La distancia en coordenadas con barra queda:</p>
+<div class="formula-block">\[
+d^2=\Delta\bar{x}_i\Delta\bar{x}_i,
+\]</div>
+<p>la misma forma pitagórica.</p>
+<ol>
+<li>En componentes:</li>
+</ol>
+<div class="formula-block">\[
+(u\times v)_i=e_{ijk}u_jv_k.
+\]</div>
+<p>Si se intercambian \(u\) y \(v\):</p>
+<div class="formula-block">\[
+(v\times u)_i=e_{ijk}v_j u_k.
+\]</div>
+<p>Renombrando los índices mudos \(j\leftrightarrow k\):</p>
+<div class="formula-block">\[
+(v\times u)_i=e_{ikj}u_jv_k.
+\]</div>
+<p>Como el símbolo de permutación cambia de signo al intercambiar dos índices,</p>
+<div class="formula-block">\[
+e_{ikj}=-e_{ijk}.
+\]</div>
+<p>Luego:</p>
+<div class="formula-block">\[
+v\times u=-(u\times v).
+\]</div>
+<ol>
+<li>Una transformación curvilínea puede fallar globalmente porque no siempre es inyectiva en todo el espacio o porque presenta singularidades. Por ejemplo, las coordenadas polares no son únicas si se permite cualquier valor de \(\theta\), y en el origen el ángulo no está definido. Por eso se trabaja en regiones donde la transformación sea válida y reversible.</li>
+</ol>
+<ol>
+<li>El producto matricial se expresa naturalmente mediante el convenio de suma:</li>
+</ol>
+<div class="formula-block">\[
+(AB)_{ij}=a_{ir}b_{rj}.
+\]</div>
+<p>Los índices \(i,j\) determinan la componente final; el índice \(r\) se suma. La identidad se escribe con la delta:</p>
+<div class="formula-block">\[
+I=[\delta_{ij}].
+\]</div>
+<p>Así:</p>
+<div class="formula-block">\[
+a_{ir}\delta_{rj}=a_{ij}.
+\]</div>
+<p>Esta forma de escribir operaciones es natural para tensores porque las operaciones tensoriales consisten precisamente en combinar componentes y contraer índices. El capítulo entrena al alumno en leer estas contracciones antes de introducir tensores de orden superior.</p>
+<ol>
+<li>Un cambio de coordenadas debe permitir describir cada punto de manera única. En el caso lineal \(\bar{x}=Ax\), esto exige que \(A\) sea invertible. La invertibilidad equivale a \(\det A\ne0\). Si el determinante se anula, la transformación pierde dimensión o identifica puntos distintos, y no puede funcionar como sistema coordenado. La inversa permite pasar de las coordenadas nuevas a las antiguas:</li>
+</ol>
+<div class="formula-block">\[
+x=A^{-1}\bar{x}.
+\]</div>
+<p>Por tanto, determinante, inversa y biyectividad son tres formas de expresar la misma exigencia básica en el contexto lineal: que el cambio de coordenadas sea reversible.</p>
+<ol>
+<li>Una forma cuadrática es una expresión de grado dos:</li>
+</ol>
+<div class="formula-block">\[
+Q=a_{ij}x_i x_j.
+\]</div>
+<p>También puede escribirse:</p>
+<div class="formula-block">\[
+Q=x^TAx.
+\]</div>
+<p>La matriz \(A\) no es única porque los términos \(x_i x_j\) y \(x_j x_i\) son iguales. Por eso la parte antisimétrica de \(A\) no contribuye. La matriz equivalente:</p>
+<div class="formula-block">\[
+B=\frac12(A+A^T)
+\]</div>
+<p>es simétrica y produce la misma forma. Este resultado importa porque muchas magnitudes geométricas, como la distancia al cuadrado, tienen forma cuadrática y se representan mediante matrices simétricas.</p>
+<ol>
+<li>En coordenadas rectangulares, la distancia euclídea entre dos puntos es:</li>
+</ol>
+<div class="formula-block">\[
+d^2=(x-y)^T(x-y).
+\]</div>
+<p>Si se introduce un cambio lineal \(\bar{x}=Ax\), entonces \(x=A^{-1}\bar{x}\). Para la diferencia entre dos puntos:</p>
+<div class="formula-block">\[
+\Delta x=A^{-1}\Delta\bar{x}.
+\]</div>
+<p>Al sustituir:</p>
+<div class="formula-block">\[
+d^2=(\Delta\bar{x})^T(A^{-1})^TA^{-1}\Delta\bar{x}.
+\]</div>
+<p>Definiendo:</p>
+<div class="formula-block">\[
+G=(AA^T)^{-1},
+\]</div>
+<p>queda:</p>
+<div class="formula-block">\[
+d^2=g_{ij}\Delta\bar{x}_i\Delta\bar{x}_j.
+\]</div>
+<p>La distancia geométrica es la misma, pero la fórmula en componentes ha cambiado. Si \(A\) es ortogonal, \(G=I\); si no, aparecen coeficientes métricos no triviales.</p>
+<ol>
+<li>Una transformación lineal tiene la forma \(\bar{x}=Ax\). Si \(A\) es invertible, define coordenadas afines. Si además conserva la distancia euclídea, es decir, si \(A\) es ortogonal, el sistema resultante es rectangular. Las coordenadas curvilíneas proceden de transformaciones no lineales, como polares o esféricas. En ellas las líneas coordenadas pueden ser curvas y la regla de la cadena se vuelve imprescindible. Esta clasificación permite entender qué se conserva automáticamente y qué debe recalcularse al cambiar de coordenadas.</li>
+</ol>
+<ol>
+<li>Una matriz ortogonal cumple \(A^TA=I\). Por eso:</li>
+</ol>
+<div class="formula-block">\[
+(Au)\cdot(Av)=u^TA^TAv=u^Tv.
+\]</div>
+<p>Si conserva productos escalares, conserva normas:</p>
+<div class="formula-block">\[
+\|Au\|=\|u\|,
+\]</div>
+<p>y también ángulos, porque el coseno del ángulo depende del producto escalar dividido por las normas. Por tanto, matriz ortogonal, producto escalar y conservación de ángulos forman una misma estructura.</p>
+<ol>
+<li>Una forma cuadrática se escribe \(a_{ij}x_i x_j\). Como sólo importa la parte simétrica de \(a_{ij}\), se puede representar con una matriz simétrica. La distancia al cuadrado es una forma cuadrática. En coordenadas generales se escribe:</li>
+</ol>
+<div class="formula-block">\[
+ds^2=g_{ij}dx_i dx_j.
+\]</div>
+<p>La matriz \(g_{ij}\) es la versión geométrica de esa matriz simétrica: el tensor métrico.</p>
+<ol>
+<li>Para que un cambio lineal de coordenadas sea válido, debe tener inversa. Una matriz cuadrada tiene inversa si y sólo si su determinante es no nulo. Por tanto:</li>
+</ol>
+<div class="formula-block">\[
+\det A\ne0 \quad \Longleftrightarrow \quad A^{-1}\ \text{existe}.
+\]</div>
+<p>Esto permite recuperar las coordenadas antiguas desde las nuevas. Si \(\det A=0\), no hay cambio de coordenadas propiamente dicho.</p>
+<ol>
+<li>La regla de la cadena expresa cómo cambian derivadas al cambiar variables:</li>
+</ol>
+<div class="formula-block">\[
+\frac{\partial w}{\partial u_j}
+=
+\frac{\partial f}{\partial x_i}
+\frac{\partial x_i}{\partial u_j}.
+\]</div>
+<p>Los coeficientes \(\partial x_i/\partial u_j\) forman la matriz jacobiana. Esa matriz será la que controle la transformación de componentes en coordenadas curvilíneas. Por tanto, regla de la cadena y jacobiano son la base diferencial de las leyes tensoriales de transformación.</p>
+<ol>
+<li>La ecuación \(\bar{x}=Ax\) puede significar que movemos un punto a otro punto, o que damos nuevas coordenadas al mismo punto. La primera es una interpretación activa; la segunda, pasiva. El cálculo tensorial se centra en la segunda porque busca describir objetos geométricos independientes del sistema de coordenadas. Las componentes cambian, pero el objeto debe permanecer el mismo.</li>
+</ol></div></details></div></section>
+<section id="resumen" class="page"><header class="section-header"><p class="section-kicker">09</p><h2>9. Resumen final de repaso</h2></header><div class="reading-block"><p>Ideas principales:</p>
+<ul>
+<li>El capítulo traduce el álgebra lineal básica a notación de índices.</li>
+<li>El producto matricial es una contracción: \((AB)_{ij}=a_{ir}b_{rj}\).</li>
+<li>La delta de Kronecker representa la identidad y selecciona componentes.</li>
+<li>La inversa permite deshacer cambios lineales de coordenadas.</li>
+<li>El determinante decide si una matriz cuadrada es invertible.</li>
+<li>La traspuesta permite definir simetría, antisimetría y ortogonalidad.</li>
+<li>Las matrices ortogonales conservan la forma euclídea de distancias y ángulos.</li>
+<li>Las formas cuadráticas pueden representarse con matrices simétricas.</li>
+<li>Un cambio lineal general modifica la expresión de la distancia: aparece \(G=(AA^T)^{-1}\).</li>
+<li>Las coordenadas curvilíneas requieren la regla de la cadena.</li>
+</ul>
+<p>Conceptos imprescindibles:</p>
+<ul>
+<li>Índice libre e índice mudo.</li>
+<li>Producto matricial en índices.</li>
+<li>Delta de Kronecker.</li>
+<li>Matriz inversa.</li>
+<li>Matriz traspuesta.</li>
+<li>Matriz simétrica y antisimétrica.</li>
+<li>Matriz ortogonal.</li>
+<li>Determinante y cofactores.</li>
+<li>Producto escalar, norma y ángulo.</li>
+<li>Forma cuadrática.</li>
+<li>Transformación lineal.</li>
+<li>Coordenadas afines, rectangulares y curvilíneas.</li>
+<li>Regla de la cadena.</li>
+</ul>
+<p>Relaciones clave:</p>
+<ul>
+<li>Producto matricial -&gt; contracción de índices -&gt; lenguaje tensorial.</li>
+<li>Determinante no nulo -&gt; inversa -&gt; cambio de coordenadas válido.</li>
+<li>Traspuesta + inversa -&gt; ortogonalidad -&gt; conservación de distancias.</li>
+<li>Forma cuadrática -&gt; matriz simétrica -&gt; métrica.</li>
+<li>Cambio lineal general -&gt; nueva matriz \(G\) para la distancia.</li>
+<li>Coordenadas curvilíneas -&gt; regla de la cadena -&gt; jacobiano.</li>
+</ul>
+<p>Errores que evitar:</p>
+<ul>
+<li>Tratar índices mudos como libres.</li>
+<li>Conmutar matrices sin justificación.</li>
+<li>Confundir traspuesta e inversa.</li>
+<li>Suponer que todo cambio lineal conserva la distancia pitagórica.</li>
+<li>Usar matrices con determinante cero como cambios de coordenadas.</li>
+<li>Colocar mal los coeficientes mixtos de una forma cuadrática.</li>
+<li>Olvidar la suma en la regla de la cadena.</li>
+<li>Confundir transformación activa con cambio pasivo de coordenadas.</li>
+</ul></div></section>
+<section id="checklist" class="page"><header class="section-header"><p class="section-kicker">10</p><h2>10. Checklist de dominio</h2></header><div class="reading-block"><ul>
+<li>Si no puedes distinguir índice libre e índice mudo, falta repasar el convenio de suma de Einstein.</li>
+</ul>
+<ul>
+<li>Si no puedes escribir \((AB)_{ij}=a_{ir}b_{rj}\), falta repasar producto matricial en notación tensorial.</li>
+</ul>
+<ul>
+<li>Si confundes \(\delta_{ij}x_j\) con una suma no simplificable, revisar delta de Kronecker.</li>
+</ul>
+<ul>
+<li>Si confundes \(A^T\) con \(A^{-1}\), revisar traspuesta, inversa y matrices ortogonales.</li>
+</ul>
+<ul>
+<li>Si no puedes explicar por qué \(AB\ne BA\) en general, falta repasar producto matricial.</li>
+</ul>
+<ul>
+<li>Si no puedes resolver \(Ax=b\) como \(x=A^{-1}b\), falta repasar sistemas lineales e inversa.</li>
+</ul>
+<ul>
+<li>Si no puedes decir por qué \(\det A\ne0\) es necesario en un cambio lineal, falta repasar determinante e invertibilidad.</li>
+</ul>
+<ul>
+<li>Si colocas todo el coeficiente de \(xy\) en una sola entrada de la matriz de una forma cuadrática simétrica, revisar formas cuadráticas.</li>
+</ul>
+<ul>
+<li>Si no puedes demostrar que la parte antisimétrica de \(A\) no contribuye a \(x^TAx\), revisar simetría y antisimetría.</li>
+</ul>
+<ul>
+<li>Si crees que todo cambio lineal conserva \(d^2=\Delta x_i\Delta x_i\), revisar matrices ortogonales y fórmula \(G=(AA^T)^{-1}\).</li>
+</ul>
+<ul>
+<li>Si puedes deducir \(d^2=g_{ij}\Delta\bar{x}_i\Delta\bar{x}_j\) desde \(\bar{x}=Ax\), el núcleo del capítulo está asentado.</li>
+</ul>
+<ul>
+<li>Si puedes explicar la diferencia entre coordenadas afines, rectangulares y curvilíneas, dominas la clasificación conceptual del capítulo.</li>
+</ul>
+<ul>
+<li>Si no puedes escribir la regla de la cadena con índices, falta repasar derivadas parciales y notación de Einstein.</li>
+</ul>
+<ul>
+<li>Si confundes mover un punto con cambiar sus coordenadas, revisar la interpretación activa/pasiva de una transformación.</li>
+</ul>
+<ul>
+<li>Si puedes resolver ejercicios de productos matriciales, inversas simples, formas cuadráticas, distancia transformada y regla de la cadena, el capítulo está suficientemente asentado.</li>
+</ul></div></section>
+    </main>
+  </div>
+</body>
+</html>

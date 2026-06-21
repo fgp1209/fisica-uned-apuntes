@@ -1,0 +1,1143 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="color-scheme" content="light dark" />
+  <title>MM4 — Tema 11: Primera forma fundamental</title>
+  <meta name="description" content="Guía de estudio de Métodos Matemáticos IV sobre la primera forma fundamental, coeficientes E, F, G, longitudes, ángulos y áreas en superficies." />
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/icon-32.png" />
+  <link rel="icon" type="image/png" sizes="50x50" href="assets/icons/icon-50.png" />
+  <link rel="apple-touch-icon" sizes="100x100" href="assets/icons/icon-100.png" />
+  <link rel="stylesheet" href="assets/styles.css" />
+  <script>window.MathJax = { tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']], processEscapes: true }, svg: { fontCache: 'global' } };</script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+  <script defer src="assets/app.js"></script>
+</head>
+<body class="subject-mm4">
+  <div class="wrap">
+    <header class="cover">
+      <a class="back-link" href="index.html">← Índice</a>
+      <p class="eyebrow">Métodos Matemáticos IV</p>
+      <h1>Primera forma fundamental</h1>
+      <p class="subtitle">Tema 11 · Lipschutz · métrica inducida, coeficientes E, F, G, longitudes, ángulos y áreas sobre superficies</p>
+      <div class="lesson-meta"><span>Asignatura: MM4</span><span>Tema 11</span><span>Estado: completo</span><span>Enfoque: examen UNED</span></div>
+    </header>
+    <div class="toolbar no-print" aria-label="Navegación del tema"><nav><a href="#mapa">Mapa</a><a href="#prerrequisitos">Prerrequisitos</a><a href="#desarrollo">Desarrollo</a><a href="#conceptos">Conceptos</a><a href="#errores">Errores</a><a href="#preguntas">Preguntas</a><a href="#respuestas">Respuestas</a><a href="#resumen">Resumen</a><a href="#checklist">Checklist</a></nav><div class="toolbar-actions"><button class="btn secondary" onclick="document.querySelectorAll('details').forEach(d=>d.open=true)">Abrir todo</button><button class="btn secondary" onclick="document.querySelectorAll('details').forEach(d=>d.open=false)">Modo repaso</button><button class="btn" onclick="window.print()">Imprimir / PDF</button></div></div>
+    <main>
+      <section id="mapa" class="page map-page"><header class="section-header"><p class="section-kicker">00</p><h2>Mapa conceptual</h2></header><div class="concept-map"><a class="map-card" href="#prerrequisitos"><span>1. Prerrequisitos mínimos</span><small>Ir a la sección</small></a><a class="map-card" href="#idea"><span>2. Idea central del capítulo</span><small>Ir a la sección</small></a><a class="map-card" href="#desarrollo"><span>3. Desarrollo completo del capítulo</span><small>Ir a la sección</small></a><a class="map-card" href="#conceptos"><span>4. Conceptos clave</span><small>Ir a la sección</small></a><a class="map-card" href="#relaciones"><span>5. Relaciones entre ideas</span><small>Ir a la sección</small></a><a class="map-card" href="#errores"><span>6. Errores habituales</span><small>Ir a la sección</small></a><a class="map-card" href="#preguntas"><span>7. Preguntas orientadas a examen</span><small>Ir a la sección</small></a><a class="map-card" href="#respuestas"><span>8. Respuestas modelo</span><small>Ir a la sección</small></a><a class="map-card" href="#resumen"><span>9. Resumen final de repaso</span><small>Ir a la sección</small></a><a class="map-card" href="#checklist"><span>10. Checklist de dominio</span><small>Ir a la sección</small></a></div><div class="reading-block source-block"><p>Fuente de trabajo: Guía de estudio — Métodos Matemáticos IV / Lipschutz, Geometría diferencial — T11: primera forma fundamental. La página conserva el orden del apunte original y lo convierte en una guía HTML navegable.</p></div></section>
+<section id="prerrequisitos" class="page"><header class="section-header"><p class="section-kicker">01</p><h2>1. Prerrequisitos mínimos</h2></header><div class="reading-block">
+<ul>
+<li>Superficie parametrizada.</li>
+</ul>
+<p>Una superficie se estudia localmente mediante una carta</p>
+<div class="formula-block">\[
+x=x(u,v),
+\]</div>
+<p>donde \((u,v)\) pertenecen a una región del plano de parámetros y \(x(u,v)\) es un punto de \(E^3\). Es necesario dominar esta idea porque la primera forma fundamental se calcula a partir de las derivadas parciales de la parametrización. Ejemplo mínimo:</p>
+<div class="formula-block">\[
+x(u,v)=(u,v,u^2+v^2)
+\]</div>
+<p>representa un paraboloide como imagen de puntos del plano \(uv\).</p>
+<ul>
+<li>Regularidad de una parametrización.</li>
+</ul>
+<p>Una carta es regular cuando los vectores tangentes</p>
+<div class="formula-block">\[
+x_u=\frac{\partial x}{\partial u},\qquad x_v=\frac{\partial x}{\partial v}
+\]</div>
+<p>son linealmente independientes. En \(E^3\), esto equivale a</p>
+<div class="formula-block">\[
+x_u\times x_v\neq 0.
+\]</div>
+<p>Es necesario porque, sin regularidad, no hay plano tangente bien definido y la primera forma fundamental puede degenerar. Ejemplo mínimo: si \(x_u\) y \(x_v\) son paralelos, los dos parámetros no generan dos direcciones tangentes independientes.</p>
+<ul>
+<li>Plano tangente.</li>
+</ul>
+<p>En un punto \(x(u,v)\), el plano tangente está generado por \(x_u\) y \(x_v\). Cualquier desplazamiento infinitesimal tangente se escribe</p>
+<div class="formula-block">\[
+dx=x_u\,du+x_v\,dv.
+\]</div>
+<p>Este concepto es central: la primera forma fundamental mide longitudes y ángulos precisamente dentro del plano tangente. Ejemplo mínimo: en el plano \(x(u,v)=(u,v,0)\), se tiene \(x_u=(1,0,0)\), \(x_v=(0,1,0)\), y el plano tangente es el propio plano \(z=0\).</p>
+<ul>
+<li>Producto escalar euclídeo.</li>
+</ul>
+<p>El producto escalar permite calcular longitudes y ángulos entre vectores de \(E^3\):</p>
+<div class="formula-block">\[
+a\cdot b,\qquad |a|=\sqrt{a\cdot a},\qquad
+\cos\theta=\frac{a\cdot b}{|a||b|}.
+\]</div>
+<p>Es necesario porque los coeficientes de la primera forma fundamental se definen mediante productos escalares de \(x_u\) y \(x_v\). Ejemplo mínimo:</p>
+<div class="formula-block">\[
+(1,0,0)\cdot(0,1,0)=0,
+\]</div>
+<p>luego las direcciones son ortogonales.</p>
+<ul>
+<li>Diferencial de una aplicación.</li>
+</ul>
+<p>La diferencial de \(x(u,v)\) aproxima el cambio de la posición sobre la superficie cuando los parámetros cambian en \(du,dv\):</p>
+<div class="formula-block">\[
+dx=x_u\,du+x_v\,dv.
+\]</div>
+<p>Es necesario porque la primera forma fundamental se define como el cuadrado de la longitud de ese diferencial:</p>
+<div class="formula-block">\[
+I=dx\cdot dx.
+\]</div>
+<p>Ejemplo mínimo: si \(x(u,v)=(u,v,0)\), entonces \(dx=(du,dv,0)\) y \(dx\cdot dx=du^2+dv^2\).</p>
+<ul>
+<li>Integrales de línea y de superficie.</li>
+</ul>
+<p>Conviene conocer que la longitud de una curva parametrizada se obtiene integrando la norma de su derivada y que el área se obtiene sumando elementos diferenciales de área. Es necesario porque el capítulo aplica la primera forma fundamental al cálculo de longitudes de arcos y áreas sobre superficies. Ejemplo mínimo:</p>
+<div class="formula-block">\[
+L=\int_a^b |\gamma'(t)|\,dt.
+\]</div>
+</div></section>
+<section id="idea" class="page"><header class="section-header"><p class="section-kicker">02</p><h2>2. Idea central del capítulo</h2></header><div class="reading-block">
+<p>El capítulo parte de una analogía con la teoría de curvas. Una curva regular del espacio queda descrita localmente por cantidades geométricas que no dependen de la forma concreta de escribirla. Para superficies ocurre algo parecido: se buscan cantidades que describan la geometría local de la superficie y que no dependan de la parametrización elegida. Dentro de ese programa aparece la primera forma fundamental.</p>
+<p>La primera forma fundamental responde a una pregunta básica: si una superficie está escrita como \(x=x(u,v)\), ¿cómo se miden sobre ella longitudes, ángulos y áreas usando únicamente los parámetros \(u,v\)? La superficie vive en \(E^3\), pero los cálculos se trasladan al plano de parámetros mediante las derivadas \(x_u\) y \(x_v\). La primera forma fundamental es la herramienta que conserva la información métrica de la superficie en ese plano.</p>
+<p>La idea técnica es sencilla y potente. Un pequeño desplazamiento en la superficie tiene como aproximación lineal</p>
+<div class="formula-block">\[
+dx=x_u\,du+x_v\,dv.
+\]</div>
+<p>El cuadrado de su longitud se obtiene con el producto escalar:</p>
+<div class="formula-block">\[
+dx\cdot dx.
+\]</div>
+<p>Al desarrollar esta expresión aparecen tres funciones:</p>
+<div class="formula-block">\[
+E=x_u\cdot x_u,\qquad F=x_u\cdot x_v,\qquad G=x_v\cdot x_v.
+\]</div>
+<p>Con ellas se escribe</p>
+<div class="formula-block">\[
+I=E\,du^2+2F\,du\,dv+G\,dv^2.
+\]</div>
+<p>Esta expresión es la primera forma fundamental.</p>
+<p>Su importancia es que permite hacer geometría sobre la superficie sin abandonar los parámetros. Con \(E,F,G\) se calcula la longitud de una curva sobre la superficie, el ángulo entre dos direcciones tangentes y el área de una región. Además, el capítulo insiste en una distinción esencial: los coeficientes \(E,F,G\) dependen de la parametrización, pero la magnitud geométrica que representan no cambia si se reparametriza correctamente. La primera forma fundamental es, por tanto, una forma de expresar la métrica inducida sobre la superficie.</p>
+<p>Dentro de Métodos Matemáticos IV, este tema es base obligatoria para todo lo posterior: segunda forma fundamental, curvatura normal, curvaturas principales, curvatura gaussiana, geodésicas e isometrías. Si no se domina la primera forma fundamental, se pierde el control de qué significa medir sobre una superficie.</p>
+</div></section>
+<section id="desarrollo" class="page"><header class="section-header"><p class="section-kicker">03</p><h2>3. Desarrollo completo del capítulo</h2></header><div class="reading-block">
+<h3>3.1. De la parametrización al desplazamiento tangente</h3>
+<p>El punto de partida es una carta local de una superficie:</p>
+<div class="formula-block">\[
+x=x(u,v).
+\]</div>
+<p>Cuando los parámetros cambian de \((u,v)\) a \((u+du,v+dv)\), el punto de la superficie cambia. La parte lineal de ese cambio está dada por la diferencial:</p>
+<div class="formula-block">\[
+dx=x_u\,du+x_v\,dv.
+\]</div>
+<p>Esta expresión no es solo una fórmula de cálculo diferencial. Geométricamente dice que todo desplazamiento tangente infinitesimal se descompone en dos direcciones básicas: la dirección de las curvas \(v=\text{constante}\), dada por \(x_u\), y la dirección de las curvas \(u=\text{constante}\), dada por \(x_v\).</p>
+<p>La regularidad de la carta garantiza que \(x_u\) y \(x_v\) no colapsan en una sola dirección. Por tanto, generan el plano tangente. La primera forma fundamental se construye midiendo la longitud de \(dx\) dentro de ese plano.</p>
+<p>Ejemplo: para</p>
+<div class="formula-block">\[
+x(u,v)=(u,v,0),
+\]</div>
+<p>se tiene</p>
+<div class="formula-block">\[
+x_u=(1,0,0),\qquad x_v=(0,1,0).
+\]</div>
+<p>Entonces</p>
+<div class="formula-block">\[
+dx=(du,dv,0).
+\]</div>
+<p>La geometría inducida es la euclídea ordinaria del plano.</p>
+<h3>3.2. Definición de la primera forma fundamental</h3>
+<p>La primera forma fundamental se define como</p>
+<div class="formula-block">\[
+I=dx\cdot dx.
+\]</div>
+<p>Sustituyendo</p>
+<div class="formula-block">\[
+dx=x_u\,du+x_v\,dv,
+\]</div>
+<p>se obtiene</p>
+<div class="formula-block">\[
+I=(x_u\,du+x_v\,dv)\cdot(x_u\,du+x_v\,dv).
+\]</div>
+<p>Al desarrollar:</p>
+<div class="formula-block">\[
+I=(x_u\cdot x_u)\,du^2+2(x_u\cdot x_v)\,du\,dv+(x_v\cdot x_v)\,dv^2.
+\]</div>
+<p>Se introducen entonces los primeros coeficientes fundamentales:</p>
+<div class="formula-block">\[
+E=x_u\cdot x_u,\qquad F=x_u\cdot x_v,\qquad G=x_v\cdot x_v.
+\]</div>
+<p>Por tanto,</p>
+<div class="formula-block">\[
+I=E\,du^2+2F\,du\,dv+G\,dv^2.
+\]</div>
+<p>Esta expresión es una forma cuadrática en los incrementos \(du,dv\). Su función es asignar a cada dirección tangente el cuadrado de la longitud del correspondiente vector tangente. Si un vector tangente tiene componentes \((du,dv)\) respecto a los parámetros, su longitud al cuadrado es</p>
+<div class="formula-block">\[
+E\,du^2+2F\,du\,dv+G\,dv^2.
+\]</div>
+<p>La importancia de \(E,F,G\) es que condensan toda la información métrica local de la superficie. Saber \(E,F,G\) permite medir sobre la superficie sin volver constantemente a la imagen en \(E^3\).</p>
+<p>Ejemplo: para el plano</p>
+<div class="formula-block">\[
+x(u,v)=(u,v,0),
+\]</div>
+<p>tenemos</p>
+<div class="formula-block">\[
+E=1,\qquad F=0,\qquad G=1,
+\]</div>
+<p>y por tanto</p>
+<div class="formula-block">\[
+I=du^2+dv^2.
+\]</div>
+<h3>3.3. Interpretación geométrica de \(E,F,G\)</h3>
+<p>El coeficiente \(E\) es el cuadrado de la longitud de \(x_u\):</p>
+<div class="formula-block">\[
+E=|x_u|^2.
+\]</div>
+<p>Mide cómo se estira la superficie al variar \(u\) manteniendo \(v\) fijo. El coeficiente \(G\) cumple el mismo papel para la variación de \(v\):</p>
+<div class="formula-block">\[
+G=|x_v|^2.
+\]</div>
+<p>El coeficiente \(F\) mide la interacción entre las dos direcciones paramétricas:</p>
+<div class="formula-block">\[
+F=x_u\cdot x_v.
+\]</div>
+<p>Si \(F=0\), las curvas coordenadas se cortan ortogonalmente. Si \(F\neq 0\), las direcciones \(x_u\) y \(x_v\) no son perpendiculares.</p>
+<p>Ejemplo: si una parametrización cumple</p>
+<div class="formula-block">\[
+E=4,\qquad F=0,\qquad G=9,
+\]</div>
+<p>entonces \(x_u\) tiene longitud \(2\), \(x_v\) tiene longitud \(3\), y las líneas coordenadas son ortogonales. La primera forma fundamental es</p>
+<div class="formula-block">\[
+I=4\,du^2+9\,dv^2.
+\]</div>
+<h3>3.4. La primera forma fundamental bajo cambio de parámetros</h3>
+<p>El capítulo subraya que la primera forma fundamental expresa una propiedad de la superficie, no de una elección accidental de parámetros. Si se usa otra carta</p>
+<div class="formula-block">\[
+x=x^*(\theta,\phi),
+\]</div>
+<p>y los parámetros se relacionan mediante</p>
+<div class="formula-block">\[
+\theta=\theta(u,v),\qquad \phi=\phi(u,v),
+\]</div>
+<p>entonces los diferenciales se transforman por la regla de la cadena:</p>
+<div class="formula-block">\[
+d\theta=\theta_u\,du+\theta_v\,dv,\qquad d\phi=\phi_u\,du+\phi_v\,dv.
+\]</div>
+<p>La forma fundamental escrita en los parámetros nuevos,</p>
+<div class="formula-block">\[
+I^*=E^*\,d\theta^2+2F^*\,d\theta\,d\phi+G^*\,d\phi^2,
+\]</div>
+<p>debe dar el mismo valor geométrico que \(I\) cuando se evalúa sobre el mismo desplazamiento tangente. Es decir, aunque cambien los coeficientes, la longitud calculada no cambia:</p>
+<div class="formula-block">\[
+I(du,dv)=I^*(d\theta,d\phi).
+\]</div>
+<p>La consecuencia importante es doble. Primero, la medición de longitudes y ángulos sobre la superficie no depende de la parametrización. Segundo, los coeficientes \(E,F,G\) sí pueden cambiar al cambiar de parámetros. Por tanto, no hay que confundir “coeficientes fundamentales” con “invariantes numéricos aislados”.</p>
+<p>Ejemplo conceptual: una misma esfera puede parametrizarse con distintos ángulos o con cambios de coordenadas locales. Las expresiones de \(E,F,G\) pueden variar, pero la longitud de una curva concreta sobre la esfera no depende de esa elección.</p>
+<h3>3.5. Longitud de un arco sobre una superficie</h3>
+<p>Una curva sobre la superficie puede escribirse como</p>
+<div class="formula-block">\[
+\gamma(t)=x(u(t),v(t)),\qquad a\leq t\leq b.
+\]</div>
+<p>Su derivada es</p>
+<div class="formula-block">\[
+\gamma'(t)=x_u\,u'(t)+x_v\,v'(t).
+\]</div>
+<p>La longitud se calcula integrando la norma:</p>
+<div class="formula-block">\[
+L=\int_a^b |\gamma'(t)|\,dt.
+\]</div>
+<p>Al cuadrar la norma aparece la primera forma fundamental:</p>
+<div class="formula-block">\[
+|\gamma'(t)|^2
+=
+E(u')^2+2F u'v'+G(v')^2.
+\]</div>
+<p>Por tanto,</p>
+<div class="formula-block">\[
+L=\int_a^b
+\sqrt{E(u(t),v(t))(u'(t))^2+2F(u(t),v(t))u'(t)v'(t)+G(u(t),v(t))(v'(t))^2}\,dt.
+\]</div>
+<p>Esta fórmula es una de las aplicaciones principales del capítulo. Permite calcular longitudes de curvas contenidas en una superficie sin tener que escribir de nuevo la curva como curva espacial completa, aunque en la práctica ambas vías sean equivalentes.</p>
+<p>Ejemplo: en el plano \(I=du^2+dv^2\), si \(u=t\), \(v=t^2\), entonces</p>
+<div class="formula-block">\[
+L=\int_a^b \sqrt{1+4t^2}\,dt.
+\]</div>
+<p>En una superficie general, el mismo procedimiento se modifica por los coeficientes \(E,F,G\).</p>
+<h3>3.6. Ángulo entre dos direcciones tangentes</h3>
+<p>La primera forma fundamental también permite calcular ángulos. Si dos vectores tangentes tienen componentes paramétricas \((du,dv)\) y \((\delta u,\delta v)\), los vectores tangentes correspondientes son</p>
+<div class="formula-block">\[
+X=x_u\,du+x_v\,dv,
+\]</div>
+<div class="formula-block">\[
+Y=x_u\,\delta u+x_v\,\delta v.
+\]</div>
+<p>Su producto escalar es</p>
+<div class="formula-block">\[
+X\cdot Y
+=
+E\,du\,\delta u
++F(du\,\delta v+dv\,\delta u)
++G\,dv\,\delta v.
+\]</div>
+<p>Por tanto,</p>
+<div class="formula-block">\[
+\cos\theta=
+\frac{
+E\,du\,\delta u
++F(du\,\delta v+dv\,\delta u)
++G\,dv\,\delta v
+}
+{
+\sqrt{E\,du^2+2F\,du\,dv+G\,dv^2}
+\sqrt{E\,\delta u^2+2F\,\delta u\,\delta v+G\,\delta v^2}
+}.
+\]</div>
+<p>Un caso especialmente importante es el de las curvas coordenadas. La dirección de \(u\) corresponde a \((du,dv)=(1,0)\), y la de \(v\) corresponde a \((0,1)\). Entonces</p>
+<div class="formula-block">\[
+\cos\theta=\frac{F}{\sqrt{EG}}.
+\]</div>
+<p>Así, las coordenadas son ortogonales si y solo si</p>
+<div class="formula-block">\[
+F=0.
+\]</div>
+<p>Ejemplo: para una esfera con parámetros angulares usuales se obtiene una primera forma fundamental diagonal. Esto expresa que meridianos y paralelos se cortan ortogonalmente.</p>
+<h3>3.7. Área de una región de la superficie</h3>
+<p>El capítulo obtiene el elemento de área aproximando una pequeña región paramétrica por un paralelogramo en el plano tangente. Si los lados infinitesimales son</p>
+<div class="formula-block">\[
+x_u\,du,\qquad x_v\,dv,
+\]</div>
+<p>el área del paralelogramo es</p>
+<div class="formula-block">\[
+|x_u\times x_v|\,du\,dv.
+\]</div>
+<p>Como</p>
+<div class="formula-block">\[
+|x_u\times x_v|^2
+=
+|x_u|^2|x_v|^2-(x_u\cdot x_v)^2,
+\]</div>
+<p>se obtiene</p>
+<div class="formula-block">\[
+|x_u\times x_v|=\sqrt{EG-F^2}.
+\]</div>
+<p>Por tanto, el área de una región \(R\) del plano de parámetros es</p>
+<div class="formula-block">\[
+A=\iint_R \sqrt{EG-F^2}\,du\,dv.
+\]</div>
+<p>Esta fórmula muestra otro papel de la primera forma fundamental: no solo mide curvas, sino también regiones. La cantidad</p>
+<div class="formula-block">\[
+\sqrt{EG-F^2}
+\]</div>
+<p>es el factor de escala de área inducido por la parametrización.</p>
+<p>Ejemplo: para el plano \(x(u,v)=(u,v,0)\),</p>
+<div class="formula-block">\[
+E=1,\quad F=0,\quad G=1,
+\]</div>
+<p>y por tanto</p>
+<div class="formula-block">\[
+\sqrt{EG-F^2}=1.
+\]</div>
+<p>El área superficial coincide con el área ordinaria del dominio paramétrico.</p>
+<h3>3.8. Ejemplo: gráfica de una función</h3>
+<p>Sea una superficie dada como gráfica</p>
+<div class="formula-block">\[
+x(u,v)=(u,v,f(u,v)).
+\]</div>
+<p>Entonces</p>
+<div class="formula-block">\[
+x_u=(1,0,f_u),\qquad x_v=(0,1,f_v).
+\]</div>
+<p>Por tanto,</p>
+<div class="formula-block">\[
+E=1+f_u^2,\qquad F=f_u f_v,\qquad G=1+f_v^2.
+\]</div>
+<p>La primera forma fundamental es</p>
+<div class="formula-block">\[
+I=(1+f_u^2)\,du^2+2f_u f_v\,du\,dv+(1+f_v^2)\,dv^2.
+\]</div>
+<p>El elemento de área queda:</p>
+<div class="formula-block">\[
+dA=\sqrt{EG-F^2}\,du\,dv
+=
+\sqrt{1+f_u^2+f_v^2}\,du\,dv.
+\]</div>
+<p>Este ejemplo fija la conexión entre cálculo de varias variables y geometría de superficies. La inclinación de la gráfica modifica las longitudes y áreas respecto al plano de parámetros.</p>
+<h3>3.9. Ejemplo: toro de revolución</h3>
+<p>El capítulo incluye el toro parametrizado, en notación equivalente, por</p>
+<div class="formula-block">\[
+x(\theta,\phi)=
+(b+a\sin\phi)\cos\theta\,e_1
++
+(b+a\sin\phi)\sin\theta\,e_2
++
+a\cos\phi\,e_3.
+\]</div>
+<p>Para esta superficie los coeficientes fundamentales son</p>
+<div class="formula-block">\[
+E=(b+a\sin\phi)^2,\qquad F=0,\qquad G=a^2.
+\]</div>
+<p>El hecho de que \(F=0\) indica que las curvas coordenadas son ortogonales. El área total, integrando sobre \(0\leq \theta\leq 2\pi\), \(0\leq \phi\leq 2\pi\), queda</p>
+<div class="formula-block">\[
+A=\int_0^{2\pi}\int_0^{2\pi}
+a(b+a\sin\phi)\,d\phi\,d\theta
+=
+4\pi^2ab.
+\]</div>
+<p>La utilidad del ejemplo es clara: con \(E,F,G\) se obtiene el área de una superficie no plana sin necesidad de descomponerla geométricamente.</p>
+<h3>3.10. Qué queda preparado para la segunda forma fundamental</h3>
+<p>La primera forma fundamental mide la geometría interna de la superficie: longitudes, ángulos y áreas. El capítulo continúa después hacia la segunda forma fundamental, que introduce la normal unitaria y mide cómo se curva la superficie respecto al espacio ambiente. Esta transición es natural: primero se aprende a medir dentro del plano tangente; después se estudia cómo cambia el plano tangente y cómo se dobla la superficie.</p>
+<p>La separación conceptual es importante. La primera forma fundamental no clasifica por sí sola los puntos como elípticos, hiperbólicos o parabólicos. Esa clasificación requiere la segunda forma fundamental. Pero sin la primera no puede definirse correctamente la curvatura normal ni las curvaturas principales, porque esas nociones comparan formas cuadráticas sobre las mismas direcciones tangentes.</p>
+</div></section>
+<section id="conceptos" class="page"><header class="section-header"><p class="section-kicker">04</p><h2>4. Conceptos clave</h2></header><div class="reading-block">
+<ul>
+<li>Primera forma fundamental.</li>
+</ul>
+<p>Definición precisa:</p>
+<div class="formula-block">\[
+I=dx\cdot dx=E\,du^2+2F\,du\,dv+G\,dv^2.
+\]</div>
+<p>Explicación desarrollada: es la forma cuadrática que da el cuadrado de la longitud de un desplazamiento tangente infinitesimal sobre la superficie. Es la herramienta métrica básica de la geometría de superficies.</p>
+<p>Ejemplo:</p>
+<div class="formula-block">\[
+x(u,v)=(u,v,0)\quad\Rightarrow\quad I=du^2+dv^2.
+\]</div>
+<p>Relación con otros conceptos: se construye con \(x_u,x_v\); permite calcular longitud, ángulo y área; sirve de base para interpretar la segunda forma fundamental.</p>
+<p>Posible forma de preguntarlo en examen: “Defina la primera forma fundamental de una superficie parametrizada y calcule sus coeficientes.”</p>
+<ul>
+<li>Coeficientes fundamentales \(E,F,G\).</li>
+</ul>
+<p>Definición precisa:</p>
+<div class="formula-block">\[
+E=x_u\cdot x_u,\qquad F=x_u\cdot x_v,\qquad G=x_v\cdot x_v.
+\]</div>
+<p>Explicación desarrollada: \(E\) y \(G\) miden las escalas de las direcciones paramétricas; \(F\) mide su no ortogonalidad.</p>
+<p>Ejemplo: si \(F=0\), las líneas coordenadas se cortan perpendicularmente.</p>
+<p>Relación con otros conceptos: son los componentes de la métrica inducida en la base \((x_u,x_v)\).</p>
+<p>Posible forma de preguntarlo en examen: “Explique el significado geométrico de \(E,F,G\).”</p>
+<ul>
+<li>Diferencial \(dx\).</li>
+</ul>
+<p>Definición precisa:</p>
+<div class="formula-block">\[
+dx=x_u\,du+x_v\,dv.
+\]</div>
+<p>Explicación desarrollada: es la aproximación lineal al desplazamiento sobre la superficie. Transforma incrementos del plano paramétrico en vectores tangentes.</p>
+<p>Ejemplo: para \(x(u,v)=(u,v,u^2)\),</p>
+<div class="formula-block">\[
+dx=(1,0,2u)\,du+(0,1,0)\,dv.
+\]</div>
+<p>Relación con otros conceptos: la primera forma fundamental es \(dx\cdot dx\).</p>
+<p>Posible forma de preguntarlo en examen: “Obtenga \(dx\) y úselo para hallar \(I\).”</p>
+<ul>
+<li>Forma cuadrática.</li>
+</ul>
+<p>Definición precisa: expresión homogénea de grado dos en \(du,dv\):</p>
+<div class="formula-block">\[
+E\,du^2+2F\,du\,dv+G\,dv^2.
+\]</div>
+<p>Explicación desarrollada: asigna a cada dirección tangente el cuadrado de una longitud. Al ser cuadrática, no depende del sentido de la dirección para la longitud, sino de la dirección y escala.</p>
+<p>Ejemplo: \(4du^2+9dv^2\) da longitudes distintas en las direcciones \(u\) y \(v\).</p>
+<p>Relación con otros conceptos: es la forma algebraica de la métrica inducida.</p>
+<p>Posible forma de preguntarlo en examen: “Interprete \(I\) como forma cuadrática y diga cuándo es positiva.”</p>
+<ul>
+<li>Coordenadas ortogonales.</li>
+</ul>
+<p>Definición precisa: un sistema de coordenadas sobre la superficie es ortogonal cuando</p>
+<div class="formula-block">\[
+x_u\cdot x_v=0,
+\]</div>
+<p>es decir,</p>
+<div class="formula-block">\[
+F=0.
+\]</div>
+<p>Explicación desarrollada: significa que las curvas coordenadas se cortan en ángulo recto.</p>
+<p>Ejemplo: en el plano polar ordinario, las curvas \(r=\text{constante}\) y \(\theta=\text{constante}\) son ortogonales.</p>
+<p>Relación con otros conceptos: simplifica longitudes y áreas, porque desaparece el término cruzado \(2F\,du\,dv\).</p>
+<p>Posible forma de preguntarlo en examen: “Estudie si la parametrización dada es ortogonal.”</p>
+<ul>
+<li>Longitud de arco sobre una superficie.</li>
+</ul>
+<p>Definición precisa:</p>
+<div class="formula-block">\[
+L=\int_a^b
+\sqrt{E(u')^2+2Fu'v'+G(v')^2}\,dt.
+\]</div>
+<p>Explicación desarrollada: permite medir una curva \(x(u(t),v(t))\) usando solo sus funciones paramétricas y los coeficientes \(E,F,G\).</p>
+<p>Ejemplo: si \(I=du^2+4dv^2\), \(u=t\), \(v=t\), entonces</p>
+<div class="formula-block">\[
+L=\int_a^b \sqrt{5}\,dt.
+\]</div>
+<p>Relación con otros conceptos: es la aplicación directa de \(I\) a curvas.</p>
+<p>Posible forma de preguntarlo en examen: “Calcule la longitud de la curva \(u=t, v=t^2\) sobre una superficie con primera forma dada.”</p>
+<ul>
+<li>Ángulo entre direcciones tangentes.</li>
+</ul>
+<p>Definición precisa:</p>
+<div class="formula-block">\[
+\cos\theta=\frac{X\cdot Y}{|X||Y|},
+\]</div>
+<p>expresando \(X,Y\) mediante \(du,dv\) y la primera forma fundamental.</p>
+<p>Explicación desarrollada: la primera forma fundamental proporciona tanto el producto escalar como las normas de los vectores tangentes.</p>
+<p>Ejemplo: entre las direcciones coordenadas,</p>
+<div class="formula-block">\[
+\cos\theta=\frac{F}{\sqrt{EG}}.
+\]</div>
+<p>Relación con otros conceptos: conecta \(F\) con la ortogonalidad.</p>
+<p>Posible forma de preguntarlo en examen: “Halle el ángulo entre las curvas coordenadas.”</p>
+<ul>
+<li>Elemento de área.</li>
+</ul>
+<p>Definición precisa:</p>
+<div class="formula-block">\[
+dA=\sqrt{EG-F^2}\,du\,dv.
+\]</div>
+<p>Explicación desarrollada: mide el área infinitesimal de la superficie correspondiente a un rectángulo infinitesimal del plano paramétrico.</p>
+<p>Ejemplo: para \(x(u,v)=(u,v,f(u,v))\),</p>
+<div class="formula-block">\[
+dA=\sqrt{1+f_u^2+f_v^2}\,du\,dv.
+\]</div>
+<p>Relación con otros conceptos: proviene del área del paralelogramo generado por \(x_u\,du\) y \(x_v\,dv\).</p>
+<p>Posible forma de preguntarlo en examen: “Obtenga el área de una región parametrizada.”</p>
+<ul>
+<li>Invariancia de la medición.</li>
+</ul>
+<p>Definición precisa: al cambiar de parámetros, los coeficientes pueden cambiar, pero el valor de \(I\) sobre el desplazamiento tangente correspondiente se conserva.</p>
+<p>Explicación desarrollada: la geometría medida no debe depender de la carta usada. La regla de la cadena explica cómo se transforman los diferenciales.</p>
+<p>Ejemplo: una curva sobre una esfera tiene la misma longitud aunque se describa con parámetros locales distintos.</p>
+<p>Relación con otros conceptos: anticipa la idea de métrica y de isometría.</p>
+<p>Posible forma de preguntarlo en examen: “Explique por qué \(E,F,G\) no son invariantes por separado, pero la primera forma fundamental sí expresa una magnitud geométrica.”</p>
+<ul>
+<li>Métrica inducida.</li>
+</ul>
+<p>Definición precisa: estructura de producto escalar sobre el plano tangente heredada del producto escalar euclídeo de \(E^3\).</p>
+<p>Explicación desarrollada: la superficie no necesita una regla de medida nueva; la obtiene del espacio ambiente mediante \(dx\cdot dx\).</p>
+<p>Ejemplo: en una esfera, la métrica inducida no coincide con la del rectángulo de parámetros angulares.</p>
+<p>Relación con otros conceptos: la primera forma fundamental es la expresión local de esa métrica.</p>
+<p>Posible forma de preguntarlo en examen: “Relacione la primera forma fundamental con la métrica inducida.”</p>
+</div></section>
+<section id="relaciones" class="page"><header class="section-header"><p class="section-kicker">05</p><h2>5. Relaciones entre ideas</h2></header><div class="reading-block">
+<p>La cadena conceptual principal es:</p>
+<div class="formula-block">\[
+x(u,v)\longrightarrow x_u,x_v\longrightarrow dx\longrightarrow I=dx\cdot dx\longrightarrow E,F,G.
+\]</div>
+<p>La parametrización genera dos direcciones tangentes. La diferencial combina esas direcciones. El producto escalar de la diferencial consigo misma produce la primera forma fundamental. Los coeficientes \(E,F,G\) son la forma concreta de esa medición en los parámetros elegidos.</p>
+<p>La primera dependencia importante es la regularidad. Si \(x_u\) y \(x_v\) no son independientes, entonces no hay plano tangente bidimensional. En ese caso, la forma \(I\) deja de representar correctamente una métrica de superficie. Por eso el estudio de superficies regulares precede al de la primera forma fundamental.</p>
+<p>La segunda dependencia es entre \(F\) y la ortogonalidad. \(F\) no es un término accesorio: mide el producto escalar de las direcciones paramétricas. Cuando \(F=0\), la expresión de \(I\) se simplifica y las coordenadas son ortogonales. Cuando \(F\neq 0\), el término cruzado es imprescindible.</p>
+<p>La tercera relación es entre longitud, ángulo y área. Las tres magnitudes se obtienen de \(E,F,G\), pero de formas distintas. La longitud usa directamente la raíz cuadrada de \(I\) evaluada sobre la derivada de una curva. El ángulo usa la forma bilineal asociada a \(I\). El área usa el determinante métrico:</p>
+<div class="formula-block">\[
+EG-F^2.
+\]</div>
+<p>Hay una jerarquía clara: primero se calculan \(x_u,x_v\); después \(E,F,G\); después longitud, ángulo o área. Saltarse este orden suele producir errores algebraicos o conceptuales.</p>
+<p>Existe también una oposición importante entre parametrización y geometría. La parametrización es una descripción; la geometría medida debe ser independiente de la descripción. Por eso los coeficientes \(E,F,G\) pueden cambiar, pero el valor geométrico de la primera forma fundamental sobre un desplazamiento tangente no cambia.</p>
+<p>La evolución lógica dentro del capítulo es: definir la primera forma fundamental, demostrar su comportamiento bajo cambios de parámetros, aplicarla a longitudes y ángulos, y usarla para deducir el elemento de área. Después, el texto pasa a la segunda forma fundamental, que ya no mide solamente dentro de la superficie, sino su curvatura en el espacio.</p>
+</div></section>
+<section id="errores" class="page"><header class="section-header"><p class="section-kicker">06</p><h2>6. Errores habituales</h2></header><div class="reading-block">
+<ul>
+<li>Error: creer que \(E,F,G\) son siempre \(1,0,1\).</li>
+</ul>
+<p>Por qué está mal: eso solo ocurre en parametrizaciones planas cartesianas o en casos muy concretos. En una superficie curva o con coordenadas no cartesianas, las escalas cambian.</p>
+<p>Corrección: calcular siempre</p>
+<div class="formula-block">\[
+E=x_u\cdot x_u,\quad F=x_u\cdot x_v,\quad G=x_v\cdot x_v.
+\]</div>
+<p>Ejemplo de respuesta incorrecta: “Como los parámetros son \(u,v\), entonces \(I=du^2+dv^2\).”</p>
+<p>Ejemplo de respuesta correcta: “Primero calculo \(x_u\) y \(x_v\). Solo si \(x_u\cdot x_u=1\), \(x_u\cdot x_v=0\), \(x_v\cdot x_v=1\), entonces \(I=du^2+dv^2\).”</p>
+<ul>
+<li>Error: confundir \(dx\) con un diferencial escalar.</li>
+</ul>
+<p>Por qué está mal: \(dx\) es un vector tangente en \(E^3\), no una sola cantidad real.</p>
+<p>Corrección:</p>
+<div class="formula-block">\[
+dx=x_u\,du+x_v\,dv.
+\]</div>
+<p>Ejemplo de respuesta incorrecta: “\(dx=du+dv\).”</p>
+<p>Ejemplo de respuesta correcta: “\(dx\) es vectorial: \(dx=x_u\,du+x_v\,dv\).”</p>
+<ul>
+<li>Error: olvidar el factor \(2\) en el término mixto.</li>
+</ul>
+<p>Por qué está mal: al desarrollar</p>
+<div class="formula-block">\[
+(x_u\,du+x_v\,dv)\cdot(x_u\,du+x_v\,dv)
+\]</div>
+<p>aparecen dos términos iguales:</p>
+<div class="formula-block">\[
+(x_u\cdot x_v)du\,dv+(x_v\cdot x_u)dv\,du.
+\]</div>
+<p>Corrección:</p>
+<div class="formula-block">\[
+I=E\,du^2+2F\,du\,dv+G\,dv^2.
+\]</div>
+<p>Ejemplo de respuesta incorrecta: “\(I=E\,du^2+F\,du\,dv+G\,dv^2\).”</p>
+<p>Ejemplo de respuesta correcta: “\(I=E\,du^2+2F\,du\,dv+G\,dv^2\).”</p>
+<ul>
+<li>Error: decir que \(F=0\) significa que la superficie es plana.</li>
+</ul>
+<p>Por qué está mal: \(F=0\) solo indica que las curvas coordenadas son ortogonales. Una esfera puede tener una parametrización con \(F=0\) y no es plana.</p>
+<p>Corrección: distinguir ortogonalidad de coordenadas y curvatura de la superficie.</p>
+<p>Ejemplo de respuesta incorrecta: “Como \(F=0\), la superficie no tiene curvatura.”</p>
+<p>Ejemplo de respuesta correcta: “Como \(F=0\), las líneas coordenadas son ortogonales. La curvatura requiere estudiar la segunda forma fundamental.”</p>
+<ul>
+<li>Error: usar \(EG-F^2\) como área, sin raíz cuadrada.</li>
+</ul>
+<p>Por qué está mal: \(EG-F^2\) es el cuadrado del factor de área.</p>
+<p>Corrección:</p>
+<div class="formula-block">\[
+dA=\sqrt{EG-F^2}\,du\,dv.
+\]</div>
+<p>Ejemplo de respuesta incorrecta: “\(A=\iint(EG-F^2)\,du\,dv\).”</p>
+<p>Ejemplo de respuesta correcta: “\(A=\iint\sqrt{EG-F^2}\,du\,dv\).”</p>
+<ul>
+<li>Error: calcular la longitud de una curva ignorando \(u'(t)\) y \(v'(t)\).</li>
+</ul>
+<p>Por qué está mal: la curva sobre la superficie depende de cómo cambian sus parámetros con \(t\).</p>
+<p>Corrección:</p>
+<div class="formula-block">\[
+L=\int\sqrt{E(u')^2+2Fu'v'+G(v')^2}\,dt.
+\]</div>
+<p>Ejemplo de respuesta incorrecta: “La longitud es \(\int\sqrt{E+2F+G}\,dt\) siempre.”</p>
+<p>Ejemplo de respuesta correcta: “Solo sería \(\int\sqrt{E+2F+G}\,dt\) si \(u'=1\) y \(v'=1\).”</p>
+<ul>
+<li>Error: confundir el área del dominio paramétrico con el área de la superficie.</li>
+</ul>
+<p>Por qué está mal: la parametrización puede estirar o comprimir áreas.</p>
+<p>Corrección: multiplicar por el factor</p>
+<div class="formula-block">\[
+\sqrt{EG-F^2}.
+\]</div>
+<p>Ejemplo de respuesta incorrecta: “Si \(R=[0,1]\times[0,1]\), el área de la superficie es \(1\).”</p>
+<p>Ejemplo de respuesta correcta: “El área es \(\int_0^1\int_0^1\sqrt{EG-F^2}\,du\,dv\). Solo vale \(1\) si el factor es \(1\).”</p>
+<ul>
+<li>Error: creer que si cambian \(E,F,G\), cambia la superficie.</li>
+</ul>
+<p>Por qué está mal: los coeficientes dependen de la parametrización. Una misma superficie puede tener distintos coeficientes en distintas cartas.</p>
+<p>Corrección: comprobar la igualdad geométrica de \(I\) bajo la correspondencia de diferenciales.</p>
+<p>Ejemplo de respuesta incorrecta: “Como los coeficientes son distintos, son superficies distintas.”</p>
+<p>Ejemplo de respuesta correcta: “Los coeficientes pueden cambiar bajo reparametrización; lo que debe conservarse es el valor de la forma sobre los desplazamientos correspondientes.”</p>
+<ul>
+<li>Error: identificar primera forma fundamental con segunda forma fundamental.</li>
+</ul>
+<p>Por qué está mal: la primera mide longitudes, ángulos y áreas; la segunda mide curvatura respecto a la normal.</p>
+<p>Corrección: primera forma:</p>
+<div class="formula-block">\[
+I=dx\cdot dx.
+\]</div>
+<p>Segunda forma:</p>
+<div class="formula-block">\[
+II=-dx\cdot dN
+\]</div>
+<p>o expresiones equivalentes, ya dentro del estudio posterior.</p>
+<p>Ejemplo de respuesta incorrecta: “La primera forma sirve para clasificar puntos elípticos e hiperbólicos.”</p>
+<p>Ejemplo de respuesta correcta: “La primera forma mide la métrica; la clasificación elíptica o hiperbólica exige la segunda forma.”</p>
+<ul>
+<li>Error: no comprobar regularidad.</li>
+</ul>
+<p>Por qué está mal: si \(x_u\times x_v=0\), la parametrización no define una superficie regular en ese punto.</p>
+<p>Corrección: antes de usar \(I\) como métrica de superficie, comprobar que</p>
+<div class="formula-block">\[
+x_u\times x_v\neq 0.
+\]</div>
+<p>Ejemplo de respuesta incorrecta: “Calculo \(E,F,G\) aunque \(x_u\) y \(x_v\) son paralelos.”</p>
+<p>Ejemplo de respuesta correcta: “En los puntos donde \(x_u\times x_v=0\), la carta no es regular y no procede usarla como parametrización regular de superficie.”</p>
+</div></section>
+<section id="preguntas" class="page"><header class="section-header"><p class="section-kicker">07</p><h2>7. Preguntas orientadas a examen</h2></header><div class="reading-block">
+<h3>10 preguntas fáciles</h3>
+<p>F1. Defina la primera forma fundamental de una superficie parametrizada \(x(u,v)\).</p>
+<p>F2. Escriba las fórmulas de los coeficientes \(E,F,G\).</p>
+<p>F3. ¿Qué representa geométricamente \(dx=x_u\,du+x_v\,dv\)?</p>
+<p>F4. ¿Qué significa que \(F=0\)?</p>
+<p>F5. Calcule \(I\) para \(x(u,v)=(u,v,0)\).</p>
+<p>F6. ¿Cuál es el elemento de área asociado a \(I=E\,du^2+2F\,du\,dv+G\,dv^2\)?</p>
+<p>F7. ¿Qué condición de regularidad debe cumplir una parametrización de superficie en \(E^3\)?</p>
+<p>F8. ¿Qué mide \(E=x_u\cdot x_u\)?</p>
+<p>F9. ¿Por qué aparece \(2F\,du\,dv\) y no solo \(F\,du\,dv\)?</p>
+<p>F10. Indique una diferencia entre la primera y la segunda forma fundamental.</p>
+<h3>10 preguntas medias</h3>
+<p>M1. Dada \(x(u,v)=(u,v,f(u,v))\), calcule \(E,F,G\).</p>
+<p>M2. Deduzca la fórmula de longitud de una curva \(x(u(t),v(t))\) sobre una superficie.</p>
+<p>M3. Obtenga la fórmula del ángulo entre las curvas coordenadas.</p>
+<p>M4. Explique por qué \(E,F,G\) dependen de la parametrización, aunque la medición geométrica no.</p>
+<p>M5. Calcule la primera forma fundamental de</p>
+<div class="formula-block">\[
+x(u,v)=(u\cos v,u\sin v,0).
+\]</div>
+<p>M6. Para una superficie con</p>
+<div class="formula-block">\[
+I=4\,du^2+9\,dv^2,
+\]</div>
+<p>calcule la longitud de la curva \(u=t,\ v=t,\ 0\leq t\leq 1\).</p>
+<p>M7. Para</p>
+<div class="formula-block">\[
+I=du^2+2a\,du\,dv+dv^2,
+\]</div>
+<p>halle la condición sobre \(a\) para que las curvas coordenadas sean ortogonales.</p>
+<p>M8. Justifique la fórmula</p>
+<div class="formula-block">\[
+dA=\sqrt{EG-F^2}\,du\,dv.
+\]</div>
+<p>M9. Si una parametrización tiene \(E=1\), \(G=1\), \(F\neq 0\), ¿las direcciones coordenadas tienen longitud unitaria? ¿Son ortogonales?</p>
+<p>M10. Explique cómo se usa la regla de la cadena para comparar la primera forma fundamental en dos parametrizaciones.</p>
+<h3>5 preguntas difíciles</h3>
+<p>D1. Sea</p>
+<div class="formula-block">\[
+x(u,v)=(u,v,u^2-v^2).
+\]</div>
+<p>Calcule \(E,F,G\), el elemento de área y decida si las curvas coordenadas son ortogonales.</p>
+<p>D2. Dada una superficie con</p>
+<div class="formula-block">\[
+I=E\,du^2+2F\,du\,dv+G\,dv^2,
+\]</div>
+<p>demuestre que el coseno del ángulo entre las direcciones \((du,dv)\) y \((\delta u,\delta v)\) viene dado por la fórmula correspondiente en términos de \(E,F,G\).</p>
+<p>D3. Para el toro</p>
+<div class="formula-block">\[
+x(\theta,\phi)=
+(b+a\sin\phi)\cos\theta\,e_1
++
+(b+a\sin\phi)\sin\theta\,e_2
++
+a\cos\phi\,e_3,
+\]</div>
+<p>calcule \(E,F,G\) y el área total.</p>
+<p>D4. Explique con precisión por qué el signo de \(EG-F^2\) debe ser positivo en una parametrización regular.</p>
+<p>D5. Sea \(I=du^2+2F\,du\,dv+G\,dv^2\), con \(G&gt;0\). Determine el ángulo entre las curvas coordenadas y razone cuándo es agudo, recto u obtuso.</p>
+<h3>5 preguntas de desarrollo largo</h3>
+<p>L1. Desarrolle la construcción completa de la primera forma fundamental desde la diferencial \(dx\) hasta la expresión \(I=E\,du^2+2F\,du\,dv+G\,dv^2\).</p>
+<p>L2. Explique cómo la primera forma fundamental permite calcular longitudes, ángulos y áreas sobre una superficie.</p>
+<p>L3. Discuta la dependencia de los coeficientes fundamentales respecto de la parametrización y la independencia geométrica de las magnitudes medidas.</p>
+<p>L4. Compare el papel de la primera forma fundamental en el plano, en una gráfica \(z=f(u,v)\) y en una superficie de revolución como el toro.</p>
+<p>L5. Explique por qué la primera forma fundamental es necesaria antes de estudiar curvatura normal, curvaturas principales y segunda forma fundamental.</p>
+<h3>5 preguntas de relación entre conceptos</h3>
+<p>R1. Relacione \(x_u,x_v\), plano tangente y primera forma fundamental.</p>
+<p>R2. Relacione \(F\), ortogonalidad de coordenadas y cálculo de ángulos.</p>
+<p>R3. Relacione \(EG-F^2\), producto vectorial \(x_u\times x_v\) y área.</p>
+<p>R4. Relacione cambio de parámetros, regla de la cadena e invariancia de la medición.</p>
+<p>R5. Relacione primera forma fundamental, métrica inducida e isometría.</p>
+</div></section>
+<section id="respuestas" class="page"><header class="section-header"><p class="section-kicker">08</p><h2>8. Respuestas modelo</h2></header><div class="reading-block">
+<h3>Respuestas a las preguntas fáciles</h3>
+<p>F1. La primera forma fundamental de una superficie parametrizada \(x(u,v)\) es</p>
+<div class="formula-block">\[
+I=dx\cdot dx.
+\]</div>
+<p>Como</p>
+<div class="formula-block">\[
+dx=x_u\,du+x_v\,dv,
+\]</div>
+<p>se escribe</p>
+<div class="formula-block">\[
+I=E\,du^2+2F\,du\,dv+G\,dv^2.
+\]</div>
+<p>Mide el cuadrado de la longitud de un desplazamiento tangente infinitesimal.</p>
+<p>F2. Los coeficientes son</p>
+<div class="formula-block">\[
+E=x_u\cdot x_u,\qquad F=x_u\cdot x_v,\qquad G=x_v\cdot x_v.
+\]</div>
+<p>Se llaman primeros coeficientes fundamentales.</p>
+<p>F3. Representa la parte lineal del desplazamiento sobre la superficie cuando los parámetros cambian en \(du,dv\). Es un vector del plano tangente generado por \(x_u\) y \(x_v\).</p>
+<p>F4. Significa que</p>
+<div class="formula-block">\[
+x_u\cdot x_v=0.
+\]</div>
+<p>Por tanto, las curvas coordenadas se cortan ortogonalmente.</p>
+<p>F5. Si</p>
+<div class="formula-block">\[
+x(u,v)=(u,v,0),
+\]</div>
+<p>entonces</p>
+<div class="formula-block">\[
+x_u=(1,0,0),\qquad x_v=(0,1,0).
+\]</div>
+<p>Luego</p>
+<div class="formula-block">\[
+E=1,\quad F=0,\quad G=1,
+\]</div>
+<p>y</p>
+<div class="formula-block">\[
+I=du^2+dv^2.
+\]</div>
+<p>F6. El elemento de área es</p>
+<div class="formula-block">\[
+dA=\sqrt{EG-F^2}\,du\,dv.
+\]</div>
+<p>F7. Debe cumplirse</p>
+<div class="formula-block">\[
+x_u\times x_v\neq 0.
+\]</div>
+<p>Esto asegura que \(x_u\) y \(x_v\) son linealmente independientes y definen un plano tangente.</p>
+<p>F8. \(E\) mide el cuadrado de la longitud del vector tangente \(x_u\). Indica la escala de la parametrización en la dirección \(u\).</p>
+<p>F9. Porque al desarrollar \(dx\cdot dx\) aparecen dos términos cruzados iguales:</p>
+<div class="formula-block">\[
+(x_u\cdot x_v)du\,dv+(x_v\cdot x_u)dv\,du=2F\,du\,dv.
+\]</div>
+<p>F10. La primera forma fundamental mide longitudes, ángulos y áreas sobre la superficie. La segunda forma fundamental mide cómo se curva la superficie respecto a su normal en el espacio ambiente.</p>
+<h3>Respuestas a las preguntas medias</h3>
+<p>M1. Si</p>
+<div class="formula-block">\[
+x(u,v)=(u,v,f(u,v)),
+\]</div>
+<p>entonces</p>
+<div class="formula-block">\[
+x_u=(1,0,f_u),\qquad x_v=(0,1,f_v).
+\]</div>
+<p>Por tanto,</p>
+<div class="formula-block">\[
+E=1+f_u^2,\qquad F=f_u f_v,\qquad G=1+f_v^2.
+\]</div>
+<p>M2. Sea</p>
+<div class="formula-block">\[
+\gamma(t)=x(u(t),v(t)).
+\]</div>
+<p>Entonces</p>
+<div class="formula-block">\[
+\gamma'(t)=x_u u'(t)+x_v v'(t).
+\]</div>
+<p>Así,</p>
+<div class="formula-block">\[
+|\gamma'(t)|^2=E(u')^2+2Fu'v'+G(v')^2.
+\]</div>
+<p>Por tanto,</p>
+<div class="formula-block">\[
+L=\int_a^b\sqrt{E(u')^2+2Fu'v'+G(v')^2}\,dt.
+\]</div>
+<p>M3. Las curvas coordenadas tienen direcciones \(x_u\) y \(x_v\). El ángulo \(\theta\) entre ellas cumple</p>
+<div class="formula-block">\[
+\cos\theta=\frac{x_u\cdot x_v}{|x_u||x_v|}
+=\frac{F}{\sqrt{EG}}.
+\]</div>
+<p>M4. Los coeficientes dependen de la carta porque \(x_u,x_v\) cambian al cambiar los parámetros. Sin embargo, la longitud de un mismo desplazamiento tangente no cambia. La regla de la cadena transforma los diferenciales de forma que</p>
+<div class="formula-block">\[
+I(du,dv)=I^*(d\theta,d\phi).
+\]</div>
+<p>M5. Para</p>
+<div class="formula-block">\[
+x(u,v)=(u\cos v,u\sin v,0),
+\]</div>
+<p>se tiene</p>
+<div class="formula-block">\[
+x_u=(\cos v,\sin v,0),
+\]</div>
+<div class="formula-block">\[
+x_v=(-u\sin v,u\cos v,0).
+\]</div>
+<p>Luego</p>
+<div class="formula-block">\[
+E=1,\qquad F=0,\qquad G=u^2.
+\]</div>
+<p>Por tanto,</p>
+<div class="formula-block">\[
+I=du^2+u^2dv^2.
+\]</div>
+<p>M6. Si</p>
+<div class="formula-block">\[
+I=4\,du^2+9\,dv^2,
+\]</div>
+<p>y \(u=t,\ v=t\), entonces \(u'=1\), \(v'=1\). La longitud es</p>
+<div class="formula-block">\[
+L=\int_0^1\sqrt{4+9}\,dt=\sqrt{13}.
+\]</div>
+<p>M7. Las curvas coordenadas son ortogonales si y solo si</p>
+<div class="formula-block">\[
+F=0.
+\]</div>
+<p>En la forma dada,</p>
+<div class="formula-block">\[
+I=du^2+2a\,du\,dv+dv^2,
+\]</div>
+<p>se tiene \(F=a\). Por tanto, la condición es</p>
+<div class="formula-block">\[
+a=0.
+\]</div>
+<p>M8. El área elemental se aproxima por el paralelogramo generado por \(x_u\,du\) y \(x_v\,dv\). Su área es</p>
+<div class="formula-block">\[
+|x_u\times x_v|\,du\,dv.
+\]</div>
+<p>Como</p>
+<div class="formula-block">\[
+|x_u\times x_v|^2=|x_u|^2|x_v|^2-(x_u\cdot x_v)^2=EG-F^2,
+\]</div>
+<p>se obtiene</p>
+<div class="formula-block">\[
+dA=\sqrt{EG-F^2}\,du\,dv.
+\]</div>
+<p>M9. Sí, las dos direcciones coordenadas tienen longitud unitaria porque</p>
+<div class="formula-block">\[
+|x_u|=\sqrt{E}=1,\qquad |x_v|=\sqrt{G}=1.
+\]</div>
+<p>No son ortogonales si \(F\neq 0\), porque</p>
+<div class="formula-block">\[
+x_u\cdot x_v=F.
+\]</div>
+<p>M10. Si</p>
+<div class="formula-block">\[
+\theta=\theta(u,v),\qquad \phi=\phi(u,v),
+\]</div>
+<p>entonces</p>
+<div class="formula-block">\[
+d\theta=\theta_u\,du+\theta_v\,dv,\qquad d\phi=\phi_u\,du+\phi_v\,dv.
+\]</div>
+<p>Sustituyendo estos diferenciales en la forma escrita con \(\theta,\phi\), se obtiene la forma escrita con \(u,v\). Esta es la comparación correcta entre dos parametrizaciones.</p>
+<h3>Respuestas a las preguntas difíciles</h3>
+<p>D1. Para</p>
+<div class="formula-block">\[
+x(u,v)=(u,v,u^2-v^2),
+\]</div>
+<div class="formula-block">\[
+x_u=(1,0,2u),\qquad x_v=(0,1,-2v).
+\]</div>
+<p>Así,</p>
+<div class="formula-block">\[
+E=1+4u^2,\qquad F=-4uv,\qquad G=1+4v^2.
+\]</div>
+<p>La primera forma fundamental es</p>
+<div class="formula-block">\[
+I=(1+4u^2)du^2-8uv\,du\,dv+(1+4v^2)dv^2.
+\]</div>
+<p>El elemento de área es</p>
+<div class="formula-block">\[
+dA=\sqrt{EG-F^2}\,du\,dv
+=
+\sqrt{(1+4u^2)(1+4v^2)-16u^2v^2}\,du\,dv
+=
+\sqrt{1+4u^2+4v^2}\,du\,dv.
+\]</div>
+<p>Las curvas coordenadas son ortogonales solo si</p>
+<div class="formula-block">\[
+F=-4uv=0,
+\]</div>
+<p>es decir, sobre los ejes \(u=0\) o \(v=0\).</p>
+<p>D2. Los vectores tangentes asociados a las direcciones dadas son</p>
+<div class="formula-block">\[
+X=x_u\,du+x_v\,dv,
+\]</div>
+<div class="formula-block">\[
+Y=x_u\,\delta u+x_v\,\delta v.
+\]</div>
+<p>Entonces</p>
+<div class="formula-block">\[
+X\cdot Y
+=
+E\,du\,\delta u
++F(du\,\delta v+dv\,\delta u)
++G\,dv\,\delta v.
+\]</div>
+<p>Además,</p>
+<div class="formula-block">\[
+|X|=\sqrt{E\,du^2+2F\,du\,dv+G\,dv^2},
+\]</div>
+<div class="formula-block">\[
+|Y|=\sqrt{E\,\delta u^2+2F\,\delta u\,\delta v+G\,\delta v^2}.
+\]</div>
+<p>Por la fórmula del producto escalar,</p>
+<div class="formula-block">\[
+\cos\theta=\frac{X\cdot Y}{|X||Y|},
+\]</div>
+<p>queda demostrada la expresión.</p>
+<p>D3. Para el toro</p>
+<div class="formula-block">\[
+x(\theta,\phi)=
+(b+a\sin\phi)\cos\theta\,e_1
++
+(b+a\sin\phi)\sin\theta\,e_2
++
+a\cos\phi\,e_3,
+\]</div>
+<p>se obtiene</p>
+<div class="formula-block">\[
+E=(b+a\sin\phi)^2,\qquad F=0,\qquad G=a^2.
+\]</div>
+<p>El elemento de área es</p>
+<div class="formula-block">\[
+dA=\sqrt{EG-F^2}\,d\theta\,d\phi
+=
+a(b+a\sin\phi)\,d\theta\,d\phi.
+\]</div>
+<p>Integrando:</p>
+<div class="formula-block">\[
+A=\int_0^{2\pi}\int_0^{2\pi}a(b+a\sin\phi)\,d\phi\,d\theta.
+\]</div>
+<p>Como</p>
+<div class="formula-block">\[
+\int_0^{2\pi}\sin\phi\,d\phi=0,
+\]</div>
+<p>queda</p>
+<div class="formula-block">\[
+A=4\pi^2ab.
+\]</div>
+<p>D4. En una parametrización regular, \(x_u\) y \(x_v\) son linealmente independientes. Por tanto, el paralelogramo que generan tiene área no nula:</p>
+<div class="formula-block">\[
+|x_u\times x_v|&gt;0.
+\]</div>
+<p>Como</p>
+<div class="formula-block">\[
+|x_u\times x_v|^2=EG-F^2,
+\]</div>
+<p>se sigue que</p>
+<div class="formula-block">\[
+EG-F^2&gt;0.
+\]</div>
+<p>Si \(EG-F^2=0\), entonces el área del paralelogramo sería nula y los vectores serían dependientes, contradiciendo la regularidad.</p>
+<p>D5. Las curvas coordenadas tienen direcciones \(x_u\) y \(x_v\). Como \(E=1\), el ángulo \(\theta\) cumple</p>
+<div class="formula-block">\[
+\cos\theta=\frac{F}{\sqrt{G}}.
+\]</div>
+<p>El ángulo es recto si \(F=0\). Es agudo si \(F&gt;0\), siempre que la forma sea positiva definida. Es obtuso si \(F&lt;0\). La interpretación procede directamente del signo del producto escalar \(x_u\cdot x_v=F\).</p>
+<h3>Respuestas a las preguntas de desarrollo largo</h3>
+<p>L1. La construcción empieza con una carta local \(x=x(u,v)\). En un punto de la superficie, las derivadas parciales \(x_u\) y \(x_v\) generan el plano tangente. Si los parámetros cambian en \(du,dv\), el desplazamiento tangente infinitesimal es</p>
+<div class="formula-block">\[
+dx=x_u\,du+x_v\,dv.
+\]</div>
+<p>Para medir su longitud se usa el producto escalar euclídeo:</p>
+<div class="formula-block">\[
+I=dx\cdot dx.
+\]</div>
+<p>Al desarrollar,</p>
+<div class="formula-block">\[
+I=(x_u\cdot x_u)du^2+2(x_u\cdot x_v)du\,dv+(x_v\cdot x_v)dv^2.
+\]</div>
+<p>Definiendo</p>
+<div class="formula-block">\[
+E=x_u\cdot x_u,\quad F=x_u\cdot x_v,\quad G=x_v\cdot x_v,
+\]</div>
+<p>se obtiene</p>
+<div class="formula-block">\[
+I=E\,du^2+2F\,du\,dv+G\,dv^2.
+\]</div>
+<p>Esta es la primera forma fundamental.</p>
+<p>L2. Para longitudes, si una curva sobre la superficie es \(x(u(t),v(t))\), su rapidez se obtiene evaluando \(I\) en \(du=u'dt\), \(dv=v'dt\):</p>
+<div class="formula-block">\[
+L=\int\sqrt{E(u')^2+2Fu'v'+G(v')^2}\,dt.
+\]</div>
+<p>Para ángulos, se usa la forma bilineal asociada a \(I\) para calcular productos escalares entre direcciones tangentes. Para áreas, se usa el factor</p>
+<div class="formula-block">\[
+\sqrt{EG-F^2},
+\]</div>
+<p>de modo que</p>
+<div class="formula-block">\[
+A=\iint\sqrt{EG-F^2}\,du\,dv.
+\]</div>
+<p>Así, una misma estructura proporciona las tres mediciones fundamentales de la superficie.</p>
+<p>L3. Los coeficientes \(E,F,G\) se calculan a partir de \(x_u,x_v\), y estos vectores cambian cuando se cambia la parametrización. Por eso los coeficientes no son invariantes como números aislados. Sin embargo, la longitud de un desplazamiento tangente, el ángulo entre dos direcciones y el área de una región son magnitudes geométricas. Al cambiar de parámetros, los diferenciales se transforman mediante la regla de la cadena, y la forma fundamental escrita en los nuevos parámetros da el mismo valor para el desplazamiento correspondiente. La parametrización cambia la expresión; no cambia la medición geométrica.</p>
+<p>L4. En el plano cartesiano \(x(u,v)=(u,v,0)\), la primera forma fundamental es</p>
+<div class="formula-block">\[
+I=du^2+dv^2.
+\]</div>
+<p>No hay distorsión entre el dominio paramétrico y la superficie. En una gráfica \(x(u,v)=(u,v,f(u,v))\), la inclinación de la superficie introduce los términos</p>
+<div class="formula-block">\[
+E=1+f_u^2,\quad F=f_u f_v,\quad G=1+f_v^2.
+\]</div>
+<p>En un toro, las coordenadas angulares tienen factores de escala variables:</p>
+<div class="formula-block">\[
+E=(b+a\sin\phi)^2,\quad F=0,\quad G=a^2.
+\]</div>
+<p>Estos tres casos muestran la misma idea en complejidad creciente: la primera forma fundamental registra cómo la parametrización mide sobre la superficie.</p>
+<p>L5. La segunda forma fundamental y la curvatura normal se expresan sobre direcciones tangentes. Para comparar curvaturas en distintas direcciones hace falta saber medir esas direcciones: su longitud, su ángulo y su normalización. Esa información la proporciona la primera forma fundamental. Sin \(I\), no se puede interpretar correctamente la razón entre la segunda y la primera forma, ni definir con rigor curvaturas principales. Por tanto, la primera forma fundamental es la base métrica sobre la que se construye la teoría de la curvatura.</p>
+<h3>Respuestas a las preguntas de relación entre conceptos</h3>
+<p>R1. Los vectores \(x_u,x_v\) generan el plano tangente de la superficie en un punto regular. La diferencial</p>
+<div class="formula-block">\[
+dx=x_u\,du+x_v\,dv
+\]</div>
+<p>representa un vector tangente cualquiera. La primera forma fundamental es el producto escalar de ese vector consigo mismo:</p>
+<div class="formula-block">\[
+I=dx\cdot dx.
+\]</div>
+<p>Así, la primera forma fundamental es la medición del plano tangente inducida por la parametrización.</p>
+<p>R2. El coeficiente</p>
+<div class="formula-block">\[
+F=x_u\cdot x_v
+\]</div>
+<p>mide el producto escalar de las dos direcciones coordenadas. Si \(F=0\), son ortogonales. En general, el ángulo entre ellas verifica</p>
+<div class="formula-block">\[
+\cos\theta=\frac{F}{\sqrt{EG}}.
+\]</div>
+<p>Por tanto, \(F\) controla directamente la ortogonalidad de las coordenadas.</p>
+<p>R3. El área elemental se obtiene a partir del paralelogramo generado por \(x_u\,du\) y \(x_v\,dv\). Su área es</p>
+<div class="formula-block">\[
+|x_u\times x_v|\,du\,dv.
+\]</div>
+<p>La identidad</p>
+<div class="formula-block">\[
+|x_u\times x_v|^2=EG-F^2
+\]</div>
+<p>conecta el producto vectorial con los coeficientes de la primera forma fundamental. Por eso</p>
+<div class="formula-block">\[
+dA=\sqrt{EG-F^2}\,du\,dv.
+\]</div>
+<p>R4. Bajo un cambio de parámetros, los diferenciales nuevos se expresan por la regla de la cadena. Al sustituirlos en la primera forma fundamental escrita en la nueva carta, se obtiene el mismo valor geométrico que en la carta antigua. Por tanto, la regla de la cadena explica cómo cambia la expresión sin cambiar la medición.</p>
+<p>R5. La primera forma fundamental es la expresión local de la métrica inducida por el producto escalar euclídeo. Dos superficies o dos parametrizaciones son isométricas localmente cuando conservan esa métrica, es decir, cuando preservan longitudes y ángulos. Por eso la primera forma fundamental es el objeto central para estudiar isometrías.</p>
+</div></section>
+<section id="resumen" class="page"><header class="section-header"><p class="section-kicker">09</p><h2>9. Resumen final de repaso</h2></header><div class="reading-block">
+<ul>
+<li>Ideas principales:</li>
+<li>Una superficie local se escribe como \(x(u,v)\).</li>
+<li>Los vectores \(x_u,x_v\) generan el plano tangente.</li>
+<li>La diferencial es \(dx=x_u\,du+x_v\,dv\).</li>
+<li>La primera forma fundamental es \(I=dx\cdot dx\).</li>
+<li>Su expresión es \(I=E\,du^2+2F\,du\,dv+G\,dv^2\).</li>
+</ul>
+<ul>
+<li>Conceptos imprescindibles:</li>
+<li>\(E=x_u\cdot x_u\).</li>
+<li>\(F=x_u\cdot x_v\).</li>
+<li>\(G=x_v\cdot x_v\).</li>
+<li>Coordenadas ortogonales: \(F=0\).</li>
+<li>Elemento de área: \(dA=\sqrt{EG-F^2}\,du\,dv\).</li>
+<li>Longitud de curva:</li>
+</ul>
+<div class="formula-block">    \[
+    L=\int\sqrt{E(u')^2+2Fu'v'+G(v')^2}\,dt.
+    \]</div>
+<ul>
+<li>Relaciones clave:</li>
+<li>\(x_u,x_v\) → plano tangente.</li>
+<li>\(dx\) → desplazamiento tangente.</li>
+<li>\(dx\cdot dx\) → primera forma fundamental.</li>
+<li>\(F\) → ángulo entre coordenadas.</li>
+<li>\(EG-F^2\) → área.</li>
+<li>Cambio de parámetros → cambian \(E,F,G\), no la medición geométrica.</li>
+</ul>
+<ul>
+<li>Errores que evitar:</li>
+<li>Usar \(I=du^2+dv^2\) sin calcular \(E,F,G\).</li>
+<li>Omitir el \(2\) en \(2F\,du\,dv\).</li>
+<li>Confundir \(F=0\) con superficie plana.</li>
+<li>Usar \(EG-F^2\) en lugar de \(\sqrt{EG-F^2}\) para el área.</li>
+<li>Calcular longitudes sin \(u'(t)\) y \(v'(t)\).</li>
+<li>Confundir primera y segunda forma fundamental.</li>
+</ul>
+</div></section>
+<section id="checklist" class="page"><header class="section-header"><p class="section-kicker">10</p><h2>10. Checklist de dominio</h2></header><div class="reading-block">
+<ul>
+<li>Si no puedes explicar \(dx=x_u\,du+x_v\,dv\), falta repasar diferencial y plano tangente.</li>
+</ul>
+<ul>
+<li>Si no puedes obtener \(E,F,G\), falta repasar derivadas parciales vectoriales y producto escalar.</li>
+</ul>
+<ul>
+<li>Si confundes \(F=0\) con superficie plana, revisar ortogonalidad de coordenadas frente a curvatura.</li>
+</ul>
+<ul>
+<li>Si olvidas el término \(2F\,du\,dv\), revisar el desarrollo algebraico de \(dx\cdot dx\).</li>
+</ul>
+<ul>
+<li>Si no sabes calcular la longitud de \(x(u(t),v(t))\), falta repasar la sustitución \(du=u'(t)dt\), \(dv=v'(t)dt\).</li>
+</ul>
+<ul>
+<li>Si confundes el área del dominio paramétrico con el área de la superficie, revisar \(dA=\sqrt{EG-F^2}\,du\,dv\).</li>
+</ul>
+<ul>
+<li>Si no sabes decidir si una parametrización es ortogonal, falta repasar \(F=x_u\cdot x_v\).</li>
+</ul>
+<ul>
+<li>Si crees que \(E,F,G\) son invariantes por separado, revisar cambio de parámetros y regla de la cadena.</li>
+</ul>
+<ul>
+<li>Si no puedes explicar para qué sirve la primera forma fundamental antes de estudiar la segunda, falta repasar la diferencia entre métrica y curvatura.</li>
+</ul>
+<ul>
+<li>Si puedes calcular \(E,F,G\), longitud, ángulo y área en una parametrización dada, el capítulo está suficientemente asentado.</li>
+</ul>
+<ul>
+<li>Si puedes justificar por qué \(EG-F^2&gt;0\) en una parametrización regular, el dominio conceptual es sólido.</li>
+</ul>
+<ul>
+<li>Si puedes resolver un ejercicio tipo toro, gráfica o coordenadas polares sin mirar fórmulas externas, el tema está preparado para examen.</li>
+</ul>
+</div></section>
+    </main>
+  </div>
+</body>
+</html>
