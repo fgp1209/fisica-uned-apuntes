@@ -1,0 +1,961 @@
+# Guía de estudio — Métodos Matemáticos IV / Geometría diferencial
+
+## 1. Prerrequisitos mínimos
+
+1. Vectores en \(E^3\).
+Definición breve: un vector de \(E^3\) se escribe como combinación de una base, por ejemplo \(x=x_1e_1+x_2e_2+x_3e_3\), y tiene norma euclídea \(|x|=\sqrt{x_1^2+x_2^2+x_3^2}\).
+Por qué es necesario: el capítulo describe curvas como funciones vectoriales \(x=x(t)\). Toda afirmación sobre regularidad, proyección o longitud se expresa mediante componentes y norma.
+Ejemplo mínimo: si \(x(t)=(\cos t,\sin t,t)\), entonces \(x'(t)=(-\sin t,\cos t,1)\) y \(|x'(t)|=\sqrt{2}\).
+
+2. Funciones vectoriales de variable real.
+Definición breve: son aplicaciones que asignan a cada \(t\) real un vector \(x(t)\in E^3\). Se derivan componente a componente.
+Por qué es necesario: una representación paramétrica de una curva es precisamente una función vectorial definida en un intervalo.
+Ejemplo mínimo: \(x(t)=t e_1+t^2e_2\) representa la parábola \(x_2=x_1^2\) en el plano \(x_3=0\).
+
+3. Continuidad y derivabilidad.
+Definición breve: una función vectorial es continua o derivable si lo son sus componentes. Su derivada \(x'(t)\) mide la variación instantánea del punto de la curva.
+Por qué es necesario: la regularidad exige que \(x(t)\) sea de clase \(C^1\) y que \(x'(t)\neq 0\).
+Ejemplo mínimo: \(x(t)=(t^2,t^3,0)\) tiene \(x'(0)=(0,0,0)\); por tanto, no es regular en \(t=0\).
+
+4. Intervalos y cambios de variable.
+Definición breve: un cambio de parámetro sustituye \(t\) por una nueva variable \(\theta\), mediante una función \(t=t(\theta)\).
+Por qué es necesario: la misma curva geométrica puede describirse con distintos parámetros. El capítulo distingue la curva del modo concreto de recorrerla.
+Ejemplo mínimo: la circunferencia \(x(t)=(\cos t,\sin t,0)\) también puede escribirse como \(x(2\theta)=(\cos 2\theta,\sin 2\theta,0)\), siempre que el cambio sea admisible en el intervalo considerado.
+
+5. Producto escalar y norma.
+Definición breve: el producto escalar permite medir longitudes y ángulos; la norma se obtiene como \(|v|=\sqrt{v\cdot v}\).
+Por qué es necesario: la longitud de arco se calcula sumando longitudes de segmentos o integrando \(|x'(t)|\).
+Ejemplo mínimo: si \(x'(t)=(3,4,0)\), entonces \(|x'(t)|=5\).
+
+6. Teorema fundamental del cálculo.
+Definición breve: relaciona derivadas e integrales: si \(s(t)=\int_{t_0}^t f(u)\,du\), entonces \(s'(t)=f(t)\), bajo hipótesis de continuidad.
+Por qué es necesario: el parámetro longitud de arco se define mediante una integral y se demuestra que \(ds/dt=|x'(t)|\).
+Ejemplo mínimo: para \(x(t)=(a\cos t,a\sin t,0)\), \(|x'(t)|=|a|\), luego \(s(t)=|a|(t-t_0)\).
+
+7. Teorema de la función implícita, en forma elemental.
+Definición breve: si unas ecuaciones \(F(x_1,x_2,x_3)=0\), \(G(x_1,x_2,x_3)=0\) cumplen una condición jacobiana adecuada, localmente permiten despejar dos variables en función de la tercera.
+Por qué es necesario: el capítulo interpreta ciertas curvas como intersección de dos superficies.
+Ejemplo mínimo: si \(F=x_1^2+x_2^2-1\) y \(G=x_3\), la intersección es una circunferencia en el plano \(x_3=0\).
+
+8. Cálculo de integrales sencillas.
+Definición breve: integración de funciones continuas de una variable real.
+Por qué es necesario: la longitud de arco de una curva regular se obtiene con \(\int |x'(t)|\,dt\).
+Ejemplo mínimo: para la hélice \(x(t)=(a\cos t,a\sin t,bt)\), la longitud entre \(t=\alpha\) y \(t=\beta\) es \(\sqrt{a^2+b^2}\,(\beta-\alpha)\), si \(\beta>\alpha\).
+
+## 2. Idea central del capítulo
+
+El capítulo introduce el concepto matemático de curva regular en el espacio euclídeo tridimensional. La idea básica es sencilla: una curva se puede describir haciendo depender la posición de un punto de un parámetro real. Así, una expresión \(x=x(t)\) no es sólo una fórmula; es una manera de recorrer un conjunto de puntos del espacio.
+
+La dificultad conceptual aparece porque una misma curva puede estar descrita por muchas parametrizaciones distintas. Una circunferencia, por ejemplo, puede recorrerse despacio, deprisa, en sentido contrario o empezando desde otro punto. El capítulo separa por tanto dos niveles: la representación paramétrica concreta y la curva geométrica que esa representación define. Esta separación es fundamental para que las propiedades geométricas no dependan artificialmente del parámetro elegido.
+
+La condición de regularidad, \(x'(t)\neq 0\), evita puntos en los que la trayectoria se detiene o pierde dirección tangente. No es una condición decorativa: sin ella no se puede construir de forma estable la teoría posterior de tangentes, curvatura, torsión y triedro móvil. En este capítulo todavía no se desarrolla la curvatura, pero se prepara todo lo necesario para que el siguiente tema pueda hacerlo sin ambigüedad.
+
+El capítulo también explica cómo una curva espacial puede verse de varias formas: como una parametrización, como una proyección sobre planos coordenados o como intersección de superficies. Estas formas son equivalentes sólo bajo ciertas hipótesis. En examen, esto suele traducirse en saber decidir si una representación es regular, hallar proyecciones, reconocer una curva como intersección de cilindros o superficies, y justificar cuándo una descripción implícita define localmente una curva.
+
+La segunda parte del capítulo se centra en la longitud de arco. Primero se define geométricamente, aproximando la curva por polígonos inscritos. Después se obtiene la fórmula práctica para curvas regulares: la longitud es la integral de la rapidez \(|x'(t)|\). Finalmente, esa longitud se convierte en un nuevo parámetro, el parámetro natural o longitud de arco. Esta construcción es esencial: cuando una curva se parametriza por longitud de arco, el vector derivada tiene norma uno, lo que simplifica toda la teoría posterior.
+
+El papel del capítulo dentro de la asignatura es fundacional. Antes de hablar de curvatura, torsión, normales, binormales, geodésicas o formas fundamentales, hay que saber qué significa que algo sea una curva regular y qué propiedades no cambian al cambiar de parámetro. Este capítulo fija ese lenguaje.
+
+## 3. Desarrollo completo del capítulo
+
+### 3.1. Representaciones paramétricas regulares
+
+El punto de partida es una función vectorial
+\[
+x=x(t),\qquad t\in I,
+\]
+donde \(I\) es un intervalo real. Si se fija una base de \(E^3\), esta expresión equivale a tres funciones escalares:
+\[
+x_1=x_1(t),\qquad x_2=x_2(t),\qquad x_3=x_3(t).
+\]
+La curva aparece como el conjunto de posiciones que toma el extremo del vector \(x(t)\) al variar \(t\).
+
+La representación se llama regular cuando \(x(t)\) es de clase \(C^1\) y
+\[
+x'(t)\neq 0
+\]
+para todo \(t\) del intervalo. La primera condición asegura suavidad mínima. La segunda impide que la parametrización se detenga. Si \(x'(t)=0\) en un punto, no hay una dirección instantánea bien definida en esa representación, y se pierde la base para definir la tangente de forma limpia.
+
+Por ejemplo,
+\[
+x(t)=(\cos t,\sin t,0)
+\]
+es una representación regular de la circunferencia unidad, porque
+\[
+x'(t)=(-\sin t,\cos t,0)
+\]
+y \(|x'(t)|=1\) para todo \(t\). En cambio,
+\[
+x(t)=(t^2,t^3,0)
+\]
+no es regular en \(t=0\), ya que \(x'(0)=(0,0,0)\). La imagen puede parecer una curva reconocible, pero esa parametrización no cumple la condición regular en el origen.
+
+Esta distinción importa porque la geometría diferencial no estudia cualquier trazo continuo. Estudia curvas suficientemente suaves para que se puedan medir direcciones, longitudes y, más adelante, curvaturas.
+
+### 3.2. Regularidad local e inyectividad
+
+Una representación regular puede tener puntos múltiples. Es decir, pueden existir \(t_1\neq t_2\) tales que
+\[
+x(t_1)=x(t_2).
+\]
+Esto ocurre, por ejemplo, en curvas cerradas: la circunferencia vuelve al punto inicial si el intervalo cubre una vuelta completa.
+
+Sin embargo, la regularidad sí garantiza buen comportamiento local. Cerca de cada valor \(t_0\), la parametrización no se aplasta por completo ni pierde dirección. Al menos una componente tiene derivada no nula en \(t_0\), y eso permite mostrar que, en un entorno suficientemente pequeño, la representación es inyectiva respecto a esa componente. En términos prácticos: aunque una curva pueda cortarse a sí misma globalmente, localmente se comporta como un arco simple.
+
+Esta idea conecta con la condición \(x'(t)\neq 0\). Si todas las derivadas componentes se anulasen en un punto, no se podría elegir una coordenada que sirviera localmente para distinguir los puntos de la curva. La regularidad elimina ese problema.
+
+### 3.3. Cambios admisibles de parámetro
+
+La misma curva puede describirse con otro parámetro. Para ello se introduce un cambio
+\[
+t=t(\theta),
+\]
+donde \(\theta\) pertenece a otro intervalo. El cambio es admisible si es suficientemente regular y no anula su derivada:
+\[
+\frac{dt}{d\theta}\neq 0.
+\]
+Con ello, la nueva representación es
+\[
+x^*(\theta)=x(t(\theta)).
+\]
+La regla de la cadena da
+\[
+\frac{dx^*}{d\theta}=\frac{dx}{dt}\frac{dt}{d\theta}.
+\]
+Si \(x'(t)\neq0\) y \(dt/d\theta\neq0\), entonces \(dx^*/d\theta\neq0\). Por tanto, la regularidad se conserva.
+
+El capítulo también subraya que un cambio admisible de parámetro es inyectivo sobre el intervalo y posee inversa admisible. Esto evita que el nuevo parámetro recorra el mismo trozo de curva de forma degenerada o duplicada localmente.
+
+Ejemplo: si
+\[
+x(t)=(\cos t,\sin t,0),
+\]
+y tomamos \(t=2\theta\), entonces
+\[
+x^*(\theta)=(\cos 2\theta,\sin 2\theta,0).
+\]
+La curva geométrica es la misma si los intervalos se ajustan adecuadamente, pero la velocidad de recorrido cambia. Si \(t=-\theta\), la orientación se invierte.
+
+### 3.4. Curva regular como objeto geométrico
+
+Una curva regular no debe identificarse con una única fórmula \(x(t)\). El capítulo trata como equivalentes las representaciones que se obtienen unas de otras mediante cambios admisibles de parámetro. Esta equivalencia permite decir que propiedades como la longitud de arco no dependen de cómo se recorra la curva.
+
+Esta idea es esencial para el examen. Si se pide estudiar una curva, no basta mirar la imagen; hay que comprobar la representación. Si se cambia el parámetro, hay que justificar que el cambio es admisible. Si no lo es, no se puede afirmar sin más que se mantiene la regularidad.
+
+Por ejemplo, la circunferencia puede representarse por
+\[
+x(t)=(\cos t,\sin t,0)
+\]
+o por
+\[
+y(\theta)=(\cos(\theta^3),\sin(\theta^3),0).
+\]
+Aunque ambas tienen la misma imagen en intervalos adecuados, la segunda falla como representación regular en \(\theta=0\), porque \(dt/d\theta=3\theta^2\) se anula. Por tanto, no todo cambio de variable que conserve la imagen es admisible.
+
+### 3.5. Ejemplos geométricos: circunferencia, hélice y curvas planas
+
+El capítulo utiliza ejemplos de curvas planas y espaciales para mostrar que una parametrización regular puede describir objetos muy distintos.
+
+La circunferencia de radio \(a\) puede escribirse como
+\[
+x(t)=a\cos t\,e_1+a\sin t\,e_2.
+\]
+Su derivada es
+\[
+x'(t)=-a\sin t\,e_1+a\cos t\,e_2,
+\]
+por lo que \(|x'(t)|=|a|\). Es regular si \(a\neq0\).
+
+Una hélice circular se escribe en la forma
+\[
+x(t)=a\cos t\,e_1+a\sin t\,e_2+bt\,e_3,
+\]
+con \(a\neq0\) o \(b\neq0\), según el caso. Si \(a\neq0\), se apoya sobre un cilindro circular de radio \(|a|\), mientras el término \(bt\) hace avanzar la curva en la dirección \(e_3\). Su derivada es
+\[
+x'(t)=-a\sin t\,e_1+a\cos t\,e_2+b e_3,
+\]
+y
+\[
+|x'(t)|=\sqrt{a^2+b^2}.
+\]
+Es un ejemplo importante porque no es plana si \(b\neq0\) y prepara la necesidad de estudiar torsión más adelante.
+
+También aparecen curvas construidas mediante procedimientos geométricos, como epicicloides, donde la parametrización se obtiene siguiendo el movimiento de un punto ligado a una circunferencia que rueda. En estos casos, el objetivo no es memorizar la fórmula, sino entender que una descripción geométrica puede traducirse a una representación vectorial.
+
+### 3.6. Proyecciones ortogonales
+
+Una curva espacial
+\[
+x(t)=(x_1(t),x_2(t),x_3(t))
+\]
+puede proyectarse ortogonalmente sobre los planos coordenados. Sobre el plano \(x_1x_2\), la proyección es
+\[
+(x_1(t),x_2(t),0).
+\]
+Sobre el plano \(x_1x_3\), la proyección es
+\[
+(x_1(t),0,x_3(t)).
+\]
+Sobre el plano \(x_2x_3\), la proyección es
+\[
+(0,x_2(t),x_3(t)).
+\]
+
+Esta técnica permite visualizar curvas espaciales a partir de curvas planas. Si una curva espacial viene dada por funciones sencillas, sus proyecciones suelen revelar que está contenida en la intersección de cilindros. Por ejemplo, si
+\[
+x_1=t,\qquad x_2=t^2+1,\qquad x_3=(t-1)^3,
+\]
+la proyección sobre \(x_1x_2\) es una parábola y la proyección sobre \(x_1x_3\) es una cúbica. La curva espacial puede entenderse como intersección de cilindros definidos por esas relaciones.
+
+En examen, este apartado suele aparecer como cálculo directo: hallar proyecciones, identificar las ecuaciones cartesianas de los cilindros proyectantes y describir la curva como intersección.
+
+### 3.7. Representaciones implícitas
+
+Además de parametrizar una curva, se puede describir como intersección de dos superficies:
+\[
+F(x_1,x_2,x_3)=0,\qquad G(x_1,x_2,x_3)=0.
+\]
+Esta forma no siempre define una curva regular. Para que localmente lo haga, debe cumplirse una condición de independencia entre las ecuaciones. En términos prácticos, algún menor jacobiano de orden dos debe ser distinto de cero, de modo que se puedan despejar dos variables en función de la tercera.
+
+Por ejemplo,
+\[
+x_1^2+x_2^2=1,\qquad x_3=0
+\]
+define la circunferencia unidad en el plano \(x_3=0\). Una parametrización regular es
+\[
+x(t)=(\cos t,\sin t,0).
+\]
+
+El capítulo muestra que una misma curva puede tener partes distintas o componentes adicionales si las ecuaciones implícitas no se analizan con cuidado. Por eso, al resolver problemas implícitos, no basta con escribir dos ecuaciones: hay que estudiar qué conjunto definen y bajo qué condiciones puede elegirse un parámetro local.
+
+### 3.8. Curvas de clase \(C^m\)
+
+La regularidad básica exige clase \(C^1\), pero la teoría posterior requiere derivadas de orden superior. El capítulo introduce la noción de curva regular de clase \(C^m\): sus representaciones tienen derivadas continuas hasta el orden \(m\), manteniendo la condición de velocidad no nula.
+
+Esto importa porque cada concepto geométrico posterior exige más derivadas. Para la tangente basta \(C^1\). Para la curvatura se necesita derivar la tangente, por lo que hace falta más regularidad. Para la torsión todavía se requiere un orden superior. El capítulo no desarrolla aún todos esos objetos, pero deja fijada la jerarquía.
+
+Un error frecuente es decir que toda curva regular es suficientemente buena para cualquier cálculo. No. Regularidad \(C^1\) basta para longitud y tangente, pero no necesariamente para curvatura y torsión.
+
+### 3.9. Longitud de arco mediante polígonos inscritos
+
+La longitud de una curva no se introduce primero mediante una integral, sino mediante una idea geométrica. Se toma una subdivisión del intervalo:
+\[
+a=t_0<t_1<\cdots<t_n=b.
+\]
+Los puntos \(x(t_0),x(t_1),\ldots,x(t_n)\) forman una poligonal inscrita. Su longitud es
+\[
+s(P)=\sum_{i=1}^n |x(t_i)-x(t_{i-1})|.
+\]
+Al refinar la partición, se obtienen aproximaciones cada vez mejores. Si todas esas longitudes poligonales están acotadas superiormente, el arco se llama rectificable. La longitud de arco se define entonces como el supremo de esas longitudes.
+
+Esta definición es importante porque no presupone que exista una fórmula integral. Primero define qué significa medir una curva. Después, bajo hipótesis de regularidad, se demuestra la fórmula práctica.
+
+El capítulo también muestra que no toda curva continua es rectificable. Hay curvas que oscilan tanto que las longitudes de las poligonales crecen sin cota. Este punto sirve para distinguir continuidad de regularidad geométrica útil.
+
+### 3.10. Fórmula integral de la longitud de una curva regular
+
+Si \(x=x(t)\), \(a\leq t\leq b\), es una curva regular, su longitud viene dada por
+\[
+L=\int_a^b |x'(t)|\,dt.
+\]
+La cantidad \(|x'(t)|\) es la rapidez con la que se recorre la curva respecto al parámetro \(t\). Aunque la rapidez depende del parámetro, la integral total no cambia bajo cambios admisibles de parámetro.
+
+Ejemplo:
+\[
+x(t)=(a\cos t,a\sin t,bt),\qquad \alpha\leq t\leq \beta.
+\]
+Entonces
+\[
+x'(t)=(-a\sin t,a\cos t,b),
+\]
+\[
+|x'(t)|=\sqrt{a^2+b^2}.
+\]
+La longitud es
+\[
+L=\int_\alpha^\beta \sqrt{a^2+b^2}\,dt
+=\sqrt{a^2+b^2}\,(\beta-\alpha).
+\]
+
+La fórmula integral convierte la definición geométrica por polígonos en un método operativo. En examen, casi siempre se usa esta forma, pero conviene recordar de dónde viene.
+
+### 3.11. Longitud de arco como parámetro
+
+Fijado un valor \(t_0\), se define
+\[
+s(t)=\int_{t_0}^{t} |x'(u)|\,du.
+\]
+Si \(t>t_0\), \(s(t)\) mide la longitud del arco desde \(t_0\) hasta \(t\). Si \(t<t_0\), toma signo negativo. Por el teorema fundamental del cálculo,
+\[
+\frac{ds}{dt}=|x'(t)|.
+\]
+Como la curva es regular, \(|x'(t)|>0\), así que \(s=s(t)\) es un cambio admisible de parámetro. Por tanto, se puede usar \(s\) como nuevo parámetro.
+
+Cuando una curva se escribe como \(x=x(s)\), usando la longitud de arco, se dice que está en representación natural. Entonces
+\[
+\left|\frac{dx}{ds}\right|=1.
+\]
+Esta propiedad será la herramienta central del tema siguiente: al parametrizar por longitud de arco, la derivada de la posición es directamente el vector tangente unitario.
+
+### 3.12. Unicidad relativa del parámetro natural
+
+El parámetro longitud de arco no es absolutamente único. Depende del punto inicial elegido y de la orientación. Si dos representaciones naturales describen la misma curva, sus parámetros están relacionados por
+\[
+s=\pm s^*+\text{constante}.
+\]
+El signo positivo corresponde a la misma orientación; el signo negativo, a orientación opuesta.
+
+Esto significa que la longitud de arco elimina la arbitrariedad de la rapidez, pero no elimina la elección del origen ni del sentido de recorrido. Esa es la forma correcta de entender la “naturalidad” del parámetro.
+
+### 3.13. Consecuencia operativa
+
+Al final del capítulo, el alumno debe poder hacer cuatro cosas. Primero, reconocer si una parametrización es regular. Segundo, justificar cuándo dos parametrizaciones representan la misma curva regular mediante un cambio admisible. Tercero, traducir entre parametrización, proyección e intersección implícita cuando sea posible. Cuarto, calcular longitudes y reparametrizar por longitud de arco en casos manejables.
+
+Estas cuatro tareas son la base para el estudio posterior de tangente, curvatura y torsión.
+
+## 4. Conceptos clave
+
+1. Representación paramétrica regular.
+Definición precisa: una aplicación \(x=x(t)\), \(t\in I\), de clase \(C^1\), tal que \(x'(t)\neq0\) para todo \(t\in I\).
+Explicación desarrollada: es la forma básica de describir una curva en geometría diferencial. La derivada no nula impide paradas o singularidades de la parametrización. La condición se comprueba calculando \(x'(t)\) y verificando que no es el vector cero.
+Ejemplo: \(x(t)=(\cos t,\sin t,t)\) es regular porque \(x'(t)=(-\sin t,\cos t,1)\), nunca nulo.
+Relación con otros conceptos: permite definir tangente, longitud de arco y cambios admisibles.
+Posible forma de preguntarlo en examen: “Determine si \(x(t)=(t^2,t^3,0)\) es una representación regular en un intervalo dado”.
+
+2. Parámetro.
+Definición precisa: variable real \(t\) que ordena los puntos de una representación \(x=x(t)\).
+Explicación desarrollada: el parámetro no es necesariamente la longitud ni el tiempo físico. Es una variable auxiliar para recorrer la curva.
+Ejemplo: en \(x(t)=(\cos t,\sin t,0)\), \(t\) es el ángulo polar.
+Relación con otros conceptos: se puede sustituir por otro parámetro mediante cambios admisibles.
+Posible pregunta de examen: “Explique por qué el parámetro de una curva no forma parte de la curva geométrica”.
+
+3. Cambio admisible de parámetro.
+Definición precisa: sustitución \(t=t(\theta)\) suficientemente regular, inyectiva en el intervalo y con \(dt/d\theta\neq0\).
+Explicación desarrollada: permite obtener otra representación regular de la misma curva. La condición \(dt/d\theta\neq0\) garantiza que la nueva representación no se detiene.
+Ejemplo: \(t=2\theta+1\) es admisible; \(t=\theta^3\) no lo es en \(\theta=0\).
+Relación con otros conceptos: define equivalencia entre representaciones y controla la orientación.
+Posible pregunta de examen: “Compruebe si \(t=\theta^3\) es un cambio admisible en un intervalo que contiene \(0\)”.
+
+4. Curva regular.
+Definición precisa: objeto geométrico definido por una clase de representaciones paramétricas regulares equivalentes mediante cambios admisibles de parámetro.
+Explicación desarrollada: no es sólo una fórmula. Distintas fórmulas pueden representar la misma curva si están conectadas por cambios permitidos.
+Ejemplo: \(x(t)=(\cos t,\sin t,0)\) y \(y(\theta)=(\cos(2\theta),\sin(2\theta),0)\) representan el mismo arco si los intervalos se corresponden adecuadamente.
+Relación con otros conceptos: separa propiedad geométrica de elección de parámetro.
+Posible pregunta de examen: “¿Representan la misma curva regular dos parametrizaciones dadas? Justifique el cambio de parámetro”.
+
+5. Orientación.
+Definición precisa: sentido de recorrido de la curva inducido por el crecimiento del parámetro.
+Explicación desarrollada: un cambio con derivada positiva conserva la orientación; uno con derivada negativa la invierte.
+Ejemplo: \(t=-\theta\) recorre la circunferencia en sentido contrario.
+Relación con otros conceptos: afecta al sentido de la tangente, pero no a la longitud.
+Posible pregunta de examen: “Indique si un cambio de parámetro conserva o invierte la orientación”.
+
+6. Punto múltiple.
+Definición precisa: punto de la imagen de la curva que corresponde a dos o más valores distintos del parámetro.
+Explicación desarrollada: una curva regular puede tener puntos múltiples. La regularidad no prohíbe auto-intersecciones globales; asegura buen comportamiento local.
+Ejemplo: una circunferencia parametrizada en \(0\leq t\leq 2\pi\) tiene \(x(0)=x(2\pi)\).
+Relación con otros conceptos: no contradice la regularidad; sí afecta a la inyectividad global.
+Posible pregunta de examen: “Explique por qué una representación regular puede no ser globalmente inyectiva”.
+
+7. Proyección ortogonal.
+Definición precisa: curva obtenida anulando una coordenada y conservando las otras dos.
+Explicación desarrollada: permite estudiar una curva espacial observando su sombra sobre planos coordenados.
+Ejemplo: si \(x(t)=(t,t^2,t^3)\), su proyección sobre \(x_1x_2\) es \((t,t^2,0)\).
+Relación con otros conceptos: ayuda a describir la curva como intersección de cilindros.
+Posible pregunta de examen: “Halle las proyecciones de una curva sobre los tres planos coordenados”.
+
+8. Representación implícita.
+Definición precisa: descripción de una curva como conjunto de puntos que satisfacen dos ecuaciones \(F=0\), \(G=0\).
+Explicación desarrollada: en \(E^3\), la intersección de dos superficies suele ser una curva, pero hay que comprobar condiciones de independencia.
+Ejemplo: \(x_1^2+x_2^2=1\), \(x_3=0\) define una circunferencia.
+Relación con otros conceptos: se conecta con el teorema de la función implícita y con la parametrización local.
+Posible pregunta de examen: “Determine una parametrización de la curva definida por dos ecuaciones implícitas”.
+
+9. Curva de clase \(C^m\).
+Definición precisa: curva que admite representaciones con derivadas continuas hasta orden \(m\), manteniendo regularidad.
+Explicación desarrollada: la suavidad necesaria depende de los objetos que se quieran estudiar. Longitud exige menos que curvatura o torsión.
+Ejemplo: una curva \(x(t)\) con componentes polinómicas es de clase \(C^\infty\).
+Relación con otros conceptos: prepara el estudio de tangente, curvatura y torsión.
+Posible pregunta de examen: “¿Qué regularidad mínima se necesita para hablar de longitud de arco? ¿Y por qué la teoría posterior exige más?”
+
+10. Arco poligonal aproximado.
+Definición precisa: poligonal formada uniendo los puntos \(x(t_i)\) asociados a una partición del intervalo.
+Explicación desarrollada: aproxima la curva mediante segmentos rectos. Su longitud es la suma de las longitudes de esos segmentos.
+Ejemplo: para \(a=t_0<t_1<t_2=b\), la longitud poligonal es \(|x(t_1)-x(t_0)|+|x(t_2)-x(t_1)|\).
+Relación con otros conceptos: es la base geométrica de la definición de longitud de arco.
+Posible pregunta de examen: “Defina la longitud de una curva mediante polígonos inscritos”.
+
+11. Curva rectificable.
+Definición precisa: curva para la cual las longitudes de todos los polígonos inscritos están acotadas superiormente.
+Explicación desarrollada: sólo para curvas rectificables tiene sentido asignar una longitud finita mediante el supremo de longitudes poligonales.
+Ejemplo: toda curva regular en un intervalo cerrado es rectificable.
+Relación con otros conceptos: permite pasar de definición geométrica a fórmula integral.
+Posible pregunta de examen: “Explique qué significa que una curva sea rectificable”.
+
+12. Longitud de arco.
+Definición precisa: supremo de las longitudes de los polígonos inscritos; para curvas regulares, \(L=\int_a^b |x'(t)|\,dt\).
+Explicación desarrollada: mide la distancia recorrida sobre la curva, no la distancia recta entre extremos.
+Ejemplo: en una circunferencia de radio \(a\), una vuelta completa mide \(2\pi |a|\).
+Relación con otros conceptos: genera el parámetro natural.
+Posible pregunta de examen: “Calcule la longitud de la hélice \(x(t)=(a\cos t,a\sin t,bt)\) entre dos valores del parámetro”.
+
+13. Parámetro longitud de arco.
+Definición precisa: parámetro \(s\) definido por \(s(t)=\int_{t_0}^{t}|x'(u)|\,du\).
+Explicación desarrollada: convierte la distancia recorrida desde un punto inicial en el parámetro de la curva.
+Ejemplo: para \(x(t)=(a\cos t,a\sin t,bt)\), \(s=\sqrt{a^2+b^2}(t-t_0)\).
+Relación con otros conceptos: en representación natural se cumple \(|dx/ds|=1\).
+Posible pregunta de examen: “Reparametrice una curva por longitud de arco”.
+
+14. Representación natural.
+Definición precisa: parametrización \(x=x(s)\) en la que \(s\) es longitud de arco.
+Explicación desarrollada: simplifica las fórmulas geométricas porque la velocidad tiene norma uno.
+Ejemplo: la recta \(x(s)=p+s u\), con \(|u|=1\), está parametrizada naturalmente.
+Relación con otros conceptos: base directa para definir el vector tangente unitario en el capítulo siguiente.
+Posible pregunta de examen: “Demuestre que en una representación natural se cumple \(|x'(s)|=1\)”.
+
+15. Invariancia de la longitud.
+Definición precisa: la longitud de una curva no cambia bajo cambios admisibles de parámetro.
+Explicación desarrollada: aunque \(|x'(t)|\) cambie al cambiar de parámetro, la integral se transforma de modo que el valor total permanece.
+Ejemplo: recorrer una circunferencia con \(t\) o con \(2\theta\) no altera su longitud.
+Relación con otros conceptos: distingue propiedades geométricas de propiedades de la representación.
+Posible pregunta de examen: “Explique por qué la longitud es independiente de la parametrización regular elegida”.
+
+## 5. Relaciones entre ideas
+
+La primera dependencia conceptual es clara: no se puede hablar de curva regular sin antes hablar de representación paramétrica regular. La representación es la fórmula; la curva regular es la clase geométrica que queda al identificar representaciones equivalentes por cambios admisibles.
+
+La condición \(x'(t)\neq0\) sostiene toda la estructura. Gracias a ella, la curva tiene dirección local, el cambio a longitud de arco es admisible, y la fórmula \(s'(t)=|x'(t)|\) no se anula. Si desaparece esa condición, la reparametrización natural puede fallar y la geometría local pierde estabilidad.
+
+La relación entre cambio de parámetro y orientación es jerárquica. Primero se exige que el cambio sea admisible. Después se mira el signo de \(dt/d\theta\). Si es positivo, se conserva el sentido de recorrido; si es negativo, se invierte. La longitud no depende de ese signo, pero el vector tangente orientado sí dependerá de él en el tema siguiente.
+
+Las proyecciones ortogonales y las representaciones implícitas son dos modos complementarios de describir la misma realidad. Una curva espacial puede proyectarse sobre planos para obtener información visual; también puede entenderse como intersección de superficies. La parametrización permite recorrer la curva; la forma implícita permite reconocerla como lugar geométrico.
+
+La longitud de arco se construye en dos niveles. Primero, de forma geométrica, mediante polígonos inscritos y supremo. Segundo, de forma analítica, mediante la integral \(\int |x'(t)|dt\). La primera definición da significado; la segunda da método de cálculo. Confundirlas empobrece el concepto.
+
+El parámetro natural aparece como consecuencia de la longitud, no como punto de partida. Una vez medida la longitud desde un origen, esa medida se usa para reparametrizar. De ahí se obtiene la propiedad \(|dx/ds|=1\), que será la conexión directa con el vector tangente unitario.
+
+También hay una oposición importante entre propiedades locales y globales. La regularidad garantiza que localmente la curva se comporta bien, pero no impide puntos múltiples globales. Por eso una curva cerrada o auto-intersecante puede ser regular. En examen, esta diferencia evita errores al confundir regularidad con inyectividad global.
+
+Históricamente, el capítulo se sitúa en la tradición de construir la geometría diferencial a partir del cálculo. La curva deja de ser sólo una figura dibujada y pasa a ser una función vectorial con derivadas. Esta traducción permite medir y clasificar figuras mediante cálculo diferencial e integral.
+
+## 6. Errores habituales
+
+1. Error: identificar curva con una única parametrización.
+Por qué está mal: la misma curva admite muchas representaciones, y la geometría debe ser independiente del parámetro.
+Corrección: distinguir entre representación \(x(t)\) y curva regular como clase de representaciones equivalentes.
+Ejemplo de respuesta incorrecta: “Si cambia la fórmula, cambia la curva”.
+Ejemplo de respuesta correcta: “Puede cambiar la fórmula sin cambiar la curva si existe un cambio admisible de parámetro que relacione ambas representaciones”.
+
+2. Error: olvidar comprobar \(x'(t)\neq0\).
+Por qué está mal: sin esa condición no hay representación regular.
+Corrección: calcular siempre la derivada vectorial y verificar que no se anula en el intervalo.
+Ejemplo de respuesta incorrecta: “\(x(t)=(t^2,t^3,0)\) es regular porque sus componentes son derivables”.
+Ejemplo de respuesta correcta: “No es regular en un intervalo que contenga \(0\), pues \(x'(0)=(0,0,0)\)”.
+
+3. Error: confundir regularidad con ausencia de autointersecciones.
+Por qué está mal: una curva regular puede tener puntos múltiples.
+Corrección: la regularidad es local; la inyectividad global es otra propiedad.
+Ejemplo de respuesta incorrecta: “La circunferencia en \([0,2\pi]\) no es regular porque \(x(0)=x(2\pi)\)”.
+Ejemplo de respuesta correcta: “La representación es regular porque \(x'(t)\neq0\), aunque los extremos coincidan”.
+
+4. Error: aceptar cualquier cambio de parámetro.
+Por qué está mal: un cambio que anula su derivada puede destruir la regularidad.
+Corrección: comprobar que \(dt/d\theta\neq0\) en todo el intervalo.
+Ejemplo de respuesta incorrecta: “\(t=\theta^3\) siempre es admisible”.
+Ejemplo de respuesta correcta: “No es admisible en intervalos que contengan \(0\), porque \(dt/d\theta=3\theta^2\) se anula”.
+
+5. Error: decir que la longitud es \(|x(b)-x(a)|\).
+Por qué está mal: eso mide la distancia recta entre extremos, no la longitud recorrida sobre la curva.
+Corrección: usar \(L=\int_a^b |x'(t)|\,dt\) para curvas regulares.
+Ejemplo de respuesta incorrecta: “La longitud de una circunferencia cerrada es cero porque el punto inicial y final coinciden”.
+Ejemplo de respuesta correcta: “La longitud de una vuelta completa de radio \(a\) es \(2\pi |a|\)”.
+
+6. Error: usar la fórmula integral sin comprobar regularidad o suavidad.
+Por qué está mal: la fórmula integral se justifica bajo hipótesis adecuadas.
+Corrección: comprobar que la curva es al menos regular en el intervalo.
+Ejemplo de respuesta incorrecta: “Aplico directamente \(L=\int |x'|\) aunque \(x'\) se anule y no haya regularidad”.
+Ejemplo de respuesta correcta: “Primero verifico regularidad; si se cumple en el intervalo cerrado, la curva es rectificable y uso la integral”.
+
+7. Error: olvidar el valor absoluto en \(|x'(t)|\).
+Por qué está mal: la longitud integra rapidez, no una componente con signo.
+Corrección: calcular la norma del vector derivada.
+Ejemplo de respuesta incorrecta: “Para \(x(t)=(t,0,0)\), de \(1\) a \(-1\), la longitud es \(\int_1^{-1}1\,dt=-2\)”.
+Ejemplo de respuesta correcta: “La longitud es positiva; si se integra con límites ordenados según el intervalo o se toma el valor adecuado, resulta \(2\)”.
+
+8. Error: no distinguir parámetro natural de parámetro arbitrario.
+Por qué está mal: sólo en parámetro natural se cumple \(|dx/ds|=1\).
+Corrección: calcular \(s(t)=\int |x'(u)|du\) y sustituir.
+Ejemplo de respuesta incorrecta: “En cualquier parametrización \(|x'(t)|=1\)”.
+Ejemplo de respuesta correcta: “\(|x'(t)|\) puede variar; sólo con \(s\) longitud de arco se obtiene \(|dx/ds|=1\)”.
+
+9. Error: confundir proyección con intersección.
+Por qué está mal: proyectar elimina información de una coordenada; intersectar impone ecuaciones.
+Corrección: una proyección es una sombra sobre un plano; una representación implícita define puntos que satisfacen condiciones.
+Ejemplo de respuesta incorrecta: “La proyección sobre \(x_1x_2\) de una hélice es la hélice sin \(x_3\), luego sigue siendo una hélice”.
+Ejemplo de respuesta correcta: “La proyección de la hélice circular sobre \(x_1x_2\) es una circunferencia”.
+
+10. Error: creer que dos ecuaciones implícitas siempre definen una curva regular.
+Por qué está mal: pueden definir un punto, varias componentes, una superficie degenerada o no cumplir independencia.
+Corrección: analizar la intersección y comprobar una condición jacobiana local.
+Ejemplo de respuesta incorrecta: “Cualquier sistema \(F=0\), \(G=0\) en \(E^3\) es una curva”.
+Ejemplo de respuesta correcta: “Es necesario comprobar que las superficies se cortan de forma regular; localmente debe poder parametrizarse la intersección”.
+
+## 7. Preguntas orientadas a examen
+
+### 10 preguntas fáciles
+
+F1. Defina representación paramétrica regular de una curva en \(E^3\).
+
+F2. Determine si \(x(t)=(t,t^2,t^3)\) es regular en \(\mathbb{R}\).
+
+F3. Determine si \(x(t)=(t^2,t^3,0)\) es regular en un intervalo que contiene \(0\).
+
+F4. Escriba la proyección sobre el plano \(x_1x_2\) de la curva \(x(t)=(t,t^2,e^t)\).
+
+F5. Calcule \(|x'(t)|\) para \(x(t)=(a\cos t,a\sin t,0)\).
+
+F6. Defina cambio admisible de parámetro.
+
+F7. Diga si \(t=2\theta+1\) es un cambio admisible de parámetro.
+
+F8. Explique qué significa que una curva sea rectificable.
+
+F9. Escriba la fórmula de longitud de arco para una curva regular \(x(t)\), \(a\leq t\leq b\).
+
+F10. Defina parámetro longitud de arco.
+
+### 10 preguntas medias
+
+M1. Demuestre que la hélice \(x(t)=(a\cos t,a\sin t,bt)\), con \(a\neq0\), es regular.
+
+M2. Calcule la longitud de la hélice \(x(t)=(a\cos t,a\sin t,bt)\) entre \(t=0\) y \(t=T\), con \(T>0\).
+
+M3. Reparametrice por longitud de arco la circunferencia \(x(t)=(a\cos t,a\sin t,0)\), \(a>0\), tomando \(s=0\) en \(t=0\).
+
+M4. Explique por qué \(t=\theta^3\) no es un cambio admisible en un intervalo que contiene \(0\).
+
+M5. Halle las tres proyecciones coordenadas de \(x(t)=(t,t^2+1,(t-1)^3)\).
+
+M6. Describa la curva \(x(t)=(\cos t,\sin t,0)\) como intersección de dos superficies.
+
+M7. Para \(x(t)=(e^t\cos t,e^t\sin t,e^t)\), calcule \(|x'(t)|\).
+
+M8. Explique por qué una representación regular puede tener puntos múltiples.
+
+M9. Sea \(x(t)=(t^2-1,t^2+1,0)\). Determine si es regular en \(\mathbb{R}\).
+
+M10. Si \(x=x(s)\) es una representación natural, demuestre que la longitud entre \(s=s_1\) y \(s=s_2\) es \(|s_2-s_1|\).
+
+### 5 preguntas difíciles
+
+D1. Sean \(x(t)\) y \(y(\theta)=x(t(\theta))\). Demuestre que si \(x\) es regular y \(t=t(\theta)\) es admisible, entonces \(y\) es regular.
+
+D2. Justifique que la longitud de arco no depende de la parametrización regular elegida.
+
+D3. Dadas las superficies \(F(x_1,x_2,x_3)=x_1^2+x_2^2-1=0\) y \(G(x_1,x_2,x_3)=x_3-cx_1=0\), obtenga una parametrización regular de su intersección y compruebe la regularidad.
+
+D4. Sea \(x(t)=(t^3,t^4,0)\). Estudie la regularidad en \(\mathbb{R}\) y explique qué falla en \(t=0\).
+
+D5. Para \(x(t)=(e^t\cos t,e^t\sin t,e^t)\), introduzca la longitud de arco como parámetro tomando \(s=0\) en \(t=0\).
+
+### 5 preguntas de desarrollo largo
+
+DL1. Desarrolle el concepto de curva regular distinguiendo representación paramétrica, cambio admisible y clase geométrica de la curva.
+
+DL2. Explique la construcción de la longitud de arco desde las poligonales inscritas hasta la fórmula integral para curvas regulares.
+
+DL3. Desarrolle el papel del parámetro longitud de arco y explique por qué es central para la teoría posterior de curvas.
+
+DL4. Explique las distintas formas de describir una curva espacial: parametrización, proyección y representación implícita.
+
+DL5. Analice la diferencia entre propiedades locales y globales en curvas regulares, usando regularidad, inyectividad local y puntos múltiples.
+
+### 5 preguntas de relación entre conceptos
+
+R1. Relacione regularidad y existencia de parámetro longitud de arco.
+
+R2. Relacione cambio admisible de parámetro y orientación.
+
+R3. Relacione representación implícita y teorema de la función implícita.
+
+R4. Relacione proyecciones ortogonales y descripción de una curva como intersección de cilindros.
+
+R5. Relacione longitud de arco, rapidez \(|x'(t)|\) y representación natural.
+
+## 8. Respuestas modelo
+
+### Respuestas a las preguntas fáciles
+
+F1. Una representación paramétrica regular es una función vectorial \(x=x(t)\), definida en un intervalo \(I\), tal que \(x\) es de clase \(C^1\) y \(x'(t)\neq0\) para todo \(t\in I\). Si \(x(t)=(x_1(t),x_2(t),x_3(t))\), esto exige que las componentes sean derivables con derivadas continuas y que no se anulen simultáneamente las tres derivadas.
+
+F2. Para \(x(t)=(t,t^2,t^3)\),
+\[
+x'(t)=(1,2t,3t^2).
+\]
+Este vector nunca es cero porque su primera componente vale siempre \(1\). Por tanto, la representación es regular en todo \(\mathbb{R}\).
+
+F3. Para \(x(t)=(t^2,t^3,0)\),
+\[
+x'(t)=(2t,3t^2,0).
+\]
+En \(t=0\), \(x'(0)=(0,0,0)\). Por tanto, no es regular en ningún intervalo que contenga \(0\).
+
+F4. La proyección sobre el plano \(x_1x_2\) se obtiene anulando la tercera coordenada:
+\[
+(t,t^2,0).
+\]
+La coordenada \(e^t\) se pierde en esa proyección.
+
+F5. Si \(x(t)=(a\cos t,a\sin t,0)\), entonces
+\[
+x'(t)=(-a\sin t,a\cos t,0).
+\]
+Por tanto,
+\[
+|x'(t)|=\sqrt{a^2\sin^2t+a^2\cos^2t}=|a|.
+\]
+
+F6. Un cambio admisible de parámetro es una sustitución \(t=t(\theta)\) que permite pasar de una parametrización regular a otra sin perder regularidad. Debe ser suficientemente regular, inyectiva en el intervalo y cumplir \(dt/d\theta\neq0\).
+
+F7. Sí. Para \(t=2\theta+1\),
+\[
+dt/d\theta=2\neq0.
+\]
+Es una función lineal inyectiva en cualquier intervalo. Por tanto, es un cambio admisible.
+
+F8. Una curva es rectificable si las longitudes de todos los polígonos inscritos asociados a particiones del intervalo están acotadas superiormente. En ese caso, la longitud de la curva se define como el supremo de esas longitudes poligonales.
+
+F9. Si \(x(t)\), \(a\leq t\leq b\), es regular, su longitud es
+\[
+L=\int_a^b |x'(t)|\,dt.
+\]
+Aquí \(|x'(t)|\) es la norma euclídea del vector derivada.
+
+F10. El parámetro longitud de arco se define por
+\[
+s(t)=\int_{t_0}^{t}|x'(u)|\,du.
+\]
+Mide la longitud recorrida desde el punto correspondiente a \(t_0\), con signo según la orientación.
+
+### Respuestas a las preguntas medias
+
+M1. Derivamos:
+\[
+x'(t)=(-a\sin t,a\cos t,b).
+\]
+Su norma es
+\[
+|x'(t)|=\sqrt{a^2\sin^2t+a^2\cos^2t+b^2}=\sqrt{a^2+b^2}.
+\]
+Como \(a\neq0\), \(\sqrt{a^2+b^2}>0\). Por tanto, \(x'(t)\neq0\) para todo \(t\), y la hélice es regular.
+
+M2. Usando el cálculo anterior,
+\[
+|x'(t)|=\sqrt{a^2+b^2}.
+\]
+La longitud entre \(0\) y \(T\) es
+\[
+L=\int_0^T \sqrt{a^2+b^2}\,dt
+=\sqrt{a^2+b^2}\,T.
+\]
+
+M3. Para \(x(t)=(a\cos t,a\sin t,0)\), con \(a>0\),
+\[
+|x'(t)|=a.
+\]
+Tomando \(s=0\) en \(t=0\),
+\[
+s(t)=\int_0^t a\,du=at.
+\]
+Así, \(t=s/a\). La parametrización natural es
+\[
+x(s)=\left(a\cos\frac{s}{a},a\sin\frac{s}{a},0\right).
+\]
+Se comprueba que \(|dx/ds|=1\).
+
+M4. Si \(t=\theta^3\), entonces
+\[
+dt/d\theta=3\theta^2.
+\]
+En \(\theta=0\), esta derivada se anula. Por tanto, no es un cambio admisible en ningún intervalo que contenga \(0\). Aunque la imagen pueda coincidir con la de otra parametrización, la regularidad puede perderse.
+
+M5. La curva es
+\[
+x(t)=(t,t^2+1,(t-1)^3).
+\]
+Proyección sobre \(x_1x_2\):
+\[
+(t,t^2+1,0).
+\]
+Proyección sobre \(x_1x_3\):
+\[
+(t,0,(t-1)^3).
+\]
+Proyección sobre \(x_2x_3\):
+\[
+(0,t^2+1,(t-1)^3).
+\]
+
+M6. La curva
+\[
+x(t)=(\cos t,\sin t,0)
+\]
+satisface
+\[
+x_1^2+x_2^2=1,\qquad x_3=0.
+\]
+Por tanto, es la intersección del cilindro circular \(x_1^2+x_2^2=1\) con el plano \(x_3=0\).
+
+M7. Sea
+\[
+x(t)=(e^t\cos t,e^t\sin t,e^t).
+\]
+Derivando,
+\[
+x'(t)=(e^t(\cos t-\sin t),e^t(\sin t+\cos t),e^t).
+\]
+La norma al cuadrado es
+\[
+|x'(t)|^2=e^{2t}\left[(\cos t-\sin t)^2+(\sin t+\cos t)^2+1\right].
+\]
+Como
+\[
+(\cos t-\sin t)^2+(\sin t+\cos t)^2=2,
+\]
+resulta
+\[
+|x'(t)|=e^t\sqrt{3}.
+\]
+
+M8. La regularidad es una condición local sobre la derivada: exige \(x'(t)\neq0\). No exige que valores distintos del parámetro den puntos distintos de la imagen en todo el intervalo. Una circunferencia en \([0,2\pi]\) es regular porque su derivada nunca se anula, pero \(x(0)=x(2\pi)\). Por tanto, puede haber puntos múltiples sin perder regularidad.
+
+M9. Para
+\[
+x(t)=(t^2-1,t^2+1,0),
+\]
+se tiene
+\[
+x'(t)=(2t,2t,0).
+\]
+En \(t=0\), \(x'(0)=(0,0,0)\). No es regular en todo \(\mathbb{R}\). Sí sería regular en intervalos que no contengan \(0\).
+
+M10. Si \(x=x(s)\) es natural, entonces
+\[
+|x'(s)|=1.
+\]
+La longitud entre \(s_1\) y \(s_2\), suponiendo \(s_1<s_2\), es
+\[
+L=\int_{s_1}^{s_2}|x'(s)|\,ds
+=\int_{s_1}^{s_2}1\,ds=s_2-s_1.
+\]
+En general, la longitud es \(|s_2-s_1|\).
+
+### Respuestas a las preguntas difíciles
+
+D1. Sea
+\[
+y(\theta)=x(t(\theta)).
+\]
+Por la regla de la cadena,
+\[
+y'(\theta)=x'(t(\theta))\,t'(\theta).
+\]
+Como \(x\) es regular, \(x'(t(\theta))\neq0\). Como \(t=t(\theta)\) es admisible, \(t'(\theta)\neq0\). El producto de un vector no nulo por un escalar no nulo es no nulo. Por tanto,
+\[
+y'(\theta)\neq0.
+\]
+Además, la composición conserva la clase \(C^1\). Luego \(y\) es regular.
+
+D2. Supongamos que \(y(\theta)=x(t(\theta))\), con cambio admisible. Entonces
+\[
+y'(\theta)=x'(t(\theta))\,t'(\theta),
+\]
+y
+\[
+|y'(\theta)|=|x'(t(\theta))|\,|t'(\theta)|.
+\]
+Al integrar sobre el intervalo correspondiente, el cambio de variable en la integral transforma
+\[
+\int |y'(\theta)|\,d\theta
+\]
+en
+\[
+\int |x'(t)|\,dt.
+\]
+Si el cambio invierte orientación, el valor absoluto compensa el signo. Por tanto, la longitud no depende de la parametrización regular elegida.
+
+D3. Las ecuaciones son
+\[
+x_1^2+x_2^2=1,\qquad x_3=cx_1.
+\]
+Una parametrización natural de la circunferencia base es
+\[
+x_1=\cos t,\qquad x_2=\sin t.
+\]
+Entonces
+\[
+x_3=c\cos t.
+\]
+Por tanto,
+\[
+x(t)=(\cos t,\sin t,c\cos t).
+\]
+Derivamos:
+\[
+x'(t)=(-\sin t,\cos t,-c\sin t).
+\]
+Su norma al cuadrado es
+\[
+|x'(t)|^2=\sin^2t+\cos^2t+c^2\sin^2t
+=1+c^2\sin^2t.
+\]
+Este valor es siempre al menos \(1\), así que \(x'(t)\neq0\). La parametrización es regular.
+
+D4. Para
+\[
+x(t)=(t^3,t^4,0),
+\]
+se tiene
+\[
+x'(t)=(3t^2,4t^3,0).
+\]
+En \(t=0\), el vector derivada es cero. Por tanto, la representación no es regular en \(\mathbb{R}\), ni en ningún intervalo que contenga \(0\). Lo que falla es la existencia de una velocidad no nula en ese valor del parámetro; la curva queda singularizada por la parametrización en el origen.
+
+D5. Ya se calculó que
+\[
+|x'(t)|=\sqrt{3}\,e^t.
+\]
+Tomando \(s=0\) en \(t=0\),
+\[
+s(t)=\int_0^t \sqrt{3}e^u\,du
+=\sqrt{3}(e^t-1).
+\]
+Despejamos:
+\[
+e^t=1+\frac{s}{\sqrt{3}},
+\qquad
+t=\log\left(1+\frac{s}{\sqrt{3}}\right).
+\]
+La parametrización por longitud de arco es
+\[
+x(s)=\left(\left(1+\frac{s}{\sqrt{3}}\right)\cos\log\left(1+\frac{s}{\sqrt{3}}\right),
+\left(1+\frac{s}{\sqrt{3}}\right)\sin\log\left(1+\frac{s}{\sqrt{3}}\right),
+1+\frac{s}{\sqrt{3}}\right),
+\]
+en el intervalo donde \(1+s/\sqrt{3}>0\).
+
+### Respuestas a las preguntas de desarrollo largo
+
+DL1. Una representación paramétrica regular es una función vectorial \(x=x(t)\), definida en un intervalo, de clase \(C^1\) y con \(x'(t)\neq0\). Esta fórmula permite recorrer una curva, pero no debe confundirse con la curva geométrica. La misma imagen puede recorrerse con otros parámetros. Para que el cambio sea válido dentro de la teoría, debe ser admisible: regular, inyectivo y con derivada no nula. Dos representaciones relacionadas de este modo describen la misma curva regular. Así se separan las propiedades geométricas, como la longitud, de las propiedades accidentales del parámetro, como la rapidez de recorrido.
+
+DL2. La longitud de arco se construye aproximando la curva por polígonos. Dada una partición \(a=t_0<\cdots<t_n=b\), se unen los puntos \(x(t_i)\) y se suma la longitud de los segmentos:
+\[
+s(P)=\sum |x(t_i)-x(t_{i-1})|.
+\]
+Si estas longitudes están acotadas superiormente, la curva es rectificable y su longitud es el supremo de todas ellas. Para curvas regulares, esta definición geométrica se transforma en la fórmula práctica
+\[
+L=\int_a^b |x'(t)|\,dt.
+\]
+La integral suma la rapidez instantánea de recorrido. Esta fórmula no sustituye a la definición, sino que la hace calculable bajo hipótesis de regularidad.
+
+DL3. El parámetro longitud de arco se define por
+\[
+s(t)=\int_{t_0}^{t}|x'(u)|\,du.
+\]
+Como \(|x'(t)|>0\), se tiene \(ds/dt>0\), de modo que \(s\) puede usarse como parámetro. Al escribir la curva como \(x=x(s)\), se obtiene
+\[
+|dx/ds|=1.
+\]
+Esto significa que la curva se recorre a rapidez unitaria. Su importancia es que elimina la dependencia de la rapidez arbitraria del parámetro inicial. En los temas posteriores, esta parametrización permitirá definir el vector tangente unitario como \(dx/ds\) y simplificar las fórmulas de curvatura y torsión.
+
+DL4. Una curva espacial puede describirse de tres maneras principales. La primera es paramétrica: \(x=x(t)\). Es la más operativa para derivar, calcular longitudes y estudiar regularidad. La segunda es mediante proyecciones: se observa la curva sobre planos coordenados, lo que ayuda a visualizarla y a reconocer cilindros proyectantes. La tercera es implícita: la curva aparece como intersección de dos superficies \(F=0\), \(G=0\). Esta forma exige comprobar condiciones de independencia para asegurar que localmente se obtiene una curva regular. Las tres descripciones se complementan: la parametrización recorre, la proyección visualiza y la forma implícita caracteriza el lugar geométrico.
+
+DL5. La regularidad es una propiedad local: exige que \(x'(t)\neq0\) en cada punto del intervalo. De ahí se deduce que cerca de cada parámetro la curva se comporta como un arco bien definido. Sin embargo, globalmente la curva puede cerrarse o cortarse a sí misma. Una circunferencia parametrizada en una vuelta completa es regular, aunque el punto inicial y final coincidan. Por tanto, regularidad no significa inyectividad global. Esta distinción es importante porque la geometría diferencial local puede funcionar perfectamente aunque la imagen global tenga puntos múltiples.
+
+### Respuestas a las preguntas de relación entre conceptos
+
+R1. La regularidad implica \(|x'(t)|>0\). Por eso
+\[
+s(t)=\int_{t_0}^{t}|x'(u)|\,du
+\]
+tiene derivada no nula y puede utilizarse como nuevo parámetro. Si \(x'(t)\) se anulase, el cambio a longitud de arco podría dejar de ser admisible.
+
+R2. Un cambio admisible de parámetro conserva la curva regular. Si \(dt/d\theta>0\), el nuevo parámetro recorre la curva en el mismo sentido. Si \(dt/d\theta<0\), la recorre en sentido contrario. Por tanto, la orientación depende del signo del cambio, no de la imagen geométrica.
+
+R3. La representación implícita \(F=0\), \(G=0\) define una curva regular sólo si localmente se pueden despejar dos variables en función de la tercera. Esa posibilidad se justifica mediante una condición jacobiana, que es la forma concreta en que interviene el teorema de la función implícita.
+
+R4. Una proyección ortogonal elimina una coordenada y muestra la sombra de la curva en un plano. Si las proyecciones satisfacen ecuaciones como \(x_2=f(x_1)\) o \(x_3=g(x_1)\), la curva espacial puede verse como intersección de cilindros construidos a partir de esas ecuaciones. Así se conecta la información plana con la descripción espacial.
+
+R5. La rapidez \(|x'(t)|\) mide cuánto avanza la curva por unidad de parámetro. Al integrarla se obtiene la longitud de arco. Si esa longitud se usa como parámetro, se obtiene una representación natural, en la que \(|dx/ds|=1\). Así, longitud, rapidez y parametrización natural forman una cadena: rapidez integrada produce longitud; longitud usada como parámetro produce velocidad unitaria.
+
+## 9. Resumen final de repaso
+
+Ideas principales:
+- Una curva regular se representa por \(x=x(t)\), con \(x\in C^1\) y \(x'(t)\neq0\).
+- La curva geométrica no se identifica con una única parametrización.
+- Los cambios admisibles de parámetro conservan la regularidad.
+- La orientación depende del signo del cambio de parámetro.
+- Una curva regular puede tener puntos múltiples globales.
+- Las proyecciones ayudan a visualizar curvas espaciales.
+- Una curva puede describirse implícitamente como intersección de superficies, si se cumplen condiciones de independencia.
+- La longitud de arco se define mediante polígonos inscritos y se calcula, para curvas regulares, con \(\int |x'(t)|dt\).
+- El parámetro longitud de arco \(s\) permite escribir \(|dx/ds|=1\).
+
+Conceptos imprescindibles:
+- representación paramétrica regular;
+- cambio admisible;
+- curva regular;
+- orientación;
+- punto múltiple;
+- proyección ortogonal;
+- representación implícita;
+- curva rectificable;
+- longitud de arco;
+- parámetro natural.
+
+Relaciones clave:
+- \(x'(t)\neq0\) permite tangente, longitud de arco y reparametrización natural.
+- Cambio admisible \(+\) regla de la cadena implica conservación de regularidad.
+- Longitud geométrica por polígonos \(+\) regularidad implica fórmula integral.
+- Parámetro natural implica velocidad unitaria.
+- Proyecciones e intersecciones implícitas son formas complementarias de describir curvas.
+
+Errores que evitar:
+- No confundir longitud con distancia entre extremos.
+- No olvidar comprobar \(x'(t)\neq0\).
+- No aceptar cambios de parámetro con derivada nula.
+- No confundir regularidad con inyectividad global.
+- No suponer que dos ecuaciones implícitas siempre definen una curva regular.
+- No afirmar \(|x'(t)|=1\) salvo que el parámetro sea longitud de arco.
+
+## 10. Checklist de dominio
+
+- Si no puedes explicar qué significa \(x'(t)\neq0\), falta repasar representación paramétrica regular.
+
+- Si confundes curva con parametrización, revisar cambios admisibles y equivalencia de representaciones.
+
+- Si no sabes decidir si \(t=t(\theta)\) es admisible, falta repasar la condición \(dt/d\theta\neq0\) y la inyectividad.
+
+- Si confundes orientación con imagen geométrica, revisar el signo de \(dt/d\theta\).
+
+- Si crees que una curva regular no puede tener puntos múltiples, revisar la diferencia entre propiedad local y global.
+
+- Si no puedes hallar proyecciones coordenadas, falta repasar la escritura \(x(t)=(x_1(t),x_2(t),x_3(t))\).
+
+- Si no puedes describir una circunferencia como intersección de superficies, falta repasar representaciones implícitas.
+
+- Si aplicas \(|x(b)-x(a)|\) como longitud de arco, falta repasar la definición por poligonales y la fórmula integral.
+
+- Si no calculas correctamente \(|x'(t)|\), falta repasar norma euclídea y derivación componente a componente.
+
+- Si no puedes calcular \(L=\int_a^b |x'(t)|dt\) en ejemplos básicos, falta práctica de longitud de arco.
+
+- Si no puedes construir \(s(t)=\int_{t_0}^{t}|x'(u)|du\), falta repasar parámetro longitud de arco.
+
+- Si no sabes despejar \(t\) en función de \(s\) en ejemplos sencillos, falta practicar reparametrización natural.
+
+- Si afirmas que \(|dx/dt|=1\) en cualquier parámetro, revisar representación natural.
+
+- Si puedes comprobar regularidad, hallar proyecciones, calcular longitud y reparametrizar una circunferencia o una hélice, el capítulo está suficientemente asentado.
+
+- Si puedes justificar por escrito por qué la longitud no depende del parámetro, el nivel teórico del capítulo está dominado para examen.

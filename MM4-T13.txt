@@ -1,0 +1,1009 @@
+# Guía de estudio — Métodos Matemáticos IV
+
+Capítulo trabajado: Lipschutz, Teoría de superficies — Análisis tensorial.
+Nota de correspondencia: en el PDF cargado este bloque aparece como “Capítulo 10. Teoría de superficies — Análisis tensorial”; aquí se organiza como T13 de MM4.
+
+## 1. Prerrequisitos mínimos
+
+1. Superficie parametrizada regular
+
+Una superficie se estudia localmente mediante una carta
+\[
+x=x(u,v)\subset \mathbb R^3.
+\]
+La regularidad exige que \(x_u\) y \(x_v\) sean linealmente independientes, o equivalentemente que \(x_u\times x_v\neq 0\). Es necesario porque todo el capítulo trabaja con la base tangente formada por \(x_u,x_v\) y con el vector normal unitario. Por ejemplo, en una superficie de revolución
+\[
+x(u,\theta)=(u\cos\theta,u\sin\theta,g(u)),
+\]
+los vectores \(x_u\) y \(x_\theta\) generan el plano tangente si su producto vectorial no se anula.
+
+2. Plano tangente y vector normal
+
+El plano tangente en una carta está generado por \(x_u\) y \(x_v\). El vector normal unitario se obtiene, salvo orientación, como
+\[
+\mathbf n=\frac{x_u\times x_v}{\|x_u\times x_v\|}.
+\]
+Es necesario porque las ecuaciones de Gauss-Weingarten expresan las derivadas de \(x_u,x_v,\mathbf n\) en la base móvil \(\{x_u,x_v,\mathbf n\}\). Por ejemplo, \(x_{uu}\) no tiene por qué ser tangente; se descompone en parte tangente más parte normal.
+
+3. Primera forma fundamental
+
+La primera forma fundamental mide longitudes, ángulos y áreas sobre la superficie. Sus coeficientes son
+\[
+E=x_u\cdot x_u,\qquad F=x_u\cdot x_v,\qquad G=x_v\cdot x_v,
+\]
+y
+\[
+I=E\,du^2+2F\,du\,dv+G\,dv^2.
+\]
+Es necesaria porque los símbolos de Christoffel de segunda especie dependen solo de \(E,F,G\) y de sus derivadas. Si \(F=0\), las curvas coordenadas son ortogonales.
+
+4. Segunda forma fundamental
+
+La segunda forma fundamental mide la variación normal de la superficie. Sus coeficientes son
+\[
+L=x_{uu}\cdot \mathbf n,\qquad M=x_{uv}\cdot \mathbf n,\qquad N=x_{vv}\cdot \mathbf n,
+\]
+y
+\[
+II=L\,du^2+2M\,du\,dv+N\,dv^2.
+\]
+Es necesaria porque controla la curvatura normal, las curvaturas principales y la parte normal de las ecuaciones de Gauss. Por ejemplo, en las ecuaciones de Gauss aparece \(L\mathbf n\), \(M\mathbf n\) o \(N\mathbf n\) según la derivada segunda que se tome.
+
+5. Curvatura gaussiana y curvatura media
+
+La curvatura gaussiana y la curvatura media se expresan mediante las dos formas fundamentales:
+\[
+K=\frac{LN-M^2}{EG-F^2},
+\]
+\[
+H=\frac{EN-2FM+GL}{2(EG-F^2)}.
+\]
+Son necesarias porque el capítulo demuestra que \(K\), aunque se define usando la segunda forma fundamental, depende solo de la primera forma fundamental. Ese resultado es el teorema egregium de Gauss.
+
+6. Derivadas parciales y conmutación de derivadas mixtas
+
+Si \(x(u,v)\) tiene suficiente regularidad, las derivadas mixtas de orden tres no dependen del orden de derivación:
+\[
+(x_{uu})_v=(x_{uv})_u,\qquad (x_{uv})_v=(x_{vv})_u.
+\]
+Es necesario porque las ecuaciones de compatibilidad salen precisamente de comparar estas derivadas. Si las derivadas no conmutasen, no se podrían obtener las ecuaciones de Gauss-Codazzi del modo en que se hace en el capítulo.
+
+7. Sistemas lineales y unicidad de EDO
+
+El teorema fundamental de las superficies se apoya en una idea de unicidad: si dos sistemas diferenciales de primer orden tienen los mismos coeficientes y los mismos datos iniciales, sus soluciones coinciden. Es necesario porque permite demostrar que dos superficies con las mismas formas fundamentales coinciden salvo movimiento rígido.
+
+8. Cambio de coordenadas
+
+En una superficie se puede cambiar de parámetros:
+\[
+\bar u=\bar u(u,v),\qquad \bar v=\bar v(u,v),
+\]
+con jacobiano no nulo. Es necesario para entender por qué \(E,F,G\), \(L,M,N\) no son simples números aislados, sino componentes de objetos que se transforman con reglas definidas. Esa es la entrada natural al lenguaje tensorial.
+
+9. Notación de índices
+
+El capítulo introduce la notación \(u^1=u\), \(u^2=v\), \(x_1=x_u\), \(x_2=x_v\), \(g_{ij}=x_i\cdot x_j\) y \(b_{ij}=x_{ij}\cdot\mathbf n\). También usa la convención de suma sobre índices repetidos. Es necesaria porque permite escribir las ecuaciones de la teoría de superficies de forma compacta:
+\[
+x_{ij}=\Gamma^k_{ij}x_k+b_{ij}\mathbf n.
+\]
+
+10. Idea elemental de tensor
+
+Un tensor se reconoce por su ley de transformación bajo cambios admisibles de coordenadas. Es necesario porque el capítulo culmina mostrando que la primera forma fundamental, la segunda forma fundamental y ciertas expresiones de curvatura tienen carácter tensorial. Por ejemplo, \(g_{ij}\) y \(b_{ij}\) son tensores covariantes de orden dos.
+
+## 2. Idea central del capítulo
+
+El capítulo parte de una pregunta natural: una vez que una superficie se ha descrito localmente mediante una carta \(x(u,v)\), ¿cómo se relacionan entre sí las derivadas de los vectores básicos \(x_u,x_v\) y del normal unitario \(\mathbf n\)? En la teoría de curvas, las fórmulas de Frenet explican cómo varían el tangente, el normal y el binormal. En superficies, el papel análogo lo desempeñan las ecuaciones de Gauss-Weingarten.
+
+La idea central es que las derivadas segundas \(x_{uu},x_{uv},x_{vv}\) se pueden descomponer en una parte tangente y una parte normal. La parte tangente depende de los símbolos de Christoffel, que se calculan a partir de \(E,F,G\). La parte normal está dada por los coeficientes \(L,M,N\) de la segunda forma fundamental. A su vez, las derivadas del normal \(\mathbf n_u,\mathbf n_v\) son tangentes a la superficie y se expresan mediante \(E,F,G,L,M,N\).
+
+Después, el capítulo plantea un problema más profundo: no cualquier colección de seis funciones \(E,F,G,L,M,N\) puede proceder de una superficie. Para que exista una superficie con esas formas fundamentales, esas funciones deben cumplir condiciones de compatibilidad. Dichas condiciones nacen de la igualdad de derivadas mixtas. Dos de ellas son las ecuaciones de Mainardi-Codazzi; otra conduce al teorema egregium de Gauss.
+
+El teorema egregium es el punto conceptual más importante del capítulo. Aunque la curvatura gaussiana se define inicialmente con \(L,M,N\), es decir, con información de cómo la superficie se curva en el espacio ambiente, el capítulo muestra que \(K\) puede determinarse solo con \(E,F,G\) y sus derivadas. Por tanto, \(K\) pertenece a la geometría que puede medirse dentro de la propia superficie, sin mirar desde fuera.
+
+El teorema fundamental de las superficies completa la estructura: si se dan \(E,F,G,L,M,N\) con la regularidad adecuada, con \(EG-F^2>0\), y cumpliendo las ecuaciones de compatibilidad, entonces existe localmente una superficie que las realiza. Además, esa superficie queda determinada salvo traslaciones y giros. Esto convierte las formas fundamentales en los datos esenciales de la geometría local de una superficie.
+
+La parte final del capítulo introduce el lenguaje tensorial para reorganizar todo lo anterior. El objetivo no es añadir una teoría ajena, sino expresar de modo estable bajo cambios de coordenadas las mismas ecuaciones de la teoría de superficies. Así se entiende por qué \(g_{ij}\), \(b_{ij}\), los vectores tangentes diferenciales, las contracciones y los objetos de curvatura tienen leyes de transformación precisas. El capítulo funciona, por tanto, como puente entre la geometría diferencial clásica de superficies y el cálculo tensorial que se utiliza en asignaturas posteriores.
+
+## 3. Desarrollo completo del capítulo
+
+### 3.1. De las fórmulas de Frenet a las ecuaciones de Gauss-Weingarten
+
+El capítulo comienza comparando la teoría de superficies con la teoría de curvas. En una curva regular, las fórmulas de Frenet describen cómo cambian los vectores del triedro móvil. En una superficie, la base móvil natural no está formada por tres vectores de una curva, sino por los dos vectores tangentes de la carta y el normal unitario:
+\[
+x_u,\qquad x_v,\qquad \mathbf n.
+\]
+Estos tres vectores son linealmente independientes en una superficie regular.
+
+Como \(x_{uu},x_{uv},x_{vv},\mathbf n_u,\mathbf n_v\) son vectores de \(\mathbb R^3\), cada uno de ellos puede escribirse como combinación lineal de \(x_u,x_v,\mathbf n\). Esa observación elemental es la base de todo el capítulo. No se trata todavía de curvatura, sino de descomponer derivadas en la base geométrica adecuada.
+
+Las derivadas segundas de \(x\) se escriben como:
+\[
+x_{uu}=\Gamma^1_{11}x_u+\Gamma^2_{11}x_v+L\mathbf n,
+\]
+\[
+x_{uv}=\Gamma^1_{12}x_u+\Gamma^2_{12}x_v+M\mathbf n,
+\]
+\[
+x_{vv}=\Gamma^1_{22}x_u+\Gamma^2_{22}x_v+N\mathbf n.
+\]
+Estas son las ecuaciones de Gauss. La parte tangente contiene los símbolos de Christoffel \(\Gamma^k_{ij}\); la parte normal contiene los coeficientes de la segunda forma fundamental.
+
+La importancia de estas ecuaciones es doble. Primero, explican cómo se curva la superficie dentro de \(\mathbb R^3\). Segundo, separan dos niveles de información: la parte tangente depende de la métrica de la superficie, mientras que la parte normal mide la curvatura extrínseca.
+
+Las derivadas del normal cumplen otra propiedad clave. Como \(\mathbf n\cdot\mathbf n=1\), al derivar se obtiene
+\[
+\mathbf n_u\cdot \mathbf n=0,\qquad \mathbf n_v\cdot \mathbf n=0.
+\]
+Por tanto, \(\mathbf n_u\) y \(\mathbf n_v\) son tangentes. Se pueden escribir como:
+\[
+\mathbf n_u=
+\frac{FM-GL}{EG-F^2}x_u+
+\frac{FL-EM}{EG-F^2}x_v,
+\]
+\[
+\mathbf n_v=
+\frac{FN-GM}{EG-F^2}x_u+
+\frac{FM-EN}{EG-F^2}x_v.
+\]
+Estas son las ecuaciones de Weingarten. Su lectura geométrica es clara: la variación del normal mide la curvatura, y esa variación se expresa completamente mediante las dos formas fundamentales.
+
+### 3.2. Los símbolos de Christoffel y su dependencia de la primera forma fundamental
+
+Los símbolos de Christoffel aparecen como coeficientes de la parte tangente de las derivadas segundas. El capítulo muestra que se calculan usando solo \(E,F,G\) y sus derivadas. Si
+\[
+W=EG-F^2,
+\]
+entonces:
+\[
+\Gamma^1_{11}=\frac{GE_u-2FF_u+FE_v}{2W},
+\]
+\[
+\Gamma^2_{11}=\frac{2EF_u-EE_v-FE_u}{2W},
+\]
+\[
+\Gamma^1_{12}=\frac{GE_v-FG_u}{2W},
+\]
+\[
+\Gamma^2_{12}=\frac{EG_u-FE_v}{2W},
+\]
+\[
+\Gamma^1_{22}=\frac{2GF_v-GG_u-FG_v}{2W},
+\]
+\[
+\Gamma^2_{22}=\frac{EG_v-2FF_v+FG_u}{2W}.
+\]
+
+Estas fórmulas son importantes porque separan lo intrínseco de lo extrínseco. Para calcular \(\Gamma^k_{ij}\) no hace falta conocer \(L,M,N\), ni tampoco observar cómo la superficie se inserta en \(\mathbb R^3\), siempre que se conozca la primera forma fundamental. Los símbolos de Christoffel describen cómo cambia la base tangente al moverse sobre la superficie.
+
+Un ejemplo típico es una superficie de revolución. Al calcular \(E,F,G\) de una parametrización como
+\[
+x(u,\theta)=(u\cos\theta,u\sin\theta,g(u)),
+\]
+se puede obtener \(\Gamma^k_{ij}\) sin estudiar primero todas las curvaturas. Después, con \(L,M,N\), se completan las ecuaciones de Gauss-Weingarten.
+
+La consecuencia de examen es clara: si te piden ecuaciones de Gauss-Weingarten, no basta con hallar \(E,F,G,L,M,N\). Hay que saber qué coeficientes van en la parte tangente y cuáles en la parte normal. Los \(\Gamma^k_{ij}\) no son coeficientes de la segunda forma fundamental; son coeficientes tangenciales.
+
+### 3.3. Condiciones de compatibilidad
+
+Una vez escritas las ecuaciones de Gauss-Weingarten, el capítulo pregunta si se pueden elegir arbitrariamente las seis funciones \(E,F,G,L,M,N\). La respuesta es negativa. La razón es que, si proceden de una superficie suficientemente regular, las derivadas mixtas deben ser compatibles.
+
+La idea es comparar
+\[
+(x_{uu})_v \quad\text{con}\quad (x_{uv})_u,
+\]
+y
+\[
+(x_{uv})_v \quad\text{con}\quad (x_{vv})_u.
+\]
+Al sustituir las ecuaciones de Gauss-Weingarten en esas derivadas y reagrupar los coeficientes de \(x_u,x_v,\mathbf n\), aparecen relaciones obligatorias entre \(E,F,G,L,M,N\).
+
+Dos de esas relaciones son las ecuaciones de Mainardi-Codazzi:
+\[
+L_v-M_u=L\Gamma^1_{12}+M(\Gamma^2_{12}-\Gamma^1_{11})-N\Gamma^2_{11},
+\]
+\[
+M_v-N_u=L\Gamma^1_{22}+M(\Gamma^2_{22}-\Gamma^1_{12})-N\Gamma^2_{12}.
+\]
+Estas ecuaciones vinculan las derivadas de la segunda forma fundamental con los símbolos de Christoffel. No dicen solo cómo se curva la superficie en un punto, sino cómo esa curvatura cambia de un punto a otro.
+
+La otra relación fundamental es la ecuación de Gauss. Su contenido esencial es que \(LN-M^2\) queda determinado por \(E,F,G\) y sus derivadas. Al dividir por \(EG-F^2\), se obtiene la consecuencia más notable:
+\[
+K=\frac{LN-M^2}{EG-F^2}
+\]
+depende solo de la primera forma fundamental.
+
+Esto tiene una consecuencia conceptual fuerte. Dos superficies pueden estar curvadas de modo distinto en el espacio ambiente, pero si tienen la misma primera forma fundamental local, entonces tienen la misma curvatura gaussiana. La curvatura gaussiana no es un dato puramente visual de la inmersión en \(\mathbb R^3\); es una propiedad interna de la métrica de la superficie.
+
+### 3.4. Teorema egregium de Gauss
+
+El teorema egregium afirma que la curvatura gaussiana de una superficie de clase suficientemente regular es función de los coeficientes de la primera forma fundamental y de sus derivadas.
+
+La importancia del resultado está en que \(K\) se había definido con \(L,M,N\). Es decir, parecía depender de la segunda forma fundamental y, por tanto, de la manera en que la superficie se dobla dentro del espacio. El teorema muestra que esa apariencia es engañosa: \(K\) puede calcularse con la información métrica \(E,F,G\).
+
+Un ejemplo que ayuda a fijar la idea es el contraste entre doblar una hoja de papel y deformar una esfera. Si una superficie se deforma sin cambiar longitudes internas, la primera forma fundamental se conserva localmente y, por tanto, también se conserva \(K\). Por eso una región plana no puede convertirse localmente en una región esférica mediante una deformación que preserve distancias.
+
+En examen, este teorema puede preguntarse de tres maneras: como enunciado, como consecuencia de las ecuaciones de compatibilidad o como razonamiento sobre isometrías locales. La respuesta correcta debe mencionar explícitamente que \(K\) depende solo de la primera forma fundamental, no solo decir que “la curvatura se conserva”.
+
+### 3.5. Teorema fundamental de las superficies
+
+El capítulo formula después el teorema fundamental de las superficies. Su función es inversa a lo anterior. Hasta ahora se ha partido de una superficie y se han calculado \(E,F,G,L,M,N\). El teorema pregunta: si se nos dan esas funciones, ¿cuándo existe una superficie que las tenga como formas fundamentales?
+
+La respuesta es: si \(E,F,G\) tienen regularidad suficiente, \(L,M,N\) también, si
+\[
+EG-F^2>0,
+\]
+y si se cumplen las ecuaciones de compatibilidad, entonces existe localmente una superficie que realiza esos datos. Además, la superficie queda determinada salvo movimientos rígidos del espacio, es decir, salvo traslaciones y giros.
+
+El papel de \(EG-F^2>0\) es garantizar que la primera forma fundamental sea realmente una métrica sobre el plano tangente de la carta. Sin esa condición, \(x_u\) y \(x_v\) no formarían una base tangente adecuada o la forma cuadrática no mediría longitudes de modo válido.
+
+La unicidad salvo movimiento rígido se entiende así: las formas fundamentales fijan longitudes, ángulos y curvaturas normales. Si dos superficies tienen los mismos datos \(E,F,G,L,M,N\), se puede colocar una sobre la otra haciendo coincidir un punto y la base tangente inicial. Después, la unicidad de cierto sistema de ecuaciones diferenciales obliga a que coincidan localmente.
+
+Este teorema da al capítulo su estructura completa: las formas fundamentales no son solo herramientas de cálculo, sino datos suficientes para reconstruir localmente una superficie, siempre que satisfagan las ecuaciones de compatibilidad.
+
+### 3.6. Algunos resultados globales
+
+Después de desarrollar la teoría local, el capítulo incluye resultados sobre superficies consideradas “en grande”, es decir, no solo en una carta pequeña. Estos resultados relacionan propiedades locales de curvatura con la forma global de la superficie.
+
+Uno de los resultados indica que las esferas son las únicas superficies conexas y cerradas, con regularidad suficiente, en las que todos los puntos son umbilicales esféricos. Un punto umbilical es aquel en el que las curvaturas principales coinciden. Si esa coincidencia ocurre de forma adecuada en toda la superficie y la superficie es cerrada y conexa, la geometría queda forzada a ser esférica.
+
+De forma análoga, el capítulo señala que los planos son las únicas superficies conexas y cerradas, de la clase considerada, en las que todos los puntos son planos. La idea es que si la curvatura se anula de modo total en todos los puntos, no queda margen para una curvatura extrínseca no trivial que cierre la superficie como lo haría una esfera.
+
+También aparece el teorema de Liebmann, presentado como resultado sobre superficies compactas y conexas con curvatura gaussiana constante en el contexto de las esferas. El mensaje para el alumno de primero no es memorizar cada hipótesis técnica, sino entender el patrón: una condición de curvatura impuesta globalmente puede determinar de forma rígida el tipo de superficie.
+
+Estos resultados son más teóricos que computacionales. En examen suelen aparecer como preguntas de razonamiento: por qué no basta mirar un punto, por qué la compacidad o la conexión importan, o qué significa que todos los puntos sean umbilicales.
+
+### 3.7. Variedades coordenadas elementales
+
+El capítulo introduce después una generalización. Una superficie elemental en \(\mathbb R^3\) es un ejemplo de objeto que puede describirse mediante coordenadas locales. Lipschutz amplía esta idea a una colección abstracta de puntos dotada de sistemas coordenados admisibles. A eso lo llama variedad coordenada elemental de \(n\) dimensiones.
+
+La idea no exige todavía toda la teoría moderna de variedades. Basta con entender que se tiene un conjunto \(M\) y que, para cada punto, se pueden asignar coordenadas
+\[
+(u^1,\ldots,u^n).
+\]
+Cuando se cambia de sistema coordenado, las nuevas coordenadas deben ser funciones suficientemente regulares de las antiguas y con jacobiano no nulo.
+
+Este paso importa porque prepara el lenguaje tensorial. En una superficie, ya habíamos visto que \(E,F,G\) y \(L,M,N\) cambian cuando cambiamos de parámetros. La variedad elemental permite estudiar esas leyes de cambio de coordenadas sin depender de una superficie concreta en \(\mathbb R^3\).
+
+Los ejemplos naturales son una curva regular simple como variedad de dimensión uno, una superficie elemental como variedad de dimensión dos y el propio espacio euclídeo con coordenadas admisibles como variedad de dimensión tres. Así se ve que la superficie no es un caso aislado, sino un miembro de una familia más amplia de objetos coordinatizables.
+
+### 3.8. Tensores y campos tensoriales
+
+El capítulo define tensores a partir de sus componentes y de sus leyes de transformación. No se presenta el tensor como un objeto abstracto independiente de coordenadas, sino como un sistema de componentes que cambia de forma determinada cuando cambiamos de coordenadas.
+
+Un vector contravariante de orden uno tiene componentes \(A^i\) que se transforman como los diferenciales de coordenadas. Un vector covariante de orden uno tiene componentes \(A_i\) que se transforman con la regla dual. Los tensores de orden dos pueden tener dos índices superiores, dos inferiores o uno de cada tipo. En general, un tensor mixto tiene índices contravariantes y covariantes.
+
+El capítulo también contempla tensores con peso, en los que aparece una potencia del jacobiano en la ley de transformación. Este detalle sirve para tratar objetos como ciertos símbolos alternantes asociados a determinantes. Para un primer estudio, lo esencial es distinguir entre tensor absoluto y objeto que transforma con factor de jacobiano.
+
+Un campo tensorial asigna a cada punto de la variedad un tensor. En una superficie, \(g_{ij}\) es un campo tensorial covariante de orden dos; lo mismo ocurre con \(b_{ij}\). Esta observación da una lectura más conceptual de las formas fundamentales: sus coeficientes no son meras funciones sueltas, sino componentes de tensores geométricos.
+
+### 3.9. Simetría, hemisimetría y operaciones tensoriales
+
+El capítulo introduce propiedades de simetría respecto de índices. Un tensor es simétrico respecto de dos índices si al intercambiarlos no cambia. Es hemisimétrico o antisimétrico si al intercambiarlos cambia de signo. Esta distinción aparece de forma natural en objetos construidos con símbolos alternantes.
+
+La simetría no es un detalle formal. Por ejemplo, \(g_{ij}=g_{ji}\) y \(b_{ij}=b_{ji}\). Esa simetría reduce el número de componentes independientes y refleja que las formas fundamentales son formas cuadráticas simétricas.
+
+Después se presentan operaciones tensoriales. La suma de tensores del mismo tipo vuelve a ser un tensor del mismo tipo. El producto externo combina componentes y aumenta el orden. La contracción identifica un índice superior con uno inferior y suma sobre él, reduciendo el orden del tensor. Estas operaciones permiten construir nuevos objetos geométricos a partir de otros ya conocidos.
+
+Un ejemplo básico es la contracción de un tensor mixto \(A^i_j\), que produce el escalar \(A^i_i\). Otro ejemplo es el uso de \(g^{ij}\), la matriz inversa de \(g_{ij}\), para subir índices de \(b_{ij}\) y obtener objetos asociados a la curvatura normal.
+
+### 3.10. Aplicación tensorial a las ecuaciones de superficies
+
+La parte final del capítulo reescribe las ecuaciones de la teoría de superficies con índices. Se toma
+\[
+u^1=u,\qquad u^2=v,\qquad x_i=\frac{\partial x}{\partial u^i},
+\]
+\[
+g_{ij}=x_i\cdot x_j,\qquad b_{ij}=x_{ij}\cdot\mathbf n.
+\]
+Entonces las ecuaciones de Gauss se escriben de forma compacta:
+\[
+x_{ij}=\Gamma^k_{ij}x_k+b_{ij}\mathbf n.
+\]
+Esta ecuación contiene a la vez los tres casos \(x_{uu},x_{uv},x_{vv}\).
+
+Las ecuaciones de Weingarten se expresan diciendo que la derivada del normal es tangente y está gobernada por la segunda forma fundamental y la métrica:
+\[
+\mathbf n_i=-b_i^{\ k}x_k,
+\]
+donde \(b_i^{\ k}=g^{kj}b_{ij}\), salvo la convención de signos usada para el normal. La idea importante es que \(g^{ij}\) permite convertir un índice covariante en contravariante.
+
+También aparece la relación
+\[
+\Gamma_{ijk}=x_{ij}\cdot x_k
+=\frac{1}{2}\left(\frac{\partial g_{ik}}{\partial u^j}
++\frac{\partial g_{jk}}{\partial u^i}
+-\frac{\partial g_{ij}}{\partial u^k}\right),
+\]
+y
+\[
+\Gamma^k_{ij}=g^{k\ell}\Gamma_{ij\ell}.
+\]
+Así se ve de nuevo que los símbolos de Christoffel están determinados por la primera forma fundamental.
+
+La reformulación tensorial permite escribir las condiciones de compatibilidad como identidades geométricas. En particular, en una superficie inmersa en \(\mathbb R^3\), el tensor de curvatura asociado a la métrica se relaciona con la segunda forma fundamental. En dimensión dos, esa relación desemboca en la fórmula de la curvatura gaussiana:
+\[
+K=\frac{LN-M^2}{EG-F^2}.
+\]
+El lenguaje tensorial no cambia los resultados, pero los organiza de modo que sean independientes de la carta elegida.
+
+## 4. Conceptos clave
+
+1. Ecuaciones de Gauss
+
+Definición precisa: Son las fórmulas que descomponen las derivadas segundas de la parametrización en parte tangente y parte normal:
+\[
+x_{ij}=\Gamma^k_{ij}x_k+b_{ij}\mathbf n.
+\]
+
+Explicación desarrollada: En una superficie, derivar un vector tangente puede producir una componente tangente y una componente normal. La parte tangente describe cómo cambia la base de coordenadas sobre la superficie; la parte normal describe cómo la superficie se curva en el espacio.
+
+Ejemplo: Para \(x_{uu}\),
+\[
+x_{uu}=\Gamma^1_{11}x_u+\Gamma^2_{11}x_v+L\mathbf n.
+\]
+
+Relación con otros conceptos: Usa los símbolos de Christoffel y la segunda forma fundamental. Es el punto de partida de las ecuaciones de compatibilidad.
+
+Posible forma de preguntarlo en examen: “Escriba las ecuaciones de Gauss de una superficie parametrizada y explique qué representa cada término.”
+
+2. Ecuaciones de Weingarten
+
+Definición precisa: Son las fórmulas que expresan \(\mathbf n_u\) y \(\mathbf n_v\) como combinaciones lineales de \(x_u,x_v\).
+
+Explicación desarrollada: Como \(\mathbf n\) tiene norma uno, sus derivadas son ortogonales a \(\mathbf n\), luego pertenecen al plano tangente. La variación del normal codifica la curvatura de la superficie.
+
+Ejemplo:
+\[
+\mathbf n_u=
+\frac{FM-GL}{EG-F^2}x_u+
+\frac{FL-EM}{EG-F^2}x_v.
+\]
+
+Relación con otros conceptos: Está directamente relacionada con la segunda forma fundamental, las curvaturas principales y la aplicación de Weingarten.
+
+Posible forma de preguntarlo en examen: “Demuestre que las derivadas del normal son tangentes y escriba su expresión en función de \(E,F,G,L,M,N\).”
+
+3. Símbolos de Christoffel
+
+Definición precisa: Son los coeficientes \(\Gamma^k_{ij}\) de la parte tangente de \(x_{ij}\) en la base \(x_1,x_2\).
+
+Explicación desarrollada: Miden cómo varía la base tangente al desplazarse en coordenadas. En este capítulo se calculan exclusivamente con \(E,F,G\) y sus derivadas.
+
+Ejemplo:
+\[
+\Gamma^1_{12}=\frac{GE_v-FG_u}{2(EG-F^2)}.
+\]
+
+Relación con otros conceptos: Conectan la primera forma fundamental con las ecuaciones de Gauss, las condiciones de compatibilidad y la formulación tensorial.
+
+Posible forma de preguntarlo en examen: “Explique por qué los símbolos de Christoffel dependen solo de la primera forma fundamental.”
+
+4. Primera forma fundamental
+
+Definición precisa: Es la forma cuadrática
+\[
+I=E\,du^2+2F\,du\,dv+G\,dv^2,
+\]
+con \(E=x_u\cdot x_u\), \(F=x_u\cdot x_v\), \(G=x_v\cdot x_v\).
+
+Explicación desarrollada: Contiene la información métrica de la superficie: longitudes, ángulos y áreas. En el capítulo aparece como el dato que determina los símbolos de Christoffel y la curvatura gaussiana.
+
+Ejemplo: Si \(F=0\), las curvas coordenadas se cortan ortogonalmente.
+
+Relación con otros conceptos: Está representada tensorialmente por \(g_{ij}\). Es la base del teorema egregium.
+
+Posible forma de preguntarlo en examen: “Calcule la primera forma fundamental de una superficie y explique qué información geométrica contiene.”
+
+5. Segunda forma fundamental
+
+Definición precisa: Es la forma cuadrática
+\[
+II=L\,du^2+2M\,du\,dv+N\,dv^2,
+\]
+donde \(L=x_{uu}\cdot\mathbf n\), \(M=x_{uv}\cdot\mathbf n\), \(N=x_{vv}\cdot\mathbf n\).
+
+Explicación desarrollada: Mide la componente normal de la variación de la superficie. Permite calcular curvatura normal, curvaturas principales, curvatura media y curvatura gaussiana.
+
+Ejemplo: En una dirección \(du:dv\), la curvatura normal se obtiene comparando \(II\) con \(I\).
+
+Relación con otros conceptos: Sus coeficientes son \(b_{ij}\), un tensor covariante de orden dos.
+
+Posible forma de preguntarlo en examen: “Explique el papel de \(L,M,N\) en las ecuaciones de Gauss.”
+
+6. Condiciones de compatibilidad
+
+Definición precisa: Son las relaciones que deben cumplir \(E,F,G,L,M,N\) para que procedan de una superficie.
+
+Explicación desarrollada: Nacen de la igualdad de derivadas mixtas de orden tres. Si se proponen arbitrariamente las dos formas fundamentales, en general no existe ninguna superficie que las tenga. Las condiciones de compatibilidad eliminan esa arbitrariedad.
+
+Ejemplo: Las ecuaciones de Mainardi-Codazzi relacionan \(L_v-M_u\) y \(M_v-N_u\) con los símbolos de Christoffel.
+
+Relación con otros conceptos: Son necesarias en el teorema fundamental de las superficies y conducen al teorema egregium.
+
+Posible forma de preguntarlo en examen: “¿Por qué no toda colección \(E,F,G,L,M,N\) define una superficie?”
+
+7. Ecuaciones de Mainardi-Codazzi
+
+Definición precisa: Son dos ecuaciones de compatibilidad que vinculan las derivadas de \(L,M,N\) con los símbolos de Christoffel.
+
+Explicación desarrollada: Controlan la variación de la segunda forma fundamental sobre la superficie. No bastan curvaturas puntuales: también debe ser coherente cómo cambian.
+
+Ejemplo:
+\[
+L_v-M_u=L\Gamma^1_{12}+M(\Gamma^2_{12}-\Gamma^1_{11})-N\Gamma^2_{11}.
+\]
+
+Relación con otros conceptos: Completan, junto con la ecuación de Gauss, las restricciones que hacen posible el teorema fundamental de superficies.
+
+Posible forma de preguntarlo en examen: “Enuncie el significado geométrico de las ecuaciones de Mainardi-Codazzi.”
+
+8. Teorema egregium de Gauss
+
+Definición precisa: La curvatura gaussiana de una superficie depende solo de la primera forma fundamental y de sus derivadas.
+
+Explicación desarrollada: Aunque \(K\) se define mediante \(L,M,N\), el teorema muestra que es intrínseca. No cambia bajo transformaciones que preserven la métrica local de la superficie.
+
+Ejemplo: Una superficie localmente isométrica a un plano debe tener \(K=0\).
+
+Relación con otros conceptos: Se obtiene a partir de la ecuación de Gauss dentro de las condiciones de compatibilidad.
+
+Posible forma de preguntarlo en examen: “Explique por qué el teorema egregium permite llamar intrínseca a la curvatura gaussiana.”
+
+9. Teorema fundamental de las superficies
+
+Definición precisa: Si \(E,F,G,L,M,N\) cumplen las condiciones de regularidad, \(EG-F^2>0\) y compatibilidad, existe localmente una superficie con esas formas fundamentales, única salvo movimientos rígidos.
+
+Explicación desarrollada: Es un resultado de existencia y unicidad. Dice que las dos formas fundamentales, si son compatibles, contienen toda la información local de la superficie en \(\mathbb R^3\).
+
+Ejemplo: Dos superficies con los mismos \(E,F,G,L,M,N\) se pueden superponer localmente mediante una traslación y una rotación.
+
+Relación con otros conceptos: Usa las ecuaciones de Gauss-Weingarten y la unicidad de sistemas de EDO.
+
+Posible forma de preguntarlo en examen: “Enuncie el teorema fundamental de las superficies e indique qué papel juegan las condiciones de compatibilidad.”
+
+10. Punto umbilical
+
+Definición precisa: Punto en el que las dos curvaturas principales coinciden.
+
+Explicación desarrollada: En un punto umbilical no hay una dirección principal privilegiada, porque la curvatura normal es igual en todas las direcciones tangentes.
+
+Ejemplo: Todos los puntos de una esfera son umbilicales.
+
+Relación con otros conceptos: Se relaciona con los resultados globales del capítulo sobre superficies esféricas.
+
+Posible forma de preguntarlo en examen: “Explique qué significa que todos los puntos de una superficie sean umbilicales.”
+
+11. Variedad coordenada elemental
+
+Definición precisa: Conjunto dotado de sistemas coordenados admisibles de dimensión \(n\), con cambios de coordenadas regulares y jacobiano no nulo.
+
+Explicación desarrollada: Generaliza la idea de curva o superficie parametrizada. Permite hablar de coordenadas sin depender necesariamente de una única inmersión en \(\mathbb R^3\).
+
+Ejemplo: Una superficie elemental es una variedad coordenada elemental de dimensión dos.
+
+Relación con otros conceptos: Sirve de marco para definir tensores y campos tensoriales.
+
+Posible forma de preguntarlo en examen: “¿Por qué se introduce la noción de variedad coordenada elemental antes de definir tensores?”
+
+12. Tensor covariante
+
+Definición precisa: Tensor cuyas componentes tienen índices inferiores y se transforman con la ley asociada al cambio de coordenadas de las variables antiguas respecto de las nuevas.
+
+Explicación desarrollada: Los covectores y las formas bilineales son ejemplos básicos. En superficies, la primera y segunda forma fundamental se expresan mediante tensores covariantes de orden dos.
+
+Ejemplo: \(g_{ij}\) es covariante de orden dos.
+
+Relación con otros conceptos: \(g_{ij}\) y \(b_{ij}\) son los ejemplos geométricos principales del capítulo.
+
+Posible forma de preguntarlo en examen: “Justifique que los coeficientes de la primera forma fundamental son componentes de un tensor covariante.”
+
+13. Tensor contravariante
+
+Definición precisa: Tensor cuyas componentes tienen índices superiores y se transforman como los diferenciales de coordenadas.
+
+Explicación desarrollada: Las componentes de un vector tangente \(dx=x_i\,du^i\) se transforman contravariantemente. Esto refleja que el objeto geométrico no cambia, aunque cambien sus coordenadas.
+
+Ejemplo: Los incrementos \(du^i\) son componentes contravariantes de un vector tangente.
+
+Relación con otros conceptos: Se combina con tensores covariantes para formar tensores mixtos y contracciones.
+
+Posible forma de preguntarlo en examen: “Demuestre que \(du^i\) se transforma como vector contravariante.”
+
+14. Contracción tensorial
+
+Definición precisa: Operación que iguala un índice superior y uno inferior y suma sobre él, reduciendo el orden del tensor.
+
+Explicación desarrollada: Permite obtener escalares o tensores de menor orden. Es una operación válida porque respeta las leyes de transformación tensorial.
+
+Ejemplo: La traza \(A^i_i\) de un tensor mixto es un invariante escalar.
+
+Relación con otros conceptos: Se utiliza para construir invariantes y para manejar expresiones compactas en la teoría de superficies.
+
+Posible forma de preguntarlo en examen: “Explique por qué la contracción de un tensor mixto de orden dos produce un escalar.”
+
+15. Formulación tensorial de Gauss-Weingarten
+
+Definición precisa: Escritura con índices de las ecuaciones:
+\[
+x_{ij}=\Gamma^k_{ij}x_k+b_{ij}\mathbf n,\qquad \mathbf n_i=-b_i^{\ k}x_k.
+\]
+
+Explicación desarrollada: Condensa varias ecuaciones en una sola expresión y muestra qué objetos son tensoriales y cuáles dependen de la conexión de coordenadas.
+
+Ejemplo: Para \(i=j=1\), se recupera la ecuación de \(x_{uu}\).
+
+Relación con otros conceptos: Une símbolos de Christoffel, primera forma, segunda forma, ecuaciones de compatibilidad y tensor de curvatura.
+
+Posible forma de preguntarlo en examen: “Escriba las ecuaciones de Gauss-Weingarten en notación tensorial e interprete sus términos.”
+
+## 5. Relaciones entre ideas
+
+La estructura conceptual del capítulo puede leerse como una cadena. Primero se necesita una carta regular \(x(u,v)\). De ella salen los vectores \(x_u,x_v\) y el normal \(\mathbf n\). Con estos objetos se definen las dos formas fundamentales: la primera mide la geometría interna y la segunda mide la curvatura normal dentro del espacio ambiente.
+
+A partir de la primera forma fundamental se obtienen los símbolos de Christoffel. Esto establece una jerarquía clara: \(E,F,G\) determinan la parte tangente de las derivadas segundas. En cambio, \(L,M,N\) determinan la parte normal. Las ecuaciones de Gauss-Weingarten unen ambos niveles en una única descripción diferencial de la superficie.
+
+Las condiciones de compatibilidad surgen después porque las ecuaciones de Gauss-Weingarten no pueden ser arbitrarias. Si una superficie existe, sus derivadas mixtas deben coincidir. Esa exigencia produce las ecuaciones de Mainardi-Codazzi y la ecuación de Gauss. La consecuencia más relevante es el teorema egregium: una cantidad definida con la segunda forma, \(K\), queda determinada por la primera.
+
+Hay una oposición importante entre geometría extrínseca e intrínseca. La segunda forma fundamental parece extrínseca porque utiliza el normal en \(\mathbb R^3\). La primera forma fundamental es intrínseca porque mide distancias sobre la superficie. El teorema egregium muestra que la curvatura gaussiana, aunque nace de una fórmula extrínseca, es intrínseca.
+
+El teorema fundamental de las superficies invierte la dirección del razonamiento. Antes: superficie \(\to\) formas fundamentales \(\to\) compatibilidad. Ahora: formas fundamentales compatibles \(\to\) existencia local de superficie. Esta simetría conceptual es esencial. Las condiciones de compatibilidad no son adornos; son exactamente lo que permite reconstruir la superficie.
+
+La introducción de variedades elementales y tensores responde a una necesidad de invariancia. Las fórmulas escritas en una carta deben seguir teniendo sentido en otra. Los tensores son el lenguaje que controla esas transformaciones. Por eso \(g_{ij}\) y \(b_{ij}\) no se tratan solo como tablas de funciones, sino como componentes de campos tensoriales.
+
+Históricamente, el capítulo conecta la geometría diferencial clásica de Gauss con el cálculo tensorial. Gauss proporciona el resultado intrínseco fundamental; el lenguaje tensorial permite expresarlo de forma independiente de las coordenadas. En el contexto de Métodos Matemáticos IV, esta transición prepara el uso posterior de métricas, curvaturas, símbolos de Christoffel y tensores en geometría y física matemática.
+
+## 6. Errores habituales
+
+1. Formular el error: “Los símbolos de Christoffel dependen de \(L,M,N\).”
+
+Por qué está mal: En este capítulo, los \(\Gamma^k_{ij}\) se calculan a partir de \(E,F,G\) y sus derivadas. La segunda forma fundamental no interviene en ellos.
+
+Corrección: Los \(\Gamma^k_{ij}\) son coeficientes de la parte tangente de \(x_{ij}\) y dependen solo de la primera forma fundamental.
+
+Ejemplo de respuesta incorrecta: “Para hallar \(\Gamma^1_{11}\) uso \(L\) y \(M\), porque son coeficientes de curvatura.”
+
+Ejemplo de respuesta correcta: “\(\Gamma^1_{11}\) se obtiene con \(E,F,G\) y sus derivadas; \(L,M,N\) aparecen en la componente normal de \(x_{ij}\).”
+
+2. Formular el error: “La curvatura gaussiana depende esencialmente de la segunda forma fundamental.”
+
+Por qué está mal: La fórmula inicial usa \(L,M,N\), pero el teorema egregium demuestra que \(K\) queda determinada por la primera forma fundamental.
+
+Corrección: \(K=(LN-M^2)/(EG-F^2)\), pero por compatibilidad puede expresarse solo mediante \(E,F,G\) y derivadas.
+
+Ejemplo de respuesta incorrecta: “Si no conozco \(L,M,N\), no puedo saber nada de \(K\).”
+
+Ejemplo de respuesta correcta: “Aunque la definición usa \(L,M,N\), el teorema egregium dice que \(K\) es intrínseca y depende de \(E,F,G\).”
+
+3. Formular el error: “Las ecuaciones de compatibilidad son opcionales.”
+
+Por qué está mal: Sin ellas, las funciones \(E,F,G,L,M,N\) pueden no proceder de ninguna superficie.
+
+Corrección: Las condiciones de compatibilidad son necesarias y, en el teorema fundamental, forman parte de las hipótesis de existencia.
+
+Ejemplo de respuesta incorrecta: “Dadas seis funciones cualesquiera, siempre hay una superficie que las realiza.”
+
+Ejemplo de respuesta correcta: “Hace falta \(EG-F^2>0\) y que se cumplan Gauss y Mainardi-Codazzi.”
+
+4. Formular el error: “Las derivadas del normal tienen componente normal.”
+
+Por qué está mal: Como \(\mathbf n\cdot\mathbf n=1\), al derivar se obtiene \(\mathbf n_i\cdot\mathbf n=0\). Por tanto, \(\mathbf n_i\) es tangente.
+
+Corrección: \(\mathbf n_u\) y \(\mathbf n_v\) son combinaciones lineales de \(x_u,x_v\).
+
+Ejemplo de respuesta incorrecta: “\(\mathbf n_u=a x_u+b x_v+c\mathbf n\), con \(c\neq 0\) en general.”
+
+Ejemplo de respuesta correcta: “\(\mathbf n_u=a x_u+b x_v\), porque es perpendicular a \(\mathbf n\).”
+
+5. Formular el error: “Primera y segunda forma fundamental se transforman igual porque ambas son matrices.”
+
+Por qué está mal: Se transforman como tensores covariantes de orden dos, pero no basta decir que son matrices. La razón es su ley de transformación bajo cambios admisibles de coordenadas.
+
+Corrección: Hay que justificar la transformación mediante la regla de la cadena y la expresión de \(I\) e \(II\).
+
+Ejemplo de respuesta incorrecta: “Son tensores porque son matrices simétricas.”
+
+Ejemplo de respuesta correcta: “Son tensores covariantes de orden dos porque sus coeficientes transforman con dos factores de cambio de coordenadas.”
+
+6. Formular el error: “El teorema fundamental dice que las formas fundamentales determinan una superficie global única.”
+
+Por qué está mal: El resultado del capítulo es local y la unicidad es salvo movimientos rígidos.
+
+Corrección: Las formas compatibles determinan localmente la superficie salvo traslaciones y giros.
+
+Ejemplo de respuesta incorrecta: “Si dos superficies tienen las mismas formas fundamentales, son literalmente la misma superficie en todo el espacio.”
+
+Ejemplo de respuesta correcta: “Coinciden localmente después de aplicar un movimiento rígido.”
+
+7. Formular el error: “Un tensor es cualquier conjunto de componentes con índices.”
+
+Por qué está mal: Los índices no bastan. Lo que define a un tensor es su ley de transformación.
+
+Corrección: Para afirmar que algo es tensorial, hay que comprobar cómo cambian sus componentes al cambiar de coordenadas.
+
+Ejemplo de respuesta incorrecta: “\(A_{ij}\) es tensor porque tiene dos subíndices.”
+
+Ejemplo de respuesta correcta: “\(A_{ij}\) será tensor covariante de orden dos si transforma como \(A'_{ij}=A_{ab}\frac{\partial u^a}{\partial \bar u^i}\frac{\partial u^b}{\partial \bar u^j}\).”
+
+8. Formular el error: “Contravariante significa ‘con subíndices’.”
+
+Por qué está mal: Es al revés en la notación usada: los índices superiores son contravariantes y los inferiores covariantes.
+
+Corrección: \(A^i\) es contravariante; \(A_i\) es covariante.
+
+Ejemplo de respuesta incorrecta: “\(du^i\) es covariante porque lleva una diferencial.”
+
+Ejemplo de respuesta correcta: “\(du^i\) se transforma como componente contravariante de un vector tangente.”
+
+9. Formular el error: “El teorema egregium dice que toda curvatura es intrínseca.”
+
+Por qué está mal: El resultado se refiere a la curvatura gaussiana. La curvatura media no queda determinada solo por la primera forma fundamental.
+
+Corrección: \(K\) es intrínseca; \(H\) depende de la segunda forma fundamental de modo que no queda fijada solo por la métrica.
+
+Ejemplo de respuesta incorrecta: “Como \(K\) es intrínseca, también \(H\) lo es.”
+
+Ejemplo de respuesta correcta: “El teorema egregium afecta a \(K\), no a todas las magnitudes de curvatura.”
+
+10. Formular el error: “Si \(K\) es igual en dos superficies, entonces son localmente isométricas.”
+
+Por qué está mal: El capítulo demuestra que la misma primera forma implica la misma \(K\), no el recíproco general.
+
+Corrección: Igualdad de \(K\) es condición necesaria para isometría local, no suficiente en general.
+
+Ejemplo de respuesta incorrecta: “Tienen la misma curvatura gaussiana, luego tienen la misma métrica.”
+
+Ejemplo de respuesta correcta: “Si son isométricas localmente, entonces tienen la misma \(K\); la igualdad de \(K\) por sí sola no garantiza isometría.”
+
+## 7. Preguntas orientadas a examen
+
+### 10 preguntas fáciles
+
+F1. ¿Qué vectores forman la base móvil natural asociada a una carta \(x(u,v)\) de una superficie?
+
+F2. Define los coeficientes \(E,F,G\) de la primera forma fundamental.
+
+F3. Define los coeficientes \(L,M,N\) de la segunda forma fundamental.
+
+F4. ¿Por qué \(\mathbf n_u\) y \(\mathbf n_v\) son vectores tangentes a la superficie?
+
+F5. Escribe la fórmula de la curvatura gaussiana en función de \(E,F,G,L,M,N\).
+
+F6. ¿Qué significa que \(EG-F^2>0\)?
+
+F7. ¿Qué son los símbolos de Christoffel en las ecuaciones de Gauss?
+
+F8. ¿Qué afirma, en una frase, el teorema egregium de Gauss?
+
+F9. ¿Qué es una variedad coordenada elemental?
+
+F10. ¿Qué diferencia básica hay entre un vector covariante y uno contravariante?
+
+### 10 preguntas medias
+
+M1. Escribe las ecuaciones de Gauss para \(x_{uu},x_{uv},x_{vv}\).
+
+M2. Escribe las ecuaciones de Weingarten en función de \(E,F,G,L,M,N\).
+
+M3. Explica por qué los símbolos de Christoffel dependen solo de la primera forma fundamental.
+
+M4. ¿Cómo se obtienen conceptualmente las ecuaciones de compatibilidad?
+
+M5. Enuncia las ecuaciones de Mainardi-Codazzi y explica qué relacionan.
+
+M6. Explica por qué el teorema egregium convierte \(K\) en una magnitud intrínseca.
+
+M7. Enuncia el teorema fundamental de las superficies.
+
+M8. Justifica que \(g_{ij}\) son componentes de un tensor covariante de orden dos.
+
+M9. Explica qué es la contracción de un tensor y da un ejemplo.
+
+M10. Explica qué significa que dos superficies con las mismas formas fundamentales sean iguales salvo movimiento rígido.
+
+### 5 preguntas difíciles
+
+D1. Demuestra que \(\mathbf n_u\) y \(\mathbf n_v\) se expresan mediante las fórmulas de Weingarten resolviendo un sistema lineal con \(E,F,G,L,M,N\).
+
+D2. Deriva una de las ecuaciones de Mainardi-Codazzi comparando derivadas mixtas.
+
+D3. Explica el razonamiento por el cual la ecuación de Gauss implica el teorema egregium.
+
+D4. Demuestra que \(\Gamma_{ijk}=x_{ij}\cdot x_k\) se puede expresar mediante derivadas de \(g_{ij}\).
+
+D5. Explica cómo la notación tensorial resume las ecuaciones de Gauss-Weingarten y por qué mejora la formulación bajo cambios de coordenadas.
+
+### 5 preguntas de desarrollo largo
+
+L1. Desarrolla la analogía entre las fórmulas de Frenet para curvas y las ecuaciones de Gauss-Weingarten para superficies.
+
+L2. Expón el papel de las condiciones de compatibilidad en la teoría de superficies y su relación con el teorema fundamental.
+
+L3. Explica el teorema egregium de Gauss, su significado y sus consecuencias geométricas.
+
+L4. Presenta la introducción de variedades coordenadas elementales y tensores en el capítulo, indicando por qué se necesitan.
+
+L5. Desarrolla la relación entre primera forma fundamental, segunda forma fundamental, curvatura gaussiana y reconstrucción local de superficies.
+
+### 5 preguntas de relación entre conceptos
+
+R1. Relaciona primera forma fundamental, símbolos de Christoffel y ecuaciones de Gauss.
+
+R2. Relaciona segunda forma fundamental, ecuaciones de Weingarten y curvaturas principales.
+
+R3. Relaciona ecuaciones de compatibilidad, teorema egregium y geometría intrínseca.
+
+R4. Relaciona cambio de coordenadas, tensor covariante y formas fundamentales.
+
+R5. Relaciona teorema fundamental de las superficies, unicidad de EDO y movimientos rígidos.
+
+## 8. Respuestas modelo
+
+### Respuestas a las preguntas fáciles
+
+F1. La base móvil natural está formada por \(x_u\), \(x_v\) y el normal unitario \(\mathbf n\). Los dos primeros generan el plano tangente y el tercero completa una base de \(\mathbb R^3\) adaptada a la superficie.
+
+F2. Los coeficientes de la primera forma fundamental son
+\[
+E=x_u\cdot x_u,\quad F=x_u\cdot x_v,\quad G=x_v\cdot x_v.
+\]
+Con ellos se escribe
+\[
+I=E\,du^2+2F\,du\,dv+G\,dv^2.
+\]
+
+F3. Los coeficientes de la segunda forma fundamental son
+\[
+L=x_{uu}\cdot\mathbf n,\quad M=x_{uv}\cdot\mathbf n,\quad N=x_{vv}\cdot\mathbf n.
+\]
+Miden la componente normal de las derivadas segundas de la parametrización.
+
+F4. Porque \(\mathbf n\cdot\mathbf n=1\). Al derivar respecto de \(u\) o \(v\), se obtiene \(\mathbf n_u\cdot\mathbf n=0\) y \(\mathbf n_v\cdot\mathbf n=0\). Por tanto, esas derivadas son ortogonales al normal y pertenecen al plano tangente.
+
+F5. La curvatura gaussiana es
+\[
+K=\frac{LN-M^2}{EG-F^2}.
+\]
+El numerador procede de la segunda forma fundamental y el denominador de la primera.
+
+F6. Significa que la matriz de la primera forma fundamental tiene determinante positivo. Geométricamente, garantiza que \(x_u,x_v\) son independientes y que la forma fundamental mide longitudes de modo no degenerado.
+
+F7. Son los coeficientes de la parte tangente de las derivadas segundas \(x_{ij}\). En
+\[
+x_{ij}=\Gamma^k_{ij}x_k+b_{ij}\mathbf n,
+\]
+los \(\Gamma^k_{ij}\) indican cómo cambia la base tangente.
+
+F8. Afirma que la curvatura gaussiana depende solo de la primera forma fundamental y de sus derivadas. Por eso \(K\) es una magnitud intrínseca.
+
+F9. Es un conjunto dotado de sistemas coordenados admisibles de dimensión \(n\), con cambios de coordenadas regulares y jacobiano no nulo. Generaliza la idea de curva o superficie parametrizada.
+
+F10. Un vector contravariante tiene componentes con índices superiores y transforma como los diferenciales de coordenadas. Un vector covariante tiene componentes con índices inferiores y transforma con la regla dual.
+
+### Respuestas a las preguntas medias
+
+M1. Las ecuaciones de Gauss son:
+\[
+x_{uu}=\Gamma^1_{11}x_u+\Gamma^2_{11}x_v+L\mathbf n,
+\]
+\[
+x_{uv}=\Gamma^1_{12}x_u+\Gamma^2_{12}x_v+M\mathbf n,
+\]
+\[
+x_{vv}=\Gamma^1_{22}x_u+\Gamma^2_{22}x_v+N\mathbf n.
+\]
+Separan la derivada segunda en parte tangente y parte normal.
+
+M2. Las ecuaciones de Weingarten son:
+\[
+\mathbf n_u=
+\frac{FM-GL}{EG-F^2}x_u+
+\frac{FL-EM}{EG-F^2}x_v,
+\]
+\[
+\mathbf n_v=
+\frac{FN-GM}{EG-F^2}x_u+
+\frac{FM-EN}{EG-F^2}x_v.
+\]
+Expresan la variación del normal como vector tangente.
+
+M3. Los símbolos de Christoffel se obtienen proyectando \(x_{ij}\) sobre la base tangente y usando productos escalares con \(x_u,x_v\). Esos productos escalares se expresan mediante derivadas de \(E,F,G\). Por eso no intervienen \(L,M,N\).
+
+M4. Se obtienen comparando derivadas mixtas de orden tres. Como \(x\) tiene suficiente regularidad, deben coincidir \((x_{uu})_v\) y \((x_{uv})_u\), así como \((x_{uv})_v\) y \((x_{vv})_u\). Al sustituir Gauss-Weingarten aparecen relaciones entre \(E,F,G,L,M,N\).
+
+M5. Las ecuaciones de Mainardi-Codazzi son:
+\[
+L_v-M_u=L\Gamma^1_{12}+M(\Gamma^2_{12}-\Gamma^1_{11})-N\Gamma^2_{11},
+\]
+\[
+M_v-N_u=L\Gamma^1_{22}+M(\Gamma^2_{22}-\Gamma^1_{12})-N\Gamma^2_{12}.
+\]
+Relacionan la variación de la segunda forma fundamental con la conexión determinada por la primera.
+
+M6. Porque una magnitud intrínseca debe depender solo de las medidas internas de la superficie. El teorema egregium demuestra que \(K\) se calcula a partir de \(E,F,G\) y sus derivadas, aunque su fórmula inicial use \(L,M,N\).
+
+M7. El teorema fundamental afirma que, dadas funciones \(E,F,G,L,M,N\) con regularidad adecuada, \(EG-F^2>0\) y cumpliendo las condiciones de compatibilidad, existe localmente una superficie con esas formas fundamentales. Además, es única salvo traslaciones y rotaciones.
+
+M8. Bajo un cambio de coordenadas, la primera forma fundamental debe conservar el valor geométrico de \(ds^2\). Por la regla de la cadena, sus coeficientes transforman con dos factores jacobianos, exactamente como un tensor covariante de orden dos.
+
+M9. La contracción identifica un índice superior con uno inferior y suma sobre él. Por ejemplo, si \(A^i_j\) es un tensor mixto, entonces \(A^i_i\) es un escalar invariante.
+
+M10. Significa que las superficies pueden diferir por una traslación o una rotación del espacio ambiente, pero no por su geometría local. Si se colocan haciendo coincidir un punto y la base tangente inicial, las ecuaciones diferenciales obligan a que coincidan localmente.
+
+### Respuestas a las preguntas difíciles
+
+D1. Como \(\mathbf n\cdot\mathbf n=1\), se tiene \(\mathbf n_u\cdot\mathbf n=0\), luego
+\[
+\mathbf n_u=a x_u+b x_v.
+\]
+Derivando \(\mathbf n\cdot x_u=0\) y \(\mathbf n\cdot x_v=0\):
+\[
+\mathbf n_u\cdot x_u=-\mathbf n\cdot x_{uu}=-L,
+\]
+\[
+\mathbf n_u\cdot x_v=-\mathbf n\cdot x_{uv}=-M.
+\]
+Por tanto,
+\[
+aE+bF=-L,\qquad aF+bG=-M.
+\]
+Al resolver el sistema:
+\[
+a=\frac{FM-GL}{EG-F^2},\qquad b=\frac{FL-EM}{EG-F^2}.
+\]
+Así se obtiene la primera fórmula de Weingarten. La segunda se obtiene igual, sustituyendo \(-M\) y \(-N\) en el sistema.
+
+D2. Se parte de
+\[
+x_{uu}=\Gamma^1_{11}x_u+\Gamma^2_{11}x_v+L\mathbf n
+\]
+y
+\[
+x_{uv}=\Gamma^1_{12}x_u+\Gamma^2_{12}x_v+M\mathbf n.
+\]
+Se derivan la primera respecto de \(v\) y la segunda respecto de \(u\). Después se sustituyen de nuevo las ecuaciones de Gauss-Weingarten para eliminar derivadas segundas y derivadas del normal. Al comparar el coeficiente de \(\mathbf n\) en ambos lados se obtiene una relación entre \(L_v\), \(M_u\), \(L,M,N\) y los \(\Gamma^k_{ij}\). Esa relación es una de las ecuaciones de Mainardi-Codazzi.
+
+D3. La ecuación de Gauss es una condición de compatibilidad que expresa \(LN-M^2\) mediante \(E,F,G\), sus derivadas y los símbolos de Christoffel. Como los símbolos de Christoffel dependen solo de \(E,F,G\), el cociente
+\[
+K=\frac{LN-M^2}{EG-F^2}
+\]
+queda determinado exclusivamente por la primera forma fundamental. Por tanto, la curvatura gaussiana no depende de la elección extrínseca de \(L,M,N\), sino de la métrica inducida.
+
+D4. Se parte de
+\[
+g_{ij}=x_i\cdot x_j.
+\]
+Derivando:
+\[
+\frac{\partial g_{ij}}{\partial u^k}=x_{ik}\cdot x_j+x_i\cdot x_{jk}.
+\]
+Usando la simetría de derivadas \(x_{ij}=x_{ji}\) y combinando las tres derivadas
+\[
+(g_{ik})_j,\quad (g_{jk})_i,\quad (g_{ij})_k,
+\]
+se despeja
+\[
+x_{ij}\cdot x_k
+=\frac12\left((g_{ik})_j+(g_{jk})_i-(g_{ij})_k\right).
+\]
+Esto define los símbolos de Christoffel de primera especie \(\Gamma_{ijk}\).
+
+D5. En notación tensorial se escriben simultáneamente todas las ecuaciones:
+\[
+x_{ij}=\Gamma^k_{ij}x_k+b_{ij}\mathbf n,
+\]
+\[
+\mathbf n_i=-b_i^{\ k}x_k.
+\]
+Esta formulación evita repetir casos particulares y muestra qué objetos tienen significado geométrico bajo cambios de coordenadas. \(g_{ij}\) y \(b_{ij}\) son tensores covariantes; \(g^{ij}\) permite subir índices; los \(\Gamma^k_{ij}\) codifican la conexión asociada a la métrica.
+
+### Respuestas a las preguntas de desarrollo largo
+
+L1. En una curva, las fórmulas de Frenet expresan las derivadas de \(t,n,b\) en términos del propio triedro. En una superficie, el sistema móvil natural es \(x_u,x_v,\mathbf n\). Las ecuaciones de Gauss-Weingarten cumplen el mismo papel: describen cómo varían los vectores básicos al desplazarse por la superficie. La diferencia es que ahora hay dos direcciones independientes de derivación, \(u\) y \(v\), y la geometría se reparte entre una parte tangente, dada por los símbolos de Christoffel, y una parte normal, dada por la segunda forma fundamental.
+
+L2. Las condiciones de compatibilidad expresan que las dos formas fundamentales no son datos independientes arbitrarios. Si proceden de una superficie, las derivadas mixtas de la parametrización deben coincidir. Al imponer esa condición sobre las ecuaciones de Gauss-Weingarten se obtienen las ecuaciones de Mainardi-Codazzi y la ecuación de Gauss. En el teorema fundamental de las superficies, esas condiciones son precisamente las que permiten pasar de datos \(E,F,G,L,M,N\) a una superficie local existente y única salvo movimiento rígido.
+
+L3. El teorema egregium afirma que la curvatura gaussiana depende solo de la primera forma fundamental y de sus derivadas. Su importancia consiste en que \(K\) se define inicialmente con \(L,M,N\), que parecen datos extrínsecos. Sin embargo, la ecuación de Gauss muestra que \(LN-M^2\) queda determinado por la métrica. Por tanto, \(K\) es una propiedad intrínseca. Consecuencia: dos superficies localmente isométricas deben tener la misma curvatura gaussiana. En cambio, no se debe concluir que la igualdad de \(K\) baste por sí sola para garantizar una isometría.
+
+L4. Las variedades coordenadas elementales se introducen para generalizar la idea de coordenadas más allá de una superficie concreta. En ellas se pueden definir cambios admisibles de coordenadas y estudiar cómo se transforman componentes. Los tensores aparecen como objetos cuyas componentes siguen leyes de transformación precisas. Esta herramienta permite reconocer que \(g_{ij}\) y \(b_{ij}\) son tensores covariantes de orden dos y que las operaciones de suma, producto externo y contracción preservan el carácter tensorial cuando se aplican correctamente.
+
+L5. La primera forma fundamental contiene la métrica de la superficie. La segunda forma fundamental contiene la curvatura normal. Juntas permiten calcular \(K\), \(H\) y las curvaturas principales. Sin embargo, el teorema egregium muestra que \(K\) depende solo de la primera forma. Por otra parte, el teorema fundamental de las superficies afirma que las dos formas, si son compatibles y no degeneradas, reconstruyen localmente la superficie salvo movimiento rígido. Así, la primera forma gobierna la geometría intrínseca; la segunda completa la información extrínseca necesaria para la inmersión local.
+
+### Respuestas a las preguntas de relación entre conceptos
+
+R1. La primera forma fundamental proporciona \(E,F,G\). De ellos y sus derivadas se calculan los símbolos de Christoffel. Estos símbolos son los coeficientes tangenciales en las ecuaciones de Gauss. Por tanto:
+\[
+I \longrightarrow \Gamma^k_{ij} \longrightarrow \text{parte tangente de } x_{ij}.
+\]
+
+R2. La segunda forma fundamental proporciona \(L,M,N\). Las ecuaciones de Weingarten muestran que la variación del normal depende de esos coeficientes y de la métrica. Las curvaturas principales son los valores extremos de la curvatura normal, por lo que dependen de la relación entre \(II\) e \(I\).
+
+R3. Las ecuaciones de compatibilidad garantizan que las formas fundamentales procedan de una superficie. Entre ellas, la ecuación de Gauss implica que \(K\) se expresa solo con la primera forma. De ahí sale el teorema egregium y la interpretación de \(K\) como magnitud intrínseca.
+
+R4. Al cambiar de coordenadas, las componentes de una forma cuadrática deben transformarse de manera que el valor geométrico permanezca igual. Por eso \(g_{ij}\) y \(b_{ij}\) son tensores covariantes de orden dos. La ley tensorial formaliza la invariancia de \(I\) e \(II\).
+
+R5. El teorema fundamental afirma que datos compatibles \(E,F,G,L,M,N\) determinan una superficie local. La demostración de la unicidad se apoya en la unicidad de sistemas de EDO aplicados a \(x,x_u,x_v\). La indeterminación restante son los movimientos rígidos, porque traslaciones y rotaciones no cambian las formas fundamentales.
+
+## 9. Resumen final de repaso
+
+Ideas principales:
+- Las ecuaciones de Gauss-Weingarten son el equivalente superficial de las fórmulas de Frenet.
+- \(x_{ij}\) se descompone en parte tangente y parte normal.
+- Los símbolos de Christoffel dependen solo de \(E,F,G\).
+- Las derivadas del normal son tangentes y se expresan con \(E,F,G,L,M,N\).
+- Las formas fundamentales no pueden elegirse arbitrariamente: deben cumplir compatibilidad.
+- El teorema egregium afirma que \(K\) depende solo de la primera forma fundamental.
+- El teorema fundamental reconstruye localmente la superficie a partir de formas compatibles.
+- El lenguaje tensorial organiza las leyes de transformación bajo cambios de coordenadas.
+
+Conceptos imprescindibles:
+- Carta regular.
+- Plano tangente.
+- Vector normal unitario.
+- Primera forma fundamental \(I\).
+- Segunda forma fundamental \(II\).
+- Símbolos de Christoffel.
+- Ecuaciones de Gauss.
+- Ecuaciones de Weingarten.
+- Ecuaciones de Mainardi-Codazzi.
+- Teorema egregium.
+- Teorema fundamental de superficies.
+- Variedad coordenada elemental.
+- Tensor covariante.
+- Tensor contravariante.
+- Contracción tensorial.
+
+Relaciones clave:
+- \(E,F,G\) determinan \(\Gamma^k_{ij}\).
+- \(L,M,N\) determinan la componente normal de \(x_{ij}\).
+- \(I\) mide geometría intrínseca.
+- \(II\) mide curvatura normal.
+- Compatibilidad conecta \(I\) e \(II\).
+- Gauss implica \(K\) intrínseca.
+- Tensorialidad garantiza independencia de la carta.
+
+Errores que evitar:
+- Hacer depender \(\Gamma^k_{ij}\) de \(L,M,N\).
+- Decir que toda curvatura es intrínseca.
+- Olvidar \(EG-F^2>0\).
+- Confundir normal unitario con coeficiente \(N\) de la segunda forma.
+- Creer que tener índices basta para ser tensor.
+- Confundir covariante con contravariante.
+- Omitir que la unicidad del teorema fundamental es salvo movimientos rígidos.
+- Tomar igualdad de \(K\) como suficiente para isometría local.
+
+## 10. Checklist de dominio
+
+- Si no puedes escribir \(I=E\,du^2+2F\,du\,dv+G\,dv^2\), falta repasar primera forma fundamental.
+
+- Si no puedes definir \(L,M,N\), falta repasar segunda forma fundamental y vector normal.
+
+- Si no puedes explicar por qué \(\mathbf n_u\) es tangente, falta repasar la derivación de \(\mathbf n\cdot\mathbf n=1\).
+
+- Si confundes \(\Gamma^k_{ij}\) con \(L,M,N\), revisar la descomposición tangente/normal de \(x_{ij}\).
+
+- Si no puedes escribir las tres ecuaciones de Gauss, falta repasar Gauss-Weingarten.
+
+- Si no puedes escribir al menos una ecuación de Weingarten, falta repasar el sistema lineal que determina \(\mathbf n_u\) y \(\mathbf n_v\).
+
+- Si no sabes de dónde salen las condiciones de compatibilidad, revisar la igualdad de derivadas mixtas.
+
+- Si no puedes enunciar el teorema egregium sin usar frases vagas, falta repasar la ecuación de Gauss.
+
+- Si dices que \(K\) y \(H\) son igualmente intrínsecas, revisar la diferencia entre curvatura gaussiana y curvatura media.
+
+- Si no puedes enunciar el teorema fundamental de las superficies, falta repasar existencia, compatibilidad y unicidad salvo movimientos rígidos.
+
+- Si confundes una superficie parametrizada con una variedad coordenada elemental, revisar la generalización de coordenadas.
+
+- Si llamas tensor a cualquier conjunto con índices, revisar leyes de transformación.
+
+- Si confundes covariante y contravariante, revisar índices superiores e inferiores y cambios de coordenadas.
+
+- Si no puedes justificar que \(g_{ij}\) es tensor covariante, falta repasar la invariancia de \(ds^2\).
+
+- Si no puedes explicar qué hace una contracción, revisar operaciones tensoriales básicas.
+
+- Si puedes calcular \(E,F,G,L,M,N\), escribir Gauss-Weingarten, explicar compatibilidad y enunciar correctamente el teorema egregium, el capítulo está suficientemente asentado para examen.
+
+- Si puedes relacionar \(I\), \(II\), \(K\), compatibilidad y tensorialidad en una respuesta de desarrollo, el tema está dominado.

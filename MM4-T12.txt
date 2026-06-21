@@ -1,0 +1,1107 @@
+# Guía de estudio — Lipschutz / Métodos Matemáticos IV
+
+Tema trabajado: T12 — Segunda forma fundamental.
+Fuente principal: Martin M. Lipschutz, Teoría y problemas de geometría diferencial, capítulo 9, «Primera y segunda formas fundamentales».
+
+## 1. Prerrequisitos mínimos
+
+1. Superficie parametrizada regular.
+
+Definición breve: una superficie se estudia localmente mediante una carta
+\(x=x(u,v)\) de clase suficiente, con \(x_u\times x_v\neq 0\). Los vectores \(x_u\) y \(x_v\) generan el plano tangente.
+
+Por qué es necesario: todo el capítulo expresa longitudes, áreas, curvaturas y direcciones mediante derivadas parciales de una carta. Sin una carta regular no se pueden definir correctamente el plano tangente ni la normal.
+
+Ejemplo mínimo: si \(x(u,v)=(u,v,u^2+v^2)\), entonces \(x_u=(1,0,2u)\) y \(x_v=(0,1,2v)\). Como \(x_u\times x_v\neq 0\), la parametrización es regular.
+
+2. Plano tangente y normal unitaria.
+
+Definición breve: el plano tangente en \(x(u,v)\) está generado por \(x_u\) y \(x_v\). Una normal unitaria es
+\[
+\mathbf N=\frac{x_u\times x_v}{|x_u\times x_v|},
+\]
+salvo cambio de orientación.
+
+Por qué es necesario: la segunda forma fundamental mide cómo cambia el plano tangente al desplazarse sobre la superficie. Para ello se necesita comparar la superficie con su normal.
+
+Ejemplo mínimo: en el plano \(x(u,v)=(u,v,0)\), \(x_u=(1,0,0)\), \(x_v=(0,1,0)\), y una normal unitaria es \(\mathbf N=(0,0,1)\).
+
+3. Diferencial de una aplicación vectorial.
+
+Definición breve: para una carta \(x(u,v)\), su diferencial aplicado a un vector \((du,dv)\) del plano de parámetros es
+\[
+dx=x_u\,du+x_v\,dv.
+\]
+
+Por qué es necesario: la primera forma fundamental se define como el cuadrado de la longitud de este vector tangente. La segunda forma fundamental se expresa también en términos de desplazamientos \(du,dv\).
+
+Ejemplo mínimo: si \(x(u,v)=(u,v,u^2)\), entonces \(dx=(1,0,2u)\,du+(0,1,0)\,dv\).
+
+4. Producto escalar y producto vectorial en \(\mathbb R^3\).
+
+Definición breve: el producto escalar mide longitudes y ángulos; el producto vectorial produce un vector perpendicular a dos vectores dados.
+
+Por qué es necesario: los coeficientes \(E,F,G\) de la primera forma fundamental son productos escalares, y el vector normal se obtiene con \(x_u\times x_v\).
+
+Ejemplo mínimo: si \(a=(1,0,0)\) y \(b=(0,1,0)\), entonces \(a\cdot b=0\) y \(a\times b=(0,0,1)\).
+
+5. Curva sobre una superficie.
+
+Definición breve: una curva sobre la superficie se escribe como
+\[
+\alpha(t)=x(u(t),v(t)).
+\]
+
+Por qué es necesario: las fórmulas de longitud, curvatura normal, líneas de curvatura y líneas asintóticas se formulan examinando curvas contenidas en la superficie.
+
+Ejemplo mínimo: en una esfera parametrizada, fijar un parámetro da un paralelo o un meridiano.
+
+6. Curvatura de una curva.
+
+Definición breve: para una curva parametrizada por longitud de arco, la curvatura mide la variación del vector tangente unitario. El vector curvatura apunta hacia la normal principal.
+
+Por qué es necesario: la curvatura normal de una curva de la superficie se obtiene proyectando su vector curvatura sobre la normal de la superficie.
+
+Ejemplo mínimo: una recta tiene curvatura cero; una circunferencia de radio \(a\) tiene curvatura \(1/a\).
+
+7. Formas cuadráticas.
+
+Definición breve: una expresión como
+\[
+A\,du^2+2B\,du\,dv+C\,dv^2
+\]
+es una forma cuadrática en las variables \(du,dv\).
+
+Por qué es necesario: tanto la primera como la segunda forma fundamental son formas cuadráticas. El signo del discriminante \(LN-M^2\) decide la naturaleza local de un punto de la superficie.
+
+Ejemplo mínimo: \(du^2+dv^2\) es positiva salvo en \((0,0)\); \(du^2-dv^2\) puede ser positiva, negativa o nula según la dirección.
+
+8. Cambio de parámetros.
+
+Definición breve: una misma porción de superficie puede representarse con otra carta \(x^*(\theta,\phi)\), relacionada por funciones \(\theta=\theta(u,v)\), \(\phi=\phi(u,v)\).
+
+Por qué es necesario: los coeficientes \(E,F,G,L,M,N\) dependen de la carta, pero las formas fundamentales y las curvaturas que se derivan de ellas tienen significado geométrico.
+
+Ejemplo mínimo: una esfera puede parametrizarse con coordenadas esféricas habituales o con otra elección local de parámetros; los números cambian, la geometría no.
+
+## 2. Idea central del capítulo
+
+El capítulo estudia cómo una superficie regular de \(\mathbb R^3\) puede medirse desde dentro y desde fuera. La primera forma fundamental permite medir longitudes, ángulos y áreas dentro de la superficie. La segunda forma fundamental permite medir cómo se curva la superficie respecto al espacio ambiente.
+
+El punto de partida es la diferencial de una carta \(x=x(u,v)\). Si se toma un pequeño desplazamiento \((du,dv)\) en el plano de parámetros, su imagen sobre la superficie es \(dx=x_u\,du+x_v\,dv\). El cuadrado de su longitud produce la primera forma fundamental. Por eso la primera forma fundamental contiene toda la información métrica local: longitud de arcos, ángulo entre curvas y elemento de área.
+
+A continuación, el capítulo introduce la normal unitaria \(\mathbf N\). Mientras la primera forma fundamental mira dentro del plano tangente, la segunda forma fundamental mira cómo la superficie se separa del plano tangente. Sus coeficientes se obtienen proyectando las segundas derivadas \(x_{uu}\), \(x_{uv}\), \(x_{vv}\) sobre la normal. De ahí aparecen \(L\), \(M\) y \(N\), y la forma
+\[
+II=L\,du^2+2M\,du\,dv+N\,dv^2.
+\]
+
+El capítulo conecta esta forma con la curvatura normal. Dada una dirección tangente, el cociente
+\[
+k_n=\frac{II}{I}
+\]
+mide la componente normal de la curvatura de cualquier curva de la superficie que tenga esa dirección. Así se pasa de una forma cuadrática a una magnitud geométrica observable: la curvatura de secciones normales.
+
+Después se estudian las direcciones en las que la curvatura normal es extrema. Esas direcciones son las direcciones principales, y los valores extremos son las curvaturas principales. A partir de ellas se definen la curvatura gaussiana \(K\) y la curvatura media \(H\). La curvatura gaussiana decide si un punto es elíptico, hiperbólico, parabólico o plano.
+
+Por último, el capítulo clasifica curvas especiales sobre una superficie. Las líneas de curvatura siguen direcciones principales. Las líneas asintóticas siguen direcciones en las que la curvatura normal es cero. Las familias conjugadas generalizan la relación entre direcciones mediante la segunda forma fundamental. Todo el capítulo muestra que la geometría local de una superficie puede leerse en las dos formas fundamentales.
+
+## 3. Desarrollo completo del capítulo
+
+### 3.1. La primera forma fundamental
+
+Sea \(x=x(u,v)\) una carta local de una superficie regular. Para un desplazamiento \((du,dv)\) en el plano de parámetros, el vector tangente correspondiente es
+\[
+dx=x_u\,du+x_v\,dv.
+\]
+La primera forma fundamental se define como
+\[
+I=dx\cdot dx.
+\]
+Al desarrollar el producto escalar se obtiene
+\[
+I=E\,du^2+2F\,du\,dv+G\,dv^2,
+\]
+donde
+\[
+E=x_u\cdot x_u,\qquad F=x_u\cdot x_v,\qquad G=x_v\cdot x_v.
+\]
+
+Esto importa porque \(I\) mide el cuadrado de la longitud de un desplazamiento infinitesimal sobre la superficie. La carta transforma un pequeño vector del plano de parámetros en un vector del plano tangente; la primera forma fundamental dice qué longitud tiene realmente ese vector en la superficie.
+
+La conexión con lo anterior es directa: ya se conocía el plano tangente mediante \(x_u\) y \(x_v\). Ahora no solo se sabe qué vectores lo generan, sino cómo se miden en él las distancias y los ángulos.
+
+Los coeficientes \(E,F,G\) dependen de la parametrización, pero la forma \(I\) tiene significado geométrico. Si se cambia de parámetros, los números que aparecen como coeficientes pueden cambiar, pero la longitud del vector tangente representado no cambia.
+
+Ejemplo: en el plano \(x(u,v)=(u,v,0)\), se tiene \(x_u=(1,0,0)\), \(x_v=(0,1,0)\). Por tanto \(E=1\), \(F=0\), \(G=1\), y
+\[
+I=du^2+dv^2.
+\]
+La métrica coincide con la métrica euclídea ordinaria.
+
+### 3.2. Longitud de arcos
+
+Si una curva de la superficie se escribe como
+\[
+\alpha(t)=x(u(t),v(t)),\qquad a\leq t\leq b,
+\]
+entonces
+\[
+\alpha'(t)=x_u\,u'(t)+x_v\,v'(t).
+\]
+Su longitud se calcula con la primera forma fundamental:
+\[
+s=\int_a^b
+\sqrt{
+E\left(\frac{du}{dt}\right)^2
++2F\frac{du}{dt}\frac{dv}{dt}
++G\left(\frac{dv}{dt}\right)^2
+}\,dt.
+\]
+
+Esto importa porque convierte un problema geométrico sobre una superficie en una integral expresada con los parámetros. La longitud real de la curva no se obtiene sumando simplemente \(du\) y \(dv\); se obtiene mediante \(E,F,G\).
+
+La consecuencia práctica es clara: para calcular la longitud de una curva sobre una superficie, primero se calcula \(I\), luego se sustituye la curva \(u(t),v(t)\).
+
+Ejemplo: si \(I=du^2+f(u,v)\,dv^2\), entonces una curva con \(v=\) constante tiene longitud dada por \(\int |du|\). En ese caso, los segmentos correspondientes en curvas de parámetro \(u\) pueden compararse directamente.
+
+### 3.3. Ángulos y ortogonalidad
+
+Si dos vectores tangentes son
+\[
+dx=x_u\,du+x_v\,dv,\qquad
+\delta x=x_u\,\delta u+x_v\,\delta v,
+\]
+el coseno del ángulo \(\alpha\) que forman viene dado por
+\[
+\cos\alpha=
+\frac{
+E\,du\,\delta u
++F(du\,\delta v+dv\,\delta u)
++G\,dv\,\delta v
+}{
+\sqrt{E\,du^2+2F\,du\,dv+G\,dv^2}
+\sqrt{E\,\delta u^2+2F\,\delta u\,\delta v+G\,\delta v^2}
+}.
+\]
+
+Esta fórmula conecta el producto escalar ordinario con los parámetros. En particular, las curvas de parámetro \(u\) y las curvas de parámetro \(v\) son ortogonales cuando \(F=0\), porque sus vectores tangentes son \(x_u\) y \(x_v\).
+
+La importancia en examen es grande: muchas preguntas piden decidir si un sistema de coordenadas sobre una superficie es ortogonal. La comprobación local se reduce a calcular \(F\).
+
+Ejemplo: en una superficie de revolución parametrizada de forma natural por una variable meridiana y un ángulo, con frecuencia aparece \(F=0\), lo que indica que meridianos y paralelos son ortogonales.
+
+### 3.4. Área de una región de superficie
+
+El elemento de área se obtiene aproximando una pequeña región por el paralelogramo generado por \(x_u\,du\) y \(x_v\,dv\). Su área es
+\[
+|x_u\times x_v|\,du\,dv.
+\]
+Como
+\[
+|x_u\times x_v|^2=EG-F^2,
+\]
+el área de una región \(R\) de la carta es
+\[
+A=\iint_R \sqrt{EG-F^2}\,du\,dv.
+\]
+
+Esto importa porque la superficie no conserva, en general, el área del plano de parámetros. El factor \(\sqrt{EG-F^2}\) corrige la deformación producida por la parametrización.
+
+La conexión con la primera forma fundamental es esencial: el elemento de área depende solo de \(E,F,G\). Por tanto, el área pertenece a la geometría métrica de la superficie.
+
+Ejemplo: para el toro parametrizado por dos ángulos, el capítulo obtiene el área total \(4\pi^2ab\), donde \(a\) y \(b\) representan los radios característicos del toro.
+
+### 3.5. La segunda forma fundamental
+
+Para estudiar cómo se curva una superficie hay que introducir la normal unitaria \(\mathbf N\). Si \(x=x(u,v)\) es de clase al menos \(C^2\), la normal \(\mathbf N\) varía de punto a punto y tiene diferencial
+\[
+d\mathbf N=\mathbf N_u\,du+\mathbf N_v\,dv.
+\]
+Como \(\mathbf N\cdot\mathbf N=1\), se deduce que \(d\mathbf N\cdot\mathbf N=0\). Por tanto, \(d\mathbf N\) es tangente a la superficie.
+
+La segunda forma fundamental se escribe
+\[
+II=L\,du^2+2M\,du\,dv+N\,dv^2,
+\]
+donde, con la notación del capítulo,
+\[
+L=x_{uu}\cdot\mathbf N,\qquad
+M=x_{uv}\cdot\mathbf N,\qquad
+N=x_{vv}\cdot\mathbf N.
+\]
+Aquí conviene distinguir el coeficiente \(N\) de la forma fundamental del vector normal \(\mathbf N\).
+
+También aparecen fórmulas equivalentes:
+\[
+L=-x_u\cdot \mathbf N_u,\qquad
+M=-x_u\cdot \mathbf N_v=-x_v\cdot \mathbf N_u,\qquad
+N=-x_v\cdot \mathbf N_v.
+\]
+
+La primera forma mide \(dx\cdot dx\); la segunda mide la parte normal de las segundas derivadas. Por eso la primera forma describe la métrica y la segunda describe la curvatura extrínseca.
+
+Ejemplo: en el plano \(x(u,v)=(u,v,0)\), las segundas derivadas son cero. Así \(L=M=N=0\), luego \(II=0\). El plano no se curva respecto a su plano tangente porque coincide con él.
+
+### 3.6. Interpretación geométrica de la segunda forma
+
+El capítulo interpreta \(II\) mediante la separación de la superficie respecto a su plano tangente. Si \(P=x(u,v)\) y \(Q=x(u+du,v+dv)\), la proyección de \(\overrightarrow{PQ}\) sobre la normal queda controlada, en primer orden cuadrático, por la segunda forma fundamental.
+
+La idea es que el plano tangente da la mejor aproximación lineal a la superficie. La segunda forma fundamental proporciona la primera corrección significativa, que es de segundo orden. Por eso la función
+\[
+z=\frac12\,II
+\]
+se interpreta como un paraboloide osculador: aproxima la superficie cerca del punto cuando se mira desde el plano tangente y la dirección normal.
+
+Esta interpretación es clave para clasificar puntos. Si la aproximación cuadrática queda siempre al mismo lado del plano tangente, el punto es elíptico. Si cambia de signo según la dirección, el punto es hiperbólico. Si hay una dirección de contacto más plano, el punto es parabólico. Si la segunda forma se anula por completo, el punto es plano.
+
+### 3.7. Clasificación local mediante \(LN-M^2\)
+
+El discriminante de la segunda forma fundamental es
+\[
+LN-M^2.
+\]
+Según su signo, el capítulo distingue:
+
+Punto elíptico: \(LN-M^2>0\). La segunda forma conserva signo en todas las direcciones no nulas. Localmente la superficie queda a un mismo lado del plano tangente.
+
+Punto hiperbólico: \(LN-M^2<0\). La segunda forma cambia de signo. La superficie cruza el plano tangente con comportamiento de silla.
+
+Punto parabólico: \(LN-M^2=0\), pero no se anulan simultáneamente \(L,M,N\). Hay una dirección especial en la que la segunda forma se anula.
+
+Punto plano: \(L=M=N=0\). La segunda forma fundamental se anula en todas las direcciones.
+
+Esta clasificación no depende de la parametrización. Si se cambia de carta, los coeficientes se transforman, pero el signo de \(LN-M^2\) se conserva, salvo el caso plano que se reconoce por la anulación simultánea.
+
+Ejemplo: una esfera tiene puntos elípticos. Un paraboloide hiperbólico tiene puntos hiperbólicos. Un plano tiene todos sus puntos planos.
+
+### 3.8. Curvatura normal
+
+Sea \(C\) una curva de la superficie que pasa por \(P\). La componente del vector curvatura de \(C\) en la dirección de la normal \(\mathbf N\) se llama curvatura normal. En términos de las formas fundamentales,
+\[
+k_n=\frac{II}{I}
+=
+\frac{L\,du^2+2M\,du\,dv+N\,dv^2}
+{E\,du^2+2F\,du\,dv+G\,dv^2}.
+\]
+
+La importancia de esta fórmula es que la curvatura normal depende solo del punto y de la dirección tangente \(du:dv\), no de la curva concreta. Todas las curvas que pasan por \(P\) con la misma tangente tienen la misma curvatura normal en \(P\).
+
+Si la curva es una sección normal, es decir, se obtiene cortando la superficie por un plano que contiene la normal \(\mathbf N\), entonces la curvatura ordinaria de esa sección coincide con la curvatura normal. Esta afirmación permite interpretar \(k_n\) geométricamente sin necesidad de estudiar todas las curvas posibles.
+
+Además, si \(\kappa\) es la curvatura ordinaria de una curva de la superficie y \(n\) su normal principal, entonces
+\[
+k_n=\kappa(n\cdot \mathbf N).
+\]
+Por tanto, la curvatura normal es la proyección de la curvatura de la curva sobre la normal de la superficie.
+
+### 3.9. Curvaturas y direcciones principales
+
+En un punto fijo, la curvatura normal \(k_n\) cambia con la dirección \(du:dv\). Los valores extremos de \(k_n\) se llaman curvaturas principales, y las direcciones donde se alcanzan se llaman direcciones principales.
+
+El capítulo obtiene las direcciones principales mediante el sistema
+\[
+(L-\kappa E)\,du+(M-\kappa F)\,dv=0,
+\]
+\[
+(M-\kappa F)\,du+(N-\kappa G)\,dv=0.
+\]
+Para que exista una dirección no nula, el determinante debe anularse:
+\[
+(EG-F^2)\kappa^2-(EN+GL-2FM)\kappa+(LN-M^2)=0.
+\]
+Las dos raíces son las curvaturas principales \(\kappa_1,\kappa_2\).
+
+La consecuencia es que el problema geométrico de buscar extremos de curvatura normal se reduce a una ecuación cuadrática. En un punto no umbilical hay dos direcciones principales perpendiculares. En un punto umbilical todas las direcciones son principales.
+
+Ejemplo: en una esfera, todas las direcciones son equivalentes; por eso todos los puntos son umbilicales. En un punto no umbilical de una superficie de revolución, las direcciones meridiana y paralela suelen ser principales.
+
+### 3.10. Curvatura gaussiana y curvatura media
+
+A partir de las curvaturas principales se definen
+\[
+H=\frac{\kappa_1+\kappa_2}{2},
+\qquad
+K=\kappa_1\kappa_2.
+\]
+En términos de los coeficientes de las formas fundamentales:
+\[
+H=\frac{EN+GL-2FM}{2(EG-F^2)},
+\]
+\[
+K=\frac{LN-M^2}{EG-F^2}.
+\]
+
+La curvatura gaussiana es especialmente importante porque su signo coincide con el signo de \(LN-M^2\), ya que \(EG-F^2>0\) para una carta regular. Por tanto:
+\[
+K>0 \Longleftrightarrow \text{punto elíptico},
+\]
+\[
+K<0 \Longleftrightarrow \text{punto hiperbólico},
+\]
+\[
+K=0 \Longleftrightarrow \text{punto parabólico o plano}.
+\]
+
+Ejemplo: una esfera de radio \(a\) tiene \(K=1/a^2\). Un plano tiene \(K=0\) y \(H=0\).
+
+### 3.11. Líneas de curvatura
+
+Una línea de curvatura es una curva de la superficie cuya tangente apunta en cada punto en una dirección principal. Como las direcciones principales son invariantes geométricos, la noción de línea de curvatura no depende de la carta elegida.
+
+La ecuación diferencial de las líneas de curvatura se obtiene eliminando \(\kappa\) del sistema de direcciones principales:
+\[
+(EM-LF)\,du^2+(EN-GL)\,du\,dv+(FN-GM)\,dv^2=0.
+\]
+Cerca de un punto no umbilical de una superficie suficientemente regular, hay dos familias ortogonales de líneas de curvatura.
+
+El capítulo destaca un criterio útil: en un punto no umbilical, las curvas coordenadas \(u=\) constante y \(v=\) constante tienen direcciones principales si y solo si
+\[
+F=0,\qquad M=0.
+\]
+Por tanto, si en toda una carta sin puntos umbilicales se cumple \(F=M=0\), las curvas coordenadas son líneas de curvatura.
+
+### 3.12. Fórmula de Rodríguez
+
+La fórmula de Rodríguez caracteriza las direcciones principales mediante la variación de la normal:
+\[
+d\mathbf N=-\kappa\,dx.
+\]
+Una dirección \(du:dv\) es principal si y solo si existe un escalar \(\kappa\) tal que la variación de la normal en esa dirección es proporcional al desplazamiento tangente \(dx\). En ese caso, \(\kappa\) es la curvatura principal correspondiente.
+
+La fórmula es importante porque conecta dos ideas: la curvatura principal y el cambio de orientación del plano tangente. Si al moverse en una dirección la normal cambia exactamente en la misma dirección tangente, entonces se está siguiendo una dirección principal.
+
+En examen puede pedirse como criterio conceptual o como herramienta de cálculo.
+
+### 3.13. Líneas asintóticas
+
+Una dirección se llama asintótica si
+\[
+II=L\,du^2+2M\,du\,dv+N\,dv^2=0.
+\]
+Como \(k_n=II/I\), las direcciones asintóticas son las direcciones de curvatura normal nula.
+
+En un punto elíptico no hay direcciones asintóticas reales. En un punto hiperbólico hay dos. En un punto parabólico hay una. En un punto plano, la segunda forma se anula en todas las direcciones.
+
+Una curva es línea asintótica si su tangente es asintótica en cada punto. El capítulo da una interpretación con el plano osculador: una curva de la superficie es línea asintótica si en cada punto su curvatura es nula, o si su plano osculador es tangente a la superficie. De ahí se obtiene que toda recta contenida en una superficie es una línea asintótica.
+
+Las curvas coordenadas son líneas asintóticas si y solo si
+\[
+L=0,\qquad N=0
+\]
+en los puntos considerados, porque las direcciones coordenadas corresponden a \(dv=0\) y \(du=0\).
+
+### 3.14. Familias conjugadas de curvas
+
+Dos direcciones \(du:dv\) y \(\delta u:\delta v\) se llaman conjugadas si satisfacen
+\[
+L\,du\,\delta u
++M(du\,\delta v+dv\,\delta u)
++N\,dv\,\delta v=0.
+\]
+Esta condición usa la forma bilineal asociada a la segunda forma fundamental.
+
+En un punto elíptico o hiperbólico, cada dirección tiene una única dirección conjugada. Dos familias de curvas son conjugadas si sus tangentes son direcciones conjugadas en cada punto.
+
+Las curvas coordenadas son familias conjugadas si y solo si
+\[
+M=0.
+\]
+Además, en una carta sin puntos umbilicales, las curvas coordenadas son conjugadas y ortogonales si y solo si son líneas de curvatura.
+
+Esta parte cierra el capítulo conectando tres tipos de curvas: líneas de curvatura, líneas asintóticas y familias conjugadas. Todas se describen mediante \(I\), \(II\) y sus coeficientes.
+
+## 4. Conceptos clave
+
+1. Primera forma fundamental.
+
+Definición precisa: es la forma cuadrática
+\[
+I=E\,du^2+2F\,du\,dv+G\,dv^2=dx\cdot dx.
+\]
+
+Explicación desarrollada: mide el cuadrado de la longitud de un vector tangente representado por \(du,dv\). Es la herramienta básica para calcular longitudes, ángulos y áreas sobre la superficie.
+
+Ejemplo: para \(x(u,v)=(u,v,0)\), \(I=du^2+dv^2\).
+
+Relación con otros conceptos: de \(I\) salen las fórmulas de longitud, ángulo, ortogonalidad y área. También aparece en el denominador de la curvatura normal.
+
+Posible pregunta de examen: «Defina la primera forma fundamental de una superficie parametrizada y explique qué mide».
+
+2. Coeficientes \(E,F,G\).
+
+Definición precisa:
+\[
+E=x_u\cdot x_u,\quad F=x_u\cdot x_v,\quad G=x_v\cdot x_v.
+\]
+
+Explicación desarrollada: describen cómo la parametrización deforma las direcciones \(u\) y \(v\). \(E\) mide la longitud cuadrática de \(x_u\), \(G\) la de \(x_v\), y \(F\) su producto escalar.
+
+Ejemplo: si \(F=0\), las curvas coordenadas se cortan ortogonalmente.
+
+Relación con otros conceptos: aparecen en \(I\), en \(\sqrt{EG-F^2}\), en \(k_n=II/I\), en \(H\) y en \(K\).
+
+Posible pregunta de examen: «Calcule \(E,F,G\) y determine si las curvas coordenadas son ortogonales».
+
+3. Elemento de área.
+
+Definición precisa:
+\[
+dA=\sqrt{EG-F^2}\,du\,dv.
+\]
+
+Explicación desarrollada: procede del área del paralelogramo generado por \(x_u\,du\) y \(x_v\,dv\). Corrige el área del plano de parámetros para obtener el área real sobre la superficie.
+
+Ejemplo: en el plano con parametrización cartesiana, \(dA=du\,dv\).
+
+Relación con otros conceptos: depende únicamente de la primera forma fundamental.
+
+Posible pregunta de examen: «Deduzca el elemento de área de una superficie parametrizada».
+
+4. Segunda forma fundamental.
+
+Definición precisa:
+\[
+II=L\,du^2+2M\,du\,dv+N\,dv^2.
+\]
+
+Explicación desarrollada: mide la componente normal del comportamiento de segundo orden de la superficie. Mientras \(I\) mide la geometría del plano tangente, \(II\) mide cómo cambia la superficie respecto a ese plano.
+
+Ejemplo: en un plano, \(II=0\).
+
+Relación con otros conceptos: determina curvatura normal, clasificación local, curvaturas principales, líneas asintóticas y familias conjugadas.
+
+Posible pregunta de examen: «Defina la segunda forma fundamental y explique su significado geométrico».
+
+5. Coeficientes \(L,M,N\).
+
+Definición precisa:
+\[
+L=x_{uu}\cdot\mathbf N,\quad M=x_{uv}\cdot\mathbf N,\quad N=x_{vv}\cdot\mathbf N.
+\]
+
+Explicación desarrollada: son las componentes normales de las segundas derivadas de la carta. Reflejan cómo se curva la superficie al variar \(u\), al variar \(v\), y al variar ambas.
+
+Ejemplo: si todas las segundas derivadas son tangentes o nulas, entonces \(L=M=N=0\).
+
+Relación con otros conceptos: forman \(II\), aparecen en \(LN-M^2\), en las ecuaciones de curvaturas principales y en \(K,H\).
+
+Posible pregunta de examen: «Calcule \(L,M,N\) para una superficie dada».
+
+6. Clasificación de puntos.
+
+Definición precisa: se clasifica un punto según el signo de \(LN-M^2\):
+\[
+>0 \text{ elíptico},\quad <0 \text{ hiperbólico},\quad =0 \text{ parabólico o plano}.
+\]
+
+Explicación desarrollada: la clasificación describe la forma local de la superficie respecto al plano tangente. En un punto elíptico la superficie queda a un lado; en uno hiperbólico se comporta como silla; en uno parabólico hay una dirección de contacto más plano; en uno plano \(II=0\).
+
+Ejemplo: esfera: elíptico; paraboloide hiperbólico: hiperbólico; plano: plano.
+
+Relación con otros conceptos: equivale al signo de la curvatura gaussiana \(K\).
+
+Posible pregunta de examen: «Clasifique los puntos de una superficie a partir de sus formas fundamentales».
+
+7. Curvatura normal.
+
+Definición precisa:
+\[
+k_n=\frac{L\,du^2+2M\,du\,dv+N\,dv^2}
+{E\,du^2+2F\,du\,dv+G\,dv^2}.
+\]
+
+Explicación desarrollada: es la componente de la curvatura de una curva sobre la superficie en la dirección normal a la superficie. Depende del punto y de la dirección tangente, no de la curva concreta.
+
+Ejemplo: en un plano, \(k_n=0\) para toda dirección.
+
+Relación con otros conceptos: sus valores extremos son las curvaturas principales.
+
+Posible pregunta de examen: «Demuestre que las curvas tangentes en un punto tienen la misma curvatura normal».
+
+8. Curvaturas principales.
+
+Definición precisa: son los valores máximo y mínimo de \(k_n\) al variar la dirección tangente en un punto.
+
+Explicación desarrollada: resumen la curvatura de la superficie en las dos direcciones más significativas. Se obtienen como raíces de
+\[
+(EG-F^2)\kappa^2-(EN+GL-2FM)\kappa+(LN-M^2)=0.
+\]
+
+Ejemplo: en una esfera de radio \(a\), ambas curvaturas principales valen \(\pm 1/a\) según la orientación.
+
+Relación con otros conceptos: producen \(H\) y \(K\). Sus direcciones son las direcciones principales.
+
+Posible pregunta de examen: «Obtenga la ecuación de las curvaturas principales».
+
+9. Curvatura gaussiana.
+
+Definición precisa:
+\[
+K=\kappa_1\kappa_2=\frac{LN-M^2}{EG-F^2}.
+\]
+
+Explicación desarrollada: mide el producto de las curvaturas principales. Su signo clasifica el punto de la superficie.
+
+Ejemplo: la esfera de radio \(a\) tiene \(K=1/a^2\).
+
+Relación con otros conceptos: conecta la segunda forma fundamental con la clasificación local.
+
+Posible pregunta de examen: «Explique cómo el signo de \(K\) clasifica los puntos de una superficie».
+
+10. Curvatura media.
+
+Definición precisa:
+\[
+H=\frac{\kappa_1+\kappa_2}{2}
+=\frac{EN+GL-2FM}{2(EG-F^2)}.
+\]
+
+Explicación desarrollada: es el promedio de las curvaturas principales. A diferencia de \(K\), cambia de signo si se invierte la orientación de la normal.
+
+Ejemplo: en un plano \(H=0\).
+
+Relación con otros conceptos: depende de las dos formas fundamentales y de la orientación elegida.
+
+Posible pregunta de examen: «Calcule \(H\) y \(K\) a partir de \(E,F,G,L,M,N\)».
+
+11. Líneas de curvatura.
+
+Definición precisa: son curvas cuyas tangentes siguen direcciones principales en cada punto.
+
+Explicación desarrollada: organizan la superficie según las direcciones de curvatura extrema. En zonas sin puntos umbilicales, forman dos familias ortogonales.
+
+Ejemplo: en muchas superficies de revolución, meridianos y paralelos son líneas de curvatura.
+
+Relación con otros conceptos: se caracterizan por la ecuación de direcciones principales y por la fórmula de Rodríguez.
+
+Posible pregunta de examen: «Indique cuándo las curvas coordenadas son líneas de curvatura».
+
+12. Fórmula de Rodríguez.
+
+Definición precisa:
+\[
+d\mathbf N=-\kappa\,dx.
+\]
+
+Explicación desarrollada: una dirección es principal si la variación de la normal en esa dirección es proporcional al desplazamiento tangente. El factor de proporcionalidad cambiado de signo es la curvatura principal.
+
+Ejemplo: si al avanzar sobre una curva la normal gira en la misma dirección tangente, se está siguiendo una dirección principal.
+
+Relación con otros conceptos: caracteriza líneas de curvatura y direcciones principales.
+
+Posible pregunta de examen: «Enuncie la fórmula de Rodríguez y explique su significado».
+
+13. Líneas asintóticas.
+
+Definición precisa: son curvas cuyas direcciones tangentes satisfacen
+\[
+II=0.
+\]
+
+Explicación desarrollada: en ellas la curvatura normal es nula. Existen dos direcciones asintóticas en puntos hiperbólicos, una en puntos parabólicos y ninguna en puntos elípticos.
+
+Ejemplo: toda recta contenida en una superficie es línea asintótica.
+
+Relación con otros conceptos: dependen de la segunda forma fundamental y de la clasificación por \(K\).
+
+Posible pregunta de examen: «Determine las líneas asintóticas de una superficie parametrizada».
+
+14. Familias conjugadas.
+
+Definición precisa: dos direcciones son conjugadas si
+\[
+L\,du\,\delta u+M(du\,\delta v+dv\,\delta u)+N\,dv\,\delta v=0.
+\]
+
+Explicación desarrollada: es una relación bilineal definida por la segunda forma fundamental. Dos familias de curvas son conjugadas si sus tangentes cumplen esa relación en cada punto.
+
+Ejemplo: las curvas coordenadas son conjugadas si \(M=0\).
+
+Relación con otros conceptos: si además son ortogonales y no hay puntos umbilicales, coinciden con líneas de curvatura.
+
+Posible pregunta de examen: «Explique la relación entre familias conjugadas, ortogonalidad y líneas de curvatura».
+
+## 5. Relaciones entre ideas
+
+La primera relación fundamental es la que une la carta \(x(u,v)\) con el plano tangente. De las derivadas primeras \(x_u,x_v\) nace la primera forma fundamental. Esta forma no clasifica la curvatura exterior de la superficie; mide la geometría interna local: longitudes, ángulos y áreas.
+
+La segunda relación une las derivadas segundas de la carta con la normal unitaria \(\mathbf N\). Las cantidades \(L,M,N\) son proyecciones normales de \(x_{uu},x_{uv},x_{vv}\). Por tanto, la segunda forma fundamental no mide distancias sobre la superficie, sino cómo la superficie se separa del plano tangente.
+
+La curvatura normal conecta las dos formas:
+\[
+k_n=\frac{II}{I}.
+\]
+La primera forma aparece en el denominador porque normaliza la dirección tangente; la segunda aparece en el numerador porque mide la curvatura normal. Sin \(I\), la expresión dependería de la escala de \(du,dv\). Sin \(II\), no habría información sobre curvatura.
+
+La clasificación de puntos depende primero de la segunda forma mediante \(LN-M^2\), pero se expresa también por la curvatura gaussiana:
+\[
+K=\frac{LN-M^2}{EG-F^2}.
+\]
+Como \(EG-F^2>0\), el signo de \(K\) reproduce el signo de \(LN-M^2\). Así se ordenan jerárquicamente las ideas: carta regular, formas fundamentales, curvatura normal, curvaturas principales, curvatura gaussiana, clasificación.
+
+Las curvaturas principales son consecuencia de extremar \(k_n\). Por eso no aparecen antes de definir \(I\), \(II\) y la curvatura normal. Las direcciones principales son las direcciones en que se alcanzan esos extremos; las líneas de curvatura son curvas que siguen esas direcciones.
+
+Las líneas asintóticas se oponen a las líneas de curvatura en su criterio: las líneas de curvatura usan valores extremos de \(k_n\); las líneas asintóticas usan \(k_n=0\). Por eso las líneas asintóticas dependen fuertemente del signo de \(K\). En puntos elípticos no hay direcciones reales de curvatura normal nula; en puntos hiperbólicos sí.
+
+Las familias conjugadas generalizan otra relación: no se exige que una dirección sea principal ni que tenga curvatura normal cero, sino que dos direcciones estén relacionadas por la forma bilineal asociada a \(II\). La relación con las líneas de curvatura aparece cuando las familias conjugadas son además ortogonales y no hay puntos umbilicales.
+
+No hay una evolución histórica desarrollada en el capítulo. La evolución es conceptual: primero se mide la superficie con \(I\), luego se mide su curvatura con \(II\), después se extraen invariantes \(k_n,\kappa_1,\kappa_2,H,K\), y finalmente se estudian curvas especiales definidas por esas magnitudes.
+
+## 6. Errores habituales
+
+1. Confundir el vector normal \(\mathbf N\) con el coeficiente \(N\) de la segunda forma fundamental.
+
+Por qué está mal: el mismo símbolo aparece con dos significados distintos. \(\mathbf N\) es un vector unitario; \(N=x_{vv}\cdot\mathbf N\) es un escalar.
+
+Corrección: escribir el vector normal en negrita o como \(\mathbf N\), y reservar \(L,M,N\) para los coeficientes.
+
+Respuesta incorrecta: «La segunda forma es \(Ldu^2+2Mdu\,dv+\mathbf N dv^2\)».
+
+Respuesta correcta: «La segunda forma es \(Ldu^2+2Mdu\,dv+N\,dv^2\), donde \(N=x_{vv}\cdot\mathbf N\) es un coeficiente escalar».
+
+2. Creer que \(E,F,G\) son invariantes absolutos.
+
+Por qué está mal: los coeficientes cambian al cambiar de parámetros.
+
+Corrección: lo que tiene significado geométrico es la forma \(I\), no los valores aislados de \(E,F,G\).
+
+Respuesta incorrecta: «Como \(E=1\) en una carta, será \(E=1\) en cualquier parametrización».
+
+Respuesta correcta: «El valor de \(E\) puede cambiar; la longitud calculada con \(I\) no cambia».
+
+3. Usar \(EG-F^2\) para clasificar puntos por curvatura.
+
+Por qué está mal: \(EG-F^2\) es positivo para cartas regulares y aparece en el elemento de área. No decide si el punto es elíptico o hiperbólico.
+
+Corrección: la clasificación se hace con \(LN-M^2\) o, equivalentemente, con el signo de \(K\).
+
+Respuesta incorrecta: «Como \(EG-F^2>0\), el punto es elíptico».
+
+Respuesta correcta: «Como \(LN-M^2>0\), el punto es elíptico».
+
+4. Olvidar que \(k_n=II/I\).
+
+Por qué está mal: usar solo \(II\) da una cantidad dependiente de la escala de \(du,dv\).
+
+Corrección: la curvatura normal se obtiene dividiendo por la primera forma fundamental.
+
+Respuesta incorrecta: «\(k_n=Ldu^2+2Mdu\,dv+Ndv^2\)».
+
+Respuesta correcta: «\(k_n=(Ldu^2+2Mdu\,dv+Ndv^2)/(Edu^2+2Fdu\,dv+Gdv^2)\)».
+
+5. Decir que una dirección asintótica es una dirección principal.
+
+Por qué está mal: una dirección asintótica anula la curvatura normal; una dirección principal extrema la curvatura normal. Coinciden solo en casos especiales.
+
+Corrección: distinguir \(II=0\) de las ecuaciones de curvatura principal.
+
+Respuesta incorrecta: «Las líneas asintóticas son las líneas de curvatura con menor curvatura».
+
+Respuesta correcta: «Las líneas asintóticas satisfacen \(II=0\); las líneas de curvatura siguen direcciones principales».
+
+6. Clasificar un punto con \(K=0\) automáticamente como plano.
+
+Por qué está mal: \(K=0\) incluye puntos parabólicos y planos.
+
+Corrección: si \(K=0\), comprobar si \(L=M=N=0\). Si se anulan los tres, el punto es plano; si no, es parabólico.
+
+Respuesta incorrecta: «\(K=0\), luego el punto es plano».
+
+Respuesta correcta: «\(K=0\). Como no todos \(L,M,N\) son cero, el punto es parabólico».
+
+7. Pensar que \(H\) clasifica el signo elíptico/hiperbólico.
+
+Por qué está mal: la clasificación se hace con \(K\), no con \(H\).
+
+Corrección: \(H\) es el promedio de curvaturas principales; \(K\) es su producto.
+
+Respuesta incorrecta: «Si \(H>0\), el punto es elíptico».
+
+Respuesta correcta: «El punto es elíptico si \(K>0\)».
+
+8. Olvidar la orientación de la normal.
+
+Por qué está mal: al cambiar \(\mathbf N\) por \(-\mathbf N\), los coeficientes \(L,M,N\) cambian de signo, y también \(H\), pero \(K\) no cambia.
+
+Corrección: indicar la orientación si se pide \(H\) o curvaturas principales con signo.
+
+Respuesta incorrecta: «La curvatura media no depende de la elección de normal».
+
+Respuesta correcta: «La curvatura media cambia de signo al invertir la normal; la gaussiana se conserva».
+
+9. Suponer que \(F=0\) basta para que las coordenadas sean líneas de curvatura.
+
+Por qué está mal: \(F=0\) indica ortogonalidad, no necesariamente direcciones principales.
+
+Corrección: en un punto no umbilical, las curvas coordenadas son principales si y solo si \(F=0\) y \(M=0\).
+
+Respuesta incorrecta: «Como \(F=0\), las curvas coordenadas son líneas de curvatura».
+
+Respuesta correcta: «Además de \(F=0\), debe cumplirse \(M=0\)».
+
+10. Confundir familias conjugadas con familias ortogonales.
+
+Por qué está mal: conjugación se define con la segunda forma fundamental; ortogonalidad se define con la primera.
+
+Corrección: las curvas coordenadas son conjugadas si \(M=0\), y ortogonales si \(F=0\).
+
+Respuesta incorrecta: «Si dos familias son conjugadas, entonces se cortan perpendicularmente».
+
+Respuesta correcta: «Pueden ser conjugadas sin ser ortogonales. Si además son ortogonales y no hay umbilicales, son líneas de curvatura».
+
+## 7. Preguntas orientadas a examen
+
+### 10 preguntas fáciles
+
+F1. Defina la primera forma fundamental de una superficie parametrizada.
+
+F2. Escriba los coeficientes \(E,F,G\) en función de \(x_u,x_v\).
+
+F3. ¿Qué condición indica que las curvas coordenadas son ortogonales?
+
+F4. Escriba la fórmula del elemento de área de una superficie parametrizada.
+
+F5. Defina la segunda forma fundamental.
+
+F6. Escriba los coeficientes \(L,M,N\) en función de \(x_{uu},x_{uv},x_{vv}\) y la normal unitaria.
+
+F7. ¿Cómo se clasifica un punto según el signo de \(LN-M^2\)?
+
+F8. Defina la curvatura normal en una dirección.
+
+F9. Escriba las fórmulas de \(H\) y \(K\) en términos de \(E,F,G,L,M,N\).
+
+F10. ¿Qué es una línea asintótica?
+
+### 10 preguntas medias
+
+M1. Explique por qué \(E,F,G\) no son invariantes aunque la primera forma fundamental sí tenga significado geométrico.
+
+M2. Deduzca la fórmula de longitud de una curva \(\alpha(t)=x(u(t),v(t))\) usando la primera forma fundamental.
+
+M3. Explique geométricamente qué mide la segunda forma fundamental.
+
+M4. Demuestre que \(d\mathbf N\) es tangente a la superficie.
+
+M5. Explique por qué \(k_n=II/I\) depende solo de la dirección tangente.
+
+M6. Relacione la curvatura normal con las secciones normales.
+
+M7. Obtenga la ecuación cuadrática que da las curvaturas principales.
+
+M8. Explique por qué el signo de \(K\) clasifica puntos elípticos, hiperbólicos y parabólicos.
+
+M9. Indique el criterio para que las curvas coordenadas sean líneas de curvatura en un punto no umbilical.
+
+M10. Indique el criterio para que las curvas coordenadas sean familias conjugadas.
+
+### 5 preguntas difíciles
+
+D1. A partir del sistema de direcciones principales, derive la ecuación diferencial de las líneas de curvatura.
+
+D2. Pruebe que las direcciones principales en un punto no umbilical son ortogonales.
+
+D3. Explique por qué en un punto hiperbólico existen dos direcciones asintóticas y en un punto elíptico no existe ninguna.
+
+D4. Use la fórmula de Rodríguez para justificar que una curva es línea de curvatura cuando \(d\mathbf N\) es proporcional a \(dx\) a lo largo de ella.
+
+D5. Explique la diferencia entre punto parabólico y punto plano cuando \(K=0\).
+
+### 5 preguntas de desarrollo largo
+
+L1. Desarrolle el papel de la primera forma fundamental en el cálculo de longitudes, ángulos y áreas.
+
+L2. Desarrolle la construcción y el significado geométrico de la segunda forma fundamental.
+
+L3. Explique el proceso completo que lleva desde \(I\) y \(II\) hasta las curvaturas principales, \(H\) y \(K\).
+
+L4. Desarrolle la clasificación local de puntos de una superficie y relaciónela con \(K\).
+
+L5. Explique líneas de curvatura, líneas asintóticas y familias conjugadas, comparando sus definiciones.
+
+### 5 preguntas de relación entre conceptos
+
+R1. Relacione primera forma fundamental, segunda forma fundamental y curvatura normal.
+
+R2. Relacione curvaturas principales, curvatura media y curvatura gaussiana.
+
+R3. Relacione ortogonalidad, conjugación y líneas de curvatura.
+
+R4. Relacione el paraboloide osculador con la clasificación elíptica, hiperbólica, parabólica y plana.
+
+R5. Relacione la orientación de la normal con \(L,M,N,H,K\).
+
+## 8. Respuestas modelo
+
+### Respuestas a las preguntas fáciles
+
+F1. La primera forma fundamental es
+\[
+I=dx\cdot dx=E\,du^2+2F\,du\,dv+G\,dv^2.
+\]
+Mide el cuadrado de la longitud de un desplazamiento tangente a la superficie.
+
+F2. Los coeficientes son
+\[
+E=x_u\cdot x_u,\qquad F=x_u\cdot x_v,\qquad G=x_v\cdot x_v.
+\]
+Se calculan con las derivadas primeras de la carta.
+
+F3. Las curvas coordenadas son ortogonales cuando
+\[
+F=x_u\cdot x_v=0.
+\]
+Esto significa que los vectores tangentes \(x_u\) y \(x_v\) son perpendiculares.
+
+F4. El elemento de área es
+\[
+dA=\sqrt{EG-F^2}\,du\,dv.
+\]
+El área de una región se obtiene integrando esta expresión.
+
+F5. La segunda forma fundamental es
+\[
+II=L\,du^2+2M\,du\,dv+N\,dv^2.
+\]
+Mide la componente normal de la aproximación de segundo orden de la superficie respecto al plano tangente.
+
+F6. Sus coeficientes son
+\[
+L=x_{uu}\cdot\mathbf N,\qquad
+M=x_{uv}\cdot\mathbf N,\qquad
+N=x_{vv}\cdot\mathbf N.
+\]
+Aquí \(\mathbf N\) es la normal unitaria elegida.
+
+F7. Si \(LN-M^2>0\), el punto es elíptico. Si \(LN-M^2<0\), es hiperbólico. Si \(LN-M^2=0\) y no se anulan todos \(L,M,N\), es parabólico. Si \(L=M=N=0\), es plano.
+
+F8. La curvatura normal en la dirección \(du:dv\) es
+\[
+k_n=\frac{II}{I}
+=
+\frac{L\,du^2+2M\,du\,dv+N\,dv^2}
+{E\,du^2+2F\,du\,dv+G\,dv^2}.
+\]
+
+F9. Las fórmulas son
+\[
+H=\frac{EN+GL-2FM}{2(EG-F^2)},
+\qquad
+K=\frac{LN-M^2}{EG-F^2}.
+\]
+
+F10. Una línea asintótica es una curva cuyas direcciones tangentes satisfacen \(II=0\). Equivale a que la curvatura normal sea nula en cada punto de la curva.
+
+### Respuestas a las preguntas medias
+
+M1. Los coeficientes \(E,F,G\) dependen de la carta elegida porque cambian al reparametrizar la superficie. Sin embargo, la expresión \(I=dx\cdot dx\) mide una longitud geométrica del vector tangente real. Por eso el valor calculado para una dirección tangente es independiente de la forma concreta de parametrizar, aunque los coeficientes aislados cambien.
+
+M2. Para \(\alpha(t)=x(u(t),v(t))\), se tiene
+\[
+\alpha'(t)=x_u u'(t)+x_v v'(t).
+\]
+Luego
+\[
+|\alpha'(t)|^2=E(u')^2+2Fu'v'+G(v')^2.
+\]
+Integrando la raíz se obtiene
+\[
+s=\int_a^b\sqrt{E(u')^2+2Fu'v'+G(v')^2}\,dt.
+\]
+
+M3. La segunda forma fundamental mide cómo se separa la superficie de su plano tangente. Sus coeficientes son las componentes normales de las segundas derivadas de la carta. Por eso contiene información de curvatura exterior: no mide distancias sobre la superficie, sino la variación normal de la superficie cerca del punto.
+
+M4. Como \(\mathbf N\) es unitaria, \(\mathbf N\cdot\mathbf N=1\). Derivando,
+\[
+d(\mathbf N\cdot\mathbf N)=2\,d\mathbf N\cdot\mathbf N=0.
+\]
+Por tanto, \(d\mathbf N\) es perpendicular a \(\mathbf N\). En \(\mathbb R^3\), los vectores perpendiculares a la normal pertenecen al plano tangente.
+
+M5. Si se multiplica la dirección \((du,dv)\) por un escalar \(\lambda\), tanto \(II\) como \(I\) se multiplican por \(\lambda^2\). El cociente \(II/I\) no cambia. Por eso \(k_n\) depende de la dirección \(du:dv\), no de la longitud del vector elegido para representarla.
+
+M6. Una sección normal es la intersección de la superficie con un plano que contiene la normal \(\mathbf N\). En ese caso, la normal principal de la curva está en el plano generado por la tangente y \(\mathbf N\), y la curvatura de esa sección coincide con la curvatura normal. Así, \(k_n\) se interpreta como la curvatura de la sección normal en esa dirección.
+
+M7. Las direcciones principales satisfacen
+\[
+(L-\kappa E)du+(M-\kappa F)dv=0,
+\]
+\[
+(M-\kappa F)du+(N-\kappa G)dv=0.
+\]
+Para que exista una solución no trivial, el determinante debe ser cero. Esto da
+\[
+(EG-F^2)\kappa^2-(EN+GL-2FM)\kappa+(LN-M^2)=0.
+\]
+
+M8. Como
+\[
+K=\frac{LN-M^2}{EG-F^2}
+\]
+y para una carta regular \(EG-F^2>0\), el signo de \(K\) coincide con el de \(LN-M^2\). Por eso \(K>0\) indica punto elíptico, \(K<0\) punto hiperbólico y \(K=0\) punto parabólico o plano.
+
+M9. En un punto no umbilical, las curvas coordenadas tienen direcciones principales si y solo si
+\[
+F=0,\qquad M=0.
+\]
+La condición \(F=0\) da ortogonalidad de las direcciones coordenadas, y \(M=0\) hace compatible esa ortogonalidad con la segunda forma fundamental.
+
+M10. Las curvas coordenadas son familias conjugadas si y solo si
+\[
+M=0.
+\]
+Esto se obtiene sustituyendo las direcciones coordenadas \((1,0)\) y \((0,1)\) en la relación bilineal de conjugación asociada a \(II\).
+
+### Respuestas a las preguntas difíciles
+
+D1. Partimos de
+\[
+(L-\kappa E)du+(M-\kappa F)dv=0,
+\]
+\[
+(M-\kappa F)du+(N-\kappa G)dv=0.
+\]
+Eliminando \(\kappa\), se obtiene la ecuación diferencial
+\[
+(EM-LF)du^2+(EN-GL)du\,dv+(FN-GM)dv^2=0.
+\]
+Sus soluciones son las líneas de curvatura, porque en cada punto sus tangentes satisfacen la condición de dirección principal.
+
+D2. En un punto no umbilical hay dos curvaturas principales distintas. Las direcciones principales se obtienen como direcciones extremas de la curvatura normal. La construcción mediante la indicatriz muestra que esos extremos se alcanzan en los ejes de una cónica central, y esos ejes son perpendiculares con respecto a la primera forma fundamental. Por eso las direcciones principales son ortogonales.
+
+D3. Las direcciones asintóticas satisfacen \(II=0\). En un punto elíptico, la segunda forma conserva signo y solo se anula en la dirección nula, así que no hay direcciones asintóticas reales. En un punto hiperbólico, la segunda forma toma signos opuestos según la dirección; por continuidad, se anula en dos direcciones distintas. Por eso aparecen dos direcciones asintóticas.
+
+D4. Si a lo largo de una curva se cumple
+\[
+d\mathbf N=-\kappa\,dx,
+\]
+la variación de la normal es proporcional al desplazamiento tangente. Por la fórmula de Rodríguez, la dirección tangente es principal y \(\kappa\) es la curvatura principal correspondiente. Si esto ocurre en cada punto de la curva, la curva sigue direcciones principales, luego es línea de curvatura.
+
+D5. Si \(K=0\), entonces \(LN-M^2=0\). El punto es plano solo si además
+\[
+L=M=N=0.
+\]
+Si \(LN-M^2=0\) pero la segunda forma no es nula, existe una única dirección en la que la curvatura normal se anula, y el punto es parabólico. Por tanto, \(K=0\) no basta para concluir que el punto sea plano.
+
+### Respuestas a las preguntas de desarrollo largo
+
+L1. La primera forma fundamental nace de \(I=dx\cdot dx\), donde \(dx=x_u\,du+x_v\,dv\). Al desarrollarla se obtiene \(I=E\,du^2+2F\,du\,dv+G\,dv^2\). Con ella se calcula la longitud de una curva sustituyendo \(du=u'(t)dt\), \(dv=v'(t)dt\). También se calculan ángulos mediante el producto escalar de dos vectores tangentes escritos en parámetros. En particular, \(F=0\) caracteriza la ortogonalidad de las curvas coordenadas. Finalmente, el área se obtiene con \(dA=\sqrt{EG-F^2}\,du\,dv\). Así, la primera forma concentra toda la métrica local de la superficie.
+
+L2. La segunda forma fundamental se construye usando la normal unitaria \(\mathbf N\). Sus coeficientes son \(L=x_{uu}\cdot\mathbf N\), \(M=x_{uv}\cdot\mathbf N\), \(N=x_{vv}\cdot\mathbf N\). Estos valores son las componentes normales de las segundas derivadas de la carta. Geométricamente, \(II\) mide la primera desviación cuadrática de la superficie respecto al plano tangente. Por eso se relaciona con el paraboloide osculador y permite distinguir si la superficie queda a un lado del plano tangente, si lo cruza o si tiene contacto más alto.
+
+L3. Primero se definen las formas fundamentales \(I\) y \(II\). Después se introduce la curvatura normal como \(k_n=II/I\). Al variar la dirección \(du:dv\), esta curvatura toma valores extremos. Esos extremos son las curvaturas principales \(\kappa_1,\kappa_2\), obtenidas como raíces de la ecuación
+\[
+(EG-F^2)\kappa^2-(EN+GL-2FM)\kappa+(LN-M^2)=0.
+\]
+A partir de ellas se definen
+\[
+H=(\kappa_1+\kappa_2)/2,
+\qquad
+K=\kappa_1\kappa_2.
+\]
+En coeficientes:
+\[
+H=\frac{EN+GL-2FM}{2(EG-F^2)},
+\qquad
+K=\frac{LN-M^2}{EG-F^2}.
+\]
+
+L4. La clasificación local depende de la forma cuadrática \(II\). Si \(LN-M^2>0\), \(II\) conserva signo y el punto es elíptico. Si \(LN-M^2<0\), \(II\) cambia de signo y el punto es hiperbólico. Si \(LN-M^2=0\) sin anulación total de \(L,M,N\), el punto es parabólico. Si \(L=M=N=0\), es plano. Como \(K=(LN-M^2)/(EG-F^2)\) y \(EG-F^2>0\), la misma clasificación se expresa con el signo de \(K\).
+
+L5. Las líneas de curvatura son curvas tangentes a direcciones principales; se relacionan con valores extremos de \(k_n\). Las líneas asintóticas son curvas tangentes a direcciones con \(II=0\), es decir, con curvatura normal nula. Las familias conjugadas se definen mediante la forma bilineal asociada a \(II\). Las tres nociones proceden de la segunda forma fundamental, pero responden a preguntas distintas: extremos de curvatura, curvatura normal cero y relación bilineal entre direcciones.
+
+### Respuestas a las preguntas de relación entre conceptos
+
+R1. La primera forma mide el tamaño de una dirección tangente; la segunda mide su curvatura normal no normalizada. El cociente \(II/I\) da la curvatura normal. Por eso ambas formas son necesarias: \(II\) aporta la curvatura y \(I\) elimina la dependencia de escala.
+
+R2. Las curvaturas principales son los dos valores extremos de la curvatura normal. La curvatura media es su promedio, \(H=(\kappa_1+\kappa_2)/2\). La curvatura gaussiana es su producto, \(K=\kappa_1\kappa_2\). \(H\) resume la curvatura de forma aditiva; \(K\) clasifica el tipo local del punto por el signo.
+
+R3. La ortogonalidad se mide con la primera forma: para coordenadas, \(F=0\). La conjugación se mide con la segunda forma: para coordenadas, \(M=0\). En una carta sin puntos umbilicales, si ambas condiciones se cumplen, las curvas coordenadas son líneas de curvatura.
+
+R4. El paraboloide osculador es la aproximación cuadrática de la superficie respecto al plano tangente. Si es elíptico, la superficie queda a un lado del plano tangente; si es hiperbólico, cambia de lado; si degenera sin anularse, el punto es parabólico; si la segunda forma se anula, el punto es plano.
+
+R5. Al invertir la normal \(\mathbf N\), los coeficientes \(L,M,N\) cambian de signo. Por ello las curvaturas principales y la curvatura media \(H\) cambian de signo. En cambio, \(K=(LN-M^2)/(EG-F^2)\) no cambia, porque el numerador conserva su valor. La clasificación elíptica, hiperbólica, parabólica o plana tampoco cambia.
+
+## 9. Resumen final de repaso
+
+Ideas principales:
+
+- La primera forma fundamental es \(I=dx\cdot dx=E\,du^2+2Fdu\,dv+Gdv^2\).
+- Sirve para calcular longitudes, ángulos y áreas.
+- El área se calcula con \(dA=\sqrt{EG-F^2}\,du\,dv\).
+- La segunda forma fundamental es \(II=Ldu^2+2Mdu\,dv+Ndv^2\).
+- Sus coeficientes son proyecciones normales de las segundas derivadas.
+- La curvatura normal es \(k_n=II/I\).
+- Las curvaturas principales son los extremos de \(k_n\).
+- \(H=(\kappa_1+\kappa_2)/2\) y \(K=\kappa_1\kappa_2\).
+- \(K=(LN-M^2)/(EG-F^2)\).
+- El signo de \(K\) clasifica los puntos.
+- Las líneas de curvatura siguen direcciones principales.
+- Las líneas asintóticas satisfacen \(II=0\).
+- Las familias conjugadas se definen con la forma bilineal asociada a \(II\).
+
+Conceptos imprescindibles:
+
+- \(E,F,G\).
+- \(L,M,N\).
+- \(I\) y \(II\).
+- Curvatura normal.
+- Curvaturas principales.
+- Curvatura media y gaussiana.
+- Punto elíptico, hiperbólico, parabólico y plano.
+- Línea de curvatura.
+- Fórmula de Rodríguez.
+- Línea asintótica.
+- Familia conjugada.
+
+Relaciones clave:
+
+- \(I\) mide; \(II\) curva.
+- \(II/I\) produce \(k_n\).
+- Extremos de \(k_n\) producen \(\kappa_1,\kappa_2\).
+- Producto de principales produce \(K\).
+- Signo de \(K\) clasifica puntos.
+- \(F=0\) indica ortogonalidad.
+- \(M=0\) indica conjugación coordenada.
+- \(F=M=0\) indica líneas de curvatura coordenadas en puntos no umbilicales.
+
+Errores que evitar:
+
+- Usar \(EG-F^2\) para clasificar puntos.
+- Confundir \(N\) coeficiente con \(\mathbf N\) normal.
+- Olvidar dividir \(II\) por \(I\) en la curvatura normal.
+- Llamar plano a todo punto con \(K=0\).
+- Confundir líneas asintóticas con líneas de curvatura.
+- Creer que \(F=0\) basta para tener líneas de curvatura.
+- Ignorar el cambio de signo al invertir la normal.
+
+## 10. Checklist de dominio
+
+- Si no puedes explicar qué mide \(I\), falta repasar primera forma fundamental.
+
+- Si no sabes calcular \(E,F,G\), falta repasar derivadas primeras y producto escalar.
+
+- Si no puedes obtener \(dA=\sqrt{EG-F^2}\,du\,dv\), falta repasar producto vectorial y área de paralelogramos.
+
+- Si confundes \(F=0\) con \(M=0\), revisar ortogonalidad frente a conjugación.
+
+- Si no puedes explicar qué mide \(II\), falta repasar normal unitaria y derivadas segundas.
+
+- Si confundes el vector \(\mathbf N\) con el coeficiente \(N\), revisar la notación de la segunda forma fundamental.
+
+- Si no puedes clasificar un punto con \(LN-M^2\), falta repasar formas cuadráticas.
+
+- Si dices que \(K=0\) implica punto plano, revisar diferencia entre punto parabólico y punto plano.
+
+- Si no puedes escribir \(k_n=II/I\), falta repasar curvatura normal.
+
+- Si no puedes derivar la ecuación de curvaturas principales, revisar el sistema \((L-\kappa E)du+(M-\kappa F)dv=0\), \((M-\kappa F)du+(N-\kappa G)dv=0\).
+
+- Si confundes \(H\) con \(K\), revisar promedio frente a producto de curvaturas principales.
+
+- Si no puedes explicar la fórmula de Rodríguez, falta repasar variación de la normal.
+
+- Si confundes línea asintótica con línea de curvatura, revisar \(II=0\) frente a extremos de \(k_n\).
+
+- Si no puedes decidir si las curvas coordenadas son líneas de curvatura, revisar el criterio \(F=M=0\) en puntos no umbilicales.
+
+- Si puedes calcular \(I\), \(II\), \(H\), \(K\), clasificar puntos y decidir líneas asintóticas/curvatura para una superficie dada, el capítulo está suficientemente asentado.

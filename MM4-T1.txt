@@ -1,0 +1,1074 @@
+# Guía de estudio — MM4: Kay, espacios vectoriales
+
+## 1. Prerrequisitos mínimos
+
+1. Números reales como escalares.
+Definición breve: los escalares son los números que multiplican a los vectores. En el capítulo se toma como cuerpo de escalares \(\mathbb R\), aunque la definición abstracta admite otros cuerpos.
+Por qué es necesario: la estructura de espacio vectorial distingue siempre entre los objetos estudiados, llamados vectores, y los números que los escalan.
+Ejemplo mínimo: si \(u=(1,2)\), entonces \(3u=(3,6)\). El número \(3\) es un escalar; \(u\) es un vector.
+
+2. Suma de objetos matemáticos.
+Definición breve: operación que combina dos objetos del mismo tipo para producir otro objeto del mismo tipo.
+Por qué es necesario: uno de los axiomas básicos de espacio vectorial exige que \(u+v\) vuelva a pertenecer al conjunto.
+Ejemplo mínimo: si \(p(t)=1+t\) y \(q(t)=t^2\), entonces \(p+q=1+t+t^2\).
+
+3. Producto por un escalar.
+Definición breve: operación que multiplica un objeto por un número real.
+Por qué es necesario: un espacio vectorial no solo permite sumar vectores; también permite cambiar su escala sin salir del conjunto.
+Ejemplo mínimo: si \(A=\begin{pmatrix}1&0\\2&3\end{pmatrix}\), entonces \(2A=\begin{pmatrix}2&0\\4&6\end{pmatrix}\).
+
+4. Funciones y polinomios.
+Definición breve: una función asigna valores a puntos de su dominio; un polinomio es una suma finita de potencias con coeficientes reales.
+Por qué es necesario: Kay usa funciones y polinomios como ejemplos de vectores abstractos. No todos los vectores son flechas geométricas.
+Ejemplo mínimo: \(p(t)=a_0+a_1t+a_2t^2\) puede considerarse un vector en el espacio de polinomios de grado menor o igual que \(2\).
+
+5. Matrices.
+Definición breve: una matriz es una tabla rectangular de números; en el capítulo aparecen especialmente matrices cuadradas.
+Por qué es necesario: las matrices son ejemplos de vectores en ciertos espacios vectoriales y también sirven para representar cambios de base y aplicaciones lineales.
+Ejemplo mínimo: el conjunto de matrices reales \(2\times2\), con suma de matrices y multiplicación por escalares, forma un espacio vectorial.
+
+6. Notación de índices.
+Definición breve: se escriben componentes mediante índices, por ejemplo \(v^i\), \(a_i\), \(b_i\). En la notación de Einstein, un índice repetido indica suma.
+Por qué es necesario: el capítulo conecta espacios vectoriales con tensores; para ello se necesita manejar componentes, bases y bases duales.
+Ejemplo mínimo: \(\omega(v)=a_i v^i\) significa \(\omega(v)=\sum_i a_i v^i\).
+
+7. Aplicaciones entre conjuntos.
+Definición breve: una aplicación asigna a cada elemento de un conjunto un elemento de otro.
+Por qué es necesario: los funcionales lineales y los tensores se definen como aplicaciones con propiedades de linealidad.
+Ejemplo mínimo: \(f:\mathbb R^2\to\mathbb R\), \(f(x,y)=2x-y\), asigna un número real a cada par \((x,y)\).
+
+## 2. Idea central del capítulo
+
+El capítulo introduce la noción de espacio vectorial como estructura algebraica común a objetos muy distintos. El punto de partida no es la geometría de flechas en el plano, sino la idea de que matrices, \(n\)-tuplas, funciones, polinomios u operadores pueden comportarse algebraicamente como vectores si admiten una suma y un producto por escalares que satisfacen ciertos axiomas. Esta abstracción permite usar un único lenguaje para problemas que, a primera vista, pertenecen a contextos diferentes.
+
+La idea principal es separar tres niveles: el objeto abstracto, sus componentes y la base elegida para describirlo. Un vector no se identifica con una lista de números de forma absoluta; esa lista depende de la base. Esta distinción es esencial para el cálculo tensorial, porque los tensores se caracterizan precisamente por cómo actúan sobre vectores y covectores, y por cómo cambian sus componentes al cambiar de base.
+
+El capítulo avanza desde la definición axiomática de espacio vectorial hasta la noción de dual. El dual \(V^*\) está formado por funcionales lineales, es decir, aplicaciones lineales de \(V\) en \(\mathbb R\). Esta construcción prepara el lenguaje de las 1-formas y de las diferenciales. En \(\mathbb R^n\), una 1-forma se escribe como \(\omega=a_i dx^i\) y actúa sobre un vector \(v=v^i b_i\) mediante \(\omega(v)=a_i v^i\). Esta acción es la base de la distinción entre componentes contravariantes y covariantes.
+
+El capítulo también introduce la importancia de la base y de la dimensión. Una base permite expresar todo vector de manera única; la dimensión es el número de vectores de cualquier base. En dimensión finita, todos los espacios vectoriales de la misma dimensión son isomorfos, aunque sus elementos puedan tener naturaleza muy distinta. Esta idea justifica que se puedan estudiar matrices, polinomios o funciones con métodos algebraicos comunes.
+
+Dentro del libro de Kay, este bloque cumple una función preparatoria para los campos tensoriales sobre variedades. Antes de hablar de tensores, métricas, derivadas covariantes o espacios tangentes, hay que dominar la estructura lineal básica: vectores, bases, duales, productos de espacios y aplicaciones multilineales. Sin esta base, las leyes de transformación tensorial se reducen a fórmulas mecánicas sin significado.
+
+## 3. Desarrollo completo del capítulo
+
+### 3.1. La abstracción algebraica: qué es un vector
+
+El capítulo comienza ampliando el significado de la palabra vector. En cursos elementales, un vector suele representarse como una flecha o como una lista de coordenadas. Kay adopta una perspectiva más general: un vector puede ser una matriz, una \(n\)-tupla de números reales, una función, un polinomio o incluso un operador, siempre que pertenezca a un conjunto dotado de dos operaciones compatibles.
+
+La estructura relevante no es la forma visual del objeto, sino las reglas algebraicas que obedecen la suma y el producto por escalares. Por ejemplo, dos polinomios pueden sumarse y el resultado sigue siendo un polinomio; también se puede multiplicar un polinomio por un número real. Del mismo modo, dos matrices del mismo tamaño se suman entrada a entrada y pueden multiplicarse por un escalar. Estos hechos permiten tratarlas como vectores abstractos.
+
+Esta abstracción es importante porque el cálculo tensorial trabaja con objetos que no siempre tienen una interpretación geométrica inmediata. Si se domina la estructura lineal, se puede pasar de \(\mathbb R^n\) a espacios de funciones, duales, tensores y espacios tangentes sin cambiar continuamente de lenguaje.
+
+### 3.2. Escalares frente a vectores
+
+Kay insiste en distinguir escalares y vectores. Los escalares son números reales \(a,b,c,\ldots\). Los vectores son los objetos estudiados \(u,v,w,\ldots\). La multiplicación por un escalar cambia un vector, pero no convierte al escalar en vector ni al vector en escalar.
+
+Esta separación evita errores posteriores. Por ejemplo, si \(u\) y \(v\) son vectores, \(u+v\) tiene sentido porque ambos pertenecen al mismo espacio. En cambio, \(a+u\) no tiene sentido dentro de la estructura de espacio vectorial ordinaria, porque suma un escalar con un vector. Del mismo modo, \(au\) sí tiene sentido porque es producto de escalar por vector.
+
+La distinción se vuelve esencial en el dual. Una 1-forma \(\omega\) es un objeto que toma un vector \(v\) y devuelve un escalar \(\omega(v)\). El resultado de aplicar la 1-forma no es otro vector, sino un número real.
+
+### 3.3. Axiomas de espacio vectorial
+
+Un espacio vectorial real es un conjunto \(V\) cuyos elementos se llaman vectores y que posee dos operaciones: suma de vectores y producto por escalares. Estas operaciones deben cumplir los axiomas usuales.
+
+Para la suma se exige cierre, conmutatividad, asociatividad, existencia de vector cero y existencia de opuesto. En símbolos: si \(u,v,w\in V\), entonces \(u+v\in V\), \(u+v=v+u\), \((u+v)+w=u+(v+w)\), existe \(0\in V\) tal que \(u+0=u\), y para cada \(u\) existe \(-u\) tal que \(u+(-u)=0\).
+
+Para el producto por escalares se exige que \(\alpha u\in V\), que \(\alpha(u+v)=\alpha u+\alpha v\), que \((\alpha+\beta)u=\alpha u+\beta u\), que \((\alpha\beta)u=\alpha(\beta u)\), y que \(1u=u\).
+
+El sentido de estos axiomas es garantizar que se puedan formar combinaciones lineales:
+\[
+\alpha_1v_1+\cdots+\alpha_kv_k.
+\]
+Las combinaciones lineales son el lenguaje básico para hablar de generación, dependencia lineal, bases, coordenadas y dimensión.
+
+### 3.4. Ejemplos fundamentales
+
+El primer ejemplo natural es \(\mathbb R^n\), el conjunto de \(n\)-tuplas reales. La suma se define componente a componente y el producto por escalares también. Si \(u=(u^1,\ldots,u^n)\) y \(v=(v^1,\ldots,v^n)\), entonces
+\[
+u+v=(u^1+v^1,\ldots,u^n+v^n),
+\]
+y
+\[
+\alpha u=(\alpha u^1,\ldots,\alpha u^n).
+\]
+
+Otro ejemplo importante es el espacio \(P_n\) de los polinomios en una variable de grado menor o igual que \(n\). Si
+\[
+p(t)=\sum_{i=0}^n a_i t^i,\qquad q(t)=\sum_{i=0}^n b_i t^i,
+\]
+entonces
+\[
+(p+q)(t)=\sum_{i=0}^n (a_i+b_i)t^i,
+\]
+y
+\[
+(\lambda p)(t)=\sum_{i=0}^n (\lambda a_i)t^i.
+\]
+El conjunto no se sale de \(P_n\), porque ni la suma ni la multiplicación escalar aumentan el grado por encima de \(n\).
+
+Kay también usa como ejemplo \(C^k\), el conjunto de funciones \(k\) veces continuamente diferenciables. La suma de dos funciones \(C^k\) vuelve a ser \(C^k\), y el producto de una función \(C^k\) por un escalar también. Por eso \(C^k\) tiene estructura de espacio vectorial.
+
+Las matrices de tamaño fijo también forman espacios vectoriales. Si \(A=(a_{ij})\) y \(B=(b_{ij})\), entonces
+\[
+A+B=(a_{ij}+b_{ij}),\qquad \lambda A=(\lambda a_{ij}).
+\]
+La condición de tamaño fijo es importante: no se puede sumar una matriz \(2\times2\) con una matriz \(3\times1\).
+
+### 3.5. Espacios vectoriales y grupos
+
+Kay introduce los grupos como contraste. Un grupo es un conjunto con una operación interna que cumple cierre, asociatividad, existencia de elemento identidad y existencia de inverso. Si además la operación conmuta, el grupo es abeliano.
+
+Todo espacio vectorial tiene una estructura de grupo abeliano respecto de la suma, porque los axiomas de la suma forman precisamente esa estructura. Pero un espacio vectorial es más que un grupo: también posee producto por escalares y reglas distributivas.
+
+Esta comparación evita confundir estructuras algebraicas. Por ejemplo, los reales no nulos con la multiplicación forman un grupo, pero no forman un espacio vectorial con esa operación como suma. Las matrices no singulares con el producto matricial forman un grupo general lineal, pero no un espacio vectorial bajo el producto, porque la operación principal no es una suma compatible con escalares.
+
+### 3.6. Bases y dimensión
+
+Una base de un espacio vectorial es una familia de vectores que cumple dos condiciones: genera todo el espacio y es linealmente independiente. Generar significa que todo vector del espacio puede expresarse como combinación lineal de los vectores de la familia. Ser linealmente independiente significa que la única combinación lineal que da el vector cero es la combinación con todos los coeficientes nulos.
+
+La base canónica de \(\mathbb R^n\) está formada por
+\[
+e_1=(1,0,\ldots,0),\quad e_2=(0,1,\ldots,0),\quad \ldots,\quad e_n=(0,\ldots,0,1).
+\]
+Todo vector \(v=(v^1,\ldots,v^n)\) se escribe de manera única como
+\[
+v=v^1e_1+\cdots+v^ne_n.
+\]
+
+En \(P_n\), una base natural es
+\[
+\{1,t,t^2,\ldots,t^n\}.
+\]
+Por tanto, \(\dim P_n=n+1\). En cambio, el espacio de todos los polinomios, sin cota en el grado, no tiene base finita. Kay lo usa como ejemplo de dimensión infinita. Como \(C^k\) contiene polinomios de grados arbitrariamente altos, también es de dimensión infinita.
+
+La dimensión es el número de vectores de cualquier base. No depende de la base concreta. Esta invariancia es fundamental: permite hablar de dimensión del espacio, no de dimensión de una descripción particular.
+
+### 3.7. Isomorfismos y aplicaciones lineales
+
+Una aplicación lineal entre espacios vectoriales es una aplicación que respeta suma y producto por escalares. Si \(T:V\to W\), entonces
+\[
+T(u+v)=T(u)+T(v),\qquad T(\lambda u)=\lambda T(u).
+\]
+Estas dos propiedades equivalen a decir que \(T\) conserva combinaciones lineales:
+\[
+T(\alpha u+\beta v)=\alpha T(u)+\beta T(v).
+\]
+
+Un isomorfismo es una aplicación lineal biyectiva. Si existe un isomorfismo entre dos espacios, tienen la misma estructura lineal. En dimensión finita, dos espacios vectoriales reales de dimensión \(n\) son isomorfos: basta escoger una base en cada uno y enviar el primer vector de una base al primer vector de la otra, el segundo al segundo, y así sucesivamente.
+
+Esto no significa que los elementos sean “lo mismo” en sentido material. Un vector de \(\mathbb R^3\), un polinomio de \(P_2\) y una matriz diagonal \(3\times3\) pueden pertenecer a espacios isomorfos si todos tienen dimensión \(3\), pero sus interpretaciones son distintas. El isomorfismo solo identifica su estructura lineal.
+
+### 3.8. Producto de espacios vectoriales
+
+Si \(U\) y \(V\) son espacios vectoriales, el conjunto de pares ordenados \((u,v)\), con \(u\in U\) y \(v\in V\), también puede convertirse en espacio vectorial. La suma y el producto por escalares se definen componente a componente:
+\[
+(u,v)+(r,s)=(u+r,v+s),
+\]
+\[
+\lambda(u,v)=(\lambda u,\lambda v).
+\]
+
+Kay denota este espacio producto mediante una notación del tipo \(U\otimes V\), aunque en otros contextos esa notación suele reservarse para el producto tensorial. En este punto del capítulo, lo importante es que la construcción permite formar espacios cuyos elementos contienen varias componentes vectoriales.
+
+Esta idea prepara la definición de tensores como aplicaciones que reciben varios argumentos. Para hablar de aplicaciones bilineales o multilineales, se necesita entender primero que se pueden manejar pares, ternas o listas de vectores y covectores.
+
+### 3.9. Espacio dual y funcionales lineales
+
+El dual de un espacio vectorial \(V\), denotado \(V^*\), es el conjunto de todas las aplicaciones lineales de \(V\) en \(\mathbb R\). Sus elementos se llaman funcionales lineales o 1-formas.
+
+Si \(f,g\in V^*\), se define
+\[
+(f+g)(v)=f(v)+g(v),
+\]
+y
+\[
+(\lambda f)(v)=\lambda f(v).
+\]
+Con estas operaciones, \(V^*\) es también un espacio vectorial.
+
+En \(\mathbb R^n\), un funcional lineal queda determinado por \(n\) coeficientes \(a_i\). Si \(v=(v^1,\ldots,v^n)\), entonces
+\[
+\omega(v)=a_i v^i=\sum_{i=1}^n a_i v^i.
+\]
+La salida es un número real. Esta fórmula expresa la acción de una 1-forma sobre un vector.
+
+En dimensión finita, si \(\dim V=n\), entonces \(\dim V^*=n\). Kay subraya además que \(V^*\) es isomorfo a \(V\), aunque conceptualmente conviene no confundir vectores y funcionales. Un vector es un elemento de \(V\); una 1-forma es una aplicación que actúa sobre vectores.
+
+### 3.10. Notación diferencial y 1-formas
+
+Las 1-formas se escriben con frecuencia como
+\[
+\omega=a_i dx^i.
+\]
+Aquí \(dx^i\) no se usa simplemente como “cantidad infinitesimal pequeña”, sino como el funcional que extrae la componente \(i\)-ésima de un vector respecto de una base. Si \(v=v^i b_i\), entonces
+\[
+dx^i(v)=v^i.
+\]
+
+La diferencial de una función \(F(x^1,\ldots,x^n)\) se expresa como
+\[
+dF=\frac{\partial F}{\partial x^1}dx^1+\cdots+\frac{\partial F}{\partial x^n}dx^n.
+\]
+En un punto concreto, \(dF\) es una 1-forma: toma una dirección \(v\) y devuelve la derivada direccional de \(F\) en esa dirección.
+
+Por ejemplo, si \(F(x,y)=x^2+y\), entonces
+\[
+dF=2x\,dx+dy.
+\]
+En el punto \((1,3)\), sobre la dirección \(v=(4,-1)\), se obtiene
+\[
+dF(v)=2\cdot1\cdot4+(-1)=7.
+\]
+La interpretación algebraica es que \(dF\) actúa linealmente sobre el vector de dirección.
+
+### 3.11. Base dual
+
+Dada una base \(\{b_1,\ldots,b_n\}\) de \(V\), existe una base asociada en \(V^*\), llamada base dual. Se denota \(\{p^1,\ldots,p^n\}\) o, en notación diferencial, \(\{dx^1,\ldots,dx^n\}\). Está definida por
+\[
+p^i(b_j)=\delta^i_j,
+\]
+donde \(\delta^i_j\) es la delta de Kronecker: vale \(1\) si \(i=j\), y \(0\) si \(i\neq j\).
+
+Si un vector se escribe como
+\[
+v=v^j b_j,
+\]
+entonces
+\[
+p^i(v)=v^i.
+\]
+Por tanto, cada elemento de la base dual extrae una componente del vector.
+
+Esta construcción es esencial porque, al cambiar de base en \(V\), la base dual cambia mediante la matriz inversa correspondiente. Es el origen algebraico de la diferencia entre componentes contravariantes y covariantes. Los vectores y las 1-formas no transforman igual: sus componentes se compensan para que la evaluación \(\omega(v)\) sea un escalar bien definido.
+
+### 3.12. De las 1-formas a los tensores
+
+El capítulo conecta el dual con la definición de tensor. Un tensor se entiende como una aplicación multilineal que toma varios vectores y/o 1-formas y devuelve un número real. La palabra clave es multilineal: lineal en cada argumento por separado.
+
+Un producto escalar ordinario, por ejemplo, puede verse como una aplicación bilineal
+\[
+G(u,v)=u\cdot v.
+\]
+Si se representa mediante una matriz \(g_{ij}\), se escribe
+\[
+G(u,v)=g_{ij}u^i v^j.
+\]
+Cuando esta forma bilineal es simétrica y no singular, se interpreta como tensor métrico. En cálculo tensorial, la métrica permite medir longitudes, ángulos y relacionar vectores con covectores.
+
+La consecuencia más importante para este tema es que los tensores no deben memorizarse como “matrices con muchos índices”. Su definición natural es funcional: son aplicaciones multilineales definidas sobre espacios vectoriales y sus duales. Las componentes aparecen solo después de elegir bases.
+
+## 4. Conceptos clave
+
+### Espacio vectorial
+
+Definición precisa:
+Un espacio vectorial real es un conjunto \(V\) con una suma \(V\times V\to V\) y un producto \(\mathbb R\times V\to V\) que cumplen los axiomas de cierre, conmutatividad y asociatividad de la suma, existencia de cero y opuesto, distributividad, compatibilidad del producto escalar y \(1u=u\).
+
+Explicación desarrollada:
+La definición no depende de que los elementos sean flechas. Lo decisivo es que puedan sumarse y multiplicarse por reales de manera compatible. Por eso espacios de polinomios, funciones o matrices pueden tratarse con el mismo lenguaje.
+
+Ejemplo:
+\(\mathbb R^3\) con suma componente a componente y producto por escalares es un espacio vectorial.
+
+Relación con otros conceptos:
+Es la estructura sobre la que se definen bases, dimensión, aplicaciones lineales, duales y tensores.
+
+Posible forma de preguntarlo en examen:
+“Compruebe si el conjunto dado, con las operaciones indicadas, es un espacio vectorial real.”
+
+### Escalar
+
+Definición precisa:
+Elemento del cuerpo de base; en el capítulo, un número real usado para multiplicar vectores.
+
+Explicación desarrollada:
+El escalar no pertenece necesariamente al espacio vectorial. Actúa sobre los vectores modificando su escala. La distinción entre escalar y vector es necesaria para interpretar correctamente fórmulas tensoriales.
+
+Ejemplo:
+En \(3(1,2)=(3,6)\), el número \(3\) es un escalar.
+
+Relación con otros conceptos:
+Los coeficientes de una combinación lineal son escalares. Los funcionales lineales devuelven escalares.
+
+Posible forma de preguntarlo en examen:
+“Explique la diferencia entre un vector de \(V\) y un escalar del cuerpo base.”
+
+### Vector abstracto
+
+Definición precisa:
+Elemento de un espacio vectorial, cualquiera que sea su naturaleza concreta.
+
+Explicación desarrollada:
+Un vector puede ser una \(n\)-tupla, un polinomio, una función o una matriz. Lo que lo convierte en vector no es su forma, sino pertenecer a un conjunto que satisface los axiomas de espacio vectorial.
+
+Ejemplo:
+El polinomio \(p(t)=1+t^2\) es un vector de \(P_2\).
+
+Relación con otros conceptos:
+Los vectores se expresan mediante coordenadas una vez elegida una base.
+
+Posible forma de preguntarlo en examen:
+“Dé tres ejemplos de vectores que no sean flechas geométricas.”
+
+### Combinación lineal
+
+Definición precisa:
+Expresión de la forma
+\[
+\alpha_1v_1+\cdots+\alpha_kv_k,
+\]
+donde \(\alpha_i\in\mathbb R\) y \(v_i\in V\).
+
+Explicación desarrollada:
+Las combinaciones lineales son posibles porque el espacio permite sumar vectores y multiplicarlos por escalares. Sirven para definir generación, dependencia lineal, bases y subespacios.
+
+Ejemplo:
+En \(P_2\), \(3(1)+2t-5t^2\) es combinación lineal de \(1,t,t^2\).
+
+Relación con otros conceptos:
+Una base genera el espacio mediante combinaciones lineales únicas.
+
+Posible forma de preguntarlo en examen:
+“Exprese un vector dado como combinación lineal de una familia dada.”
+
+### Independencia lineal
+
+Definición precisa:
+Una familia \(v_1,\ldots,v_k\) es linealmente independiente si
+\[
+\alpha_1v_1+\cdots+\alpha_kv_k=0
+\]
+implica
+\[
+\alpha_1=\cdots=\alpha_k=0.
+\]
+
+Explicación desarrollada:
+La independencia significa que ningún vector de la familia es redundante. Si hay una combinación no trivial que da cero, alguno de los vectores puede reconstruirse a partir de los demás.
+
+Ejemplo:
+En \(P_2\), los polinomios \(1,t,t^2\) son linealmente independientes.
+
+Relación con otros conceptos:
+Una base debe ser independiente. La dimensión mide el tamaño de una base.
+
+Posible forma de preguntarlo en examen:
+“Determine si una familia de polinomios o vectores de \(\mathbb R^n\) es linealmente independiente.”
+
+### Base
+
+Definición precisa:
+Familia de vectores linealmente independiente que genera todo el espacio.
+
+Explicación desarrollada:
+Una base es un sistema de referencia algebraico. Permite escribir cada vector de manera única como combinación lineal de los vectores básicos.
+
+Ejemplo:
+La base canónica de \(\mathbb R^3\) es
+\[
+(1,0,0),\ (0,1,0),\ (0,0,1).
+\]
+
+Relación con otros conceptos:
+La base determina coordenadas y también determina una base dual.
+
+Posible forma de preguntarlo en examen:
+“Compruebe si una familia dada es base de un espacio vectorial.”
+
+### Dimensión
+
+Definición precisa:
+Número de vectores de una base, cuando existe una base finita. Si no existe base finita, se habla de dimensión infinita.
+
+Explicación desarrollada:
+La dimensión no depende de la base elegida. Todos los sistemas de coordenadas completos e independientes tienen el mismo número de vectores.
+
+Ejemplo:
+\(\dim P_n=n+1\), porque una base es \(\{1,t,\ldots,t^n\}\).
+
+Relación con otros conceptos:
+Dos espacios vectoriales reales de la misma dimensión finita son isomorfos.
+
+Posible forma de preguntarlo en examen:
+“Determine la dimensión de \(P_3\) o del espacio de matrices \(2\times2\).”
+
+### Aplicación lineal
+
+Definición precisa:
+Aplicación \(T:V\to W\) tal que
+\[
+T(u+v)=T(u)+T(v),\qquad T(\lambda u)=\lambda T(u).
+\]
+
+Explicación desarrollada:
+Una aplicación lineal respeta la estructura vectorial. Por tanto, transforma combinaciones lineales en combinaciones lineales de las imágenes.
+
+Ejemplo:
+\(T:\mathbb R^2\to\mathbb R\), \(T(x,y)=2x-y\), es lineal.
+
+Relación con otros conceptos:
+Los funcionales lineales son aplicaciones lineales con valores reales. Los isomorfismos son aplicaciones lineales biyectivas.
+
+Posible forma de preguntarlo en examen:
+“Compruebe si una aplicación dada es lineal.”
+
+### Isomorfismo
+
+Definición precisa:
+Aplicación lineal biyectiva entre dos espacios vectoriales.
+
+Explicación desarrollada:
+Un isomorfismo identifica dos espacios desde el punto de vista de su estructura lineal. Conserva independencia, generación y dimensión.
+
+Ejemplo:
+La aplicación que envía \(a+bt+ct^2\in P_2\) al vector \((a,b,c)\in\mathbb R^3\) es un isomorfismo.
+
+Relación con otros conceptos:
+En dimensión finita, tener la misma dimensión permite construir un isomorfismo eligiendo bases.
+
+Posible forma de preguntarlo en examen:
+“Construya un isomorfismo entre \(P_2\) y \(\mathbb R^3\).”
+
+### Producto de espacios vectoriales
+
+Definición precisa:
+Dado \(U\) y \(V\), el conjunto de pares \((u,v)\) se hace espacio vectorial mediante suma y producto escalar componente a componente.
+
+Explicación desarrollada:
+Permite formar espacios cuyos elementos agrupan varios objetos vectoriales. Es una construcción preparatoria para aplicaciones con varios argumentos.
+
+Ejemplo:
+Si \(U=\mathbb R^2\) y \(V=P_1\), un elemento del producto es \(((x,y),a+bt)\).
+
+Relación con otros conceptos:
+Las aplicaciones bilineales y los tensores actúan sobre productos de espacios.
+
+Posible forma de preguntarlo en examen:
+“Defina la suma y el producto escalar en \(U\times V\).”
+
+### Espacio dual
+
+Definición precisa:
+El dual \(V^*\) es el espacio de todos los funcionales lineales \(V\to\mathbb R\).
+
+Explicación desarrollada:
+Sus elementos no son vectores de \(V\), sino aplicaciones que toman vectores y devuelven escalares. En dimensión finita, \(V^*\) tiene la misma dimensión que \(V\).
+
+Ejemplo:
+En \(\mathbb R^3\), \(\omega(x,y,z)=2x-y+5z\) es un elemento de \((\mathbb R^3)^*\).
+
+Relación con otros conceptos:
+La base dual de una base de \(V\) es una base de \(V^*\). Las 1-formas son funcionales lineales.
+
+Posible forma de preguntarlo en examen:
+“Determine el dual de un espacio finito-dimensional y escriba un funcional lineal en coordenadas.”
+
+### 1-forma
+
+Definición precisa:
+Funcional lineal sobre un espacio vectorial, escrito a menudo como
+\[
+\omega=a_i dx^i.
+\]
+
+Explicación desarrollada:
+Una 1-forma actúa sobre un vector \(v=v^i b_i\) y produce el escalar
+\[
+\omega(v)=a_i v^i.
+\]
+La notación \(dx^i\) indica funcionales coordenados.
+
+Ejemplo:
+Si \(\omega=4dx^1-dx^2\) y \(v=(1,3)\), entonces \(\omega(v)=4\cdot1-3=1\).
+
+Relación con otros conceptos:
+Las 1-formas forman el dual \(V^*\). La diferencial \(dF\) es una 1-forma.
+
+Posible forma de preguntarlo en examen:
+“Evalúe una 1-forma sobre un vector dado.”
+
+### Base dual
+
+Definición precisa:
+Dada una base \(\{b_i\}\) de \(V\), la base dual \(\{p^i\}\) de \(V^*\) se define por
+\[
+p^i(b_j)=\delta^i_j.
+\]
+
+Explicación desarrollada:
+Cada elemento de la base dual extrae una componente del vector. Si \(v=v^j b_j\), entonces \(p^i(v)=v^i\).
+
+Ejemplo:
+En \(\mathbb R^2\), respecto de la base canónica, \(dx^1(x,y)=x\) y \(dx^2(x,y)=y\).
+
+Relación con otros conceptos:
+El cambio de base en el dual usa la matriz inversa respecto del cambio de base en \(V\).
+
+Posible forma de preguntarlo en examen:
+“Calcule la base dual asociada a una base no canónica de \(\mathbb R^2\).”
+
+### Diferencial
+
+Definición precisa:
+Para una función \(F(x^1,\ldots,x^n)\), la diferencial es la 1-forma
+\[
+dF=\frac{\partial F}{\partial x^i}dx^i.
+\]
+
+Explicación desarrollada:
+La diferencial actúa sobre direcciones. Al aplicarla a un vector, devuelve la variación lineal de la función en esa dirección.
+
+Ejemplo:
+Si \(F(x,y)=x^2y\), entonces
+\[
+dF=2xy\,dx+x^2\,dy.
+\]
+
+Relación con otros conceptos:
+Es un ejemplo central de 1-forma y conecta cálculo diferencial con espacio dual.
+
+Posible forma de preguntarlo en examen:
+“Calcule \(dF\) y evalúela sobre una dirección dada.”
+
+### Tensor multilineal
+
+Definición precisa:
+Aplicación multilineal que toma vectores y/o 1-formas como argumentos y devuelve un número real.
+
+Explicación desarrollada:
+El capítulo lo introduce como consecuencia natural de haber definido \(V\), \(V^*\) y productos de espacios. La linealidad debe cumplirse en cada argumento por separado.
+
+Ejemplo:
+Un producto escalar \(G(u,v)=g_{ij}u^iv^j\) es bilineal.
+
+Relación con otros conceptos:
+Los tensores se describen por componentes solo después de fijar bases. La métrica es un tensor bilineal especial.
+
+Posible forma de preguntarlo en examen:
+“Explique por qué un producto escalar define un tensor bilineal.”
+
+## 5. Relaciones entre ideas
+
+La primera dependencia conceptual es la que va de los escalares y vectores a las combinaciones lineales. Sin distinguir entre número real y objeto vectorial, no se puede formular correctamente \(\alpha u+\beta v\). A partir de ahí aparecen generación, independencia, base y dimensión.
+
+La segunda relación es entre base y coordenadas. La base no es el espacio: es una elección dentro del espacio. Las coordenadas de un vector dependen de esa elección. Esta distinción permite entender por qué el mismo vector puede tener componentes distintas en bases distintas sin dejar de ser el mismo vector.
+
+La tercera relación es entre dimensión e isomorfismo. En dimensión finita, la dimensión clasifica los espacios vectoriales reales desde el punto de vista lineal: dos espacios de dimensión \(n\) son isomorfos. Sin embargo, ese isomorfismo no borra la interpretación concreta de los objetos. Un polinomio y una \(n\)-tupla pueden tener la misma estructura lineal, pero no son el mismo tipo de objeto.
+
+La cuarta relación es entre espacio vectorial y dual. El dual no añade un conjunto de vectores “paralelos” al original, sino un conjunto de aplicaciones lineales sobre él. La evaluación \(\omega(v)\) une ambos mundos: una 1-forma y un vector producen un escalar. Esta operación debe ser independiente de la base si el objeto está bien definido.
+
+La quinta relación es entre base dual y cambio de base. Si la base de \(V\) cambia mediante una matriz, la base dual cambia mediante la matriz inversa. Esta oposición algebraica es el germen de la distinción entre comportamiento contravariante y covariante.
+
+La sexta relación es entre 1-formas y diferenciales. La notación \(dx^i\) no se limita a un símbolo de cálculo elemental; en este contexto representa funcionales coordenados. La diferencial \(dF\) se convierte así en una 1-forma que mide la variación de \(F\) sobre vectores de dirección.
+
+La séptima relación es entre funcionales, productos de espacios y tensores. Una 1-forma es lineal en un argumento. Un producto escalar es lineal en dos argumentos. Un tensor generaliza esta idea a varios argumentos, manteniendo la linealidad separada en cada uno.
+
+La oposición importante del capítulo es entre objeto y componentes. El objeto geométrico o algebraico debe ser independiente de la base. Las componentes son su representación en una base. Confundir ambas cosas impide entender los tensores.
+
+Otra oposición importante es entre grupo y espacio vectorial. Todo espacio vectorial es un grupo abeliano respecto de la suma, pero no todo grupo es espacio vectorial. El espacio vectorial requiere además multiplicación por escalares y distributividad.
+
+No hay una evolución histórica desarrollada en el capítulo. Sí hay una evolución conceptual: desde vectores concretos en \(\mathbb R^n\) hacia vectores abstractos, luego hacia funcionales lineales y finalmente hacia aplicaciones multilineales.
+
+## 6. Errores habituales
+
+### Error 1. Creer que un vector siempre es una flecha
+
+Formulación del error:
+“Un vector tiene que ser una flecha en el plano o en el espacio.”
+
+Por qué está mal:
+El capítulo usa vector en sentido abstracto. Un polinomio, una función o una matriz pueden ser vectores si pertenecen a un espacio vectorial.
+
+Corrección:
+Un vector es un elemento de un espacio vectorial.
+
+Ejemplo de respuesta incorrecta:
+“El polinomio \(1+t\) no puede ser un vector porque no tiene dirección.”
+
+Ejemplo de respuesta correcta:
+“El polinomio \(1+t\) es un vector de \(P_1\), porque \(P_1\) es cerrado por suma y producto por escalares.”
+
+### Error 2. Confundir escalar y vector
+
+Formulación del error:
+“Como \(\omega(v)\) usa un vector, el resultado es otro vector.”
+
+Por qué está mal:
+Un funcional lineal toma un vector y devuelve un número real.
+
+Corrección:
+\(\omega(v)\in\mathbb R\), no en \(V\).
+
+Ejemplo de respuesta incorrecta:
+“Si \(\omega=2dx+dy\) y \(v=(1,3)\), entonces \(\omega(v)=(2,3)\).”
+
+Ejemplo de respuesta correcta:
+“\(\omega(v)=2\cdot1+3=5\).”
+
+### Error 3. Olvidar el cierre
+
+Formulación del error:
+“Un conjunto parecido a un espacio vectorial ya es espacio vectorial.”
+
+Por qué está mal:
+Debe verificarse que la suma y el producto por escalares no sacan del conjunto.
+
+Corrección:
+Comprobar cierre por suma y por producto escalar.
+
+Ejemplo de respuesta incorrecta:
+“Los polinomios de grado exactamente \(2\) forman un espacio vectorial.”
+
+Ejemplo de respuesta correcta:
+“No forman espacio vectorial, porque \(t^2+(-t^2)=0\), y el polinomio cero no tiene grado exactamente \(2\).”
+
+### Error 4. Ignorar el vector cero
+
+Formulación del error:
+“Un conjunto puede ser espacio vectorial aunque no contenga el cero.”
+
+Por qué está mal:
+La existencia de vector cero es un axioma.
+
+Corrección:
+Si el conjunto no contiene al cero, no es espacio vectorial.
+
+Ejemplo de respuesta incorrecta:
+“\(\{p\in P_2:p(0)=1\}\) es espacio vectorial.”
+
+Ejemplo de respuesta correcta:
+“No lo es, porque el polinomio cero no cumple \(p(0)=1\).”
+
+### Error 5. Confundir grupo con espacio vectorial
+
+Formulación del error:
+“Todo grupo es un espacio vectorial.”
+
+Por qué está mal:
+Un grupo solo requiere una operación interna con identidad e inversos. Un espacio vectorial necesita además producto por escalares y leyes distributivas.
+
+Corrección:
+Distinguir la estructura aditiva de la estructura vectorial completa.
+
+Ejemplo de respuesta incorrecta:
+“Las matrices no singulares con el producto forman un espacio vectorial.”
+
+Ejemplo de respuesta correcta:
+“Forman un grupo bajo el producto, pero no un espacio vectorial con esa operación como suma.”
+
+### Error 6. Creer que generar basta para ser base
+
+Formulación del error:
+“Si una familia genera el espacio, entonces es base.”
+
+Por qué está mal:
+También debe ser linealmente independiente.
+
+Corrección:
+Comprobar generación e independencia.
+
+Ejemplo de respuesta incorrecta:
+“\((1,0),(0,1),(1,1)\) es base de \(\mathbb R^2\) porque genera \(\mathbb R^2\).”
+
+Ejemplo de respuesta correcta:
+“No es base, porque los tres vectores son dependientes; \((1,1)=(1,0)+(0,1)\).”
+
+### Error 7. Identificar vector con coordenadas
+
+Formulación del error:
+“El vector es la lista de componentes.”
+
+Por qué está mal:
+La lista de componentes depende de la base elegida.
+
+Corrección:
+El vector es el objeto; las coordenadas son su representación respecto de una base.
+
+Ejemplo de respuesta incorrecta:
+“Si cambian las coordenadas, cambia el vector.”
+
+Ejemplo de respuesta correcta:
+“Al cambiar de base cambian las componentes, pero el vector representado puede ser el mismo.”
+
+### Error 8. Confundir \(V\) con \(V^*\)
+
+Formulación del error:
+“Como \(V\) y \(V^*\) tienen la misma dimensión finita, son el mismo espacio.”
+
+Por qué está mal:
+Que sean isomorfos no significa que sus elementos tengan la misma naturaleza. Los elementos de \(V^*\) son funcionales.
+
+Corrección:
+Distinguir vector de 1-forma.
+
+Ejemplo de respuesta incorrecta:
+“\(\omega=dx^1+dx^2\) es un vector de \(V\).”
+
+Ejemplo de respuesta correcta:
+“\(\omega=dx^1+dx^2\) es una 1-forma, es decir, un elemento de \(V^*\).”
+
+### Error 9. Tratar \(dx^i\) solo como incremento pequeño
+
+Formulación del error:
+“\(dx^i\) es simplemente una cantidad infinitesimal.”
+
+Por qué está mal:
+En el capítulo, \(dx^i\) se interpreta como funcional coordenado que extrae la componente \(i\)-ésima.
+
+Corrección:
+Entender \(dx^i(v)=v^i\).
+
+Ejemplo de respuesta incorrecta:
+“\(dx^1(v)\) no se puede calcular porque \(dx^1\) es infinitesimal.”
+
+Ejemplo de respuesta correcta:
+“Si \(v=(3,5)\), entonces \(dx^1(v)=3\).”
+
+### Error 10. Pensar que la base dual transforma igual que la base original
+
+Formulación del error:
+“Si la base de \(V\) cambia con una matriz, la dual cambia con la misma matriz.”
+
+Por qué está mal:
+La base dual debe conservar \(p^i(b_j)=\delta^i_j\), por eso aparece la matriz inversa.
+
+Corrección:
+La transformación dual compensa la transformación de la base original.
+
+Ejemplo de respuesta incorrecta:
+“Base y base dual cambian con la misma matriz.”
+
+Ejemplo de respuesta correcta:
+“Si \(b'_i=A_i^{\ j}b_j\), la base dual cambia con la matriz inversa para mantener la regla de evaluación.”
+
+## 7. Preguntas orientadas a examen
+
+### 10 preguntas fáciles
+
+F1. Defina espacio vectorial real.
+
+F2. Explique la diferencia entre escalar y vector.
+
+F3. Dé tres ejemplos de espacios vectoriales citados o compatibles con el capítulo.
+
+F4. ¿Qué significa que un conjunto sea cerrado por suma?
+
+F5. ¿Cuál es la base canónica de \(\mathbb R^n\)?
+
+F6. ¿Cuál es una base natural de \(P_n\) y cuál es su dimensión?
+
+F7. Defina aplicación lineal.
+
+F8. Defina espacio dual \(V^*\).
+
+F9. ¿Qué es una 1-forma?
+
+F10. ¿Qué condición define la base dual \(\{p^i\}\) de una base \(\{b_i\}\)?
+
+### 10 preguntas medias
+
+M1. Compruebe que \(P_2\) es un espacio vectorial real.
+
+M2. Compruebe que el conjunto de matrices reales \(2\times2\) es un espacio vectorial.
+
+M3. Decida si \(S=\{p\in P_2:p(0)=1\}\) es un espacio vectorial.
+
+M4. Sea \(\omega=3dx^1-2dx^2+dx^3\) y \(v=(1,-1,4)\). Calcule \(\omega(v)\).
+
+M5. Sea \(F(x,y)=x^2y\). Calcule \(dF\) y evalúela en el punto \((1,2)\) sobre el vector \(v=(3,-1)\).
+
+M6. Sea \(b_1=(1,1)\), \(b_2=(1,-1)\) en \(\mathbb R^2\). Calcule la base dual.
+
+M7. Explique por qué una base genera coordenadas únicas.
+
+M8. Construya un isomorfismo entre \(P_2\) y \(\mathbb R^3\).
+
+M9. Explique por qué los reales no nulos con la multiplicación forman grupo pero no espacio vectorial con esa operación como suma.
+
+M10. Defina el producto de dos espacios vectoriales \(U\) y \(V\) mediante pares ordenados.
+
+### 5 preguntas difíciles
+
+D1. Demuestre que si \(\dim V=n\), entonces \(\dim V^*=n\).
+
+D2. Justifique por qué dos bases finitas de un mismo espacio vectorial tienen el mismo número de elementos.
+
+D3. Demuestre que el espacio de todos los polinomios reales en una variable no tiene dimensión finita.
+
+D4. Explique por qué la matriz de cambio de la base dual es la inversa de la matriz de cambio de base en \(V\).
+
+D5. Sea \(G(u,v)=g_{ij}u^iv^j\). Explique bajo qué condiciones representa una forma bilineal simétrica y no singular, y por qué se relaciona con un tensor métrico.
+
+### 5 preguntas de desarrollo largo
+
+L1. Desarrolle la idea de espacio vectorial abstracto y explique por qué matrices, funciones y polinomios pueden ser tratados como vectores.
+
+L2. Explique el papel de las bases y la dimensión en el capítulo, incluyendo ejemplos finito-dimensionales e infinito-dimensionales.
+
+L3. Desarrolle la construcción del espacio dual y la interpretación de las 1-formas.
+
+L4. Explique la relación entre diferenciales, 1-formas y derivadas direccionales.
+
+L5. Explique cómo la noción de espacio vectorial prepara la definición de tensor como aplicación multilineal.
+
+### 5 preguntas de relación entre conceptos
+
+R1. Relacione espacio vectorial y grupo.
+
+R2. Relacione base, coordenadas y vector abstracto.
+
+R3. Relacione \(V\), \(V^*\) y la evaluación \(\omega(v)\).
+
+R4. Relacione base dual y cambio de base.
+
+R5. Relacione aplicaciones lineales, funcionales lineales y tensores multilineales.
+
+## 8. Respuestas modelo
+
+### Respuestas fáciles
+
+F1. Un espacio vectorial real es un conjunto \(V\) con una suma de vectores y un producto por escalares reales que cumplen los axiomas de cierre, conmutatividad y asociatividad de la suma, existencia de vector cero, existencia de opuesto, distributividad respecto de suma de vectores y escalares, compatibilidad \((\alpha\beta)u=\alpha(\beta u)\) y \(1u=u\).
+
+F2. Un escalar es un número real del cuerpo base. Un vector es un elemento del espacio vectorial. El escalar puede multiplicar al vector, pero no tiene la misma naturaleza. Por ejemplo, en \(3u\), \(3\) es el escalar y \(u\) el vector.
+
+F3. Tres ejemplos son \(\mathbb R^n\), el espacio \(P_n\) de polinomios de grado menor o igual que \(n\), y el espacio de matrices reales \(n\times n\). También aparece \(C^k\), el espacio de funciones \(k\) veces continuamente diferenciables.
+
+F4. Que un conjunto sea cerrado por suma significa que al sumar dos elementos cualesquiera del conjunto el resultado sigue perteneciendo al conjunto. Si \(u,v\in V\), entonces debe cumplirse \(u+v\in V\).
+
+F5. La base canónica de \(\mathbb R^n\) es
+\[
+e_1=(1,0,\ldots,0),\ e_2=(0,1,\ldots,0),\ldots,\ e_n=(0,\ldots,0,1).
+\]
+
+F6. Una base natural de \(P_n\) es
+\[
+\{1,t,t^2,\ldots,t^n\}.
+\]
+Tiene \(n+1\) elementos, luego \(\dim P_n=n+1\).
+
+F7. Una aplicación \(T:V\to W\) es lineal si conserva suma y producto por escalares:
+\[
+T(u+v)=T(u)+T(v),\qquad T(\lambda u)=\lambda T(u).
+\]
+
+F8. El espacio dual \(V^*\) es el conjunto de todos los funcionales lineales de \(V\) en \(\mathbb R\). Sus elementos toman vectores y devuelven escalares.
+
+F9. Una 1-forma es un funcional lineal sobre un espacio vectorial. En coordenadas se escribe como \(\omega=a_i dx^i\) y actúa sobre \(v=v^i b_i\) mediante \(\omega(v)=a_i v^i\).
+
+F10. La base dual \(\{p^i\}\) de una base \(\{b_i\}\) está definida por
+\[
+p^i(b_j)=\delta^i_j.
+\]
+Cada \(p^i\) extrae la componente \(i\)-ésima del vector.
+
+### Respuestas medias
+
+M1. \(P_2\) está formado por polinomios \(a_0+a_1t+a_2t^2\). La suma de dos polinomios de grado menor o igual que \(2\) sigue teniendo grado menor o igual que \(2\), y el producto por un escalar tampoco aumenta el grado. El polinomio cero pertenece a \(P_2\), cada polinomio tiene opuesto, y las propiedades algebraicas proceden de las propiedades de los números reales. Por tanto, \(P_2\) es espacio vectorial real.
+
+M2. Si \(A=(a_{ij})\) y \(B=(b_{ij})\) son matrices reales \(2\times2\), entonces \(A+B=(a_{ij}+b_{ij})\) también es \(2\times2\), y \(\lambda A=(\lambda a_{ij})\) también. La matriz cero pertenece al conjunto y cada matriz \(A\) tiene opuesta \(-A\). Las propiedades asociativas, conmutativas y distributivas se cumplen entrada a entrada. Por tanto, el conjunto es un espacio vectorial.
+
+M3. No es un espacio vectorial. El polinomio cero no pertenece a \(S\), porque \(0(0)=0\neq1\). Además, si \(p(0)=1\), entonces \((2p)(0)=2\), por lo que el conjunto no es cerrado por producto escalar. Falla la estructura vectorial.
+
+M4. Se calcula aplicando la 1-forma al vector:
+\[
+\omega(v)=3\cdot1-2\cdot(-1)+1\cdot4=3+2+4=9.
+\]
+El resultado es el escalar \(9\).
+
+M5. Como \(F(x,y)=x^2y\),
+\[
+dF=2xy\,dx+x^2\,dy.
+\]
+En \((1,2)\),
+\[
+dF=4\,dx+1\,dy.
+\]
+Aplicada a \(v=(3,-1)\),
+\[
+dF(v)=4\cdot3+1\cdot(-1)=11.
+\]
+
+M6. Buscamos \(p^1(x,y)=ax+by\) y \(p^2(x,y)=cx+dy\). Para \(p^1\):
+\[
+p^1(1,1)=1,\qquad p^1(1,-1)=0.
+\]
+Entonces \(a+b=1\), \(a-b=0\), luego \(a=b=1/2\). Así,
+\[
+p^1=\frac12 dx+\frac12 dy.
+\]
+Para \(p^2\):
+\[
+p^2(1,1)=0,\qquad p^2(1,-1)=1.
+\]
+Entonces \(c+d=0\), \(c-d=1\), luego \(c=1/2\), \(d=-1/2\). Por tanto,
+\[
+p^2=\frac12 dx-\frac12 dy.
+\]
+
+M7. Una base genera el espacio, así que todo vector puede escribirse como combinación lineal de sus elementos. Además, es linealmente independiente, por lo que esa combinación es única. Si hubiera dos expresiones distintas, al restarlas se obtendría una combinación lineal no trivial igual a cero, contradiciendo la independencia.
+
+M8. Definimos
+\[
+T:P_2\to\mathbb R^3,\qquad T(a+bt+ct^2)=(a,b,c).
+\]
+Es lineal porque suma de polinomios y producto por escalares se traducen en suma y producto por escalares de sus coeficientes. Es biyectiva, ya que todo \((a,b,c)\in\mathbb R^3\) procede del polinomio \(a+bt+ct^2\). Por tanto, es un isomorfismo.
+
+M9. Los reales no nulos con la multiplicación forman grupo porque el producto de dos reales no nulos es no nulo, la multiplicación es asociativa, \(1\) es identidad, y cada \(a\neq0\) tiene inverso \(a^{-1}\). Pero eso no los convierte en espacio vectorial con la multiplicación como suma: falta una suma vectorial compatible con el producto por escalares y las leyes distributivas propias de un espacio vectorial.
+
+M10. El producto de espacios \(U\) y \(V\) se forma con pares \((u,v)\), donde \(u\in U\) y \(v\in V\). Se define
+\[
+(u,v)+(r,s)=(u+r,v+s),
+\]
+y
+\[
+\lambda(u,v)=(\lambda u,\lambda v).
+\]
+Con estas operaciones, el conjunto de pares tiene estructura de espacio vectorial.
+
+### Respuestas difíciles
+
+D1. Sea \(\{b_1,\ldots,b_n\}\) una base de \(V\). Definimos \(p^i\in V^*\) por \(p^i(b_j)=\delta^i_j\). Estos \(n\) funcionales son linealmente independientes: si \(\sum_i \alpha_i p^i=0\), al evaluar en \(b_j\) queda \(\alpha_j=0\). Además generan \(V^*\): si \(f\in V^*\), entonces para \(v=v^i b_i\),
+\[
+f(v)=v^i f(b_i).
+\]
+Luego
+\[
+f=\sum_i f(b_i)p^i.
+\]
+Por tanto, \(\{p^i\}\) es base de \(V^*\) y \(\dim V^*=n\).
+
+D2. Si una base tuviera \(n\) vectores, cualquier familia con más de \(n\) vectores en el mismo espacio sería linealmente dependiente, porque todos sus elementos se expresan en términos de esos \(n\) generadores. Si otra base tuviera más de \(n\), sería dependiente, contradicción. Si tuviera menos, no podría generar todo el espacio. Por tanto, todas las bases finitas tienen el mismo número de elementos.
+
+D3. Supongamos que el espacio \(P\) de todos los polinomios tuviera una base finita. Entonces habría un grado máximo entre los polinomios de esa base. Toda combinación lineal de ellos tendría grado menor o igual que ese máximo. Pero existen polinomios de grado arbitrariamente alto, como \(t^{N}\) para \(N\) mayor que ese máximo. Contradicción. Por tanto, \(P\) no tiene dimensión finita.
+
+D4. La base dual debe satisfacer siempre \(p'^i(b'_j)=\delta^i_j\). Si la base de \(V\) cambia mediante una matriz \(A\), las nuevas bases son combinaciones lineales de las antiguas. Para que al evaluar la nueva base dual sobre la nueva base original siga saliendo la delta de Kronecker, los coeficientes de la base dual deben compensar el cambio. Algebraicamente esa compensación se expresa mediante la matriz inversa. Por eso el cambio en \(V^*\) es inverso al cambio en \(V\).
+
+D5. La expresión
+\[
+G(u,v)=g_{ij}u^iv^j
+\]
+define una forma bilineal porque es lineal en \(u\) dejando fijo \(v\), y lineal en \(v\) dejando fijo \(u\). Es simétrica si \(G(u,v)=G(v,u)\), lo que en componentes equivale a \(g_{ij}=g_{ji}\). Es no singular si \(G(u,v)=0\) para todo \(u\) implica \(v=0\), lo que se expresa mediante determinante no nulo de la matriz \((g_{ij})\). Cuando una forma bilineal es simétrica y no singular, se relaciona con un tensor métrico porque permite medir y emparejar vectores de forma algebraicamente consistente.
+
+### Respuestas de desarrollo largo
+
+L1. Un espacio vectorial abstracto se define por sus operaciones, no por la forma concreta de sus elementos. Esto permite tratar como vectores objetos muy distintos. En \(\mathbb R^n\), los vectores son listas de números. En \(P_n\), los vectores son polinomios. En \(C^k\), son funciones suficientemente diferenciables. En espacios de matrices, son matrices de tamaño fijo. En todos los casos hay suma, producto por escalares, cero, opuestos y leyes distributivas. Por eso la misma teoría de combinaciones lineales, bases y dimensión se aplica a todos ellos.
+
+L2. Una base es una familia independiente y generadora. Su papel es proporcionar coordenadas únicas para cada vector. En \(\mathbb R^n\), la base canónica permite escribir \(v=v^ie_i\). En \(P_n\), la base \(\{1,t,\ldots,t^n\}\) permite escribir cualquier polinomio por sus coeficientes, y por eso \(\dim P_n=n+1\). La dimensión es el número de elementos de una base, y no depende de la base elegida. El espacio de todos los polinomios no tiene dimensión finita, porque no existe una cota universal para el grado de los polinomios. Como \(C^k\) contiene polinomios de grado arbitrario, también es infinito-dimensional.
+
+L3. El espacio dual \(V^*\) está formado por los funcionales lineales \(V\to\mathbb R\). Estos funcionales se suman y se multiplican por escalares punto a punto, de modo que \(V^*\) también es espacio vectorial. Si \(V\) tiene base \(\{b_i\}\), entonces existe una base dual \(\{p^i\}\) definida por \(p^i(b_j)=\delta^i_j\). Si \(v=v^jb_j\), entonces \(p^i(v)=v^i\). Así, una 1-forma \(\omega=a_i p^i\) actúa como \(\omega(v)=a_i v^i\). Esta construcción diferencia los vectores, que pertenecen a \(V\), de las 1-formas, que pertenecen a \(V^*\).
+
+L4. La diferencial de una función \(F(x^1,\ldots,x^n)\) se escribe
+\[
+dF=\frac{\partial F}{\partial x^i}dx^i.
+\]
+Esta expresión debe entenderse como una 1-forma. Al aplicarla a un vector dirección \(v=v^i b_i\), se obtiene
+\[
+dF(v)=\frac{\partial F}{\partial x^i}v^i.
+\]
+Ese número es la derivada direccional de \(F\) en la dirección \(v\). Por tanto, la diferencial enlaza cálculo diferencial y espacio dual: el gradiente de componentes parciales se organiza como un funcional lineal sobre direcciones.
+
+L5. La noción de tensor exige previamente entender espacios vectoriales, duales y multilinealidad. Una 1-forma es lineal en un argumento. Una forma bilineal, como un producto escalar, es lineal en dos argumentos. Un tensor generaliza esto: toma varios vectores y/o 1-formas y devuelve un escalar, siendo lineal en cada entrada. Una vez elegidas bases, el tensor se expresa mediante componentes con índices. Pero el tensor no es la tabla de componentes; es la aplicación multilineal que esas componentes representan.
+
+### Respuestas de relación entre conceptos
+
+R1. Un espacio vectorial es un grupo abeliano respecto de la suma, porque la suma cumple cierre, asociatividad, conmutatividad, identidad y opuestos. Pero además tiene producto por escalares y leyes distributivas. Por tanto, todo espacio vectorial tiene una estructura de grupo aditivo, pero no todo grupo es espacio vectorial.
+
+R2. La base permite asignar coordenadas a un vector abstracto. Si \(v=v^ib_i\), los números \(v^i\) son las coordenadas de \(v\) en la base \(\{b_i\}\). Al cambiar la base, cambian las coordenadas, pero el vector puede ser el mismo. Por eso no se debe identificar el vector con una lista fija de números.
+
+R3. \(V\) es el espacio de vectores. \(V^*\) es el espacio de funcionales lineales sobre \(V\). La evaluación \(\omega(v)\) combina un elemento de \(V^*\) con un elemento de \(V\) y produce un escalar. Esta operación es central porque expresa la relación entre componentes covariantes y contravariantes.
+
+R4. La base dual está determinada por la condición \(p^i(b_j)=\delta^i_j\). Si cambia la base \(b_j\), la base dual debe cambiar de manera compensada para que esa condición siga siendo cierta. Por eso aparece la matriz inversa en el cambio de base dual. Esta relación anticipa las leyes de transformación tensorial.
+
+R5. Una aplicación lineal conserva combinaciones lineales. Un funcional lineal es una aplicación lineal particular cuyo codominio es \(\mathbb R\). Un tensor multilineal generaliza esta idea a varias entradas: es lineal en cada argumento y devuelve un escalar. Así, los tensores prolongan la idea de funcional lineal al caso de varios vectores y covectores.
+
+## 9. Resumen final de repaso
+
+Ideas principales:
+- Un espacio vectorial se define por suma y producto por escalares, no por la forma visual de sus elementos.
+- Los vectores pueden ser \(n\)-tuplas, polinomios, funciones o matrices.
+- Una base es una familia independiente y generadora.
+- La dimensión es el número de vectores de una base.
+- El dual \(V^*\) está formado por funcionales lineales \(V\to\mathbb R\).
+- Una 1-forma \(\omega=a_i dx^i\) actúa sobre un vector \(v=v^i b_i\) mediante \(\omega(v)=a_i v^i\).
+- La base dual cumple \(p^i(b_j)=\delta^i_j\).
+- La diferencial \(dF\) es una 1-forma.
+- Los tensores se entienden como aplicaciones multilineales, no solo como colecciones de componentes.
+
+Conceptos imprescindibles:
+- Escalar.
+- Vector abstracto.
+- Combinación lineal.
+- Independencia lineal.
+- Base.
+- Dimensión.
+- Aplicación lineal.
+- Isomorfismo.
+- Dual.
+- Funcional lineal.
+- 1-forma.
+- Base dual.
+- Diferencial.
+- Tensor multilineal.
+
+Relaciones clave:
+- Escalares y vectores permiten formar combinaciones lineales.
+- Combinaciones lineales permiten definir base y dimensión.
+- Una base determina coordenadas.
+- Una base de \(V\) determina una base dual de \(V^*\).
+- Vectores y 1-formas se emparejan para producir escalares.
+- Las diferenciales son 1-formas.
+- Los tensores generalizan las formas lineales y bilineales.
+
+Errores que evitar:
+- Reducir vector a flecha geométrica.
+- Confundir vector con sus coordenadas.
+- Confundir \(V\) con \(V^*\).
+- Olvidar comprobar el vector cero.
+- Dar por supuesto que un conjunto es espacio vectorial sin verificar cierre.
+- Pensar que generar basta para ser base.
+- Tratar \(dx^i\) solo como infinitesimal.
+- Usar la misma matriz para el cambio de base de \(V\) y de \(V^*\).
+- Confundir grupo con espacio vectorial.
+- Interpretar un tensor solo como una matriz de componentes.
+
+## 10. Checklist de dominio
+
+- Si no puedes explicar por qué un polinomio puede ser un vector, falta repasar la definición abstracta de espacio vectorial.
+
+- Si confundes escalar con vector, revisar la diferencia entre cuerpo base y conjunto vectorial.
+
+- Si no puedes verificar cierre por suma y producto escalar, falta repasar los axiomas.
+
+- Si no detectas que un conjunto sin vector cero no es espacio vectorial, revisar los axiomas de la suma.
+
+- Si confundes grupo con espacio vectorial, revisar la comparación entre grupo aditivo y producto por escalares.
+
+- Si no puedes decidir si una familia es base, falta repasar generación e independencia lineal.
+
+- Si confundes una base con una lista cualquiera de generadores, revisar independencia lineal.
+
+- Si no puedes calcular \(\dim P_n\), revisar la base \(\{1,t,\ldots,t^n\}\).
+
+- Si no puedes explicar por qué el espacio de todos los polinomios es infinito-dimensional, falta repasar la idea de grado no acotado.
+
+- Si no puedes construir un isomorfismo entre \(P_2\) y \(\mathbb R^3\), revisar coordenadas respecto de una base.
+
+- Si no puedes definir \(V^*\), falta repasar funcional lineal.
+
+- Si confundes una 1-forma con un vector, revisar la evaluación \(\omega(v)\).
+
+- Si no puedes calcular \(\omega(v)=a_iv^i\), falta repasar notación de índices y suma de Einstein.
+
+- Si no puedes explicar \(p^i(b_j)=\delta^i_j\), revisar base dual.
+
+- Si no puedes calcular la base dual de una base sencilla de \(\mathbb R^2\), falta práctica con sistemas lineales.
+
+- Si tratas \(dx^i\) solo como incremento pequeño, revisar su interpretación como funcional coordenado.
+
+- Si no puedes calcular \(dF\) y evaluarla sobre un vector, falta repasar diferencial como 1-forma.
+
+- Si no entiendes por qué la base dual cambia con la matriz inversa, revisar la condición \(p^i(b_j)=\delta^i_j\).
+
+- Si no puedes distinguir objeto y componentes, falta repasar cambio de base.
+
+- Si puedes verificar espacios vectoriales, calcular bases duales y evaluar 1-formas sobre vectores, el capítulo está suficientemente asentado para avanzar hacia tensores.

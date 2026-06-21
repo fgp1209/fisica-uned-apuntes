@@ -1,0 +1,1296 @@
+# Guía de estudio — Lipschutz / Métodos Matemáticos IV
+
+Capítulo trabajado: T9 — Teoría de curvas.
+Fuente principal: Martin M. Lipschutz, Teoría y problemas de geometría diferencial, capítulo 5, «Teoría de las curvas».
+
+## 1. Prerrequisitos mínimos
+
+1. Curva regular parametrizada.
+
+Definición breve: una curva en \(E^3\) se representa mediante una función vectorial
+\[
+x=x(t)=x_1(t)e_1+x_2(t)e_2+x_3(t)e_3,
+\]
+con derivada no nula en los puntos considerados. Si se usa el parámetro longitud de arco, se escribe \(x=x(s)\).
+
+Por qué es necesario: todo el capítulo supone que la curva se puede derivar varias veces y que tiene sentido hablar de tangente, normal, binormal, curvatura y torsión.
+
+Ejemplo mínimo: la hélice
+\[
+x(t)=a\cos t\,e_1+a\sin t\,e_2+bt\,e_3
+\]
+es regular si \((a,b)\neq (0,0)\), porque \(x'(t)\neq 0\).
+
+2. Parámetro longitud de arco.
+
+Definición breve: es un parámetro \(s\) que mide la longitud recorrida sobre la curva. Cuando la curva está parametrizada por \(s\), se cumple
+\[
+\left\|\frac{dx}{ds}\right\|=1.
+\]
+
+Por qué es necesario: las fórmulas de Frenet del capítulo se escriben en su forma simple usando \(s\). Si se usa otro parámetro, aparecen factores de cambio de variable.
+
+Ejemplo mínimo: para una circunferencia de radio \(R\),
+\[
+x(\theta)=R\cos\theta\,e_1+R\sin\theta\,e_2,
+\]
+la longitud de arco es \(s=R\theta\).
+
+3. Triedro móvil.
+
+Definición breve: en cada punto regular de una curva espacial se consideran tres vectores unitarios:
+\[
+t \quad \text{tangente}, \qquad n \quad \text{normal principal}, \qquad b \quad \text{binormal}.
+\]
+El vector \(b\) es perpendicular al plano generado por \(t\) y \(n\).
+
+Por qué es necesario: el capítulo estudia cómo varía este triedro al moverse por la curva. Esa variación codifica la curvatura y la torsión.
+
+Ejemplo mínimo: en una circunferencia plana, \(t\) gira dentro del plano, \(n\) apunta hacia el centro y \(b\) es constante perpendicular al plano.
+
+4. Curvatura.
+
+Definición breve: mide cuánto cambia la dirección tangente de la curva por unidad de longitud de arco. En la notación del capítulo,
+\[
+\frac{dt}{ds}=\kappa n.
+\]
+
+Por qué es necesario: la curvatura es una de las dos funciones intrínsecas que determinan una curva espacial.
+
+Ejemplo mínimo: una recta tiene \(\kappa=0\). Una circunferencia de radio \(R\) tiene \(\kappa=1/R\).
+
+5. Torsión.
+
+Definición breve: mide cómo gira el plano osculador de la curva al avanzar por ella. En las fórmulas de Frenet aparece como
+\[
+\frac{db}{ds}=-\tau n.
+\]
+
+Por qué es necesario: dos curvas pueden tener la misma curvatura y no ser la misma curva espacial si difiere su torsión. La torsión distingue el comportamiento espacial del comportamiento plano.
+
+Ejemplo mínimo: una curva plana tiene \(\tau=0\). Una hélice circular tiene curvatura y torsión constantes no nulas.
+
+6. Producto escalar y producto vectorial.
+
+Definición breve: el producto escalar mide longitudes y ángulos; el producto vectorial permite construir vectores perpendiculares en \(E^3\).
+
+Por qué es necesario: la ortogonalidad de \(t,n,b\), el plano osculador, el plano normal y las construcciones de involutas y evolutas se formulan con perpendicularidad.
+
+Ejemplo mínimo: si \(t\) y \(n\) son unitarios y ortogonales, entonces \(b=t\times n\).
+
+7. Ecuaciones diferenciales ordinarias de primer orden.
+
+Definición breve: una EDO de primer orden relaciona una función desconocida con su derivada. Un sistema de EDO de primer orden permite determinar varias funciones simultáneamente.
+
+Por qué es necesario: las fórmulas de Frenet forman un sistema de ecuaciones diferenciales para \(t,n,b\). El teorema fundamental de las curvas se apoya en la existencia y unicidad de ese sistema.
+
+Ejemplo mínimo: si \(d\phi/ds=\kappa(s)\), entonces
+\[
+\phi(s)=\int \kappa(s)\,ds+C.
+\]
+
+8. Desarrollo de Taylor.
+
+Definición breve: aproxima una función mediante sus derivadas en un punto:
+\[
+x(s)=x(0)+x'(0)s+\frac{x''(0)}{2}s^2+\frac{x'''(0)}{6}s^3+o(s^3).
+\]
+
+Por qué es necesario: la representación canónica de una curva cerca de un punto se obtiene aplicando Taylor y sustituyendo las derivadas por expresiones en \(t,n,b,\kappa,\tau\).
+
+Ejemplo mínimo: cerca de \(s=0\), una curva con \(\kappa(0)\neq 0\) se parece, en su plano osculador, a una parábola.
+
+## 2. Idea central del capítulo
+
+El capítulo estudia una cuestión fundamental: hasta qué punto la forma de una curva espacial queda determinada por dos funciones, la curvatura y la torsión. En capítulos anteriores se han definido los objetos geométricos básicos de una curva: tangente, normal principal, binormal, curvatura, torsión y planos asociados. Este capítulo reúne esos elementos y los convierte en una teoría estructurada.
+
+La primera idea fuerte es que el triedro móvil \((t,n,b)\) no cambia arbitrariamente. Sus derivadas respecto de la longitud de arco obedecen las fórmulas de Frenet-Serret. Estas ecuaciones dicen que la curvatura controla el giro de la tangente hacia la normal, mientras que la torsión controla el giro de la binormal hacia la normal. Por tanto, la geometría local de la curva se expresa como un sistema diferencial.
+
+La segunda idea es que las ecuaciones
+\[
+\kappa=\kappa(s),\qquad \tau=\tau(s)
+\]
+son las ecuaciones intrínsecas o naturales de la curva. Son intrínsecas porque no dependen de haber colocado la curva en un punto concreto del espacio ni de haber elegido unos ejes particulares. Si se fija la posición inicial y el triedro inicial, esas dos funciones determinan la curva. Si no se fijan, determinan la curva salvo movimientos rígidos.
+
+El capítulo desarrolla después varias consecuencias. La representación canónica describe cómo se ve una curva cerca de un punto cuando se eligen como ejes la tangente, la normal y la binormal. Las involutas y evolutas muestran cómo se generan nuevas curvas a partir de tangentes y normales. La teoría del contacto mide con precisión cuándo una recta, un plano, una esfera o una superficie “roza” una curva con mayor o menor orden.
+
+El papel del capítulo dentro de la asignatura es claro: convierte el cálculo diferencial de curvas en una herramienta operativa. Para examen no basta con repetir definiciones; hay que saber usar las fórmulas de Frenet, reconocer qué significan \(\kappa\) y \(\tau\), reconstruir curvas en casos sencillos, interpretar la representación canónica y razonar órdenes de contacto.
+
+## 3. Desarrollo completo del capítulo
+
+### 3.1. Fórmulas de Frenet
+
+El capítulo empieza estableciendo las fórmulas de Frenet. Sea \(x=x(s)\) una curva parametrizada por longitud de arco. Su vector tangente unitario es
+\[
+t=\frac{dx}{ds}.
+\]
+Como \(t\) tiene longitud uno, su derivada es perpendicular a \(t\). Cuando la curvatura no se anula, esa derivada define la dirección normal principal:
+\[
+\frac{dt}{ds}=\kappa n.
+\]
+La binormal \(b\) completa el triedro móvil. Las tres derivadas se organizan en el sistema
+\[
+\frac{dt}{ds}=\kappa n,
+\]
+\[
+\frac{dn}{ds}=-\kappa t+\tau b,
+\]
+\[
+\frac{db}{ds}=-\tau n.
+\]
+
+Estas igualdades son importantes porque muestran que la curva no se estudia directamente sólo por sus coordenadas, sino por la evolución de una base ortonormal ligada a ella. La primera fórmula dice cómo gira la tangente. La segunda muestra que la normal cambia en dos direcciones: hacia la tangente, por efecto de la curvatura, y hacia la binormal, por efecto de la torsión. La tercera muestra que la binormal sólo cambia hacia la normal; si no cambia, la torsión es nula y la curva permanece en un plano.
+
+Las fórmulas pueden escribirse como una matriz de coeficientes respecto de la base \((t,n,b)\):
+\[
+\begin{pmatrix}
+t'\\
+n'\\
+b'
+\end{pmatrix}
+=
+\begin{pmatrix}
+0&\kappa&0\\
+-\kappa&0&\tau\\
+0&-\tau&0
+\end{pmatrix}
+\begin{pmatrix}
+t\\
+n\\
+b
+\end{pmatrix}.
+\]
+La matriz es antisimétrica. Esto refleja que el triedro conserva longitudes y ángulos: los vectores siguen siendo unitarios y mutuamente ortogonales.
+
+Un ejemplo básico es la circunferencia. Su torsión es cero porque el plano osculador no gira fuera del plano de la curva. Su curvatura es constante, igual al inverso del radio. En una hélice circular, en cambio, tanto la curvatura como la torsión son constantes: la curva gira alrededor de un cilindro y avanza en dirección axial.
+
+### 3.2. Ecuaciones intrínsecas
+
+Después de las fórmulas de Frenet aparece una consecuencia esencial: una curva queda determinada por su curvatura y su torsión como funciones del parámetro natural. Las ecuaciones
+\[
+\kappa=\kappa(s),\qquad \tau=\tau(s)
+\]
+reciben el nombre de ecuaciones naturales o intrínsecas.
+
+La palabra “intrínseca” significa aquí que esas ecuaciones no describen la curva por coordenadas externas \((x_1,x_2,x_3)\), sino por magnitudes geométricas medidas a lo largo de la propia curva. Si dos curvas tienen las mismas funciones \(\kappa(s)\) y \(\tau(s)\), y además se hacen coincidir en un punto con el mismo triedro inicial, entonces las fórmulas de Frenet obligan a que sus triedros evolucionen igual. Como \(t=dx/ds\), también sus posiciones evolucionan igual. Por tanto, las curvas coinciden.
+
+Los ejemplos elementales fijan la idea. Una recta tiene
+\[
+\kappa=0,\qquad \tau=0.
+\]
+Una circunferencia de radio \(R\) tiene
+\[
+\kappa=\frac1R,\qquad \tau=0.
+\]
+Una hélice circular tiene
+\[
+\kappa=\text{constante}\neq 0,\qquad \tau=\text{constante}\neq 0.
+\]
+En el caso de la hélice, el signo de \(\tau\) distingue el sentido de giro espacial.
+
+La consecuencia práctica es que muchos problemas de curvas pueden plantearse sin escribir inicialmente una parametrización en coordenadas. Se puede partir de \(\kappa(s)\) y \(\tau(s)\), resolver el sistema de Frenet, integrar \(t\) y obtener \(x(s)\).
+
+### 3.3. Teorema fundamental de existencia y unicidad
+
+El capítulo formula el teorema fundamental de existencia y unicidad de curvas espaciales. Dadas dos funciones continuas \(\kappa(s)\) y \(\tau(s)\) en un intervalo, existe una curva espacial, determinada salvo su colocación inicial, que tiene esas funciones como curvatura y torsión y que usa \(s\) como longitud de arco.
+
+La razón matemática está en las fórmulas de Frenet. Son un sistema de ecuaciones diferenciales de primer orden para los vectores \(t,n,b\). Si se fijan \(t(s_0)\), \(n(s_0)\), \(b(s_0)\), el sistema determina la evolución del triedro. Una vez obtenido \(t(s)\), se recupera la curva por integración:
+\[
+x(s)=\int t(s)\,ds+C.
+\]
+
+Este teorema es central porque permite pasar de datos geométricos a existencia real de una curva. No sólo dice que \(\kappa\) y \(\tau\) caracterizan una curva ya dada; dice que, bajo condiciones de continuidad, esas funciones son datos suficientes para construir una curva.
+
+En examen puede aparecer de forma teórica, pidiendo enunciar el teorema, explicar por qué las fórmulas de Frenet conducen a un sistema diferencial o justificar por qué dos curvas con las mismas ecuaciones intrínsecas son congruentes.
+
+### 3.4. Curvas planas dadas por su curvatura
+
+El caso \(\tau=0\) recibe un tratamiento especial porque las fórmulas se simplifican. Si la curva es plana, podemos escribir
+\[
+t=(\cos\phi)e_1+(\sin\phi)e_2,
+\]
+\[
+n=(-\sin\phi)e_1+(\cos\phi)e_2.
+\]
+La relación de Frenet \(t'=\kappa n\) implica
+\[
+\frac{d\phi}{ds}=\kappa(s).
+\]
+Por tanto,
+\[
+\phi(s)=\int \kappa(s)\,ds+C.
+\]
+La curva se obtiene integrando el vector tangente:
+\[
+x(s)=\int\big((\cos\phi(s))e_1+(\sin\phi(s))e_2\big)\,ds+C.
+\]
+
+Si \(\kappa\neq 0\), puede introducirse \(\phi\) como nuevo parámetro y escribir
+\[
+x=\int \frac{\cos\phi}{\kappa(\phi)}\,d\phi\,e_1+
+\int \frac{\sin\phi}{\kappa(\phi)}\,d\phi\,e_2+C.
+\]
+Este procedimiento aparece en el capítulo para reconstruir curvas planas a partir de sus ecuaciones intrínsecas.
+
+Un ejemplo importante es la espiral logarítmica. Para \(\kappa=1/s\), con \(\tau=0\), se obtiene una curva plana cuya forma en coordenadas polares es una espiral logarítmica. El detalle técnico no es memorizar una integral concreta, sino entender el método: curvatura \(\rightarrow\) ángulo de la tangente \(\rightarrow\) integración del tangente.
+
+### 3.5. Representación canónica de una curva
+
+El capítulo introduce una descripción local de la curva cerca de un punto \(P\). Se coloca \(P\) en el origen y se elige una base adaptada:
+\[
+e_1=t(0),\qquad e_2=n(0),\qquad e_3=b(0).
+\]
+Además, se toma \(s=0\) en \(P\). Aplicando Taylor a \(x(s)\) y usando las fórmulas de Frenet, se obtiene una representación aproximada de la curva en esa base.
+
+Como
+\[
+x'(0)=t(0)=e_1,
+\]
+\[
+x''(0)=\kappa(0)n(0)=\kappa_0e_2,
+\]
+y
+\[
+x'''(0)=-\kappa_0^2e_1+\kappa_0'e_2+\kappa_0\tau_0e_3,
+\]
+se llega a
+\[
+x_1=s-\frac{\kappa_0^2}{6}s^3+o(s^3),
+\]
+\[
+x_2=\frac{\kappa_0}{2}s^2+\frac{\kappa_0'}{6}s^3+o(s^3),
+\]
+\[
+x_3=\frac{\kappa_0\tau_0}{6}s^3+o(s^3).
+\]
+
+Estas expresiones explican cómo se coloca localmente la curva respecto de sus planos principales. En dirección tangente, la curva avanza principalmente como \(s\). En dirección normal, el primer término relevante es de orden \(s^2\), lo que produce una forma parabólica en el plano osculador. En dirección binormal, el primer término relevante es de orden \(s^3\), y ahí aparece la torsión.
+
+La representación canónica permite interpretar de forma geométrica los planos asociados. El plano osculador contiene las direcciones \(t\) y \(n\). La proyección sobre ese plano se comporta como una parábola. La proyección sobre el plano rectificante, generado por \(t\) y \(b\), tiene comportamiento cúbico. La proyección sobre el plano normal, generado por \(n\) y \(b\), presenta una forma cuspidal en el punto.
+
+La consecuencia para examen es doble. Primero, hay que saber obtener la representación canónica a partir de Taylor y Frenet. Segundo, hay que saber explicar qué significan los términos de orden \(s\), \(s^2\) y \(s^3\).
+
+### 3.6. Involutas
+
+El capítulo define la superficie tangente de una curva \(C\) como la superficie generada por sus rectas tangentes:
+\[
+X(s,\lambda)=x(s)+\lambda t(s).
+\]
+Una involuta de \(C\) es una curva \(C^*\) situada sobre esa superficie tangente y que corta ortogonalmente a las rectas tangentes de \(C\).
+
+Si \(C\) está dada por \(x=x(s)\), un punto de una involuta debe tener la forma
+\[
+x^*(s)=x(s)+\lambda(s)t(s).
+\]
+La condición de ortogonalidad lleva a
+\[
+\lambda'(s)=-1.
+\]
+Por tanto,
+\[
+x^*(s)=x(s)+(c-s)t(s),
+\]
+donde \(c\) es una constante. Así aparece una familia infinita de involutas, una por cada valor de \(c\).
+
+La fórmula tiene una interpretación mecánica: una involuta se obtiene desenrollando una cuerda tensa apoyada sobre la curva. El parámetro \(c-s\) representa la longitud efectiva de cuerda que queda sobre la tangente.
+
+Hay una advertencia importante: la involuta puede dejar de ser regular donde la curva original tiene un punto de inflexión, es decir, donde \(\kappa=0\). En efecto,
+\[
+\frac{dx^*}{ds}=(c-s)\kappa n,
+\]
+por lo que si \(\kappa=0\), la derivada puede anularse.
+
+Ejemplo orientativo: las involutas de una circunferencia son las curvas clásicas generadas al desenrollar una cuerda de una rueda. En el capítulo también se analiza el caso de la hélice circular, cuyas involutas resultan curvas planas.
+
+### 3.7. Evolutas
+
+Una evoluta se define de forma recíproca: si \(C\) es una involuta de \(C^*\), entonces \(C^*\) es una evoluta de \(C\). Geométricamente, las evolutas de \(C\) son curvas cuyas tangentes cortan ortogonalmente a \(C\).
+
+Si \(C\) está dada por \(x=x(s)\), un punto de una evoluta debe estar en el plano normal de \(C\):
+\[
+x^*(s)=x(s)+\alpha(s)n(s)+\beta(s)b(s).
+\]
+El capítulo deriva, usando las fórmulas de Frenet, que la familia de evolutas puede escribirse como
+\[
+x^*(s)=x(s)+\frac{1}{\kappa(s)}\,n(s)
++\frac{1}{\kappa(s)}\cot\left(\int \tau(s)\,ds+c\right)b(s),
+\]
+con \(c\) constante, bajo las condiciones de regularidad correspondientes.
+
+El caso plano es especialmente importante. Si \(\tau=0\), entonces \(b\) es constante y las evolutas toman la forma
+\[
+x^*(s)=x(s)+\frac{1}{\kappa(s)}\,n(s)+\gamma b,
+\]
+donde \(\gamma\) es constante. La evoluta contenida en el mismo plano que la curva se obtiene tomando \(\gamma=0\):
+\[
+x^*(s)=x(s)+\frac{1}{\kappa(s)}\,n(s).
+\]
+Esta curva es el lugar geométrico de los centros de curvatura de \(C\).
+
+La idea esencial es que una evoluta recoge la variación de los centros normales asociados a la curva. En el plano, esta construcción es muy visual: cada punto de la evoluta es el centro del círculo osculador de la curva original.
+
+### 3.8. Teoría del contacto
+
+El capítulo introduce después una teoría para medir el grado de contacto entre una curva y una superficie. Sea una curva
+\[
+x=x(t)
+\]
+y una superficie
+\[
+F(x_1,x_2,x_3)=0.
+\]
+Se define
+\[
+f(t)=F(x_1(t),x_2(t),x_3(t)).
+\]
+La curva tiene contacto de orden \(n\) con la superficie en \(t=t_0\) si
+\[
+f(t_0)=f'(t_0)=\cdots=f^{(n-1)}(t_0)=0,
+\]
+pero
+\[
+f^{(n)}(t_0)\neq 0.
+\]
+Esta definición no depende de la parametrización de la curva, siempre que el cambio de parámetro sea regular.
+
+Esta noción formaliza la idea intuitiva de “rozar más”. Si sólo se anula \(f(t_0)\), la curva pasa por la superficie. Si también se anula \(f'(t_0)\), el contacto es más fuerte: las direcciones tangentes son compatibles. Si se anulan más derivadas, el contacto es de orden superior.
+
+El capítulo aplica esta idea a planos. Un plano que pasa por \(x_0=x(s_0)\) y tiene normal \(N\) se escribe como
+\[
+(x-x_0)\cdot N=0.
+\]
+Tiene contacto de segundo orden con la curva si contiene la recta tangente. Si \(\kappa(s_0)\neq 0\), tiene contacto de tercer orden precisamente cuando es el plano osculador. Esto conecta la teoría del contacto con los objetos ya definidos: el plano osculador es el plano que mejor aproxima la curva en ese punto entre los planos que pasan por él.
+
+### 3.9. Circunferencia osculadora y esfera osculatriz
+
+El contacto también se aplica a familias de superficies. Una superficie osculatriz dentro de una familia es aquella que tiene con la curva el mayor orden de contacto posible, determinado por el número de parámetros disponibles.
+
+Para la familia de circunferencias asociadas a una curva en el plano osculador, se obtiene el círculo osculador. Si \(\kappa_0\neq 0\), su centro es
+\[
+x_0+\frac{1}{\kappa_0}n_0
+\]
+y su radio es
+\[
+\frac{1}{\kappa_0}.
+\]
+Este círculo tiene con la curva un contacto de tercer orden, salvo situaciones degeneradas.
+
+Para la familia de esferas que pasan por un punto de la curva, el capítulo determina la esfera osculatriz. Si en el punto se tienen \(\kappa_0\neq 0\) y \(\tau_0\neq 0\), el centro de la esfera osculatriz se expresa en el triedro de Frenet como
+\[
+y_0=x_0+\frac{1}{\kappa_0}n_0-\frac{\kappa_0'}{\kappa_0^2\tau_0}b_0.
+\]
+Su radio queda determinado por la longitud del vector \(y_0-x_0\):
+\[
+R^2=\frac{1}{\kappa_0^2}+
+\left(\frac{\kappa_0'}{\kappa_0^2\tau_0}\right)^2.
+\]
+La esfera osculatriz tiene contacto de cuarto orden con la curva en el punto considerado.
+
+La lectura geométrica es clara. El círculo osculador usa información de curvatura; la esfera osculatriz exige además información de torsión y de variación de la curvatura. Por eso la fórmula del centro incluye \(n\), \(b\), \(\kappa\), \(\tau\) y \(\kappa'\).
+
+### 3.10. Resultados problemáticos asociados
+
+Los problemas resueltos del capítulo amplían la teoría con varios resultados típicos de examen. Entre ellos destacan los siguientes.
+
+Una curva situada sobre una esfera de radio \(a\), con torsión no nula, cumple una relación entre curvatura, torsión y derivada de la curvatura:
+\[
+a^2=\frac{1}{\kappa^2}+
+\left(\frac{\kappa'}{\kappa^2\tau}\right)^2.
+\]
+Esta fórmula muestra que estar sobre una esfera no es una condición visual solamente, sino una restricción diferencial sobre las ecuaciones intrínsecas.
+
+También aparecen las curvas de Bertrand, que son pares de curvas con normales principales comunes. El capítulo demuestra que, para una curva con torsión no nula, la existencia de una curva de Bertrand asociada equivale a una relación lineal entre curvatura y torsión:
+\[
+\kappa+\gamma\tau=\frac{1}{a},
+\]
+donde \(a\) y \(\gamma\) son constantes. Este resultado ilustra de nuevo el poder de las ecuaciones intrínsecas.
+
+Otro resultado relevante es que el lugar geométrico de los centros de curvatura de una curva plana es una evoluta de la curva. Si la curvatura no cambia de signo, la diferencia de radios de curvatura entre dos puntos se relaciona con la longitud de arco de esa evoluta.
+
+## 4. Conceptos clave
+
+1. Fórmulas de Frenet-Serret.
+
+Definición precisa:
+\[
+t'=\kappa n,\qquad n'=-\kappa t+\tau b,\qquad b'=-\tau n.
+\]
+
+Explicación desarrollada: describen la variación del triedro móvil a lo largo de una curva parametrizada por longitud de arco. Son el núcleo algebraico y diferencial del capítulo.
+
+Ejemplo: en una circunferencia, \(\tau=0\), \(b'=0\) y el triedro sólo gira dentro de un plano.
+
+Relación con otros conceptos: conectan curvatura, torsión, ecuaciones intrínsecas, representación canónica, evolutas y contacto.
+
+Posible forma de preguntarlo en examen: “Enuncie y explique las fórmulas de Frenet. ¿Qué información geométrica contienen \(\kappa\) y \(\tau\)?”
+
+2. Ecuaciones intrínsecas.
+
+Definición precisa:
+\[
+\kappa=\kappa(s),\qquad \tau=\tau(s).
+\]
+
+Explicación desarrollada: son las funciones que determinan la curva salvo su posición inicial y orientación. No dan coordenadas directamente; dan la forma geométrica de la curva.
+
+Ejemplo: \(\kappa=1/R,\tau=0\) describe una circunferencia de radio \(R\).
+
+Relación con otros conceptos: dependen de Frenet y conducen al teorema fundamental de existencia y unicidad.
+
+Posible forma de preguntarlo en examen: “¿Por qué se dice que \(\kappa(s)\) y \(\tau(s)\) son ecuaciones naturales de una curva?”
+
+3. Teorema fundamental de las curvas espaciales.
+
+Definición precisa: dadas funciones continuas \(\kappa(s)\) y \(\tau(s)\) en un intervalo, existe una curva espacial con esas funciones como curvatura y torsión, determinada salvo colocación inicial.
+
+Explicación desarrollada: las fórmulas de Frenet forman un sistema diferencial para \(t,n,b\). Una vez resuelto, se integra \(t\) para obtener \(x(s)\).
+
+Ejemplo: si \(\kappa\) y \(\tau\) son constantes no nulas, se obtiene una hélice circular.
+
+Relación con otros conceptos: formaliza la suficiencia de las ecuaciones intrínsecas.
+
+Posible forma de preguntarlo en examen: “Explique cómo se reconstruye una curva a partir de \(\kappa(s)\) y \(\tau(s)\).”
+
+4. Representación canónica.
+
+Definición precisa: desarrollo local de \(x(s)\) en la base \((t_0,n_0,b_0)\) con \(x(0)=0\):
+\[
+x_1=s-\frac{\kappa_0^2}{6}s^3+o(s^3),
+\]
+\[
+x_2=\frac{\kappa_0}{2}s^2+\frac{\kappa_0'}{6}s^3+o(s^3),
+\]
+\[
+x_3=\frac{\kappa_0\tau_0}{6}s^3+o(s^3).
+\]
+
+Explicación desarrollada: muestra la forma local de la curva cerca de un punto. La tangente domina en primer orden, la normal en segundo y la binormal en tercero.
+
+Ejemplo: si \(\tau_0=0\), el término binormal principal desaparece, como ocurre en una curva plana.
+
+Relación con otros conceptos: se obtiene aplicando Taylor y Frenet; explica el orden de contacto del plano osculador.
+
+Posible forma de preguntarlo en examen: “Obtenga la representación canónica de una curva en un punto y explique el papel de \(\kappa_0\) y \(\tau_0\).”
+
+5. Superficie tangente.
+
+Definición precisa:
+\[
+X(s,\lambda)=x(s)+\lambda t(s).
+\]
+
+Explicación desarrollada: es la superficie barrida por todas las rectas tangentes a la curva.
+
+Ejemplo: la superficie tangente de una circunferencia plana está contenida en su plano.
+
+Relación con otros conceptos: las involutas se definen como curvas sobre esta superficie que cortan las tangentes ortogonalmente.
+
+Posible forma de preguntarlo en examen: “Defina la superficie tangente de una curva y úsela para deducir las involutas.”
+
+6. Involuta.
+
+Definición precisa: una curva \(C^*\) sobre la superficie tangente de \(C\) que corta ortogonalmente las rectas tangentes de \(C\).
+
+Explicación desarrollada: para \(x=x(s)\), sus involutas son
+\[
+x^*(s)=x(s)+(c-s)t(s).
+\]
+
+Ejemplo: la involuta de una circunferencia es la curva generada al desenrollar una cuerda.
+
+Relación con otros conceptos: la evoluta es el concepto recíproco; la regularidad de la involuta depende de \(\kappa\).
+
+Posible forma de preguntarlo en examen: “Demuestre que las involutas de \(x(s)\) tienen la forma \(x+(c-s)t\).”
+
+7. Evoluta.
+
+Definición precisa: una curva \(C^*\) tal que \(C\) es involuta de \(C^*\). Equivalente: sus tangentes cortan ortogonalmente a \(C\).
+
+Explicación desarrollada: para una curva espacial,
+\[
+x^*=x+\frac1\kappa n+\frac1\kappa\cot\left(\int\tau\,ds+c\right)b.
+\]
+Para una curva plana, la evoluta plana es
+\[
+x^*=x+\frac1\kappa n.
+\]
+
+Ejemplo: la evoluta plana de una circunferencia es su centro, considerado como curva degenerada.
+
+Relación con otros conceptos: se relaciona con centros de curvatura, normales, involutas y contacto.
+
+Posible forma de preguntarlo en examen: “¿Qué es la evoluta plana de una curva? ¿Por qué coincide con el lugar de centros de curvatura?”
+
+8. Contacto de orden \(n\).
+
+Definición precisa: \(C\) tiene contacto de orden \(n\) con \(F=0\) en \(t_0\) si
+\[
+f(t_0)=f'(t_0)=\cdots=f^{(n-1)}(t_0)=0,\qquad f^{(n)}(t_0)\neq 0,
+\]
+donde \(f(t)=F(x(t))\).
+
+Explicación desarrollada: mide cuántas derivadas comparten la curva y la superficie en el punto de intersección.
+
+Ejemplo: el plano osculador tiene contacto de tercer orden con una curva en un punto no inflexional.
+
+Relación con otros conceptos: permite definir plano osculador, círculo osculador y esfera osculatriz como objetos de máximo contacto dentro de una familia.
+
+Posible forma de preguntarlo en examen: “Defina contacto de orden \(n\) y explique por qué es independiente de la parametrización.”
+
+9. Plano osculador.
+
+Definición precisa: plano generado por \(t\) y \(n\), con normal \(b\):
+\[
+(x-x_0)\cdot b_0=0.
+\]
+
+Explicación desarrollada: es el plano que mejor aproxima la curva en el punto entre los planos que contienen la tangente.
+
+Ejemplo: en una curva plana, el plano osculador coincide con el plano de la curva.
+
+Relación con otros conceptos: aparece en la representación canónica y en la teoría del contacto.
+
+Posible forma de preguntarlo en examen: “Demuestre que el plano osculador tiene contacto de tercer orden con la curva si \(\kappa_0\neq0\).”
+
+10. Círculo osculador.
+
+Definición precisa: círculo en el plano osculador con centro
+\[
+x_0+\frac1{\kappa_0}n_0
+\]
+y radio \(1/\kappa_0\).
+
+Explicación desarrollada: es el círculo que reproduce la curvatura de la curva en el punto.
+
+Ejemplo: en una circunferencia, el círculo osculador en cualquier punto es la propia circunferencia.
+
+Relación con otros conceptos: su centro pertenece a la evoluta plana.
+
+Posible forma de preguntarlo en examen: “Halle el centro y el radio del círculo osculador de una curva en función de \(\kappa\) y \(n\).”
+
+11. Esfera osculatriz.
+
+Definición precisa: esfera con contacto de cuarto orden con la curva, cuando las condiciones de no degeneración lo permiten. Su centro es
+\[
+y=x+\frac1\kappa n-\frac{\kappa'}{\kappa^2\tau}b.
+\]
+
+Explicación desarrollada: mejora la aproximación del círculo osculador usando además la torsión y la variación de la curvatura.
+
+Ejemplo: si \(\kappa'\) se anula en el punto, el centro queda sobre la normal principal.
+
+Relación con otros conceptos: procede de la teoría del contacto aplicada a la familia de esferas.
+
+Posible forma de preguntarlo en examen: “Explique qué datos de la curva intervienen en el centro de la esfera osculatriz.”
+
+12. Curvas de Bertrand.
+
+Definición precisa: dos curvas son de Bertrand si tienen normales principales comunes en puntos correspondientes.
+
+Explicación desarrollada: el capítulo muestra que esta condición impone restricciones fuertes a \(\kappa\) y \(\tau\). En particular, bajo las hipótesis indicadas,
+\[
+\kappa+\gamma\tau=\frac1a
+\]
+para constantes \(a,\gamma\).
+
+Ejemplo: una hélice circular admite más de una curva de Bertrand asociada.
+
+Relación con otros conceptos: conecta normales principales, curvatura, torsión e involutas/evolutas.
+
+Posible forma de preguntarlo en examen: “Indique la condición intrínseca para que una curva admita una curva de Bertrand asociada.”
+
+## 5. Relaciones entre ideas
+
+La estructura del capítulo es jerárquica. En la base están las definiciones del triedro móvil: tangente, normal y binormal. Sin este triedro no se pueden formular las ecuaciones de Frenet. Las fórmulas de Frenet son el eje del capítulo porque convierten la geometría de la curva en un sistema diferencial.
+
+A partir de Frenet aparecen las ecuaciones intrínsecas. La curvatura y la torsión no son sólo números asociados a una curva ya conocida; son datos que, como funciones de \(s\), permiten reconstruirla. Esta es la transición conceptual más importante: pasar de “calcular \(\kappa\) y \(\tau\)” a “usar \(\kappa\) y \(\tau\) para definir una curva”.
+
+El teorema fundamental depende de esa estructura diferencial. Si \(\kappa\) y \(\tau\) son conocidas, Frenet determina \(t,n,b\); después \(t=dx/ds\) determina \(x\). La curva no queda fijada por una posición absoluta, porque se puede trasladar o girar en el espacio sin alterar \(\kappa\) ni \(\tau\).
+
+La representación canónica es una consecuencia local de Frenet. Taylor necesita \(x'\), \(x''\) y \(x'''\). Frenet da esas derivadas en términos de \(t,n,b,\kappa,\tau\). Por eso el desarrollo local muestra exactamente dónde entra cada magnitud: \(t\) domina el primer orden, \(\kappa n\) el segundo y \(\kappa\tau b\) el tercero.
+
+Las involutas y evolutas forman una pareja conceptual. La involuta se construye sobre tangentes; la evoluta se construye sobre normales. Una involuta corta ortogonalmente las tangentes de la curva original; una evoluta tiene tangentes que cortan ortogonalmente a la curva. En el plano, esta relación se vuelve más concreta: la evoluta es el lugar de centros de curvatura, y la curva original puede verse como una involuta de esa evoluta.
+
+La teoría del contacto se conecta con la representación canónica porque ambas miden aproximación local. La representación canónica muestra órdenes de pequeñez en direcciones \(t,n,b\); el contacto mide cuántas derivadas se anulan al sustituir la curva en una superficie. Por eso el plano osculador se caracteriza como el plano con contacto de tercer orden, y la esfera osculatriz como una esfera con contacto de cuarto orden.
+
+La oposición más importante del capítulo es entre descripción extrínseca e intrínseca. La descripción extrínseca usa coordenadas \(x_1,x_2,x_3\). La descripción intrínseca usa \(\kappa(s)\) y \(\tau(s)\). El capítulo no elimina las coordenadas, pero enseña que la forma geométrica esencial de una curva espacial se condensa en esas dos funciones.
+
+No hay un desarrollo histórico propiamente dicho en el capítulo. La evolución es lógica: primero se controla el triedro, después se define la curva por sus invariantes, luego se estudia la forma local y finalmente se analizan objetos de contacto asociados.
+
+## 6. Errores habituales
+
+1. Error: escribir las fórmulas de Frenet con signos incorrectos.
+
+Por qué está mal: los signos determinan la orientación del triedro y el sentido de la torsión. Cambiar \(b'=-\tau n\) por \(b'=\tau n\) altera la geometría.
+
+Corrección:
+\[
+t'=\kappa n,\qquad n'=-\kappa t+\tau b,\qquad b'=-\tau n.
+\]
+
+Respuesta incorrecta: “\(n'=\kappa t+\tau b\).”
+
+Respuesta correcta: “\(n'=-\kappa t+\tau b\), porque al derivar \(t\cdot n=0\) se obtiene \(t'\cdot n+t\cdot n'=0\), y como \(t'=\kappa n\), debe cumplirse \(t\cdot n'=-\kappa\).”
+
+2. Error: pensar que \(\kappa(s)\) por sí sola determina siempre una curva espacial.
+
+Por qué está mal: en el espacio también importa la torsión. Dos curvas pueden tener la misma curvatura y distinta torsión.
+
+Corrección: una curva espacial queda determinada por \(\kappa(s)\) y \(\tau(s)\), salvo colocación inicial.
+
+Respuesta incorrecta: “Si dos curvas tienen igual curvatura, son la misma curva.”
+
+Respuesta correcta: “Si dos curvas espaciales tienen igual curvatura e igual torsión como funciones de \(s\), y se fija el mismo dato inicial, entonces coinciden.”
+
+3. Error: olvidar que \(s\) debe ser longitud de arco en las fórmulas simples de Frenet.
+
+Por qué está mal: si se usa un parámetro arbitrario \(t\), entonces \(dx/dt\) no es necesariamente unitario.
+
+Corrección: antes de usar Frenet en forma simple, hay que reparametrizar por \(s\) o introducir el factor \(ds/dt\).
+
+Respuesta incorrecta: “Para \(x(t)\), tomo directamente \(t'=x''(t)\).”
+
+Respuesta correcta: “Primero calculo el tangente unitario \(t=x'(t)/\|x'(t)\|\) y relaciono derivadas con \(ds/dt=\|x'(t)\|\).”
+
+4. Error: confundir involuta con evoluta.
+
+Por qué está mal: una involuta se construye sobre tangentes de la curva original; una evoluta se construye por una relación normal recíproca.
+
+Corrección:
+\[
+\text{involuta: } x^*=x+(c-s)t.
+\]
+\[
+\text{evoluta plana: } x^*=x+\frac1\kappa n.
+\]
+
+Respuesta incorrecta: “La involuta plana es el lugar de centros de curvatura.”
+
+Respuesta correcta: “El lugar de centros de curvatura es la evoluta plana; una involuta se obtiene sobre las tangentes.”
+
+5. Error: creer que toda involuta es regular.
+
+Por qué está mal: si \(\kappa=0\), la derivada de \(x^*=x+(c-s)t\) puede anularse.
+
+Corrección: hay que comprobar la regularidad, especialmente en puntos de inflexión.
+
+Respuesta incorrecta: “Toda curva regular tiene involutas regulares.”
+
+Respuesta correcta: “La involuta puede no ser regular donde la curva original tiene \(\kappa=0\).”
+
+6. Error: decir que el plano osculador es simplemente cualquier plano que contiene la tangente.
+
+Por qué está mal: todos esos planos tienen la tangente, pero sólo uno contiene también la normal principal y tiene el contacto superior correspondiente cuando \(\kappa\neq0\).
+
+Corrección: el plano osculador está generado por \(t\) y \(n\), y su normal es \(b\).
+
+Respuesta incorrecta: “Un plano tangente a una curva es su plano osculador.”
+
+Respuesta correcta: “El plano osculador es el plano que contiene \(t\) y \(n\); entre los planos que contienen la tangente, es el que tiene contacto de tercer orden si \(\kappa\neq0\).”
+
+7. Error: interpretar \(\tau=0\) como “curvatura cero”.
+
+Por qué está mal: torsión cero significa que la binormal no cambia y la curva es plana; puede tener curvatura no nula.
+
+Corrección: recta: \(\kappa=0\). Curva plana no recta: \(\tau=0\), pero \(\kappa\) puede ser distinta de cero.
+
+Respuesta incorrecta: “Una circunferencia tiene torsión cero, luego es una recta.”
+
+Respuesta correcta: “Una circunferencia tiene torsión cero porque es plana, pero su curvatura es \(1/R\).”
+
+8. Error: definir contacto de orden \(n\) sólo diciendo que curva y superficie “se tocan”.
+
+Por qué está mal: el contacto se mide por anulación de derivadas de \(f(t)=F(x(t))\).
+
+Corrección: hay que escribir la condición con derivadas:
+\[
+f(t_0)=f'(t_0)=\cdots=f^{(n-1)}(t_0)=0,\quad f^{(n)}(t_0)\neq0.
+\]
+
+Respuesta incorrecta: “Contacto de orden tres significa que la curva está muy cerca de la superficie.”
+
+Respuesta correcta: “Contacto de orden tres significa que \(f(t_0)=f'(t_0)=f''(t_0)=0\) y \(f'''(t_0)\neq0\).”
+
+9. Error: olvidar que el círculo osculador está en el plano osculador.
+
+Por qué está mal: el centro \(x+(1/\kappa)n\) está en el plano osculador, no en una dirección arbitraria del plano normal.
+
+Corrección: el círculo osculador usa la normal principal, no la binormal.
+
+Respuesta incorrecta: “El centro del círculo osculador es \(x+(1/\kappa)b\).”
+
+Respuesta correcta: “El centro del círculo osculador es \(x+(1/\kappa)n\).”
+
+10. Error: usar la fórmula de la esfera osculatriz cuando \(\tau=0\).
+
+Por qué está mal: la fórmula incluye división por \(\tau\). Si la torsión se anula, se entra en un caso degenerado.
+
+Corrección: comprobar antes las hipótesis \(\kappa\neq0\) y \(\tau\neq0\).
+
+Respuesta incorrecta: “Para una curva plana uso \(y=x+(1/\kappa)n-\kappa'/(\kappa^2\tau)b\).”
+
+Respuesta correcta: “En una curva plana \(\tau=0\); la esfera osculatriz en esa forma no se aplica. Se usa el círculo osculador o se analiza el caso degenerado.”
+
+## 7. Preguntas orientadas a examen
+
+### 10 preguntas fáciles
+
+F1. Escribe las fórmulas de Frenet-Serret para una curva parametrizada por longitud de arco.
+
+F2. Define las ecuaciones intrínsecas de una curva.
+
+F3. ¿Qué significan geométricamente la curvatura y la torsión?
+
+F4. ¿Qué valores tienen \(\kappa\) y \(\tau\) en una recta?
+
+F5. ¿Qué valores tienen \(\kappa\) y \(\tau\) en una circunferencia de radio \(R\)?
+
+F6. ¿Qué es el plano osculador?
+
+F7. ¿Qué es una involuta de una curva?
+
+F8. ¿Qué es una evoluta de una curva?
+
+F9. Define contacto de orden \(n\) entre una curva y una superficie.
+
+F10. ¿Cuál es el centro del círculo osculador de una curva en un punto con \(\kappa\neq0\)?
+
+### 10 preguntas medias
+
+M1. Deduce la segunda fórmula de Frenet a partir de \(n=b\times t\).
+
+M2. Explica por qué \(\kappa(s)\) y \(\tau(s)\) determinan una curva salvo su posición inicial.
+
+M3. Reconstruye formalmente una curva plana a partir de \(\kappa(s)\).
+
+M4. Obtén la representación canónica hasta orden tres de una curva en un punto.
+
+M5. Demuestra que las involutas de \(x=x(s)\) tienen la forma \(x^*=x+(c-s)t\).
+
+M6. Explica por qué una involuta puede no ser regular en un punto con \(\kappa=0\).
+
+M7. Deduce la forma general de una evoluta partiendo de \(x^*=x+\alpha n+\beta b\).
+
+M8. Explica por qué, para una curva plana, la evoluta plana es \(x+(1/\kappa)n\).
+
+M9. Justifica que el plano osculador tiene contacto de tercer orden con la curva si \(\kappa\neq0\).
+
+M10. Indica la fórmula del centro de la esfera osculatriz y explica qué hipótesis exige.
+
+### 5 preguntas difíciles
+
+D1. Explica el papel de las fórmulas de Frenet en el teorema fundamental de existencia y unicidad de curvas.
+
+D2. Demuestra que si una curva plana tiene vector de posición formando ángulo constante con la tangente, entonces sus ecuaciones intrínsecas corresponden a una espiral logarítmica.
+
+D3. Enuncia y explica la condición intrínseca para que una curva admita una curva de Bertrand asociada.
+
+D4. Una curva está sobre una esfera de radio \(a\) y tiene \(\tau\neq0\). ¿Qué relación deben cumplir \(\kappa,\tau,\kappa'\)?
+
+D5. Demuestra que la definición de contacto de orden \(n\) es independiente de la parametrización regular de la curva.
+
+### 5 preguntas de desarrollo largo
+
+L1. Desarrolla las fórmulas de Frenet y explica cómo conducen a las ecuaciones intrínsecas de una curva.
+
+L2. Explica la representación canónica de una curva y su interpretación geométrica mediante los planos osculador, normal y rectificante.
+
+L3. Compara involutas y evolutas: definición, construcción, fórmulas y significado geométrico.
+
+L4. Desarrolla la teoría del contacto entre curvas y superficies y aplícala al plano osculador, al círculo osculador y a la esfera osculatriz.
+
+L5. Explica cómo se reconstruye una curva a partir de \(\kappa(s)\) y \(\tau(s)\), incluyendo el caso particular de curvas planas.
+
+### 5 preguntas de relación entre conceptos
+
+R1. Relaciona las fórmulas de Frenet con el teorema fundamental de las curvas.
+
+R2. Relaciona la evoluta plana con el círculo osculador.
+
+R3. Relaciona la representación canónica con la teoría del contacto.
+
+R4. Relaciona torsión nula, plano osculador y curvas planas.
+
+R5. Relaciona curvatura, torsión y esfera osculatriz.
+
+## 8. Respuestas modelo
+
+### Respuestas a las preguntas fáciles
+
+F1. Para una curva \(x=x(s)\) parametrizada por longitud de arco, las fórmulas de Frenet-Serret son
+\[
+t'=\kappa n,\qquad n'=-\kappa t+\tau b,\qquad b'=-\tau n.
+\]
+Describen cómo varía el triedro móvil \((t,n,b)\) al avanzar por la curva.
+
+F2. Las ecuaciones intrínsecas son
+\[
+\kappa=\kappa(s),\qquad \tau=\tau(s).
+\]
+Reciben ese nombre porque describen la curva mediante magnitudes geométricas medidas a lo largo de ella, no mediante coordenadas externas.
+
+F3. La curvatura mide el cambio de dirección de la tangente por unidad de longitud de arco. La torsión mide el giro del plano osculador, o equivalentemente la variación de la binormal. Si \(\tau=0\), la curva es plana en el sentido considerado por la teoría.
+
+F4. En una recta,
+\[
+\kappa=0,\qquad \tau=0.
+\]
+La tangente no cambia y no hay giro del plano osculador.
+
+F5. En una circunferencia de radio \(R\),
+\[
+\kappa=\frac1R,\qquad \tau=0.
+\]
+La curvatura es constante y la torsión se anula porque la curva es plana.
+
+F6. El plano osculador en un punto de una curva es el plano generado por los vectores \(t\) y \(n\). Su normal es \(b\), por lo que puede escribirse como
+\[
+(x-x_0)\cdot b_0=0.
+\]
+
+F7. Una involuta de una curva \(C\) es una curva situada sobre la superficie tangente de \(C\) que corta ortogonalmente a las rectas tangentes de \(C\). Si \(C\) es \(x(s)\), sus involutas tienen la forma
+\[
+x^*=x+(c-s)t.
+\]
+
+F8. Una evoluta de \(C\) es una curva \(C^*\) tal que \(C\) es una involuta de \(C^*\). Equivalentemente, sus tangentes cortan ortogonalmente a \(C\). En el caso plano, la evoluta principal es
+\[
+x^*=x+\frac1\kappa n.
+\]
+
+F9. Si \(F(x_1,x_2,x_3)=0\) es una superficie y \(x=x(t)\) una curva, se define \(f(t)=F(x(t))\). Hay contacto de orden \(n\) en \(t_0\) si
+\[
+f(t_0)=f'(t_0)=\cdots=f^{(n-1)}(t_0)=0,\qquad f^{(n)}(t_0)\neq0.
+\]
+
+F10. El centro del círculo osculador es
+\[
+x_0+\frac1{\kappa_0}n_0,
+\]
+y su radio es \(1/\kappa_0\).
+
+### Respuestas a las preguntas medias
+
+M1. Como \(b=t\times n\), también puede escribirse \(n=b\times t\). Derivando:
+\[
+n'=b'\times t+b\times t'.
+\]
+Por Frenet ya se tiene \(t'=\kappa n\) y \(b'=-\tau n\). Entonces
+\[
+n'=(-\tau n)\times t+b\times(\kappa n).
+\]
+Usando las relaciones de orientación del triedro,
+\[
+n\times t=-b,\qquad b\times n=-t,
+\]
+resulta
+\[
+n'=\tau b-\kappa t=-\kappa t+\tau b.
+\]
+
+M2. Las funciones \(\kappa(s)\) y \(\tau(s)\) aparecen como coeficientes del sistema de Frenet:
+\[
+t'=\kappa n,\quad n'=-\kappa t+\tau b,\quad b'=-\tau n.
+\]
+Si se fijan \(t,n,b\) en un punto inicial, el sistema determina el triedro. Después, como \(t=x'\), se integra
+\[
+x(s)=\int t(s)\,ds+C.
+\]
+Por eso la curva queda determinada salvo la posición y orientación iniciales.
+
+M3. Si la curva es plana, \(\tau=0\). Se escribe
+\[
+t=(\cos\phi)e_1+(\sin\phi)e_2.
+\]
+La fórmula \(t'=\kappa n\) da
+\[
+\phi'=\kappa.
+\]
+Así,
+\[
+\phi(s)=\int\kappa(s)\,ds+C,
+\]
+y la curva se reconstruye mediante
+\[
+x(s)=\int\big((\cos\phi(s))e_1+(\sin\phi(s))e_2\big)\,ds+C.
+\]
+
+M4. Tomamos \(x(0)=0\), \(e_1=t_0\), \(e_2=n_0\), \(e_3=b_0\). Por Taylor:
+\[
+x(s)=x'(0)s+\frac{x''(0)}2s^2+\frac{x'''(0)}6s^3+o(s^3).
+\]
+Frenet da
+\[
+x'(0)=e_1,\quad x''(0)=\kappa_0 e_2,
+\]
+\[
+x'''(0)=-\kappa_0^2e_1+\kappa_0'e_2+\kappa_0\tau_0e_3.
+\]
+Por tanto,
+\[
+x_1=s-\frac{\kappa_0^2}{6}s^3+o(s^3),\quad
+x_2=\frac{\kappa_0}{2}s^2+\frac{\kappa_0'}6s^3+o(s^3),
+\]
+\[
+x_3=\frac{\kappa_0\tau_0}{6}s^3+o(s^3).
+\]
+
+M5. Una involuta debe estar sobre la superficie tangente, luego
+\[
+x^*=x+\lambda t.
+\]
+Derivando:
+\[
+(x^*)'=t+\lambda't+\lambda t'=(1+\lambda')t+\lambda\kappa n.
+\]
+La involuta corta ortogonalmente a la tangente de \(C\), así que \((x^*)'\cdot t=0\). Como \(t\cdot t=1\) y \(n\cdot t=0\),
+\[
+1+\lambda'=0.
+\]
+De ahí,
+\[
+\lambda=c-s,
+\]
+y
+\[
+x^*=x+(c-s)t.
+\]
+
+M6. Derivando la fórmula de la involuta:
+\[
+(x^*)'=(c-s)\kappa n.
+\]
+Si \(\kappa=0\), esta derivada puede anularse. En ese caso la involuta no es regular. Por eso los puntos de inflexión de la curva original son puntos problemáticos para la regularidad de la involuta.
+
+M7. Una evoluta debe tener sus puntos en el plano normal:
+\[
+x^*=x+\alpha n+\beta b.
+\]
+Derivando y usando Frenet:
+\[
+(x^*)'=(1-\alpha\kappa)t+(\alpha'-\beta\tau)n+(\beta'+\alpha\tau)b.
+\]
+Como la tangente de la evoluta debe ser paralela a \(x^*-x=\alpha n+\beta b\), el coeficiente de \(t\) debe anularse:
+\[
+1-\alpha\kappa=0,\qquad \alpha=\frac1\kappa.
+\]
+Las otras condiciones conducen a
+\[
+\beta=\frac1\kappa\cot\left(\int\tau\,ds+c\right).
+\]
+Por tanto,
+\[
+x^*=x+\frac1\kappa n+\frac1\kappa\cot\left(\int\tau\,ds+c\right)b.
+\]
+
+M8. Si la curva es plana, \(\tau=0\) y \(b\) es constante. Las evolutas quedan
+\[
+x^*=x+\frac1\kappa n+\gamma b.
+\]
+La que pertenece al mismo plano que \(C\) corresponde a \(\gamma=0\):
+\[
+x^*=x+\frac1\kappa n.
+\]
+Esta curva es el lugar geométrico de los centros de curvatura.
+
+M9. Sea el plano \((x-x_0)\cdot N=0\) y sea
+\[
+f(s)=(x(s)-x_0)\cdot N.
+\]
+Se tiene \(f(s_0)=0\). Además,
+\[
+f'(s_0)=t_0\cdot N.
+\]
+Para que el contacto sea al menos de segundo orden, \(N\) debe ser perpendicular a \(t_0\), es decir, el plano contiene la tangente. También
+\[
+f''(s_0)=\kappa_0 n_0\cdot N.
+\]
+Si \(\kappa_0\neq0\), para que se anule se necesita \(N\perp n_0\). Así \(N\) es paralelo a \(b_0\), y el plano es el osculador. Por eso el plano osculador tiene contacto de tercer orden.
+
+M10. Si \(\kappa\neq0\) y \(\tau\neq0\), el centro de la esfera osculatriz es
+\[
+y=x+\frac1\kappa n-\frac{\kappa'}{\kappa^2\tau}b.
+\]
+Exige que la curvatura no se anule y que la torsión no sea cero en el punto. Si \(\tau=0\), la fórmula no es aplicable porque aparece una división por \(\tau\).
+
+### Respuestas a las preguntas difíciles
+
+D1. Las fórmulas de Frenet son un sistema de EDO lineales de primer orden para los vectores \(t,n,b\), con coeficientes \(\kappa(s)\) y \(\tau(s)\). Si estas funciones son continuas y se fija un triedro ortonormal inicial, el sistema tiene solución. Esa solución conserva la estructura ortonormal del triedro. Después se obtiene la curva integrando \(t\):
+\[
+x(s)=\int t(s)\,ds+C.
+\]
+La unicidad se razona del mismo modo: dos curvas con las mismas \(\kappa,\tau\) y el mismo dato inicial satisfacen el mismo sistema de Frenet y, por tanto, tienen el mismo triedro y la misma derivada \(x'=t\). Sus posiciones sólo pueden diferir por una constante si no se fija el punto inicial.
+
+D2. Si la curva es plana y \(x\) forma un ángulo constante \(\alpha\) con la tangente \(t\), entonces
+\[
+x\cdot t=(\cos\alpha)\|x\|.
+\]
+Escogiendo la normal de forma compatible, se tiene también
+\[
+x\cdot n=(\sin\alpha)\|x\|.
+\]
+Al derivar la primera relación y usar \(t'=\kappa n\), se obtiene una ecuación diferencial que relaciona \(\kappa\) con la distancia radial. En el planteamiento del capítulo, esta relación conduce a una curvatura de la forma
+\[
+\kappa=\frac{1}{s}\cdot \text{constante},
+\]
+según la elección de constantes. Esa es precisamente la forma intrínseca asociada a una espiral logarítmica. La idea geométrica es que mantener constante el ángulo entre radio vector y tangente caracteriza a la espiral logarítmica.
+
+D3. Dos curvas son de Bertrand si sus normales principales coinciden en puntos correspondientes. El capítulo muestra que, si \(\tau\neq0\) a lo largo de la curva y se cumplen las hipótesis de regularidad, la existencia de una curva de Bertrand asociada equivale a que existan constantes \(a\) y \(\gamma\) tales que
+\[
+\kappa+\gamma\tau=\frac1a.
+\]
+Esta relación es intrínseca porque sólo usa curvatura y torsión. Geométricamente, expresa que la condición de compartir normales principales impone una dependencia lineal entre los dos modos de giro de la curva: el giro de la tangente y el giro del plano osculador.
+
+D4. Si una curva está situada sobre una esfera de radio \(a\) y \(\tau\neq0\), el capítulo obtiene la relación
+\[
+a^2=\frac1{\kappa^2}+\left(\frac{\kappa'}{\kappa^2\tau}\right)^2.
+\]
+La fórmula se deduce escribiendo que la distancia desde la curva al centro fijo de la esfera es constante y derivando sucesivamente. Al expresar el vector desde la curva al centro en la base de Frenet, sus componentes quedan determinadas por \(\kappa\), \(\tau\) y \(\kappa'\).
+
+D5. Si se cambia de parámetro mediante \(t=t(u)\), con \(dt/du\neq0\), la función que mide el contacto pasa de
+\[
+f(t)=F(x(t))
+\]
+a
+\[
+g(u)=F(x(t(u)))=f(t(u)).
+\]
+Por la regla de la cadena, \(g'\), \(g''\), ..., \(g^{(n)}\) se expresan mediante derivadas de \(f\) y derivadas del cambio de parámetro. Si \(f,f',\ldots,f^{(n-1)}\) se anulan en \(t_0\), entonces también se anulan las derivadas correspondientes de \(g\). Además, el primer término no nulo de orden \(n\) queda multiplicado por \((dt/du)^n\), que no es cero. Por tanto, el orden de contacto no cambia.
+
+### Respuestas a las preguntas de desarrollo largo
+
+L1. Las fórmulas de Frenet describen cómo evoluciona el triedro móvil de una curva \(x=x(s)\). Como \(t=x'\) es unitario, su derivada es perpendicular a \(t\), y se escribe
+\[
+t'=\kappa n.
+\]
+La derivada de la normal debe tener una componente en la dirección de \(t\), que resulta ser \(-\kappa t\), y una componente en la dirección de \(b\), que se denomina \(\tau b\):
+\[
+n'=-\kappa t+\tau b.
+\]
+Finalmente,
+\[
+b'=-\tau n.
+\]
+Estas ecuaciones muestran que la forma de la curva está gobernada por \(\kappa\) y \(\tau\). Por eso las ecuaciones
+\[
+\kappa=\kappa(s),\qquad \tau=\tau(s)
+\]
+son las ecuaciones intrínsecas. El teorema fundamental afirma que, dadas esas funciones, existe una curva que las tiene como curvatura y torsión, determinada salvo colocación inicial. La clave es que Frenet es un sistema diferencial para \(t,n,b\), y después se integra \(x'=t\).
+
+L2. Para obtener la representación canónica, se coloca el punto \(P\) en el origen, se toma \(s=0\) en \(P\) y se elige la base
+\[
+e_1=t_0,\qquad e_2=n_0,\qquad e_3=b_0.
+\]
+Taylor da
+\[
+x(s)=x'(0)s+\frac{x''(0)}2s^2+\frac{x'''(0)}6s^3+o(s^3).
+\]
+Con Frenet,
+\[
+x'(0)=e_1,\quad x''(0)=\kappa_0e_2,\quad
+x'''(0)=-\kappa_0^2e_1+\kappa_0'e_2+\kappa_0\tau_0e_3.
+\]
+Por tanto:
+\[
+x_1=s-\frac{\kappa_0^2}{6}s^3+o(s^3),
+\]
+\[
+x_2=\frac{\kappa_0}{2}s^2+\frac{\kappa_0'}6s^3+o(s^3),
+\]
+\[
+x_3=\frac{\kappa_0\tau_0}{6}s^3+o(s^3).
+\]
+La interpretación es que la curva se aproxima primero a la tangente, después se separa hacia la normal por efecto de la curvatura y sólo en tercer orden aparece la dirección binormal, controlada por la torsión. La proyección sobre el plano osculador es parabólica; sobre el plano rectificante tiene carácter cúbico; sobre el plano normal aparece una forma cuspidal.
+
+L3. Una involuta de \(C\) se encuentra sobre la superficie tangente
+\[
+X(s,\lambda)=x(s)+\lambda t(s)
+\]
+y corta ortogonalmente a las tangentes de \(C\). Si \(x^*=x+\lambda t\), la condición de ortogonalidad da \(\lambda'=-1\), y por tanto
+\[
+x^*=x+(c-s)t.
+\]
+La evoluta es el concepto recíproco: \(C^*\) es evoluta de \(C\) si \(C\) es involuta de \(C^*\). Sus puntos están en el plano normal de \(C\), de modo que
+\[
+x^*=x+\alpha n+\beta b.
+\]
+Usando Frenet se obtiene
+\[
+x^*=x+\frac1\kappa n+
+\frac1\kappa\cot\left(\int\tau\,ds+c\right)b.
+\]
+En el caso plano,
+\[
+x^*=x+\frac1\kappa n+\gamma b.
+\]
+La evoluta plana, con \(\gamma=0\), es el lugar de centros de curvatura. Así, la involuta se asocia a tangentes y desenrollamiento; la evoluta se asocia a normales y centros de curvatura.
+
+L4. La teoría del contacto mide cuántas derivadas coinciden entre una curva y una superficie. Si \(F=0\) es una superficie y \(x=x(t)\) una curva, se define
+\[
+f(t)=F(x(t)).
+\]
+Hay contacto de orden \(n\) si
+\[
+f(t_0)=f'(t_0)=\cdots=f^{(n-1)}(t_0)=0,\qquad f^{(n)}(t_0)\neq0.
+\]
+Aplicado a planos, si un plano pasa por \(x_0\) y tiene normal \(N\), se estudia
+\[
+f(s)=(x(s)-x_0)\cdot N.
+\]
+Para que \(f'\) se anule, el plano debe contener la tangente. Para que también se anule \(f''\), si \(\kappa_0\neq0\), el plano debe ser el osculador. Así el plano osculador es el plano de contacto de tercer orden. El círculo osculador se obtiene en el plano osculador con centro \(x+(1/\kappa)n\). La esfera osculatriz procede de la familia de esferas y, bajo \(\kappa\tau\neq0\), tiene centro
+\[
+y=x+\frac1\kappa n-\frac{\kappa'}{\kappa^2\tau}b.
+\]
+Por tanto, el capítulo usa el contacto para justificar rigurosamente los objetos que “mejor aproximan” la curva.
+
+L5. Para reconstruir una curva espacial desde \(\kappa(s)\) y \(\tau(s)\), se resuelve primero el sistema de Frenet:
+\[
+t'=\kappa n,\quad n'=-\kappa t+\tau b,\quad b'=-\tau n.
+\]
+Fijado un triedro inicial ortonormal, el sistema determina \(t,n,b\). Luego se integra
+\[
+x'=t,
+\]
+de modo que
+\[
+x(s)=\int t(s)\,ds+C.
+\]
+En el caso plano \(\tau=0\), el proceso se simplifica. Se introduce el ángulo \(\phi\) de la tangente:
+\[
+t=(\cos\phi)e_1+(\sin\phi)e_2,\qquad \phi'=\kappa.
+\]
+Así,
+\[
+\phi(s)=\int\kappa(s)\,ds+C,
+\]
+y
+\[
+x(s)=\int\big((\cos\phi(s))e_1+(\sin\phi(s))e_2\big)\,ds+C.
+\]
+El método muestra por qué \(\kappa\) y \(\tau\) son más que magnitudes derivadas: son datos constructivos.
+
+### Respuestas a las preguntas de relación entre conceptos
+
+R1. Las fórmulas de Frenet son el mecanismo diferencial del teorema fundamental. El teorema dice que \(\kappa(s)\) y \(\tau(s)\) determinan una curva; Frenet explica cómo: primero determinan \(t,n,b\), y luego \(t\) determina \(x\).
+
+R2. La evoluta plana es el lugar de centros de curvatura. Cada punto de ella es
+\[
+x+\frac1\kappa n,
+\]
+que es precisamente el centro del círculo osculador de la curva en \(x\). Por tanto, la evoluta agrupa todos los círculos osculadores a través de sus centros.
+
+R3. La representación canónica muestra los términos de Taylor de una curva en la base \(t,n,b\). La teoría del contacto mide cuántas derivadas se anulan al comparar la curva con una superficie. Ambas ideas describen aproximación local. Por eso el plano osculador aparece como el plano que captura los términos relevantes hasta el orden correspondiente.
+
+R4. Si \(\tau=0\), entonces \(b'=-\tau n=0\), de modo que la binormal es constante. Si la binormal es constante, el plano perpendicular a ella y generado por \(t,n\) no gira en el espacio. Por eso la curva queda contenida en un plano. En una curva plana, el plano osculador coincide con ese plano fijo.
+
+R5. El círculo osculador usa \(\kappa\), porque su radio es \(1/\kappa\). La esfera osculatriz usa además \(\tau\) y \(\kappa'\), porque aproximar una curva espacial con una esfera exige controlar cómo sale del plano osculador y cómo cambia su curvatura. De ahí la fórmula
+\[
+y=x+\frac1\kappa n-\frac{\kappa'}{\kappa^2\tau}b.
+\]
+
+## 9. Resumen final de repaso
+
+Ideas principales:
+
+- Las fórmulas de Frenet son:
+\[
+t'=\kappa n,\qquad n'=-\kappa t+\tau b,\qquad b'=-\tau n.
+\]
+
+- Las ecuaciones intrínsecas de una curva son:
+\[
+\kappa=\kappa(s),\qquad \tau=\tau(s).
+\]
+
+- El teorema fundamental afirma que \(\kappa(s)\) y \(\tau(s)\) determinan una curva salvo colocación inicial.
+
+- En curvas planas, \(\tau=0\), y se reconstruye la curva mediante
+\[
+\phi'=\kappa,\qquad x'=(\cos\phi)e_1+(\sin\phi)e_2.
+\]
+
+- La representación canónica en la base \(t,n,b\) es:
+\[
+x_1=s-\frac{\kappa_0^2}{6}s^3+o(s^3),
+\]
+\[
+x_2=\frac{\kappa_0}{2}s^2+\frac{\kappa_0'}6s^3+o(s^3),
+\]
+\[
+x_3=\frac{\kappa_0\tau_0}{6}s^3+o(s^3).
+\]
+
+Conceptos imprescindibles:
+
+- Triedro móvil.
+- Curvatura.
+- Torsión.
+- Ecuaciones intrínsecas.
+- Teorema fundamental de curvas.
+- Involuta.
+- Evoluta.
+- Contacto de orden \(n\).
+- Plano osculador.
+- Círculo osculador.
+- Esfera osculatriz.
+
+Relaciones clave:
+
+- Frenet \(\rightarrow\) ecuaciones intrínsecas.
+- Ecuaciones intrínsecas \(\rightarrow\) existencia y unicidad.
+- Taylor + Frenet \(\rightarrow\) representación canónica.
+- Tangentes \(\rightarrow\) involutas.
+- Normales \(\rightarrow\) evolutas.
+- Contacto \(\rightarrow\) plano osculador, círculo osculador y esfera osculatriz.
+
+Errores que evitar:
+
+- Cambiar signos en las fórmulas de Frenet.
+- Usar \(t\) como parámetro si no es longitud de arco.
+- Confundir \(\tau=0\) con \(\kappa=0\).
+- Confundir involuta con evoluta.
+- Olvidar las hipótesis \(\kappa\neq0\) y \(\tau\neq0\) en fórmulas que las necesitan.
+- Definir contacto sin derivadas.
+- Poner el centro del círculo osculador en dirección \(b\) en vez de \(n\).
+
+## 10. Checklist de dominio
+
+- Si no puedes escribir sin mirar las fórmulas de Frenet, falta repasar el triedro móvil y los signos de \(n'\) y \(b'\).
+
+- Si no puedes explicar qué mide \(\kappa\), falta repasar la relación \(t'=\kappa n\).
+
+- Si no puedes explicar qué mide \(\tau\), falta repasar la relación \(b'=-\tau n\) y el papel del plano osculador.
+
+- Si confundes \(\kappa=0\) con \(\tau=0\), revisar rectas, circunferencias y curvas planas.
+
+- Si no puedes definir las ecuaciones intrínsecas, falta repasar el teorema fundamental de las curvas.
+
+- Si no sabes por qué \(\kappa(s)\) y \(\tau(s)\) determinan una curva, revisar Frenet como sistema de EDO y la integración \(x'=t\).
+
+- Si no puedes reconstruir una curva plana desde \(\kappa(s)\), falta repasar el ángulo tangencial \(\phi\) y la ecuación \(\phi'=\kappa\).
+
+- Si no puedes obtener la representación canónica, falta repasar Taylor y el cálculo de \(x'\), \(x''\), \(x'''\) mediante Frenet.
+
+- Si no puedes interpretar los términos \(s\), \(s^2\) y \(s^3\) de la representación canónica, falta repasar tangente, normal, binormal y planos asociados.
+
+- Si confundes involuta con evoluta, revisar las fórmulas \(x+(c-s)t\) y \(x+(1/\kappa)n\).
+
+- Si no puedes deducir \(x^*=x+(c-s)t\), falta repasar la condición de ortogonalidad de la involuta.
+
+- Si no puedes explicar por qué la evoluta plana es el lugar de centros de curvatura, revisar círculo osculador y normal principal.
+
+- Si no puedes definir contacto de orden \(n\), falta repasar la función \(f(t)=F(x(t))\) y la anulación de derivadas.
+
+- Si confundes plano tangente y plano osculador, revisar que una curva tiene recta tangente, y que el plano osculador es el generado por \(t\) y \(n\).
+
+- Si no puedes justificar el contacto de tercer orden del plano osculador, falta repasar las derivadas de \(f(s)=(x(s)-x_0)\cdot N\).
+
+- Si no puedes escribir el centro del círculo osculador, falta repasar la relación entre radio de curvatura y normal principal.
+
+- Si intentas usar la esfera osculatriz con \(\tau=0\), revisar las hipótesis de la fórmula.
+
+- Si puedes enunciar Frenet, explicar el teorema fundamental, obtener la representación canónica y distinguir involutas, evolutas y contacto, el capítulo está suficientemente asentado.
+
+- Si puedes resolver un problema donde se den \(\kappa(s)\) y \(\tau(s)\) y se pida interpretar la curva, el capítulo está asentado a nivel de examen.
+
+- Si puedes justificar cada fórmula con una línea de razonamiento geométrico, el dominio es sólido.

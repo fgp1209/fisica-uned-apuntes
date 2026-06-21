@@ -1,0 +1,1090 @@
+# Guía de estudio — Métodos Matemáticos IV / Lipschutz, Geometría diferencial — T10: Superficies
+
+Fuente principal: Martin M. Lipschutz, Teoría y problemas de geometría diferencial, capítulo «Concepto de superficie».
+
+## 1. Prerrequisitos mínimos
+
+1. Vectores en \(\mathbb{R}^3\).
+
+Concepto: un vector de \(\mathbb{R}^3\) se expresa mediante tres componentes y permite describir desplazamientos, tangentes y normales.
+
+Definición breve: si \(a=(a_1,a_2,a_3)\), su norma es \(\|a\|=\sqrt{a_1^2+a_2^2+a_3^2}\). Dos vectores son linealmente independientes si ninguno es múltiplo del otro.
+
+Por qué es necesario: una superficie parametrizada se estudia mediante dos vectores tangentes \(x_u\) y \(x_v\). La regularidad exige que esos vectores sean independientes.
+
+Ejemplo mínimo: si \(a=(1,0,0)\) y \(b=(0,1,0)\), entonces generan el plano \(z=0\).
+
+2. Producto escalar.
+
+Concepto: mide longitudes y ángulos.
+
+Definición breve: \(a\cdot b=a_1b_1+a_2b_2+a_3b_3\). Si \(a\cdot b=0\), los vectores son ortogonales.
+
+Por qué es necesario: el plano tangente y la recta normal se caracterizan mediante ortogonalidad. También permite reconocer si dos direcciones de una superficie son perpendiculares.
+
+Ejemplo mínimo: \((1,0,0)\cdot(0,1,0)=0\).
+
+3. Producto vectorial.
+
+Concepto: construye un vector perpendicular a dos vectores dados.
+
+Definición breve: \(a\times b\) es ortogonal a \(a\) y a \(b\), y se anula exactamente cuando \(a\) y \(b\) son dependientes.
+
+Por qué es necesario: la normal a una superficie parametrizada \(x(u,v)\) se obtiene con \(x_u\times x_v\). La condición \(x_u\times x_v\neq0\) es la forma práctica de comprobar regularidad.
+
+Ejemplo mínimo: \((1,0,0)\times(0,1,0)=(0,0,1)\).
+
+4. Funciones vectoriales de dos variables.
+
+Concepto: una función vectorial asigna a cada par \((u,v)\) un punto del espacio.
+
+Definición breve: \(x:U\subset\mathbb{R}^2\to\mathbb{R}^3\), \(x(u,v)=(x_1(u,v),x_2(u,v),x_3(u,v))\).
+
+Por qué es necesario: una representación paramétrica regular de una superficie es precisamente una aplicación vectorial de dos variables con ciertas condiciones de diferenciabilidad y rango.
+
+Ejemplo mínimo: \(x(u,v)=(u,v,u^2+v^2)\) representa un paraboloide.
+
+5. Derivadas parciales.
+
+Concepto: miden cómo cambia una función al variar una variable y mantener fija la otra.
+
+Definición breve: \(x_u=\partial x/\partial u\) y \(x_v=\partial x/\partial v\).
+
+Por qué es necesario: los vectores \(x_u\) y \(x_v\) son tangentes a las curvas coordenadas \(v=\text{cte}\) y \(u=\text{cte}\).
+
+Ejemplo mínimo: si \(x(u,v)=(u,v,u^2+v^2)\), entonces \(x_u=(1,0,2u)\) y \(x_v=(0,1,2v)\).
+
+6. Matriz jacobiana y rango.
+
+Concepto: el jacobiano recoge las derivadas parciales de una aplicación.
+
+Definición breve: para \(x(u,v)=(x_1,x_2,x_3)\), la matriz jacobiana es
+\[
+J_x=
+\begin{pmatrix}
+x_{1u} & x_{1v}\\
+x_{2u} & x_{2v}\\
+x_{3u} & x_{3v}
+\end{pmatrix}.
+\]
+Tiene rango \(2\) si alguna submatriz \(2\times2\) tiene determinante no nulo.
+
+Por qué es necesario: el rango \(2\) equivale a que \(x_u\) y \(x_v\) sean independientes. Sin esta condición no hay plano tangente bien definido.
+
+Ejemplo mínimo: para \(x(u,v)=(u,v,f(u,v))\), el menor formado por las dos primeras filas vale \(1\), luego la representación es regular.
+
+7. Teorema de la función inversa.
+
+Concepto: permite cambiar de parámetros cuando el jacobiano no se anula.
+
+Definición breve: si una aplicación diferenciable tiene jacobiano no nulo en un punto, entonces localmente posee inversa diferenciable.
+
+Por qué es necesario: justifica que una misma superficie pueda describirse mediante cartas distintas y que los cambios de coordenadas sean válidos localmente.
+
+Ejemplo mínimo: si \((\alpha,\beta)=(u+v,u-v)\), entonces \(\partial(\alpha,\beta)/\partial(u,v)=-2\neq0\); por tanto, el cambio es localmente invertible.
+
+8. Teorema de la función implícita.
+
+Concepto: permite expresar una ecuación \(F(x,y,z)=0\) como gráfica local.
+
+Definición breve: si \(F\) es diferenciable y alguna derivada parcial, por ejemplo \(F_z\), no se anula en un punto, entonces cerca de ese punto puede escribirse \(z=f(x,y)\).
+
+Por qué es necesario: muchas superficies aparecen dadas implícitamente, no parametrizadas. El capítulo conecta ambas descripciones.
+
+Ejemplo mínimo: en la esfera \(x^2+y^2+z^2=a^2\), si \(z\neq0\), se puede escribir localmente \(z=\pm\sqrt{a^2-x^2-y^2}\).
+
+9. Topología elemental.
+
+Concepto: estudia abiertos, entornos, continuidad, conexión y compacidad.
+
+Definición breve: un entorno de un punto de una superficie es la parte de la superficie contenida cerca de ese punto. Una superficie es conexa si no se separa en dos abiertos disjuntos no vacíos.
+
+Por qué es necesario: la definición de superficie simple no es solo algebraica; también exige que cada punto tenga un entorno superficial comparable a un abierto del plano.
+
+Ejemplo mínimo: la esfera sin un punto puede cubrirse con una carta local, pero la esfera completa necesita más de una.
+
+## 2. Idea central del capítulo
+
+El capítulo estudia qué significa llamar superficie a un subconjunto de \(\mathbb{R}^3\) desde el punto de vista diferencial. La intuición inicial es sencilla: una superficie es algo bidimensional dentro del espacio tridimensional. Pero esa intuición no basta para hacer cálculo. Para derivar, construir tangentes y normales, o cambiar de coordenadas, se necesita una definición local precisa.
+
+La herramienta principal es la representación paramétrica. En lugar de describir una superficie directamente como conjunto de puntos, se toma un abierto \(U\subset\mathbb{R}^2\) y una aplicación
+\[
+x(u,v)=(x_1(u,v),x_2(u,v),x_3(u,v)).
+\]
+Los parámetros \((u,v)\) actúan como coordenadas internas de la superficie. Cada punto de \(U\) produce un punto del espacio, y al variar \(u\) y \(v\) se barre una porción de superficie.
+
+La condición decisiva es la regularidad. No basta con que \(x(u,v)\) sea diferenciable; se exige que los dos vectores \(x_u\) y \(x_v\) sean linealmente independientes en cada punto. En términos geométricos, esto significa que las dos direcciones paramétricas realmente generan un plano. En términos de cálculo, equivale a que \(x_u\times x_v\neq0\), o a que la matriz jacobiana tenga rango \(2\). Gracias a esa condición se define el plano tangente.
+
+El capítulo no se queda en una sola parametrización. Introduce la idea de carta local: una descripción válida solo cerca de un punto. Esto es esencial porque muchas superficies no pueden cubrirse bien con una única carta. La esfera, por ejemplo, no se describe globalmente de forma regular e inyectiva con los parámetros esféricos usuales, pues aparecen problemas en los polos. La solución es trabajar localmente.
+
+Después se define la superficie simple. La idea es que, cerca de cada punto, la superficie debe parecerse a una región plana parametrizada regularmente. Esta definición descarta objetos con autointersecciones, pliegues degenerados o puntos singulares si se consideran como parte de una misma carta regular.
+
+El capítulo culmina con el plano tangente y la recta normal. Si \(P=x(u_0,v_0)\), entonces \(x_u(u_0,v_0)\) y \(x_v(u_0,v_0)\) generan el plano tangente, mientras que \(x_u\times x_v\) da una dirección normal. Esta construcción será la base de los capítulos posteriores: primera forma fundamental, segunda forma fundamental, curvatura normal, curvaturas principales, curvatura gaussiana y geometría intrínseca.
+
+El papel del capítulo dentro de la asignatura es fundacional. Antes de medir longitudes, áreas o curvaturas en una superficie, hay que saber qué son sus coordenadas, cuándo una parametrización es válida y cómo se obtiene el plano tangente. En examen, esta base aparece en ejercicios de parametrización, regularidad, cálculo de tangentes y normales, reconocimiento local de superficies y cambios de carta.
+
+## 3. Desarrollo completo del capítulo
+
+### 3.1. Representaciones paramétricas regulares
+
+El punto de partida es representar una superficie mediante dos parámetros. Sea \(U\) un abierto del plano \(uv\). Una aplicación
+\[
+x:U\to\mathbb{R}^3,\qquad x(u,v)=(x_1(u,v),x_2(u,v),x_3(u,v))
+\]
+produce un conjunto de puntos \(S=x(U)\). La imagen puede interpretarse como una porción de superficie.
+
+La representación es de clase \(C^r\) si sus componentes tienen derivadas continuas hasta orden \(r\). En el capítulo se trabaja con suavidad suficiente para poder derivar y construir los objetos geométricos básicos.
+
+La regularidad exige que los vectores
+\[
+x_u=\frac{\partial x}{\partial u},\qquad x_v=\frac{\partial x}{\partial v}
+\]
+sean linealmente independientes. Equivalentemente,
+\[
+x_u\times x_v\neq0.
+\]
+Esta condición impide que la parametrización se colapse en una curva o en un punto. Si \(x_u\) y \(x_v\) fuesen paralelos, las dos direcciones paramétricas no generarían una superficie bidimensional en sentido diferencial.
+
+Un ejemplo básico es el plano
+\[
+x(u,v)=P+ua+vb,
+\]
+donde \(a\) y \(b\) son vectores independientes. Entonces \(x_u=a\), \(x_v=b\), y \(x_u\times x_v=a\times b\neq0\). Por tanto, la representación es regular.
+
+Otro ejemplo importante es la gráfica
+\[
+x(u,v)=(u,v,f(u,v)).
+\]
+Aquí
+\[
+x_u=(1,0,f_u),\qquad x_v=(0,1,f_v),
+\]
+y
+\[
+x_u\times x_v=(-f_u,-f_v,1),
+\]
+que nunca se anula. Toda gráfica suficientemente diferenciable es, por tanto, una superficie regular en este sentido local.
+
+La condición de regularidad también se expresa con la matriz jacobiana. Como \(x\) aplica \(\mathbb{R}^2\) en \(\mathbb{R}^3\), su jacobiana tiene tres filas y dos columnas. El rango debe ser \(2\). Esto equivale a que al menos uno de los menores \(2\times2\) sea distinto de cero.
+
+Esta formulación conecta con el teorema de la función inversa y con las cartas de Monge. Si un menor es no nulo, se pueden usar dos coordenadas espaciales como parámetros locales y expresar la tercera como función de ellas.
+
+### 3.2. Curvas coordenadas
+
+Una parametrización no solo da puntos; también introduce dos familias de curvas sobre la superficie. Si se fija \(v=v_0\), queda la curva
+\[
+u\mapsto x(u,v_0).
+\]
+Su vector tangente es \(x_u(u,v_0)\). Si se fija \(u=u_0\), queda la curva
+\[
+v\mapsto x(u_0,v),
+\]
+con vector tangente \(x_v(u_0,v)\).
+
+Estas curvas reciben el nombre de curvas coordenadas. Son importantes porque permiten visualizar la malla de coordenadas sobre la superficie. En un paraboloide \(x(u,v)=(u,v,u^2+v^2)\), las curvas \(v=\text{cte}\) y \(u=\text{cte}\) son cortes parabólicos en direcciones coordenadas.
+
+El hecho de que \(x_u\) y \(x_v\) sean independientes significa que las dos curvas coordenadas se cortan transversalmente. Si no se cortaran con dos direcciones distintas, la malla local no serviría como sistema de coordenadas superficial.
+
+### 3.3. Cartas locales
+
+Una carta local es una parametrización válida en un entorno de un punto de la superficie. El capítulo insiste en esta idea porque las superficies deben estudiarse localmente.
+
+Supongamos que \(x=x(u,v)\) es una representación regular. Puede ocurrir que otra pareja de parámetros \((\alpha,\beta)\) describa la misma porción mediante
+\[
+x^*(\alpha,\beta)=x(u(\alpha,\beta),v(\alpha,\beta)).
+\]
+Para que el cambio de parámetros sea admisible se exige que sea diferenciable y que el jacobiano
+\[
+\frac{\partial(\alpha,\beta)}{\partial(u,v)}
+\]
+no se anule. Esta condición garantiza que las coordenadas nuevas no degeneran.
+
+La idea de carta local se apoya en el teorema de la función inversa. Aunque una parametrización no sea globalmente inyectiva, cerca de un punto regular puede restringirse a un entorno donde sí actúe como coordenada local.
+
+Esto se ve en la esfera. La parametrización esférica
+\[
+x(u,v)=(a\cos u\sin v,\ a\sin u\sin v,\ a\cos v)
+\]
+es regular cuando \(0<v<\pi\), pero falla en los polos \(v=0\) y \(v=\pi\), donde \(x_u\) se anula. Además, el parámetro \(u\) identifica valores separados por \(2\pi\). Por eso no se usa como carta global de toda la esfera, sino como descripción local o sobre una franja adecuada.
+
+### 3.4. Cartas de Monge
+
+Una carta de Monge describe una superficie como gráfica de una función de dos variables. La forma típica es
+\[
+x=x,\qquad y=y,\qquad z=f(x,y),
+\]
+o, vectorialmente,
+\[
+X(x,y)=(x,y,f(x,y)).
+\]
+
+El capítulo explica que, si una representación regular tiene un menor jacobiano no nulo, entonces localmente puede reorganizarse como carta de Monge. Por ejemplo, si el menor formado por las coordenadas \(x_1,x_2\) respecto de \(u,v\) no se anula, entonces \((x_1,x_2)\) pueden usarse como nuevos parámetros y \(x_3\) queda como función de ellos.
+
+La importancia de este resultado es doble. Primero, confirma que toda superficie regular se parece localmente a una gráfica. Segundo, permite aplicar intuiciones del cálculo de varias variables al estudio de superficies. Localmente, una superficie regular no tiene autointersecciones ni pliegues verticales inevitables: puede verse como una lámina gráfica después de elegir bien los ejes.
+
+Ejemplo: la esfera \(x^2+y^2+z^2=a^2\) no es una gráfica global sobre el plano \(xy\), pero cerca de un punto con \(z>0\) se puede escribir como
+\[
+z=\sqrt{a^2-x^2-y^2}.
+\]
+Cerca de un punto con \(z<0\), se usa la rama negativa. En los puntos donde una coordenada no sirve, puede elegirse otra.
+
+### 3.5. Superficie simple
+
+Una superficie simple de clase \(C^r\) es un subconjunto de \(\mathbb{R}^3\) que, cerca de cada uno de sus puntos, admite una carta local regular de clase \(C^r\). La palabra “simple” indica que la superficie se comporta localmente como una región plana deformada suavemente.
+
+Esta definición evita considerar como una única superficie regular objetos con singularidades. Por ejemplo, el cono circular completo tiene un problema en el vértice: allí no hay un plano tangente único. El cono sin vértice sí puede tratarse como superficie regular.
+
+También evita aceptar parametrizaciones que cubren el mismo punto de manera ambigua dentro de una carta local. La parametrización puede tener repeticiones globales, pero localmente debe funcionar como coordenada.
+
+La definición de superficie simple tiene un contenido topológico: cada punto debe tener un entorno superficial comparable a un abierto del plano. Esto permite hablar de continuidad, conexión, orientación y cartas compatibles.
+
+### 3.6. Plano tangente
+
+Sea \(P=x(u_0,v_0)\) un punto de una superficie dada por una carta regular. Los vectores \(x_u(u_0,v_0)\) y \(x_v(u_0,v_0)\) son tangentes a las curvas coordenadas que pasan por \(P\). Como son independientes, generan un plano.
+
+Ese plano se llama plano tangente a la superficie en \(P\). Su forma paramétrica es
+\[
+Y=P+\lambda x_u(u_0,v_0)+\mu x_v(u_0,v_0),
+\qquad \lambda,\mu\in\mathbb{R}.
+\]
+
+Si se define
+\[
+N=x_u(u_0,v_0)\times x_v(u_0,v_0),
+\]
+entonces una forma implícita del plano tangente es
+\[
+N\cdot(Y-P)=0.
+\]
+
+Esta construcción no depende de la carta elegida. Si se cambia de parámetros mediante una transformación con jacobiano no nulo, los nuevos vectores tangentes son combinaciones lineales invertibles de los antiguos. Por tanto, generan el mismo plano. El vector normal puede cambiar de escala o de sentido, pero la recta normal y el plano tangente permanecen.
+
+Ejemplo: para el paraboloide
+\[
+x(u,v)=(u,v,u^2+v^2),
+\]
+en \((u_0,v_0)\) se tiene
+\[
+x_u=(1,0,2u_0),\qquad x_v=(0,1,2v_0),
+\]
+\[
+N=x_u\times x_v=(-2u_0,-2v_0,1).
+\]
+Si \(P=(u_0,v_0,u_0^2+v_0^2)\), el plano tangente es
+\[
+-2u_0(X-u_0)-2v_0(Y-v_0)+(Z-u_0^2-v_0^2)=0.
+\]
+
+### 3.7. Recta normal y normal unitaria
+
+La recta normal es la recta perpendicular al plano tangente que pasa por \(P\). Si
+\[
+N=x_u\times x_v,
+\]
+entonces su ecuación vectorial es
+\[
+Y=P+tN,\qquad t\in\mathbb{R}.
+\]
+
+La normal unitaria se obtiene normalizando:
+\[
+n=\frac{x_u\times x_v}{\|x_u\times x_v\|}.
+\]
+El signo de \(n\) depende del orden de los parámetros y de la orientación elegida. Cambiar de \((u,v)\) a \((v,u)\) cambia el signo del producto vectorial. Por eso una superficie puede tener dos elecciones locales de normal.
+
+Este punto anticipa el concepto de orientación. Una superficie orientable permite escoger un campo normal unitario continuo en toda ella. El capítulo introduce esta idea porque será necesaria para hablar con coherencia de segunda forma fundamental y curvaturas con signo.
+
+### 3.8. Superficies dadas implícitamente
+
+Muchas superficies se presentan como nivel de una función:
+\[
+F(x,y,z)=c.
+\]
+Si \(F\) es suficientemente diferenciable y
+\[
+\nabla F(P)\neq0
+\]
+en los puntos considerados, entonces el conjunto de nivel es localmente una superficie regular.
+
+La razón es el teorema de la función implícita. Si, por ejemplo, \(F_z(P)\neq0\), entonces cerca de \(P\) se puede despejar \(z=f(x,y)\). Así se obtiene una carta de Monge.
+
+Además, \(\nabla F(P)\) es perpendicular al nivel \(F=c\). Por tanto, para una superficie implícita regular, el plano tangente en \(P\) puede escribirse como
+\[
+\nabla F(P)\cdot(Y-P)=0.
+\]
+
+Ejemplo: para la esfera \(F(x,y,z)=x^2+y^2+z^2-a^2=0\), se tiene
+\[
+\nabla F(P)=2P.
+\]
+En \(P=(x_0,y_0,z_0)\), el plano tangente es
+\[
+x_0(X-x_0)+y_0(Y-y_0)+z_0(Z-z_0)=0,
+\]
+equivalentemente
+\[
+x_0X+y_0Y+z_0Z=a^2.
+\]
+
+### 3.9. Superficies regladas y de revolución
+
+El capítulo y sus problemas trabajan también con familias especiales de superficies.
+
+Una superficie reglada se genera por una familia de rectas. Una parametrización típica es
+\[
+x(u,v)=\gamma(u)+v\,e(u),
+\]
+donde \(\gamma(u)\) es una curva y \(e(u)\) es una dirección no nula. Para que sea regular se comprueba
+\[
+x_u\times x_v\neq0.
+\]
+El cilindro y el cono sin vértice son ejemplos naturales de superficies regladas.
+
+Una superficie de revolución se obtiene al girar una curva plana alrededor de un eje. Una forma frecuente es
+\[
+x(u,v)=(f(u)\cos v,\ f(u)\sin v,\ g(u)).
+\]
+La regularidad exige que la curva generatriz sea regular y que no se produzca degeneración sobre el eje de giro. En particular, si \(f(u)=0\), puede aparecer un punto problemático.
+
+Estas familias son importantes porque aparecen en ejercicios de reconocimiento, parametrización y cálculo de tangentes.
+
+### 3.10. Propiedades topológicas de superficies simples
+
+La definición de superficie simple incluye un comportamiento local parecido al plano. Cada punto tiene un entorno en la superficie que puede describirse con una carta local. Por eso las superficies simples heredan localmente propiedades de los abiertos de \(\mathbb{R}^2\).
+
+Una consecuencia relevante es que la conexión puede relacionarse con la conexión por arcos. En el marco del capítulo, una superficie simple conexa permite unir puntos mediante arcos regulares contenidos en la superficie. Esto traduce una propiedad topológica en una herramienta geométrica: se puede desplazarse suavemente de un punto a otro sin salir de la superficie.
+
+También aparece la cuestión de la orientación. Una superficie orientable admite una elección coherente de normal. En una carta local siempre se puede escoger una normal, pero el problema es si esas elecciones pueden hacerse compatibles al pasar de una carta a otra. Los cambios de parámetros con jacobiano positivo conservan la orientación; los de jacobiano negativo la invierten.
+
+Estas ideas preparan los capítulos siguientes. Para definir curvaturas con signo y formas fundamentales conviene tener una normal elegida de forma coherente. Para estudiar geometría global se necesita saber cómo se conectan los entornos locales.
+
+## 4. Conceptos clave
+
+1. Representación paramétrica.
+
+Definición precisa: aplicación \(x:U\subset\mathbb{R}^2\to\mathbb{R}^3\), \(x(u,v)=(x_1(u,v),x_2(u,v),x_3(u,v))\), cuya imagen describe una porción de superficie.
+
+Explicación desarrollada: los parámetros \((u,v)\) son coordenadas internas. No son, en general, coordenadas cartesianas del espacio. Sirven para recorrer la superficie y calcular derivadas tangenciales.
+
+Ejemplo: \(x(u,v)=(u,v,u^2+v^2)\).
+
+Relación con otros conceptos: permite definir curvas coordenadas, vectores tangentes, plano tangente y normal.
+
+Posible forma de preguntarlo en examen: “Dada \(x(u,v)\), describa la superficie y sus curvas coordenadas”.
+
+2. Regularidad.
+
+Definición precisa: una representación \(x(u,v)\) es regular si \(x_u\) y \(x_v\) son linealmente independientes en todo punto del dominio.
+
+Explicación desarrollada: significa que la parametrización no se aplasta. La imagen tiene dos direcciones tangentes independientes.
+
+Ejemplo: \(x(u,v)=(u,v,0)\) es regular; \(x(u,v)=(u+v,2u+2v,0)\) no lo es, porque depende solo de \(u+v\).
+
+Relación con otros conceptos: equivale a \(x_u\times x_v\neq0\) y a rango jacobiano \(2\).
+
+Posible forma de preguntarlo en examen: “Estudie los puntos regulares de la parametrización”.
+
+3. Curvas coordenadas.
+
+Definición precisa: son las curvas obtenidas al fijar uno de los parámetros: \(v=v_0\) o \(u=u_0\).
+
+Explicación desarrollada: constituyen la red de coordenadas sobre la superficie. Sus tangentes son \(x_u\) y \(x_v\).
+
+Ejemplo: en \(x(u,v)=(u,v,u^2+v^2)\), \(v=v_0\) da una parábola en el plano \(y=v_0\).
+
+Relación con otros conceptos: su independencia transversal se usa para construir el plano tangente.
+
+Posible forma de preguntarlo en examen: “Identifique y describa las curvas paramétricas de una superficie”.
+
+4. Carta local.
+
+Definición precisa: parametrización regular e inyectiva de un entorno superficial mediante un abierto del plano.
+
+Explicación desarrollada: una carta no pretende cubrir toda la superficie, sino describirla sin ambigüedad cerca de un punto.
+
+Ejemplo: una semiesfera superior se describe con \(z=\sqrt{a^2-x^2-y^2}\), pero no toda la esfera.
+
+Relación con otros conceptos: las cartas locales se comparan mediante cambios de parámetros con jacobiano no nulo.
+
+Posible forma de preguntarlo en examen: “Explique por qué la parametrización esférica usual no es una carta global de la esfera”.
+
+5. Cambio de parámetros.
+
+Definición precisa: transformación diferenciable \((u,v)\leftrightarrow(\alpha,\beta)\) con jacobiano no nulo que relaciona dos cartas.
+
+Explicación desarrollada: garantiza que dos descripciones locales representan la misma geometría sin perder dimensión.
+
+Ejemplo: \(\alpha=u+v,\ \beta=u-v\), con jacobiano \(-2\).
+
+Relación con otros conceptos: conserva el plano tangente; puede conservar o invertir la orientación según el signo del jacobiano.
+
+Posible forma de preguntarlo en examen: “Demuestre que el plano tangente no depende de la carta”.
+
+6. Carta de Monge.
+
+Definición precisa: carta en la que la superficie aparece como gráfica, por ejemplo \(X(x,y)=(x,y,f(x,y))\).
+
+Explicación desarrollada: permite estudiar localmente cualquier superficie regular como si fuese una gráfica.
+
+Ejemplo: \(z=x^2+y^2\).
+
+Relación con otros conceptos: se obtiene localmente si un menor jacobiano \(2\times2\) no se anula.
+
+Posible forma de preguntarlo en examen: “Use el teorema de la función implícita para escribir una superficie como carta de Monge”.
+
+7. Superficie simple.
+
+Definición precisa: subconjunto de \(\mathbb{R}^3\) que localmente admite cartas regulares compatibles de clase \(C^r\).
+
+Explicación desarrollada: formaliza la idea de superficie suave sin puntos singulares locales.
+
+Ejemplo: la esfera es superficie simple; el cono completo tiene singularidad en el vértice.
+
+Relación con otros conceptos: exige estructura local de carta y permite definir plano tangente en cada punto.
+
+Posible forma de preguntarlo en examen: “Determine si el conjunto dado es una superficie simple en todos sus puntos”.
+
+8. Plano tangente.
+
+Definición precisa: si \(P=x(u_0,v_0)\), es el plano generado por \(x_u(u_0,v_0)\) y \(x_v(u_0,v_0)\).
+
+Explicación desarrollada: contiene las velocidades de todas las curvas regulares de la superficie que pasan por \(P\).
+
+Ejemplo: para \(z=f(x,y)\), en \((x_0,y_0,z_0)\) el plano tangente es
+\[
+z-z_0=f_x(x_0,y_0)(x-x_0)+f_y(x_0,y_0)(y-y_0).
+\]
+
+Relación con otros conceptos: es perpendicular a la normal \(x_u\times x_v\).
+
+Posible forma de preguntarlo en examen: “Calcule el plano tangente en un punto de una superficie parametrizada”.
+
+9. Recta normal.
+
+Definición precisa: recta que pasa por \(P\) y tiene dirección \(N=x_u\times x_v\).
+
+Explicación desarrollada: es perpendicular al plano tangente. En superficies implícitas también se obtiene con \(\nabla F\).
+
+Ejemplo: para la esfera de radio \(a\), la normal en \(P\) tiene dirección \(P\).
+
+Relación con otros conceptos: depende del plano tangente y anticipa la normal unitaria.
+
+Posible forma de preguntarlo en examen: “Calcule la recta normal a la superficie en el punto dado”.
+
+10. Normal unitaria.
+
+Definición precisa:
+\[
+n=\frac{x_u\times x_v}{\|x_u\times x_v\|}.
+\]
+
+Explicación desarrollada: da una dirección normal de longitud \(1\). Hay dos posibles elecciones, \(n\) y \(-n\).
+
+Ejemplo: para \(z=f(x,y)\),
+\[
+n=\frac{(-f_x,-f_y,1)}{\sqrt{1+f_x^2+f_y^2}}.
+\]
+
+Relación con otros conceptos: interviene en la orientación y será imprescindible en la segunda forma fundamental.
+
+Posible forma de preguntarlo en examen: “Determine una normal unitaria compatible con el orden de los parámetros”.
+
+11. Superficie implícita regular.
+
+Definición precisa: conjunto \(F(x,y,z)=c\) con \(\nabla F\neq0\) en los puntos considerados.
+
+Explicación desarrollada: si el gradiente no se anula, el nivel puede verse localmente como gráfica.
+
+Ejemplo: \(x^2+y^2+z^2=a^2\) es regular porque \(\nabla F=2(x,y,z)\neq0\) sobre la esfera.
+
+Relación con otros conceptos: el gradiente da la normal y el teorema de la función implícita da cartas locales.
+
+Posible forma de preguntarlo en examen: “Compruebe si \(F=0\) define una superficie regular y halle el plano tangente”.
+
+12. Orientación.
+
+Definición precisa: elección coherente y continua de una normal unitaria sobre la superficie.
+
+Explicación desarrollada: localmente siempre se puede escoger una normal, pero globalmente puede no ser posible.
+
+Ejemplo: la esfera admite normal exterior \(n=P/a\).
+
+Relación con otros conceptos: los cambios de carta con jacobiano positivo conservan la orientación.
+
+Posible forma de preguntarlo en examen: “Explique qué cambia en la normal al permutar los parámetros”.
+
+## 5. Relaciones entre ideas
+
+La secuencia conceptual del capítulo es clara. Primero se introduce una aplicación de dos variables a tres coordenadas. Esa aplicación solo se acepta como representación de superficie si tiene rango \(2\). La regularidad es, por tanto, la condición que convierte una imagen parametrizada en un objeto geométrico bidimensional con tangente.
+
+Las curvas coordenadas dependen de la parametrización, pero su función es estructural: permiten ver qué significan \(x_u\) y \(x_v\). Cada una da una dirección tangente. La superficie no se estudia como un conjunto amorfo, sino como una familia organizada de curvas.
+
+El plano tangente depende de \(x_u\) y \(x_v\), pero no depende de la carta concreta. Esta independencia es esencial. Si el plano tangente cambiara al cambiar de parámetros, no sería un objeto geométrico de la superficie, sino un accidente de la representación. El cambio de parámetros con jacobiano no nulo garantiza que los nuevos vectores tangentes son combinaciones lineales invertibles de los anteriores; por eso generan el mismo plano.
+
+La normal se construye a partir del plano tangente. El producto vectorial da una dirección perpendicular a \(x_u\) y \(x_v\), pero su signo depende del orden de los parámetros. De aquí nace la orientación: no se trata solo de hallar una normal, sino de escogerla de manera coherente.
+
+Las cartas locales corrigen el problema de las parametrizaciones globales. Una superficie como la esfera no se deja describir sin problemas por una sola parametrización regular e inyectiva. La geometría diferencial trabaja localmente: cada punto tiene su carta, y las cartas se enlazan por cambios de coordenadas.
+
+La carta de Monge ocupa una posición intermedia entre la parametrización general y la superficie implícita. Muestra que toda superficie regular puede verse localmente como una gráfica si se escogen bien las coordenadas. Esto conecta con el teorema de la función implícita: una ecuación \(F=c\) con gradiente no nulo define localmente una superficie.
+
+La jerarquía es la siguiente: aplicación parametrizada, regularidad, carta local, superficie simple, objetos geométricos asociados. Sin regularidad no hay carta válida; sin carta válida no hay superficie simple; sin superficie simple no hay plano tangente globalmente definido punto a punto.
+
+La oposición más importante es local frente a global. Localmente una superficie regular se parece a un plano o a una gráfica. Globalmente puede requerir varias cartas, puede ser compacta o no compacta, orientable o no orientable, conexa o no conexa. El capítulo prepara esa transición de la geometría local al estudio global.
+
+Históricamente, esta forma de presentar superficies procede del paso desde la geometría clásica de figuras concretas hacia la geometría diferencial moderna. En la geometría clásica se estudiaban esferas, cilindros, conos o superficies de revolución. La formulación con cartas permite tratar todas ellas bajo una misma definición.
+
+## 6. Errores habituales
+
+1. Confundir parametrización con superficie.
+
+Formulación del error: pensar que la superficie es la fórmula \(x(u,v)\), no su imagen ni su estructura local.
+
+Por qué está mal: parametrizaciones distintas pueden describir la misma superficie.
+
+Corrección: distinguir entre la aplicación \(x\), el dominio \(U\) y la imagen \(S=x(U)\).
+
+Ejemplo de respuesta incorrecta: “La superficie es \(x(u,v)\), luego si cambio \(u,v\) cambia la superficie”.
+
+Ejemplo de respuesta correcta: “La superficie es el conjunto imagen; un cambio regular de parámetros puede describir la misma superficie”.
+
+2. Comprobar regularidad mirando solo que las funciones sean derivables.
+
+Formulación del error: afirmar que una parametrización es regular porque sus componentes son \(C^1\).
+
+Por qué está mal: la diferenciabilidad no garantiza rango \(2\).
+
+Corrección: calcular \(x_u\), \(x_v\) y comprobar \(x_u\times x_v\neq0\).
+
+Ejemplo incorrecto: “Es regular porque \(x(u,v)=(u^2,v^2,0)\) es derivable”.
+
+Ejemplo correcto: “Hay que comprobar \(x_u\times x_v=(0,0,4uv)\); falla si \(u=0\) o \(v=0\)”.
+
+3. Usar una parametrización global donde solo hay carta local.
+
+Formulación del error: tratar coordenadas esféricas como carta regular de toda la esfera.
+
+Por qué está mal: en los polos se degeneran y además hay identificaciones periódicas.
+
+Corrección: restringir el dominio o usar varias cartas.
+
+Ejemplo incorrecto: “La esfera tiene una sola carta con \(0\leq u\leq2\pi\), \(0\leq v\leq\pi\)”.
+
+Ejemplo correcto: “Esa parametrización es útil, pero no es carta regular global; se restringe a zonas sin polos ni duplicaciones”.
+
+4. Confundir plano tangente con plano coordenado.
+
+Formulación del error: pensar que el plano tangente siempre es paralelo a \(xy\), \(xz\) o \(yz\).
+
+Por qué está mal: el plano tangente depende de \(x_u\) y \(x_v\) en el punto.
+
+Corrección: construirlo con \(P+\lambda x_u+\mu x_v\) o con \(N\cdot(Y-P)=0\).
+
+Ejemplo incorrecto: “Como los parámetros son \(u,v\), el plano tangente es el plano \(uv\)”.
+
+Ejemplo correcto: “El plano tangente está en \(\mathbb{R}^3\) y está generado por las imágenes de las direcciones \(u\) y \(v\)”.
+
+5. Olvidar evaluar en el punto.
+
+Formulación del error: calcular \(x_u\), \(x_v\), \(N\), pero no sustituir \((u_0,v_0)\).
+
+Por qué está mal: el plano tangente y la normal son objetos en un punto concreto.
+
+Corrección: después de derivar, evaluar todos los vectores en el parámetro del punto.
+
+Ejemplo incorrecto: “El plano tangente es \((-2u,-2v,1)\cdot(Y-P)=0\)”.
+
+Ejemplo correcto: “En \((u_0,v_0)\), \(N=(-2u_0,-2v_0,1)\), y ese vector se usa en la ecuación del plano”.
+
+6. Usar \(x_u+x_v\) como normal.
+
+Formulación del error: construir la normal sumando vectores tangentes.
+
+Por qué está mal: \(x_u+x_v\) sigue estando en el plano tangente.
+
+Corrección: la normal se obtiene con producto vectorial \(x_u\times x_v\).
+
+Ejemplo incorrecto: “La normal es \(x_u+x_v\)”.
+
+Ejemplo correcto: “La normal es perpendicular a ambos; por tanto, es \(x_u\times x_v\)”.
+
+7. Creer que si \(x_u\times x_v=0\) en un punto la superficie completa deja de existir.
+
+Formulación del error: rechazar todo el conjunto por una degeneración puntual.
+
+Por qué está mal: puede haber una superficie regular al excluir puntos singulares o usando otra descripción local; depende del caso.
+
+Corrección: estudiar los puntos regulares y los singulares por separado.
+
+Ejemplo incorrecto: “El cono no es superficie porque falla en el vértice”.
+
+Ejemplo correcto: “El cono sin vértice es superficie regular; el vértice es singular en la descripción clásica”.
+
+8. Confundir normal de una superficie implícita con normal de una parametrizada.
+
+Formulación del error: usar \(\nabla F\) cuando no se tiene una ecuación implícita, o usar \(x_u\times x_v\) sin relacionarlo con \(F\).
+
+Por qué está mal: son métodos distintos para descripciones distintas, aunque deben coincidir en dirección si representan la misma superficie.
+
+Corrección: si \(S\) viene como \(F=c\), usar \(\nabla F\); si viene como \(x(u,v)\), usar \(x_u\times x_v\).
+
+Ejemplo incorrecto: “Para \(x(u,v)\), tomo el gradiente de sus tres componentes”.
+
+Ejemplo correcto: “Para una parametrización vectorial, el vector normal es el producto vectorial de las derivadas parciales”.
+
+9. No distinguir orientación local y global.
+
+Formulación del error: afirmar que toda superficie es orientable porque localmente hay una normal.
+
+Por qué está mal: la compatibilidad global de las normales puede fallar.
+
+Corrección: comprobar si existe un campo normal unitario continuo global o un atlas con cambios de orientación compatibles.
+
+Ejemplo incorrecto: “Toda superficie regular es orientable”.
+
+Ejemplo correcto: “Toda superficie regular es localmente orientable; la orientabilidad global exige una elección coherente en toda la superficie”.
+
+10. Pensar que una superficie implícita siempre es regular.
+
+Formulación del error: tomar \(F(x,y,z)=0\) como superficie sin comprobar \(\nabla F\neq0\).
+
+Por qué está mal: si el gradiente se anula puede haber singularidad.
+
+Corrección: calcular \(\nabla F\) y analizar sus ceros dentro del conjunto.
+
+Ejemplo incorrecto: “\(x^2+y^2-z^2=0\) es regular también en el origen”.
+
+Ejemplo correcto: “En el origen el gradiente es cero; ese punto debe tratarse como singular”.
+
+## 7. Preguntas orientadas a examen
+
+### 10 preguntas fáciles
+
+1. Define representación paramétrica de una superficie.
+
+2. ¿Qué significa que una representación \(x(u,v)\) sea regular?
+
+3. Escribe la condición de regularidad usando el producto vectorial.
+
+4. ¿Qué son las curvas coordenadas de una superficie parametrizada?
+
+5. Dada \(x(u,v)=(u,v,u^2+v^2)\), calcula \(x_u\) y \(x_v\).
+
+6. ¿Cómo se obtiene un vector normal a una superficie parametrizada?
+
+7. Escribe la ecuación paramétrica del plano tangente en \(P=x(u_0,v_0)\).
+
+8. Escribe la ecuación de la recta normal en \(P=x(u_0,v_0)\).
+
+9. ¿Qué condición debe cumplir una superficie implícita \(F(x,y,z)=c\) para ser regular?
+
+10. ¿Por qué una esfera no se cubre bien con una sola carta esférica usual?
+
+### 10 preguntas medias
+
+11. Estudia la regularidad de \(x(u,v)=(u,v,u+v)\).
+
+12. Estudia la regularidad de \(x(u,v)=(u^2,v^2,0)\).
+
+13. Halla el plano tangente al paraboloide \(x(u,v)=(u,v,u^2+v^2)\) en \((u_0,v_0)=(1,2)\).
+
+14. Halla la recta normal al mismo paraboloide en \((u_0,v_0)=(1,2)\).
+
+15. Para la esfera \(F(x,y,z)=x^2+y^2+z^2-a^2=0\), halla el plano tangente en \(P=(x_0,y_0,z_0)\).
+
+16. Explica qué es una carta de Monge y da un ejemplo.
+
+17. Demuestra que toda gráfica \(x(u,v)=(u,v,f(u,v))\) es regular si \(f\) es \(C^1\).
+
+18. Dada una superficie de revolución \(x(u,v)=(f(u)\cos v,f(u)\sin v,g(u))\), calcula \(x_u\) y \(x_v\).
+
+19. Para una superficie reglada \(x(u,v)=\gamma(u)+v e(u)\), escribe la condición de regularidad.
+
+20. Explica por qué el signo de la normal depende del orden de los parámetros.
+
+### 5 preguntas difíciles
+
+21. Demuestra que el plano tangente no depende de la carta local elegida.
+
+22. Justifica, usando la idea del teorema de la función inversa, por qué una representación regular puede verse localmente como carta de Monge si algún menor jacobiano no se anula.
+
+23. Determina los puntos regulares de la parametrización esférica
+\[
+x(u,v)=(a\cos u\sin v,a\sin u\sin v,a\cos v).
+\]
+
+24. Explica por qué el cono completo tiene un problema en el vértice desde el punto de vista de superficie regular.
+
+25. Si \(F(x,y,z)=x^2+y^2-z^2\), estudia la regularidad del conjunto \(F=0\).
+
+### 5 preguntas de desarrollo largo
+
+26. Desarrolla la construcción completa del plano tangente y la recta normal de una superficie parametrizada regular.
+
+27. Explica el paso de parametrización regular a superficie simple.
+
+28. Explica la relación entre superficies implícitas y cartas locales.
+
+29. Desarrolla el papel de las cartas locales en el estudio de la esfera.
+
+30. Explica el concepto de orientación de una superficie y su relación con los cambios de parámetros.
+
+### 5 preguntas de relación entre conceptos
+
+31. Relaciona regularidad, rango jacobiano y producto vectorial.
+
+32. Relaciona curvas coordenadas, vectores tangentes y plano tangente.
+
+33. Relaciona carta de Monge, teorema de la función implícita y superficie implícita.
+
+34. Relaciona normal unitaria, orientación y cambio de parámetros.
+
+35. Relaciona superficie simple, propiedades topológicas locales y conexión por arcos.
+
+## 8. Respuestas modelo
+
+1. Una representación paramétrica de una superficie es una aplicación \(x:U\subset\mathbb{R}^2\to\mathbb{R}^3\), dada por \(x(u,v)=(x_1(u,v),x_2(u,v),x_3(u,v))\), cuya imagen describe una porción de superficie. Los parámetros \(u\) y \(v\) actúan como coordenadas internas de la superficie.
+
+2. Significa que \(x\) es diferenciable con suficiente regularidad y que los vectores parciales \(x_u\) y \(x_v\) son linealmente independientes en cada punto del dominio. Esta independencia garantiza que la imagen tiene dimensión superficial y no se colapsa en una curva.
+
+3. La condición es
+\[
+x_u(u,v)\times x_v(u,v)\neq0
+\]
+en todo punto del dominio. Si el producto vectorial se anula, los vectores tangentes son dependientes y no generan un plano tangente.
+
+4. Son las curvas obtenidas al fijar uno de los parámetros. Si \(v=v_0\), la curva es \(u\mapsto x(u,v_0)\). Si \(u=u_0\), la curva es \(v\mapsto x(u_0,v)\). Sus tangentes son, respectivamente, \(x_u\) y \(x_v\).
+
+5. Para \(x(u,v)=(u,v,u^2+v^2)\),
+\[
+x_u=(1,0,2u),\qquad x_v=(0,1,2v).
+\]
+Estos vectores son independientes en todo punto porque su producto vectorial es \((-2u,-2v,1)\), que nunca se anula.
+
+6. Se obtiene calculando
+\[
+N=x_u\times x_v.
+\]
+Este vector es perpendicular a \(x_u\) y a \(x_v\), luego es perpendicular al plano tangente. Si se quiere una normal unitaria, se divide por su norma.
+
+7. Si \(P=x(u_0,v_0)\), el plano tangente es
+\[
+Y=P+\lambda x_u(u_0,v_0)+\mu x_v(u_0,v_0),
+\qquad \lambda,\mu\in\mathbb{R}.
+\]
+También puede escribirse como \(N\cdot(Y-P)=0\), con \(N=x_u\times x_v\) evaluado en \((u_0,v_0)\).
+
+8. La recta normal en \(P=x(u_0,v_0)\) es
+\[
+Y=P+tN,\qquad t\in\mathbb{R},
+\]
+donde
+\[
+N=x_u(u_0,v_0)\times x_v(u_0,v_0).
+\]
+
+9. Debe cumplirse que \(F\) sea suficientemente diferenciable y que
+\[
+\nabla F(P)\neq0
+\]
+en los puntos del nivel considerados. Así se puede despejar localmente una coordenada como función de las otras dos.
+
+10. Porque la parametrización esférica usual se degenera en los polos: allí una dirección paramétrica deja de producir una dirección tangente independiente. Además, el parámetro angular identifica valores separados por \(2\pi\). Por eso se necesitan restricciones o varias cartas.
+
+11. Para \(x(u,v)=(u,v,u+v)\),
+\[
+x_u=(1,0,1),\qquad x_v=(0,1,1).
+\]
+Entonces
+\[
+x_u\times x_v=(-1,-1,1)\neq0.
+\]
+La parametrización es regular en todo su dominio.
+
+12. Para \(x(u,v)=(u^2,v^2,0)\),
+\[
+x_u=(2u,0,0),\qquad x_v=(0,2v,0).
+\]
+Entonces
+\[
+x_u\times x_v=(0,0,4uv).
+\]
+La representación es regular solo si \(uv\neq0\). Falla en las rectas \(u=0\) y \(v=0\).
+
+13. En \((1,2)\), el punto es \(P=(1,2,5)\). Además,
+\[
+x_u=(1,0,2),\qquad x_v=(0,1,4),
+\]
+\[
+N=x_u\times x_v=(-2,-4,1).
+\]
+El plano tangente es
+\[
+-2(X-1)-4(Y-2)+(Z-5)=0.
+\]
+Simplificando:
+\[
+Z=2X+4Y-5.
+\]
+
+14. Con \(P=(1,2,5)\) y \(N=(-2,-4,1)\), la recta normal es
+\[
+(X,Y,Z)=(1,2,5)+t(-2,-4,1).
+\]
+
+15. En la esfera \(F=x^2+y^2+z^2-a^2\),
+\[
+\nabla F(P)=2(x_0,y_0,z_0).
+\]
+El plano tangente es
+\[
+x_0(X-x_0)+y_0(Y-y_0)+z_0(Z-z_0)=0.
+\]
+Como \(P\) pertenece a la esfera, también puede escribirse
+\[
+x_0X+y_0Y+z_0Z=a^2.
+\]
+
+16. Una carta de Monge es una carta local en la que la superficie se escribe como gráfica de una función de dos variables, por ejemplo
+\[
+X(x,y)=(x,y,f(x,y)).
+\]
+Ejemplo: \(X(x,y)=(x,y,x^2+y^2)\), que representa un paraboloide.
+
+17. Si \(x(u,v)=(u,v,f(u,v))\), entonces
+\[
+x_u=(1,0,f_u),\qquad x_v=(0,1,f_v).
+\]
+Su producto vectorial es
+\[
+x_u\times x_v=(-f_u,-f_v,1).
+\]
+Como la tercera componente es \(1\), nunca puede ser el vector cero. Por tanto, la gráfica es regular.
+
+18. Para
+\[
+x(u,v)=(f(u)\cos v,f(u)\sin v,g(u)),
+\]
+se obtiene
+\[
+x_u=(f'(u)\cos v,f'(u)\sin v,g'(u)),
+\]
+\[
+x_v=(-f(u)\sin v,f(u)\cos v,0).
+\]
+La regularidad se analiza con \(x_u\times x_v\).
+
+19. Si
+\[
+x(u,v)=\gamma(u)+v e(u),
+\]
+entonces
+\[
+x_u=\gamma'(u)+v e'(u),\qquad x_v=e(u).
+\]
+La condición de regularidad es
+\[
+(\gamma'(u)+v e'(u))\times e(u)\neq0.
+\]
+
+20. Porque el producto vectorial es antisimétrico:
+\[
+x_v\times x_u=-(x_u\times x_v).
+\]
+Al invertir el orden de los parámetros se invierte la orientación local de la normal, aunque el plano tangente es el mismo.
+
+21. Sean \(x(u,v)\) y \(x^*(\alpha,\beta)\) dos cartas relacionadas por \(u=u(\alpha,\beta)\), \(v=v(\alpha,\beta)\). Por la regla de la cadena,
+\[
+x^*_\alpha=x_u u_\alpha+x_v v_\alpha,
+\]
+\[
+x^*_\beta=x_u u_\beta+x_v v_\beta.
+\]
+Como el jacobiano del cambio no se anula, estas dos combinaciones son invertibles respecto de \(x_u,x_v\). Por tanto, \(x^*_\alpha,x^*_\beta\) generan el mismo subespacio que \(x_u,x_v\). Ese subespacio es el plano tangente, luego no depende de la carta.
+
+22. Si la representación \(x(u,v)\) es regular, la matriz jacobiana tiene rango \(2\). Por tanto, algún menor \(2\times2\) no se anula. Supongamos que el menor de \((x_1,x_2)\) respecto de \((u,v)\) es no nulo. Entonces, por el teorema de la función inversa, \((x_1,x_2)\) pueden usarse localmente como parámetros. La tercera coordenada queda expresada como función de ellas:
+\[
+x_3=f(x_1,x_2).
+\]
+Así, localmente, la superficie tiene forma de carta de Monge.
+
+23. Para
+\[
+x(u,v)=(a\cos u\sin v,a\sin u\sin v,a\cos v),
+\]
+se calcula
+\[
+x_u=(-a\sin u\sin v,a\cos u\sin v,0),
+\]
+\[
+x_v=(a\cos u\cos v,a\sin u\cos v,-a\sin v).
+\]
+El producto vectorial tiene norma proporcional a \(a^2|\sin v|\). Por tanto, la parametrización es regular si \(\sin v\neq0\), es decir, si \(v\neq0,\pi\). Falla en los polos.
+
+24. El cono completo tiene un vértice donde todas las generatrices se encuentran. En ese punto no hay un único plano tangente: las direcciones límite dependen de la generatriz por la que se llegue. Además, parametrizaciones naturales del cono tienen producto vectorial nulo en el vértice. Por eso el cono sin vértice es regular, pero el vértice es singular.
+
+25. Para \(F(x,y,z)=x^2+y^2-z^2\),
+\[
+\nabla F=(2x,2y,-2z).
+\]
+En el conjunto \(F=0\), el gradiente se anula solo en \((0,0,0)\). Por tanto, el cono \(x^2+y^2=z^2\) es regular fuera del origen. En el origen no es superficie regular.
+
+26. Sea \(x(u,v)\) una representación regular y \(P=x(u_0,v_0)\). Las curvas coordenadas que pasan por \(P\) tienen tangentes \(x_u(u_0,v_0)\) y \(x_v(u_0,v_0)\). La regularidad garantiza que son independientes, luego generan un plano. Ese plano es
+\[
+Y=P+\lambda x_u+\mu x_v.
+\]
+El vector
+\[
+N=x_u\times x_v
+\]
+es perpendicular a ambos tangentes, por lo que da una ecuación implícita del plano:
+\[
+N\cdot(Y-P)=0.
+\]
+La recta normal es la recta que pasa por \(P\) con dirección \(N\):
+\[
+Y=P+tN.
+\]
+Si se desea normal unitaria, se toma \(n=N/\|N\|\). Todos los vectores deben evaluarse en \((u_0,v_0)\).
+
+27. Una parametrización regular describe una porción de superficie. Para pasar a superficie simple se exige que cada punto del conjunto tenga alguna carta local regular que lo describa sin ambigüedad. La superficie simple no depende de una sola fórmula global, sino de una familia de cartas compatibles. Esto permite estudiar superficies como la esfera, que necesitan varias cartas. La condición esencial es que localmente la superficie se comporte como un abierto del plano deformado suavemente en \(\mathbb{R}^3\).
+
+28. Una superficie implícita aparece como \(F(x,y,z)=c\). Para que sea superficie regular hay que exigir \(\nabla F\neq0\). Si, por ejemplo, \(F_z\neq0\), el teorema de la función implícita permite despejar \(z=f(x,y)\), y entonces se obtiene una carta de Monge:
+\[
+X(x,y)=(x,y,f(x,y)).
+\]
+Además, el gradiente \(\nabla F\) es normal al conjunto de nivel, por lo que da directamente el plano tangente mediante
+\[
+\nabla F(P)\cdot(Y-P)=0.
+\]
+
+29. La esfera muestra por qué la geometría de superficies debe ser local. La parametrización esférica usual describe casi toda la esfera, pero se degenera en los polos y repite puntos por periodicidad angular. Esto impide que sea una carta global regular e inyectiva. Sin embargo, cerca de cada punto de la esfera puede elegirse una carta válida. Por ejemplo, en la semiesfera superior se usa \(z=\sqrt{a^2-x^2-y^2}\); en otras zonas se despeja \(x\), \(y\) o se usan otras cartas. La esfera completa se entiende como superficie simple mediante un conjunto de cartas locales.
+
+30. La orientación consiste en escoger una normal unitaria de forma continua sobre la superficie. En una carta local se puede tomar
+\[
+n=\frac{x_u\times x_v}{\|x_u\times x_v\|}.
+\]
+Si se cambia de parámetros, el producto vectorial queda multiplicado por el jacobiano del cambio. Si el jacobiano es positivo, se conserva el sentido de la normal; si es negativo, se invierte. Una orientación global exige que las cartas puedan elegirse de manera compatible, de modo que no aparezcan inversiones inevitables de normal.
+
+31. La regularidad de \(x(u,v)\) puede formularse de tres maneras equivalentes. Primera: \(x_u\) y \(x_v\) son linealmente independientes. Segunda: el producto vectorial \(x_u\times x_v\) no se anula. Tercera: la matriz jacobiana de \(x\) tiene rango \(2\). Las tres expresan que la parametrización conserva dos direcciones independientes.
+
+32. Las curvas coordenadas son las imágenes de \(u\mapsto x(u,v_0)\) y \(v\mapsto x(u_0,v)\). Sus vectores tangentes son \(x_u\) y \(x_v\). Si la superficie es regular, esos vectores son independientes y generan el plano tangente. Por tanto, el plano tangente se obtiene a partir de las direcciones instantáneas de las curvas coordenadas.
+
+33. Una carta de Monge escribe la superficie como \(z=f(x,y)\). Una superficie implícita \(F(x,y,z)=c\) puede convertirse localmente en carta de Monge si alguna derivada parcial de \(F\) no se anula. Esto es precisamente lo que garantiza el teorema de la función implícita. Así, el enfoque implícito y el paramétrico se conectan localmente.
+
+34. La normal unitaria se obtiene normalizando \(x_u\times x_v\). Al cambiar de parámetros, este producto se multiplica por el jacobiano del cambio. Si el jacobiano es positivo, la normal conserva sentido; si es negativo, cambia de signo. La orientación consiste en escoger normales compatibles en todas las cartas.
+
+35. Una superficie simple está formada por entornos que se parecen a abiertos del plano mediante cartas. Esa estructura local permite transferir propiedades topológicas elementales. En particular, en el contexto del capítulo, una superficie simple conexa puede tratarse como conectable por arcos regulares. Esto permite pasar de afirmaciones locales a recorridos suaves sobre la superficie.
+
+## 9. Resumen final de repaso
+
+Ideas principales:
+
+La superficie se estudia localmente mediante una aplicación \(x(u,v)\) de un abierto del plano en \(\mathbb{R}^3\).
+
+La regularidad exige \(x_u\times x_v\neq0\).
+
+Las curvas coordenadas tienen tangentes \(x_u\) y \(x_v\).
+
+Una carta local es una parametrización regular válida cerca de un punto.
+
+Toda superficie regular puede verse localmente como una gráfica si se escogen bien las coordenadas.
+
+El plano tangente en \(P=x(u_0,v_0)\) está generado por \(x_u\) y \(x_v\).
+
+La normal se obtiene con \(N=x_u\times x_v\).
+
+La recta normal es \(Y=P+tN\).
+
+Una superficie implícita \(F=c\) es regular si \(\nabla F\neq0\).
+
+Conceptos imprescindibles:
+
+Representación paramétrica.
+
+Regularidad.
+
+Rango jacobiano.
+
+Carta local.
+
+Carta de Monge.
+
+Superficie simple.
+
+Curvas coordenadas.
+
+Plano tangente.
+
+Recta normal.
+
+Normal unitaria.
+
+Orientación.
+
+Relaciones clave:
+
+Regularidad \(\Longleftrightarrow\) rango \(2\) \(\Longleftrightarrow\) \(x_u\times x_v\neq0\).
+
+Curvas coordenadas \(\Longrightarrow\) vectores tangentes \(\Longrightarrow\) plano tangente.
+
+Producto vectorial \(\Longrightarrow\) normal \(\Longrightarrow\) recta normal.
+
+Teorema de la función inversa \(\Longrightarrow\) cambios de carta.
+
+Teorema de la función implícita \(\Longrightarrow\) cartas de Monge para superficies \(F=c\).
+
+Errores que evitar:
+
+No comprobar \(x_u\times x_v\).
+
+Usar una carta global donde solo hay parametrización local.
+
+No evaluar en el punto.
+
+Confundir normal con vector tangente.
+
+Olvidar que la normal cambia de signo al invertir parámetros.
+
+Aceptar \(F=c\) como superficie regular sin mirar \(\nabla F\).
+
+## 10. Checklist de dominio
+
+- Si no puedes definir una representación paramétrica \(x(u,v)\), falta repasar la idea de aplicación \(U\subset\mathbb{R}^2\to\mathbb{R}^3\).
+
+- Si no puedes explicar por qué hacen falta dos parámetros, falta repasar dimensión y curvas coordenadas.
+
+- Si no puedes comprobar \(x_u\times x_v\neq0\), falta repasar derivadas parciales y producto vectorial.
+
+- Si confundes \(x_u\) con una coordenada espacial, revisar el significado de vector tangente.
+
+- Si confundes el plano \(uv\) con el plano tangente, revisar la diferencia entre dominio paramétrico e imagen en \(\mathbb{R}^3\).
+
+- Si no puedes hallar \(P=x(u_0,v_0)\), falta repasar evaluación de parametrizaciones.
+
+- Si no puedes escribir \(Y=P+\lambda x_u+\mu x_v\), falta repasar plano generado por dos vectores.
+
+- Si no puedes pasar de la forma paramétrica del plano tangente a \(N\cdot(Y-P)=0\), falta repasar producto escalar y normal.
+
+- Si usas \(x_u+x_v\) como normal, revisar producto vectorial.
+
+- Si olvidas evaluar \(N\) en \((u_0,v_0)\), revisar el procedimiento completo de plano tangente.
+
+- Si no puedes hallar la normal a \(F=c\), falta repasar gradiente.
+
+- Si dices que \(F=c\) siempre es superficie, revisar la condición \(\nabla F\neq0\).
+
+- Si no puedes explicar qué es una carta local, falta repasar la diferencia entre descripción local y global.
+
+- Si confundes carta de Monge con parametrización cualquiera, revisar la forma \(z=f(x,y)\).
+
+- Si no entiendes por qué la esfera necesita varias cartas, revisar polos, periodicidad y regularidad.
+
+- Si no puedes explicar qué hace un cambio de parámetros, falta repasar jacobiano no nulo.
+
+- Si confundes cambio de orientación con cambio de superficie, revisar el signo de \(x_u\times x_v\).
+
+- Si puedes estudiar regularidad, calcular plano tangente y recta normal de una parametrización dada, el núcleo operativo del capítulo está asentado.
+
+- Si puedes pasar entre \(F=c\), carta de Monge y plano tangente, el capítulo está suficientemente dominado para problemas estándar de examen.
+
+- Si puedes justificar por qué el plano tangente no depende de la carta, el capítulo está dominado a nivel teórico.

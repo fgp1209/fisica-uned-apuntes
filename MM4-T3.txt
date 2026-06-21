@@ -1,0 +1,1260 @@
+# Guía de estudio — Cálculo Tensorial / Métodos Matemáticos IV
+
+T3 Kay — Álgebra tensorial
+
+Fuente principal: David C. Kay, Cálculo Tensorial, bloque sobre tensores generales y operaciones tensoriales. Esta guía parafrasea y reorganiza el contenido con finalidad docente.
+
+## 1. Prerrequisitos mínimos
+
+1. Convenio de suma de Einstein
+
+Definición breve: cuando un índice aparece repetido una vez arriba y una vez abajo en un mismo término, se entiende que se suma sobre todos sus valores. Por ejemplo,
+\[
+A^iB_i=\sum_{i=1}^n A^iB_i.
+\]
+Por qué es necesario: la notación tensorial del capítulo depende de este convenio. Sin él, las leyes de transformación y las contracciones se vuelven largas y poco legibles.
+Ejemplo mínimo: en dimensión \(3\),
+\[
+u^iv_i=u^1v_1+u^2v_2+u^3v_3.
+\]
+
+2. Derivadas parciales y regla de la cadena
+
+Definición breve: si \(\bar x^i=\bar x^i(x^1,\ldots,x^n)\), las derivadas parciales \(\partial \bar x^i/\partial x^j\) describen cómo cambian las nuevas coordenadas respecto de las antiguas. La regla de la cadena permite transformar derivadas al cambiar de coordenadas.
+Por qué es necesario: las leyes de transformación tensorial se expresan mediante matrices jacobianas. Sin regla de la cadena no se puede justificar por qué un gradiente transforma como covector.
+Ejemplo mínimo:
+\[
+\frac{\partial F}{\partial \bar x^i}
+=
+\frac{\partial F}{\partial x^r}
+\frac{\partial x^r}{\partial \bar x^i}.
+\]
+
+3. Matriz jacobiana e inversa local
+
+Definición breve: el jacobiano de un cambio de coordenadas es la matriz
+\[
+J=\left(\frac{\partial \bar x^i}{\partial x^j}\right).
+\]
+Si su determinante no se anula, el cambio es localmente invertible.
+Por qué es necesario: Kay define los cambios admisibles de coordenadas mediante la regularidad suficiente y la condición de jacobiano no nulo. Las leyes tensoriales usan \(J\) y \(J^{-1}\).
+Ejemplo mínimo: en coordenadas polares,
+\[
+x=r\cos\theta,\qquad y=r\sin\theta,
+\]
+el jacobiano es \(r\), por lo que el cambio falla en el origen.
+
+4. Vectores y matrices
+
+Definición breve: un vector se representa por una colección ordenada de componentes; una matriz puede verse como una colección con dos índices.
+Por qué es necesario: los tensores de orden \(1\) generalizan los vectores y los de orden \(2\) se representan mediante matrices de componentes.
+Ejemplo mínimo: un tensor covariante de orden \(2\) se escribe como \((T_{ij})\), con dos subíndices.
+
+5. Índices superiores e inferiores
+
+Definición breve: los índices superiores se reservan para componentes contravariantes y los inferiores para componentes covariantes.
+Por qué es necesario: el lugar del índice determina qué jacobiano aparece en la transformación. Cambiar un índice de sitio no es un gesto tipográfico, sino una operación matemática que exige estructura adicional.
+Ejemplo mínimo:
+\[
+\bar T^i=\frac{\partial \bar x^i}{\partial x^r}T^r
+\]
+es ley contravariante, mientras que
+\[
+\bar T_i=\frac{\partial x^r}{\partial \bar x^i}T_r
+\]
+es ley covariante.
+
+6. Producto matricial y traza
+
+Definición breve: el producto matricial combina filas y columnas; la traza es la suma de los elementos diagonales.
+Por qué es necesario: muchos ejemplos del capítulo reescriben las leyes tensoriales en lenguaje matricial. La traza de un tensor mixto de orden \(2\), \(T^i{}_i\), aparece como invariante.
+Ejemplo mínimo:
+\[
+T^i{}_i=T^1{}_1+\cdots+T^n{}_n.
+\]
+
+7. Formas cuadráticas
+
+Definición breve: una forma cuadrática tiene la forma \(c_{ij}x^ix^j\).
+Por qué es necesario: Kay usa las formas cuadráticas para mostrar cómo los coeficientes pueden comportarse como tensores covariantes bajo cambios afines.
+Ejemplo mínimo:
+\[
+c_{ij}x^ix^j=1
+\]
+mantiene su forma si los coeficientes transforman adecuadamente.
+
+8. Gradiente
+
+Definición breve: el gradiente de una función escalar \(F\) tiene componentes \(\partial F/\partial x^i\).
+Por qué es necesario: el capítulo lo usa como ejemplo fundamental de vector covariante.
+Ejemplo mínimo:
+\[
+(\nabla F)_i=\frac{\partial F}{\partial x^i}.
+\]
+
+## 2. Idea central del capítulo
+
+El capítulo introduce la idea operativa de tensor como objeto definido por su ley de transformación. No se parte de una definición abstracta libre de coordenadas, sino de componentes que cambian cuando se cambia el sistema coordenado. Esta decisión es esencial para el cálculo tensorial aplicado: en física y geometría se trabaja continuamente con magnitudes que se expresan en coordenadas, pero cuyo significado no debe depender de la elección de esas coordenadas.
+
+El problema que resuelve el capítulo es el siguiente: si una cantidad se escribe con componentes \(T^i\), \(T_i\), \(T^{ij}\), \(T_{ij}\), \(T^i{}_j\) o más índices, ¿cómo sabemos si esas componentes representan un objeto geométrico real y no una simple colección arbitraria de funciones? La respuesta es que deben obedecer una ley de transformación concreta al pasar de \(x^i\) a \(\bar x^i\). Esa ley distingue entre componentes contravariantes, covariantes y mixtas.
+
+La segunda idea central es que la tensorialidad permite reconocer invariantes. Un invariante es una expresión cuyo valor no cambia con el sistema coordenado. El ejemplo básico es la contracción de un vector contravariante con uno covariante:
+\[
+S^iT_i.
+\]
+Aunque cambien las componentes de \(S\) y de \(T\), el producto contraído conserva el mismo valor. Esta es la razón por la que los tensores son útiles: permiten escribir ecuaciones cuyo contenido no depende del observador coordenado.
+
+El capítulo también prepara el uso algebraico de los tensores. Una vez se sabe reconocer un tensor, se estudian operaciones que producen nuevos tensores: combinaciones lineales, producto externo, producto interno, contracción y operaciones combinadas. Estas operaciones son el núcleo del álgebra tensorial. Permiten construir tensores de orden alto a partir de tensores conocidos y reducirlos mediante sumas sobre pares de índices.
+
+Dentro de la asignatura, este bloque es la base obligatoria para todo lo posterior. El tensor métrico, los símbolos de Christoffel, la derivada covariante, el tensor de Riemann o las ecuaciones geodésicas solo tienen sentido si antes se domina qué significa que una cantidad sea tensorial y cómo se transforman sus índices. En examen, esta parte suele aparecer en forma de demostraciones breves: probar si una expresión es tensor, demostrar que una contracción es invariante, escribir una ley de transformación o justificar que una ecuación tensorial válida en un sistema lo es en todos.
+
+## 3. Desarrollo completo del capítulo
+
+### 3.1. Cambios admisibles de coordenadas
+
+El punto de partida es que una región de \( \mathbb{R}^n \) puede describirse mediante distintos sistemas de coordenadas. Un sistema inicial se denota por \(x^1,\ldots,x^n\), y otro por \(\bar x^1,\ldots,\bar x^n\). El cambio de coordenadas se escribe
+\[
+\bar x^i=\bar x^i(x^1,\ldots,x^n).
+\]
+Para que sea útil en cálculo tensorial, el cambio debe ser suficientemente regular y localmente invertible. La condición práctica es que el jacobiano no se anule:
+\[
+\det\left(\frac{\partial \bar x^i}{\partial x^j}\right)\neq 0.
+\]
+Así se garantiza que, al menos localmente, pueden recuperarse las coordenadas antiguas como funciones de las nuevas:
+\[
+x^i=x^i(\bar x^1,\ldots,\bar x^n).
+\]
+
+Esto importa porque una ley de transformación tensorial siempre necesita dos matrices: la jacobiana directa,
+\[
+\frac{\partial \bar x^i}{\partial x^r},
+\]
+y la jacobiana inversa,
+\[
+\frac{\partial x^r}{\partial \bar x^i}.
+\]
+Estas matrices codifican cómo se deforman las componentes al cambiar de coordenadas.
+
+El ejemplo típico es el paso entre coordenadas cartesianas y polares. En el plano,
+\[
+x=r\cos\theta,\qquad y=r\sin\theta.
+\]
+Este cambio no es globalmente regular en todo el plano, porque en el origen \(r=0\) se pierde la dirección angular. El capítulo usa este tipo de ejemplos para mostrar que las leyes tensoriales no son fórmulas formales aisladas: dependen de que el cambio de coordenadas sea admisible en la región considerada.
+
+La consecuencia para el estudio es clara: antes de transformar componentes hay que saber qué coordenadas se están usando, cuál es el jacobiano y en qué región el cambio tiene sentido. Un fallo frecuente es aplicar leyes tensoriales sin comprobar que las coordenadas son válidas.
+
+### 3.2. Vectores contravariantes
+
+Un tensor contravariante de orden \(1\) es una magnitud cuyas componentes se transforman como
+\[
+\bar T^i=\frac{\partial \bar x^i}{\partial x^r}T^r.
+\]
+El índice superior indica que aparece la derivada de la coordenada nueva respecto de la antigua. Esta es la ley que siguen, por ejemplo, los vectores tangentes a curvas. Si una curva viene dada por \(x^i=x^i(t)\), sus componentes tangentes son
+\[
+T^i=\frac{dx^i}{dt}.
+\]
+Al cambiar de coordenadas,
+\[
+\frac{d\bar x^i}{dt}
+=
+\frac{\partial \bar x^i}{\partial x^r}
+\frac{dx^r}{dt},
+\]
+que es exactamente la ley contravariante.
+
+Esto conecta directamente con la regla de la cadena. El vector contravariante no se define por ser una flecha dibujada en el espacio, sino porque sus componentes obedecen esa transformación. En cálculo tensorial aplicado, esta forma de pensar evita confusiones entre el objeto geométrico y su representación coordenada.
+
+Ejemplo: si en coordenadas \(x^1,x^2\) un vector tiene componentes \(T^1,T^2\), y se cambia a coordenadas \(\bar x^1,\bar x^2\), para hallar \(\bar T^1\) se usa la primera fila de la jacobiana:
+\[
+\bar T^1
+=
+\frac{\partial \bar x^1}{\partial x^1}T^1
++
+\frac{\partial \bar x^1}{\partial x^2}T^2.
+\]
+El patrón se repite para cada componente.
+
+### 3.3. Vectores covariantes
+
+Un tensor covariante de orden \(1\), o covector, transforma mediante la jacobiana inversa:
+\[
+\bar T_i=\frac{\partial x^r}{\partial \bar x^i}T_r.
+\]
+El índice inferior indica que el cambio se produce en sentido contrario al de las componentes contravariantes.
+
+El ejemplo fundamental del capítulo es el gradiente de una función escalar. Si \(F\) es una función diferenciable,
+\[
+T_i=\frac{\partial F}{\partial x^i}
+\]
+define un covector. En las coordenadas nuevas,
+\[
+\bar T_i
+=
+\frac{\partial F}{\partial \bar x^i}
+=
+\frac{\partial F}{\partial x^r}
+\frac{\partial x^r}{\partial \bar x^i}
+=
+\frac{\partial x^r}{\partial \bar x^i}T_r.
+\]
+De nuevo, la tensorialidad no se supone: se demuestra por regla de la cadena.
+
+La distinción entre vector contravariante y covariante es una de las ideas más importantes del capítulo. Dos objetos pueden tener el mismo número de componentes y, sin embargo, no ser del mismo tipo tensorial. Uno usa la jacobiana directa; el otro, la inversa. Por eso no se deben cambiar índices de arriba a abajo sin una regla adicional.
+
+Ejemplo: en coordenadas polares, las componentes de un gradiente no se transforman como las de un vector tangente. El gradiente es covariante porque mide variación de una función respecto de coordenadas; el vector tangente es contravariante porque mide variación de coordenadas respecto de un parámetro.
+
+### 3.4. Invariantes
+
+Una expresión es invariante si su valor no cambia al pasar de un sistema coordenado a otro. Kay destaca el caso básico:
+\[
+E=S^iT_i.
+\]
+Si \(S^i\) es contravariante y \(T_i\) covariante, entonces \(E\) es el mismo número en todos los sistemas admisibles. La demostración consiste en sustituir las dos leyes de transformación:
+\[
+\bar S^i\bar T_i
+=
+\left(\frac{\partial \bar x^i}{\partial x^r}S^r\right)
+\left(\frac{\partial x^s}{\partial \bar x^i}T_s\right).
+\]
+Por la relación entre jacobiana e inversa,
+\[
+\frac{\partial \bar x^i}{\partial x^r}
+\frac{\partial x^s}{\partial \bar x^i}
+=
+\delta^s_r,
+\]
+queda
+\[
+\bar S^i\bar T_i=S^rT_r.
+\]
+
+La consecuencia es profunda: la contracción de un índice superior con uno inferior elimina la dependencia coordenada en ese par. Así empieza el álgebra tensorial. Los invariantes pueden entenderse como tensores de orden cero.
+
+Ejemplo: si \(T^i\) es la velocidad de una curva y \(F_i=\partial F/\partial x^i\), entonces
+\[
+F_iT^i
+\]
+representa la derivada de \(F\) a lo largo de la curva. Su valor no depende de las coordenadas usadas para describirla.
+
+### 3.5. Tensores de orden dos
+
+Un tensor contravariante de orden \(2\) tiene componentes \(T^{ij}\) que transforman como
+\[
+\bar T^{ij}
+=
+\frac{\partial \bar x^i}{\partial x^r}
+\frac{\partial \bar x^j}{\partial x^s}
+T^{rs}.
+\]
+Cada índice superior aporta una jacobiana directa.
+
+Un tensor covariante de orden \(2\) tiene componentes \(T_{ij}\) que transforman como
+\[
+\bar T_{ij}
+=
+\frac{\partial x^r}{\partial \bar x^i}
+\frac{\partial x^s}{\partial \bar x^j}
+T_{rs}.
+\]
+Cada índice inferior aporta una jacobiana inversa.
+
+Un tensor mixto de orden \(2\), con un índice superior y uno inferior, transforma como
+\[
+\bar T^i{}_j
+=
+\frac{\partial \bar x^i}{\partial x^r}
+\frac{\partial x^s}{\partial \bar x^j}
+T^r{}_s.
+\]
+La ley combina ambos comportamientos.
+
+Esto importa porque las matrices de componentes no se transforman siempre del mismo modo. Dos matrices pueden tener el mismo tamaño, pero representar objetos tensoriales diferentes. Una matriz \(T^{ij}\) no tiene la misma ley de cambio que una matriz \(T_{ij}\) ni que una matriz \(T^i{}_j\).
+
+Ejemplo: si \(S^i\) y \(T^j\) son dos vectores contravariantes, entonces
+\[
+U^{ij}=S^iT^j
+\]
+es un tensor contravariante de orden \(2\). Basta multiplicar las dos leyes de transformación.
+
+### 3.6. Tensores de orden arbitrario
+
+El capítulo generaliza las leyes anteriores. Un tensor con \(p\) índices contravariantes y \(q\) índices covariantes se escribe
+\[
+T^{i_1\ldots i_p}{}_{j_1\ldots j_q}.
+\]
+Su orden total es
+\[
+m=p+q.
+\]
+La ley de transformación contiene una jacobiana directa por cada índice superior y una jacobiana inversa por cada índice inferior:
+\[
+\bar T^{i_1\ldots i_p}{}_{j_1\ldots j_q}
+=
+T^{r_1\ldots r_p}{}_{s_1\ldots s_q}
+\frac{\partial \bar x^{i_1}}{\partial x^{r_1}}\cdots
+\frac{\partial \bar x^{i_p}}{\partial x^{r_p}}
+\frac{\partial x^{s_1}}{\partial \bar x^{j_1}}\cdots
+\frac{\partial x^{s_q}}{\partial \bar x^{j_q}}.
+\]
+
+Esta fórmula es el núcleo formal del capítulo. Todas las leyes particulares de vectores, covectores, matrices covariantes, matrices contravariantes y tensores mixtos son casos especiales. Por eso conviene entenderla por estructura, no memorizar cada caso por separado.
+
+Ejemplo: para un tensor \(T^{ij}{}_k\), que es \(2\)-contravariante y \(1\)-covariante,
+\[
+\bar T^{ij}{}_k
+=
+T^{rs}{}_t
+\frac{\partial \bar x^i}{\partial x^r}
+\frac{\partial \bar x^j}{\partial x^s}
+\frac{\partial x^t}{\partial \bar x^k}.
+\]
+
+### 3.7. Tensor de tensiones como ejemplo físico
+
+Kay introduce el tensor de tensiones para mostrar que la noción no es solo formal. En un cubo elemental, se consideran las fuerzas por unidad de área que actúan sobre caras perpendiculares a los ejes coordenados. Las componentes de esas tensiones se organizan en una matriz \(\sigma^{ij}\).
+
+La pregunta física es qué tensión actúa sobre un plano arbitrario cuya normal unitaria es \(n\). Mediante equilibrio de fuerzas en un tetraedro elemental, se obtiene una relación lineal entre la normal y la fuerza por unidad de área. Esta relación muestra que las componentes de tensión se transforman como un tensor contravariante de orden \(2\), al menos bajo los cambios de coordenadas tratados en ese contexto.
+
+La importancia del ejemplo está en que una matriz de datos físicos no es tensor por tener dos índices. Es tensor si sus componentes cambian según la ley correcta. El tensor de tensiones ilustra cómo una ley física lleva naturalmente a una ley tensorial.
+
+Ejemplo conceptual: si se gira el sistema de ejes, cambian las componentes \(\sigma^{ij}\), pero no cambia el hecho físico que describen: cómo se transmiten las fuerzas internas a través de planos orientados.
+
+### 3.8. Tensores afines
+
+Un cambio afín lineal de coordenadas se escribe, en esencia, mediante una matriz constante invertible. Bajo este tipo de cambios, las jacobianas son constantes. Los tensores afines son los objetos cuyas componentes satisfacen las leyes tensoriales restringidas a transformaciones afines.
+
+Esto importa porque algunos objetos son tensoriales solo bajo una clase limitada de cambios de coordenadas. En transformaciones afines, por ejemplo, las derivadas parciales de ciertos tensores mantienen mejor comportamiento que bajo cambios curvilíneos generales, porque no aparecen segundas derivadas del cambio coordenado.
+
+Ejemplo: el vector posición \(x^i\) puede comportarse como tensor afín contravariante bajo transformaciones lineales adecuadas, pero no debe confundirse con un tensor general bajo cambios arbitrarios de coordenadas.
+
+La consecuencia para el examen es que hay que mirar siempre la clase de transformaciones permitida. Decir “es tensor” sin especificar respecto a qué cambios puede ser insuficiente.
+
+### 3.9. Tensores cartesianos
+
+Los tensores cartesianos aparecen cuando los cambios de coordenadas son ortogonales, es decir, rotaciones o reflexiones de sistemas rectangulares. En ese caso, la matriz inversa coincide con la traspuesta. Esto hace que, formalmente, las leyes covariante y contravariante se parezcan mucho más.
+
+Kay subraya que en el caso cartesiano se reduce la diferencia práctica entre índices superiores e inferiores. Sin embargo, esto no autoriza a ignorar la distinción en el cálculo tensorial general. Lo que es cierto en coordenadas cartesianas puede dejar de serlo en coordenadas curvilíneas.
+
+Ejemplo: el producto escalar ordinario de dos vectores cartesianos es invariante bajo rotaciones ortogonales. Pero una expresión que sea invariante cartesiana no tiene por qué ser invariante bajo cambios generales.
+
+Una consecuencia importante es que ciertos símbolos, como el símbolo de permutación, tienen buen comportamiento bajo transformaciones cartesianas propias, pero no necesariamente bajo transformaciones arbitrarias. Esto anticipa la diferencia entre tensores, pseudotensores y objetos definidos por una convención de componentes.
+
+### 3.10. Combinaciones lineales de tensores
+
+Una vez definidos los tensores, el capítulo estudia operaciones que conservan la tensorialidad. La primera es la combinación lineal. Si \(S\) y \(T\) son tensores del mismo tipo y orden, entonces
+\[
+A S + B T
+\]
+también es tensor del mismo tipo y orden, siempre que \(A\) y \(B\) sean invariantes escalares.
+
+Esto se debe a que las leyes de transformación son lineales en las componentes. Si dos objetos obedecen la misma ley, cualquier combinación lineal con coeficientes escalares invariantes también la obedece.
+
+Ejemplo: si \(S_{ij}\) y \(T_{ij}\) son tensores covariantes de orden \(2\), entonces
+\[
+U_{ij}=2S_{ij}-3T_{ij}
+\]
+es otro tensor covariante de orden \(2\). En cambio, no tiene sentido sumar directamente \(S_{ij}\) con \(T^i{}_j\) como tensores del mismo tipo, porque sus leyes de transformación no coinciden.
+
+### 3.11. Producto externo
+
+El producto externo construye un tensor nuevo multiplicando componentes de dos tensores. Si \(S\) es de tipo \((p,q)\) y \(T\) de tipo \((r,s)\), entonces su producto externo es de tipo
+\[
+(p+r,q+s).
+\]
+Aumenta el número total de índices.
+
+Ejemplo: si \(S^i\) es contravariante y \(T_j\) es covariante, el producto
+\[
+U^i{}_j=S^iT_j
+\]
+es un tensor mixto de orden \(2\). Si \(A^{ij}\) y \(B_{kl}\) son tensores, entonces
+\[
+C^{ij}{}_{kl}=A^{ij}B_{kl}
+\]
+es un tensor de orden \(4\), dos veces contravariante y dos veces covariante.
+
+La importancia del producto externo es que permite construir tensores complejos a partir de objetos más simples. En notación de índices, basta escribir todos los índices de los factores en el producto final, conservando sus posiciones.
+
+### 3.12. Producto interno
+
+El producto interno entre tensores se obtiene identificando un índice superior de un tensor con un índice inferior de otro y sumando sobre ese índice. Esta operación reduce el orden total en \(2\).
+
+Si se parte de un tensor de tipo \((p,q)\) y otro de tipo \((r,s)\), después de un producto interno se obtiene un tensor de tipo
+\[
+(p+r-1,q+s-1).
+\]
+
+Ejemplo básico:
+\[
+S^iT_i
+\]
+es el producto interno de un vector contravariante y un covector. El resultado es de orden cero, es decir, un invariante.
+
+Ejemplo de orden superior: si \(A^{ij}\) y \(B_{jk}\) son tensores, entonces
+\[
+C^i{}_k=A^{ij}B_{jk}
+\]
+es un tensor mixto de orden \(2\). El índice \(j\) se repite una vez arriba y una vez abajo, por lo que se suma.
+
+La consecuencia es que las expresiones tensoriales no se manipulan solo por álgebra ordinaria: hay que controlar qué índices quedan libres y cuáles quedan contraídos. Los índices libres determinan el tipo del resultado.
+
+### 3.13. Contracción
+
+La contracción es una operación interna a un solo tensor. Consiste en igualar un índice superior y uno inferior del mismo tensor y sumar sobre él. Reduce el tipo \((p,q)\) a
+\[
+(p-1,q-1).
+\]
+
+Ejemplo:
+\[
+T^i{}_i
+\]
+es la contracción de un tensor mixto de orden \(2\). El resultado es un invariante, equivalente a la traza de la matriz de componentes.
+
+Ejemplo de orden superior: si \(T^{ij}{}_{kl}\) es un tensor, se puede contraer \(i\) con \(k\):
+\[
+S^j{}_l=T^{ij}{}_{il}.
+\]
+El resultado es un tensor mixto de orden \(2\).
+
+La contracción es una de las operaciones más preguntables porque mezcla notación e idea conceptual. No se contraen dos índices cualesquiera: debe ser un índice superior con uno inferior. Si se contraen dos índices ambos superiores o ambos inferiores, no se está aplicando la operación tensorial definida en este bloque, salvo que antes se haya usado una métrica para subir o bajar índices.
+
+### 3.14. Operaciones combinadas
+
+El álgebra tensorial permite combinar producto externo, producto interno y contracción. Un producto interno puede entenderse como una contracción de un producto externo. Primero se multiplican los tensores y después se contrae un par de índices.
+
+Ejemplo: a partir de \(S^i\) y \(T_j\), el producto externo da
+\[
+U^i{}_j=S^iT_j.
+\]
+Si después se contrae,
+\[
+U^i{}_i=S^iT_i,
+\]
+se obtiene un invariante.
+
+Este punto conecta las operaciones básicas en una estructura unificada. En examen, muchas expresiones se analizan identificando primero los tensores de partida, luego los productos externos, después las contracciones y finalmente los índices libres.
+
+### 3.15. Criterios de tensorialidad y regla del cociente
+
+El capítulo introduce un método para reconocer tensores sin verificar directamente toda la ley de transformación. La idea es que, si al contraer un objeto desconocido con vectores arbitrarios se obtiene siempre un tensor o un invariante del tipo esperado, entonces el objeto original debe tener carácter tensorial.
+
+El criterio más sencillo dice: si
+\[
+T_iV^i
+\]
+es invariante para todo vector contravariante \(V^i\), entonces \(T_i\) es un vector covariante.
+
+Otro criterio: si
+\[
+T_{ij}V^i
+\]
+es un vector covariante para todo vector contravariante \(V^i\), entonces \(T_{ij}\) es un tensor covariante de orden \(2\).
+
+También aparece el criterio cuadrático: si \(T_{ij}\) es simétrico y
+\[
+T_{ij}V^iV^j
+\]
+es invariante para todo vector contravariante \(V^i\), entonces \(T_{ij}\) es tensor covariante de orden \(2\).
+
+Estos criterios son importantes porque en física se conocen a menudo expresiones escalares o vectoriales invariantes antes que la ley de transformación explícita de todos sus coeficientes. El criterio permite deducir la tensorialidad a partir de cómo se comportan las contracciones.
+
+### 3.16. Ecuaciones tensoriales
+
+Una ecuación tensorial es una igualdad entre tensores del mismo tipo y orden. La ventaja fundamental es que, si es cierta en un sistema coordenado, entonces es cierta en cualquier otro sistema admisible.
+
+La razón es simple: si un tensor se anula en un sistema, sus componentes transformadas son combinaciones lineales de ceros, luego se anula en todos los sistemas. Por tanto, para demostrar una identidad tensorial, a veces basta probarla en un sistema de coordenadas especialmente cómodo, siempre que antes se haya verificado que ambos lados son tensores del mismo tipo.
+
+Ejemplo: si \(T_{ij}=0\) en un sistema y \(T_{ij}\) es tensor covariante de orden \(2\), entonces
+\[
+\bar T_{ij}
+=
+\frac{\partial x^r}{\partial \bar x^i}
+\frac{\partial x^s}{\partial \bar x^j}
+T_{rs}=0.
+\]
+
+Esta idea es una de las herramientas más potentes del cálculo tensorial. Reduce demostraciones complejas a cálculos en coordenadas convenientes. Pero tiene una condición imprescindible: la expresión debe ser tensorial. Si no lo es, que sea válida en un sistema no garantiza que lo sea en otro.
+
+## 4. Conceptos clave
+
+1. Cambio admisible de coordenadas
+
+Definición precisa: transformación \( \bar x^i=\bar x^i(x^1,\ldots,x^n) \) suficientemente regular, localmente invertible y con jacobiano no nulo en la región de trabajo.
+Explicación desarrollada: permite comparar componentes de un mismo objeto en dos sistemas coordenados. La condición de jacobiano no nulo asegura que existen coordenadas inversas y que las matrices usadas en las leyes tensoriales tienen sentido.
+Ejemplo:
+\[
+x=r\cos\theta,\qquad y=r\sin\theta
+\]
+es admisible localmente fuera del origen y con una elección adecuada del intervalo angular.
+Relación con otros conceptos: es la base de las leyes contravariante y covariante.
+Posible forma de preguntarlo en examen: “Calcule el jacobiano de un cambio de coordenadas y determine dónde es admisible.”
+
+2. Jacobiana directa
+
+Definición precisa:
+\[
+J^i{}_r=\frac{\partial \bar x^i}{\partial x^r}.
+\]
+Explicación desarrollada: mide cómo cambian las nuevas coordenadas respecto de las antiguas. Aparece en cada índice contravariante.
+Ejemplo:
+\[
+\bar T^i=J^i{}_rT^r.
+\]
+Relación con otros conceptos: su inversa aparece en los índices covariantes.
+Posible forma de preguntarlo en examen: “Escriba la ley de transformación de un vector contravariante.”
+
+3. Jacobiana inversa
+
+Definición precisa:
+\[
+(J^{-1})^r{}_i=\frac{\partial x^r}{\partial \bar x^i}.
+\]
+Explicación desarrollada: aparece cuando se transforman covectores o índices inferiores. Es la matriz inversa de la jacobiana directa en un cambio admisible.
+Ejemplo:
+\[
+\bar T_i=\frac{\partial x^r}{\partial \bar x^i}T_r.
+\]
+Relación con otros conceptos: permite que la contracción \(S^iT_i\) sea invariante.
+Posible forma de preguntarlo en examen: “Justifique por qué el gradiente es covariante.”
+
+4. Tensor contravariante de orden \(1\)
+
+Definición precisa: objeto con componentes \(T^i\) que satisfacen
+\[
+\bar T^i=\frac{\partial \bar x^i}{\partial x^r}T^r.
+\]
+Explicación desarrollada: sus componentes cambian como las coordenadas diferenciales o como los vectores tangentes.
+Ejemplo:
+\[
+T^i=\frac{dx^i}{dt}.
+\]
+Relación con otros conceptos: se contrae naturalmente con un covector.
+Posible forma de preguntarlo en examen: “Demuestre que el vector tangente a una curva es contravariante.”
+
+5. Tensor covariante de orden \(1\)
+
+Definición precisa: objeto con componentes \(T_i\) que satisfacen
+\[
+\bar T_i=\frac{\partial x^r}{\partial \bar x^i}T_r.
+\]
+Explicación desarrollada: sus componentes cambian con la jacobiana inversa. Los gradientes son el ejemplo central.
+Ejemplo:
+\[
+T_i=\frac{\partial F}{\partial x^i}.
+\]
+Relación con otros conceptos: su producto interno con un vector contravariante produce un invariante.
+Posible forma de preguntarlo en examen: “Probar que \(\partial F/\partial x^i\) define un covector.”
+
+6. Tensor covariante de orden \(2\)
+
+Definición precisa:
+\[
+\bar T_{ij}=
+\frac{\partial x^r}{\partial \bar x^i}
+\frac{\partial x^s}{\partial \bar x^j}
+T_{rs}.
+\]
+Explicación desarrollada: tiene dos índices inferiores y cada uno transforma con la jacobiana inversa.
+Ejemplo: los coeficientes \(c_{ij}\) de ciertas formas cuadráticas bajo cambios afines.
+Relación con otros conceptos: puede contraerse con dos vectores contravariantes para producir un escalar.
+Posible forma de preguntarlo en examen: “Si \(T_{ij}V^iV^j\) es invariante para todo \(V^i\), ¿qué puede concluirse bajo hipótesis de simetría?”
+
+7. Tensor contravariante de orden \(2\)
+
+Definición precisa:
+\[
+\bar T^{ij}=
+\frac{\partial \bar x^i}{\partial x^r}
+\frac{\partial \bar x^j}{\partial x^s}
+T^{rs}.
+\]
+Explicación desarrollada: tiene dos índices superiores; cada uno aporta una jacobiana directa.
+Ejemplo:
+\[
+U^{ij}=S^iT^j.
+\]
+Relación con otros conceptos: se obtiene por producto externo de dos vectores contravariantes.
+Posible forma de preguntarlo en examen: “Demuestre que \(S^iT^j\) es tensor contravariante de orden \(2\).”
+
+8. Tensor mixto de orden \(2\)
+
+Definición precisa:
+\[
+\bar T^i{}_j=
+\frac{\partial \bar x^i}{\partial x^r}
+\frac{\partial x^s}{\partial \bar x^j}
+T^r{}_s.
+\]
+Explicación desarrollada: combina un índice superior y uno inferior. Es el caso natural para muchas transformaciones lineales.
+Ejemplo:
+\[
+U^i{}_j=S^iT_j.
+\]
+Relación con otros conceptos: su contracción \(T^i{}_i\) es invariante.
+Posible forma de preguntarlo en examen: “Demuestre que la traza de un tensor mixto es invariante.”
+
+9. Tensor de orden arbitrario
+
+Definición precisa: colección de componentes
+\[
+T^{i_1\ldots i_p}{}_{j_1\ldots j_q}
+\]
+que transforma con una jacobiana directa por índice superior y una inversa por índice inferior.
+Explicación desarrollada: unifica todos los casos anteriores.
+Ejemplo:
+\[
+\bar T^{ij}{}_k
+=
+T^{rs}{}_t
+\frac{\partial \bar x^i}{\partial x^r}
+\frac{\partial \bar x^j}{\partial x^s}
+\frac{\partial x^t}{\partial \bar x^k}.
+\]
+Relación con otros conceptos: su orden total es \(p+q\).
+Posible forma de preguntarlo en examen: “Escriba la ley de transformación de un tensor \(2\)-contravariante y \(1\)-covariante.”
+
+10. Invariante
+
+Definición precisa: cantidad de orden cero cuyo valor no depende del sistema coordenado.
+Explicación desarrollada: se obtiene típicamente por contracción completa de índices compatibles.
+Ejemplo:
+\[
+S^iT_i.
+\]
+Relación con otros conceptos: es el resultado de un producto interno entre vector y covector.
+Posible forma de preguntarlo en examen: “Demuestre que \(S^iT_i\) es invariante.”
+
+11. Producto externo
+
+Definición precisa: producto componente a componente de dos tensores que conserva todos sus índices.
+Explicación desarrollada: si los tensores son de tipos \((p,q)\) y \((r,s)\), el resultado es de tipo \((p+r,q+s)\).
+Ejemplo:
+\[
+C^{ij}{}_{k}=A^iB^j{}_k.
+\]
+Relación con otros conceptos: un producto interno puede verse como una contracción posterior de un producto externo.
+Posible forma de preguntarlo en examen: “Determine el tipo tensorial del producto externo de \(A^i{}_j\) y \(B_{kl}\).”
+
+12. Producto interno
+
+Definición precisa: operación que suma sobre un índice superior de un tensor y un índice inferior de otro.
+Explicación desarrollada: reduce el orden total en \(2\). Es una forma de contraer después de multiplicar.
+Ejemplo:
+\[
+C^i{}_k=A^{ij}B_{jk}.
+\]
+Relación con otros conceptos: produce invariantes cuando todos los índices quedan contraídos.
+Posible forma de preguntarlo en examen: “Indique los índices libres y el tipo tensorial de \(A^{ij}B_{jk}\).”
+
+13. Contracción
+
+Definición precisa: suma sobre un índice superior y uno inferior del mismo tensor.
+Explicación desarrollada: transforma un tensor de tipo \((p,q)\) en otro de tipo \((p-1,q-1)\).
+Ejemplo:
+\[
+S^j{}_l=T^{ij}{}_{il}.
+\]
+Relación con otros conceptos: la traza \(T^i{}_i\) es una contracción.
+Posible forma de preguntarlo en examen: “Contraiga el tensor \(T^{ij}{}_{kl}\) en los índices \(i\) y \(k\) y diga el tipo del resultado.”
+
+14. Regla del cociente tensorial
+
+Definición precisa: criterio que permite deducir que un objeto es tensor si sus contracciones con vectores arbitrarios producen tensores o invariantes del tipo adecuado.
+Explicación desarrollada: evita verificar directamente toda la ley de transformación.
+Ejemplo: si \(T_iV^i\) es invariante para todo \(V^i\), entonces \(T_i\) es covector.
+Relación con otros conceptos: depende del carácter arbitrario del vector contraído.
+Posible forma de preguntarlo en examen: “Use la regla del cociente para probar que \(T_{ij}\) es tensor covariante.”
+
+15. Ecuación tensorial
+
+Definición precisa: igualdad entre tensores del mismo tipo y orden.
+Explicación desarrollada: si se verifica en un sistema coordenado, se verifica en todos los sistemas admisibles.
+Ejemplo:
+\[
+T_{ij}=0.
+\]
+Relación con otros conceptos: se apoya en las leyes de transformación homogéneas.
+Posible forma de preguntarlo en examen: “Explique por qué basta comprobar una identidad tensorial en un sistema conveniente.”
+
+## 5. Relaciones entre ideas
+
+La dependencia principal del capítulo es esta: primero se necesita un cambio admisible de coordenadas; después se define cómo transforman los índices; luego se reconocen tensores; finalmente se construyen nuevos tensores mediante operaciones algebraicas.
+
+El cambio de coordenadas proporciona las matrices jacobianas. La jacobiana directa se asocia a índices superiores y la jacobiana inversa a índices inferiores. Esta oposición contravariante/covariante es la jerarquía básica: todo tensor de orden alto no es más que una combinación ordenada de esos dos comportamientos elementales.
+
+Los invariantes aparecen como consecuencia de combinar un comportamiento contravariante con uno covariante. La razón es que la jacobiana directa y la inversa se cancelan mediante la delta de Kronecker. Por eso la contracción es la operación central: elimina pares de índices y reduce el orden sin destruir la tensorialidad.
+
+El producto externo va en sentido contrario a la contracción. Mientras la contracción reduce el número de índices, el producto externo los aumenta. El producto interno combina ambas ideas: primero se multiplican tensores y luego se suma sobre un par superior-inferior. Así, las operaciones algebraicas no son independientes; forman una cadena:
+producto externo → contracción → producto interno → invariante, si no quedan índices libres.
+
+La regla del cociente se sitúa en un nivel superior. No construye directamente tensores, sino que permite reconocerlos a partir de sus contracciones. Su lógica depende de que los vectores usados sean arbitrarios. Si una expresión se comporta tensorialmente al contraerse con cualquier vector de prueba, entonces los coeficientes que quedaban ocultos deben obedecer la ley tensorial correspondiente.
+
+La diferencia entre tensores generales, afines y cartesianos introduce una jerarquía de exigencia. Los tensores generales deben transformar correctamente bajo cambios admisibles curvilíneos. Los tensores afines solo se consideran respecto de transformaciones lineales invertibles. Los tensores cartesianos se restringen a cambios ortogonales. Cuanto más restringida es la clase de cambios, más objetos pueden comportarse como tensores. Por eso una propiedad cartesiana no siempre se puede trasladar al caso general.
+
+La oposición más importante es “componente frente a objeto”. Las componentes cambian; el objeto tensorial permanece representado por todas esas componentes compatibles. El cálculo tensorial no afirma que los números \(T_{ij}\) sean iguales en todos los sistemas, sino que cambian de forma controlada.
+
+No hay en este bloque un desarrollo histórico detallado. La evolución interna es matemática: se pasa de la geometría analítica con coordenadas, a la clasificación de leyes de transformación, y de ahí a una notación algebraica capaz de expresar leyes físicas y geométricas independientemente del sistema coordenado elegido.
+
+## 6. Errores habituales
+
+1. Error: “Todo objeto con varios índices es un tensor.”
+
+Por qué está mal: tener índices solo indica una forma de escribir componentes. Para ser tensor debe obedecer una ley de transformación determinada.
+Corrección: comprobar la ley de transformación o aplicar un criterio de tensorialidad.
+Respuesta incorrecta: “\(A_{ij}\) es tensor porque tiene dos subíndices.”
+Respuesta correcta: “\(A_{ij}\) será tensor covariante de orden \(2\) si bajo cambios admisibles cumple \(\bar A_{ij}=(\partial x^r/\partial \bar x^i)(\partial x^s/\partial \bar x^j)A_{rs}\).”
+
+2. Error: “Covariante y contravariante significan lo mismo en la práctica.”
+
+Por qué está mal: usan matrices jacobianas distintas.
+Corrección: índice superior implica jacobiana directa; índice inferior implica jacobiana inversa.
+Respuesta incorrecta: “\(\bar T_i=(\partial \bar x^i/\partial x^r)T_r\).”
+Respuesta correcta: “\(\bar T_i=(\partial x^r/\partial \bar x^i)T_r\).”
+
+3. Error: “El gradiente es un vector contravariante.”
+
+Por qué está mal: sus componentes transforman por regla de la cadena con la jacobiana inversa.
+Corrección: el gradiente de una función escalar es covariante.
+Respuesta incorrecta: “\(\overline{\partial_iF}=(\partial \bar x^i/\partial x^r)\partial_rF\).”
+Respuesta correcta: “\(\partial F/\partial \bar x^i=(\partial x^r/\partial \bar x^i)(\partial F/\partial x^r)\).”
+
+4. Error: “Se pueden contraer dos índices cualesquiera repetidos.”
+
+Por qué está mal: la contracción tensorial básica exige un índice superior y uno inferior.
+Corrección: solo se suma automáticamente sobre pares repetidos uno arriba y otro abajo.
+Respuesta incorrecta: “En \(T^{ij}U^{ij}\) se contraen \(i\) y \(j\) sin más.”
+Respuesta correcta: “Para contraer de forma tensorial se necesita una expresión como \(T^{ij}U_{ij}\) o usar antes una métrica para bajar índices.”
+
+5. Error: “Los índices libres pueden cambiar de nombre de manera independiente en cada lado.”
+
+Por qué está mal: los índices libres determinan las componentes de la igualdad. Deben coincidir en ambos miembros.
+Corrección: solo los índices mudos pueden renombrarse.
+Respuesta incorrecta: “\(A^iB_j=C^k{}_l\) con \(i,j,k,l\) libres.”
+Respuesta correcta: “\(A^iB_j=C^i{}_j\), si ambos lados representan el mismo tensor mixto.”
+
+6. Error: “Si una expresión vale cero en un sistema, entonces siempre vale cero.”
+
+Por qué está mal: eso solo se garantiza si la expresión es tensorial.
+Corrección: demostrar primero que es tensor.
+Respuesta incorrecta: “Como \(Q_{ij}=0\) en cartesianas, entonces \(Q_{ij}=0\) en cualquier coordenada.”
+Respuesta correcta: “Si \(Q_{ij}\) es tensor covariante y se anula en un sistema, entonces se anula en todos.”
+
+7. Error: “La traza de cualquier matriz es invariante.”
+
+Por qué está mal: la traza invariante en este contexto corresponde a la contracción de un tensor mixto \(T^i{}_i\), no a cualquier matriz de componentes.
+Corrección: verificar que el objeto es tensor mixto.
+Respuesta incorrecta: “La traza de \(T_{ij}\) es siempre invariante.”
+Respuesta correcta: “La contracción \(T^i{}_i\) de un tensor mixto de orden \(2\) es invariante.”
+
+8. Error: “El producto externo contrae índices.”
+
+Por qué está mal: el producto externo conserva todos los índices de los factores.
+Corrección: el producto externo aumenta el orden; la contracción o producto interno lo reduce.
+Respuesta incorrecta: “\(S^iT_j\) es un escalar.”
+Respuesta correcta: “\(S^iT_j\) es un tensor mixto de orden \(2\). El escalar sería \(S^iT_i\).”
+
+9. Error: “Una propiedad cartesiana vale automáticamente para cambios generales.”
+
+Por qué está mal: las transformaciones cartesianas son más restrictivas que los cambios curvilíneos generales.
+Corrección: distinguir tensores cartesianos, afines y generales.
+Respuesta incorrecta: “Como funciona bajo rotaciones, es tensor general.”
+Respuesta correcta: “Funcionar bajo rotaciones prueba tensorialidad cartesiana, no necesariamente tensorialidad general.”
+
+10. Error: “La regla del cociente vale con un único vector de prueba.”
+
+Por qué está mal: el criterio exige que la propiedad se cumpla para vectores arbitrarios.
+Corrección: indicar explícitamente la arbitrariedad.
+Respuesta incorrecta: “Como \(T_iV^i\) es invariante para este \(V\), \(T_i\) es covector.”
+Respuesta correcta: “Si \(T_iV^i\) es invariante para todo vector contravariante \(V^i\), entonces \(T_i\) es covector.”
+
+11. Error: “El orden de un tensor es el número de componentes.”
+
+Por qué está mal: el orden es el número total de índices, no el número de componentes.
+Corrección: un tensor de tipo \((p,q)\) tiene orden \(p+q\).
+Respuesta incorrecta: “En dimensión \(3\), \(T_{ij}\) es de orden \(9\).”
+Respuesta correcta: “\(T_{ij}\) tiene \(9\) componentes, pero es de orden \(2\).”
+
+12. Error: “Los coeficientes escalares de una combinación lineal pueden ser funciones cualesquiera sin mirar su transformación.”
+
+Por qué está mal: para conservar tensorialidad deben ser invariantes escalares si se pretende una combinación lineal tensorial del mismo tipo.
+Corrección: usar escalares invariantes o comprobar la transformación completa.
+Respuesta incorrecta: “\(f_iS_{ij}+T_{ij}\) es tensor porque \(S\) y \(T\) lo son.”
+Respuesta correcta: “\(aS_{ij}+bT_{ij}\) es tensor si \(a,b\) son invariantes escalares.”
+
+## 7. Preguntas orientadas a examen
+
+### 10 preguntas fáciles
+
+F1. ¿Qué significa que un cambio de coordenadas sea admisible en el contexto tensorial?
+
+F2. Escriba la ley de transformación de un vector contravariante.
+
+F3. Escriba la ley de transformación de un vector covariante.
+
+F4. ¿Por qué el gradiente de una función escalar es un vector covariante?
+
+F5. Defina tensor mixto de orden \(2\).
+
+F6. ¿Qué es un invariante?
+
+F7. ¿Qué operación tensorial representa \(T^i{}_i\)?
+
+F8. ¿Cuál es el orden de \(T^{ij}{}_{klm}\)?
+
+F9. ¿Qué tipo de tensor es \(U^{ij}=S^iT^j\) si \(S^i\) y \(T^j\) son contravariantes?
+
+F10. ¿Qué diferencia hay entre producto externo y producto interno?
+
+### 10 preguntas medias
+
+M1. Demuestre que \(S^iT_i\) es invariante si \(S^i\) es contravariante y \(T_i\) covariante.
+
+M2. Escriba la ley de transformación de un tensor \(T^{ij}{}_k\).
+
+M3. Determine el tipo tensorial de \(C^i{}_k=A^{ij}B_{jk}\).
+
+M4. Explique por qué la traza de un tensor mixto \(T^i{}_j\) es invariante.
+
+M5. Si \(T_{ij}\) y \(S_{ij}\) son tensores covariantes de orden \(2\), pruebe que \(2T_{ij}-3S_{ij}\) también lo es.
+
+M6. Si \(A^i\) es contravariante y \(B_j\) covariante, determine el tipo de \(A^iB_j\).
+
+M7. Explique por qué no se debe afirmar que \(T_{ii}\) es una contracción tensorial válida sin más información.
+
+M8. Enuncie un criterio de tensorialidad basado en la regla del cociente.
+
+M9. Explique la diferencia entre tensor general y tensor cartesiano.
+
+M10. Si \(T_{ij}=0\) en un sistema y \(T_{ij}\) es tensor, explique por qué \(T_{ij}=0\) en todos los sistemas.
+
+### 5 preguntas difíciles
+
+D1. Use la regla del cociente para justificar que si \(T_iV^i\) es invariante para todo \(V^i\), entonces \(T_i\) es covariante.
+
+D2. Demuestre que si \(T_{ij}V^i\) es covariante para todo vector contravariante \(V^i\), entonces \(T_{ij}\) es tensor covariante de orden \(2\).
+
+D3. Sea \(T^{ij}{}_{kl}\). Escriba dos contracciones distintas y determine el tipo de tensor resultante.
+
+D4. Explique por qué una identidad comprobada en coordenadas cartesianas no siempre queda demostrada en coordenadas generales.
+
+D5. Muestre que el producto interno de dos tensores puede entenderse como contracción de su producto externo.
+
+### 5 preguntas de desarrollo largo
+
+L1. Desarrolle la construcción de las leyes de transformación tensorial desde el cambio de coordenadas hasta la fórmula general para \(T^{i_1\ldots i_p}{}_{j_1\ldots j_q}\).
+
+L2. Explique la diferencia entre vectores contravariantes y covariantes, usando como ejemplos el vector tangente a una curva y el gradiente de una función.
+
+L3. Desarrolle las operaciones algebraicas básicas con tensores: combinación lineal, producto externo, producto interno y contracción.
+
+L4. Explique la función de los invariantes en cálculo tensorial y su relación con las ecuaciones tensoriales.
+
+L5. Exponga la diferencia entre tensores generales, afines y cartesianos, y explique por qué una propiedad cartesiana no basta para asegurar tensorialidad general.
+
+### 5 preguntas de relación entre conceptos
+
+R1. Relacione jacobiana directa, índice superior y vector tangente.
+
+R2. Relacione jacobiana inversa, índice inferior y gradiente.
+
+R3. Relacione producto externo, producto interno y contracción.
+
+R4. Relacione invariante, tensor de orden cero y ecuación física independiente de coordenadas.
+
+R5. Relacione regla del cociente y demostración de tensorialidad.
+
+## 8. Respuestas modelo
+
+### Respuestas fáciles
+
+F1. Un cambio de coordenadas es admisible cuando las nuevas coordenadas son funciones suficientemente regulares de las antiguas, el cambio es localmente invertible y el jacobiano no se anula. Esta condición permite usar la jacobiana directa y su inversa en las leyes de transformación tensorial.
+
+F2. Un vector contravariante transforma según
+\[
+\bar T^i=\frac{\partial \bar x^i}{\partial x^r}T^r.
+\]
+Cada índice superior introduce una derivada de la coordenada nueva respecto de la antigua.
+
+F3. Un vector covariante transforma según
+\[
+\bar T_i=\frac{\partial x^r}{\partial \bar x^i}T_r.
+\]
+Cada índice inferior introduce una derivada de la coordenada antigua respecto de la nueva.
+
+F4. Porque sus componentes son \(T_i=\partial F/\partial x^i\). Al cambiar de coordenadas, por la regla de la cadena,
+\[
+\frac{\partial F}{\partial \bar x^i}
+=
+\frac{\partial F}{\partial x^r}
+\frac{\partial x^r}{\partial \bar x^i}.
+\]
+Esto coincide con la ley covariante.
+
+F5. Es un tensor con un índice superior y uno inferior, \(T^i{}_j\), que transforma como
+\[
+\bar T^i{}_j=
+\frac{\partial \bar x^i}{\partial x^r}
+\frac{\partial x^s}{\partial \bar x^j}
+T^r{}_s.
+\]
+
+F6. Un invariante es una cantidad cuyo valor no depende del sistema coordenado. En notación tensorial se puede considerar un tensor de orden cero. Un ejemplo es \(S^iT_i\).
+
+F7. Representa una contracción: se identifica el índice superior \(i\) con el inferior \(i\) y se suma. En un tensor mixto de orden \(2\), \(T^i{}_i\) es la traza y es invariante.
+
+F8. Tiene cinco índices en total: dos superiores y tres inferiores. Por tanto, es un tensor de orden \(5\), de tipo \((2,3)\).
+
+F9. Es un tensor contravariante de orden \(2\), porque es el producto externo de dos vectores contravariantes.
+
+F10. El producto externo conserva todos los índices y aumenta el orden. El producto interno suma sobre un par formado por un índice superior y uno inferior, por lo que reduce el orden en \(2\).
+
+### Respuestas medias
+
+M1. Usando las leyes de transformación,
+\[
+\bar S^i=\frac{\partial \bar x^i}{\partial x^r}S^r,
+\qquad
+\bar T_i=\frac{\partial x^s}{\partial \bar x^i}T_s.
+\]
+Entonces
+\[
+\bar S^i\bar T_i
+=
+\frac{\partial \bar x^i}{\partial x^r}
+\frac{\partial x^s}{\partial \bar x^i}
+S^rT_s.
+\]
+Como las jacobianas son inversas,
+\[
+\frac{\partial \bar x^i}{\partial x^r}
+\frac{\partial x^s}{\partial \bar x^i}
+=
+\delta^s_r.
+\]
+Por tanto,
+\[
+\bar S^i\bar T_i=S^rT_r.
+\]
+La cantidad es invariante.
+
+M2. Al tener dos índices superiores y uno inferior,
+\[
+\bar T^{ij}{}_k
+=
+T^{rs}{}_t
+\frac{\partial \bar x^i}{\partial x^r}
+\frac{\partial \bar x^j}{\partial x^s}
+\frac{\partial x^t}{\partial \bar x^k}.
+\]
+
+M3. El índice \(j\) aparece una vez arriba y una vez abajo, por lo que está contraído. Quedan libres \(i\) arriba y \(k\) abajo. Por tanto,
+\[
+C^i{}_k=A^{ij}B_{jk}
+\]
+es un tensor mixto de orden \(2\), de tipo \((1,1)\).
+
+M4. La traza es
+\[
+T^i{}_i.
+\]
+Bajo cambio de coordenadas,
+\[
+\bar T^i{}_i
+=
+\frac{\partial \bar x^i}{\partial x^r}
+\frac{\partial x^s}{\partial \bar x^i}
+T^r{}_s
+=
+\delta^s_rT^r{}_s
+=
+T^r{}_r.
+\]
+Por tanto, no cambia con las coordenadas.
+
+M5. Como \(T_{ij}\) y \(S_{ij}\) tienen la misma ley covariante,
+\[
+\bar T_{ij}=\frac{\partial x^r}{\partial \bar x^i}
+\frac{\partial x^s}{\partial \bar x^j}T_{rs},
+\qquad
+\bar S_{ij}=\frac{\partial x^r}{\partial \bar x^i}
+\frac{\partial x^s}{\partial \bar x^j}S_{rs}.
+\]
+Entonces
+\[
+\overline{(2T-3S)}_{ij}
+=
+\frac{\partial x^r}{\partial \bar x^i}
+\frac{\partial x^s}{\partial \bar x^j}
+(2T_{rs}-3S_{rs}).
+\]
+Luego \(2T_{ij}-3S_{ij}\) es tensor covariante de orden \(2\).
+
+M6. \(A^iB_j\) tiene un índice superior y uno inferior. Es el producto externo de un vector contravariante y un covector, así que es un tensor mixto de orden \(2\), \(U^i{}_j\).
+
+M7. La expresión \(T_{ii}\) repite dos subíndices. La contracción tensorial básica exige un índice superior y uno inferior. Para convertir un índice inferior en superior haría falta una estructura adicional, como una métrica. Sin esa información, \(T_{ii}\) no debe tratarse como contracción tensorial invariante.
+
+M8. Un criterio básico es: si \(T_iV^i\) es invariante para todo vector contravariante \(V^i\), entonces \(T_i\) es vector covariante. Otro criterio: si \(T_{ij}V^i\) es covariante para todo \(V^i\), entonces \(T_{ij}\) es tensor covariante de orden \(2\).
+
+M9. Un tensor general transforma correctamente bajo cambios admisibles de coordenadas, incluidos cambios curvilíneos. Un tensor cartesiano solo se exige respecto de cambios ortogonales entre sistemas rectangulares. Por eso la tensorialidad cartesiana es una condición más débil que la tensorialidad general.
+
+M10. Si \(T_{ij}\) es tensor covariante,
+\[
+\bar T_{ij}
+=
+\frac{\partial x^r}{\partial \bar x^i}
+\frac{\partial x^s}{\partial \bar x^j}
+T_{rs}.
+\]
+Si \(T_{rs}=0\) para todo \(r,s\) en un sistema, entonces todas las combinaciones lineales anteriores son cero. Luego \(\bar T_{ij}=0\) en cualquier sistema admisible.
+
+### Respuestas difíciles
+
+D1. Supongamos que \(E=T_iV^i\) es invariante para todo vector contravariante \(V^i\). Entonces
+\[
+\bar T_i\bar V^i=T_jV^j.
+\]
+Como
+\[
+\bar V^i=\frac{\partial \bar x^i}{\partial x^r}V^r,
+\]
+queda
+\[
+\bar T_i\frac{\partial \bar x^i}{\partial x^r}V^r=T_rV^r.
+\]
+Por tanto,
+\[
+\left(\bar T_i\frac{\partial \bar x^i}{\partial x^r}-T_r\right)V^r=0.
+\]
+Como \(V^r\) es arbitrario, el paréntesis debe anularse:
+\[
+T_r=\bar T_i\frac{\partial \bar x^i}{\partial x^r}.
+\]
+Multiplicando por \(\partial x^r/\partial \bar x^k\), se obtiene
+\[
+\bar T_k=\frac{\partial x^r}{\partial \bar x^k}T_r.
+\]
+Esta es la ley covariante.
+
+D2. Se parte de que, para todo \(V^i\), la colección \(U_j=T_{ij}V^i\) es covariante:
+\[
+\bar U_j=\frac{\partial x^s}{\partial \bar x^j}U_s.
+\]
+Pero
+\[
+\bar U_j=\bar T_{ij}\bar V^i
+\]
+y
+\[
+\bar V^i=\frac{\partial \bar x^i}{\partial x^r}V^r.
+\]
+Entonces
+\[
+\bar T_{ij}\frac{\partial \bar x^i}{\partial x^r}V^r
+=
+\frac{\partial x^s}{\partial \bar x^j}T_{rs}V^r.
+\]
+Como \(V^r\) es arbitrario,
+\[
+\bar T_{ij}\frac{\partial \bar x^i}{\partial x^r}
+=
+\frac{\partial x^s}{\partial \bar x^j}T_{rs}.
+\]
+Multiplicando por \(\partial x^r/\partial \bar x^k\),
+\[
+\bar T_{kj}
+=
+\frac{\partial x^r}{\partial \bar x^k}
+\frac{\partial x^s}{\partial \bar x^j}
+T_{rs}.
+\]
+Renombrando índices libres, se obtiene la ley covariante de orden \(2\).
+
+D3. El tensor \(T^{ij}{}_{kl}\) tiene tipo \((2,2)\). Una contracción posible es \(i\) con \(k\):
+\[
+S^j{}_l=T^{ij}{}_{il}.
+\]
+Queda un índice superior \(j\) y uno inferior \(l\); el resultado es mixto de orden \(2\).
+
+Otra contracción posible es \(j\) con \(l\):
+\[
+R^i{}_k=T^{ij}{}_{kj}.
+\]
+También es tensor mixto de orden \(2\). En general, contraer un índice superior con uno inferior reduce el tipo de \((2,2)\) a \((1,1)\).
+
+D4. Una identidad comprobada en coordenadas cartesianas queda demostrada en coordenadas generales solo si se sabe que ambos lados son tensores del mismo tipo. Si la expresión no es tensorial, puede transformarse con términos adicionales o con leyes distintas al cambiar de coordenadas. Las coordenadas cartesianas tienen propiedades especiales, como matrices ortogonales y, en muchos contextos, simplificaciones que no sobreviven a cambios curvilíneos. Por eso el método correcto es: primero demostrar tensorialidad; después usar coordenadas convenientes.
+
+D5. Sean \(A^{ij}\) y \(B_{jk}\). Su producto externo es
+\[
+P^{ij}{}_{mk}=A^{ij}B_{mk}.
+\]
+Si se contrae el índice \(j\) con el índice \(m\), se obtiene
+\[
+P^{ij}{}_{jk}=A^{ij}B_{jk}=C^i{}_k.
+\]
+Esto muestra que el producto interno puede verse como un producto externo seguido de una contracción.
+
+### Respuestas de desarrollo largo
+
+L1. Un cambio de coordenadas se escribe como \(\bar x^i=\bar x^i(x^1,\ldots,x^n)\). Si el jacobiano no se anula, existe la transformación inversa \(x^i=x^i(\bar x^1,\ldots,\bar x^n)\). Las componentes contravariantes usan la jacobiana directa:
+\[
+\bar T^i=\frac{\partial \bar x^i}{\partial x^r}T^r.
+\]
+Las covariantes usan la inversa:
+\[
+\bar T_i=\frac{\partial x^r}{\partial \bar x^i}T_r.
+\]
+Un tensor general combina ambos patrones. Si tiene \(p\) índices superiores y \(q\) inferiores,
+\[
+\bar T^{i_1\ldots i_p}{}_{j_1\ldots j_q}
+=
+T^{r_1\ldots r_p}{}_{s_1\ldots s_q}
+\frac{\partial \bar x^{i_1}}{\partial x^{r_1}}\cdots
+\frac{\partial \bar x^{i_p}}{\partial x^{r_p}}
+\frac{\partial x^{s_1}}{\partial \bar x^{j_1}}\cdots
+\frac{\partial x^{s_q}}{\partial \bar x^{j_q}}.
+\]
+Esta fórmula define el tipo tensorial. El orden total es \(p+q\).
+
+L2. Un vector contravariante transforma como las coordenadas diferenciales. Si una curva es \(x^i(t)\), su vector tangente tiene componentes \(dx^i/dt\). Al cambiar de coordenadas,
+\[
+\frac{d\bar x^i}{dt}
+=
+\frac{\partial \bar x^i}{\partial x^r}\frac{dx^r}{dt}.
+\]
+Por tanto, el tangente es contravariante.
+
+Un covector transforma de forma inversa. El gradiente de una función escalar \(F\) tiene componentes \(\partial F/\partial x^i\). Por regla de la cadena,
+\[
+\frac{\partial F}{\partial \bar x^i}
+=
+\frac{\partial x^r}{\partial \bar x^i}
+\frac{\partial F}{\partial x^r}.
+\]
+Por tanto, el gradiente es covariante.
+
+La diferencia no está en que uno sea “más vector” que otro, sino en la ley de transformación. Ambos tienen \(n\) componentes, pero representan objetos duales respecto del cambio de coordenadas.
+
+L3. La combinación lineal de tensores del mismo tipo y orden conserva la tensorialidad, siempre que los coeficientes sean invariantes escalares. Por ejemplo, si \(A_{ij}\) y \(B_{ij}\) son covariantes de orden \(2\), entonces \(2A_{ij}-B_{ij}\) también lo es.
+
+El producto externo multiplica componentes y conserva todos los índices. Si \(A^i\) y \(B_j\) son tensores, entonces \(A^iB_j\) es mixto de orden \(2\).
+
+El producto interno identifica un índice superior con uno inferior pertenecientes a dos tensores y suma sobre él. Así,
+\[
+A^{ij}B_{jk}=C^i{}_k.
+\]
+El resultado conserva solo los índices libres.
+
+La contracción actúa dentro de un mismo tensor. En \(T^i{}_j\), la contracción \(T^i{}_i\) produce un invariante. En \(T^{ij}{}_{kl}\), contraer \(i\) con \(k\) da \(T^{ij}{}_{il}\), que es mixto de orden \(2\).
+
+L4. Los invariantes son cantidades cuyo valor no cambia con el sistema coordenado. En cálculo tensorial son esenciales porque expresan contenido geométrico o físico independiente de la descripción. El ejemplo elemental es \(S^iT_i\), donde la jacobiana directa de \(S^i\) y la inversa de \(T_i\) se cancelan.
+
+Los invariantes también se interpretan como tensores de orden cero. Una contracción completa de una expresión tensorial puede producir un escalar invariante. Por ejemplo, la traza \(T^i{}_i\) de un tensor mixto es invariante.
+
+La relación con ecuaciones tensoriales es directa. Si una ecuación está formada por tensores del mismo tipo, su validez no depende del sistema coordenado. Si además se reduce a un invariante, expresa una igualdad escalar independiente de coordenadas.
+
+L5. Un tensor general transforma bajo cambios admisibles de coordenadas, incluidos cambios curvilíneos. Sus leyes contienen jacobianas que pueden depender del punto. Es la noción más fuerte y la que se necesita para geometría diferencial.
+
+Un tensor afín se considera bajo cambios lineales invertibles. En ese caso las jacobianas son constantes y algunas expresiones se comportan tensorialmente aunque no lo harían bajo cambios generales.
+
+Un tensor cartesiano se restringe a cambios ortogonales entre sistemas rectangulares. Como la inversa coincide con la traspuesta, la diferencia práctica entre índices superiores e inferiores se reduce. Pero esa simplificación es específica de coordenadas cartesianas. Por eso una propiedad demostrada solo bajo rotaciones no garantiza tensorialidad general. Para afirmar una identidad en coordenadas generales hay que verificar leyes tensoriales generales.
+
+### Respuestas de relación entre conceptos
+
+R1. La jacobiana directa
+\[
+\frac{\partial \bar x^i}{\partial x^r}
+\]
+aparece en los índices superiores. El vector tangente a una curva tiene componentes \(dx^i/dt\), y por la regla de la cadena transforma con esa jacobiana. Por eso el vector tangente es contravariante.
+
+R2. La jacobiana inversa
+\[
+\frac{\partial x^r}{\partial \bar x^i}
+\]
+aparece en los índices inferiores. El gradiente tiene componentes \(\partial F/\partial x^i\), y por la regla de la cadena transforma con esa matriz inversa. Por eso el gradiente es covariante.
+
+R3. El producto externo aumenta el número de índices porque conserva todos los índices de los factores. La contracción reduce el número de índices porque suma sobre un par superior-inferior. El producto interno puede verse como producto externo seguido de una contracción.
+
+R4. Un invariante es un tensor de orden cero. Su valor no depende de las coordenadas. Por eso es adecuado para expresar magnitudes físicas o geométricas que no deben depender del sistema usado para medirlas.
+
+R5. La regla del cociente permite deducir tensorialidad a partir de contracciones con vectores arbitrarios. Si al contraer un objeto desconocido con cualquier vector se obtiene siempre un tensor o un invariante, entonces el objeto desconocido debe transformar tensorialmente.
+
+## 9. Resumen final de repaso
+
+Ideas principales:
+- Un tensor se reconoce por su ley de transformación.
+- Los índices superiores transforman con \(\partial \bar x/\partial x\).
+- Los índices inferiores transforman con \(\partial x/\partial \bar x\).
+- El gradiente es covariante; el vector tangente es contravariante.
+- La contracción de un índice superior con uno inferior produce tensores de menor orden o invariantes.
+- Las ecuaciones tensoriales válidas en un sistema lo son en todos, siempre que sean realmente tensoriales.
+
+Conceptos imprescindibles:
+- Cambio admisible de coordenadas.
+- Jacobiana directa e inversa.
+- Tensor contravariante.
+- Tensor covariante.
+- Tensor mixto.
+- Tensor de orden arbitrario.
+- Invariante.
+- Producto externo.
+- Producto interno.
+- Contracción.
+- Regla del cociente.
+- Tensor cartesiano y tensor afín.
+
+Relaciones clave:
+- Contravariante ↔ índice superior ↔ jacobiana directa.
+- Covariante ↔ índice inferior ↔ jacobiana inversa.
+- Producto externo ↔ aumenta orden.
+- Contracción ↔ reduce orden.
+- Producto interno ↔ producto externo más contracción.
+- Invariante ↔ tensor de orden cero.
+- Ecuación tensorial ↔ independencia coordenada.
+
+Errores que evitar:
+- Confundir índices con tensorialidad.
+- Cambiar índices de arriba abajo sin métrica.
+- Contraer dos índices del mismo tipo.
+- Creer que toda traza es invariante.
+- Usar una identidad cartesiana como si fuera general.
+- Aplicar la regla del cociente sin arbitrariedad.
+- No comprobar que los índices libres coinciden en una igualdad.
+
+## 10. Checklist de dominio
+
+- Si no puedes explicar qué significa que un cambio sea admisible, falta repasar cambios de coordenadas y jacobiano.
+
+- Si no puedes escribir \(\bar T^i=(\partial \bar x^i/\partial x^r)T^r\), falta repasar vectores contravariantes.
+
+- Si confundes \(\bar T_i=(\partial x^r/\partial \bar x^i)T_r\) con la ley contravariante, revisar covectores y regla de la cadena.
+
+- Si no puedes demostrar que el gradiente es covariante, falta repasar la regla de la cadena.
+
+- Si no puedes demostrar que \(S^iT_i\) es invariante, falta repasar cancelación de jacobiana directa e inversa.
+
+- Si no puedes escribir la ley de transformación de \(T^{ij}{}_k\), falta repasar la fórmula general de transformación tensorial.
+
+- Si confundes orden del tensor con número de componentes, revisar tipo \((p,q)\) y orden \(p+q\).
+
+- Si sumas tensores con índices colocados de forma distinta, revisar combinación lineal de tensores.
+
+- Si crees que \(S^iT_j\) es un escalar, revisar producto externo frente a producto interno.
+
+- Si contraes \(T_{ii}\) sin métrica, revisar la definición de contracción.
+
+- Si no puedes determinar los índices libres de \(A^{ij}B_{jk}\), falta practicar producto interno.
+
+- Si no puedes explicar por qué \(T^i{}_i\) es invariante, revisar contracción de tensores mixtos.
+
+- Si afirmas que una matriz cualquiera tiene traza invariante, revisar diferencia entre matriz de componentes y tensor mixto.
+
+- Si no sabes usar la regla del cociente, repasar los criterios de tensorialidad con vectores arbitrarios.
+
+- Si no puedes explicar por qué una ecuación tensorial válida en un sistema vale en todos, falta repasar transformación de un tensor nulo.
+
+- Si confundes tensor cartesiano con tensor general, revisar la clase de cambios coordenados permitidos.
+
+- Si puedes escribir leyes de transformación, clasificar índices libres y contraídos, y justificar invariantes por contracción, el capítulo está suficientemente asentado.
+
+- Si puedes resolver ejercicios del tipo “decidir si una expresión es tensor”, “contraer índices” y “probar que una traza es invariante”, el bloque de álgebra tensorial está operativo para pasar a tensor métrico y derivada covariante.
