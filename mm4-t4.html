@@ -1,0 +1,470 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="color-scheme" content="light dark" />
+  <title>MM4 — Tema 4: Campos tensoriales y operaciones</title>
+  <meta name="description" content="Guía de estudio de Métodos Matemáticos IV sobre campos tensoriales, operaciones con tensores, criterios de tensorialidad y ecuaciones tensoriales." />
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/icon-32.png" />
+  <link rel="icon" type="image/png" sizes="50x50" href="assets/icons/icon-50.png" />
+  <link rel="apple-touch-icon" sizes="100x100" href="assets/icons/icon-100.png" />
+  <link rel="stylesheet" href="assets/styles.css" />
+  <script>window.MathJax = { tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']], processEscapes: true }, svg: { fontCache: 'global' } };</script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+  <script defer src="assets/app.js"></script>
+</head>
+<body class="subject-mm4">
+  <div class="wrap">
+    <header class="cover">
+      <a class="back-link" href="index.html">← Índice</a>
+      <p class="eyebrow">Métodos Matemáticos IV</p>
+      <h1>Campos tensoriales: operaciones, criterios y ecuaciones</h1>
+      <p class="subtitle">Tema 4 · Kay · producto externo, producto interno, contracción, regla del cociente y ecuaciones tensoriales</p>
+      <div class="lesson-meta"><span>Asignatura: MM4</span><span>Tema 4</span><span>Estado: completo</span><span>Enfoque: examen UNED</span></div>
+    </header>
+    <div class="toolbar no-print" aria-label="Navegación del tema"><nav><a href="#mapa">Mapa</a><a href="#prerrequisitos">Prerrequisitos</a><a href="#desarrollo">Desarrollo</a><a href="#conceptos">Conceptos</a><a href="#errores">Errores</a><a href="#preguntas">Preguntas</a><a href="#respuestas">Respuestas</a><a href="#resumen">Resumen</a><a href="#checklist">Checklist</a></nav><div class="toolbar-actions"><button class="btn secondary" onclick="document.querySelectorAll('details').forEach(d=>d.open=true)">Abrir todo</button><button class="btn secondary" onclick="document.querySelectorAll('details').forEach(d=>d.open=false)">Modo repaso</button><button class="btn" onclick="window.print()">Imprimir / PDF</button></div></div>
+    <main>
+      <section id="mapa" class="page map-page"><header class="section-header"><p class="section-kicker">00</p><h2>Mapa conceptual</h2></header><div class="concept-map"><a class="map-card" href="#prerrequisitos"><span>1. Prerrequisitos mínimos</span><small>Ir a la sección</small></a><a class="map-card" href="#idea"><span>2. Idea central del capítulo</span><small>Ir a la sección</small></a><a class="map-card" href="#desarrollo"><span>3. Desarrollo completo del capítulo</span><small>Ir a la sección</small></a><a class="map-card" href="#conceptos"><span>4. Conceptos clave</span><small>Ir a la sección</small></a><a class="map-card" href="#relaciones"><span>5. Relaciones entre ideas</span><small>Ir a la sección</small></a><a class="map-card" href="#errores"><span>6. Errores habituales</span><small>Ir a la sección</small></a><a class="map-card" href="#preguntas"><span>7. Preguntas orientadas a examen</span><small>Ir a la sección</small></a><a class="map-card" href="#respuestas"><span>8. Respuestas modelo</span><small>Ir a la sección</small></a><a class="map-card" href="#resumen"><span>9. Resumen final de repaso</span><small>Ir a la sección</small></a><a class="map-card" href="#checklist"><span>10. Checklist de dominio</span><small>Ir a la sección</small></a></div><div class="reading-block source-block"><p>Fuente de trabajo: Guía de estudio — Cálculo tensorial / MM4 · T4 Kay — Campos tensoriales: operaciones con tensores, criterios de tensorialidad y ecuaciones tensoriales. La página conserva el orden del apunte original y lo convierte en una guía HTML navegable.</p></div></section>
+<section id="prerrequisitos" class="page"><header class="section-header"><p class="section-kicker">01</p><h2>1. Prerrequisitos mínimos</h2></header><div class="reading-block"><ol>
+<li>Notación de Einstein<p>Definición breve: cuando un índice aparece una vez arriba y una vez abajo en un mismo término, se entiende que se suma sobre todos sus valores. Así, \(A_iB^i\) significa \(\sum_i A_iB^i\).</p><p>Por qué es necesario: todo el capítulo trabaja con productos, contracciones y cambios de índice. Sin esta convención no se entiende cuándo una expresión representa una familia de componentes y cuándo representa un escalar.</p><p>Ejemplo mínimo: si \(i=1,2,3\), entonces \(T_iV^i=T_1V^1+T_2V^2+T_3V^3\).</p></li>
+<li>Índices contravariantes y covariantes<p>Definición breve: los índices superiores son contravariantes y los inferiores son covariantes. Bajo un cambio de coordenadas, cada tipo de índice transforma con el jacobiano correspondiente o con su inverso.</p><p>Por qué es necesario: las operaciones tensoriales consisten, en gran parte, en combinar índices superiores e inferiores sin romper sus leyes de transformación.</p><p>Ejemplo mínimo: \(V^i\) es un vector contravariante; \(T_i\) es un vector covariante; \(T^i{}_j\) es un tensor mixto.</p></li>
+<li>Ley de transformación tensorial<p>Definición breve: una colección de componentes es tensorial si, al cambiar de coordenadas, sus componentes nuevas se obtienen multiplicando por los factores jacobianos adecuados, uno por cada índice.</p><p>Por qué es necesario: el capítulo no define tensores desde cero, sino que enseña a construir tensores nuevos y a reconocerlos sin repetir siempre la ley completa.</p><p>Ejemplo mínimo: un tensor covariante de orden 2 transforma como</p></li>
+</ol>
+<div class="formula-block">\[
+\bar T_{ij}=T_{rs}\frac{\partial x^r}{\partial \bar x^i}\frac{\partial x^s}{\partial \bar x^j}.
+\]</div>
+<ol>
+<li>Orden y tipo de un tensor<p>Definición breve: el orden total de un tensor es el número total de índices. El tipo se especifica por el número de índices contravariantes y covariantes.</p><p>Por qué es necesario: las operaciones del capítulo modifican el orden y el tipo. El producto externo suma órdenes; el producto interno y la contracción los reducen.</p><p>Ejemplo mínimo: \(T^{ij}{}_k\) es de orden 3, 2-contravariante y 1-covariante.</p></li>
+<li>Invariante escalar<p>Definición breve: es una cantidad cuyo valor no cambia al cambiar de sistema coordenado. En notación tensorial puede verse como un tensor de orden cero.</p><p>Por qué es necesario: los criterios de tensorialidad del capítulo utilizan invariantes como prueba indirecta de que ciertos objetos son tensores.</p><p>Ejemplo mínimo: si \(U^i\) es contravariante y \(V_i\) es covariante, entonces \(V_iU^i\) es invariante.</p></li>
+<li>Producto interno entre vector covariante y vector contravariante<p>Definición breve: es la suma obtenida al emparejar un índice inferior con uno superior.</p><p>Por qué es necesario: el producto interno es la base de la contracción, de la regla del cociente y de los criterios de tensorialidad.</p><p>Ejemplo mínimo: \(A_iB^i\) tiene todos sus índices repetidos y, por tanto, no deja índices libres: es un escalar.</p></li>
+<li>Delta de Kronecker<p>Definición breve:</p></li>
+</ol>
+<div class="formula-block">\[
+\delta^i_j=
+\begin{cases}
+1,&amp; i=j,\\
+0,&amp; i\ne j.
+\end{cases}
+\]</div>
+<p>Actúa como identidad sobre índices.</p>
+<p>Por qué es necesario: el capítulo la usa como ejemplo de tensor mixto obtenido mediante producto interno y como objeto que permite reconocer identidades tensoriales.</p>
+<p>Ejemplo mínimo: \(\delta^i_jV^j=V^i\).</p>
+<ol>
+<li>Simetría de tensores de orden 2<p>Definición breve: un tensor covariante \(T_{ij}\) es simétrico si \(T_{ij}=T_{ji}\). Análogamente para uno contravariante \(T^{ij}=T^{ji}\).</p><p>Por qué es necesario: uno de los criterios de tensorialidad exige simetría para concluir que \(T_{ij}\) es tensor a partir de la invariancia de \(T_{ij}V^iV^j\).</p><p>Ejemplo mínimo: si \(g_{ij}=g_{ji}\), la forma \(g_{ij}V^iV^j\) contiene términos cruzados duplicados de forma controlada.</p></li>
+<li>Matriz jacobiana<p>Definición breve: es la matriz formada por las derivadas parciales de unas coordenadas respecto de otras.</p><p>Por qué es necesario: toda ley de transformación tensorial se escribe mediante factores jacobianos. El capítulo los evita cuando puede, pero su validez descansa en ellos.</p><p>Ejemplo mínimo: si \(\bar x^i=\bar x^i(x^1,\ldots,x^n)\), entonces aparece \(\partial \bar x^i/\partial x^r\) para índices contravariantes.</p></li>
+<li>Igualdad tensorial<p>Definición breve: una igualdad entre tensores del mismo tipo y orden se entiende componente a componente y conserva su forma bajo cambios de coordenadas.</p><p>Por qué es necesario: la última parte del capítulo explica por qué demostrar una ecuación tensorial en un sistema conveniente basta para tenerla en todos.</p><p>Ejemplo mínimo: si \(T_{ij}=0\) en un sistema y \(T_{ij}\) es tensor, entonces \(T_{ij}=0\) en cualquier sistema.</p></li>
+</ol></div></section>
+<section id="idea" class="page"><header class="section-header"><p class="section-kicker">02</p><h2>2. Idea central del capítulo</h2></header><div class="reading-block"><p>El capítulo 4 de Kay enseña a trabajar con tensores ya construidos. En el capítulo anterior se establecen las leyes de transformación de vectores y tensores de distinto tipo. Ahora se aborda un problema práctico: si ya se tienen varios tensores, ¿qué operaciones pueden hacerse con ellos sin perder el carácter tensorial? La respuesta organiza la aritmética básica del cálculo tensorial.</p>
+<p>La idea dominante es que los tensores no son simples tablas de números. Sus componentes pueden cambiar al cambiar de coordenadas, pero lo hacen siguiendo una regla exacta. Por eso no toda combinación de componentes es admisible. Sumar componentes solo tiene sentido tensorial cuando los objetos tienen el mismo tipo y orden; multiplicar tensores produce un tensor mayor; emparejar un índice superior con uno inferior produce una suma que reduce el orden; contraer índices dentro de un tensor también reduce el orden.</p>
+<p>El capítulo también introduce una herramienta de reconocimiento: no siempre conviene comprobar directamente la ley de transformación completa. Kay presenta criterios de tensorialidad basados en productos internos con vectores arbitrarios. Esta es la llamada regla del cociente: si al multiplicar un objeto por vectores arbitrarios se obtiene siempre un tensor o un invariante del tipo esperado, entonces el objeto original debe transformar como tensor.</p>
+<p>La última parte del capítulo explica por qué las ecuaciones tensoriales son tan poderosas. Si una expresión tensorial es cierta en un sistema de coordenadas, y todos los términos que aparecen son tensores del mismo tipo, la igualdad será cierta en cualquier sistema. Esto justifica una estrategia habitual: escoger coordenadas sencillas, demostrar allí la igualdad, y trasladar el resultado a cualquier coordenada mediante el carácter tensorial de la ecuación.</p>
+<p>Dentro de MM4, este capítulo es un puente. Antes se han definido los tensores; después aparecerán el tensor métrico, la derivada covariante, los símbolos de Christoffel y el tensor de Riemann. Para que esas construcciones sean manejables hay que dominar primero las operaciones formales: producto externo, producto interno, contracción, criterios de tensorialidad y validez de las ecuaciones tensoriales.</p></div></section>
+<section id="desarrollo" class="page"><header class="section-header"><p class="section-kicker">03</p><h2>3. Desarrollo completo del capítulo</h2></header><div class="reading-block"><h3>3.1. Combinaciones lineales de tensores</h3>
+<p>El capítulo comienza con la operación más simple: formar combinaciones lineales. Si se tienen varios tensores del mismo tipo y del mismo orden, cualquier combinación lineal de ellos con coeficientes escalares invariantes vuelve a ser un tensor del mismo tipo y orden.</p>
+<p>La restricción “mismo tipo y mismo orden” es esencial. No se pueden sumar tensorialmente \(T_i\) y \(S^i\), porque uno es covariante y el otro contravariante. Aunque ambos tengan un índice, no transforman igual. Tampoco se puede sumar un tensor de orden 2 con uno de orden 1. La suma debe respetar exactamente la estructura de índices.</p>
+<p>La importancia de esta regla es doble. Primero, permite construir nuevos tensores sin comprobar de nuevo toda la ley de transformación. Segundo, sirve para formar diferencias tensoriales. Si \(A_{ij}\) y \(B_{ij}\) son tensores covariantes de orden 2, entonces \(A_{ij}-B_{ij}\) también lo es. Esta idea será decisiva para justificar que una ecuación tensorial \(A_{ij}=B_{ij}\) equivale a decir que el tensor \(A_{ij}-B_{ij}\) se anula.</p>
+<p>Un ejemplo mínimo es</p>
+<div class="formula-block">\[
+C_{ij}=2A_{ij}-3B_{ij}.
+\]</div>
+<p>Si \(A_{ij}\) y \(B_{ij}\) son tensores covariantes de orden 2, entonces \(C_{ij}\) también lo es. En cambio,</p>
+<div class="formula-block">\[
+A_{ij}+V_i
+\]</div>
+<p>no tiene sentido como suma tensorial, porque deja estructuras de índices incompatibles.</p>
+<h3>3.2. Producto externo</h3>
+<p>El producto externo, también llamado producto tensorial en muchos textos, multiplica componentes de dos tensores y conserva todos los índices de ambos. Si</p>
+<div class="formula-block">\[
+S=S^{i_1\ldots i_p}{}_{j_1\ldots j_q},\qquad
+T=T^{k_1\ldots k_r}{}_{l_1\ldots l_s},
+\]</div>
+<p>entonces su producto externo tiene componentes</p>
+<div class="formula-block">\[
+(ST)^{i_1\ldots i_p k_1\ldots k_r}{}_{j_1\ldots j_q l_1\ldots l_s}
+=
+S^{i_1\ldots i_p}{}_{j_1\ldots j_q}
+T^{k_1\ldots k_r}{}_{l_1\ldots l_s}.
+\]</div>
+<p>El nuevo tensor tiene orden</p>
+<div class="formula-block">\[
+m=p+q+r+s,
+\]</div>
+<p>es \((p+r)\)-contravariante y \((q+s)\)-covariante. El producto externo no suma ningún índice; solo junta las estructuras de ambos tensores.</p>
+<p>La conexión con lo anterior es clara: una vez que sabemos que las componentes de cada tensor transforman correctamente, al multiplicar las leyes de transformación aparecen exactamente los factores necesarios para el tensor compuesto. Por eso el producto externo es una operación segura.</p>
+<p>Ejemplo:</p>
+<div class="formula-block">\[
+U^{ik}=A^iB^k
+\]</div>
+<p>es un tensor contravariante de orden 2 si \(A^i\) y \(B^k\) son vectores contravariantes. No se ha hecho ninguna suma, porque los índices \(i\) y \(k\) aparecen libres.</p>
+<h3>3.3. Producto interno entre dos tensores</h3>
+<p>El producto interno se obtiene al igualar un índice contravariante de un tensor con un índice covariante del otro y sumar sobre ese índice. A diferencia del producto externo, ahora sí desaparecen dos índices: uno superior y uno inferior. Por eso el orden total baja en dos.</p>
+<p>Si \(S\) es de tipo \((p,q)\) y \(T\) de tipo \((r,s)\), cada producto interno tendrá orden</p>
+<div class="formula-block">\[
+m=p+q+r+s-2.
+\]</div>
+<p>El resultado será \((p+r-1)\)-contravariante y \((q+s-1)\)-covariante.</p>
+<p>El capítulo insiste en que puede haber varios productos internos posibles. Si \(S\) tiene \(p\) índices superiores y \(q\) inferiores, y \(T\) tiene \(r\) superiores y \(s\) inferiores, se puede emparejar un superior de \(S\) con un inferior de \(T\), o un superior de \(T\) con un inferior de \(S\). En general hay \(ps+rq\) productos internos posibles, que no tienen por qué coincidir.</p>
+<p>Ejemplo:</p>
+<div class="formula-block">\[
+U^i{}_m=S^{ij}T_{jm}
+\]</div>
+<p>es producto interno porque se suma sobre \(j\). Quedan libres \(i\) y \(m\), así que el resultado es mixto de orden 2.</p>
+<p>El caso más simple es \(A_iB^i\). Ahí desaparece el único índice de cada vector y queda un escalar. Kay interpreta este caso como tensor de orden cero, es decir, como invariante.</p>
+<h3>3.4. Contracción</h3>
+<p>La contracción es similar al producto interno, pero se realiza dentro de un solo tensor. Se toma un índice superior y uno inferior del mismo tensor, se les da el mismo nombre y se suma sobre ellos.</p>
+<p>Si</p>
+<div class="formula-block">\[
+T^{i_1\ldots i_p}{}_{j_1\ldots j_q}
+\]</div>
+<p>es de tipo \((p,q)\), una contracción produce un tensor de tipo \((p-1,q-1)\). También baja el orden total en dos.</p>
+<p>Ejemplo:</p>
+<div class="formula-block">\[
+S^i{}_j \mapsto S^i{}_i
+\]</div>
+<p>produce un escalar: la traza de un tensor mixto de orden 2. Otro ejemplo:</p>
+<div class="formula-block">\[
+T^{ij}{}_{jk}
+\]</div>
+<p>deja libres \(i\) y \(k\), luego el resultado es un tensor mixto de orden 2.</p>
+<p>La contracción importa porque permite pasar de objetos complejos a otros más simples sin perder tensorialidad. Es también la operación que aparece escondida en muchos cálculos físicos: trazas, divergencias tensoriales, productos escalares generalizados y reducción de expresiones con índices.</p>
+<h3>3.5. Operaciones combinadas</h3>
+<p>Kay subraya que las operaciones anteriores pueden encadenarse. Se puede formar primero un producto externo y después contraer índices; o tomar productos internos sucesivos; o contraer varias parejas de índices dentro de un tensor.</p>
+<p>La idea importante es que cada paso conserva el carácter tensorial, siempre que se respeten los índices. Así, una expresión complicada puede analizarse paso a paso: primero se determina el tipo de cada tensor, después se miran los índices repetidos, y finalmente se identifican los índices libres que quedan.</p>
+<p>Por ejemplo, si</p>
+<div class="formula-block">\[
+A^i,\quad B_j,\quad C^k{}_l
+\]</div>
+<p>son tensores, entonces</p>
+<div class="formula-block">\[
+D^i{}_l=A^iB_kC^k{}_l
+\]</div>
+<p>es tensor. El producto \(A^iB_kC^k{}_l\) contiene una suma sobre \(k\); quedan libres \(i\) y \(l\). Por tanto, \(D\) es mixto de orden 2.</p>
+<p>La consecuencia práctica es que una expresión con índices se puede leer casi mecánicamente. Los índices repetidos arriba-abajo se contraen; los índices libres determinan el tipo del resultado; y la validez tensorial se hereda si todos los ingredientes eran tensores.</p>
+<h3>3.6. Criterios de tensorialidad</h3>
+<p>La segunda sección del capítulo cambia la pregunta. En vez de preguntar “¿qué se obtiene a partir de tensores conocidos?”, pregunta “¿cómo reconozco que una colección de componentes es un tensor?”.</p>
+<p>La comprobación directa puede ser larga. Para un tensor de varios índices habría que verificar una ley de transformación con muchos factores jacobianos. Kay presenta una alternativa: multiplicar el objeto sospechoso por vectores arbitrarios y observar si el resultado se comporta tensorialmente.</p>
+<p>El primer criterio dice: si \(T_iV^i\) es un invariante para todo vector contravariante \(V^i\), entonces \(T_i\) es un vector covariante. La razón es que el único modo de que la contracción sea independiente de coordenadas para cualquier \(V^i\) es que \(T_i\) transforme con la ley covariante.</p>
+<p>El segundo criterio dice: si \(T_{ij}V^i\) es un vector covariante para todo vector contravariante \(V^i\), entonces \(T_{ij}\) es un tensor covariante de orden 2. Aquí el vector arbitrario “prueba” uno de los índices; el hecho de que el resultado sea covariante fuerza la transformación correcta del objeto completo.</p>
+<p>El tercer criterio dice: si \(T_{ij}U^iV^j\) es invariante para todos los pares de vectores contravariantes \(U^i\) y \(V^j\), entonces \(T_{ij}\) es tensor covariante de orden 2. Es una versión bilineal del primero.</p>
+<p>El cuarto criterio añade una hipótesis de simetría: si \(T_{ij}\) es simétrico y \(T_{ij}V^iV^j\) es invariante para todo vector contravariante \(V^i\), entonces \(T_{ij}\) es tensor covariante de orden 2. La simetría permite recuperar la información bilineal a partir de la forma cuadrática.</p>
+<p>La consecuencia es una técnica de examen: cuando se pide demostrar que cierto objeto es tensor, no siempre conviene escribir la ley completa. Si puede contraerse con vectores arbitrarios y producir invariantes o tensores conocidos, el criterio permite concluir.</p>
+<h3>3.7. Regla del cociente</h3>
+<p>La regla del cociente es la forma general de los criterios anteriores. Su idea es: si un objeto no identificado, al contraerse con un vector arbitrario, produce siempre un tensor, entonces el objeto original debe ser un tensor con un índice más.</p>
+<p>En forma típica:</p>
+<div class="formula-block">\[
+T^{i_1\ldots i_p}{}_{j_1\ldots j_q k}V^k
+=
+S^{i_1\ldots i_p}{}_{j_1\ldots j_q}
+\]</div>
+<p>para todo vector contravariante \(V^k\). Si el resultado \(S\) es tensor para todo \(V\), entonces</p>
+<div class="formula-block">\[
+T^{i_1\ldots i_p}{}_{j_1\ldots j_q k}
+\]</div>
+<p>es tensor de tipo \((p,q+1)\).</p>
+<p>Esta regla recibe el nombre de “cociente” porque se razona como si se pudiera “dividir” por el vector \(V^k\). Formalmente no se divide por un vector concreto: se usa la arbitrariedad de \(V^k\). Esa arbitrariedad fuerza las componentes de \(T\) a transformar de la única manera compatible con la tensorialidad del producto.</p>
+<p>La regla también admite una versión en la que el divisor arbitrario es un vector covariante. El capítulo la menciona como extensión útil para demostraciones posteriores.</p>
+<h3>3.8. Simetría, determinante e invertibilidad</h3>
+<p>El capítulo extrae consecuencias del carácter tensorial. Una de ellas es que, para tensores puros de orden 2, la simetría es independiente del sistema coordenado. Si \(T_{ij}=T_{ji}\) en un sistema y \(T_{ij}\) es tensor covariante de orden 2, entonces seguirá siendo simétrico tras cambiar de coordenadas. Lo mismo ocurre con un tensor contravariante \(T^{ij}\). Kay advierte que esta afirmación no se extiende sin más a tensores mixtos.</p>
+<p>Otra consecuencia es que si un tensor covariante de orden 2 tiene determinante cero en un sistema coordenado, lo tiene en todos. Esto no significa que el determinante sea un invariante ordinario con el mismo valor numérico, sino que la propiedad de anularse sí se conserva.</p>
+<p>También se deduce que si la matriz de un tensor covariante de orden 2 es invertible en un sistema coordenado, lo será en todos. Esta idea prepara el capítulo siguiente sobre el tensor métrico: para hablar de inverso, ascenso y descenso de índices, hace falta que la propiedad de invertibilidad no dependa de las coordenadas.</p>
+<h3>3.9. Ecuaciones tensoriales</h3>
+<p>La tercera sección del capítulo introduce una regla central: si una ecuación entre tensores del mismo tipo es cierta en un sistema coordenado, entonces es cierta en todos los sistemas coordenados admisibles.</p>
+<p>La razón es simple. Si la ecuación es</p>
+<div class="formula-block">\[
+A_{ij}=B_{ij},
+\]</div>
+<p>entonces</p>
+<div class="formula-block">\[
+T_{ij}=A_{ij}-B_{ij}
+\]</div>
+<p>es un tensor del mismo tipo. Si en un sistema \(T_{ij}=0\), al transformar sus componentes en otro sistema se obtiene una combinación lineal de ceros, luego también será \(0\). Por tanto, la igualdad se conserva.</p>
+<p>Esto tiene un valor metodológico enorme. Permite demostrar una identidad en coordenadas rectangulares, o en un punto donde las componentes sean más sencillas, y concluir que la identidad es general. Pero solo se puede hacer si todos los términos son tensores del tipo adecuado. Si en la ecuación aparece un objeto no tensorial, el argumento falla.</p>
+<p>Un ejemplo de uso correcto sería: probar que \(T_{ij}=0\) en un sistema especial, sabiendo ya que \(T_{ij}\) es tensor. Un uso incorrecto sería probar una identidad con derivadas parciales ordinarias de componentes y asumir que es tensorial, cuando esas derivadas no transforman como tensor en coordenadas generales.</p>
+<h3>3.10. Papel del capítulo en el cálculo tensorial</h3>
+<p>El capítulo no introduce todavía la métrica ni la derivada covariante. Su papel es más elemental: fija el álgebra de los tensores. Esta álgebra será necesaria para todo lo posterior.</p>
+<p>El producto externo permite construir tensores de orden alto. El producto interno y la contracción permiten reducirlos. Los criterios de tensorialidad permiten reconocer objetos sin desarrollar leyes de transformación largas. Las ecuaciones tensoriales permiten trasladar resultados entre sistemas coordenados.</p>
+<p>En conjunto, el capítulo enseña una disciplina de trabajo: no manipular índices como si fueran simples etiquetas, sino controlar qué índices se suman, cuáles quedan libres, qué tipo tensorial tiene cada expresión y qué propiedades sobreviven a un cambio de coordenadas.</p></div></section>
+<section id="conceptos" class="page"><header class="section-header"><p class="section-kicker">04</p><h2>4. Conceptos clave</h2></header><div class="reading-block"><ol>
+<li>Combinación lineal tensorial<p>Definición precisa: suma ponderada de tensores del mismo tipo y orden mediante coeficientes escalares invariantes.</p><p>Explicación desarrollada: si todos los términos transforman con la misma ley, entonces cualquier suma con coeficientes escalares también transformará con esa ley. La clave es que los índices libres coincidan exactamente.</p><p>Ejemplo:</p></li>
+</ol>
+<div class="formula-block">\[
+C^i{}_j=2A^i{}_j-5B^i{}_j.
+\]</div>
+<p>Relación con otros conceptos: permite formar diferencias tensoriales y justificar ecuaciones tensoriales.</p>
+<p>Posible forma de preguntarlo en examen: “Explique por qué \(A_{ij}-B_{ij}\) es tensor si \(A_{ij}\) y \(B_{ij}\) lo son. ¿Qué falla si se intenta sumar \(A_i\) y \(B^i\)?”</p>
+<ol>
+<li>Producto externo<p>Definición precisa: operación que multiplica las componentes de dos tensores y conserva todos sus índices libres.</p><p>Explicación desarrollada: junta dos objetos tensoriales en uno de orden mayor. No implica suma de índices salvo que se introduzca una repetición adicional, cosa que ya no sería producto externo puro.</p><p>Ejemplo:</p></li>
+</ol>
+<div class="formula-block">\[
+P^{ij}{}_{kl}=A^i{}_kB^j{}_l.
+\]</div>
+<p>Relación con otros conceptos: el producto interno puede verse como una contracción posterior de un producto externo.</p>
+<p>Posible forma de preguntarlo en examen: “Dados los tipos de \(A\) y \(B\), determine el tipo de \(AB\) como producto externo.”</p>
+<ol>
+<li>Producto interno<p>Definición precisa: operación entre dos tensores en la que se iguala y suma un índice superior de uno con un índice inferior del otro.</p><p>Explicación desarrollada: reduce el orden total en dos y conserva tensorialidad. Debe emparejarse siempre un índice contravariante con uno covariante.</p><p>Ejemplo:</p></li>
+</ol>
+<div class="formula-block">\[
+C^i{}_l=A^{ij}B_{jl}.
+\]</div>
+<p>Relación con otros conceptos: generaliza el producto \(A_iB^i\), que produce un invariante.</p>
+<p>Posible forma de preguntarlo en examen: “Indique el tipo de \(C^i{}_l=A^{ij}B_{jl}\) y explique qué índice se ha contraído.”</p>
+<ol>
+<li>Contracción<p>Definición precisa: suma sobre un par de índices, uno superior y otro inferior, pertenecientes al mismo tensor.</p><p>Explicación desarrollada: transforma un tensor de tipo \((p,q)\) en otro de tipo \((p-1,q-1)\). Es una reducción interna de la estructura tensorial.</p><p>Ejemplo:</p></li>
+</ol>
+<div class="formula-block">\[
+T^i{}_{ik}
+\]</div>
+<p>deja un índice covariante \(k\), luego produce un vector covariante.</p>
+<p>Relación con otros conceptos: está ligada a la traza y a la construcción de invariantes.</p>
+<p>Posible forma de preguntarlo en examen: “¿Cuántas contracciones distintas pueden realizarse en \(T^{ij}{}_{kl}\)? ¿Qué tipo produce cada una?”</p>
+<ol>
+<li>Invariante como tensor de orden cero<p>Definición precisa: cantidad escalar que no cambia bajo transformaciones de coordenadas y que puede considerarse tensor sin índices.</p><p>Explicación desarrollada: al contraer todos los índices de una expresión tensorial no queda ningún índice libre. El resultado, si se ha hecho correctamente, no depende del sistema coordenado.</p><p>Ejemplo:</p></li>
+</ol>
+<div class="formula-block">\[
+g_{ij}U^iV^j.
+\]</div>
+<p>Relación con otros conceptos: es la salida de muchos criterios de tensorialidad.</p>
+<p>Posible forma de preguntarlo en examen: “Explique por qué \(A_iB^i\) es un tensor de orden cero.”</p>
+<ol>
+<li>Índice libre<p>Definición precisa: índice que aparece una sola vez en un término y determina las componentes del resultado.</p><p>Explicación desarrollada: los índices libres deben coincidir en todos los términos de una igualdad o suma. Si una expresión tiene libres \(i,j\), representa una familia de componentes con esos índices.</p><p>Ejemplo:</p></li>
+</ol>
+<div class="formula-block">\[
+C^i{}_j=A^i{}_kB^k{}_j
+\]</div>
+<p>tiene libres \(i,j\); \(k\) está contraído.</p>
+<p>Relación con otros conceptos: determina el tipo final tras productos y contracciones.</p>
+<p>Posible forma de preguntarlo en examen: “Señale los índices libres y contraídos de una expresión tensorial dada.”</p>
+<ol>
+<li>Índice mudo<p>Definición precisa: índice repetido una vez arriba y una vez abajo sobre el que se suma; su nombre puede cambiarse sin modificar la expresión.</p><p>Explicación desarrollada: el índice mudo no aparece en el resultado final. Cambiar \(k\) por \(r\) en \(A^i{}_kB^k{}_j\) no cambia nada.</p><p>Ejemplo:</p></li>
+</ol>
+<div class="formula-block">\[
+A^i{}_kB^k{}_j=A^i{}_rB^r{}_j.
+\]</div>
+<p>Relación con otros conceptos: evita confundir contracción con componentes libres.</p>
+<p>Posible forma de preguntarlo en examen: “Explique por qué \(A^i{}_kB^k{}_j\) y \(A^i{}_rB^r{}_j\) representan lo mismo.”</p>
+<ol>
+<li>Regla del cociente<p>Definición precisa: criterio que permite deducir la tensorialidad de un objeto si su contracción con vectores arbitrarios produce tensores del tipo esperado.</p><p>Explicación desarrollada: no es una división literal; depende de la arbitrariedad de los vectores usados. Si la expresión funciona para todo vector, las componentes desconocidas quedan forzadas a obedecer la ley tensorial.</p><p>Ejemplo:</p></li>
+</ol>
+<p>si \(T_{ij}V^i\) es covariante para todo \(V^i\), entonces \(T_{ij}\) es tensor covariante de orden 2.</p>
+<p>Relación con otros conceptos: generaliza los criterios de tensorialidad de la sección 4.2.</p>
+<p>Posible forma de preguntarlo en examen: “Use la regla del cociente para demostrar que \(T_{ij}\) es tensor covariante.”</p>
+<ol>
+<li>Criterio por forma bilineal<p>Definición precisa: si \(T_{ij}U^iV^j\) es invariante para todos los vectores contravariantes \(U,V\), entonces \(T_{ij}\) es tensor covariante de orden 2.</p><p>Explicación desarrollada: la invariancia de todas las contracciones bilineales contiene información suficiente para recuperar la ley de transformación de \(T_{ij}\).</p><p>Ejemplo:</p></li>
+</ol>
+<p>si \(g_{ij}U^iV^j\) es invariante para todo \(U,V\), entonces \(g_{ij}\) tiene comportamiento covariante de orden 2.</p>
+<p>Relación con otros conceptos: se apoya en el primer criterio y en la regla del cociente.</p>
+<p>Posible forma de preguntarlo en examen: “Demuestre que la invariancia de \(T_{ij}U^iV^j\) implica la tensorialidad de \(T_{ij}\).”</p>
+<ol>
+<li>Criterio por forma cuadrática simétrica<p>Definición precisa: si \(T_{ij}=T_{ji}\) y \(T_{ij}V^iV^j\) es invariante para todo \(V\), entonces \(T_{ij}\) es tensor covariante de orden 2.</p><p>Explicación desarrollada: la simetría permite recuperar los términos cruzados mediante polarización. Sin simetría, la forma cuadrática no detecta la parte antisimétrica.</p><p>Ejemplo:</p></li>
+</ol>
+<p>la expresión \(T_{ij}V^iV^j\) no cambia si se sustituye \(T_{ij}\) por su parte simétrica; por eso hace falta imponer simetría.</p>
+<p>Relación con otros conceptos: es una versión especial del criterio bilineal.</p>
+<p>Posible forma de preguntarlo en examen: “¿Por qué hace falta la hipótesis de simetría en el criterio basado en \(T_{ij}V^iV^j\)?”</p>
+<ol>
+<li>Ecuación tensorial<p>Definición precisa: igualdad entre tensores del mismo tipo y orden.</p><p>Explicación desarrollada: si es cierta en un sistema coordenado, lo es en todos. La diferencia entre ambos lados es un tensor que se anula.</p><p>Ejemplo:</p></li>
+</ol>
+<p>si \(A_{ij}=B_{ij}\) en coordenadas rectangulares y ambos son tensores covariantes de orden 2, entonces la igualdad es general.</p>
+<p>Relación con otros conceptos: depende de la combinación lineal y de la transformación del tensor cero.</p>
+<p>Posible forma de preguntarlo en examen: “Justifique por qué basta comprobar una ecuación tensorial en un sistema conveniente.”</p>
+<ol>
+<li>Tensor cero<p>Definición precisa: tensor cuyas componentes son cero en un sistema coordenado, y por tanto en todos.</p><p>Explicación desarrollada: al transformar componentes nulas, cada componente nueva es una suma de términos nulos. La propiedad de anularse es tensorial.</p><p>Ejemplo:</p></li>
+</ol>
+<p>si \(T^i{}_j=0\) en un sistema y \(T^i{}_j\) es tensor, entonces \(\bar T^i{}_j=0\).</p>
+<p>Relación con otros conceptos: fundamento de la validez de ecuaciones tensoriales.</p>
+<p>Posible forma de preguntarlo en examen: “Explique por qué \(T=0\) es una afirmación independiente de coordenadas.”</p>
+<ol>
+<li>Simetría tensorial<p>Definición precisa: igualdad de componentes al intercambiar dos índices del mismo tipo.</p><p>Explicación desarrollada: para tensores puros de orden 2, la simetría se conserva bajo cambio de coordenadas. No puede trasladarse automáticamente a tensores mixtos.</p><p>Ejemplo:</p></li>
+</ol>
+<p>si \(T_{ij}=T_{ji}\), entonces \(\bar T_{ij}=\bar T_{ji}\).</p>
+<p>Relación con otros conceptos: aparece en el criterio cuadrático y en propiedades de tensores métricos.</p>
+<p>Posible forma de preguntarlo en examen: “¿La simetría de \(T^i{}_j\) es una propiedad tensorial general? Razone.”</p>
+<ol>
+<li>Determinante nulo de un tensor covariante de orden 2<p>Definición precisa: propiedad de que la matriz de componentes \([T_{ij}]\) tenga determinante cero.</p><p>Explicación desarrollada: el valor numérico del determinante puede variar con coordenadas, pero su anulación no. Si es cero en un sistema, será cero en todos.</p><p>Ejemplo:</p></li>
+</ol>
+<p>si \(\det[g_{ij}]=0\) en un sistema, no puede volverse no nulo en otro si \(g_{ij}\) es tensor covariante de orden 2.</p>
+<p>Relación con otros conceptos: conduce a la propiedad de invertibilidad independiente de coordenadas.</p>
+<p>Posible forma de preguntarlo en examen: “Explique por qué la invertibilidad de un tensor covariante de orden 2 no depende del sistema coordenado.”</p>
+<ol>
+<li>Invertibilidad tensorial de orden 2<p>Definición precisa: propiedad de que la matriz asociada a un tensor covariante de orden 2 tenga inversa.</p><p>Explicación desarrollada: si la matriz es invertible en un sistema, también lo será tras un cambio coordenado admisible. Esto permite definir el tensor inverso en capítulos posteriores.</p><p>Ejemplo:</p></li>
+</ol>
+<p>si \(g_{ij}\) es no singular, existe \(g^{ij}\) con \(g_{ik}g^{kj}=\delta_i^j\).</p>
+<p>Relación con otros conceptos: prepara el ascenso y descenso de índices en el tensor métrico.</p>
+<p>Posible forma de preguntarlo en examen: “¿Por qué es legítimo hablar del inverso de un tensor métrico independientemente de las coordenadas?”</p></div></section>
+<section id="relaciones" class="page"><header class="section-header"><p class="section-kicker">05</p><h2>5. Relaciones entre ideas</h2></header><div class="reading-block"><p>El capítulo tiene una estructura jerárquica. Primero se parte de tensores ya conocidos y se estudian operaciones que conservan la tensorialidad. Después se invierte el problema: a partir de ciertos comportamientos de contracciones se deduce que un objeto desconocido es tensor. Finalmente se aplica todo a las ecuaciones tensoriales.</p>
+<p>La dependencia conceptual principal es:</p>
+<div class="formula-block">\[
+\text{ley de transformación} \rightarrow
+\text{operaciones tensoriales} \rightarrow
+\text{criterios de tensorialidad} \rightarrow
+\text{ecuaciones tensoriales}.
+\]</div>
+<p>Sin la ley de transformación no se puede justificar que el producto externo o la contracción conserven tensorialidad. Sin estas operaciones no se entiende la regla del cociente. Sin la regla de que la diferencia de tensores es tensor, no se justifica que una ecuación tensorial válida en un sistema lo sea en todos.</p>
+<p>Hay una oposición importante entre índices libres e índices mudos. Los índices libres describen el tipo del resultado; los mudos son índices de suma y desaparecen. Muchos errores de tensorialidad nacen de no distinguirlos.</p>
+<p>Otra oposición importante es producto externo frente a producto interno. El producto externo aumenta el orden porque conserva todos los índices. El producto interno reduce el orden porque contrae uno superior con uno inferior. La contracción es el análogo interno del producto interno: no necesita dos tensores, sino un solo tensor con al menos un índice superior y uno inferior.</p>
+<p>También hay una relación entre invariancia y tensorialidad. Un invariante es tensor de orden cero; por eso sirve como salida de pruebas tensoriales. Si un objeto desconocido produce invariantes al contraerse con vectores arbitrarios, su comportamiento queda determinado.</p>
+<p>La regla del cociente es una consecuencia metodológica de la arbitrariedad. No basta con que \(T_iV^i\) sea invariante para un vector concreto; debe serlo para todo vector del tipo indicado. La palabra “todo” es la que permite concluir la ley de transformación de \(T_i\).</p>
+<p>Las ecuaciones tensoriales dependen de que ambos lados tengan el mismo tipo. No se puede aplicar el principio tensorial a una igualdad entre objetos que transforman de forma distinta. En ese caso, la igualdad podría ser accidental de un sistema coordenado y perderse en otro.</p>
+<p>No hay una evolución histórica desarrollada en este capítulo. Su evolución interna es formal: se pasa de manipular tensores conocidos a reconocer tensores y, después, a usar ecuaciones tensoriales como herramienta de demostración.</p></div></section>
+<section id="errores" class="page"><header class="section-header"><p class="section-kicker">06</p><h2>6. Errores habituales</h2></header><div class="reading-block"><details class="accordion" open><summary>Contenido de 6. Errores habituales</summary><div class="accordion-body"><ol>
+<li>Error: sumar tensores de distinto tipo.<p>Por qué está mal: \(A_i\) y \(B^i\) no transforman con la misma ley. Aunque ambos tengan un índice, uno es covariante y otro contravariante.</p><p>Corrección: solo se suman tensores con los mismos índices libres en la misma posición.</p><p>Respuesta incorrecta: “\(C_i=A_i+B^i\) es un vector covariante.”</p><p>Respuesta correcta: “La suma no es tensorial. Para sumar habría que convertir primero uno de los objetos al tipo del otro mediante una métrica, si estuviera disponible.”</p></li>
+<li>Error: creer que todo índice repetido se puede sumar aunque aparezca dos veces arriba o dos veces abajo.<p>Por qué está mal: la contracción tensorial estándar exige un índice superior y uno inferior.</p><p>Corrección: solo se contraen pares uno arriba y uno abajo.</p><p>Respuesta incorrecta: “En \(A^iB^i\) se suma sobre \(i\).”</p><p>Respuesta correcta: “Tal como está escrito, \(A^iB^i\) no es una contracción tensorial válida en esta notación.”</p></li>
+<li>Error: confundir producto externo con producto interno.<p>Por qué está mal: el producto externo conserva todos los índices; el producto interno elimina dos.</p><p>Corrección: mirar si hay suma sobre algún índice repetido.</p><p>Respuesta incorrecta: “\(A^iB^j\) es producto interno.”</p><p>Respuesta correcta: “\(A^iB^j\) es producto externo; \(A^iB_i\) es producto interno.”</p></li>
+<li>Error: no identificar los índices libres del resultado.<p>Por qué está mal: los índices libres determinan el tipo tensorial. Si se pierden o se duplican, la expresión queda mal formada.</p><p>Corrección: antes de operar, separar índices libres e índices mudos.</p><p>Respuesta incorrecta: “\(C^i=A^i{}_jB^j{}_k\).”</p><p>Respuesta correcta: “La expresión \(A^i{}_jB^j{}_k\) tiene libres \(i,k\), luego debe escribirse \(C^i{}_k=A^i{}_jB^j{}_k\).”</p></li>
+<li>Error: cambiar el nombre de un índice libre.<p>Por qué está mal: un índice libre identifica componentes del resultado. Solo se pueden renombrar índices mudos.</p><p>Corrección: los índices libres deben mantenerse coherentes en todos los términos.</p><p>Respuesta incorrecta: “\(A^i{}_kB^k{}_j=A^r{}_kB^k{}_j\).”</p><p>Respuesta correcta: “Se puede cambiar \(k\) por otro nombre mudo, pero no \(i\) o \(j\) salvo que se cambie toda la igualdad de forma consistente.”</p></li>
+<li>Error: aplicar la regla del cociente con un vector no arbitrario.<p>Por qué está mal: la conclusión tensorial depende de que la expresión sea válida para todos los vectores del tipo indicado.</p><p>Corrección: comprobar o declarar explícitamente la arbitrariedad del vector.</p><p>Respuesta incorrecta: “Como \(T_iV^i\) es invariante para este \(V\), \(T_i\) es tensor.”</p><p>Respuesta correcta: “Si \(T_iV^i\) es invariante para todo vector contravariante \(V^i\), entonces \(T_i\) es covariante.”</p></li>
+<li>Error: omitir la simetría en el criterio cuadrático.<p>Por qué está mal: \(T_{ij}V^iV^j\) no detecta la parte antisimétrica de \(T_{ij}\).</p><p>Corrección: usar el criterio bilineal con dos vectores arbitrarios, o exigir simetría si se usa una sola forma cuadrática.</p><p>Respuesta incorrecta: “Si \(T_{ij}V^iV^j\) es invariante, entonces \(T_{ij}\) siempre es tensor.”</p><p>Respuesta correcta: “Esa conclusión requiere que \(T_{ij}\) sea simétrico.”</p></li>
+<li>Error: suponer que la simetría de un tensor mixto es siempre invariante.<p>Por qué está mal: el capítulo advierte que la conservación de simetría se asegura para tensores puros de orden 2, no para tensores mixtos en general.</p><p>Corrección: distinguir entre \(T_{ij}\), \(T^{ij}\) y \(T^i{}_j\).</p><p>Respuesta incorrecta: “Si \(T^i{}_j=T^j{}_i\) en un sistema, será simétrico en todos.”</p><p>Respuesta correcta: “Esa afirmación no es general para tensores mixtos.”</p></li>
+<li>Error: creer que el valor del determinante de \(T_{ij}\) es invariante.<p>Por qué está mal: lo que se conserva en el capítulo es la anulación del determinante, no necesariamente su valor numérico.</p><p>Corrección: distinguir entre “determinante cero” e “igual determinante”.</p><p>Respuesta incorrecta: “\(\det T\) vale lo mismo en todos los sistemas.”</p><p>Respuesta correcta: “Si \(\det T=0\) en un sistema, entonces se anula en todos; la propiedad de singularidad se conserva.”</p></li>
+<li>Error: demostrar una igualdad en coordenadas especiales sin comprobar que es tensorial.<p>Por qué está mal: una igualdad no tensorial puede ser cierta en un sistema y falsa en otro.</p><p>Corrección: antes de usar coordenadas convenientes, probar que ambos lados son tensores del mismo tipo.</p><p>Respuesta incorrecta: “La identidad vale en cartesianas, luego vale siempre.”</p><p>Respuesta correcta: “La identidad vale en cartesianas y ambos lados son tensores del mismo tipo; por tanto, vale en cualquier sistema.”</p></li>
+<li>Error: escribir una ecuación con índices libres distintos en cada término.<p>Por qué está mal: no se pueden igualar componentes con distinta estructura de índices.</p><p>Corrección: todos los términos de una suma o igualdad deben tener los mismos índices libres.</p><p>Respuesta incorrecta: “\(A_{ij}+B_i=C_{ij}\).”</p><p>Respuesta correcta: “Una suma compatible sería \(A_{ij}+B_{ij}=C_{ij}\).”</p></li>
+<li>Error: pensar que contraer siempre produce un escalar.<p>Por qué está mal: contraer solo elimina dos índices. Si quedan índices libres, el resultado sigue siendo tensor de orden positivo.</p><p>Corrección: contar los índices libres restantes.</p><p>Respuesta incorrecta: “\(T^i{}_{ik}\) es escalar.”</p><p>Respuesta correcta: “\(T^i{}_{ik}\) deja libre \(k\); es un vector covariante.”</p></li>
+</ol></div></details></div></section>
+<section id="preguntas" class="page"><header class="section-header"><p class="section-kicker">07</p><h2>7. Preguntas orientadas a examen</h2></header><div class="reading-block"><h3>10 preguntas fáciles</h3>
+<p>F1. ¿Qué condición deben cumplir dos tensores para poder sumarse tensorialmente?</p>
+<p>F2. Defina producto externo de dos tensores.</p>
+<p>F3. ¿Qué ocurre con el orden total al formar un producto externo?</p>
+<p>F4. ¿Qué es un producto interno entre tensores?</p>
+<p>F5. ¿Qué diferencia hay entre producto interno y contracción?</p>
+<p>F6. ¿Por qué \(A_iB^i\) es un invariante?</p>
+<p>F7. ¿Qué es un índice libre?</p>
+<p>F8. ¿Qué es un índice mudo?</p>
+<p>F9. ¿Qué significa que un invariante sea un tensor de orden cero?</p>
+<p>F10. ¿Por qué una ecuación tensorial válida en un sistema es válida en todos?</p>
+<h3>10 preguntas medias</h3>
+<p>M1. Sean \(A^i\) y \(B^j\) vectores contravariantes. Determine el tipo de \(C^{ij}=A^iB^j\).</p>
+<p>M2. Sean \(A^{ij}\) y \(B_{jk}\) tensores. Determine el tipo de \(C^i{}_k=A^{ij}B_{jk}\).</p>
+<p>M3. Si \(T^{ij}{}_{kl}\) se contrae en \(i=k\), ¿qué tipo tensorial queda?</p>
+<p>M4. Explique por qué no es tensorial, en general, la suma \(T^i{}_j+T_j{}^i\).</p>
+<p>M5. Enuncie el criterio: si \(T_iV^i\) es invariante para todo \(V^i\), entonces...</p>
+<p>M6. Enuncie el criterio: si \(T_{ij}V^i\) es covariante para todo \(V^i\), entonces...</p>
+<p>M7. ¿Por qué la condición “para todo vector” es esencial en los criterios de tensorialidad?</p>
+<p>M8. ¿Qué hipótesis adicional aparece en el criterio basado en \(T_{ij}V^iV^j\)?</p>
+<p>M9. ¿Qué propiedad del determinante de un tensor covariante de orden 2 se conserva bajo cambios de coordenadas?</p>
+<p>M10. Explique por qué la invertibilidad de un tensor covariante de orden 2 no depende del sistema coordenado.</p>
+<h3>5 preguntas difíciles</h3>
+<p>D1. Use la regla del cociente para justificar que si \(T_{ij}V^i\) es covariante para todo vector contravariante \(V^i\), entonces \(T_{ij}\) es tensor covariante de orden 2.</p>
+<p>D2. Demuestre que si \(T_{ij}U^iV^j\) es invariante para todos los vectores contravariantes \(U,V\), entonces \(T_{ij}\) es tensor covariante de orden 2.</p>
+<p>D3. Explique por qué la invariancia de \(T_{ij}V^iV^j\) no basta sin simetría para concluir que \(T_{ij}\) es tensor.</p>
+<p>D4. Sean \(A^i{}_j\) y \(B^j{}_k\) tensores mixtos. Justifique el tipo de \(C^i{}_k=A^i{}_jB^j{}_k\) y explique la operación realizada.</p>
+<p>D5. Justifique por qué, si \(A_{ij}\) y \(B_{ij}\) son tensores y \(A_{ij}=B_{ij}\) en un sistema, entonces la igualdad es válida en cualquier sistema.</p>
+<h3>5 preguntas de desarrollo largo</h3>
+<p>L1. Desarrolle las operaciones fundamentales con tensores: combinación lineal, producto externo, producto interno y contracción. Explique cómo cambia el tipo tensorial en cada caso.</p>
+<p>L2. Exponga los criterios de tensorialidad de la sección 4.2 y explique la idea común que los sostiene.</p>
+<p>L3. Explique la regla del cociente y su utilidad para evitar comprobaciones directas de leyes de transformación.</p>
+<p>L4. Desarrolle el principio de las ecuaciones tensoriales y explique sus condiciones de aplicación.</p>
+<p>L5. Analice la frase: “El cálculo tensorial permite demostrar identidades en coordenadas convenientes sin perder generalidad.”</p>
+<h3>5 preguntas de relación entre conceptos</h3>
+<p>R1. Relacione producto externo, producto interno y contracción.</p>
+<p>R2. Relacione invariante, tensor de orden cero y criterios de tensorialidad.</p>
+<p>R3. Relacione índices libres, tipo tensorial y validez de una suma.</p>
+<p>R4. Relacione simetría, forma cuadrática y criterio de tensorialidad.</p>
+<p>R5. Relacione tensor cero, ecuación tensorial y cambio de coordenadas.</p></div></section>
+<section id="respuestas" class="page"><header class="section-header"><p class="section-kicker">08</p><h2>8. Respuestas modelo</h2></header><div class="reading-block"><details class="accordion" open><summary>Contenido de 8. Respuestas modelo</summary><div class="accordion-body"><h3>Respuestas fáciles</h3>
+<p>F1. Dos tensores pueden sumarse tensorialmente si tienen el mismo tipo y el mismo orden, es decir, los mismos índices libres en las mismas posiciones. Por ejemplo, \(A_{ij}+B_{ij}\) es admisible si ambos son covariantes de orden 2. En cambio, \(A_i+B^i\) no lo es.</p>
+<p>F2. El producto externo de dos tensores consiste en multiplicar sus componentes conservando todos los índices de ambos. Si \(S\) es de tipo \((p,q)\) y \(T\) de tipo \((r,s)\), el producto externo \(ST\) es de tipo \((p+r,q+s)\).</p>
+<p>F3. El orden total se suma. Si los órdenes son \(p+q\) y \(r+s\), el producto externo tiene orden \(p+q+r+s\). No desaparece ningún índice porque no hay contracción.</p>
+<p>F4. Es la operación en la que se empareja un índice superior de un tensor con un índice inferior de otro y se suma sobre ese índice. El resultado es tensorial y su orden baja en dos.</p>
+<p>F5. El producto interno se hace entre dos tensores; la contracción se hace dentro de un mismo tensor. En ambos casos se suma un índice superior con uno inferior y el orden baja en dos.</p>
+<p>F6. Porque se contrae correctamente un índice covariante con uno contravariante. La ley de transformación de \(A_i\) compensa la de \(B^i\), de modo que el valor de \(A_iB^i\) no depende de las coordenadas.</p>
+<p>F7. Un índice libre aparece una sola vez en un término y queda como índice del resultado. En \(C^i{}_j=A^i{}_kB^k{}_j\), los índices libres son \(i\) y \(j\).</p>
+<p>F8. Un índice mudo aparece repetido una vez arriba y una vez abajo; se suma sobre él y no aparece en el resultado. Su nombre puede cambiarse sin alterar la expresión.</p>
+<p>F9. Significa que un escalar invariante puede tratarse como tensor sin índices. Es de orden cero porque no tiene componentes indexadas que transformar.</p>
+<p>F10. Porque la diferencia entre ambos lados es un tensor. Si ese tensor se anula en un sistema, sus componentes transformadas siguen siendo combinaciones de ceros, luego se anula en todos.</p>
+<h3>Respuestas medias</h3>
+<p>M1. \(C^{ij}=A^iB^j\) es un tensor contravariante de orden 2. Es producto externo de dos vectores contravariantes. No hay suma porque \(i\) y \(j\) son índices libres.</p>
+<p>M2. \(C^i{}_k=A^{ij}B_{jk}\) es un tensor mixto de orden 2, 1-contravariante y 1-covariante. Se ha contraído el índice \(j\), que aparece una vez arriba y una vez abajo.</p>
+<p>M3. \(T^{ij}{}_{kl}\) tiene tipo \((2,2)\). Si se contrae \(i=k\), desaparecen un índice superior y uno inferior. Queda un tensor de tipo \((1,1)\), con índices libres \(j,l\).</p>
+<p>M4. En general, \(T^i{}_j\) y \(T_j{}^i\) no son componentes del mismo tipo colocadas de forma compatible. En tensores mixtos no se puede intercambiar sin más la posición de los índices como si fuera una matriz ordinaria. La suma solo sería válida si ambas colecciones transformaran igual, cosa que no ocurre en general.</p>
+<p>M5. Si \(T_iV^i\) es invariante para todo vector contravariante \(V^i\), entonces \(T_i\) es un vector covariante.</p>
+<p>M6. Si \(T_{ij}V^i\) es un vector covariante para todo vector contravariante \(V^i\), entonces \(T_{ij}\) es un tensor covariante de orden 2.</p>
+<p>M7. Porque un solo vector puede ocultar componentes o direcciones y producir una invariancia accidental. La arbitrariedad garantiza que la conclusión afecta a toda la ley de transformación del objeto.</p>
+<p>M8. Se exige que \(T_{ij}\) sea simétrico. Sin simetría, la expresión \(T_{ij}V^iV^j\) no detecta la parte antisimétrica de \(T_{ij}\).</p>
+<p>M9. Se conserva la propiedad de que el determinante sea cero. Si \(\det(T_{ij})=0\) en un sistema, también se anula en cualquier otro sistema admisible.</p>
+<p>M10. Porque la singularidad o no singularidad de la matriz asociada a un tensor covariante de orden 2 se conserva bajo transformaciones coordenadas admisibles. Si tiene inversa en un sistema, la tendrá en todos.</p>
+<h3>Respuestas difíciles</h3>
+<p>D1. Supongamos que \(T_{ij}V^i=W_j\) es covariante para todo vector contravariante \(V^i\). La regla del cociente dice que si una contracción de un objeto desconocido con un vector arbitrario produce siempre un tensor, entonces el objeto desconocido debe ser tensor con el índice adicional correspondiente. Aquí el índice contraído es \(i\) y el resultado conserva \(j\) como covariante. Por tanto, \(T_{ij}\) debe ser tensor covariante de orden 2.</p>
+<p>D2. Si \(T_{ij}U^iV^j\) es invariante para todo \(U,V\), fijado \(V\) podemos considerar \(T_{ij}V^j\) como un objeto con índice \(i\). Al contraerlo con todo \(U^i\) se obtiene un invariante; por el primer criterio, \(T_{ij}V^j\) es covariante en \(i\). Como esto vale para todo \(V^j\), el segundo criterio o la regla del cociente implican que \(T_{ij}\) es tensor covariante de orden 2.</p>
+<p>D3. La expresión \(T_{ij}V^iV^j\) solo depende de la parte simétrica de \(T_{ij}\), porque \(V^iV^j\) es simétrico al intercambiar \(i,j\). La parte antisimétrica se cancela en la contracción. Por eso, aunque la forma cuadrática sea invariante, no se controla la transformación de toda la colección \(T_{ij}\) salvo que se sepa que \(T_{ij}=T_{ji}\).</p>
+<p>D4. \(A^i{}_jB^j{}_k\) contiene el índice \(j\) repetido una vez abajo en \(A\) y una vez arriba en \(B\), luego se contrae. Quedan libres \(i\) arriba y \(k\) abajo. Por tanto, \(C^i{}_k\) es tensor mixto de orden 2. La operación puede verse como producto externo seguido de contracción.</p>
+<p>D5. Si \(A_{ij}\) y \(B_{ij}\) son tensores covariantes de orden 2, entonces \(T_{ij}=A_{ij}-B_{ij}\) también lo es. Si en un sistema \(A_{ij}=B_{ij}\), entonces \(T_{ij}=0\) en ese sistema. Al transformar \(T_{ij}\), las nuevas componentes son sumas de ceros multiplicados por factores jacobianos, luego también son cero. Por tanto, \(A_{ij}=B_{ij}\) en cualquier sistema.</p>
+<h3>Respuestas de desarrollo largo</h3>
+<p>L1. Las operaciones fundamentales son las que permiten construir tensores nuevos a partir de tensores dados. La combinación lineal suma tensores del mismo tipo y orden con coeficientes invariantes; el resultado conserva tipo y orden. El producto externo multiplica componentes y conserva todos los índices de ambos factores; si los tipos son \((p,q)\) y \((r,s)\), el resultado es \((p+r,q+s)\). El producto interno contrae un índice superior de un tensor con un índice inferior del otro; el orden total baja en dos. La contracción hace lo mismo dentro de un único tensor, pasando de \((p,q)\) a \((p-1,q-1)\). Todas estas operaciones conservan tensorialidad si se respetan las posiciones de los índices.</p>
+<p>L2. Los criterios de tensorialidad permiten reconocer tensores sin escribir toda la ley de transformación. El primero dice que si \(T_iV^i\) es invariante para todo \(V^i\), entonces \(T_i\) es covariante. El segundo dice que si \(T_{ij}V^i\) es covariante para todo \(V^i\), entonces \(T_{ij}\) es covariante de orden 2. El tercero usa la invariancia de \(T_{ij}U^iV^j\) para todo par \(U,V\). El cuarto permite usar \(T_{ij}V^iV^j\) si \(T_{ij}\) es simétrico. Todos descansan en la misma idea: la contracción con vectores arbitrarios fuerza la ley de transformación del objeto desconocido.</p>
+<p>L3. La regla del cociente generaliza los criterios anteriores. Si un objeto con índices desconocidos, al contraerse con un vector arbitrario, produce siempre un tensor del tipo esperado, entonces el objeto original es tensor. No se divide realmente por el vector; se usa que el vector es arbitrario. Esta regla es útil porque evita comprobar expresiones largas con muchos jacobianos. En vez de demostrar directamente cómo transforma \(T_{ijk}\), se puede demostrar que \(T_{ijk}V^k\) es tensor para todo \(V^k\).</p>
+<p>L4. Una ecuación tensorial es una igualdad entre tensores del mismo tipo y orden. Su propiedad fundamental es que si vale en un sistema coordenado, vale en todos. Para justificarlo, se pasa todo a un lado: \(T=A-B\). Si \(A\) y \(B\) son tensores del mismo tipo, \(T\) también lo es. Si \(T=0\) en un sistema, entonces sus componentes transformadas son combinaciones lineales de ceros, así que \(T=0\) en cualquier sistema. La condición de aplicación es estricta: todos los términos deben ser tensores y deben tener la misma estructura de índices.</p>
+<p>L5. La frase es correcta solo bajo condiciones tensoriales. El cálculo tensorial permite escoger coordenadas convenientes porque las leyes de transformación garantizan que una igualdad tensorial no depende del sistema usado para comprobarla. Si una identidad está formada por tensores del mismo tipo, basta verificarla donde el cálculo sea más simple. Sin embargo, si intervienen objetos no tensoriales, como ciertas derivadas ordinarias en coordenadas generales, la conclusión puede ser falsa. La generalidad no procede de las coordenadas elegidas, sino del carácter tensorial de la igualdad.</p>
+<h3>Respuestas de relación entre conceptos</h3>
+<p>R1. El producto externo conserva todos los índices y aumenta el orden. El producto interno puede verse como un producto externo seguido de una contracción entre un índice superior y uno inferior de factores distintos. La contracción es la misma reducción de índices, pero aplicada dentro de un solo tensor. Los tres conceptos forman una secuencia: construir, emparejar y reducir.</p>
+<p>R2. Un invariante es un tensor de orden cero, porque no tiene índices y su valor no cambia bajo coordenadas. Los criterios de tensorialidad usan invariantes como prueba: si al contraer un objeto con vectores arbitrarios se obtiene un invariante, el objeto debe tener la ley tensorial adecuada. Así, la invariancia sirve como detector de tensorialidad.</p>
+<p>R3. Los índices libres determinan el tipo del resultado. Para sumar o igualar expresiones, los índices libres deben coincidir en nombre y posición. Si una expresión tiene libres \(i,j\) y otra solo \(i\), no representan objetos del mismo tipo. Por tanto, la validez formal de una suma depende de la estructura de índices libres.</p>
+<p>R4. La forma cuadrática \(T_{ij}V^iV^j\) usa dos copias del mismo vector. Como \(V^iV^j\) es simétrico, solo detecta la parte simétrica de \(T_{ij}\). Por eso el criterio basado en esa forma necesita que \(T_{ij}\) sea simétrico. Si no se conoce la simetría, debe usarse la forma bilineal \(T_{ij}U^iV^j\) con dos vectores arbitrarios.</p>
+<p>R5. Si \(A=B\), entonces \(A-B=0\). Cuando \(A-B\) es tensor, el hecho de que sea cero en un sistema implica que es cero en todos. Por eso el tensor cero es la pieza que conecta la ecuación tensorial con el cambio de coordenadas. La igualdad no se conserva por casualidad, sino porque la diferencia transforma tensorialmente.</p></div></details></div></section>
+<section id="resumen" class="page"><header class="section-header"><p class="section-kicker">09</p><h2>9. Resumen final de repaso</h2></header><div class="reading-block"><p>Ideas principales:</p>
+<ul>
+<li>Las operaciones tensoriales permitidas son las que respetan las leyes de transformación.</li>
+<li>Solo se suman tensores del mismo tipo y orden.</li>
+<li>El producto externo junta índices y aumenta el orden.</li>
+<li>El producto interno contrae un índice superior con uno inferior de dos tensores.</li>
+<li>La contracción contrae un índice superior con uno inferior dentro de un tensor.</li>
+<li>Un invariante puede verse como tensor de orden cero.</li>
+<li>Los criterios de tensorialidad permiten reconocer tensores mediante contracciones con vectores arbitrarios.</li>
+<li>La regla del cociente generaliza esos criterios.</li>
+<li>Una ecuación tensorial válida en un sistema es válida en todos si todos sus términos son tensores del mismo tipo.</li>
+<li>La anulación de un tensor es independiente del sistema coordenado.</li>
+</ul>
+<p>Conceptos imprescindibles:</p>
+<ul>
+<li>Índice libre.</li>
+<li>Índice mudo.</li>
+<li>Tipo \((p,q)\).</li>
+<li>Producto externo.</li>
+<li>Producto interno.</li>
+<li>Contracción.</li>
+<li>Invariante.</li>
+<li>Regla del cociente.</li>
+<li>Simetría tensorial.</li>
+<li>Ecuación tensorial.</li>
+</ul>
+<p>Relaciones clave:</p>
+<ul>
+<li>Producto interno = producto externo + contracción.</li>
+<li>Contracción correcta = un índice arriba + un índice abajo.</li>
+<li>Criterio tensorial = contracción con vectores arbitrarios.</li>
+<li>Ecuación tensorial = diferencia tensorial igual a cero.</li>
+<li>Tensor cero en un sistema = tensor cero en todos.</li>
+</ul>
+<p>Errores que evitar:</p>
+<ul>
+<li>Sumar índices de tipos incompatibles.</li>
+<li>Contraer dos índices ambos arriba o ambos abajo.</li>
+<li>Cambiar nombres de índices libres.</li>
+<li>Usar la regla del cociente con un vector no arbitrario.</li>
+<li>Omitir la simetría en el criterio cuadrático.</li>
+<li>Suponer que toda igualdad demostrada en coordenadas especiales es automáticamente general.</li>
+<li>Confundir determinante nulo con determinante invariante.</li>
+<li>Tratar tensores mixtos como matrices ordinarias respecto a la simetría.</li>
+</ul></div></section>
+<section id="checklist" class="page"><header class="section-header"><p class="section-kicker">10</p><h2>10. Checklist de dominio</h2></header><div class="reading-block"><ul>
+<li>Si no puedes distinguir índice libre e índice mudo, falta repasar notación de Einstein.</li>
+<li>Si confundes \(A^iB^j\) con \(A^iB_i\), revisar producto externo frente a producto interno.</li>
+<li>Si no puedes decir el tipo de \(A^{ij}B_{jk}\), falta practicar conteo de índices libres y contraídos.</li>
+<li>Si sumas \(T_i\) con \(S^i\), revisar compatibilidad de tipo y orden.</li>
+<li>Si crees que toda repetición de índices implica suma válida, revisar contracción superior-inferior.</li>
+<li>Si no puedes explicar por qué \(A_iB^i\) es invariante, falta repasar leyes de transformación covariante y contravariante.</li>
+<li>Si no puedes formular la regla del cociente, repasar criterios de tensorialidad.</li>
+<li>Si aplicas la regla del cociente a un vector concreto, revisar la necesidad de arbitrariedad.</li>
+<li>Si no sabes por qué \(T_{ij}V^iV^j\) requiere simetría, revisar la diferencia entre forma bilineal y forma cuadrática.</li>
+<li>Si confundes la simetría de \(T_{ij}\) con la de \(T^i{}_j\), revisar tensores puros y tensores mixtos.</li>
+<li>Si afirmas que \(\det(T_{ij})\) vale lo mismo en todos los sistemas, revisar qué propiedad del determinante conserva el capítulo.</li>
+<li>Si no puedes justificar que \(T=0\) en un sistema implica \(T=0\) en todos, revisar la transformación del tensor cero.</li>
+<li>Si usas coordenadas especiales sin comprobar tensorialidad, revisar ecuaciones tensoriales.</li>
+<li>Si puedes construir el tipo final de expresiones como \(A^i{}_jB^j{}_k\), \(T^{ij}{}_{ik}\) y \(g_{ij}U^iV^j\), el bloque de operaciones está asentado.</li>
+<li>Si puedes demostrar con la regla del cociente que \(T_{ij}\) es tensor a partir de \(T_{ij}V^i\), el bloque de criterios está asentado.</li>
+<li>Si puedes explicar en dos líneas por qué una ecuación tensorial demostrada en coordenadas convenientes es general, el capítulo está suficientemente dominado.</li>
+</ul></div></section>
+    </main>
+  </div>
+</body>
+</html>
