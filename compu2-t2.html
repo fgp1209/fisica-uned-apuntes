@@ -1,0 +1,510 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="color-scheme" content="light dark" />
+  <title>Compu2 — Tema 2: Solución de conjuntos de ecuaciones</title>
+  <meta name="description" content="Guía HTML de Física Computacional II, tema 2: Solución de conjuntos de ecuaciones. Eliminación · LU · Jacobi · Gauss-Seidel · condicionamiento · Newton multivariable" />
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/icon-32.png" />
+  <link rel="icon" type="image/png" sizes="50x50" href="assets/icons/icon-50.png" />
+  <link rel="apple-touch-icon" sizes="100x100" href="assets/icons/icon-100.png" />
+  <link rel="stylesheet" href="assets/styles.css" />
+  <style>
+    body.subject-computacional{
+      --subject:#0f766e;
+      --subject-soft:#e7f8f5;
+      --subject-mid:#99d8cf;
+      --subject-strong:#115e59;
+    }
+    @media(prefers-color-scheme:dark){
+      :root:not([data-theme="light"]) body.subject-computacional{
+        --subject-soft:#102f2d;
+        --subject-mid:#2a5955;
+        --subject-strong:#99f6e4;
+      }
+    }
+  </style>
+  <script>
+  window.MathJax = {
+    tex: { inlineMath: [['\(', '\)'], ['$', '$']], displayMath: [['\[', '\]']], processEscapes: true },
+    svg: { fontCache: 'global' },
+    options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+  };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+  <script defer src="assets/app.js"></script>
+</head>
+<body class="subject-computacional">
+  <div class="wrap">
+    <header class="cover">
+      <a class="back-link" href="index.html">← Índice</a>
+      <p class="eyebrow">Física Computacional II · Análisis numérico</p>
+      <h1>Solución de conjuntos de ecuaciones</h1>
+      <p class="subtitle">Tema 2 oficial · Eliminación · LU · Jacobi · Gauss-Seidel · condicionamiento · Newton multivariable</p>
+      <div class="lesson-meta">
+        <span>Asignatura: Compu2</span>
+        <span>Tema 2</span>
+        <span>Estado: completo</span>
+        <span>Enfoque: examen UNED</span>
+      </div>
+    </header>
+
+    <div class="toolbar no-print" aria-label="Navegación del tema">
+      <nav><a href="#mapa">Mapa</a><a href="#prerrequisitos">Prerrequisitos</a><a href="#idea-central">Idea</a><a href="#desarrollo">Desarrollo</a><a href="#conceptos">Conceptos</a><a href="#relaciones">Relaciones</a><a href="#errores">Errores</a><a href="#preguntas">Preguntas</a><a href="#respuestas">Respuestas</a><a href="#resumen">Resumen</a><a href="#checklist">Checklist</a></nav>
+      <div class="toolbar-actions"><button class="btn secondary" onclick="document.querySelectorAll('details').forEach(d=>d.open=true)">Abrir todo</button><button class="btn secondary" onclick="document.querySelectorAll('details').forEach(d=>d.open=false)">Modo repaso</button><button class="btn" onclick="window.print()">Imprimir / PDF</button></div>
+    </div>
+
+    <main>
+<section id="mapa" class="page">
+  <header class="page-head">
+    <h2>Mapa conceptual</h2>
+    <span class="page-no">00</span>
+  </header>
+  
+  <div class="concept-map">
+<a class="map-node" href="#desarrollo"><span>Sistemas lineales y eliminación</span><small>Un sistema lineal se escribe Ax=b. La eliminación gaussiana aplica operaciones por filas para c</small></a>
+<a class="map-node" href="#desarrollo"><span>Factorización LU</span><small>La factorización LU separa la matriz en dos triangulares. La eliminación queda almacenada de fo</small></a>
+<a class="map-node" href="#desarrollo"><span>Métodos iterativos</span><small>Jacobi y Gauss-Seidel generan aproximaciones sucesivas. Jacobi usa valores anteriores; Gauss-Se</small></a>
+<a class="map-node" href="#desarrollo"><span>Error, normas y condicionamiento</span><small>El residuo r=b-Ax no es igual al error. Una matriz mal condicionada puede ∏ucir gran error c</small></a>
+<a class="map-node" href="#desarrollo"><span>Sistemas no lineales</span><small>Para F(x)=0, Newton usa el Jacobiano y resuelve J_F(x_k)s=-F(x_k). Cada iteración no lineal con</small></a>
+<a class="map-node" href="#preguntas"><span>Examen</span><small>método, hipótesis, error, convergencia y criterio de parada</small></a>
+</div>
+<div class="reading-block source-block"><p>Fuente principal: guía oficial y capítulos del libro sobre sistemas lineales directos, métodos iterativos matriciales y sistemas no lineales.</p></div>
+</section>
+<section id="prerrequisitos" class="page">
+  <header class="page-head">
+    <h2>Prerrequisitos mínimos</h2>
+    <span class="page-no">01</span>
+  </header>
+  
+  <div class="cards-grid">
+<article class="definition-card">
+<h3>Matrices y vectores</h3>
+<p><strong>Definición breve:</strong> objetos que organizan coeficientes e incógnitas.</p>
+<p><strong>Por qué es necesario:</strong> el sistema se escribe Ax=b.</p>
+<p><strong>Ejemplo mínimo:</strong></p><div class="formula-block">A=[[2,1],[1,3]].</div>
+</article>
+<article class="definition-card">
+<h3>Determinante</h3>
+<p><strong>Definición breve:</strong> número asociado a una matriz cuadrada.</p>
+<p><strong>Por qué es necesario:</strong> indica invertibilidad y solución única en casos básicos.</p>
+<p><strong>Ejemplo mínimo:</strong></p><div class="formula-block">det(A) distinto de cero.</div>
+</article>
+<article class="definition-card">
+<h3>Operaciones por filas</h3>
+<p><strong>Definición breve:</strong> transformaciones elementales de un sistema.</p>
+<p><strong>Por qué es necesario:</strong> sostienen la eliminación gaussiana.</p>
+<p><strong>Ejemplo mínimo:</strong></p><div class="formula-block">F2 ← F2-2F1.</div>
+</article>
+<article class="definition-card">
+<h3>Norma</h3>
+<p><strong>Definición breve:</strong> medida de tamaño de vectores o matrices.</p>
+<p><strong>Por qué es necesario:</strong> mide errores y residuos.</p>
+<p><strong>Ejemplo mínimo:</strong></p><div class="formula-block">||x||_infty=max |x_i|.</div>
+</article>
+<article class="definition-card">
+<h3>Valor propio</h3>
+<p><strong>Definición breve:</strong> λ con Av=λ v.</p>
+<p><strong>Por qué es necesario:</strong> aparece en convergencia de iteraciones.</p>
+<p><strong>Ejemplo mínimo:</strong> matriz diagonal.</p>
+</article>
+<article class="definition-card">
+<h3>Jacobiano</h3>
+<p><strong>Definición breve:</strong> matriz de derivadas parciales.</p>
+<p><strong>Por qué es necesario:</strong> Newton multivariable lo usa para linealizar.</p>
+<p><strong>Ejemplo mínimo:</strong></p><div class="formula-block">J_F(x).</div>
+</article>
+</div>
+</section>
+<section id="idea-central" class="page">
+  <header class="page-head">
+    <h2>Idea central del capítulo</h2>
+    <span class="page-no">02</span>
+  </header>
+  
+  <div class="reading-block"><p>El tema aborda la resolución numérica de conjuntos de ecuaciones. El caso lineal Ax=b aparece directamente en álgebra matricial y también al discretizar problemas físicos. El caso no lineal F(x)=0 se trata linealizando repetidamente.</p>
+<p>La enseñanza principal es que resolver sistemas no equivale a calcular inversas. Hay métodos directos, como eliminación y LU, e iterativos, como Jacobi, Gauss-Seidel y relajación. La elección depende de tamaño, estructura, precisión, estabilidad y coste.</p>
+<p>Relación con MM1: sistemas, matrices y autovalores. Relación con MM2: normas y operadores. Relación con MM3: linealización por Jacobiano y estabilidad.</p></div>
+</section>
+<section id="desarrollo" class="page">
+  <header class="page-head">
+    <h2>Desarrollo completo</h2>
+    <span class="page-no">03</span>
+  </header>
+  
+  <article class="reading-block" id="3-1-sistemas-lineales-y-eliminacion">
+<h3>3.1. Sistemas lineales y eliminación</h3>
+<p>Un sistema lineal se escribe Ax=b. La eliminación gaussiana aplica operaciones por filas para convertirlo en triangular y resolverlo por sustitución. Es el método directo básico.</p>
+<p>El pivote no es un detalle: si es pequeño, el redondeo puede contaminar el resultado. Por eso se estudia el pivoteo.</p>
+</article>
+<article class="reading-block" id="3-2-factorizacion-lu">
+<h3>3.2. Factorización LU</h3>
+<p>La factorización LU separa la matriz en dos triangulares. La eliminación queda almacenada de forma reutilizable.</p>
+<p>Si se resuelven muchos sistemas con la misma A, LU ahorra trabajo: se factoriza una vez y se cambian solo las sustituciones.</p>
+</article>
+<article class="reading-block" id="3-3-metodos-iterativos">
+<h3>3.3. Métodos iterativos</h3>
+<p>Jacobi y Gauss-Seidel generan aproximaciones sucesivas. Jacobi usa valores anteriores; Gauss-Seidel usa valores nuevos en cuanto aparecen.</p>
+<p>La relajación introduce un parámetro que puede acelerar o frenar la convergencia. La clave es estudiar si la matriz de iteración reduce el error.</p>
+</article>
+<article class="reading-block" id="3-4-error-normas-y-condicionamiento">
+<h3>3.4. Error, normas y condicionamiento</h3>
+<p>El residuo r=b-Ax no es igual al error. Una matriz mal condicionada puede ∏ucir gran error con residuo pequeño.</p>
+<p>Las normas permiten cuantificar convergencia, tolerancias y sensibilidad.</p>
+</article>
+<article class="reading-block" id="3-5-sistemas-no-lineales">
+<h3>3.5. Sistemas no lineales</h3>
+<p>Para F(x)=0, Newton usa el Jacobiano y resuelve J_F(x_k)s=-F(x_k). Cada iteración no lineal contiene un problema lineal.</p>
+<p>El método puede ser muy eficaz, pero depende de una buena aproximación inicial y de que el Jacobiano sea adecuado.</p>
+</article>
+</section>
+<section id="conceptos" class="page">
+  <header class="page-head">
+    <h2>Conceptos clave</h2>
+    <span class="page-no">04</span>
+  </header>
+  
+  <div class="cards-grid">
+<article class="definition-card">
+<h3>Eliminación gaussiana</h3>
+<p><strong>Definición precisa:</strong> triangularización mediante operaciones por filas.</p>
+<p><strong>Explicación desarrollada:</strong> Convierte Ax=b en un sistema equivalente fácil de resolver.</p>
+<p><strong>Ejemplo:</strong> sistema 3x3 triangularizado.</p>
+<p><strong>Relación con otros conceptos:</strong> base de LU.</p>
+<p><strong>Posible forma de preguntarlo en examen:</strong> Describa eliminación y sustitución.</p>
+</article>
+<article class="definition-card">
+<h3>Pivoteo</h3>
+<p><strong>Definición precisa:</strong> intercambio de filas o columnas para elegir pivotes adecuados.</p>
+<p><strong>Explicación desarrollada:</strong> Mejora estabilidad numérica.</p>
+<p><strong>Ejemplo:</strong> pivoteo parcial.</p>
+<p><strong>Relación con otros conceptos:</strong> reduce redondeo.</p>
+<p><strong>Posible forma de preguntarlo en examen:</strong> Explique el pivoteo parcial.</p>
+</article>
+<article class="definition-card">
+<h3>LU</h3>
+<p><strong>Definición precisa:</strong> factorización A=LU.</p>
+<p><strong>Explicación desarrollada:</strong> Permite reutilizar la eliminación.</p>
+<p><strong>Ejemplo:</strong></p><div class="formula-block">resolver Ly=b y Ux=y.</div>
+<p><strong>Relación con otros conceptos:</strong> conecta eliminación y determinantes.</p>
+<p><strong>Posible forma de preguntarlo en examen:</strong> Cuándo conviene LU.</p>
+</article>
+<article class="definition-card">
+<h3>Método iterativo</h3>
+<p><strong>Definición precisa:</strong> regla que genera x^{k+1} a partir de x^k.</p>
+<p><strong>Explicación desarrollada:</strong> Útil en sistemas grandes o dispersos.</p>
+<p><strong>Ejemplo:</strong> Jacobi.</p>
+<p><strong>Relación con otros conceptos:</strong> necesita convergencia.</p>
+<p><strong>Posible forma de preguntarlo en examen:</strong> Compare métodos directos e iterativos.</p>
+</article>
+<article class="definition-card">
+<h3>Residuo</h3>
+<p><strong>Definición precisa:</strong> r=b-Ax_aprox.</p>
+<p><strong>Explicación desarrollada:</strong> Mide incumplimiento de la ecuación.</p>
+<p><strong>Ejemplo:</strong> r cercano a cero.</p>
+<p><strong>Relación con otros conceptos:</strong> no es siempre error.</p>
+<p><strong>Posible forma de preguntarlo en examen:</strong> Distinga residuo y error.</p>
+</article>
+<article class="definition-card">
+<h3>Condicionamiento</h3>
+<p><strong>Definición precisa:</strong> sensibilidad de la solución a perturbaciones.</p>
+<p><strong>Explicación desarrollada:</strong> Limita la fiabilidad aun con buen algoritmo.</p>
+<p><strong>Ejemplo:</strong> matriz casi singular.</p>
+<p><strong>Relación con otros conceptos:</strong> relacionado con normas.</p>
+<p><strong>Posible forma de preguntarlo en examen:</strong> Qué es matriz mal condicionada.</p>
+</article>
+<article class="definition-card">
+<h3>Jacobiano</h3>
+<p><strong>Definición precisa:</strong> matriz de derivadas parciales de F.</p>
+<p><strong>Explicación desarrollada:</strong> Linealiza sistemas no lineales.</p>
+<p><strong>Ejemplo:</strong> Newton multivariable.</p>
+<p><strong>Relación con otros conceptos:</strong> conecta cálculo y álgebra lineal.</p>
+<p><strong>Posible forma de preguntarlo en examen:</strong> Plantee un paso de Newton.</p>
+</article>
+</div>
+</section>
+<section id="relaciones" class="page">
+  <header class="page-head">
+    <h2>Relaciones entre ideas</h2>
+    <span class="page-no">05</span>
+  </header>
+  
+  <div class="key-box"><p>Eliminación, pivoteo y LU forman una cadena: triangularizar, hacerlo estable y guardar la triangularización.</p>
+<p>Los métodos iterativos sustituyen la solución exacta por convergencia controlada. Las normas son el lenguaje que permite hablar de tamaño de error y residuo.</p>
+<p>Newton para sistemas no lineales depende del tema lineal: cada paso requiere resolver un sistema con el Jacobiano.</p></div>
+</section>
+<section id="errores" class="page">
+  <header class="page-head">
+    <h2>Errores habituales</h2>
+    <span class="page-no">06</span>
+  </header>
+  
+  <div class="cards-grid">
+<article class="error-box">
+<h3>Calcular A^{-1} para resolver siempre Ax=b.</h3>
+<p><strong>Por qué está mal:</strong> es costoso y puede ser inestable.</p>
+<p><strong>Corrección:</strong> resolver el sistema por eliminación, LU o iteración.</p>
+<p><strong>Ejemplo de respuesta incorrecta:</strong></p><div class="formula-block">x=A^{-1}b es el método recomendado.</div>
+<p><strong>Ejemplo de respuesta correcta:</strong></p><div class="formula-block">No calculo la inversa salvo necesidad; resuelvo Ax=b.</div>
+</article>
+<article class="error-box">
+<h3>No pivotar con pivotes pequeños.</h3>
+<p><strong>Por qué está mal:</strong> amplifica redondeo.</p>
+<p><strong>Corrección:</strong> usar pivoteo parcial.</p>
+<p><strong>Ejemplo de respuesta incorrecta:</strong> Sigo aunque el pivote sea casi cero.</p>
+<p><strong>Ejemplo de respuesta correcta:</strong> Permuto filas para mejorar el pivote.</p>
+</article>
+<article class="error-box">
+<h3>Confundir residuo y error.</h3>
+<p><strong>Por qué está mal:</strong> una matriz mal condicionada puede engañar.</p>
+<p><strong>Corrección:</strong> interpretar residuo junto al condicionamiento.</p>
+<p><strong>Ejemplo de respuesta incorrecta:</strong> Residuo pequeño implica error pequeño.</p>
+<p><strong>Ejemplo de respuesta correcta:</strong> Residuo pequeño es indicio, no garantía universal.</p>
+</article>
+<article class="error-box">
+<h3>Suponer que Jacobi siempre converge.</h3>
+<p><strong>Por qué está mal:</strong> depende de la matriz.</p>
+<p><strong>Corrección:</strong> estudiar condiciones o comprobar convergencia.</p>
+<p><strong>Ejemplo de respuesta incorrecta:</strong> Itero y seguro converge.</p>
+<p><strong>Ejemplo de respuesta correcta:</strong> La convergencia debe justificarse.</p>
+</article>
+<article class="error-box">
+<h3>Dividir por el Jacobiano como si fuera escalar.</h3>
+<p><strong>Por qué está mal:</strong> J es matriz.</p>
+<p><strong>Corrección:</strong> resolver J s=-F.</p>
+<p><strong>Ejemplo de respuesta incorrecta:</strong></p><div class="formula-block">x_{k+1}=x_k-F/J.</div>
+<p><strong>Ejemplo de respuesta correcta:</strong> Calculo la corrección resolviendo un sistema lineal.</p>
+</article>
+</div>
+</section>
+<section id="preguntas" class="page">
+  <header class="page-head">
+    <h2>Preguntas orientadas a examen</h2>
+    <span class="page-no">07</span>
+  </header>
+  
+  <details class="accordion accordion-reading" open>
+<summary>10 preguntas fáciles</summary>
+<ol class="question-list">
+<li>¿Qué significa Ax=b?</li>
+<li>¿Qué es una matriz triangular?</li>
+<li>¿Qué es un pivote?</li>
+<li>¿Para qué sirve el pivoteo?</li>
+<li>¿Qué es LU?</li>
+<li>¿Qué es el residuo?</li>
+<li>¿Qué diferencia hay entre método directo e iterativo?</li>
+<li>¿Qué es Jacobi?</li>
+<li>¿Qué es Gauss-Seidel?</li>
+<li>¿Qué es el Jacobiano?</li>
+</ol></details>
+<details class="accordion accordion-reading" open>
+<summary>10 preguntas medias</summary>
+<ol class="question-list">
+<li>Explique eliminación gaussiana.</li>
+<li>¿Por qué no conviene calcular A^{-1}?</li>
+<li>Explique pivoteo parcial.</li>
+<li>¿Cuándo conviene LU?</li>
+<li>Compare Jacobi y Gauss-Seidel.</li>
+<li>Explique relajación.</li>
+<li>Distinga residuo y error.</li>
+<li>Explique Newton para sistemas no lineales.</li>
+<li>¿Qué es condicionamiento?</li>
+<li>¿Por qué importa la estructura de A?</li>
+</ol></details>
+<details class="accordion accordion-reading" open>
+<summary>5 preguntas difíciles</summary>
+<ol class="question-list">
+<li>Relacione LU y eliminación.</li>
+<li>Explique convergencia mediante matriz de iteración.</li>
+<li>Analice el papel del Jacobiano.</li>
+<li>Compare estabilidad y condicionamiento.</li>
+<li>Explique por qué un sistema disperso cambia la elección de método.</li>
+</ol></details>
+<details class="accordion accordion-reading" open>
+<summary>5 preguntas de desarrollo largo</summary>
+<ol class="question-list">
+<li>Desarrolle eliminación con pivoteo.</li>
+<li>Desarrolle factorización LU.</li>
+<li>Desarrolle Jacobi, Gauss-Seidel y relajación.</li>
+<li>Desarrolle Newton para sistemas no lineales.</li>
+<li>Desarrolle error, residuo y condicionamiento.</li>
+</ol></details>
+<details class="accordion accordion-reading" open>
+<summary>5 preguntas de relación entre conceptos</summary>
+<ol class="question-list">
+<li>Relacione eliminación, LU y determinante.</li>
+<li>Relacione normas y convergencia.</li>
+<li>Relacione Jacobiano y linealización.</li>
+<li>Relacione discretización y sistemas lineales.</li>
+<li>Relacione pivoteo y redondeo.</li>
+</ol></details>
+</section>
+<section id="respuestas" class="page">
+  <header class="page-head">
+    <h2>Respuestas modelo</h2>
+    <span class="page-no">08</span>
+  </header>
+  
+  <details class="accordion accordion-answer">
+<summary>Respuesta 1</summary>
+<p>Es la forma matricial de un sistema lineal, con A matriz de coeficientes, x incógnitas y b términos independientes.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 2</summary>
+<p>Una matriz con ceros por encima o por debajo de la diagonal, lo que facilita resolver el sistema.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 3</summary>
+<p>El elemento usado para eliminar coeficientes en una etapa de eliminación.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 4</summary>
+<p>Sirve para evitar divisiones por números pequeños y mejorar estabilidad numérica.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 5</summary>
+<p>Una factorización A=LU en matrices triangular inferior y superior, quizá con permutaciones.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 6</summary>
+<p>r=b-Ax_aprox; mide cuánto incumple la aproximación el sistema.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 7</summary>
+<p>Un método directo termina en finitas operaciones en aritmética exacta; uno iterativo ∏uce sucesiones aproximadas.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 8</summary>
+<p>Un método iterativo que actualiza cada componente usando los valores de la iteración anterior.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 9</summary>
+<p>Un método iterativo que usa inmediatamente los valores recién actualizados.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 10</summary>
+<p>La matriz de derivadas parciales de una función vectorial.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 11</summary>
+<p>La eliminación usa operaciones por filas para triangularizar Ax=b y después aplica sustitución regresiva.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 12</summary>
+<p>Calcular la inversa suele ser más costoso y menos estable que resolver el sistema directamente.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 13</summary>
+<p>Consiste en permutar filas para tomar como pivote un elemento de magnitud adecuada.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 14</summary>
+<p>Cuando se resuelven varios sistemas con la misma matriz y distintos términos independientes.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 15</summary>
+<p>Jacobi usa solo valores antiguos; Gauss-Seidel usa valores nuevos conforme aparecen, y suele converger antes si converge.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 16</summary>
+<p>La relajación pondera la actualización con un parámetro omega; puede acelerar o perjudicar según su valor.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 17</summary>
+<p>El residuo mide incumplimiento de la ecuación; el error mide distancia a la solución exacta.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 18</summary>
+<p>Se linealiza F en x_k, se resuelve J_F(x_k)s=-F(x_k) y se actualiza x_{k+1}=x_k+s.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 19</summary>
+<p>Es la sensibilidad de la solución frente a pequeñas perturbaciones de datos o redondeo.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 20</summary>
+<p>Porque matrices triangulares, banda, dispersas o simétricas permiten algoritmos más eficientes y estables.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 21</summary>
+<p>LU almacena los multiplicadores de la eliminación en L y la matriz triangular resultante en U.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 22</summary>
+<p>La iteración se escribe x_{k+1}=Tx_k+c; el error evoluciona por T, y converge si T reduce esos errores.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 23</summary>
+<p>El Jacobiano es la aproximación lineal local de F y permite convertir un paso no lineal en un sistema lineal.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 24</summary>
+<p>El condicionamiento pertenece al problema; la estabilidad pertenece al algoritmo y a cómo propaga errores.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 25</summary>
+<p>En sistemas dispersos interesa no llenar la matriz ni gastar memoria; por eso se prefieren métodos iterativos o especializados.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 26</summary>
+<p>La eliminación con pivoteo triangulariza de forma más segura. Permuta filas, anula entradas bajo el pivote y resuelve por sustitución regresiva.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 27</summary>
+<p>LU expresa A como ∏ucto de triangulares. Permite resolver Ly=b y luego Ux=y, reutilizando la factorización.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 28</summary>
+<p>Jacobi, Gauss-Seidel y relajación transforman Ax=b en iteraciones. Su validez depende de convergencia y se controla con normas y residuos.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 29</summary>
+<p>Newton para F(x)=0 usa el Jacobiano para calcular una corrección resolviendo un sistema lineal en cada iteración.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 30</summary>
+<p>Normas, residuo, error y condicionamiento permiten valorar si una solución aproximada es fiable.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 31</summary>
+<p>Eliminación ∏uce U; LU organiza esa eliminación; el determinante se obtiene del ∏ucto de pivotes con el signo de permutaciones.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 32</summary>
+<p>Las normas miden errores y permiten formular criterios de convergencia.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 33</summary>
+<p>El Jacobiano linealiza el sistema y es la base del paso de Newton.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 34</summary>
+<p>Discretizar modelos continuos ∏uce sistemas algebraicos que se resuelven numéricamente.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 35</summary>
+<p>El pivoteo reduce la amplificación de redondeo al evitar pivotes pequeños.</p>
+</details>
+</section>
+<section id="resumen" class="page">
+  <header class="page-head">
+    <h2>Resumen final de repaso</h2>
+    <span class="page-no">09</span>
+  </header>
+  
+  <div class="summary-box"><p>Ideas principales: Ax=b se resuelve con eliminación, pivoteo y LU; los métodos iterativos usan sucesiones y normas; los sistemas no lineales se linealizan con el Jacobiano. Conceptos imprescindibles: pivote, triangularización, LU, Jacobi, Gauss-Seidel, relajación, residuo, condicionamiento, Jacobiano. Relaciones clave: eliminación → LU; normas → convergencia; Jacobiano → Newton. Errores que evitar: invertir matrices sin necesidad, ignorar pivoteo, confundir residuo y error, asumir convergencia automática.</p></div>
+</section>
+<section id="checklist" class="page">
+  <header class="page-head">
+    <h2>Checklist de dominio</h2>
+    <span class="page-no">10</span>
+  </header>
+  
+  <div class="checklist-box"><ul><li>Si no puedes escribir Ax=b, falta repasar álgebra matricial.</li><li>Si no distingues eliminación de LU, revisar triangularización.</li><li>Si confundes residuo y error, revisar condicionamiento.</li><li>Si no puedes plantear J s=-F, revisar Newton multivariable.</li><li>Si puedes elegir método según tamaño, estructura y convergencia, el tema está suficientemente asentado.</li></ul></div>
+</section>
+    </main>
+  </div>
+</body>
+</html>

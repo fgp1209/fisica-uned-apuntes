@@ -1,0 +1,510 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="color-scheme" content="light dark" />
+  <title>Compu2 — Tema 4: Aproximación de funciones</title>
+  <meta name="description" content="Guía HTML de Física Computacional II, tema 4: Aproximación de funciones. Mínimos cuadrados · ortogonalidad · Chebyshev · racionales · Fourier · FFT" />
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/icon-32.png" />
+  <link rel="icon" type="image/png" sizes="50x50" href="assets/icons/icon-50.png" />
+  <link rel="apple-touch-icon" sizes="100x100" href="assets/icons/icon-100.png" />
+  <link rel="stylesheet" href="assets/styles.css" />
+  <style>
+    body.subject-computacional{
+      --subject:#0f766e;
+      --subject-soft:#e7f8f5;
+      --subject-mid:#99d8cf;
+      --subject-strong:#115e59;
+    }
+    @media(prefers-color-scheme:dark){
+      :root:not([data-theme="light"]) body.subject-computacional{
+        --subject-soft:#102f2d;
+        --subject-mid:#2a5955;
+        --subject-strong:#99f6e4;
+      }
+    }
+  </style>
+  <script>
+  window.MathJax = {
+    tex: { inlineMath: [['\(', '\)'], ['$', '$']], displayMath: [['\[', '\]']], processEscapes: true },
+    svg: { fontCache: 'global' },
+    options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+  };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+  <script defer src="assets/app.js"></script>
+</head>
+<body class="subject-computacional">
+  <div class="wrap">
+    <header class="cover">
+      <a class="back-link" href="index.html">← Índice</a>
+      <p class="eyebrow">Física Computacional II · Análisis numérico</p>
+      <h1>Aproximación de funciones</h1>
+      <p class="subtitle">Tema 4 oficial · Mínimos cuadrados · ortogonalidad · Chebyshev · racionales · Fourier · FFT</p>
+      <div class="lesson-meta">
+        <span>Asignatura: Compu2</span>
+        <span>Tema 4</span>
+        <span>Estado: completo</span>
+        <span>Enfoque: examen UNED</span>
+      </div>
+    </header>
+
+    <div class="toolbar no-print" aria-label="Navegación del tema">
+      <nav><a href="#mapa">Mapa</a><a href="#prerrequisitos">Prerrequisitos</a><a href="#idea-central">Idea</a><a href="#desarrollo">Desarrollo</a><a href="#conceptos">Conceptos</a><a href="#relaciones">Relaciones</a><a href="#errores">Errores</a><a href="#preguntas">Preguntas</a><a href="#respuestas">Respuestas</a><a href="#resumen">Resumen</a><a href="#checklist">Checklist</a></nav>
+      <div class="toolbar-actions"><button class="btn secondary" onclick="document.querySelectorAll('details').forEach(d=>d.open=true)">Abrir todo</button><button class="btn secondary" onclick="document.querySelectorAll('details').forEach(d=>d.open=false)">Modo repaso</button><button class="btn" onclick="window.print()">Imprimir / PDF</button></div>
+    </div>
+
+    <main>
+<section id="mapa" class="page">
+  <header class="page-head">
+    <h2>Mapa conceptual</h2>
+    <span class="page-no">00</span>
+  </header>
+  
+  <div class="concept-map">
+<a class="map-node" href="#desarrollo"><span>Aproximar frente a interpolar</span><small>Si los datos tienen ruido, pasar exactamente por ellos puede ser mala idea. Aproximar busca una</small></a>
+<a class="map-node" href="#desarrollo"><span>Mínimos cuadrados</span><small>Se minimiza la suma de cuadrados de residuos. Al derivar respecto a coeficientes aparecen ecuac</small></a>
+<a class="map-node" href="#desarrollo"><span>Polinomios ortogonales</span><small>Legendre, Laguerre y Chebyshev son útiles porque están adaptados a ∏uctos escalares concreto</small></a>
+<a class="map-node" href="#desarrollo"><span>Aproximación racional y Chebyshev</span><small>Los racionales amplían la familia con cocientes de polinomios, útiles para comportamientos difí</small></a>
+<a class="map-node" href="#desarrollo"><span>Fourier y FFT</span><small>Las funciones periódicas se aproximan con senos y cosenos. Truncar una serie ∏uce un modelo</small></a>
+<a class="map-node" href="#preguntas"><span>Examen</span><small>método, hipótesis, error, convergencia y criterio de parada</small></a>
+</div>
+<div class="reading-block source-block"><p>Fuente principal: guía oficial y capítulo sobre mínimos cuadrados, polinomios ortogonales, Chebyshev, aproximación racional, Fourier y FFT.</p></div>
+</section>
+<section id="prerrequisitos" class="page">
+  <header class="page-head">
+    <h2>Prerrequisitos mínimos</h2>
+    <span class="page-no">01</span>
+  </header>
+  
+  <div class="cards-grid">
+<article class="definition-card">
+<h3>Producto escalar</h3>
+<p><strong>Definición breve:</strong> operación que mide componentes y ángulos.</p>
+<p><strong>Por qué es necesario:</strong> define ortogonalidad y proyección.</p>
+<p><strong>Ejemplo mínimo:</strong></p><div class="formula-block">Σ u_i v_i.</div>
+</article>
+<article class="definition-card">
+<h3>Norma</h3>
+<p><strong>Definición breve:</strong> tamaño de vector o función.</p>
+<p><strong>Por qué es necesario:</strong> mide error de aproximación.</p>
+<p><strong>Ejemplo mínimo:</strong></p><div class="formula-block">||r||_2.</div>
+</article>
+<article class="definition-card">
+<h3>Proyección</h3>
+<p><strong>Definición breve:</strong> mejor aproximación sobre un subespacio.</p>
+<p><strong>Por qué es necesario:</strong> mínimos cuadrados es proyección.</p>
+<p><strong>Ejemplo mínimo:</strong> recta ajustada a datos.</p>
+</article>
+<article class="definition-card">
+<h3>Polinomios</h3>
+<p><strong>Definición breve:</strong> funciones base de aproximación.</p>
+<p><strong>Por qué es necesario:</strong> Legendre, Laguerre y Chebyshev son polinomios.</p>
+<p><strong>Ejemplo mínimo:</strong></p><div class="formula-block">P_n(x).</div>
+</article>
+<article class="definition-card">
+<h3>Fourier</h3>
+<p><strong>Definición breve:</strong> representación por senos y cosenos.</p>
+<p><strong>Por qué es necesario:</strong> necesaria en aproximación trigonométrica.</p>
+<p><strong>Ejemplo mínimo:</strong> armónicos.</p>
+</article>
+<article class="definition-card">
+<h3>Sistemas lineales</h3>
+<p><strong>Definición breve:</strong> ecuaciones para coeficientes.</p>
+<p><strong>Por qué es necesario:</strong> las ecuaciones normales son sistemas.</p>
+<p><strong>Ejemplo mínimo:</strong></p><div class="formula-block">Aᵀ A c=Aᵀ y.</div>
+</article>
+</div>
+</section>
+<section id="idea-central" class="page">
+  <header class="page-head">
+    <h2>Idea central del capítulo</h2>
+    <span class="page-no">02</span>
+  </header>
+  
+  <div class="reading-block"><p>El tema relaja la interpolación: no se exige pasar por todos los datos, sino estar cerca según una medida de error.</p>
+<p>El criterio central es mínimos cuadrados. Geométricamente, se proyecta el dato o función sobre un espacio de aproximación.</p>
+<p>Las bases ortogonales, Fourier y la FFT convierten la aproximación en una herramienta computacional potente. Relación con MM2: Hilbert y proyecciones; con MM3: Fourier.</p></div>
+</section>
+<section id="desarrollo" class="page">
+  <header class="page-head">
+    <h2>Desarrollo completo</h2>
+    <span class="page-no">03</span>
+  </header>
+  
+  <article class="reading-block" id="3-1-aproximar-frente-a-interpolar">
+<h3>3.1. Aproximar frente a interpolar</h3>
+<p>Si los datos tienen ruido, pasar exactamente por ellos puede ser mala idea. Aproximar busca una tendencia o representación eficaz.</p>
+<p>La familia aproximante se elige antes: rectas, polinomios, racionales o trigonométricas.</p>
+</article>
+<article class="reading-block" id="3-2-minimos-cuadrados">
+<h3>3.2. Mínimos cuadrados</h3>
+<p>Se minimiza la suma de cuadrados de residuos. Al derivar respecto a coeficientes aparecen ecuaciones normales.</p>
+<p>La interpretación geométrica es que el error queda ortogonal al espacio generado por las funciones base.</p>
+</article>
+<article class="reading-block" id="3-3-polinomios-ortogonales">
+<h3>3.3. Polinomios ortogonales</h3>
+<p>Legendre, Laguerre y Chebyshev son útiles porque están adaptados a ∏uctos escalares concretos.</p>
+<p>Una base ortogonal simplifica coeficientes y mejora estabilidad frente a bases monomiales mal condicionadas.</p>
+</article>
+<article class="reading-block" id="3-4-aproximacion-racional-y-chebyshev">
+<h3>3.4. Aproximación racional y Chebyshev</h3>
+<p>Los racionales amplían la familia con cocientes de polinomios, útiles para comportamientos difíciles.</p>
+<p>Chebyshev ayuda a controlar error y a economizar series, reduciendo grado con precisión razonable.</p>
+</article>
+<article class="reading-block" id="3-5-fourier-y-fft">
+<h3>3.5. Fourier y FFT</h3>
+<p>Las funciones periódicas se aproximan con senos y cosenos. Truncar una serie ∏uce un modelo finito.</p>
+<p>La FFT calcula transformadas discretas con gran eficiencia; es algoritmo, no una teoría distinta.</p>
+</article>
+</section>
+<section id="conceptos" class="page">
+  <header class="page-head">
+    <h2>Conceptos clave</h2>
+    <span class="page-no">04</span>
+  </header>
+  
+  <div class="cards-grid">
+<article class="definition-card">
+<h3>Residuo</h3>
+<p><strong>Definición precisa:</strong> diferencia entre dato y modelo.</p>
+<p><strong>Explicación desarrollada:</strong> Mide discrepancia local.</p>
+<p><strong>Ejemplo:</strong></p><div class="formula-block">r_i=y_i-p(x_i).</div>
+<p><strong>Relación con otros conceptos:</strong> mínimos cuadrados suma r_i^2.</p>
+<p><strong>Posible forma de preguntarlo en examen:</strong> Defina residuo.</p>
+</article>
+<article class="definition-card">
+<h3>Mínimos cuadrados</h3>
+<p><strong>Definición precisa:</strong> criterio que minimiza error cuadrático.</p>
+<p><strong>Explicación desarrollada:</strong> Adecuado para datos con ruido.</p>
+<p><strong>Ejemplo:</strong> ajuste lineal.</p>
+<p><strong>Relación con otros conceptos:</strong> proyección ortogonal.</p>
+<p><strong>Posible forma de preguntarlo en examen:</strong> Deduzca ecuaciones normales.</p>
+</article>
+<article class="definition-card">
+<h3>Ecuaciones normales</h3>
+<p><strong>Definición precisa:</strong> sistema para coeficientes óptimos.</p>
+<p><strong>Explicación desarrollada:</strong> Expresan ortogonalidad del error.</p>
+<p><strong>Ejemplo:</strong></p><div class="formula-block">Aᵀ A c=Aᵀ y.</div>
+<p><strong>Relación con otros conceptos:</strong> conecta álgebra y aproximación.</p>
+<p><strong>Posible forma de preguntarlo en examen:</strong> Qué son ecuaciones normales.</p>
+</article>
+<article class="definition-card">
+<h3>Ortogonalidad</h3>
+<p><strong>Definición precisa:</strong> ∏ucto escalar cero.</p>
+<p><strong>Explicación desarrollada:</strong> Separa componentes de la aproximación.</p>
+<p><strong>Ejemplo:</strong> senos y cosenos.</p>
+<p><strong>Relación con otros conceptos:</strong> depende del peso.</p>
+<p><strong>Posible forma de preguntarlo en examen:</strong> Por qué simplifica.</p>
+</article>
+<article class="definition-card">
+<h3>Polinomios ortogonales</h3>
+<p><strong>Definición precisa:</strong> familias ortogonales con un peso.</p>
+<p><strong>Explicación desarrollada:</strong> Bases eficientes de aproximación.</p>
+<p><strong>Ejemplo:</strong> Legendre.</p>
+<p><strong>Relación con otros conceptos:</strong> relación con MM2.</p>
+<p><strong>Posible forma de preguntarlo en examen:</strong> Cite y explique.</p>
+</article>
+<article class="definition-card">
+<h3>Fourier</h3>
+<p><strong>Definición precisa:</strong> aproximación por armónicos.</p>
+<p><strong>Explicación desarrollada:</strong> Natural en fenómenos periódicos.</p>
+<p><strong>Ejemplo:</strong> serie trigonométrica.</p>
+<p><strong>Relación con otros conceptos:</strong> relación con MM3.</p>
+<p><strong>Posible forma de preguntarlo en examen:</strong> Explique aproximación trigonométrica.</p>
+</article>
+<article class="definition-card">
+<h3>FFT</h3>
+<p><strong>Definición precisa:</strong> algoritmo rápido para DFT.</p>
+<p><strong>Explicación desarrollada:</strong> Hace práctico el análisis espectral.</p>
+<p><strong>Ejemplo:</strong> señal muestreada.</p>
+<p><strong>Relación con otros conceptos:</strong> no es transformada distinta.</p>
+<p><strong>Posible forma de preguntarlo en examen:</strong> Diferencie DFT y FFT.</p>
+</article>
+</div>
+</section>
+<section id="relaciones" class="page">
+  <header class="page-head">
+    <h2>Relaciones entre ideas</h2>
+    <span class="page-no">05</span>
+  </header>
+  
+  <div class="key-box"><p>Aproximación = elegir espacio + medir error + minimizar. El ∏ucto escalar define la geometría del problema.</p>
+<p>Mínimos cuadrados discreto usa sumas; el continuo usa integrales. Ambos expresan que el error óptimo es ortogonal.</p>
+<p>Fourier es una base ortogonal trigonométrica; la FFT es la implementación eficiente para datos discretos.</p></div>
+</section>
+<section id="errores" class="page">
+  <header class="page-head">
+    <h2>Errores habituales</h2>
+    <span class="page-no">06</span>
+  </header>
+  
+  <div class="cards-grid">
+<article class="error-box">
+<h3>Exigir que un ajuste pase por todos los puntos.</h3>
+<p><strong>Por qué está mal:</strong> eso es interpolación.</p>
+<p><strong>Corrección:</strong> permitir residuos.</p>
+<p><strong>Ejemplo de respuesta incorrecta:</strong> La recta ajustada pasa por todos.</p>
+<p><strong>Ejemplo de respuesta correcta:</strong> La recta minimiza residuos.</p>
+</article>
+<article class="error-box">
+<h3>Hablar de ortogonalidad sin ∏ucto escalar.</h3>
+<p><strong>Por qué está mal:</strong> depende del peso e intervalo.</p>
+<p><strong>Corrección:</strong> especificar ∏ucto escalar.</p>
+<p><strong>Ejemplo de respuesta incorrecta:</strong> Son ortogonales siempre.</p>
+<p><strong>Ejemplo de respuesta correcta:</strong> Son ortogonales respecto a este ∏ucto.</p>
+</article>
+<article class="error-box">
+<h3>Confundir DFT y FFT.</h3>
+<p><strong>Por qué está mal:</strong> una es operación, otra algoritmo.</p>
+<p><strong>Corrección:</strong> distinguir teoría y cálculo.</p>
+<p><strong>Ejemplo de respuesta incorrecta:</strong> La FFT es otra transformada.</p>
+<p><strong>Ejemplo de respuesta correcta:</strong> La FFT calcula la DFT rápido.</p>
+</article>
+<article class="error-box">
+<h3>Aumentar grado sin control.</h3>
+<p><strong>Por qué está mal:</strong> puede sobreajustar.</p>
+<p><strong>Corrección:</strong> validar error y estabilidad.</p>
+<p><strong>Ejemplo de respuesta incorrecta:</strong> Más grado siempre mejor.</p>
+<p><strong>Ejemplo de respuesta correcta:</strong> El grado se elige por equilibrio.</p>
+</article>
+<article class="error-box">
+<h3>Interpretar residuos como verdad física absoluta.</h3>
+<p><strong>Por qué está mal:</strong> los datos pueden tener ruido.</p>
+<p><strong>Corrección:</strong> entender residuos como discrepancia modelo-dato.</p>
+<p><strong>Ejemplo de respuesta incorrecta:</strong> Residuo cero prueba modelo verdadero.</p>
+<p><strong>Ejemplo de respuesta correcta:</strong> Residuo cero solo prueba ajuste a esos datos.</p>
+</article>
+</div>
+</section>
+<section id="preguntas" class="page">
+  <header class="page-head">
+    <h2>Preguntas orientadas a examen</h2>
+    <span class="page-no">07</span>
+  </header>
+  
+  <details class="accordion accordion-reading" open>
+<summary>10 preguntas fáciles</summary>
+<ol class="question-list">
+<li>¿Qué diferencia hay entre aproximar e interpolar?</li>
+<li>¿Qué es un residuo?</li>
+<li>¿Qué minimiza mínimos cuadrados?</li>
+<li>¿Qué es una ecuación normal?</li>
+<li>¿Qué es ortogonalidad?</li>
+<li>Cite polinomios ortogonales.</li>
+<li>¿Qué es aproximación trigonométrica?</li>
+<li>¿Qué es Fourier truncado?</li>
+<li>¿Qué es la FFT?</li>
+<li>¿Por qué el ruido favorece ajustes?</li>
+</ol></details>
+<details class="accordion accordion-reading" open>
+<summary>10 preguntas medias</summary>
+<ol class="question-list">
+<li>Explique mínimos cuadrados geométricamente.</li>
+<li>¿Por qué ayuda una base ortogonal?</li>
+<li>Compare caso discreto y continuo.</li>
+<li>¿Qué papel tiene el peso?</li>
+<li>¿Por qué importa Chebyshev?</li>
+<li>¿Qué aporta una aproximación racional?</li>
+<li>Relacione Fourier y periodicidad.</li>
+<li>¿Qué significa truncar?</li>
+<li>¿Por qué la FFT es eficiente?</li>
+<li>¿Qué riesgo tiene subir el grado?</li>
+</ol></details>
+<details class="accordion accordion-reading" open>
+<summary>5 preguntas difíciles</summary>
+<ol class="question-list">
+<li>Deduzca ortogonalidad del error.</li>
+<li>Deduzca ecuaciones normales.</li>
+<li>Compare base monomial y ortogonal.</li>
+<li>Relacione Chebyshev y economización.</li>
+<li>Diferencie DFT y FFT.</li>
+</ol></details>
+<details class="accordion accordion-reading" open>
+<summary>5 preguntas de desarrollo largo</summary>
+<ol class="question-list">
+<li>Desarrolle mínimos cuadrados discretos.</li>
+<li>Desarrolle aproximación continua.</li>
+<li>Desarrolle polinomios ortogonales.</li>
+<li>Desarrolle Fourier trigonométrico.</li>
+<li>Desarrolle FFT.</li>
+</ol></details>
+<details class="accordion accordion-reading" open>
+<summary>5 preguntas de relación entre conceptos</summary>
+<ol class="question-list">
+<li>Relacione residuo y norma.</li>
+<li>Relacione ∏ucto escalar y proyección.</li>
+<li>Relacione interpolación, ruido y ajuste.</li>
+<li>Relacione ortogonalidad y estabilidad.</li>
+<li>Relacione Fourier, datos discretos y FFT.</li>
+</ol></details>
+</section>
+<section id="respuestas" class="page">
+  <header class="page-head">
+    <h2>Respuestas modelo</h2>
+    <span class="page-no">08</span>
+  </header>
+  
+  <details class="accordion accordion-answer">
+<summary>Respuesta 1</summary>
+<p>Interpolar pasa exactamente por datos; aproximar minimiza una discrepancia global.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 2</summary>
+<p>Diferencia dato-modelo.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 3</summary>
+<p>La suma o integral de cuadrados del error.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 4</summary>
+<p>El sistema que determina coeficientes de mínimos cuadrados.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 5</summary>
+<p>Producto escalar cero.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 6</summary>
+<p>Legendre, Laguerre y Chebyshev.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 7</summary>
+<p>Combinación de senos y cosenos.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 8</summary>
+<p>Serie de Fourier cortada a finitos armónicos.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 9</summary>
+<p>Algoritmo rápido para calcular la transformada discreta de Fourier.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 10</summary>
+<p>Porque interpolar re∏uciría el ruido; ajustar busca tendencia.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 11</summary>
+<p>El mejor aproximante es la proyección sobre un subespacio; el error queda ortogonal a ese subespacio.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 12</summary>
+<p>Anula ∏uctos cruzados y simplifica coeficientes.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 13</summary>
+<p>Discreto usa sumas sobre datos; continuo usa integrales.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 14</summary>
+<p>El peso define qué zonas cuentan más y qué polinomios son ortogonales.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 15</summary>
+<p>Permite buen control del error y reducción eficiente de grados.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 16</summary>
+<p>Puede representar comportamientos que un polinomio puro aproxima mal.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 17</summary>
+<p>Las funciones periódicas se expresan naturalmente con armónicos seno-coseno.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 18</summary>
+<p>Quedarse con finitos términos aceptando error.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 19</summary>
+<p>Reduce drásticamente el coste frente al cálculo directo.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 20</summary>
+<p>Sobreajuste, oscilaciones y mal condicionamiento.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 21</summary>
+<p>En el mínimo, cualquier variación dentro del subespacio no cambia la norma al primer orden; por eso el error es ortogonal a las bases.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 22</summary>
+<p>Derivando la suma de residuos cuadrados respecto a cada coeficiente e igualando a cero.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 23</summary>
+<p>La base monomial puede ser mal condicionada; una base ortogonal desacopla y estabiliza.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 24</summary>
+<p>Chebyshev permite reemplazar una serie por un polinomio menor manteniendo error controlado.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 25</summary>
+<p>La DFT es la transformación matemática discreta; la FFT es el algoritmo eficiente para calcularla.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 26</summary>
+<p>Se elige una familia lineal en parámetros, se forman residuos y se minimiza su suma cuadrática. La derivación ∏uce ecuaciones normales.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 27</summary>
+<p>Se minimiza una norma integral. El resultado se interpreta como proyección ortogonal de una función sobre un subespacio.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 28</summary>
+<p>Son bases adaptadas a ∏uctos escalares con peso. Facilitan coeficientes y mejoran comportamiento numérico.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 29</summary>
+<p>Fourier aproxima funciones periódicas con armónicos. Truncar da una representación finita útil en ondas y señales.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 30</summary>
+<p>La FFT no cambia Fourier; permite calcular coeficientes discretos con coste mucho menor.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 31</summary>
+<p>Los residuos forman un vector y su norma mide el error global.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 32</summary>
+<p>El ∏ucto escalar define ortogonalidad; la mejor aproximación es una proyección.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 33</summary>
+<p>Con ruido, la interpolación sobreajusta; el ajuste suaviza.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 34</summary>
+<p>La ortogonalidad reduce acoplamientos y mejora cálculo.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 35</summary>
+<p>Los datos muestreados se transforman mediante DFT, calculada eficientemente por FFT.</p>
+</details>
+</section>
+<section id="resumen" class="page">
+  <header class="page-head">
+    <h2>Resumen final de repaso</h2>
+    <span class="page-no">09</span>
+  </header>
+  
+  <div class="summary-box"><p>Ideas principales: aproximar minimiza error; mínimos cuadrados ∏uce proyección; bases ortogonales simplifican; Chebyshev controla error; Fourier representa periodicidad; FFT calcula rápido. Errores: confundir interpolación y ajuste, ignorar ∏ucto escalar, confundir FFT con DFT, sobreajustar.</p></div>
+</section>
+<section id="checklist" class="page">
+  <header class="page-head">
+    <h2>Checklist de dominio</h2>
+    <span class="page-no">10</span>
+  </header>
+  
+  <div class="checklist-box"><ul><li>Si no distingues aproximar de interpolar, repasa Tema 3.</li><li>Si no defines residuo, revisa mínimos cuadrados.</li><li>Si no entiendes proyección, repasa ∏ucto escalar.</li><li>Si confundes Fourier y FFT, revisa DFT.</li><li>Si puedes elegir base según datos y fenómeno, el tema está asentado.</li></ul></div>
+</section>
+    </main>
+  </div>
+</body>
+</html>

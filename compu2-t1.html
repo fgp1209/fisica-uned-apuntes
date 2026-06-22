@@ -1,0 +1,513 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="color-scheme" content="light dark" />
+  <title>Compu2 — Tema 1: Resolución de ecuaciones no lineales</title>
+  <meta name="description" content="Guía HTML de Física Computacional II, tema 1: Resolución de ecuaciones no lineales. Bisección · punto fijo · Newton · secante · falsa posición · Müller · error" />
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/icon-32.png" />
+  <link rel="icon" type="image/png" sizes="50x50" href="assets/icons/icon-50.png" />
+  <link rel="apple-touch-icon" sizes="100x100" href="assets/icons/icon-100.png" />
+  <link rel="stylesheet" href="assets/styles.css" />
+  <style>
+    body.subject-computacional{
+      --subject:#0f766e;
+      --subject-soft:#e7f8f5;
+      --subject-mid:#99d8cf;
+      --subject-strong:#115e59;
+    }
+    @media(prefers-color-scheme:dark){
+      :root:not([data-theme="light"]) body.subject-computacional{
+        --subject-soft:#102f2d;
+        --subject-mid:#2a5955;
+        --subject-strong:#99f6e4;
+      }
+    }
+  </style>
+  <script>
+  window.MathJax = {
+    tex: { inlineMath: [['\(', '\)'], ['$', '$']], displayMath: [['\[', '\]']], processEscapes: true },
+    svg: { fontCache: 'global' },
+    options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+  };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+  <script defer src="assets/app.js"></script>
+</head>
+<body class="subject-computacional">
+  <div class="wrap">
+    <header class="cover">
+      <a class="back-link" href="index.html">← Índice</a>
+      <p class="eyebrow">Física Computacional II · Análisis numérico</p>
+      <h1>Resolución de ecuaciones no lineales</h1>
+      <p class="subtitle">Tema 1 oficial · Bisección · punto fijo · Newton · secante · falsa posición · Müller · error</p>
+      <div class="lesson-meta">
+        <span>Asignatura: Compu2</span>
+        <span>Tema 1</span>
+        <span>Estado: completo</span>
+        <span>Enfoque: examen UNED</span>
+      </div>
+    </header>
+
+    <div class="toolbar no-print" aria-label="Navegación del tema">
+      <nav><a href="#mapa">Mapa</a><a href="#prerrequisitos">Prerrequisitos</a><a href="#idea-central">Idea</a><a href="#desarrollo">Desarrollo</a><a href="#conceptos">Conceptos</a><a href="#relaciones">Relaciones</a><a href="#errores">Errores</a><a href="#preguntas">Preguntas</a><a href="#respuestas">Respuestas</a><a href="#resumen">Resumen</a><a href="#checklist">Checklist</a></nav>
+      <div class="toolbar-actions"><button class="btn secondary" onclick="document.querySelectorAll('details').forEach(d=>d.open=true)">Abrir todo</button><button class="btn secondary" onclick="document.querySelectorAll('details').forEach(d=>d.open=false)">Modo repaso</button><button class="btn" onclick="window.print()">Imprimir / PDF</button></div>
+    </div>
+
+    <main>
+<section id="mapa" class="page">
+  <header class="page-head">
+    <h2>Mapa conceptual</h2>
+    <span class="page-no">00</span>
+  </header>
+  
+  <div class="concept-map">
+<a class="map-node" href="#desarrollo"><span>Planteamiento f(x)=0</span><small>Resolver una ecuación no lineal se reduce a encontrar los ceros de una función. Esta reformulac</small></a>
+<a class="map-node" href="#desarrollo"><span>Bisección y métodos cerrados</span><small>El método de bisección divide el intervalo en dos partes y conserva aquella donde persiste el c</small></a>
+<a class="map-node" href="#desarrollo"><span>Punto fijo</span><small>La iteración de punto fijo transforma f(x)=0 en x=g(x) y aplica p_{n+1}=g(p_n). La dificultad e</small></a>
+<a class="map-node" href="#desarrollo"><span>Newton, secante y falsa posición</span><small>Newton aproxima la función por la tangente en p_n y toma el corte con el eje: p_{n+1}=p_n-f(p_n</small></a>
+<a class="map-node" href="#desarrollo"><span>Error, aceleración y Müller</span><small>El análisis de error distingue residuo, incremento y error real. Un criterio de parada debe int</small></a>
+<a class="map-node" href="#preguntas"><span>Examen</span><small>método, hipótesis, error, convergencia y criterio de parada</small></a>
+</div>
+<div class="reading-block source-block"><p>Fuente principal: guía oficial de Física Computacional II y capítulo del libro sobre soluciones de ecuaciones de una variable: bisección, punto fijo, Newton, secante, falsa posición, convergencia acelerada, ceros de polinomios, método de Müller y análisis de error.</p></div>
+</section>
+<section id="prerrequisitos" class="page">
+  <header class="page-head">
+    <h2>Prerrequisitos mínimos</h2>
+    <span class="page-no">01</span>
+  </header>
+  
+  <div class="cards-grid">
+<article class="definition-card">
+<h3>Función real</h3>
+<p><strong>Definición breve:</strong> aplicación y=f(x) definida sobre un conjunto de números reales.</p>
+<p><strong>Por qué es necesario:</strong> las raíces se formulan como ceros de una función.</p>
+<p><strong>Ejemplo mínimo:</strong></p><div class="formula-block">f(x)=x^2-2.</div>
+</article>
+<article class="definition-card">
+<h3>Continuidad</h3>
+<p><strong>Definición breve:</strong> ausencia de saltos en el intervalo de trabajo.</p>
+<p><strong>Por qué es necesario:</strong> bisección y falsa posición usan el cambio de signo.</p>
+<p><strong>Ejemplo mínimo:</strong></p><div class="formula-block">si f(1)&lt;0 y f(2)&gt;0, hay raíz en (1,2) si f es continua.</div>
+</article>
+<article class="definition-card">
+<h3>Derivada</h3>
+<p><strong>Definición breve:</strong> pendiente local de la curva.</p>
+<p><strong>Por qué es necesario:</strong> Newton usa la tangente y requiere f'(x).</p>
+<p><strong>Ejemplo mínimo:</strong></p><div class="formula-block">f'(x)=2x para f(x)=x^2-2.</div>
+</article>
+<article class="definition-card">
+<h3>Sucesiones</h3>
+<p><strong>Definición breve:</strong> listas ordenadas de aproximaciones p_n.</p>
+<p><strong>Por qué es necesario:</strong> un método iterativo ∏uce una sucesión que debe converger.</p>
+<p><strong>Ejemplo mínimo:</strong> 1, 1.4, 1.41, 1.414.</p>
+</article>
+<article class="definition-card">
+<h3>Error absoluto y relativo</h3>
+<p><strong>Definición breve:</strong> medidas de distancia entre valor exacto y aproximado.</p>
+<p><strong>Por qué es necesario:</strong> permiten decidir cuándo parar.</p>
+<p><strong>Ejemplo mínimo:</strong></p><div class="formula-block">|p-p_n|.</div>
+</article>
+<article class="definition-card">
+<h3>Álgebra de polinomios</h3>
+<p><strong>Definición breve:</strong> manipulación de ∏uctos, cocientes y raíces.</p>
+<p><strong>Por qué es necesario:</strong> Müller y los ceros de polinomios usan aproximaciones polinomiales.</p>
+<p><strong>Ejemplo mínimo:</strong></p><div class="formula-block">x^3-x-1=0.</div>
+</article>
+</div>
+</section>
+<section id="idea-central" class="page">
+  <header class="page-head">
+    <h2>Idea central del capítulo</h2>
+    <span class="page-no">02</span>
+  </header>
+  
+  <div class="reading-block"><p>El tema estudia cómo aproximar soluciones de ecuaciones no lineales cuando no existe una fórmula cerrada útil. La forma estándar es transformar el problema en buscar p tal que f(p)=0. A partir de ahí se construyen algoritmos que generan intervalos o sucesiones de aproximaciones.</p>
+<p>El núcleo conceptual es doble. Primero, localizar una raíz mediante continuidad y cambio de signo. Segundo, acelerar la aproximación usando información local de la función, como tangentes, secantes o interpolaciones. La fiabilidad y la velocidad no siempre coinciden: bisección es segura pero lenta; Newton es rápido pero sensible al punto inicial.</p>
+<p>Dentro de la asignatura, este tema inaugura el análisis numérico: no basta con calcular, hay que controlar el error, entender la convergencia y fijar criterios de parada. Relación principal con MM1: funciones, cálculo diferencial, sucesiones y ecuaciones.</p></div>
+</section>
+<section id="desarrollo" class="page">
+  <header class="page-head">
+    <h2>Desarrollo completo</h2>
+    <span class="page-no">03</span>
+  </header>
+  
+  <article class="reading-block" id="3-1-planteamiento-f-x-0">
+<h3>3.1. Planteamiento f(x)=0</h3>
+<p>Resolver una ecuación no lineal se reduce a encontrar los ceros de una función. Esta reformulación permite aplicar ideas gráficas y analíticas: signo, continuidad, pendiente y curvatura.</p>
+<p>El primer paso no es iterar, sino entender dónde puede estar la raíz. Si hay cambio de signo en un intervalo y la función es continua, existe al menos una raíz. Esta garantía no dice cuál es la raíz exacta, pero sí da una zona segura para empezar.</p>
+</article>
+<article class="reading-block" id="3-2-biseccion-y-metodos-cerrados">
+<h3>3.2. Bisección y métodos cerrados</h3>
+<p>El método de bisección divide el intervalo en dos partes y conserva aquella donde persiste el cambio de signo. Cada iteración reduce a la mitad la incertidumbre. Por eso es robusto: mientras se cumplan las hipótesis, no pierde la raíz.</p>
+<p>Su coste es la lentitud. El error queda acotado por la longitud del intervalo dividido por potencias de dos, lo que permite calcular cuántas iteraciones son necesarias para una tolerancia dada.</p>
+</article>
+<article class="reading-block" id="3-3-punto-fijo">
+<h3>3.3. Punto fijo</h3>
+<p>La iteración de punto fijo transforma f(x)=0 en x=g(x) y aplica p_{n+1}=g(p_n). La dificultad es que la transformación no es neutra: distintas g para la misma ecuación pueden converger o divergir.</p>
+<p>La condición esencial es que g acerque puntos hacia el fijo. En términos prácticos, una derivada de módulo menor que uno cerca de la solución favorece la convergencia.</p>
+</article>
+<article class="reading-block" id="3-4-newton-secante-y-falsa-posicion">
+<h3>3.4. Newton, secante y falsa posición</h3>
+<p>Newton aproxima la función por la tangente en p_n y toma el corte con el eje: p_{n+1}=p_n-f(p_n)/f'(p_n). Si se parte cerca de una raíz simple, suele converger cuadráticamente.</p>
+<p>La secante evita calcular derivadas sustituyéndolas por una pendiente entre dos aproximaciones. La falsa posición usa también una secante, pero conserva un intervalo con cambio de signo. Así combina cierta seguridad con una elección del punto más informada que el punto medio.</p>
+</article>
+<article class="reading-block" id="3-5-error-aceleracion-y-muller">
+<h3>3.5. Error, aceleración y Müller</h3>
+<p>El análisis de error distingue residuo, incremento y error real. Un criterio de parada debe interpretarse con cuidado, porque |f(p_n)| pequeño no siempre implica estar cerca de la raíz.</p>
+<p>La convergencia acelerada usa términos sucesivos para eliminar parte dominante del error. El método de Müller, por su parte, ajusta una parábola con tres puntos y usa sus raíces como aproximación, siendo útil en ceros de polinomios y pudiendo entrar en raíces complejas.</p>
+</article>
+</section>
+<section id="conceptos" class="page">
+  <header class="page-head">
+    <h2>Conceptos clave</h2>
+    <span class="page-no">04</span>
+  </header>
+  
+  <div class="cards-grid">
+<article class="definition-card">
+<h3>Raíz</h3>
+<p><strong>Definición precisa:</strong> número p que cumple f(p)=0.</p>
+<p><strong>Explicación desarrollada:</strong> Es la solución buscada; puede ser simple o múltiple, lo que afecta a la convergencia.</p>
+<p><strong>Ejemplo:</strong></p><div class="formula-block">√2 es raíz de x^2-2.</div>
+<p><strong>Relación con otros conceptos:</strong> se localiza con cambio de signo y se aproxima con iteraciones.</p>
+<p><strong>Posible forma de preguntarlo en examen:</strong> Defina raíz y explique cómo localizarla.</p>
+</article>
+<article class="definition-card">
+<h3>Método cerrado</h3>
+<p><strong>Definición precisa:</strong> método que mantiene una raíz encerrada en un intervalo.</p>
+<p><strong>Explicación desarrollada:</strong> Da seguridad a costa de velocidad.</p>
+<p><strong>Ejemplo:</strong> bisección.</p>
+<p><strong>Relación con otros conceptos:</strong> depende de continuidad y cambio de signo.</p>
+<p><strong>Posible forma de preguntarlo en examen:</strong> Compare bisección con Newton.</p>
+</article>
+<article class="definition-card">
+<h3>Método abierto</h3>
+<p><strong>Definición precisa:</strong> método que no conserva necesariamente un intervalo de raíz.</p>
+<p><strong>Explicación desarrollada:</strong> Puede ser rápido, pero exige buenas condiciones iniciales.</p>
+<p><strong>Ejemplo:</strong> Newton o secante.</p>
+<p><strong>Relación con otros conceptos:</strong> se analiza por convergencia local.</p>
+<p><strong>Posible forma de preguntarlo en examen:</strong> Explique por qué Newton puede fallar.</p>
+</article>
+<article class="definition-card">
+<h3>Punto fijo</h3>
+<p><strong>Definición precisa:</strong> p cumple g(p)=p.</p>
+<p><strong>Explicación desarrollada:</strong> Permite convertir una raíz en una iteración.</p>
+<p><strong>Ejemplo:</strong></p><div class="formula-block">p_{n+1}=(p_n+2/p_n)/2.</div>
+<p><strong>Relación con otros conceptos:</strong> su convergencia depende de g'.</p>
+<p><strong>Posible forma de preguntarlo en examen:</strong> Indique condiciones de convergencia de punto fijo.</p>
+</article>
+<article class="definition-card">
+<h3>Orden de convergencia</h3>
+<p><strong>Definición precisa:</strong> velocidad asintótica con que decrece el error.</p>
+<p><strong>Explicación desarrollada:</strong> Sirve para comparar métodos más allá del número de iteraciones.</p>
+<p><strong>Ejemplo:</strong> Newton puede ser cuadrático.</p>
+<p><strong>Relación con otros conceptos:</strong> relaciona error actual y error siguiente.</p>
+<p><strong>Posible forma de preguntarlo en examen:</strong> Qué significa convergencia cuadrática.</p>
+</article>
+<article class="definition-card">
+<h3>Criterio de parada</h3>
+<p><strong>Definición precisa:</strong> regla práctica para detener el algoritmo.</p>
+<p><strong>Explicación desarrollada:</strong> Debe combinar tolerancia, residuo e incremento cuando sea necesario.</p>
+<p><strong>Ejemplo:</strong></p><div class="formula-block">|p_n-p_{n-1}|&lt;tol.</div>
+<p><strong>Relación con otros conceptos:</strong> no equivale automáticamente al error exacto.</p>
+<p><strong>Posible forma de preguntarlo en examen:</strong> Discuta criterios de parada.</p>
+</article>
+<article class="definition-card">
+<h3>Método de Müller</h3>
+<p><strong>Definición precisa:</strong> método que interpola con una parábola y toma una raíz de ella.</p>
+<p><strong>Explicación desarrollada:</strong> Generaliza la idea de secante y puede tratar raíces complejas.</p>
+<p><strong>Ejemplo:</strong> aproximar un cero de un polinomio cúbico.</p>
+<p><strong>Relación con otros conceptos:</strong> conecta raíces e interpolación.</p>
+<p><strong>Posible forma de preguntarlo en examen:</strong> Describa la idea de Müller.</p>
+</article>
+</div>
+</section>
+<section id="relaciones" class="page">
+  <header class="page-head">
+    <h2>Relaciones entre ideas</h2>
+    <span class="page-no">05</span>
+  </header>
+  
+  <div class="key-box"><p>Continuidad permite garantizar existencia; bisección explota esa garantía. Derivabilidad permite construir Newton; dos valores permiten construir secantes. La interpolación cuadrática lleva a Müller.</p>
+<p>La jerarquía práctica es robustez frente a rapidez. Bisección es lenta pero segura. Newton es rápido pero local. Secante reduce coste al no usar derivada. Falsa posición conserva el intervalo pero puede estancarse.</p>
+<p>El error atraviesa todo el tema: localizar, iterar y parar solo tienen sentido si se sabe qué precisión se ha alcanzado o al menos cómo estimarla.</p></div>
+</section>
+<section id="errores" class="page">
+  <header class="page-head">
+    <h2>Errores habituales</h2>
+    <span class="page-no">06</span>
+  </header>
+  
+  <div class="cards-grid">
+<article class="error-box">
+<h3>Aplicar bisección sin comprobar f(a)f(b)&lt;0.</h3>
+<p><strong>Por qué está mal:</strong> pierde la garantía de existencia de raíz en el intervalo.</p>
+<p><strong>Corrección:</strong> verificar continuidad y cambio de signo antes de empezar.</p>
+<p><strong>Ejemplo de respuesta incorrecta:</strong> Uso bisección porque parece que hay raíz.</p>
+<p><strong>Ejemplo de respuesta correcta:</strong></p><div class="formula-block">Uso bisección porque f es continua y f(a)f(b)&lt;0.</div>
+</article>
+<article class="error-box">
+<h3>Confundir residuo pequeño con error pequeño.</h3>
+<p><strong>Por qué está mal:</strong> una función plana puede dar |f(p_n)| pequeño lejos de la raíz.</p>
+<p><strong>Corrección:</strong> combinar residuo con incremento y análisis de escala.</p>
+<p><strong>Ejemplo de respuesta incorrecta:</strong></p><div class="formula-block">f(p_n) es casi cero, luego p_n es exacto.</div>
+<p><strong>Ejemplo de respuesta correcta:</strong></p><div class="formula-block">f(p_n) pequeño es indicio, no prueba absoluta de error pequeño.</div>
+</article>
+<article class="error-box">
+<h3>Aplicar Newton con f'(p_n)=0.</h3>
+<p><strong>Por qué está mal:</strong> la fórmula no está definida o amplifica errores.</p>
+<p><strong>Corrección:</strong> cambiar punto inicial o usar método cerrado.</p>
+<p><strong>Ejemplo de respuesta incorrecta:</strong></p><div class="formula-block">Divido por f'(p_n) aunque sea cero.</div>
+<p><strong>Ejemplo de respuesta correcta:</strong> Si la derivada se anula, Newton no se aplica en ese paso.</p>
+</article>
+<article class="error-box">
+<h3>Elegir cualquier g en punto fijo.</h3>
+<p><strong>Por qué está mal:</strong> la convergencia depende de la forma g.</p>
+<p><strong>Corrección:</strong> estudiar si g actúa como contracción.</p>
+<p><strong>Ejemplo de respuesta incorrecta:</strong></p><div class="formula-block">Todas las formas x=g(x) convergen igual.</div>
+<p><strong>Ejemplo de respuesta correcta:</strong></p><div class="formula-block">La forma elegida debe favorecer |g'|&lt;1 cerca del fijo.</div>
+</article>
+<article class="error-box">
+<h3>Afirmar que Newton siempre converge cuadráticamente.</h3>
+<p><strong>Por qué está mal:</strong> solo ocurre bajo hipótesis cerca de raíz simple.</p>
+<p><strong>Corrección:</strong> mencionar regularidad, raíz simple y buen punto inicial.</p>
+<p><strong>Ejemplo de respuesta incorrecta:</strong> Newton es siempre de orden dos.</p>
+<p><strong>Ejemplo de respuesta correcta:</strong> Newton es cuadrático localmente bajo condiciones adecuadas.</p>
+</article>
+</div>
+</section>
+<section id="preguntas" class="page">
+  <header class="page-head">
+    <h2>Preguntas orientadas a examen</h2>
+    <span class="page-no">07</span>
+  </header>
+  
+  <details class="accordion accordion-reading" open>
+<summary>10 preguntas fáciles</summary>
+<ol class="question-list">
+<li>¿Qué significa resolver f(x)=0?</li>
+<li>¿Qué condición permite aplicar bisección?</li>
+<li>Escriba el punto medio en bisección.</li>
+<li>¿Qué es un punto fijo?</li>
+<li>Escriba la fórmula de Newton.</li>
+<li>¿Qué evita calcular la secante?</li>
+<li>¿Qué mide el error absoluto?</li>
+<li>¿Qué es una raíz múltiple?</li>
+<li>¿Qué es un criterio de parada?</li>
+<li>¿Qué información usa Müller?</li>
+</ol></details>
+<details class="accordion accordion-reading" open>
+<summary>10 preguntas medias</summary>
+<ol class="question-list">
+<li>Explique por qué bisección es robusta.</li>
+<li>Deduzca geométricamente Newton.</li>
+<li>Explique por qué la elección de g importa.</li>
+<li>Compare Newton y secante.</li>
+<li>Compare secante y falsa posición.</li>
+<li>Explique el orden de convergencia.</li>
+<li>¿Por qué una raíz múltiple perjudica Newton?</li>
+<li>¿Cuándo es engañoso |f(p_n)|?</li>
+<li>Explique la convergencia acelerada.</li>
+<li>¿Por qué conviene estimar el error?</li>
+</ol></details>
+<details class="accordion accordion-reading" open>
+<summary>5 preguntas difíciles</summary>
+<ol class="question-list">
+<li>Justifique condiciones suficientes de convergencia de punto fijo.</li>
+<li>Explique la convergencia cuadrática de Newton cerca de raíz simple.</li>
+<li>Analice el estancamiento posible de falsa posición.</li>
+<li>Relacione interpolación lineal y secante.</li>
+<li>Describa el método de Müller y sus riesgos.</li>
+</ol></details>
+<details class="accordion accordion-reading" open>
+<summary>5 preguntas de desarrollo largo</summary>
+<ol class="question-list">
+<li>Desarrolle el método de bisección.</li>
+<li>Desarrolle el método de Newton.</li>
+<li>Desarrolle punto fijo y convergencia.</li>
+<li>Compare bisección, Newton, secante y falsa posición.</li>
+<li>Explique error y criterios de parada.</li>
+</ol></details>
+<details class="accordion accordion-reading" open>
+<summary>5 preguntas de relación entre conceptos</summary>
+<ol class="question-list">
+<li>Relacione continuidad y bisección.</li>
+<li>Relacione derivada y Newton.</li>
+<li>Relacione secante e interpolación.</li>
+<li>Relacione aceleración y orden de convergencia.</li>
+<li>Relacione coste computacional y tolerancia.</li>
+</ol></details>
+</section>
+<section id="respuestas" class="page">
+  <header class="page-head">
+    <h2>Respuestas modelo</h2>
+    <span class="page-no">08</span>
+  </header>
+  
+  <details class="accordion accordion-answer">
+<summary>Respuesta 1</summary>
+<p>Encontrar p tal que f(p)=0; p es una raíz o cero de la función.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 2</summary>
+<p>Que f sea continua en [a,b] y f(a)f(b)&lt;0.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 3</summary>
+<p>p=(a+b)/2.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 4</summary>
+<p>Un número p que satisface g(p)=p.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 5</summary>
+<p>p_{n+1}=p_n-f(p_n)/f'(p_n), si f'(p_n) no se anula.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 6</summary>
+<p>Evita calcular la derivada exacta; usa una pendiente entre dos puntos.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 7</summary>
+<p>El tamaño |p-p_n| de la diferencia entre valor exacto y aproximación.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 8</summary>
+<p>Una raíz donde f y alguna derivada sucesiva se anulan, por ejemplo (x-1)^2.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 9</summary>
+<p>Una regla para detener el proceso: tolerancia en residuo, incremento, error estimado o iteraciones.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 10</summary>
+<p>Usa tres puntos para construir una interpolación cuadrática.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 11</summary>
+<p>Bisección es robusta porque conserva siempre un intervalo con cambio de signo, siempre que f sea continua. Su convergencia no depende de derivadas ni de una aproximación inicial precisa.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 12</summary>
+<p>La recta tangente en p_n aproxima localmente la curva. Igualando esa tangente a cero se obtiene su corte con el eje x y la fórmula de Newton.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 13</summary>
+<p>Porque una misma ecuación puede escribirse como x=g(x) de varias formas. La iteración converge solo si g acerca los puntos al fijo, típicamente si |g'|&lt;1 cerca de él.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 14</summary>
+<p>Newton usa derivada exacta y puede ser más rápido; secante no usa derivadas y necesita dos aproximaciones previas.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 15</summary>
+<p>Ambas usan recta secante. Secante no conserva intervalo; falsa posición conserva cambio de signo.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 16</summary>
+<p>Describe cómo decrece el error de una iteración a la siguiente. Lineal es reducción proporcional; cuadrática es error siguiente proporcional al cuadrado del actual.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 17</summary>
+<p>Porque la función se aplana cerca de la raíz y Newton pierde la cancelación que ∏uce convergencia cuadrática.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 18</summary>
+<p>Cuando la función es plana, mal escalada o el residuo no representa bien la distancia horizontal a la raíz.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 19</summary>
+<p>Usa términos de una sucesión lenta para construir otra con menor término principal de error.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 20</summary>
+<p>Porque permite saber si el número calculado es aceptable y comparar métodos.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 21</summary>
+<p>Si g transforma un intervalo en sí mismo y existe k&lt;1 con |g'|≤k en el intervalo, la iteración tiene comportamiento contractivo y converge al punto fijo único.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 22</summary>
+<p>Con Taylor alrededor de la raíz simple, el término lineal del error se cancela en Newton y queda dominante un término cuadrático.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 23</summary>
+<p>Puede ocurrir si la secante corta repetidamente cerca de un extremo; el otro extremo apenas cambia y la reducción efectiva es lenta.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 24</summary>
+<p>La secante sustituye f por la recta que interpola dos valores. El cero de esa recta es la nueva aproximación.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 25</summary>
+<p>Müller interpola con una parábola por tres puntos y toma una raíz de esa parábola. Puede ser eficaz, pero exige elegir la raíz adecuada y puede entrar en complejos.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 26</summary>
+<p>Bisección exige continuidad y cambio de signo. Divide el intervalo por el punto medio y conserva el subintervalo con cambio de signo. Tras n pasos el intervalo es pequeño y da una cota explícita de error. Es fiable pero de convergencia lineal.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 27</summary>
+<p>Newton aproxima f por la tangente y actualiza con p_{n+1}=p_n-f/f'. Es rápido cerca de raíces simples, pero puede fallar con derivada nula, mal punto inicial o raíces múltiples.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 28</summary>
+<p>Punto fijo reescribe f(x)=0 como x=g(x). La iteración p_{n+1}=g(p_n) converge si g contrae cerca de la solución; no toda reescritura es válida numéricamente.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 29</summary>
+<p>Bisección prioriza garantía; Newton velocidad; secante evita derivadas; falsa posición mantiene intervalo. La elección depende de datos disponibles, seguridad y coste.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 30</summary>
+<p>El error real no suele conocerse. Se usan cotas, residuo, incremento y tolerancias. Un buen criterio de parada debe evitar aceptar resultados por simple apariencia numérica.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 31</summary>
+<p>La continuidad y el cambio de signo garantizan raíz; bisección conserva esa garantía.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 32</summary>
+<p>La derivada da la pendiente de la tangente; Newton usa el cero de esa tangente.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 33</summary>
+<p>La secante es una interpolación lineal local de la función.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 34</summary>
+<p>La aceleración intenta aumentar el orden o reducir la constante del error usando términos ya calculados.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 35</summary>
+<p>Más tolerancia exige más iteraciones. Debe equilibrarse precisión necesaria y coste.</p>
+</details>
+</section>
+<section id="resumen" class="page">
+  <header class="page-head">
+    <h2>Resumen final de repaso</h2>
+    <span class="page-no">09</span>
+  </header>
+  
+  <div class="summary-box"><p>Ideas principales: buscar raíces es resolver f(x)=0; bisección garantiza con cambio de signo; punto fijo depende de la contracción; Newton usa tangentes; secante y falsa posición usan rectas; Müller usa parábolas; el error decide cuándo parar.</p>
+<p>Conceptos imprescindibles: raíz, continuidad, intervalo, punto fijo, derivada, secante, orden de convergencia, residuo, tolerancia.</p>
+<p>Relaciones clave: continuidad → bisección; derivada → Newton; dos puntos → secante; tres puntos → Müller; error → criterio de parada.</p>
+<p>Errores que evitar: no comprobar hipótesis, dividir por derivada nula, confundir residuo y error, elegir mal g, prometer convergencia sin condiciones.</p></div>
+</section>
+<section id="checklist" class="page">
+  <header class="page-head">
+    <h2>Checklist de dominio</h2>
+    <span class="page-no">10</span>
+  </header>
+  
+  <div class="checklist-box"><ul><li>Si no puedes explicar el cambio de signo, falta repasar continuidad.</li><li>Si confundes raíz con punto fijo, revisar la transformación f(x)=0 en x=g(x).</li><li>Si no deduces Newton desde la tangente, falta repasar derivadas.</li><li>Si crees que Newton siempre converge, revisar hipótesis locales.</li><li>Si puedes elegir entre bisección, Newton, secante y falsa posición justificando error y coste, el tema está suficientemente asentado.</li></ul></div>
+</section>
+    </main>
+  </div>
+</body>
+</html>

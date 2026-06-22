@@ -1,0 +1,510 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="color-scheme" content="light dark" />
+  <title>Compu2 — Tema 5: Derivación e integración numéricas</title>
+  <meta name="description" content="Guía HTML de Física Computacional II, tema 5: Derivación e integración numéricas. Diferencias finitas · Richardson · trapecio · Simpson · Romberg · Gauss" />
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/icon-32.png" />
+  <link rel="icon" type="image/png" sizes="50x50" href="assets/icons/icon-50.png" />
+  <link rel="apple-touch-icon" sizes="100x100" href="assets/icons/icon-100.png" />
+  <link rel="stylesheet" href="assets/styles.css" />
+  <style>
+    body.subject-computacional{
+      --subject:#0f766e;
+      --subject-soft:#e7f8f5;
+      --subject-mid:#99d8cf;
+      --subject-strong:#115e59;
+    }
+    @media(prefers-color-scheme:dark){
+      :root:not([data-theme="light"]) body.subject-computacional{
+        --subject-soft:#102f2d;
+        --subject-mid:#2a5955;
+        --subject-strong:#99f6e4;
+      }
+    }
+  </style>
+  <script>
+  window.MathJax = {
+    tex: { inlineMath: [['\(', '\)'], ['$', '$']], displayMath: [['\[', '\]']], processEscapes: true },
+    svg: { fontCache: 'global' },
+    options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+  };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+  <script defer src="assets/app.js"></script>
+</head>
+<body class="subject-computacional">
+  <div class="wrap">
+    <header class="cover">
+      <a class="back-link" href="index.html">← Índice</a>
+      <p class="eyebrow">Física Computacional II · Análisis numérico</p>
+      <h1>Derivación e integración numéricas</h1>
+      <p class="subtitle">Tema 5 oficial · Diferencias finitas · Richardson · trapecio · Simpson · Romberg · Gauss</p>
+      <div class="lesson-meta">
+        <span>Asignatura: Compu2</span>
+        <span>Tema 5</span>
+        <span>Estado: completo</span>
+        <span>Enfoque: examen UNED</span>
+      </div>
+    </header>
+
+    <div class="toolbar no-print" aria-label="Navegación del tema">
+      <nav><a href="#mapa">Mapa</a><a href="#prerrequisitos">Prerrequisitos</a><a href="#idea-central">Idea</a><a href="#desarrollo">Desarrollo</a><a href="#conceptos">Conceptos</a><a href="#relaciones">Relaciones</a><a href="#errores">Errores</a><a href="#preguntas">Preguntas</a><a href="#respuestas">Respuestas</a><a href="#resumen">Resumen</a><a href="#checklist">Checklist</a></nav>
+      <div class="toolbar-actions"><button class="btn secondary" onclick="document.querySelectorAll('details').forEach(d=>d.open=true)">Abrir todo</button><button class="btn secondary" onclick="document.querySelectorAll('details').forEach(d=>d.open=false)">Modo repaso</button><button class="btn" onclick="window.print()">Imprimir / PDF</button></div>
+    </div>
+
+    <main>
+<section id="mapa" class="page">
+  <header class="page-head">
+    <h2>Mapa conceptual</h2>
+    <span class="page-no">00</span>
+  </header>
+  
+  <div class="concept-map">
+<a class="map-node" href="#desarrollo"><span>Diferencias finitas</span><small>Las derivadas se aproximan con cocientes finitos progresivos, regresivos o centrados. Taylor pe</small></a>
+<a class="map-node" href="#desarrollo"><span>Truncamiento y redondeo</span><small>Reducir h baja el error de truncamiento, pero puede aumentar el redondeo por cancelación. Por e</small></a>
+<a class="map-node" href="#desarrollo"><span>Integración por interpolación</span><small>Trapecio integra una recta; Simpson integra una parábola. Ambas son fórmulas de Newton-Cotes. L</small></a>
+<a class="map-node" href="#desarrollo"><span>Reglas compuestas, Richardson y Romberg</span><small>Las reglas compuestas dividen el intervalo y aplican fórmulas locales. Richardson combina pasos</small></a>
+<a class="map-node" href="#desarrollo"><span>Adaptativos, Gauss e integrales especiales</span><small>Los métodos adaptativos refinan donde el error local es mayor. La cuadratura gaussiana elige no</small></a>
+<a class="map-node" href="#preguntas"><span>Examen</span><small>método, hipótesis, error, convergencia y criterio de parada</small></a>
+</div>
+<div class="reading-block source-block"><p>Fuente principal: guía oficial y capítulo sobre diferenciación, extrapolación de Richardson, integración compuesta, Romberg, cuadratura adaptativa, gaussiana, integrales múltiples e impropias.</p></div>
+</section>
+<section id="prerrequisitos" class="page">
+  <header class="page-head">
+    <h2>Prerrequisitos mínimos</h2>
+    <span class="page-no">01</span>
+  </header>
+  
+  <div class="cards-grid">
+<article class="definition-card">
+<h3>Derivada</h3>
+<p><strong>Definición breve:</strong> tasa instantánea de cambio.</p>
+<p><strong>Por qué es necesario:</strong> se aproxima por diferencias.</p>
+<p><strong>Ejemplo mínimo:</strong></p><div class="formula-block">f'(x).</div>
+</article>
+<article class="definition-card">
+<h3>Integral definida</h3>
+<p><strong>Definición breve:</strong> acumulación en un intervalo.</p>
+<p><strong>Por qué es necesario:</strong> se aproxima por sumas ponderadas.</p>
+<p><strong>Ejemplo mínimo:</strong> area bajo f.</p>
+</article>
+<article class="definition-card">
+<h3>Taylor</h3>
+<p><strong>Definición breve:</strong> expansión local.</p>
+<p><strong>Por qué es necesario:</strong> deduce fórmulas y errores.</p>
+<p><strong>Ejemplo mínimo:</strong></p><div class="formula-block">f(x+h)=f+h f'+...</div>
+</article>
+<article class="definition-card">
+<h3>Interpolación</h3>
+<p><strong>Definición breve:</strong> aproximar por polinomios.</p>
+<p><strong>Por qué es necesario:</strong> trapecio y Simpson salen de integrar interpoladores.</p>
+<p><strong>Ejemplo mínimo:</strong> recta o parábola.</p>
+</article>
+<article class="definition-card">
+<h3>Redondeo</h3>
+<p><strong>Definición breve:</strong> error de aritmética finita.</p>
+<p><strong>Por qué es necesario:</strong> afecta especialmente a derivadas.</p>
+<p><strong>Ejemplo mínimo:</strong> resta de números próximos.</p>
+</article>
+<article class="definition-card">
+<h3>Cambio de variable</h3>
+<p><strong>Definición breve:</strong> transformación de integral.</p>
+<p><strong>Por qué es necesario:</strong> útil en impropias y Gauss.</p>
+<p><strong>Ejemplo mínimo:</strong></p><div class="formula-block">[a,b] a [-1,1].</div>
+</article>
+</div>
+</section>
+<section id="idea-central" class="page">
+  <header class="page-head">
+    <h2>Idea central del capítulo</h2>
+    <span class="page-no">02</span>
+  </header>
+  
+  <div class="reading-block"><p>El tema enseña a aproximar derivadas e integrales cuando la función solo se conoce por datos o la operación exacta no es cómoda.</p>
+<p>La técnica común es sustituir la función por aproximaciones locales y controlar el error. Derivar suele amplificar errores; integrar suele suavizarlos.</p>
+<p>Relación con MM1: cálculo diferencial e integral; con MM2/Tema 4: interpolación y polinomios ortogonales.</p></div>
+</section>
+<section id="desarrollo" class="page">
+  <header class="page-head">
+    <h2>Desarrollo completo</h2>
+    <span class="page-no">03</span>
+  </header>
+  
+  <article class="reading-block" id="3-1-diferencias-finitas">
+<h3>3.1. Diferencias finitas</h3>
+<p>Las derivadas se aproximan con cocientes finitos progresivos, regresivos o centrados.</p>
+<p>Taylor permite saber el orden de cada fórmula y elegir la más adecuada.</p>
+</article>
+<article class="reading-block" id="3-2-truncamiento-y-redondeo">
+<h3>3.2. Truncamiento y redondeo</h3>
+<p>Reducir h baja el error de truncamiento, pero puede aumentar el redondeo por cancelación.</p>
+<p>Por eso derivar numéricamente exige elegir h, no simplemente hacerlo mínimo.</p>
+</article>
+<article class="reading-block" id="3-3-integracion-por-interpolacion">
+<h3>3.3. Integración por interpolación</h3>
+<p>Trapecio integra una recta; Simpson integra una parábola. Ambas son fórmulas de Newton-Cotes.</p>
+<p>La interpretación polinomial evita memorizar fórmulas sin entenderlas.</p>
+</article>
+<article class="reading-block" id="3-4-reglas-compuestas-richardson-y-romberg">
+<h3>3.4. Reglas compuestas, Richardson y Romberg</h3>
+<p>Las reglas compuestas dividen el intervalo y aplican fórmulas locales.</p>
+<p>Richardson combina pasos; Romberg aplica esa combinación a trapecios compuestos.</p>
+</article>
+<article class="reading-block" id="3-5-adaptativos-gauss-e-integrales-especiales">
+<h3>3.5. Adaptativos, Gauss e integrales especiales</h3>
+<p>Los métodos adaptativos refinan donde el error local es mayor.</p>
+<p>La cuadratura gaussiana elige nodos y pesos óptimos. Integrales múltiples e impropias requieren cuidar dominio, infinito o singularidades.</p>
+</article>
+</section>
+<section id="conceptos" class="page">
+  <header class="page-head">
+    <h2>Conceptos clave</h2>
+    <span class="page-no">04</span>
+  </header>
+  
+  <div class="cards-grid">
+<article class="definition-card">
+<h3>Diferencia finita</h3>
+<p><strong>Definición precisa:</strong> combinación de valores para aproximar derivadas.</p>
+<p><strong>Explicación desarrollada:</strong> Reemplaza el límite por paso finito.</p>
+<p><strong>Ejemplo:</strong> diferencia centrada.</p>
+<p><strong>Relación con otros conceptos:</strong> se deduce con Taylor.</p>
+<p><strong>Posible forma de preguntarlo en examen:</strong> Compare fórmulas.</p>
+</article>
+<article class="definition-card">
+<h3>Truncamiento</h3>
+<p><strong>Definición precisa:</strong> error al cortar una expansión.</p>
+<p><strong>Explicación desarrollada:</strong> Disminuye con h según orden.</p>
+<p><strong>Ejemplo:</strong></p><div class="formula-block">O(h^2).</div>
+<p><strong>Relación con otros conceptos:</strong> contrasta con redondeo.</p>
+<p><strong>Posible forma de preguntarlo en examen:</strong> Explique h óptimo.</p>
+</article>
+<article class="definition-card">
+<h3>Richardson</h3>
+<p><strong>Definición precisa:</strong> extrapolación con pasos distintos.</p>
+<p><strong>Explicación desarrollada:</strong> Cancela el término principal del error.</p>
+<p><strong>Ejemplo:</strong></p><div class="formula-block">D(h),D(h/2).</div>
+<p><strong>Relación con otros conceptos:</strong> base de Romberg.</p>
+<p><strong>Posible forma de preguntarlo en examen:</strong> Explique Richardson.</p>
+</article>
+<article class="definition-card">
+<h3>Trapecio</h3>
+<p><strong>Definición precisa:</strong> integración de interpolación lineal.</p>
+<p><strong>Explicación desarrollada:</strong> Fórmula básica de Newton-Cotes.</p>
+<p><strong>Ejemplo:</strong></p><div class="formula-block">(b-a)(f(a)+f(b))/2.</div>
+<p><strong>Relación con otros conceptos:</strong> regla compuesta.</p>
+<p><strong>Posible forma de preguntarlo en examen:</strong> Deduzca trapecio.</p>
+</article>
+<article class="definition-card">
+<h3>Simpson</h3>
+<p><strong>Definición precisa:</strong> integración de interpolación cuadrática.</p>
+<p><strong>Explicación desarrollada:</strong> Más precisa para funciones suaves.</p>
+<p><strong>Ejemplo:</strong> usa punto medio.</p>
+<p><strong>Relación con otros conceptos:</strong> requiere estructura adecuada.</p>
+<p><strong>Posible forma de preguntarlo en examen:</strong> Compare con trapecio.</p>
+</article>
+<article class="definition-card">
+<h3>Romberg</h3>
+<p><strong>Definición precisa:</strong> integración por trapecios más extrapolación.</p>
+<p><strong>Explicación desarrollada:</strong> Aumenta orden sistemáticamente.</p>
+<p><strong>Ejemplo:</strong> tabla de Romberg.</p>
+<p><strong>Relación con otros conceptos:</strong> Richardson aplicado.</p>
+<p><strong>Posible forma de preguntarlo en examen:</strong> Relación con Richardson.</p>
+</article>
+<article class="definition-card">
+<h3>Cuadratura gaussiana</h3>
+<p><strong>Definición precisa:</strong> nodos y pesos óptimos.</p>
+<p><strong>Explicación desarrollada:</strong> Alta exactitud con pocos puntos.</p>
+<p><strong>Ejemplo:</strong> Gauss-Legendre.</p>
+<p><strong>Relación con otros conceptos:</strong> polinomios ortogonales.</p>
+<p><strong>Posible forma de preguntarlo en examen:</strong> Compare con Newton-Cotes.</p>
+</article>
+</div>
+</section>
+<section id="relaciones" class="page">
+  <header class="page-head">
+    <h2>Relaciones entre ideas</h2>
+    <span class="page-no">05</span>
+  </header>
+  
+  <div class="key-box"><p>Taylor conecta fórmulas y error. Interpolación conecta Tema 3 con trapecio y Simpson.</p>
+<p>El paso h gobierna precisión y coste; en derivación también gobierna redondeo.</p>
+<p>Gauss conecta integración con polinomios ortogonales; adaptativos conectan error local con distribución de esfuerzo.</p></div>
+</section>
+<section id="errores" class="page">
+  <header class="page-head">
+    <h2>Errores habituales</h2>
+    <span class="page-no">06</span>
+  </header>
+  
+  <div class="cards-grid">
+<article class="error-box">
+<h3>Creer que h más pequeño siempre mejora.</h3>
+<p><strong>Por qué está mal:</strong> redondeo puede dominar.</p>
+<p><strong>Corrección:</strong> equilibrar errores.</p>
+<p><strong>Ejemplo de respuesta incorrecta:</strong> Tomo h mínimo.</p>
+<p><strong>Ejemplo de respuesta correcta:</strong> Elijo h por truncamiento y redondeo.</p>
+</article>
+<article class="error-box">
+<h3>Aplicar Simpson con partición inadecuada.</h3>
+<p><strong>Por qué está mal:</strong> la regla compuesta estándar requiere número par de subintervalos.</p>
+<p><strong>Corrección:</strong> verificar n.</p>
+<p><strong>Ejemplo de respuesta incorrecta:</strong> Simpson vale para cualquier n.</p>
+<p><strong>Ejemplo de respuesta correcta:</strong> Compruebo la estructura de subintervalos.</p>
+</article>
+<article class="error-box">
+<h3>Confundir Richardson con solo reducir h.</h3>
+<p><strong>Por qué está mal:</strong> Richardson combina aproximaciones.</p>
+<p><strong>Corrección:</strong> usar fórmula de extrapolación.</p>
+<p><strong>Ejemplo de respuesta incorrecta:</strong> Richardson es h/2.</p>
+<p><strong>Ejemplo de respuesta correcta:</strong> Richardson cancela el término principal.</p>
+</article>
+<article class="error-box">
+<h3>Usar Gauss con nodos equiespaciados.</h3>
+<p><strong>Por qué está mal:</strong> los nodos son especiales.</p>
+<p><strong>Corrección:</strong> usar nodos y pesos correctos.</p>
+<p><strong>Ejemplo de respuesta incorrecta:</strong> Gauss usa puntos uniformes.</p>
+<p><strong>Ejemplo de respuesta correcta:</strong> Gauss usa nodos asociados a ortogonalidad.</p>
+</article>
+<article class="error-box">
+<h3>Tratar impropias como ordinarias.</h3>
+<p><strong>Por qué está mal:</strong> pueden divergir o tener singularidades.</p>
+<p><strong>Corrección:</strong> transformar, dividir o truncar con control.</p>
+<p><strong>Ejemplo de respuesta incorrecta:</strong></p><div class="formula-block">Integro [0,infinito] igual.</div>
+<p><strong>Ejemplo de respuesta correcta:</strong> Analizo el infinito o singularidad.</p>
+</article>
+</div>
+</section>
+<section id="preguntas" class="page">
+  <header class="page-head">
+    <h2>Preguntas orientadas a examen</h2>
+    <span class="page-no">07</span>
+  </header>
+  
+  <details class="accordion accordion-reading" open>
+<summary>10 preguntas fáciles</summary>
+<ol class="question-list">
+<li>¿Qué aproxima una diferencia finita?</li>
+<li>Escriba una diferencia centrada.</li>
+<li>¿Qué es truncamiento?</li>
+<li>¿Qué es redondeo?</li>
+<li>¿De dónde sale trapecio?</li>
+<li>¿De dónde sale Simpson?</li>
+<li>¿Qué es una regla compuesta?</li>
+<li>¿Qué es Richardson?</li>
+<li>¿Qué es Romberg?</li>
+<li>¿Qué es cuadratura gaussiana?</li>
+</ol></details>
+<details class="accordion accordion-reading" open>
+<summary>10 preguntas medias</summary>
+<ol class="question-list">
+<li>¿Por qué derivar numéricamente es delicado?</li>
+<li>Compare diferencias laterales y centradas.</li>
+<li>Explique equilibrio entre truncamiento y redondeo.</li>
+<li>Explique integración por interpolación.</li>
+<li>Compare trapecio y Simpson.</li>
+<li>¿Por qué usar reglas compuestas?</li>
+<li>Relacione Romberg y Richardson.</li>
+<li>¿Cuándo usar adaptativos?</li>
+<li>¿Por qué Gauss es eficiente?</li>
+<li>¿Qué dificultad tienen integrales impropias?</li>
+</ol></details>
+<details class="accordion accordion-reading" open>
+<summary>5 preguntas difíciles</summary>
+<ol class="question-list">
+<li>Use Taylor para justificar el orden centrado.</li>
+<li>Explique cómo Richardson aumenta orden.</li>
+<li>Relacione Newton-Cotes e interpolación.</li>
+<li>Compare adaptativo y uniforme.</li>
+<li>Relacione Gauss y polinomios ortogonales.</li>
+</ol></details>
+<details class="accordion accordion-reading" open>
+<summary>5 preguntas de desarrollo largo</summary>
+<ol class="question-list">
+<li>Desarrolle derivación numérica.</li>
+<li>Desarrolle Newton-Cotes.</li>
+<li>Desarrolle reglas compuestas.</li>
+<li>Desarrolle Richardson y Romberg.</li>
+<li>Desarrolle Gauss, adaptativas, múltiples e impropias.</li>
+</ol></details>
+<details class="accordion accordion-reading" open>
+<summary>5 preguntas de relación entre conceptos</summary>
+<ol class="question-list">
+<li>Relacione Taylor y error.</li>
+<li>Relacione interpolación e integración.</li>
+<li>Relacione paso h y coste.</li>
+<li>Relacione suavidad y método.</li>
+<li>Relacione peso y Gauss.</li>
+</ol></details>
+</section>
+<section id="respuestas" class="page">
+  <header class="page-head">
+    <h2>Respuestas modelo</h2>
+    <span class="page-no">08</span>
+  </header>
+  
+  <details class="accordion accordion-answer">
+<summary>Respuesta 1</summary>
+<p>Derivadas.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 2</summary>
+<p>(f(x+h)-f(x-h))/(2h).</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 3</summary>
+<p>Error por cortar una aproximación finita.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 4</summary>
+<p>Error por aritmética finita.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 5</summary>
+<p>De integrar la recta interpoladora.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 6</summary>
+<p>De integrar una parábola interpoladora.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 7</summary>
+<p>Aplicar una regla simple en muchos subintervalos.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 8</summary>
+<p>Combinar pasos distintos para cancelar error dominante.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 9</summary>
+<p>Richardson aplicado a trapecios compuestos.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 10</summary>
+<p>Regla con nodos y pesos elegidos para exactitud alta.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 11</summary>
+<p>Porque restar valores cercanos amplifica redondeo, aunque h pequeño reduzca truncamiento.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 12</summary>
+<p>Las centradas suelen cancelar más términos de Taylor y tener mayor orden.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 13</summary>
+<p>Existe un h óptimo práctico: grande da truncamiento; demasiado pequeño da redondeo.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 14</summary>
+<p>Se interpola f por un polinomio y se integra el polinomio.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 15</summary>
+<p>Simpson suele ser más precisa para funciones suaves; trapecio es más simple.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 16</summary>
+<p>Reducen el error local dividiendo el intervalo.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 17</summary>
+<p>Romberg usa extrapolación de Richardson sobre trapecios refinados.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 18</summary>
+<p>Cuando la función tiene zonas con distinta dificultad.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 19</summary>
+<p>Porque elige nodos óptimos y no necesariamente equiespaciados.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 20</summary>
+<p>Intervalos infinitos o singularidades requieren transformación, corte o tratamiento especial.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 21</summary>
+<p>Al expandir f(x+h) y f(x-h), los términos pares se cancelan; tras dividir por 2h queda error O(h^2).</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 22</summary>
+<p>Si el error es C h^p +..., dos pasos relacionados permiten eliminar C h^p.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 23</summary>
+<p>Newton-Cotes integra polinomios interpoladores con nodos fijados.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 24</summary>
+<p>Uniforme reparte esfuerzo igual; adaptativo refina donde el error local es mayor.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 25</summary>
+<p>Los nodos gaussianos son raíces asociadas a polinomios ortogonales del peso.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 26</summary>
+<p>La derivación numérica usa diferencias finitas deducidas con Taylor. Debe equilibrar truncamiento y redondeo.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 27</summary>
+<p>Newton-Cotes interpola con nodos fijados e integra; trapecio y Simpson son ejemplos.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 28</summary>
+<p>Las compuestas dividen el intervalo; mejoran precisión a costa de más evaluaciones.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 29</summary>
+<p>Richardson cancela términos de error; Romberg organiza esa idea para integración.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 30</summary>
+<p>Gauss usa nodos óptimos; adaptativos controlan error local; múltiples e impropias requieren tratar dominio y singularidades.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 31</summary>
+<p>Taylor revela qué términos se cancelan y cuál domina el error.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 32</summary>
+<p>Trapecio y Simpson salen de integrar interpoladores.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 33</summary>
+<p>Menor h suele mejorar truncamiento pero aumenta coste y puede aumentar redondeo.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 34</summary>
+<p>Funciones suaves admiten métodos de alto orden; irregulares requieren adaptación.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 35</summary>
+<p>El peso define la familia ortogonal y, por tanto, los nodos gaussianos.</p>
+</details>
+</section>
+<section id="resumen" class="page">
+  <header class="page-head">
+    <h2>Resumen final de repaso</h2>
+    <span class="page-no">09</span>
+  </header>
+  
+  <div class="summary-box"><p>Ideas principales: diferencias finitas aproximan derivadas; Taylor da errores; trapecio y Simpson integran interpoladores; reglas compuestas reducen error; Richardson y Romberg elevan orden; Gauss usa nodos óptimos; adaptativos refinan localmente. Errores: h demasiado pequeño, Simpson mal aplicado, confundir Richardson, nodos gaussianos incorrectos, impropias sin análisis.</p></div>
+</section>
+<section id="checklist" class="page">
+  <header class="page-head">
+    <h2>Checklist de dominio</h2>
+    <span class="page-no">10</span>
+  </header>
+  
+  <div class="checklist-box"><ul><li>Si no puedes obtener una diferencia con Taylor, repasa desarrollos.</li><li>Si crees que h menor siempre mejora, revisa redondeo.</li><li>Si no deduces trapecio y Simpson desde interpolación, revisa Tema 3.</li><li>Si confundes Romberg y trapecio, revisa Richardson.</li><li>Si puedes elegir cuadratura según suavidad y dominio, el tema está asentado.</li></ul></div>
+</section>
+    </main>
+  </div>
+</body>
+</html>

@@ -1,0 +1,518 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="color-scheme" content="light dark" />
+  <title>Compu2 — Tema 6: Solución numérica de ecuaciones diferenciales ordinarias</title>
+  <meta name="description" content="Guía HTML de Física Computacional II, tema 6: Solución numérica de ecuaciones diferenciales ordinarias. Euler · Taylor · Runge-Kutta · RKF · multipaso · estabilidad · rigidez" />
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/icon-32.png" />
+  <link rel="icon" type="image/png" sizes="50x50" href="assets/icons/icon-50.png" />
+  <link rel="apple-touch-icon" sizes="100x100" href="assets/icons/icon-100.png" />
+  <link rel="stylesheet" href="assets/styles.css" />
+  <style>
+    body.subject-computacional{
+      --subject:#0f766e;
+      --subject-soft:#e7f8f5;
+      --subject-mid:#99d8cf;
+      --subject-strong:#115e59;
+    }
+    @media(prefers-color-scheme:dark){
+      :root:not([data-theme="light"]) body.subject-computacional{
+        --subject-soft:#102f2d;
+        --subject-mid:#2a5955;
+        --subject-strong:#99f6e4;
+      }
+    }
+  </style>
+  <script>
+  window.MathJax = {
+    tex: { inlineMath: [['\(', '\)'], ['$', '$']], displayMath: [['\[', '\]']], processEscapes: true },
+    svg: { fontCache: 'global' },
+    options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+  };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+  <script defer src="assets/app.js"></script>
+</head>
+<body class="subject-computacional">
+  <div class="wrap">
+    <header class="cover">
+      <a class="back-link" href="index.html">← Índice</a>
+      <p class="eyebrow">Física Computacional II · Análisis numérico</p>
+      <h1>Solución numérica de ecuaciones diferenciales ordinarias</h1>
+      <p class="subtitle">Tema 6 oficial · Euler · Taylor · Runge-Kutta · RKF · multipaso · estabilidad · rigidez</p>
+      <div class="lesson-meta">
+        <span>Asignatura: Compu2</span>
+        <span>Tema 6</span>
+        <span>Estado: completo</span>
+        <span>Enfoque: examen UNED</span>
+      </div>
+    </header>
+
+    <div class="toolbar no-print" aria-label="Navegación del tema">
+      <nav><a href="#mapa">Mapa</a><a href="#prerrequisitos">Prerrequisitos</a><a href="#idea-central">Idea</a><a href="#desarrollo">Desarrollo</a><a href="#conceptos">Conceptos</a><a href="#relaciones">Relaciones</a><a href="#errores">Errores</a><a href="#preguntas">Preguntas</a><a href="#respuestas">Respuestas</a><a href="#resumen">Resumen</a><a href="#checklist">Checklist</a></nav>
+      <div class="toolbar-actions"><button class="btn secondary" onclick="document.querySelectorAll('details').forEach(d=>d.open=true)">Abrir todo</button><button class="btn secondary" onclick="document.querySelectorAll('details').forEach(d=>d.open=false)">Modo repaso</button><button class="btn" onclick="window.print()">Imprimir / PDF</button></div>
+    </div>
+
+    <main>
+<section id="mapa" class="page">
+  <header class="page-head">
+    <h2>Mapa conceptual</h2>
+    <span class="page-no">00</span>
+  </header>
+  
+  <div class="concept-map">
+<a class="map-node" href="#desarrollo"><span>PVI y discretización</span><small>Se fija una malla t_n=t0+nh y se calculan aproximaciones sucesivas. La existencia y unicidad de</small></a>
+<a class="map-node" href="#desarrollo"><span>Euler y Taylor</span><small>Euler avanza usando la pendiente actual. Es simple y de bajo orden. Taylor incorpora derivadas</small></a>
+<a class="map-node" href="#desarrollo"><span>Runge-Kutta y RKF</span><small>Runge-Kutta usa varias evaluaciones de f dentro del paso para estimar una pendiente media. RKF</small></a>
+<a class="map-node" href="#desarrollo"><span>Multipaso</span><small>Los métodos multipaso usan varios valores anteriores; pueden ser explícitos o implícitos. Neces</small></a>
+<a class="map-node" href="#desarrollo"><span>Sistemas, estabilidad y rigidez</span><small>Una EDO de orden superior se transforma en sistema de primer orden. La estabilidad estudia prop</small></a>
+<a class="map-node" href="#preguntas"><span>Examen</span><small>método, hipótesis, error, convergencia y criterio de parada</small></a>
+</div>
+<div class="reading-block source-block"><p>Fuente principal: guía oficial y capítulo sobre problemas de valor inicial: Euler, Taylor, Runge-Kutta, Runge-Kutta-Fehlberg, multipaso, extrapolación, sistemas, estabilidad y ecuaciones rígidas.</p></div>
+</section>
+<section id="prerrequisitos" class="page">
+  <header class="page-head">
+    <h2>Prerrequisitos mínimos</h2>
+    <span class="page-no">01</span>
+  </header>
+  
+  <div class="cards-grid">
+<article class="definition-card">
+<h3>EDO</h3>
+<p><strong>Definición breve:</strong> ecuación con función y derivadas.</p>
+<p><strong>Por qué es necesario:</strong> es el objeto a resolver.</p>
+<p><strong>Ejemplo mínimo:</strong></p><div class="formula-block">y'=f(t,y).</div>
+</article>
+<article class="definition-card">
+<h3>PVI</h3>
+<p><strong>Definición breve:</strong> EDO con condición inicial.</p>
+<p><strong>Por qué es necesario:</strong> los métodos avanzan desde y0.</p>
+<p><strong>Ejemplo mínimo:</strong></p><div class="formula-block">y(0)=1.</div>
+</article>
+<article class="definition-card">
+<h3>Taylor</h3>
+<p><strong>Definición breve:</strong> expansión local.</p>
+<p><strong>Por qué es necesario:</strong> Euler y análisis de error lo usan.</p>
+<p><strong>Ejemplo mínimo:</strong></p><div class="formula-block">y(t+h)=...</div>
+</article>
+<article class="definition-card">
+<h3>Sistemas de EDO</h3>
+<p><strong>Definición breve:</strong> EDO acopladas.</p>
+<p><strong>Por qué es necesario:</strong> orden superior se reduce a sistema.</p>
+<p><strong>Ejemplo mínimo:</strong></p><div class="formula-block">y1'=y2.</div>
+</article>
+<article class="definition-card">
+<h3>Autovalores</h3>
+<p><strong>Definición breve:</strong> modos de crecimiento/decaimiento.</p>
+<p><strong>Por qué es necesario:</strong> aparecen en estabilidad.</p>
+<p><strong>Ejemplo mínimo:</strong></p><div class="formula-block">λ en y'=λ y.</div>
+</article>
+<article class="definition-card">
+<h3>Error local/global</h3>
+<p><strong>Definición breve:</strong> medidas por paso y acumuladas.</p>
+<p><strong>Por qué es necesario:</strong> permiten controlar fiabilidad.</p>
+<p><strong>Ejemplo mínimo:</strong></p><div class="formula-block">error en t_n.</div>
+</article>
+</div>
+</section>
+<section id="idea-central" class="page">
+  <header class="page-head">
+    <h2>Idea central del capítulo</h2>
+    <span class="page-no">02</span>
+  </header>
+  
+  <div class="reading-block"><p>El tema aproxima soluciones de PVI mediante una malla temporal. La solución deja de ser una fórmula y pasa a ser una tabla y_n≈y(t_n).</p>
+<p>Los métodos se diferencian por cómo estiman el avance: Euler usa una pendiente; Taylor usa derivadas; Runge-Kutta usa pendientes intermedias; multipaso usa historia previa.</p>
+<p>La parte decisiva es error y estabilidad. Relación con MM1: EDO y sistemas; con MM3: estabilidad, autovalores y discretización.</p></div>
+</section>
+<section id="desarrollo" class="page">
+  <header class="page-head">
+    <h2>Desarrollo completo</h2>
+    <span class="page-no">03</span>
+  </header>
+  
+  <article class="reading-block" id="3-1-pvi-y-discretizacion">
+<h3>3.1. PVI y discretización</h3>
+<p>Se fija una malla t_n=t0+nh y se calculan aproximaciones sucesivas.</p>
+<p>La existencia y unicidad del PVI dan sentido a la solución que se aproxima.</p>
+</article>
+<article class="reading-block" id="3-2-euler-y-taylor">
+<h3>3.2. Euler y Taylor</h3>
+<p>Euler avanza usando la pendiente actual. Es simple y de bajo orden.</p>
+<p>Taylor incorpora derivadas superiores para mejorar orden, pero puede ser incómodo.</p>
+</article>
+<article class="reading-block" id="3-3-runge-kutta-y-rkf">
+<h3>3.3. Runge-Kutta y RKF</h3>
+<p>Runge-Kutta usa varias evaluaciones de f dentro del paso para estimar una pendiente media.</p>
+<p>RKF compara órdenes distintos para estimar error y adaptar el paso.</p>
+</article>
+<article class="reading-block" id="3-4-multipaso">
+<h3>3.4. Multipaso</h3>
+<p>Los métodos multipaso usan varios valores anteriores; pueden ser explícitos o implícitos.</p>
+<p>Necesitan arranque y se combinan a menudo como predictor-corrector.</p>
+</article>
+<article class="reading-block" id="3-5-sistemas-estabilidad-y-rigidez">
+<h3>3.5. Sistemas, estabilidad y rigidez</h3>
+<p>Una EDO de orden superior se transforma en sistema de primer orden.</p>
+<p>La estabilidad estudia propagación de errores; la rigidez aparece cuando escalas rápidas fuerzan pasos muy pequeños.</p>
+</article>
+</section>
+<section id="conceptos" class="page">
+  <header class="page-head">
+    <h2>Conceptos clave</h2>
+    <span class="page-no">04</span>
+  </header>
+  
+  <div class="cards-grid">
+<article class="definition-card">
+<h3>PVI</h3>
+<p><strong>Definición precisa:</strong> EDO con condición inicial.</p>
+<p><strong>Explicación desarrollada:</strong> Define una solución que se sigue desde t0.</p>
+<p><strong>Ejemplo:</strong></p><div class="formula-block">y'=t+y, y(0)=1.</div>
+<p><strong>Relación con otros conceptos:</strong> base del tema.</p>
+<p><strong>Posible forma de preguntarlo en examen:</strong> Formule un PVI.</p>
+</article>
+<article class="definition-card">
+<h3>Paso h</h3>
+<p><strong>Definición precisa:</strong> distancia entre nodos.</p>
+<p><strong>Explicación desarrollada:</strong> Controla error, coste y estabilidad.</p>
+<p><strong>Ejemplo:</strong></p><div class="formula-block">t_n=t0+nh.</div>
+<p><strong>Relación con otros conceptos:</strong> malla temporal.</p>
+<p><strong>Posible forma de preguntarlo en examen:</strong> Efecto de reducir h.</p>
+</article>
+<article class="definition-card">
+<h3>Euler</h3>
+<p><strong>Definición precisa:</strong> método y_{n+1}=y_n+h f(t_n,y_n).</p>
+<p><strong>Explicación desarrollada:</strong> Primer método de avance.</p>
+<p><strong>Ejemplo:</strong></p><div class="formula-block">y'=y.</div>
+<p><strong>Relación con otros conceptos:</strong> Taylor de orden uno.</p>
+<p><strong>Posible forma de preguntarlo en examen:</strong> Deduzca Euler.</p>
+</article>
+<article class="definition-card">
+<h3>Runge-Kutta</h3>
+<p><strong>Definición precisa:</strong> familia de un paso con varias evaluaciones de f.</p>
+<p><strong>Explicación desarrollada:</strong> Alto orden sin derivadas superiores.</p>
+<p><strong>Ejemplo:</strong> RK4.</p>
+<p><strong>Relación con otros conceptos:</strong> alternativa a Taylor.</p>
+<p><strong>Posible forma de preguntarlo en examen:</strong> Ventaja de RK.</p>
+</article>
+<article class="definition-card">
+<h3>Error local/global</h3>
+<p><strong>Definición precisa:</strong> error por paso y error acumulado.</p>
+<p><strong>Explicación desarrollada:</strong> Distinguirlos es esencial.</p>
+<p><strong>Ejemplo:</strong> error tras n pasos.</p>
+<p><strong>Relación con otros conceptos:</strong> convergencia.</p>
+<p><strong>Posible forma de preguntarlo en examen:</strong> Diferencie ambos.</p>
+</article>
+<article class="definition-card">
+<h3>Multipaso</h3>
+<p><strong>Definición precisa:</strong> usa varios valores previos.</p>
+<p><strong>Explicación desarrollada:</strong> Eficiente pero necesita arranque.</p>
+<p><strong>Ejemplo:</strong> Adams.</p>
+<p><strong>Relación con otros conceptos:</strong> predictor-corrector.</p>
+<p><strong>Posible forma de preguntarlo en examen:</strong> Por qué necesita arranque.</p>
+</article>
+<article class="definition-card">
+<h3>Estabilidad</h3>
+<p><strong>Definición precisa:</strong> control de amplificación de errores.</p>
+<p><strong>Explicación desarrollada:</strong> Puede imponer restricciones de paso.</p>
+<p><strong>Ejemplo:</strong></p><div class="formula-block">y'=λ y.</div>
+<p><strong>Relación con otros conceptos:</strong> rigidez.</p>
+<p><strong>Posible forma de preguntarlo en examen:</strong> Explique estabilidad.</p>
+</article>
+<article class="definition-card">
+<h3>Rigidez</h3>
+<p><strong>Definición precisa:</strong> estabilidad exige h muy pequeño.</p>
+<p><strong>Explicación desarrollada:</strong> Problema de escalas temporales.</p>
+<p><strong>Ejemplo:</strong> decaimiento rápido y lento.</p>
+<p><strong>Relación con otros conceptos:</strong> métodos implícitos.</p>
+<p><strong>Posible forma de preguntarlo en examen:</strong> Qué es rigidez.</p>
+</article>
+</div>
+</section>
+<section id="relaciones" class="page">
+  <header class="page-head">
+    <h2>Relaciones entre ideas</h2>
+    <span class="page-no">05</span>
+  </header>
+  
+  <div class="key-box"><p>PVI → malla → método → error → estabilidad es la cadena conceptual del tema.</p>
+<p>Euler nace de Taylor. Runge-Kutta re∏uce información de Taylor con evaluaciones de f. Multipaso reutiliza valores ya calculados.</p>
+<p>La estabilidad y la rigidez conectan EDO con autovalores y sistemas linealizados, como en MM3.</p></div>
+</section>
+<section id="errores" class="page">
+  <header class="page-head">
+    <h2>Errores habituales</h2>
+    <span class="page-no">06</span>
+  </header>
+  
+  <div class="cards-grid">
+<article class="error-box">
+<h3>Creer que y_n es la solución exacta.</h3>
+<p><strong>Por qué está mal:</strong> es una aproximación en un nodo.</p>
+<p><strong>Corrección:</strong> escribir y_n≈y(t_n).</p>
+<p><strong>Ejemplo de respuesta incorrecta:</strong></p><div class="formula-block">Euler da y(t).</div>
+<p><strong>Ejemplo de respuesta correcta:</strong> Euler da valores aproximados.</p>
+</article>
+<article class="error-box">
+<h3>Confundir error local y global.</h3>
+<p><strong>Por qué está mal:</strong> el global acumula pasos.</p>
+<p><strong>Corrección:</strong> distinguir definición.</p>
+<p><strong>Ejemplo de respuesta incorrecta:</strong> El error total es el local.</p>
+<p><strong>Ejemplo de respuesta correcta:</strong> El global incluye propagación.</p>
+</article>
+<article class="error-box">
+<h3>Usar multipaso sin arranque.</h3>
+<p><strong>Por qué está mal:</strong> necesita historia previa.</p>
+<p><strong>Corrección:</strong> generar valores con un paso.</p>
+<p><strong>Ejemplo de respuesta incorrecta:</strong> Empiezo Adams con y0.</p>
+<p><strong>Ejemplo de respuesta correcta:</strong> Arranco con RK u otro método.</p>
+</article>
+<article class="error-box">
+<h3>Ignorar estabilidad.</h3>
+<p><strong>Por qué está mal:</strong> puede crecer artificialmente.</p>
+<p><strong>Corrección:</strong> analizar h y método.</p>
+<p><strong>Ejemplo de respuesta incorrecta:</strong> Si falla, solo bajo h un poco.</p>
+<p><strong>Ejemplo de respuesta correcta:</strong> Compruebo región de estabilidad.</p>
+</article>
+<article class="error-box">
+<h3>Pensar que h pequeño siempre basta.</h3>
+<p><strong>Por qué está mal:</strong> en rigidez puede ser impracticable.</p>
+<p><strong>Corrección:</strong> considerar métodos adecuados.</p>
+<p><strong>Ejemplo de respuesta incorrecta:</strong> Hago h diminuto y resuelto.</p>
+<p><strong>Ejemplo de respuesta correcta:</strong> La rigidez puede requerir métodos específicos.</p>
+</article>
+</div>
+</section>
+<section id="preguntas" class="page">
+  <header class="page-head">
+    <h2>Preguntas orientadas a examen</h2>
+    <span class="page-no">07</span>
+  </header>
+  
+  <details class="accordion accordion-reading" open>
+<summary>10 preguntas fáciles</summary>
+<ol class="question-list">
+<li>¿Qué es un PVI?</li>
+<li>¿Qué representa y_n?</li>
+<li>Escriba Euler.</li>
+<li>¿Qué es h?</li>
+<li>¿Qué es un método de un paso?</li>
+<li>¿Qué ventaja tiene Runge-Kutta?</li>
+<li>¿Qué es un multipaso?</li>
+<li>¿Qué es predictor-corrector?</li>
+<li>¿Qué es estabilidad?</li>
+<li>¿Qué es rigidez?</li>
+</ol></details>
+<details class="accordion accordion-reading" open>
+<summary>10 preguntas medias</summary>
+<ol class="question-list">
+<li>Deduzca Euler desde Taylor.</li>
+<li>Distinga error local y global.</li>
+<li>Compare Euler y Taylor.</li>
+<li>Explique Runge-Kutta.</li>
+<li>¿Cómo controla error RKF?</li>
+<li>¿Por qué multipaso necesita arranque?</li>
+<li>Compare explícito e implícito.</li>
+<li>Transforme una EDO de segundo orden en sistema.</li>
+<li>Explique y'=λ y para estabilidad.</li>
+<li>¿Por qué rigidez impone h pequeño?</li>
+</ol></details>
+<details class="accordion accordion-reading" open>
+<summary>5 preguntas difíciles</summary>
+<ol class="question-list">
+<li>Relacione consistencia, estabilidad y convergencia.</li>
+<li>Explique por qué RK evita derivadas superiores.</li>
+<li>Explique paso adaptativo por estimación de error.</li>
+<li>Compare coste de un paso y multipaso.</li>
+<li>Explique crecimiento numérico artificial.</li>
+</ol></details>
+<details class="accordion accordion-reading" open>
+<summary>5 preguntas de desarrollo largo</summary>
+<ol class="question-list">
+<li>Desarrolle Euler.</li>
+<li>Desarrolle Taylor y Runge-Kutta.</li>
+<li>Desarrolle RKF.</li>
+<li>Desarrolle multipaso y predictor-corrector.</li>
+<li>Desarrolle estabilidad, rigidez y sistemas.</li>
+</ol></details>
+<details class="accordion accordion-reading" open>
+<summary>5 preguntas de relación entre conceptos</summary>
+<ol class="question-list">
+<li>Relacione Taylor, Euler y error.</li>
+<li>Relacione pendientes intermedias y orden.</li>
+<li>Relacione multipaso y memoria.</li>
+<li>Relacione autovalores y estabilidad.</li>
+<li>Relacione discretización y simulación física.</li>
+</ol></details>
+</section>
+<section id="respuestas" class="page">
+  <header class="page-head">
+    <h2>Respuestas modelo</h2>
+    <span class="page-no">08</span>
+  </header>
+  
+  <details class="accordion accordion-answer">
+<summary>Respuesta 1</summary>
+<p>Una EDO con dato inicial, por ejemplo y'=f(t,y), y(t0)=y0.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 2</summary>
+<p>Una aproximación de y(t_n).</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 3</summary>
+<p>y_{n+1}=y_n+h f(t_n,y_n).</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 4</summary>
+<p>El paso de la malla temporal.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 5</summary>
+<p>Calcula el siguiente valor desde el actual.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 6</summary>
+<p>Alcanza alto orden sin derivadas superiores explícitas.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 7</summary>
+<p>Usa varios valores anteriores.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 8</summary>
+<p>Predice con un método y corrige con otro.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 9</summary>
+<p>No amplificar errores de forma no física.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 10</summary>
+<p>Cuando estabilidad exige pasos muy pequeños por escalas rápidas.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 11</summary>
+<p>Taylor: y(t+h)=y+h y'+...; usando y'=f y truncando queda Euler.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 12</summary>
+<p>El local es de un paso con dato exacto; el global acumula pasos.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 13</summary>
+<p>Euler es Taylor de primer orden; Taylor superior mejora precisión pero exige derivadas.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 14</summary>
+<p>Evalúa f en puntos intermedios y combina pendientes.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 15</summary>
+<p>Compara aproximaciones de distinto orden y adapta h.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 16</summary>
+<p>Porque necesita valores y_n, y_{n-1}, etc.; se generan con un método de un paso.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 17</summary>
+<p>Explícito calcula directamente; implícito requiere resolver ecuación y suele ser más estable.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 18</summary>
+<p>y1=y, y2=y'; entonces y1'=y2, y2'=f(t,y1,y2).</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 19</summary>
+<p>Prueba si el método re∏uce crecimiento/decaimiento exponencial.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 20</summary>
+<p>Porque modos rápidos restringen estabilidad aunque la solución lenta parezca suave.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 21</summary>
+<p>Consistencia aproxima la EDO localmente; estabilidad controla propagación de errores; juntas permiten convergencia.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 22</summary>
+<p>RK usa varias evaluaciones de f para igualar términos de Taylor sin calcular derivadas de orden alto.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 23</summary>
+<p>La diferencia entre dos órdenes estima error; si supera tolerancia se reduce h y si sobra se aumenta.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 24</summary>
+<p>Un paso es fácil de iniciar y adaptar; multipaso reutiliza historia y puede ser eficiente, pero arranca peor.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 25</summary>
+<p>Si el factor de amplificación del método tiene módulo mayor que uno, una solución exacta decreciente puede crecer numéricamente.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 26</summary>
+<p>Euler avanza por la tangente. Es simple, primer orden y revela discretización, error y estabilidad.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 27</summary>
+<p>Taylor usa derivadas superiores; RK usa pendientes intermedias para conseguir orden alto de forma práctica.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 28</summary>
+<p>RKF calcula dos aproximaciones relacionadas, estima error y ajusta el paso para cumplir tolerancia.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 29</summary>
+<p>Multipaso usa varios puntos previos. Predictor-corrector combina fórmula explícita e implícita para mejorar resultado.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 30</summary>
+<p>La estabilidad limita h; la rigidez endurece esa limitación. Las EDO de orden superior se transforman en sistemas de primer orden.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 31</summary>
+<p>Euler es Taylor truncado; el término omitido determina error local.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 32</summary>
+<p>Más pendientes intermedias bien ponderadas aumentan el orden.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 33</summary>
+<p>Multipaso necesita memoria de valores previos y por eso necesita arranque.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 34</summary>
+<p>Los autovalores de sistemas linealizados determinan modos y restricciones de estabilidad.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 35</summary>
+<p>Una EDO continua se discretiza en una malla y se simula por valores sucesivos.</p>
+</details>
+</section>
+<section id="resumen" class="page">
+  <header class="page-head">
+    <h2>Resumen final de repaso</h2>
+    <span class="page-no">09</span>
+  </header>
+  
+  <div class="summary-box"><p>Ideas principales: los PVI se discretizan en una malla; Euler es Taylor de primer orden; Taylor superior mejora pero exige derivadas; Runge-Kutta usa pendientes intermedias; RKF adapta paso; multipaso usa historia; estabilidad y rigidez determinan fiabilidad. Errores: confundir aproximación con exactitud, olvidar arranque, ignorar estabilidad.</p></div>
+</section>
+<section id="checklist" class="page">
+  <header class="page-head">
+    <h2>Checklist de dominio</h2>
+    <span class="page-no">10</span>
+  </header>
+  
+  <div class="checklist-box"><ul><li>Si no puedes formular y'=f(t,y), y(t0)=y0, repasa MM1.</li><li>Si confundes y_n con y(t), revisa discretización.</li><li>Si no deduces Euler desde Taylor, repasa Taylor.</li><li>Si no entiendes RKF, revisa estimación de error.</li><li>Si no puedes explicar estabilidad con y'=λ y, repasa autovalores.</li><li>Si puedes elegir método según precisión, coste y estabilidad, el tema está asentado.</li></ul></div>
+</section>
+    </main>
+  </div>
+</body>
+</html>

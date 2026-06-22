@@ -1,0 +1,510 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="color-scheme" content="light dark" />
+  <title>Compu2 — Tema 3: Interpolación y aproximación polinomial</title>
+  <meta name="description" content="Guía HTML de Física Computacional II, tema 3: Interpolación y aproximación polinomial. Lagrange · Neville · diferencias divididas · Hermite · splines · error" />
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/icon-32.png" />
+  <link rel="icon" type="image/png" sizes="50x50" href="assets/icons/icon-50.png" />
+  <link rel="apple-touch-icon" sizes="100x100" href="assets/icons/icon-100.png" />
+  <link rel="stylesheet" href="assets/styles.css" />
+  <style>
+    body.subject-computacional{
+      --subject:#0f766e;
+      --subject-soft:#e7f8f5;
+      --subject-mid:#99d8cf;
+      --subject-strong:#115e59;
+    }
+    @media(prefers-color-scheme:dark){
+      :root:not([data-theme="light"]) body.subject-computacional{
+        --subject-soft:#102f2d;
+        --subject-mid:#2a5955;
+        --subject-strong:#99f6e4;
+      }
+    }
+  </style>
+  <script>
+  window.MathJax = {
+    tex: { inlineMath: [['\(', '\)'], ['$', '$']], displayMath: [['\[', '\]']], processEscapes: true },
+    svg: { fontCache: 'global' },
+    options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+  };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+  <script defer src="assets/app.js"></script>
+</head>
+<body class="subject-computacional">
+  <div class="wrap">
+    <header class="cover">
+      <a class="back-link" href="index.html">← Índice</a>
+      <p class="eyebrow">Física Computacional II · Análisis numérico</p>
+      <h1>Interpolación y aproximación polinomial</h1>
+      <p class="subtitle">Tema 3 oficial · Lagrange · Neville · diferencias divididas · Hermite · splines · error</p>
+      <div class="lesson-meta">
+        <span>Asignatura: Compu2</span>
+        <span>Tema 3</span>
+        <span>Estado: completo</span>
+        <span>Enfoque: examen UNED</span>
+      </div>
+    </header>
+
+    <div class="toolbar no-print" aria-label="Navegación del tema">
+      <nav><a href="#mapa">Mapa</a><a href="#prerrequisitos">Prerrequisitos</a><a href="#idea-central">Idea</a><a href="#desarrollo">Desarrollo</a><a href="#conceptos">Conceptos</a><a href="#relaciones">Relaciones</a><a href="#errores">Errores</a><a href="#preguntas">Preguntas</a><a href="#respuestas">Respuestas</a><a href="#resumen">Resumen</a><a href="#checklist">Checklist</a></nav>
+      <div class="toolbar-actions"><button class="btn secondary" onclick="document.querySelectorAll('details').forEach(d=>d.open=true)">Abrir todo</button><button class="btn secondary" onclick="document.querySelectorAll('details').forEach(d=>d.open=false)">Modo repaso</button><button class="btn" onclick="window.print()">Imprimir / PDF</button></div>
+    </div>
+
+    <main>
+<section id="mapa" class="page">
+  <header class="page-head">
+    <h2>Mapa conceptual</h2>
+    <span class="page-no">00</span>
+  </header>
+  
+  <div class="concept-map">
+<a class="map-node" href="#desarrollo"><span>Problema interpolador</span><small>Dados puntos (x_i,y_i), se busca P con P(x_i)=y_i. La utilidad es estimar valores intermedios y</small></a>
+<a class="map-node" href="#desarrollo"><span>Lagrange</span><small>Lagrange construye bases L_i que valen uno en su nodo y cero en los demás. Entonces P=Σ y_i L</small></a>
+<a class="map-node" href="#desarrollo"><span>Neville y diferencias divididas</span><small>Neville calcula el valor interpolado de forma recursiva sin escribir todo el polinomio. Las dif</small></a>
+<a class="map-node" href="#desarrollo"><span>Error de interpolación</span><small>El error depende de una derivada de orden n+1 y del ∏ucto de distancias a los nodos. Esto ex</small></a>
+<a class="map-node" href="#desarrollo"><span>Hermite y splines</span><small>Hermite impone valores y derivadas, útil cuando se conocen pendientes. Los splines cúbicos usan</small></a>
+<a class="map-node" href="#preguntas"><span>Examen</span><small>método, hipótesis, error, convergencia y criterio de parada</small></a>
+</div>
+<div class="reading-block source-block"><p>Fuente principal: guía oficial y capítulo del libro sobre interpolación de Lagrange, Neville, diferencias divididas, Hermite, splines y curvas paramétricas.</p></div>
+</section>
+<section id="prerrequisitos" class="page">
+  <header class="page-head">
+    <h2>Prerrequisitos mínimos</h2>
+    <span class="page-no">01</span>
+  </header>
+  
+  <div class="cards-grid">
+<article class="definition-card">
+<h3>Polinomios</h3>
+<p><strong>Definición breve:</strong> sumas de potencias con coeficientes.</p>
+<p><strong>Por qué es necesario:</strong> son los aproximantes básicos.</p>
+<p><strong>Ejemplo mínimo:</strong></p><div class="formula-block">p(x)=a+bx+cx^2.</div>
+</article>
+<article class="definition-card">
+<h3>Datos tabulados</h3>
+<p><strong>Definición breve:</strong> pares (x_i,y_i).</p>
+<p><strong>Por qué es necesario:</strong> la interpolación parte de datos discretos.</p>
+<p><strong>Ejemplo mínimo:</strong></p><div class="formula-block">(0,1),(1,2).</div>
+</article>
+<article class="definition-card">
+<h3>Derivada</h3>
+<p><strong>Definición breve:</strong> pendiente local.</p>
+<p><strong>Por qué es necesario:</strong> Hermite usa valores y derivadas.</p>
+<p><strong>Ejemplo mínimo:</strong></p><div class="formula-block">p'(x_i)=f'(x_i).</div>
+</article>
+<article class="definition-card">
+<h3>Productos algebraicos</h3>
+<p><strong>Definición breve:</strong> expresiones como ∏(x-x_i).</p>
+<p><strong>Por qué es necesario:</strong> bases de Lagrange y error los usan.</p>
+<p><strong>Ejemplo mínimo:</strong></p><div class="formula-block">(x-x0)(x-x1).</div>
+</article>
+<article class="definition-card">
+<h3>Sistemas lineales</h3>
+<p><strong>Definición breve:</strong> ecuaciones para coeficientes.</p>
+<p><strong>Por qué es necesario:</strong> otra forma de determinar polinomios.</p>
+<p><strong>Ejemplo mínimo:</strong></p><div class="formula-block">resolver a+bx_i=y_i.</div>
+</article>
+<article class="definition-card">
+<h3>Continuidad y suavidad</h3>
+<p><strong>Definición breve:</strong> regularidad de funciones.</p>
+<p><strong>Por qué es necesario:</strong> el error y splines dependen de ellas.</p>
+<p><strong>Ejemplo mínimo:</strong> f suficientemente derivable.</p>
+</article>
+</div>
+</section>
+<section id="idea-central" class="page">
+  <header class="page-head">
+    <h2>Idea central del capítulo</h2>
+    <span class="page-no">02</span>
+  </header>
+  
+  <div class="reading-block"><p>El tema enseña a construir funciones polinómicas a partir de datos. La interpolación exige que el aproximante pase exactamente por los nodos.</p>
+<p>El resultado básico es que n+1 nodos distintos determinan un único polinomio de grado a lo sumo n. El libro desarrolla varias formas de construirlo: Lagrange, Newton con diferencias divididas y Neville para evaluación.</p>
+<p>Hermite añade derivadas y los splines reemplazan un polinomio global alto por cúbicas por tramos. Relación con MM1: polinomios y series; con MM2: bases; con MM3: aproximación de funciones.</p></div>
+</section>
+<section id="desarrollo" class="page">
+  <header class="page-head">
+    <h2>Desarrollo completo</h2>
+    <span class="page-no">03</span>
+  </header>
+  
+  <article class="reading-block" id="3-1-problema-interpolador">
+<h3>3.1. Problema interpolador</h3>
+<p>Dados puntos (x_i,y_i), se busca P con P(x_i)=y_i. La utilidad es estimar valores intermedios y sustituir datos por una función manejable.</p>
+<p>La unicidad se apoya en que un polinomio no nulo de grado n no puede tener más de n raíces.</p>
+</article>
+<article class="reading-block" id="3-2-lagrange">
+<h3>3.2. Lagrange</h3>
+<p>Lagrange construye bases L_i que valen uno en su nodo y cero en los demás. Entonces P=Σ y_i L_i.</p>
+<p>Es directo y transparente, pero poco cómodo si se añaden nuevos nodos.</p>
+</article>
+<article class="reading-block" id="3-3-neville-y-diferencias-divididas">
+<h3>3.3. Neville y diferencias divididas</h3>
+<p>Neville calcula el valor interpolado de forma recursiva sin escribir todo el polinomio.</p>
+<p>Las diferencias divididas dan la forma de Newton, que permite añadir nodos de forma incremental.</p>
+</article>
+<article class="reading-block" id="3-4-error-de-interpolacion">
+<h3>3.4. Error de interpolación</h3>
+<p>El error depende de una derivada de orden n+1 y del ∏ucto de distancias a los nodos.</p>
+<p>Esto explica que más nodos no siempre mejoren: la distribución de nodos y la suavidad importan.</p>
+</article>
+<article class="reading-block" id="3-5-hermite-y-splines">
+<h3>3.5. Hermite y splines</h3>
+<p>Hermite impone valores y derivadas, útil cuando se conocen pendientes.</p>
+<p>Los splines cúbicos usan polinomios por tramos con continuidad de derivadas, evitando oscilaciones de grados altos.</p>
+</article>
+</section>
+<section id="conceptos" class="page">
+  <header class="page-head">
+    <h2>Conceptos clave</h2>
+    <span class="page-no">04</span>
+  </header>
+  
+  <div class="cards-grid">
+<article class="definition-card">
+<h3>Interpolación</h3>
+<p><strong>Definición precisa:</strong> construcción de una función que pasa por datos dados.</p>
+<p><strong>Explicación desarrollada:</strong> Es exacta en los nodos, no necesariamente entre ellos.</p>
+<p><strong>Ejemplo:</strong> polinomio por tres puntos.</p>
+<p><strong>Relación con otros conceptos:</strong> se diferencia del ajuste.</p>
+<p><strong>Posible forma de preguntarlo en examen:</strong> Defina interpolación.</p>
+</article>
+<article class="definition-card">
+<h3>Nodo</h3>
+<p><strong>Definición precisa:</strong> abscisa x_i de un dato.</p>
+<p><strong>Explicación desarrollada:</strong> Determina bases y error.</p>
+<p><strong>Ejemplo:</strong></p><div class="formula-block">x_0=0.</div>
+<p><strong>Relación con otros conceptos:</strong> nodos distintos en Lagrange.</p>
+<p><strong>Posible forma de preguntarlo en examen:</strong> Por qué deben ser distintos.</p>
+</article>
+<article class="definition-card">
+<h3>Polinomio interpolador</h3>
+<p><strong>Definición precisa:</strong> polinomio de grado ≤n que pasa por n+1 nodos.</p>
+<p><strong>Explicación desarrollada:</strong> Existe y es único si los nodos son distintos.</p>
+<p><strong>Ejemplo:</strong> recta por dos puntos.</p>
+<p><strong>Relación con otros conceptos:</strong> Lagrange y Newton son formas del mismo objeto.</p>
+<p><strong>Posible forma de preguntarlo en examen:</strong> Justifique unicidad.</p>
+</article>
+<article class="definition-card">
+<h3>Base de Lagrange</h3>
+<p><strong>Definición precisa:</strong> polinomios L_i con L_i(x_j)=delta_ij.</p>
+<p><strong>Explicación desarrollada:</strong> Seleccionan cada dato.</p>
+<p><strong>Ejemplo:</strong></p><div class="formula-block">L_0=(x-x1)/(x0-x1).</div>
+<p><strong>Relación con otros conceptos:</strong> fórmula explícita.</p>
+<p><strong>Posible forma de preguntarlo en examen:</strong> Construya Lagrange.</p>
+</article>
+<article class="definition-card">
+<h3>Diferencias divididas</h3>
+<p><strong>Definición precisa:</strong> coeficientes recursivos de Newton.</p>
+<p><strong>Explicación desarrollada:</strong> Facilitan añadir nodos.</p>
+<p><strong>Ejemplo:</strong></p><div class="formula-block">f[x0,x1].</div>
+<p><strong>Relación con otros conceptos:</strong> forma incremental.</p>
+<p><strong>Posible forma de preguntarlo en examen:</strong> Ventaja de Newton.</p>
+</article>
+<article class="definition-card">
+<h3>Hermite</h3>
+<p><strong>Definición precisa:</strong> interpolación con valores y derivadas.</p>
+<p><strong>Explicación desarrollada:</strong> Usa información local adicional.</p>
+<p><strong>Ejemplo:</strong></p><div class="formula-block">P(x_i)=f_i, P'(x_i)=f'_i.</div>
+<p><strong>Relación con otros conceptos:</strong> nodos repetidos.</p>
+<p><strong>Posible forma de preguntarlo en examen:</strong> Qué añade Hermite.</p>
+</article>
+<article class="definition-card">
+<h3>Spline cúbico</h3>
+<p><strong>Definición precisa:</strong> función cúbica por tramos con suavidad.</p>
+<p><strong>Explicación desarrollada:</strong> Evita oscilaciones globales.</p>
+<p><strong>Ejemplo:</strong> cúbicas en subintervalos.</p>
+<p><strong>Relación con otros conceptos:</strong> alternativa a grado alto.</p>
+<p><strong>Posible forma de preguntarlo en examen:</strong> Compare spline y polinomio global.</p>
+</article>
+</div>
+</section>
+<section id="relaciones" class="page">
+  <header class="page-head">
+    <h2>Relaciones entre ideas</h2>
+    <span class="page-no">05</span>
+  </header>
+  
+  <div class="key-box"><p>Datos, nodos y polinomio forman la cadena básica. Lagrange, Newton y Neville resuelven el mismo problema desde perspectivas distintas.</p>
+<p>El error conecta interpolación con análisis: pasar por puntos no garantiza buena aproximación entre ellos.</p>
+<p>Hermite y splines responden al problema de la suavidad: uno añade derivadas; el otro usa tramos cúbicos.</p></div>
+</section>
+<section id="errores" class="page">
+  <header class="page-head">
+    <h2>Errores habituales</h2>
+    <span class="page-no">06</span>
+  </header>
+  
+  <div class="cards-grid">
+<article class="error-box">
+<h3>Creer que más nodos siempre mejoran.</h3>
+<p><strong>Por qué está mal:</strong> pueden aparecer oscilaciones.</p>
+<p><strong>Corrección:</strong> controlar error o usar splines.</p>
+<p><strong>Ejemplo de respuesta incorrecta:</strong> Más puntos siempre es mejor.</p>
+<p><strong>Ejemplo de respuesta correcta:</strong> Más puntos pueden empeorar si los nodos son malos.</p>
+</article>
+<article class="error-box">
+<h3>Confundir interpolación y ajuste.</h3>
+<p><strong>Por qué está mal:</strong> el ajuste no pasa necesariamente por puntos.</p>
+<p><strong>Corrección:</strong> distinguir exactitud nodal de mínimos cuadrados.</p>
+<p><strong>Ejemplo de respuesta incorrecta:</strong> Una recta de ajuste interpola todos los datos.</p>
+<p><strong>Ejemplo de respuesta correcta:</strong> Un ajuste minimiza residuos.</p>
+</article>
+<article class="error-box">
+<h3>Usar Lagrange con nodos repetidos.</h3>
+<p><strong>Por qué está mal:</strong> requiere nodos distintos.</p>
+<p><strong>Corrección:</strong> usar Hermite.</p>
+<p><strong>Ejemplo de respuesta incorrecta:</strong> Repito el nodo en Lagrange.</p>
+<p><strong>Ejemplo de respuesta correcta:</strong> Con derivadas uso Hermite.</p>
+</article>
+<article class="error-box">
+<h3>Ignorar el error entre nodos.</h3>
+<p><strong>Por qué está mal:</strong> solo hay exactitud en nodos.</p>
+<p><strong>Corrección:</strong> estudiar cota de error.</p>
+<p><strong>Ejemplo de respuesta incorrecta:</strong> Pasa por puntos, luego es exacto.</p>
+<p><strong>Ejemplo de respuesta correcta:</strong> Entre nodos hay error.</p>
+</article>
+<article class="error-box">
+<h3>Pensar que un spline es una única cúbica.</h3>
+<p><strong>Por qué está mal:</strong> es por tramos.</p>
+<p><strong>Corrección:</strong> definir cúbicas en subintervalos.</p>
+<p><strong>Ejemplo de respuesta incorrecta:</strong> El spline es una cúbica global.</p>
+<p><strong>Ejemplo de respuesta correcta:</strong> El spline ensambla cúbicas locales.</p>
+</article>
+</div>
+</section>
+<section id="preguntas" class="page">
+  <header class="page-head">
+    <h2>Preguntas orientadas a examen</h2>
+    <span class="page-no">07</span>
+  </header>
+  
+  <details class="accordion accordion-reading" open>
+<summary>10 preguntas fáciles</summary>
+<ol class="question-list">
+<li>¿Qué es interpolar?</li>
+<li>¿Qué es un nodo?</li>
+<li>¿Qué grado tiene el interpolador de n+1 puntos?</li>
+<li>¿Qué propiedad tiene L_i?</li>
+<li>¿Qué es una diferencia dividida?</li>
+<li>¿Para qué sirve Neville?</li>
+<li>¿Qué añade Hermite?</li>
+<li>¿Qué es un spline cúbico?</li>
+<li>¿Qué es interpolación global?</li>
+<li>¿Qué es una curva paramétrica?</li>
+</ol></details>
+<details class="accordion accordion-reading" open>
+<summary>10 preguntas medias</summary>
+<ol class="question-list">
+<li>Explique unicidad del interpolador.</li>
+<li>Compare Lagrange y Newton.</li>
+<li>Explique el error de interpolación.</li>
+<li>¿Por qué influyen los nodos?</li>
+<li>¿Cuándo conviene Hermite?</li>
+<li>¿Por qué usar splines?</li>
+<li>Diferencie interpolación y ajuste.</li>
+<li>Explique oscilaciones por grado alto.</li>
+<li>¿Qué condiciones impone un spline?</li>
+<li>¿Por qué Neville no necesita escribir P?</li>
+</ol></details>
+<details class="accordion accordion-reading" open>
+<summary>5 preguntas difíciles</summary>
+<ol class="question-list">
+<li>Justifique la fórmula de Lagrange.</li>
+<li>Explique actualización con diferencias divididas.</li>
+<li>Analice regularidad y error.</li>
+<li>Compare Hermite y spline.</li>
+<li>Explique por qué más nodos no siempre mejoran.</li>
+</ol></details>
+<details class="accordion accordion-reading" open>
+<summary>5 preguntas de desarrollo largo</summary>
+<ol class="question-list">
+<li>Desarrolle Lagrange.</li>
+<li>Desarrolle Newton con diferencias divididas.</li>
+<li>Desarrolle error de interpolación.</li>
+<li>Desarrolle Hermite.</li>
+<li>Desarrolle splines cúbicos.</li>
+</ol></details>
+<details class="accordion accordion-reading" open>
+<summary>5 preguntas de relación entre conceptos</summary>
+<ol class="question-list">
+<li>Relacione datos y polinomio.</li>
+<li>Relacione Lagrange, Newton y Neville.</li>
+<li>Relacione derivadas y Hermite.</li>
+<li>Relacione grado alto y splines.</li>
+<li>Relacione interpolación y aproximación.</li>
+</ol></details>
+</section>
+<section id="respuestas" class="page">
+  <header class="page-head">
+    <h2>Respuestas modelo</h2>
+    <span class="page-no">08</span>
+  </header>
+  
+  <details class="accordion accordion-answer">
+<summary>Respuesta 1</summary>
+<p>Construir una función que pase exactamente por los datos.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 2</summary>
+<p>La abscisa donde se conoce un dato.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 3</summary>
+<p>A lo sumo n.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 4</summary>
+<p>L_i(x_j)=0 si i distinto de j y L_i(x_i)=1.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 5</summary>
+<p>Un cociente recursivo que da coeficientes del polinomio de Newton.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 6</summary>
+<p>Calcular el valor interpolado en un punto sin escribir todo P.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 7</summary>
+<p>Valores de derivadas además de valores de función.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 8</summary>
+<p>Una función formada por cúbicas por tramos unidas suavemente.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 9</summary>
+<p>Usar un único polinomio para todo el conjunto de datos.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 10</summary>
+<p>Describir x,y como funciones de un parámetro.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 11</summary>
+<p>Si dos polinomios de grado ≤n interpolan n+1 puntos, su diferencia tiene n+1 raíces; debe ser el polinomio nulo.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 12</summary>
+<p>Lagrange es explícito y simétrico; Newton es incremental mediante diferencias divididas.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 13</summary>
+<p>El error contiene un ∏ucto nodal y una derivada de orden n+1; mide la diferencia entre f y P.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 14</summary>
+<p>Porque el ∏ucto nodal cambia con su distribución y puede amplificar error.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 15</summary>
+<p>Cuando se conocen pendientes o derivadas y se quiere re∏ucir suavidad local.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 16</summary>
+<p>Porque evitan oscilaciones de polinomios globales de alto grado y ofrecen control local.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 17</summary>
+<p>Interpolar pasa por todos los puntos; ajustar minimiza un error global sin exigir coincidencia exacta.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 18</summary>
+<p>Un grado alto impone muchas restricciones globales y puede oscilar entre nodos.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 19</summary>
+<p>Continuidad de la función y de derivadas, más condiciones de frontera.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 20</summary>
+<p>Porque usa una tabla recursiva para evaluar directamente en el punto deseado.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 21</summary>
+<p>Cada L_i actúa como selector del dato y_i; al evaluar en x_j solo sobrevive el término j.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 22</summary>
+<p>Al añadir un nodo se añade un término nuevo en la forma de Newton sin reconstruir los anteriores.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 23</summary>
+<p>Más regularidad permite acotar derivadas altas; si estas crecen, el error puede ser grande.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 24</summary>
+<p>Hermite impone derivadas en nodos; spline impone suavidad entre tramos cúbicos.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 25</summary>
+<p>Porque el error depende de nodos y derivadas; muchos nodos mal distribuidos pueden causar oscilaciones.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 26</summary>
+<p>Lagrange construye P=Σ y_i L_i. Cumple los datos por la propiedad delta de L_i. Es útil con pocos datos fijos.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 27</summary>
+<p>Newton usa diferencias divididas en ∏uctos progresivos. Es eficiente para añadir nodos y organizar tablas.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 28</summary>
+<p>El error muestra que interpolar no garantiza exactitud fuera de nodos. Depende de suavidad y del ∏ucto de distancias.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 29</summary>
+<p>Hermite amplía datos con derivadas. Es adecuado para modelos donde se conocen pendientes, velocidades o flujos.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 30</summary>
+<p>Los splines usan cúbicas locales con empalmes suaves. Reducen oscilaciones y son robustos para datos tabulados.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 31</summary>
+<p>Los datos definen nodos y valores; el polinomio pasa por ellos.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 32</summary>
+<p>Son tres representaciones o procedimientos para el mismo problema interpolador.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 33</summary>
+<p>Las derivadas aportan información de pendiente, que Hermite impone.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 34</summary>
+<p>El grado alto puede oscilar; los splines dividen el problema en tramos.</p>
+</details>
+<details class="accordion accordion-answer">
+<summary>Respuesta 35</summary>
+<p>La interpolación es una forma exacta de aproximación; el ajuste relaja la exactitud.</p>
+</details>
+</section>
+<section id="resumen" class="page">
+  <header class="page-head">
+    <h2>Resumen final de repaso</h2>
+    <span class="page-no">09</span>
+  </header>
+  
+  <div class="summary-box"><p>Ideas principales: interpolar es pasar por datos; existe un único polinomio de grado ≤n para n+1 nodos distintos; Lagrange es explícito; Newton usa diferencias divididas; Neville evalúa; Hermite usa derivadas; splines usan cúbicas por tramos. Errores: confundir con ajuste, ignorar error, usar grado alto sin control.</p></div>
+</section>
+<section id="checklist" class="page">
+  <header class="page-head">
+    <h2>Checklist de dominio</h2>
+    <span class="page-no">10</span>
+  </header>
+  
+  <div class="checklist-box"><ul><li>Si no puedes construir L_i, repasa ∏uctos algebraicos.</li><li>Si no entiendes unicidad, repasa raíces de polinomios.</li><li>Si confundes Newton y Lagrange, revisa formas del interpolador.</li><li>Si no distingues Hermite de spline, revisa derivadas frente a tramos.</li><li>Si puedes elegir método según datos y suavidad, el tema está asentado.</li></ul></div>
+</section>
+    </main>
+  </div>
+</body>
+</html>
