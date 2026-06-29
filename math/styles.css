@@ -1,0 +1,198 @@
+:root {
+  --bg: #050505;
+  --panel: #111;
+  --panel-2: #171717;
+  --ink: #f1f1f1;
+  --muted: #aaa;
+  --border: #333;
+  --accent: #ddd;
+  --danger: #ff8a8a;
+  --font-ui: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-ui);
+  overflow: hidden;
+}
+
+button, select, input, textarea { font: inherit; }
+button, select {
+  background: var(--panel-2);
+  color: var(--ink);
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  min-height: 36px;
+  padding: 6px 10px;
+  touch-action: manipulation;
+}
+button:active { transform: translateY(1px); }
+.topbar button { flex: 0 0 auto; }
+
+.topbar {
+  height: 44px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 8px;
+  background: #090909;
+  border-bottom: 1px solid var(--border);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.topbar::-webkit-scrollbar { display: none; }
+.brand {
+  font-weight: 700;
+  letter-spacing: .2px;
+  margin-right: auto;
+  flex: 0 0 auto;
+}
+#clearAll { color: var(--danger); }
+#toggleMathKeyboard.active { border-color: #aaa; background: #242424; }
+
+.toolbar {
+  height: 48px;
+  display: flex;
+  gap: 6px;
+  padding: 6px 8px;
+  overflow-x: auto;
+  background: var(--panel);
+  border-bottom: 1px solid var(--border);
+  scrollbar-width: none;
+}
+.toolbar::-webkit-scrollbar { display: none; }
+.toolbar button {
+  flex: 0 0 auto;
+  min-width: 42px;
+  padding-inline: 9px;
+  white-space: nowrap;
+}
+
+.commandbar {
+  height: 48px;
+  display: flex;
+  gap: 6px;
+  padding: 5px 8px;
+  background: #0b0b0b;
+  border-bottom: 1px solid var(--border);
+}
+.commandbar select {
+  flex: 1;
+  min-width: 0;
+  background: #030303;
+  color: var(--ink);
+  outline: none;
+}
+.commandbar select:focus { border-color: #777; }
+
+#paper {
+  height: calc(100dvh - 140px);
+  overflow: auto;
+  padding: 12px 10px 45vh;
+  background: var(--bg);
+}
+.line {
+  min-height: 46px;
+  display: flex;
+  align-items: stretch;
+  border-bottom: 1px solid rgba(255,255,255,.055);
+}
+.mathline {
+  width: 100%;
+  min-height: 45px;
+  padding: 7px 6px;
+  border: 0;
+  background: transparent;
+  color: var(--ink);
+  font-size: clamp(22px, 6vw, 36px);
+  outline: none;
+}
+math-field::part(virtual-keyboard-toggle) { display: none; }
+math-field::part(menu-toggle) { display: none; }
+math-field::part(container) { background: transparent; }
+math-field:focus-within {
+  background: #0d0d0d;
+  box-shadow: inset 3px 0 0 var(--accent);
+}
+
+#symbolPanel,
+#sourcePanel {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.96);
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+}
+#symbolPanel[hidden],
+#sourcePanel[hidden] { display: none; }
+
+#symbolPanel {
+  inset: auto 0 0 0;
+  max-height: min(56dvh, 470px);
+  background: rgba(5,5,5,.98);
+  border-top: 1px solid var(--border);
+  z-index: 9;
+  box-shadow: 0 -12px 30px rgba(0,0,0,.45);
+}
+.symbolHeader {
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 7px 10px;
+  border-bottom: 1px solid var(--border);
+}
+.symbolGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6px;
+  padding: 8px;
+  overflow: auto;
+  max-height: calc(min(56dvh, 470px) - 44px);
+}
+.symbolGrid button {
+  min-height: 40px;
+  padding: 5px 7px;
+  font-size: 15px;
+  text-align: left;
+}
+.symbolGrid .symbolOnly {
+  text-align: center;
+  font-size: 20px;
+}
+
+.sourceHeader {
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--border);
+}
+#latexOutput {
+  flex: 1;
+  width: 100%;
+  resize: none;
+  border: 0;
+  outline: none;
+  background: #050505;
+  color: #f4f4f4;
+  padding: 12px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 15px;
+  line-height: 1.45;
+}
+
+@media (min-width: 800px) {
+  .toolbar { height: 54px; }
+  .commandbar { height: 48px; }
+  #paper { height: calc(100dvh - 146px); padding-inline: 24px; }
+  .symbolGrid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .mathline { font-size: 32px; }
+}
