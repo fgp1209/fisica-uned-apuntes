@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>MathNote Live</title>
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="stylesheet" href="styles.css" />
+  <script defer src="https://cdn.jsdelivr.net/npm/mathlive/mathlive.min.js"></script>
+  <script defer src="app.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">MathNote</div>
+    <button id="addLine" title="Nueva línea">↵</button>
+    <button id="copyLatex" title="Copiar LaTeX">copy</button>
+    <button id="toggleSource" title="Ver LaTeX">src</button>
+    <button id="clearAll" title="Borrar todo">clear</button>
+  </header>
+
+  <nav id="toolbar" class="toolbar" aria-label="plantillas rápidas"></nav>
+
+  <section class="commandbar">
+    <select id="functionSelect" aria-label="funciones matemáticas"></select>
+    <button id="runCommand">insertar</button>
+  </section>
+
+  <main id="paper" aria-label="hoja matemática"></main>
+
+  <section id="virtualKeyboard" class="vk" aria-label="teclado matemático virtual">
+    <div class="vkTabs">
+      <button data-mode="abc" class="active">abc</button>
+      <button data-mode="sym">123</button>
+      <button data-mode="fx">fx</button>
+      <button data-mode="letters">αβγ</button>
+    </div>
+    <div id="vkGrid" class="vkGrid"></div>
+  </section>
+
+  <aside id="sourcePanel" hidden>
+    <div class="sourceHeader">
+      <span>LaTeX generado</span>
+      <button id="closeSource">cerrar</button>
+    </div>
+    <textarea id="latexOutput" readonly></textarea>
+  </aside>
+
+  <template id="lineTemplate">
+    <div class="line">
+      <math-field class="mathline" virtual-keyboard-mode="off" math-virtual-keyboard-policy="manual"></math-field>
+    </div>
+  </template>
+</body>
+</html>
